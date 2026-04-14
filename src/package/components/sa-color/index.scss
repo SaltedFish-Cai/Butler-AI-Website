@@ -63,7 +63,7 @@
 .sa-color-picker {
   &-main {
     min-width: 200px;
-    margin-bottom: var(--m-size-v2-padding);
+    margin-bottom: var(--sa-size-padding);
   }
 
   // 颜色选择区域
@@ -74,7 +74,7 @@
     border-radius: 4px;
     overflow: hidden;
     cursor: crosshair;
-    margin-bottom: var(--m-size-v2-padding);
+    margin-bottom: var(--sa-size-padding);
 
     &-overlay {
       position: absolute;
@@ -182,7 +182,7 @@
       width: 100%;
       padding: 2px 8px;
       border: 1px solid var(--sa-color-border);
-      border-radius: var(--m-size-v2-radius);
+      border-radius: var(--sa-size-radius);
       font-size: 12px;
       box-sizing: border-box;
 
@@ -196,7 +196,7 @@
 
   // 预设颜色列表
   &-presets {
-    margin-top: var(--m-size-v2-padding);
+    margin-top: var(--sa-size-padding);
     display: flex;
     flex-wrap: wrap;
     gap: 4px;

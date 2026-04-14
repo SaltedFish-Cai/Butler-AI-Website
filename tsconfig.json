@@ -56,13 +56,5 @@
     "src/package/**/*.vue",
     "src/package/**/*.tsx"
   ],
-  "exclude": [
-    "node_modules",
-    "dist",
-    "**/*.js",
-    "src/package/manager-mobile/*",
-    "src/package/manager-mobile/*",
-    "src/package/manager-mobile/*",
-    "src/package/manager-mobile/*"
-  ]
+  "exclude": ["node_modules", "dist", "**/*.js"]
 }

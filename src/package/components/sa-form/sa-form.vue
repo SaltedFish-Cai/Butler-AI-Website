@@ -24,7 +24,7 @@
             </template>
 
             <!-- body -->
-            <sa-row :gutter="'calc(var(--m-component-padding-size, 10px) / 4)'">
+            <sa-row :gutter="'calc(var(--sa-size-padding, 10px) / 4)'">
               <template v-for="item in itemConfigs.configs" :key="String(item.prop)">
                 <!-- tabs 表 -->
                 <sa-col v-if="item.type == 'tabs-form'" :xs="24" :sm="24" :md="24" :lg="24" :xl="24">

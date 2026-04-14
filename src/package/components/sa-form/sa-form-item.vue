@@ -151,27 +151,27 @@ provide("elFormItem", {
   align-items: flex-start;
   position: relative;
   width: 100%;
-  padding: calc(var(--m-component-padding-size, 10px) / 4) calc(var(--m-component-padding-size, 10px) / 4);
+  padding: calc(var(--sa-size-padding, 10px) / 4) calc(var(--sa-size-padding, 10px) / 4);
   box-sizing: border-box;
   transition: 0.2s;
 
   &__label {
     display: flex;
-    font-size: calc(var(--m-component-font-size, 13px) + 1px);
-    color: var(--m-font-color);
+    font-size: calc(var(--sa-size-font, 13px) + 1px);
+    color: var(--sa-color-font);
     word-break: break-all;
     box-sizing: border-box;
     line-height: 1.5em;
     font-weight: bold;
     width: var(--sa-form-label-width);
     flex: 0 0 var(--sa-form-label-width, auto);
-    padding-right: calc(var(--m-component-padding-size, 10px) / 1);
+    padding-right: calc(var(--sa-size-padding, 10px) / 1);
   }
 
   &__content {
     width: 100%;
-    font-size: var(--m-component-font-size, 13px);
-    color: var(--m-font-color);
+    font-size: var(--sa-size-font, 13px);
+    color: var(--sa-color-font);
     .m-form-group-item {
       > .m-col {
         max-width: 100% !important;
@@ -184,19 +184,19 @@ provide("elFormItem", {
     }
   }
   &__error {
-    margin-top: calc(var(--m-component-padding-size, 10px) / 4);
-    color: var(--m-color-danger);
-    font-size: calc(var(--m-component-font-size, 13px) - 2px);
+    margin-top: calc(var(--sa-size-padding, 10px) / 4);
+    color: var(--sa-color-danger);
+    font-size: calc(var(--sa-size-font, 13px) - 2px);
   }
   &--left {
     .sa-form-item__label {
-      transform: translateY(calc(var(--m-component-padding-size, 10px) / 3));
+      transform: translateY(calc(var(--sa-size-padding, 10px) / 3));
     }
   }
   &--right {
     .sa-form-item__label {
       justify-content: flex-end !important;
-      transform: translateY(calc(var(--m-component-padding-size, 10px) / 2.5));
+      transform: translateY(calc(var(--sa-size-padding, 10px) / 2.5));
     }
   }
   &--top {
@@ -212,7 +212,7 @@ provide("elFormItem", {
 }
 
 .sa-form-item:has(.sa-form-item__error) {
-  background-color: var(--m-color-warning-light-7);
+  background-color: var(--sa-color-warning-light-7);
   border-radius: 3px;
 }
 
@@ -220,7 +220,7 @@ provide("elFormItem", {
   > .sa-form-item__label {
     &::before {
       content: "*";
-      color: var(--m-color-danger);
+      color: var(--sa-color-danger);
       margin-right: 4px;
     }
   }

@@ -210,7 +210,7 @@ const toggleAppearance = inject("toggle-appearance", async ({ clientX: x, client
     color calc(var(--trans-dur) * 0.5) steps(1, end);
   transition: 0.3s;
   &:hover {
-    color: var(--el-color-primary);
+    color: var(--sa-color-primary);
   }
 }
 

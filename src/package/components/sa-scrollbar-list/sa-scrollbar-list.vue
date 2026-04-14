@@ -242,22 +242,22 @@ defineExpose({ refresh, setScrollTop, el: mScrollbarListRef });
   min-width: 100%;
 
   &.padding-top {
-    padding-top: var(--m-size-v2-padding-base, 10px);
+    padding-top: var(--sa-size-padding-base, 10px);
   }
   &.padding-left {
-    padding-left: var(--m-size-v2-padding-base, 10px);
-    width: calc(100% - calc(var(--m-size-v2-padding-base, 10px)));
-    min-width: calc(100% - calc(var(--m-size-v2-padding-base, 10px)));
+    padding-left: var(--sa-size-padding-base, 10px);
+    width: calc(100% - calc(var(--sa-size-padding-base, 10px)));
+    min-width: calc(100% - calc(var(--sa-size-padding-base, 10px)));
   }
   &.padding-right {
-    padding-right: var(--m-size-v2-padding-base, 10px);
-    width: calc(100% - calc(var(--m-size-v2-padding-base, 10px)));
-    min-width: calc(100% - calc(var(--m-size-v2-padding-base, 10px)));
+    padding-right: var(--sa-size-padding-base, 10px);
+    width: calc(100% - calc(var(--sa-size-padding-base, 10px)));
+    min-width: calc(100% - calc(var(--sa-size-padding-base, 10px)));
   }
 
   &.padding-left.padding-right {
-    width: calc(100% - calc(var(--m-size-v2-padding-base, 10px)) * 2);
-    min-width: calc(100% - calc(var(--m-size-v2-padding-base, 10px)) * 2);
+    width: calc(100% - calc(var(--sa-size-padding-base, 10px)) * 2);
+    min-width: calc(100% - calc(var(--sa-size-padding-base, 10px)) * 2);
   }
 }
 </style>

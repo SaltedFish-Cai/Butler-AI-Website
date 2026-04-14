@@ -1,4 +1,4 @@
-export const managerUIV2Sidebar = [
+export const saltedUISidebar = [
   // {
   //   text: "指南",
   //   items: [{ text: "定制主题", link: "/document/SaltedUI_Doc/theme" }]

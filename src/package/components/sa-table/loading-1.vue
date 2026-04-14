@@ -34,7 +34,7 @@
   height: 100%;
 }
 .mo-refresh-pull-to-refresh-indicator > div > div {
-  background-color: var(--m-scrollbar-thumb-color);
+  background-color: var(--sa-color-hover);
   border-radius: 50%;
   width: 7px;
   height: 7px;

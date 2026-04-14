@@ -5,10 +5,9 @@
 <script lang="ts" setup>
 import { provide, reactive, computed, watch } from "vue";
 import { setThemeColor } from "../tools/color";
-import { SaltedGlobalConfigType, MManagerV2Type } from "./type";
+import { SaltedGlobalConfigType, SaltedUIType } from "./type";
 import languageMap from "../language.json";
 import { createLog } from "../utils/develop-log";
-import { useZIndex } from "element-plus";
 import _ from "lodash";
 const { isNil } = _;
 
@@ -16,13 +15,12 @@ const { isNil } = _;
  * # 获取全局 Z 索引
  */
 window.globalZIndex = window.globalZIndex || 1000;
-const { nextZIndex } = useZIndex();
 provide("getManagerV2GlobalZIndex", () => {
-  return nextZIndex() || window.globalZIndex++;
+  return window.globalZIndex++;
 });
 
 console.log("++++++++++> 11111:", 11111);
-const props = withDefaults(defineProps<MManagerV2Type>(), {});
+const props = withDefaults(defineProps<SaltedUIType>(), {});
 /**
  * # 状态
  */

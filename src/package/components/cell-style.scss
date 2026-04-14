@@ -1,14 +1,14 @@
 .m-display-v2 {
   width: 100%;
-  font-size: var(--m-size-v2-font);
+  font-size: var(--sa-size-font);
   word-wrap: break-word;
   word-break: break-all;
-  padding: 1px calc(var(--m-size-v2-padding) * 1);
+  padding: 1px calc(var(--sa-size-padding) * 1);
   box-sizing: border-box;
   transition: var(--sa-animation-time, 0.2s);
-  padding: calc(var(--m-size-v2-padding) / 3) calc(var(--m-size-v2-padding) / 1.2);
-  line-height: calc(var(--m-size-v2-height) - var(--m-size-v2-height) / 4);
-  border-radius: var(--m-size-v2-radius);
+  padding: calc(var(--sa-size-padding) / 3) calc(var(--sa-size-padding) / 1.2);
+  line-height: calc(var(--sa-size-height) - var(--sa-size-height) / 4);
+  border-radius: var(--sa-size-radius);
   border: 1px solid var(--sa-color-border);
   background-color: var(--sa-color-send-bg);
 }
@@ -17,7 +17,7 @@
   margin-top: 2px;
   position: relative;
   color: var(--sa-color-danger);
-  font-size: calc(var(--m-size-v2-font) - 2px) !important;
+  font-size: calc(var(--sa-size-font) - 2px) !important;
   line-height: 1.3em;
   padding-right: 25px;
   width: initial !important;

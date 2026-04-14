@@ -3,7 +3,7 @@
 .sa-dialog {
   transition: var(--sa-animation-time, 0.2s);
   height: 100%;
-  max-height: calc(100vh - var(--m-size-v2-padding) * 2);
+  max-height: calc(100vh - var(--sa-size-padding) * 2);
   z-index: 1;
   .sa-dialog-content {
     display: flex;
@@ -16,10 +16,10 @@
     margin-left: var(--sa-dialog-offset-x);
     box-shadow: 0 12px 32px 4px rgb(0 0 0 / 4%), 0 8px 20px rgb(0 0 0 / 8%);
     background-color: var(--sa-color-bg);
-    border-radius: var(--m-size-v2-radius);
+    border-radius: var(--sa-size-radius);
     overflow: hidden;
     transition: var(--sa-animation-time, 0.2s);
-    max-height: calc(100vh - var(--m-size-v2-padding, 10px) * 2);
+    max-height: calc(100vh - var(--sa-size-padding, 10px) * 2);
 
     .sa-dialog-content_header {
       position: relative;
@@ -28,31 +28,31 @@
       align-items: center;
       justify-content: space-between;
       margin: 0;
-      font-size: calc(var(--m-size-v2-font) + 2px) !important;
+      font-size: calc(var(--sa-size-font) + 2px) !important;
       font-weight: bold;
       color: var(--sa-color-font);
       border-bottom: 1px solid var(--sa-color-border);
       .title_body {
-        padding: calc(var(--m-size-v2-padding)) !important;
+        padding: calc(var(--sa-size-padding)) !important;
         width: 100%;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        font-size: calc(var(--m-size-v2-font) + 1px);
+        font-size: calc(var(--sa-size-font) + 1px);
         .is_title_body {
-          font-size: calc(var(--m-size-v2-font) + 1px);
+          font-size: calc(var(--sa-size-font) + 1px);
         }
         .sub_title_body {
           position: absolute;
           left: 50%;
           transform: translateX(-50%);
-          font-size: calc(var(--m-size-v2-font, 13px) + 1px);
+          font-size: calc(var(--sa-size-font, 13px) + 1px);
         }
       }
 
       .sa-dialog-content_header_close {
         position: relative;
-        width: calc(var(--m-size-v2-font, 13px) * 1.5 + var(--m-size-v2-padding, 10px) * 2);
+        width: calc(var(--sa-size-font, 13px) * 1.5 + var(--sa-size-padding, 10px) * 2);
         height: -webkit-fill-available;
         height: -moz-available; /* Firefox */
         height: stretch; /* 其他浏览器 */
@@ -61,7 +61,7 @@
         justify-content: center;
         align-items: center;
         color: var(--sa-color-white);
-        font-size: calc(var(--m-size-v2-font, 13px) + 3px);
+        font-size: calc(var(--sa-size-font, 13px) + 3px);
         transition: var(--sa-animation-time, 0.2s);
         &:hover {
           cursor: pointer;
@@ -78,37 +78,37 @@
         // overflow: hidden;
       }
       .dialog__body.padding-top {
-        height: calc(100% - calc(var(--m-size-v2-padding, 10px)));
-        padding-top: calc(var(--m-size-v2-padding, 10px)) !important;
+        height: calc(100% - calc(var(--sa-size-padding, 10px)));
+        padding-top: calc(var(--sa-size-padding, 10px)) !important;
       }
       .dialog__body.padding-left {
-        width: calc(100% - calc(var(--m-size-v2-padding, 10px)));
-        padding-left: calc(var(--m-size-v2-padding, 10px)) !important;
+        width: calc(100% - calc(var(--sa-size-padding, 10px)));
+        padding-left: calc(var(--sa-size-padding, 10px)) !important;
       }
       .dialog__body.padding-bottom {
-        height: calc(100% - calc(var(--m-size-v2-padding, 10px)));
-        padding-bottom: calc(var(--m-size-v2-padding, 10px)) !important;
+        height: calc(100% - calc(var(--sa-size-padding, 10px)));
+        padding-bottom: calc(var(--sa-size-padding, 10px)) !important;
       }
       .dialog__body.padding-right {
-        width: calc(100% - calc(var(--m-size-v2-padding, 10px)));
-        padding-right: calc(var(--m-size-v2-padding, 10px)) !important;
+        width: calc(100% - calc(var(--sa-size-padding, 10px)));
+        padding-right: calc(var(--sa-size-padding, 10px)) !important;
       }
       .dialog__body.padding-top.padding-bottom {
-        height: calc(100% - calc(var(--m-size-v2-padding, 10px)) * 2);
+        height: calc(100% - calc(var(--sa-size-padding, 10px)) * 2);
       }
       .dialog__body.padding-left.padding-right {
-        width: calc(100% - calc(var(--m-size-v2-padding, 10px)) * 2);
+        width: calc(100% - calc(var(--sa-size-padding, 10px)) * 2);
       }
     }
   }
 
   .full_icon {
     display: flex !important;
-    width: calc(var(--m-size-v2-height) - 9px);
-    height: calc(var(--m-size-v2-height) - 9px);
+    width: calc(var(--sa-size-height) - 9px);
+    height: calc(var(--sa-size-height) - 9px);
     color: var(--sa-color-info-light-3);
     border: 1px solid;
-    border-radius: var(--m-size-v2-radius);
+    border-radius: var(--sa-size-radius);
     transition: var(--sa-animation-time, 0.2s);
     &:hover {
       color: var(--sa-color-primary);
@@ -117,7 +117,7 @@
 
   .sa-dialog-content_footer {
     position: relative;
-    padding: calc(var(--m-size-v2-padding, 10px) / 1.5) !important;
+    padding: calc(var(--sa-size-padding, 10px) / 1.5) !important;
     border-top: 1px solid var(--sa-color-border);
     text-align: center;
     display: flex;
@@ -138,7 +138,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      height: var(--m-size-v2-height);
+      height: var(--sa-size-height);
     }
   }
 }

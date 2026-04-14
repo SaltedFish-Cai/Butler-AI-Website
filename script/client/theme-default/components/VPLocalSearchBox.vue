@@ -117,7 +117,7 @@ watchEffect(() => {
   }
 });
 
-const results: Ref<(SearchResult & Result)[]> = shallowRef([]);
+const results: Ref<(Result & SearchResult)[]> = shallowRef([]);
 
 const enableNoResults = ref(false);
 
@@ -148,7 +148,7 @@ debouncedWatch(
     if (!index) return;
 
     // Search
-    results.value = index.search(filterTextValue).slice(0, 16) as (SearchResult & Result)[];
+    results.value = index.search(filterTextValue).slice(0, 16) as (Result & SearchResult)[];
     enableNoResults.value = true;
 
     // Highlighting
@@ -636,7 +636,7 @@ function formMarkRegex(terms: Set<string>) {
 }
 
 .search-bar:focus-within {
-  border-color: var(--el-color-primary);
+  border-color: var(--sa-color-primary);
 }
 
 .search-icon {
@@ -684,7 +684,7 @@ function formMarkRegex(terms: Set<string>) {
 
 .search-actions button:not([disabled]):hover,
 .toggle-layout-button.detailed-list {
-  color: var(--el-color-primary);
+  color: var(--sa-color-primary);
 }
 
 .search-actions button.clear-button:disabled {
@@ -778,7 +778,7 @@ function formMarkRegex(terms: Set<string>) {
 .title-icon {
   opacity: 0.5;
   font-weight: 500;
-  color: var(--el-color-primary);
+  color: var(--sa-color-primary);
 }
 
 .title svg {
@@ -851,7 +851,7 @@ function formMarkRegex(terms: Set<string>) {
 
 .result.selected .titles,
 .result.selected .title-icon {
-  color: var(--el-color-primary) !important;
+  color: var(--sa-color-primary) !important;
 }
 
 .no-results {

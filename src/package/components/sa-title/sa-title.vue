@@ -32,7 +32,7 @@ const props = withDefaults(defineProps<SaTitleType>(), {
 .sa-title {
   position: relative;
   font-weight: bold;
-  font-size: var(--m-component-font-size, 13px);
+  font-size: var(--sa-size-font, 13px);
   margin-left: 0;
   color: var(--m-color-primary);
   width: calc(100% - var(--m-scroll-padding));
@@ -44,7 +44,7 @@ const props = withDefaults(defineProps<SaTitleType>(), {
       bottom: 0;
       content: "";
       display: block;
-      height: calc(var(--m-component-padding-size, 10px) * 0.3);
+      height: calc(var(--sa-size-padding, 10px) * 0.3);
       border-radius: 0 8px;
       left: 3px;
       z-index: 1;
@@ -57,13 +57,13 @@ const props = withDefaults(defineProps<SaTitleType>(), {
     display: inline-flex;
     width: max-content;
     position: relative;
-    padding-bottom: calc(var(--m-component-padding-size, 10px) * 0.8);
+    padding-bottom: calc(var(--sa-size-padding, 10px) * 0.8);
     &::after {
       position: absolute;
       bottom: 0;
       content: "";
       display: block;
-      height: calc(var(--m-component-padding-size, 10px) * 0.8);
+      height: calc(var(--sa-size-padding, 10px) * 0.8);
       border-radius: 0 8px;
       z-index: 2;
       left: 0px;
@@ -101,28 +101,28 @@ const props = withDefaults(defineProps<SaTitleType>(), {
   }
 }
 .sa-title.padding-top {
-  padding-top: var(--m-component-padding-base, 10px);
+  padding-top: var(--sa-size-padding, 10px);
 }
 .sa-title.padding-left {
-  padding-left: var(--m-component-padding-base, 10px);
-  width: calc(100% - calc(var(--m-component-padding-base, 10px)));
+  padding-left: var(--sa-size-padding, 10px);
+  width: calc(100% - calc(var(--sa-size-padding, 10px)));
 }
 .sa-title.padding-bottom {
-  padding-bottom: var(--m-component-padding-base, 10px);
+  padding-bottom: var(--sa-size-padding, 10px);
 }
 .sa-title.padding-right {
-  padding-right: var(--m-component-padding-base, 10px);
-  width: calc(100% - calc(var(--m-component-padding-base, 10px)));
+  padding-right: var(--sa-size-padding, 10px);
+  width: calc(100% - calc(var(--sa-size-padding, 10px)));
 }
 
 .sa-title.padding-left.padding-right {
-  width: calc(100% - calc(var(--m-component-padding-base, 10px)) * 2);
+  width: calc(100% - calc(var(--sa-size-padding, 10px)) * 2);
 }
 
 // .m-scrollbar:has(> .is-vertical .el-scrollbar__thumb[style*="height"]) {
 //   .el-scrollbar__view {
 //     .sa-title {
-//       --m-scroll-padding: var(--m-component-padding-size, 10px);
+//       --m-scroll-padding: var(--sa-size-padding, 10px);
 //     }
 //   }
 // }

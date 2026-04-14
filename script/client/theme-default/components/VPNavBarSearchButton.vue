@@ -37,7 +37,7 @@ const $t = createSearchTranslate(defaultTranslations);
 
 <style>
 [class*="DocSearch"] {
-  --docsearch-primary-color: var(--el-color-primary);
+  --docsearch-primary-color: var(--sa-color-primary);
   --docsearch-highlight-color: var(--docsearch-primary-color);
   --docsearch-text-color: var(--vp-c-text-1);
   --docsearch-muted-color: var(--vp-c-text-2);

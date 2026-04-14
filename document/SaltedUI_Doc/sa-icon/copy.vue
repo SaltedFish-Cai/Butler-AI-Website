@@ -12,7 +12,7 @@
         <template v-for="icon in Config[0].icons" :key="icon.value">
           <sa-icon
             class="pop_icon"
-            :style="{ color: icon.value == selectItem ? 'var(--el-color-primary)' : '' }"
+            :style="{ color: icon.value == selectItem ? 'var(--sa-color-primary)' : '' }"
             :name="icon.value"
             @click="selectedIcon(icon.value)"
             @mouseover="hoverIcon(icon)"

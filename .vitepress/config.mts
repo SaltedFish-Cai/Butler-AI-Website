@@ -1,9 +1,7 @@
 import demoBlock from "../src/demo-block";
 
 import { sidebar } from "./sidebar";
-import { managerUIV2Sidebar } from "./manager-ui-v2-sidebar";
-import { ManagerMobileSidebar } from "./manager-mobile-sidebar";
-import { ManagerTaroSidebar } from "./manager-taro-sidebar";
+import { saltedUISidebar } from "./salted-ui-sidebar";
 import { packageCode } from "./package-code";
 import { study } from "./study";
 
@@ -71,9 +69,7 @@ export default {
     ],
     sidebar: {
       "/document/demo/guide": sidebar,
-      "/document/SaltedUI_Doc": managerUIV2Sidebar,
-      "/document/ManagerMobile": ManagerMobileSidebar,
-      "/document/ManagerTaro": ManagerTaroSidebar,
+      "/document/SaltedUI_Doc": saltedUISidebar,
       "/document/study": study
     },
     search:

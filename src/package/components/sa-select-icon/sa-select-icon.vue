@@ -150,11 +150,11 @@ watch(
 
   .sa-select-icon_select-icon {
     padding: 4px;
-    margin-right: calc(var(--m-component-padding-size, 10px) / 2);
+    margin-right: calc(var(--sa-size-padding, 10px) / 2);
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: calc(var(--m-component-font-size, 13px) * 1.2);
+    font-size: calc(var(--sa-size-font, 13px) * 1.2);
     color: #fff;
     background-color: var(--m-color-primary);
     font-weight: 500;
@@ -170,17 +170,17 @@ watch(
   .pop_icon {
     width: 100%;
     flex: 0 0 calc(100% / 10 - 2px);
-    padding: calc(var(--m-component-padding-size, 10px) / 2) 0;
-    font-size: calc(var(--m-component-font-size, 13px) * 1.8);
+    padding: calc(var(--sa-size-padding, 10px) / 2) 0;
+    font-size: calc(var(--sa-size-font, 13px) * 1.8);
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 1px;
-    border: 1px solid var(--m-border-color);
+    border: 1px solid var(--sa-color-border);
     border-radius: 3px;
     box-sizing: border-box;
     &:hover {
-      background-color: var(--m-color-info-light-9);
+      background-color: var(--sa-color-info-light-9);
       cursor: pointer;
     }
 
@@ -220,7 +220,7 @@ watch(
   .sa-scrollbar:has(.scrollbar__bar.is-vertical) {
     & > .sa-scrollbar-content {
       .sa-select-icon_popover {
-        padding-right: calc(var(--m-component-padding-size, 10px) / 1.5);
+        padding-right: calc(var(--sa-size-padding, 10px) / 1.5);
       }
     }
   }
@@ -230,7 +230,7 @@ watch(
     &:hover {
       > .sa-button {
         cursor: not-allowed;
-        border-color: var(--m-border-color);
+        border-color: var(--sa-color-border);
         box-shadow: none;
       }
     }

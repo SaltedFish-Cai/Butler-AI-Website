@@ -85,59 +85,12 @@ export function setThemeColor(themeColor?: string, isDark?: boolean) {
   // const DANGER_COLOR = "#f56c6c";
   // const DEFAULT_COLOR = "#909399";
 
-  const LIGHT_COLOR_MAP = {
-    // "--m-bg-color": "#ffffff",
-    // "--m-border-color": "#dcdfe6",
-    // "--m-font-color": "#606266",
-    // "--m-scrollbar-color": "#e4e7ed",
-    // "--m-scrollbar-thumb-color": "#909399",
-    // "--sa-overlay-color-lighter": "rgba(0,0,0,0.5)",
-    // "--m-send-bg-color-lighter": "#f5f7fa",
-    // "--m-hover-color-lighter": "#c0c4cc",
-    // V2
-    // "--sa-color-font": "#606266",
-    // "--sa-color-cell-bg": "#f9f8fd",
-    // "--sa-color-send-bg": "#f5f7fa",
-    // "--sa-color-border": "#dcdfe6"
-  };
+  const LIGHT_COLOR_MAP = {};
 
-  const DARK_COLOR_MAP = {
-    // "--m-bg-color": "#282828",
-    // "--m-border-color": "#4C4D4F",
-    // "--m-font-color": "#bdbdc0",
-    // "--m-scrollbar-color": "#414243",
-    // "--m-scrollbar-thumb-color": "#A3A6AD",
-    // "--sa-overlay-color-lighter": "rgba(0,0,0,0.5)",
-    // "--m-send-bg-color-lighter": "#3c3c3c",
-    // "--m-hover-color-lighter": "#6C6E72",
-    // V2
-    // "--sa-color-font": "#bdbdc0",
-    // "--sa-color-cell-bg": "#f9f8fd",
-    // "--sa-color-send-bg": "#f9f8fd",
-    // "--sa-color-border": "#4C4D4F"
-  };
+  const DARK_COLOR_MAP = {};
 
   const BASE_COLOR_MAP = {
-    // "--m-font-color-light": "#606266",
-    // "--m-font-color-dark": "#bdbdc0",
-    // "--m-font-color-white": "#ffffff",
-    // "--m-font-color-black": "#000000",
-
-    "--el-color-primary": THEME_COLOR,
-    "--m-color-primary": THEME_COLOR,
     "--sa-color-primary": THEME_COLOR
-
-    // "--m-color-info": INFO_COLOR,
-    // "--m-color-success": SUCCESS_COLOR,
-    // "--m-color-warning": WARNING_COLOR,
-    // "--m-color-danger": DANGER_COLOR,
-    // "--m-color-default": DEFAULT_COLOR,
-
-    // "--sa-color-info": INFO_COLOR,
-    // "--sa-color-success": SUCCESS_COLOR,
-    // "--sa-color-warning": WARNING_COLOR,
-    // "--sa-color-danger": DANGER_COLOR,
-    // "--sa-color-default": DEFAULT_COLOR
   };
 
   const COLORS = { ...BASE_COLOR_MAP, ...(isDark ? DARK_COLOR_MAP : LIGHT_COLOR_MAP) };
@@ -145,40 +98,8 @@ export function setThemeColor(themeColor?: string, isDark?: boolean) {
     style?.setProperty(key, COLORS[key]);
   }
 
-  style?.setProperty(
-    "--el-color-primary-dark-2",
-    isDark ? `${getLightColor(themeColor, 0.2)}` : `${getDarkColor(themeColor, 0.3)}`
-  );
-
   for (let i = 1; i <= 9; i++) {
-    // const infoColor = isDark ? `${getDarkColor(INFO_COLOR, i / 10)}` : `${getLightColor(INFO_COLOR, i / 10)}`;
-    // style?.setProperty(`--el-color-info-light-${i}`, infoColor);
-    // style?.setProperty(`--m-color-info-light-${i}`, infoColor);
-    // style?.setProperty(`--sa-color-info-light-${i}`, infoColor);
-
-    // const successColor = isDark ? `${getDarkColor(SUCCESS_COLOR, i / 10)}` : `${getLightColor(SUCCESS_COLOR, i / 10)}`;
-    // style?.setProperty(`--el-color-success-light-${i}`, successColor);
-    // style?.setProperty(`--m-color-success-light-${i}`, successColor);
-    // style?.setProperty(`--sa-color-success-light-${i}`, successColor);
-
-    // const warningColor = isDark ? `${getDarkColor(WARNING_COLOR, i / 10)}` : `${getLightColor(WARNING_COLOR, i / 10)}`;
-    // style?.setProperty(`--el-color-warning-light-${i}`, warningColor);
-    // style?.setProperty(`--m-color-warning-light-${i}`, warningColor);
-    // style?.setProperty(`--sa-color-warning-light-${i}`, warningColor);
-
-    // const dangerColor = isDark ? `${getDarkColor(DANGER_COLOR, i / 10)}` : `${getLightColor(DANGER_COLOR, i / 10)}`;
-    // style?.setProperty(`--el-color-danger-light-${i}`, dangerColor);
-    // style?.setProperty(`--m-color-danger-light-${i}`, dangerColor);
-    // style?.setProperty(`--sa-color-danger-light-${i}`, dangerColor);
-
     const primaryColor = isDark ? `${getDarkColor(THEME_COLOR, i / 10)}` : `${getLightColor(THEME_COLOR, i / 10)}`;
-    style?.setProperty(`--el-color-primary-light-${i}`, primaryColor);
-    style?.setProperty(`--m-color-primary-light-${i}`, primaryColor);
     style?.setProperty(`--sa-color-primary-light-${i}`, primaryColor);
-
-    // const defaultColor = isDark ? `${getDarkColor(themeColor, i / 10)}` : `${getLightColor("#909399", i / 10)}`;
-    // style?.setProperty(`--el-color-default-light-${i}`, defaultColor);
-    // style?.setProperty(`--m-color-default-light-${i}`, defaultColor);
-    // style?.setProperty(`--sa-color-default-light-${i}`, defaultColor);
   }
 }

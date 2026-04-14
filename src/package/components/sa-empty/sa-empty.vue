@@ -25,7 +25,7 @@ const props = withDefaults(defineProps<SaEmptyType>(), {
   align-items: center;
   justify-content: center;
   height: 100%;
-  font-size: var(--m-size-v2-font, 13px);
+  font-size: var(--sa-size-font, 13px);
 
   .sa-empty_inner {
     width: 113px;
@@ -40,7 +40,7 @@ const props = withDefaults(defineProps<SaEmptyType>(), {
     background: #f9f8fd;
     border-radius: 50%;
     color: #d8d8d8;
-    font-size: var(--m-size-v2-font, 13px);
+    font-size: var(--sa-size-font, 13px);
   }
 }
 </style>

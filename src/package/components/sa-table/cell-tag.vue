@@ -80,14 +80,14 @@ function findTextColor(row) {
 </script>
 <style lang="scss">
 .m-table-tag-v2 {
-  margin: calc(var(--m-component-padding-size, 10px) / 4);
+  margin: calc(var(--sa-size-padding, 10px) / 4);
   display: inline-flex;
   justify-content: center;
   align-items: center;
   width: max-content;
   height: 2em;
   border-radius: 3px;
-  font-size: calc(var(--m-component-font-size, 13px) - 2px);
-  padding: calc(var(--m-component-padding-size, 10px) / 4) calc(var(--m-component-padding-size, 10px) - 2px);
+  font-size: calc(var(--sa-size-font, 13px) - 2px);
+  padding: calc(var(--sa-size-padding, 10px) / 4) calc(var(--sa-size-padding, 10px) - 2px);
 }
 </style>

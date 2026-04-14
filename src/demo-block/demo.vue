@@ -105,7 +105,7 @@ const onCopy = async e => {
 } */
 .demo-hover .demo-control,
 .demo-control-expanded {
-  background-color: var(--el-color-primary) !important;
+  background-color: var(--sa-color-primary) !important;
 }
 .demo-slot {
   box-sizing: border-box;

@@ -54,37 +54,6 @@
   }
 }
 
-// 滚动条
-.m-table-styles,
-.m-dialog-class,
-.m-tabs {
-  .el-scrollbar__bar.is-horizontal {
-    height: var(--el-scrollbar-width);
-    // background-color: var(--el-border-color-light);
-    .el-scrollbar__thumb {
-      background-color: #c1c1c1;
-      opacity: 1;
-      &:active,
-      &:hover {
-        background-color: var(--el-color-primary);
-        opacity: 1;
-      }
-    }
-  }
-  .el-scrollbar__bar.is-vertical {
-    width: var(--el-scrollbar-width);
-    // background-color: var(--el-border-color-light);
-    .el-scrollbar__thumb {
-      background-color: #c1c1c1;
-      opacity: 1;
-      &:active,
-      &:hover {
-        background-color: var(--el-color-primary);
-        opacity: 1;
-      }
-    }
-  }
-}
 client-only {
   height: 100% !important;
 }

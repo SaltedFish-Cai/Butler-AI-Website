@@ -5,7 +5,7 @@ import { useData } from "../composables/data";
 import { useSidebar } from "../composables/sidebar";
 import VPDocAside from "./VPDocAside.vue";
 import VPDocFooter from "./VPDocFooter.vue";
-import { MManagerV2Type } from "M_Types";
+import { SaltedUIType } from "M_Types";
 import { advancedQueryApi, groupAdvancedQueryApi } from "public/file/mock-api";
 const { theme } = useData();
 
@@ -16,7 +16,7 @@ const pageName = computed(() => route.path.replace(/[./]+/g, "_").replace(/_html
 
 const Host = "";
 
-const ManagerUIConfig = ref({
+const SaltedUIConfig = ref({
   env: "local",
   language: "zh-CN",
   size: "default",
@@ -36,7 +36,7 @@ const ManagerUIConfig = ref({
     downloadHose: Host + "/UploadFile/getfile?filepath=",
     compareKey: "FileId"
   }
-} as MManagerV2Type);
+} as SaltedUIType);
 </script>
 
 <template>
@@ -63,7 +63,7 @@ const ManagerUIConfig = ref({
         <div class="content-container">
           <slot name="doc-before" />
           <main class="main">
-            <sa-content v-bind="ManagerUIConfig">
+            <sa-content v-bind="SaltedUIConfig">
               <Content class="vp-doc" :class="[pageName, theme.externalLinkIcon && 'external-link-icon-enabled']" />
             </sa-content>
           </main>

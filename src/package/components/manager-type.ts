@@ -4,7 +4,7 @@ import { SaSelectOptionsType } from "./sa-select/type";
 import { SaFormItemType, SaFormRef } from "./sa-form/type";
 import { SaTableItemType, SaTableType } from "./sa-table/type";
 
-import { MManagerV2Type as MManagerV2ConfigType } from "./sa-content/type";
+import { SaltedUIType as MManagerV2ConfigType } from "./sa-content/type";
 // type MOptionType = {
 //   [x: string]: MOptionType;
 // };
@@ -26,4 +26,4 @@ export namespace MRefV2Type {
   export type TableV2 = SaTableType;
 }
 
-export type MManagerV2Type = MManagerV2ConfigType;
+export type SaltedUIType = MManagerV2ConfigType;

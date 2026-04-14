@@ -40,11 +40,11 @@
 
               &:hover {
                 cursor: pointer;
-                border-color: var(--el-color-primary);
+                border-color: var(--sa-color-primary);
               }
               &:active {
                 cursor: grabbing;
-                border-color: var(--el-color-primary);
+                border-color: var(--sa-color-primary);
               }
               // .svg-content-foreign_body_move {
               //   line-height: 2em;
@@ -52,7 +52,7 @@
               //   text-align: center;
               //   background-color: var(--el-color-info-light-5);
               //   &:hover {
-              //     background-color: var(--el-color-primary);
+              //     background-color: var(--sa-color-primary);
               //   }
               // }
 
@@ -61,7 +61,7 @@
                 background-color: var(--el-border-color-light);
                 &:active {
                   cursor: grabbing;
-                  background-color: var(--el-color-primary);
+                  background-color: var(--sa-color-primary);
                 }
               }
             }
@@ -90,7 +90,7 @@
       padding: 3px 15px;
       &:hover {
         color: #fff;
-        background-color: var(--el-color-primary);
+        background-color: var(--sa-color-primary);
       }
     }
   }
@@ -145,7 +145,7 @@
 }
 .highline {
   font-weight: bold;
-  color: var(--el-color-primary);
+  color: var(--sa-color-primary);
 }
 
 // >-------------> 线动画 <------------<
@@ -203,7 +203,7 @@
 }
 .no-trash {
   font-size: 14px;
-  color: var(--el-color-primary);
+  color: var(--sa-color-primary);
 }
 .max_label {
   display: block;

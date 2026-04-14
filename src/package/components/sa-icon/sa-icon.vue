@@ -25,7 +25,7 @@ const props = withDefaults(defineProps<SaIconType>(), {
 .sa-icon {
   display: inline-block;
   font-family: "m-iconfont-v2" !important;
-  font-size: calc(var(--m-size-v2-font) + 1px);
+  font-size: calc(var(--sa-size-font) + 1px);
   .m-iconfont_icon {
     position: relative;
     z-index: 0;
@@ -35,7 +35,7 @@ const props = withDefaults(defineProps<SaIconType>(), {
     font-size: inherit;
     line-height: 1em;
     font-family: "m-iconfont-v2" !important;
-    // font-size: calc(var(--m-size-v2-font) + 1px);
+    // font-size: calc(var(--sa-size-font) + 1px);
   }
 }
 </style>

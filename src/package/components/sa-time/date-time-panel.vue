@@ -526,12 +526,12 @@ watch(
 
 .m-date-picker-shortcuts {
   width: 120px;
-  font-size: var(--m-size-v2-font);
+  font-size: var(--sa-size-font);
   border-right: 1px solid var(--sa-color-border);
 }
 
 .m-date-picker-shortcut-item {
-  padding: calc(var(--m-size-v2-padding) / 2) calc(var(--m-size-v2-padding) / 1);
+  padding: calc(var(--sa-size-padding) / 2) calc(var(--sa-size-padding) / 1);
   cursor: pointer;
 
   &:hover {
@@ -550,7 +550,7 @@ watch(
 
 .m-date-picker-range-side {
   flex: 1;
-  padding: calc(var(--m-size-v2-padding) / 1.5);
+  padding: calc(var(--sa-size-padding) / 1.5);
 
   &:first-child {
     padding-left: 0;
@@ -565,15 +565,15 @@ watch(
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: var(--m-size-v2-font);
-  margin-bottom: var(--m-size-v2-padding);
+  font-size: var(--sa-size-font);
+  margin-bottom: var(--sa-size-padding);
 }
 
 .m-date-picker-header-btn {
   border: none;
   background: none;
   cursor: pointer;
-  padding: calc(var(--m-size-v2-padding) / 2) calc(var(--m-size-v2-padding) / 1);
+  padding: calc(var(--sa-size-padding) / 2) calc(var(--sa-size-padding) / 1);
 
   &:hover {
     background-color: var(--sa-color-info-light-9);
@@ -587,12 +587,12 @@ watch(
 .m-date-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: var(--m-size-v2-font);
+  font-size: var(--sa-size-font);
 
   th,
   td {
     text-align: center;
-    padding: var(--m-size-v2-padding) 0;
+    padding: var(--sa-size-padding) 0;
   }
 
   th {
@@ -645,28 +645,28 @@ watch(
 .m-date-table.end {
   .current-month.selected-start {
     border-radius: 0;
-    border-top-left-radius: calc(var(--m-size-v2-radius) * 2);
-    border-bottom-left-radius: calc(var(--m-size-v2-radius) * 2);
+    border-top-left-radius: calc(var(--sa-size-radius) * 2);
+    border-bottom-left-radius: calc(var(--sa-size-radius) * 2);
   }
 
   .current-month.selected-end {
     border-radius: 0;
-    border-top-right-radius: calc(var(--m-size-v2-radius) * 2);
-    border-bottom-right-radius: calc(var(--m-size-v2-radius) * 2);
+    border-top-right-radius: calc(var(--sa-size-radius) * 2);
+    border-bottom-right-radius: calc(var(--sa-size-radius) * 2);
   }
   .current-month.selected-start.selected-end {
-    border-radius: var(--m-size-v2-radius);
+    border-radius: var(--sa-size-radius);
   }
 }
 
 .m-date-picker-time-panel {
-  padding: var(--m-size-v2-padding) 0;
+  padding: var(--sa-size-padding) 0;
 }
 
 .m-date-picker-footer {
   display: flex;
   justify-content: flex-end;
-  padding-top: calc(var(--m-size-v2-padding) / 1.5);
+  padding-top: calc(var(--sa-size-padding) / 1.5);
   border-top: 1px solid var(--sa-color-border);
 }
 </style>

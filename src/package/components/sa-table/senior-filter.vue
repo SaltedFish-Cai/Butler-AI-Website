@@ -76,7 +76,7 @@
               </section>
 
               <div class="flex-center" v-if="itemIndex < groupItem.group.length - 1">
-                <span style="font-size: var(--m-component-font-size, 13px)">{{ languagePackage?.["filterText"] }}：</span>
+                <span style="font-size: var(--sa-size-font, 13px)">{{ languagePackage?.["filterText"] }}：</span>
                 <sa-radio
                   v-model="groupItem.groupLinkType"
                   :ex-options="seniorFilterOptions.linkOptions.map(item => ({ label: item.Description, value: item.Value }))"
@@ -84,7 +84,7 @@
               </div>
             </el-form> -->
               <div class="flex-center" v-if="itemIndex < groupItem.group.length - 1">
-                <span style="font-size: var(--m-component-font-size, 13px)">{{ languagePackage?.["filterText"] }}：</span>
+                <span style="font-size: var(--sa-size-font, 13px)">{{ languagePackage?.["filterText"] }}：</span>
                 <sa-radio v-model="groupItem.groupLinkType" :ex-options="state.linkOptions"></sa-radio>
               </div>
             </template>
@@ -97,7 +97,7 @@
           </div>
         </div>
         <div class="flex-center" v-if="groupItemIndex < state.advancedFilter.relationshipGroup.length - 1">
-          <span style="font-size: var(--m-component-font-size, 13px)">{{ languagePackage?.["groupText"] }}：</span>
+          <span style="font-size: var(--sa-size-font, 13px)">{{ languagePackage?.["groupText"] }}：</span>
           <sa-radio v-model="state.advancedFilter.relationshipGroupLinkType" :ex-options="state.linkOptions"></sa-radio>
         </div>
       </template>
@@ -328,27 +328,27 @@ watch(
 
 <style lang="scss" scoped>
 .sa-table_filter-list {
-  padding: calc(var(--m-component-padding-size, 10px) / 1.5);
+  padding: calc(var(--sa-size-padding, 10px) / 1.5);
   .group {
     box-sizing: border-box;
     overflow-x: hidden;
-    background-color: var(--m-send-bg-color-lighter);
-    border: 1px solid var(--m-border-color);
+    background-color: var(--sa-color-send-bg);
+    border: 1px solid var(--sa-color-border);
     border-radius: 3px;
     box-shadow: 0 0 12px rgb(0 0 0 / 5%);
     .group_top {
-      padding: calc(var(--m-component-padding-size, 10px) / 1.5);
-      background-color: var(--m-border-color);
+      padding: calc(var(--sa-size-padding, 10px) / 1.5);
+      background-color: var(--sa-color-border);
     }
     .group_bottom {
-      padding: calc(var(--m-component-padding-size, 10px) / 1.5);
+      padding: calc(var(--sa-size-padding, 10px) / 1.5);
     }
     .group__title {
       position: relative;
       height: 1.7em;
       line-height: 1.7em;
       padding-left: 12px;
-      font-size: calc(var(--m-component-font-size, 13px) + 1px);
+      font-size: calc(var(--sa-size-font, 13px) + 1px);
       color: var(--m-color-primary);
       &::before {
         position: absolute;
@@ -364,15 +364,15 @@ watch(
     }
   }
   .filter-item {
-    margin-bottom: var(--m-component-padding-size, 10px);
-    color: var(--m-font-color);
+    margin-bottom: var(--sa-size-padding, 10px);
+    color: var(--sa-color-font);
   }
 }
 
 .filter-item_name {
   width: 210px;
-  font-size: calc(var(--m-component-font-size, 13px) + 2px);
+  font-size: calc(var(--sa-size-font, 13px) + 2px);
   font-weight: bold;
-  color: var(--m-font-color);
+  color: var(--sa-color-font);
 }
 </style>

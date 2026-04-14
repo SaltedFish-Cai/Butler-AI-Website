@@ -245,15 +245,15 @@ defineExpose({ openVisible, closeVisible });
   }
 
   .zoom-box {
-    font-size: var(--m-size-v2-font);
+    font-size: var(--sa-size-font);
     .reset-btn {
       padding: 0 7px;
-      border-radius: var(--m-size-v2-radius);
+      border-radius: var(--sa-size-radius);
       cursor: pointer;
       transition: var(--sa-animation-time, 0.2s);
       border: 1px solid;
       .m-icon {
-        font-size: var(--m-size-v2-font);
+        font-size: var(--sa-size-font);
       }
       &:hover {
         color: var(--sa-color-white);

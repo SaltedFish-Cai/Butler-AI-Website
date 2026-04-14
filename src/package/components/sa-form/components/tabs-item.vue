@@ -25,7 +25,7 @@
         <template v-if="!injectConfigContext.display" #HeaderLeft>
           <sa-button
             is="add"
-            style="width: 80px; --m-component-padding-size: 5px; --m-component-font-size: 12px; --m-component-height-size: 24px"
+            style="width: 80px; --sa-size-padding: 5px; --sa-size-font: 12px; --sa-size-height: 24px"
             :disabled="item.disabled"
             @click="addTabs"
             :debounced="false"
@@ -122,7 +122,7 @@
                   </sa-title>
                 </template>
 
-                <sa-row :gutter="'calc(var(--m-component-padding-size, 10px) / 4)'">
+                <sa-row :gutter="'calc(var(--sa-size-padding, 10px) / 4)'">
                   <template v-for="tabFormItem in tabGroupItem.configs" :key="String(tabFormItem.prop)">
                     <formItem
                       v-if="tabFormItem.prop != item.titleKey"
@@ -183,7 +183,7 @@
                   </sa-title>
                 </template>
 
-                <sa-row :gutter="'calc(var(--m-component-padding-size, 10px) / 4)'">
+                <sa-row :gutter="'calc(var(--sa-size-padding, 10px) / 4)'">
                   <template v-for="tabFormItem in tabGroupItem.configs" :key="String(tabFormItem.prop)">
                     <formItem
                       v-if="tabFormItem.prop != item.titleKey"

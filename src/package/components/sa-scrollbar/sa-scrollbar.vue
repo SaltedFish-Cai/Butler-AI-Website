@@ -7,7 +7,7 @@
       ...style,
       '--scroll-vertical-thumb': scrollVerticalThumb + 'px',
       '--scroll-horizontal-thumb': scrollHorizontalThumb + 'px',
-      '--m-size-v2-padding-base': prop.paddingWidth
+      '--sa-size-padding-base': prop.paddingWidth
         ? typeof prop.paddingWidth === 'number'
           ? prop.paddingWidth + 'px'
           : prop.paddingWidth
@@ -33,13 +33,13 @@
           }"
           :style="{
             '--border-padding-top':
-              padding?.includes('top') || padding?.includes('all') ? `var(--m-size-v2-padding-base, 10px)` : '',
+              padding?.includes('top') || padding?.includes('all') ? `var(--sa-size-padding-base, 10px)` : '',
             '--border-padding-left':
-              padding?.includes('left') || padding?.includes('all') ? `var(--m-size-v2-padding-base, 10px)` : '',
+              padding?.includes('left') || padding?.includes('all') ? `var(--sa-size-padding-base, 10px)` : '',
             '--border-padding-bottom':
-              padding?.includes('bottom') || padding?.includes('all') ? `var(--m-size-v2-padding-base, 10px)` : '',
+              padding?.includes('bottom') || padding?.includes('all') ? `var(--sa-size-padding-base, 10px)` : '',
             '--border-padding-right':
-              padding?.includes('right') || padding?.includes('all') ? `var(--m-size-v2-padding-base, 10px)` : ''
+              padding?.includes('right') || padding?.includes('all') ? `var(--sa-size-padding-base, 10px)` : ''
           }"
           ref="scrollbarBodyContentRef"
         >
@@ -121,7 +121,7 @@ const prop = withDefaults(defineProps<ScrollbarV2Type>(), {
   defaultScrollVerticalThumb: 0,
   useBackTop: undefined,
   useShadow: undefined,
-  paddingWidth: "var(--m-component-padding-size, 10px)"
+  paddingWidth: "var(--sa-size-padding, 10px)"
 });
 const id = ref(randChar());
 const verticalThumbRef = ref();

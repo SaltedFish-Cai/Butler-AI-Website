@@ -16,7 +16,7 @@ const visible = ref(false);
 
 <style scoped>
 .custom-header {
-  padding: var(--m-size-v2-padding);
+  padding: var(--sa-size-padding);
   font-weight: bold;
 }
 </style>

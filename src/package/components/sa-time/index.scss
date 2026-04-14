@@ -2,9 +2,9 @@
   position: relative;
   margin: 0;
   background-color: var(--sa-color-bg);
-  border-radius: var(--m-size-v2-radius);
+  border-radius: var(--sa-size-radius);
   border: 1px solid var(--sa-color-border);
-  min-height: var(--m-size-v2-height);
+  min-height: var(--sa-size-height);
   box-sizing: border-box;
   display: flex;
   width: 100%;
@@ -35,7 +35,7 @@
     cursor: text;
     display: inline-flex;
     flex-grow: 1;
-    height: calc(var(--m-size-v2-height) - var(--m-size-v2-height) / 4);
+    height: calc(var(--sa-size-height) - var(--sa-size-height) / 4);
     box-sizing: border-box;
     justify-content: space-between;
     align-items: center;
@@ -48,7 +48,7 @@
       outline: 0;
       padding: 0;
       height: 100%;
-      font-size: var(--m-size-v2-font);
+      font-size: var(--sa-size-font);
       color: var(--sa-color-font);
       background: none;
       &::placeholder {
@@ -61,7 +61,7 @@
 
     .clear-icon {
       display: none;
-      font-size: calc(var(--m-size-v2-font) + 1px);
+      font-size: calc(var(--sa-size-font) + 1px);
       color: var(--sa-color-default);
       transition: var(--sa-animation-time, 0.2s);
 
@@ -73,7 +73,7 @@
 
     .down-icon {
       display: block;
-      font-size: calc(var(--m-size-v2-font) + 1px);
+      font-size: calc(var(--sa-size-font) + 1px);
       color: var(--sa-color-default-light-4);
       transition: var(--sa-animation-time, 0.2s);
     }
@@ -111,7 +111,7 @@
 .sa-time-content {
   width: 100%;
   box-sizing: border-box;
-  padding: calc(var(--m-size-v2-padding) / 3) calc(var(--m-size-v2-padding) / 1.2);
+  padding: calc(var(--sa-size-padding) / 3) calc(var(--sa-size-padding) / 1.2);
 }
 .sa-time > .sa-popover-reference {
   width: 100%;
@@ -125,7 +125,7 @@
   .sa-time-option {
     position: relative;
     z-index: 231;
-    padding: var(--m-size-v2-padding);
+    padding: var(--sa-size-padding);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -148,9 +148,9 @@
 }
 
 .sa-time-no-data {
-  padding: var(--m-size-v2-padding) 0;
+  padding: var(--sa-size-padding) 0;
   color: var(--sa-color-font);
-  font-size: var(--m-size-v2-font);
+  font-size: var(--sa-size-font);
   text-align: center;
 }
 

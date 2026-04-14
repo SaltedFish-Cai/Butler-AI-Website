@@ -39,32 +39,32 @@
       // min-width: 100%;
     }
     .scrollbar-body-content.padding-top {
-      padding-top: var(--m-size-v2-padding-base, 10px);
-      // height: calc(100% - calc(var(--m-size-v2-padding-base, 10px)));
-      // min-height: calc(100% - calc(var(--m-size-v2-padding-base, 10px)));
+      padding-top: var(--sa-size-padding-base, 10px);
+      // height: calc(100% - calc(var(--sa-size-padding-base, 10px)));
+      // min-height: calc(100% - calc(var(--sa-size-padding-base, 10px)));
     }
     .scrollbar-body-content.padding-left {
-      padding-left: var(--m-size-v2-padding-base, 10px);
-      // width: calc(100% - calc(var(--m-size-v2-padding-base, 10px)));
-      // min-width: calc(100% - calc(var(--m-size-v2-padding-base, 10px)));
+      padding-left: var(--sa-size-padding-base, 10px);
+      // width: calc(100% - calc(var(--sa-size-padding-base, 10px)));
+      // min-width: calc(100% - calc(var(--sa-size-padding-base, 10px)));
     }
     .scrollbar-body-content.padding-bottom {
-      padding-bottom: var(--m-size-v2-padding-base, 10px);
-      // height: calc(100% - calc(var(--m-size-v2-padding-base, 10px)));
-      // min-height: calc(100% - calc(var(--m-size-v2-padding-base, 10px)));
+      padding-bottom: var(--sa-size-padding-base, 10px);
+      // height: calc(100% - calc(var(--sa-size-padding-base, 10px)));
+      // min-height: calc(100% - calc(var(--sa-size-padding-base, 10px)));
     }
     .scrollbar-body-content.padding-right {
-      padding-right: var(--m-size-v2-padding-base, 10px);
-      // width: calc(100% - calc(var(--m-size-v2-padding-base, 10px)));
-      // min-width: calc(100% - calc(var(--m-size-v2-padding-base, 10px)));
+      padding-right: var(--sa-size-padding-base, 10px);
+      // width: calc(100% - calc(var(--sa-size-padding-base, 10px)));
+      // min-width: calc(100% - calc(var(--sa-size-padding-base, 10px)));
     }
     // .scrollbar-body-content.padding-top.padding-bottom {
-    //   height: calc(100% - calc(var(--m-size-v2-padding-base, 10px)) * 2);
-    //   min-height: calc(100% - calc(var(--m-size-v2-padding-base, 10px)) * 2);
+    //   height: calc(100% - calc(var(--sa-size-padding-base, 10px)) * 2);
+    //   min-height: calc(100% - calc(var(--sa-size-padding-base, 10px)) * 2);
     // }
     // .scrollbar-body-content.padding-left.padding-right {
-    //   width: calc(100% - calc(var(--m-size-v2-padding-base, 10px)) * 2);
-    //   min-width: calc(100% - calc(var(--m-size-v2-padding-base, 10px)) * 2);
+    //   width: calc(100% - calc(var(--sa-size-padding-base, 10px)) * 2);
+    //   min-width: calc(100% - calc(var(--sa-size-padding-base, 10px)) * 2);
     // }
   }
   .scrollbar-body-y {
@@ -80,11 +80,11 @@
 
   .scrollbar__bar {
     position: absolute;
-    background-color: var(--m-scrollbar-color);
+    background-color: var(--sa-color-scrollbar);
     > .scrollbar__thumb {
       border-radius: 4px;
       opacity: 0.5;
-      background-color: var(--m-scrollbar-thumb-color);
+      background-color: var(--sa-color-hover);
       &:hover {
         transition: var(--sa-animation-time, 0.2s);
         opacity: 0.8;
@@ -95,13 +95,13 @@
   .scrollbar__bar.is-vertical {
     top: 0;
     right: 0;
-    width: calc(var(--m-size-v2-padding-base, 10px) + 2px);
+    width: calc(var(--sa-size-padding-base, 10px) + 2px);
     height: 100%;
     display: flex;
     justify-content: center;
     align-items: flex-start;
     z-index: 12;
-    background-color: var(--m-border-color);
+    background-color: var(--sa-color-border);
     > .scrollbar__thumb {
       position: absolute;
       top: 0;
@@ -114,12 +114,12 @@
     bottom: 0;
     left: 0;
     width: 100%;
-    height: calc(var(--m-size-v2-padding-base, 10px) + 2px);
+    height: calc(var(--sa-size-padding-base, 10px) + 2px);
     display: flex;
     justify-content: flex-start;
     align-items: center;
     z-index: 11;
-    background-color: var(--m-border-color);
+    background-color: var(--sa-color-border);
     > .scrollbar__thumb {
       position: absolute;
       left: 0;
@@ -134,14 +134,14 @@
     width: 100%;
     transition: var(--sa-animation-time, 0.2s);
     z-index: 999;
-    box-shadow: 0px 0 10px 1.5px var(--m-font-color-black);
+    box-shadow: 0px 0 10px 1.5px var(--sa-color-black);
   }
 
   .is-scroll-end {
     width: 100%;
     transition: var(--sa-animation-time, 0.2s);
     z-index: 999;
-    box-shadow: 0px 0 10px 1.5px var(--m-font-color-black);
+    box-shadow: 0px 0 10px 1.5px var(--sa-color-black);
   }
 
   .sa-scrollbar-back-top {
@@ -151,7 +151,7 @@
     width: 30px;
     height: 30px;
     line-height: 30px;
-    background: var(--m-color-info-light-3);
+    background: var(--sa-color-info-light-3);
     border-radius: 50%;
     text-align: center;
     color: #fff;
@@ -165,7 +165,7 @@
   //     opacity: 1;
   //     &:active,
   //     &:hover {
-  //       background-color: var(--el-color-primary);
+  //       background-color: var(--sa-color-primary);
   //       opacity: 1;
   //     }
   //   }
@@ -176,7 +176,7 @@
   //     opacity: 1;
   //     &:active,
   //     &:hover {
-  //       background-color: var(--el-color-primary);
+  //       background-color: var(--sa-color-primary);
   //       opacity: 1;
   //     }
   //   }
@@ -184,11 +184,11 @@
 }
 
 .sa-scrollbar:has(> .scrollbar__bar.is-vertical) {
-  padding-right: calc(var(--m-size-v2-padding-base, 10px) + 2px);
+  padding-right: calc(var(--sa-size-padding-base, 10px) + 2px);
 }
 
 .sa-scrollbar:has(> .scrollbar__bar.is-horizontal) {
-  padding-bottom: calc(var(--m-size-v2-padding-base, 10px) + 2px);
+  padding-bottom: calc(var(--sa-size-padding-base, 10px) + 2px);
 }
 
 .m-table-styles {
@@ -232,23 +232,23 @@
 }
 
 .color-scrollbar {
-  --m-border-color: #fff;
-  --m-scrollbar-thumb-color: #d2e7e4;
+  --sa-color-border: #fff;
+  --sa-color-hover: #d2e7e4;
   &:has(> .scrollbar__bar.is-vertical) {
-    // padding-right: calc(var(--m-size-v2-padding-base, 10px) - 0px);
+    // padding-right: calc(var(--sa-size-padding-base, 10px) - 0px);
 
     padding-right: 14px;
-    width: calc(100% - var(--m-size-v2-padding-base, 10px));
+    width: calc(100% - var(--sa-size-padding-base, 10px));
     .scrollbar__bar.is-horizontal {
       width: calc(100% - 14px);
     }
   }
 
   &:has(> .scrollbar__bar.is-horizontal) {
-    // padding-right: calc(var(--m-size-v2-padding-base, 10px) - 0px);
+    // padding-right: calc(var(--sa-size-padding-base, 10px) - 0px);
 
     padding-bottom: 14px;
-    height: calc(100% - var(--m-size-v2-padding-base, 10px));
+    height: calc(100% - var(--sa-size-padding-base, 10px));
     width: calc(100% - 14px);
     .scrollbar__bar.is-vertical {
       height: calc(100% - 14px);

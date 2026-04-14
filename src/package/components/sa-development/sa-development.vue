@@ -106,7 +106,7 @@ if (SaltedGlobalConfig.value.env == "development") {
       }
       &:hover {
         cursor: pointer;
-        background-color: var(--el-color-primary);
+        background-color: var(--sa-color-primary);
         color: var(--el-color-white);
       }
     }

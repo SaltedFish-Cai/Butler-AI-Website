@@ -41,24 +41,6 @@ const install = function (app, options: GlobalState) {
     window.log = { info, error, warning, success, msg };
     window.log.msg("SaltedU", "Version " + packageFile.version);
     window.toLocaleString = toLocaleString;
-
-    const observer = window.ResizeObserver
-      ? new window.ResizeObserver(callback)
-      : {
-          observe: () => {
-            console.info(callback);
-          }
-        };
-
-    // _Function 监听屏幕尺寸变化
-    function callback() {
-      const baseSize = 15;
-      const devicePixelRatio = window.devicePixelRatio;
-      const size = devicePixelRatio > 1 ? baseSize / devicePixelRatio : baseSize;
-      const _size = size < 8 ? 8 : size;
-      window.document.documentElement?.style?.setProperty("--el-scrollbar-width", _size + "px");
-    }
-    observer?.observe(window.document?.body);
   }
 
   if (!app._context.components["SaltedU"]) {
@@ -67,7 +49,6 @@ const install = function (app, options: GlobalState) {
     app.use(dictionariesAll);
 
     const components: any = import.meta.glob("./components/*/sa-*.vue");
-    console.log("++++++++++> components:", components);
     for (const path in components) {
       const name = path.slice(path.lastIndexOf("/") + 1, path.lastIndexOf("."));
       console.log("++++++2++++> name:", name);
@@ -84,35 +65,6 @@ const install = function (app, options: GlobalState) {
       const setManagerThemeDark = val => setThemeColor(themeColor, val);
       if (!window.setManagerThemeDark) window.setManagerThemeDark = setManagerThemeDark;
       setThemeColor(themeColor, isDark);
-
-      const SIZE_MAP_MORE = {
-        small: {
-          "--el-component-base-size-default": "24px",
-          "--el-font-base-size-default": "12px"
-        },
-        default: {
-          "--el-component-base-size-default": "28px",
-          "--el-font-base-size-default": "13px"
-        },
-        large: {
-          "--el-component-base-size-default": "32px",
-          "--el-font-base-size-default": "15px"
-        }
-      };
-
-      const SIZE_MAP = {
-        // El
-        "--el-scrollbar-width": "12px",
-        "--el-component-size-large": "32px",
-        "--el-component-size": "28px",
-        "--el-component-size-small": "24px",
-
-        ...SIZE_MAP_MORE[size]
-      };
-
-      for (const key in SIZE_MAP) {
-        window.document.documentElement?.style?.setProperty(key, SIZE_MAP[key]);
-      }
 
       if (!window.MGlobalState) window.MGlobalState = globalState;
 

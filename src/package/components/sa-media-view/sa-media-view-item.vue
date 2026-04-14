@@ -157,15 +157,15 @@ watch(
   width: max-content;
   max-width: 100%;
   border: 1px solid var(--sa-color-border);
-  border-radius: var(--m-size-v2-radius);
+  border-radius: var(--sa-size-radius);
   margin: 3px 3px 3px 0;
-  font-size: var(--m-size-v2-font);
+  font-size: var(--sa-size-font);
   background-color: var(--sa-color-bg);
 
   > .sa-media-view-download-file_name {
     flex: 1;
     width: max-content;
-    padding: calc(var(--m-size-v2-padding) / 4) calc(var(--m-size-v2-padding) / 1.5) !important;
+    padding: calc(var(--sa-size-padding) / 4) calc(var(--sa-size-padding) / 1.5) !important;
     padding-left: 0 !important;
     display: flex;
     align-items: center;
@@ -176,9 +176,9 @@ watch(
     }
   }
   .down-file {
-    font-size: calc(var(--m-size-v2-font) - 2px);
-    transition: var(--m-size-v2-animation, 0.3s);
-    padding: 0 calc(var(--m-size-v2-padding) / 1.5);
+    font-size: calc(var(--sa-size-font) - 2px);
+    transition: var(--sa-size-animation, 0.3s);
+    padding: 0 calc(var(--sa-size-padding) / 1.5);
     border-left: 1px solid var(--sa-color-border);
     display: flex;
     align-items: center;
@@ -191,7 +191,7 @@ watch(
   }
 
   .remove-btn {
-    font-size: var(--m-size-v2-font);
+    font-size: var(--sa-size-font);
   }
 }
 

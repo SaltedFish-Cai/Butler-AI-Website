@@ -3,38 +3,38 @@
   overflow-x: hidden;
 
   .sa-form-title_label-icon {
-    margin-left: calc(var(--m-component-padding-size, 10px) / 2);
-    font-size: calc(var(--m-component-font-size, 13px) + 3px);
-    color: var(--m-color-warning);
+    margin-left: calc(var(--sa-size-padding, 10px) / 2);
+    font-size: calc(var(--sa-size-font, 13px) + 3px);
+    color: var(--sa-color-warning);
   }
 }
 
 .config-error {
-  padding: var(--m-component-padding-size, 10px);
-  font-size: var(--m-component-font-size, 13px);
-  color: var(--m-color-warning);
+  padding: var(--sa-size-padding, 10px);
+  font-size: var(--sa-size-font, 13px);
+  color: var(--sa-color-warning);
   text-align: center;
 }
 
 .sa-form-tabs {
-  padding-top: calc(var(--m-component-padding-size, 10px) / 2);
+  padding-top: calc(var(--sa-size-padding, 10px) / 2);
   .sa-form_tabs-title {
-    font-size: var(--m-component-font-size, 13px);
+    font-size: var(--sa-size-font, 13px);
   }
   .sa-form_tabs-title.deleted {
-    color: var(--m-color-danger);
+    color: var(--sa-color-danger);
     text-decoration: line-through;
-    text-decoration-color: var(--m-color-danger);
+    text-decoration-color: var(--sa-color-danger);
   }
   .tabs-form-item.deleted {
     .m-display-v2 {
-      color: var(--m-color-danger);
+      color: var(--sa-color-danger);
       text-decoration: line-through;
-      text-decoration-color: var(--m-color-danger);
+      text-decoration-color: var(--sa-color-danger);
     }
   }
   .sa-tabs-title_action:has(.sa-form_tabs-title_error) {
-    background-color: var(--m-color-danger) !important;
+    background-color: var(--sa-color-danger) !important;
   }
   .tab-edit-title-input {
     min-width: 120px;
@@ -45,9 +45,9 @@
   }
 
   .remove-hand {
-    font-size: calc(var(--m-component-font-size, 13px) + 2px);
+    font-size: calc(var(--sa-size-font, 13px) + 2px);
     &:hover {
-      color: var(--m-color-danger);
+      color: var(--sa-color-danger);
       cursor: pointer;
     }
   }
@@ -59,8 +59,8 @@
 
   > .sa-tabs-content > .sa-tabs-scroll > .sa-tabs-contents > .sa-tabs-item {
     border-radius: 3px;
-    border: 1px solid var(--m-border-color);
+    border: 1px solid var(--sa-color-border);
     box-sizing: border-box;
-    padding: calc(var(--m-component-padding-size, 10px) / 2);
+    padding: calc(var(--sa-size-padding, 10px) / 2);
   }
 }

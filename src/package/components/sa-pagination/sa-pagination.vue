@@ -8,7 +8,7 @@
     <!-- 每页显示数量选择器 -->
     <div v-if="showSizes" class="m-pagination-sizes">
       <sa-select
-        style="width: 80px; --m-component-padding-size: 5px; --m-component-font-size: 12px; --m-component-height-size: 24px"
+        style="width: 80px; --sa-size-padding: 5px; --sa-size-font: 12px; --sa-size-height: 24px"
         v-model="internalPageSize"
         @change="handleSizeChange"
         :clearable="false"
@@ -81,7 +81,7 @@
         :min="1"
         :max="pageCount"
         class="m-pagination-jumper-input"
-        style="width: 40px; --m-component-padding-size: 5px; --m-component-font-size: 12px; --m-component-height-size: 24px"
+        style="width: 40px; --sa-size-padding: 5px; --sa-size-font: 12px; --sa-size-height: 24px"
         v-model="internalCurrentPage"
         placeholder=" "
         :controls="false"

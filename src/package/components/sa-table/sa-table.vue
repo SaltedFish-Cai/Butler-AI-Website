@@ -143,8 +143,8 @@
               '--scroll-body-height': scrollBodyHeight,
               '--scroll-body-width': scrollBodyWidth
               // minHeight: useSummary
-              //   ? `calc(${scrollBodyHeight} - var(--m-component-padding-size, 10px) * 2 - 4em)`
-              //   : `calc(${scrollBodyHeight} - var(--m-component-padding-size, 10px) - 2em)`
+              //   ? `calc(${scrollBodyHeight} - var(--sa-size-padding, 10px) * 2 - 4em)`
+              //   : `calc(${scrollBodyHeight} - var(--sa-size-padding, 10px) - 2em)`
             }"
           >
             <!-- <div style="width: 3200px; height: 3200px; background-color: bisque">
@@ -314,7 +314,7 @@
                 :disabled="selectedRowsLength <= 0 && !state.showSelectList"
                 @click="changeSelectListVisible"
                 font="transfer_horizontal_line"
-                style="--m-component-padding-size: 5px; --m-component-font-size: 12px; --m-component-height-size: 24px"
+                style="--sa-size-padding: 5px; --sa-size-font: 12px; --sa-size-height: 24px"
               >
                 {{ state.showSelectList ? languagePackage["switchSelect"] : languagePackage["switchInvert"] }}
               </sa-button>

@@ -93,7 +93,7 @@ function RenderTableColumn(item: SaTableUseItemType & { isTipTitle?: boolean }) 
 <style lang="scss">
 .sa-table-more-opt {
   > .sa-button {
-    margin: calc(var(--m-component-padding-size, 10px) / 2) 0;
+    margin: calc(var(--sa-size-padding, 10px) / 2) 0;
     &:first-child {
       margin-top: 0;
     }

@@ -100,39 +100,6 @@ const Component = {
     if (!window.setManagerThemeDark) window.setManagerThemeDark = setManagerThemeDark;
     setThemeColor(themeColor, isDark);
 
-    const SIZE_MAP_MORE = {
-      small: {
-        "--el-component-base-size-default": "24px",
-        "--el-font-base-size-default": "12px"
-      },
-      default: {
-        "--el-component-base-size-default": "28px",
-        "--el-font-base-size-default": "13px"
-      },
-      large: {
-        "--el-component-base-size-default": "32px",
-        "--el-font-base-size-default": "15px"
-      }
-    };
-
-    const SIZE_MAP = {
-      // El
-      "--el-scrollbar-width": "12px",
-      "--el-component-size-large": "32px",
-      "--el-component-size": "28px",
-      "--el-component-size-small": "24px",
-      // V1
-      // "--m-component-font-base": "13px",
-      // "--m-component-height-base": "28px",
-      // "--m-component-padding-base": "10px",
-
-      ...SIZE_MAP_MORE[size]
-    };
-
-    for (const key in SIZE_MAP) {
-      window.document.documentElement?.style?.setProperty(key, SIZE_MAP[key]);
-    }
-
     if (!window.MGlobalState) window.MGlobalState = globalState;
     if (!window.MTableState) window.MTableState = tableBaseStore;
 

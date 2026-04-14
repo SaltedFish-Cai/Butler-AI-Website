@@ -64,6 +64,6 @@ function openExpand(index, row) {
 
 <style scoped>
 .expand-class {
-  padding: var(--m-component-padding-size);
+  padding: var(--sa-size-padding);
 }
 </style>

@@ -10,7 +10,7 @@
         :class="['sa-tabs-header', useHeaderLine ? 'sa-tabs-header_line' : '']"
         :style="{ '--tab-header-over-width': overFixWidth + 'px' }"
       >
-        <div v-if="$slots['HeaderLeft']" style="margin-right: calc(var(--m-component-padding-size, 10px) / 2)">
+        <div v-if="$slots['HeaderLeft']" style="margin-right: calc(var(--sa-size-padding, 10px) / 2)">
           <slot name="HeaderLeft"></slot>
         </div>
         <!-- 上更多 -->

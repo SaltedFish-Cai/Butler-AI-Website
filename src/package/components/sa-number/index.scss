@@ -1,10 +1,10 @@
 .sa-number {
   position: relative;
   margin: 0;
-  padding: calc(var(--m-size-v2-padding, 10px) / 3) calc(var(--m-size-v2-padding, 10px) / 1.2);
+  padding: calc(var(--sa-size-padding, 10px) / 3) calc(var(--sa-size-padding, 10px) / 1.2);
   width: 100%;
   background-color: var(--sa-color-bg);
-  border-radius: var(--m-size-v2-radius);
+  border-radius: var(--sa-size-radius);
   border: 1px solid var(--sa-color-border);
   box-sizing: border-box;
   display: flex;
@@ -27,7 +27,7 @@
     cursor: text;
     display: inline-flex;
     flex-grow: 1;
-    height: calc(var(--m-size-v2-height, 24px) - var(--m-size-v2-height, 24px) / 4);
+    height: calc(var(--sa-size-height, 24px) - var(--sa-size-height, 24px) / 4);
     box-sizing: border-box;
     justify-content: center;
     align-items: center;
@@ -35,7 +35,7 @@
 
     .sa-number-input-controls {
       position: relative;
-      margin-left: calc(var(--m-size-v2-padding, 10px) / 1.2);
+      margin-left: calc(var(--sa-size-padding, 10px) / 1.2);
       width: 25px;
       height: 100%;
       text-align: center;
@@ -44,9 +44,9 @@
         position: absolute;
         left: 0;
         width: 100%;
-        height: calc(50% + var(--m-size-v2-padding, 10px) / 3);
+        height: calc(50% + var(--sa-size-padding, 10px) / 3);
         color: var(--sa-color-default);
-        font-size: calc(var(--m-size-v2-font, 13px) - 2px);
+        font-size: calc(var(--sa-size-font, 13px) - 2px);
         background-color: var(--sa-color-send-bg);
         transition: background-color 0.3s;
         > .m-iconfont_icon {
@@ -66,7 +66,7 @@
       }
       .control-icon.top {
         z-index: 1;
-        top: calc(0px - var(--m-size-v2-padding, 10px) / 3);
+        top: calc(0px - var(--sa-size-padding, 10px) / 3);
         &::after {
           content: "";
           position: absolute;
@@ -79,7 +79,7 @@
       }
       .control-icon.bottom {
         z-index: 0;
-        bottom: calc(0px - var(--m-size-v2-padding, 10px) / 3);
+        bottom: calc(0px - var(--sa-size-padding, 10px) / 3);
       }
     }
     .sa-number-input-inner {
@@ -89,7 +89,7 @@
       outline: 0;
       padding: 0;
       height: 100%;
-      font-size: var(--m-size-v2-font, 13px);
+      font-size: var(--sa-size-font, 13px);
       color: var(--sa-color-font);
       background: none;
       &::placeholder {
@@ -97,9 +97,9 @@
       }
     }
     .clear-icon {
-      margin-left: var(--m-size-v2-padding, 10px);
+      margin-left: var(--sa-size-padding, 10px);
       display: none;
-      font-size: calc(var(--m-size-v2-font, 13px) + 1px);
+      font-size: calc(var(--sa-size-font, 13px) + 1px);
       color: var(--sa-color-default);
       transition: var(--sa-animation-time, 0.2s);
 

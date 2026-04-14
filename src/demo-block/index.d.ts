@@ -3,7 +3,7 @@ declare module "*.vue" {
   export default component;
 }
 
-declare module "manager-ui" {
+declare module "salted-ui" {
   const demoblock: (md: any) => void;
   export default demoblock;
 }

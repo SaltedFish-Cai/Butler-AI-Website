@@ -1,7 +1,7 @@
 <template>
   <!-- 表配置 -->
   <sa-drawer :title="languagePackage?.['colSetting'] || ''" v-model="drawerVisible" @close="handleCloseDrawer" width="680px">
-    <section :id="'table-col-' + id" class="p-all-size" style="height: calc(100% - var(--m-component-padding-size, 10px) * 2)">
+    <section :id="'table-col-' + id" class="p-all-size" style="height: calc(100% - var(--sa-size-padding, 10px) * 2)">
       <sa-table
         :id="id + '-table-col-setting'"
         ref="SettingTableRef"
@@ -395,7 +395,7 @@ defineExpose({
   color: var(--m-color-primary);
 }
 .icon_highlight--hide {
-  color: var(--m-color-warning);
+  color: var(--sa-color-warning);
 }
 </style>
 

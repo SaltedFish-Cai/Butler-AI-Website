@@ -34,16 +34,16 @@ import inBrowser from "../../../../src/package/components/tools/inBrowser";
 let time;
 if (inBrowser) {
   setTimeout(() => {
-    var pageX = document.documentElement.scrollWidth;
-    var pageY = document.documentElement.scrollHeight;
-    var mouseY = 0;
-    var mouseX = 0;
+    const pageX = document.documentElement.scrollWidth;
+    const pageY = document.documentElement.scrollHeight;
+    let mouseY = 0;
+    let mouseX = 0;
     document.addEventListener("mousemove", function (event) {
       mouseY = event.pageY;
-      var yAxis = ((pageY / 2 - mouseY) / pageY) * 300;
+      const yAxis = ((pageY / 2 - mouseY) / pageY) * 300;
       mouseX = event.pageX / -pageX;
-      var xAxis = -mouseX * 100 - 100;
-      var boxGhostEyes: any = document.querySelector(".box__ghost-eyes");
+      const xAxis = -mouseX * 100 - 100;
+      const boxGhostEyes: any = document.querySelector(".box__ghost-eyes");
       if (boxGhostEyes && boxGhostEyes.style) boxGhostEyes.style.transform = `translate(${xAxis}%,${-yAxis}%)`;
     });
   }, 0);
@@ -180,7 +180,7 @@ onUnmounted(() => {
   transform: rotate(180deg);
 }
 .box .box__ghost .box__ghost-container {
-  background: var(--el-color-primary);
+  background: var(--sa-color-primary);
   width: 100px;
   height: 100px;
   border-radius: 100px 100px 0 0;
@@ -226,7 +226,7 @@ onUnmounted(() => {
   top: -10px;
   height: 20px;
   border-radius: 100%;
-  background-color: var(--el-color-primary);
+  background-color: var(--sa-color-primary);
 }
 .box .box__ghost .box__ghost-container .box__ghost-bottom div:nth-child(2n) {
   top: -12px;

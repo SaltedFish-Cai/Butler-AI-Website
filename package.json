@@ -1,8 +1,8 @@
 {
   "private": true,
-  "name": "manager-ui",
+  "name": "salted-ui",
   "version": "1.0.0",
-  "description": "manager-ui",
+  "description": "salted-ui",
   "main": "index.js",
   "module": "index.js",
   "types": "index.d.ts",

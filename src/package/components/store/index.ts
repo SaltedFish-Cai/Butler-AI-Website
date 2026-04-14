@@ -6,7 +6,7 @@ import languageMap from "../language.json";
 
 // # useBaseStore
 export const useBaseStore = defineStore({
-  id: "manager-ui-global-configs",
+  id: "salted-ui-global-configs",
   state: (): GlobalState & toolsState => ({
     themeColor: "#254679",
     isDark: false,
@@ -185,30 +185,21 @@ export const useBaseStore = defineStore({
       this.cleanDictionary();
       if (this.language) this.changeLanguage(this.language);
 
-      window.document.documentElement?.style?.setProperty(
-        "--el-component-base-size-default",
-        28 + (this.size == "small" ? -4 : this.size == "large" ? 4 : 0) + "px"
-      );
-      window.document.documentElement?.style?.setProperty(
-        "--el-font-base-size-default",
-        13 + (this.size == "small" ? -1 : this.size == "large" ? 2 : 0) + "px"
-      );
-
       // # 组件字体大小
       // window.document.documentElement?.style?.setProperty(
-      //   "--m-component-font-size",
+      //   "--sa-size-font",
       //   13 + (this.size == "small" ? -1 : this.size == "large" ? 1 : 0) + "px"
       // );
 
       // # 组件高度
       // window.document.documentElement?.style?.setProperty(
-      //   "--m-component-height-size",
+      //   "--sa-size-height",
       //   28 + (this.size == "small" ? -4 : this.size == "large" ? 1 : 0) + "px"
       // );
 
       // # 组件内边距
       // window.document.documentElement?.style?.setProperty(
-      //   "--m-component-padding-size",
+      //   "--sa-size-padding",
       //   10 + (this.size == "small" ? -3 : this.size == "large" ? 2 : 0) + "px"
       // );
 
@@ -219,7 +210,7 @@ export const useBaseStore = defineStore({
       // window.document.documentElement?.style?.setProperty("--m-component-height-base", 28 + "px");
 
       // # 组件内边距
-      // window.document.documentElement?.style?.setProperty("--m-component-padding-base", 10 + "px");
+      // window.document.documentElement?.style?.setProperty("--sa-size-padding", 10 + "px");
     },
 
     /**
@@ -280,5 +271,5 @@ export const useBaseStore = defineStore({
       this.languagePackage = languageMap[language];
     }
   },
-  persist: piniaPersistConfig("manager-ui-global-configs")
+  persist: piniaPersistConfig("salted-ui-global-configs")
 });

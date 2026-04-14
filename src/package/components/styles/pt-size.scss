@@ -1,63 +1,63 @@
 .mt-size {
-  margin-top: var(--m-component-padding-size, 10px);
+  margin-top: var(--sa-size-padding, 10px);
 }
 .mb-size {
-  margin-bottom: var(--m-component-padding-size, 10px);
+  margin-bottom: var(--sa-size-padding, 10px);
 }
 .mr-size {
-  margin-right: var(--m-component-padding-size, 10px);
+  margin-right: var(--sa-size-padding, 10px);
 }
 .ml-size {
-  margin-left: var(--m-component-padding-size, 10px);
+  margin-left: var(--sa-size-padding, 10px);
 }
 .pt-size {
-  padding-top: var(--m-component-padding-size, 10px);
+  padding-top: var(--sa-size-padding, 10px);
 }
 .pb-size {
-  padding-bottom: var(--m-component-padding-size, 10px);
+  padding-bottom: var(--sa-size-padding, 10px);
 }
 .pr-size {
-  padding-right: var(--m-component-padding-size, 10px);
+  padding-right: var(--sa-size-padding, 10px);
 }
 .pl-size {
-  padding-left: var(--m-component-padding-size, 10px);
+  padding-left: var(--sa-size-padding, 10px);
 }
 .p-all-size {
-  padding: var(--m-component-padding-size, 10px);
+  padding: var(--sa-size-padding, 10px);
 }
 .m-all-size {
-  margin: var(--m-component-padding-size, 10px);
+  margin: var(--sa-size-padding, 10px);
 }
 
 .mt-size-v2 {
-  margin-top: calc(var(--m-component-padding-size, 10px) / 1.5) !important;
+  margin-top: calc(var(--sa-size-padding, 10px) / 1.5) !important;
 }
 .mb-size-v2 {
-  margin-bottom: calc(var(--m-component-padding-size, 10px) / 1.5) !important;
+  margin-bottom: calc(var(--sa-size-padding, 10px) / 1.5) !important;
 }
 .mr-size-v2 {
-  margin-right: calc(var(--m-component-padding-size, 10px) / 1.5) !important;
+  margin-right: calc(var(--sa-size-padding, 10px) / 1.5) !important;
 }
 .ml-size-v2 {
-  margin-left: calc(var(--m-component-padding-size, 10px) / 1.5) !important;
+  margin-left: calc(var(--sa-size-padding, 10px) / 1.5) !important;
 }
 .pt-size-v2 {
-  padding-top: calc(var(--m-component-padding-size, 10px) / 1.5) !important;
+  padding-top: calc(var(--sa-size-padding, 10px) / 1.5) !important;
 }
 .pb-size-v2 {
-  padding-bottom: calc(var(--m-component-padding-size, 10px) / 1.5) !important;
+  padding-bottom: calc(var(--sa-size-padding, 10px) / 1.5) !important;
 }
 .pr-size-v2 {
-  padding-right: calc(var(--m-component-padding-size, 10px) / 1.5) !important;
+  padding-right: calc(var(--sa-size-padding, 10px) / 1.5) !important;
 }
 .pl-size-v2 {
-  padding-left: calc(var(--m-component-padding-size, 10px) / 1.5) !important;
+  padding-left: calc(var(--sa-size-padding, 10px) / 1.5) !important;
 }
 .p-all-size-v2 {
-  padding: calc(var(--m-component-padding-size, 10px) / 1.5) !important;
+  padding: calc(var(--sa-size-padding, 10px) / 1.5) !important;
 }
 .m-all-size-v2 {
-  margin: calc(var(--m-component-padding-size, 10px) / 1.5) !important;
+  margin: calc(var(--sa-size-padding, 10px) / 1.5) !important;
 }
 
 @for $i from 0 through 40 {

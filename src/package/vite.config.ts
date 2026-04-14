@@ -96,9 +96,9 @@ export default defineConfig({
 
 // 复制UMD文件
 function copyUMDFile(managerUIRoot, managerUIV2Root) {
-  const umdSourcePath = path.join(managerUIRoot, "umd", "manager-ui.umd.js");
+  const umdSourcePath = path.join(managerUIRoot, "umd", "salted-ui.umd.js");
   const umdTargetPath = path.join(managerUIV2Root, "umd");
-  const umdTargetFile = path.join(umdTargetPath, "manager-ui-v2.umd.js");
+  const umdTargetFile = path.join(umdTargetPath, "salted-ui-v2.umd.js");
 
   if (fs.existsSync(umdSourcePath)) {
     // 确保目标目录存在

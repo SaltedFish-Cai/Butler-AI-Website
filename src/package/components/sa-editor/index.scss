@@ -5,7 +5,7 @@
   display: flex;
   flex-direction: column;
   border: 1px solid var(--sa-color-border);
-  border-radius: var(--m-size-v2-radius);
+  border-radius: var(--sa-size-radius);
   overflow: hidden;
   background-color: var(--sa-color-white);
   width: 100%;
@@ -27,12 +27,12 @@
       padding: 6px 10px;
       border: 1px solid var(--sa-color-border);
       background-color: var(--sa-color-bg) !important;
-      border-radius: var(--m-size-v2-radius);
+      border-radius: var(--sa-size-radius);
       cursor: pointer;
-      font-size: var(--m-size-v2-font);
+      font-size: var(--sa-size-font);
       transition: all 0.3s;
-      min-width: var(--m-size-v2-height);
-      height: var(--m-size-v2-height);
+      min-width: var(--sa-size-height);
+      height: var(--sa-size-height);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -270,7 +270,7 @@
     justify-content: space-between;
     align-items: center;
     .word-count {
-      font-size: var(--m-size-v2-font);
+      font-size: var(--sa-size-font);
       color: var(--sa-color-send-font);
     }
   }
@@ -293,17 +293,17 @@
       color: var(--sa-color-font);
     }
     .color-block {
-      height: var(--m-size-v2-height);
+      height: var(--sa-size-height);
     }
   }
   button {
     padding: 6px 10px;
     border: 1px solid var(--sa-color-border);
-    border-radius: var(--m-size-v2-radius);
+    border-radius: var(--sa-size-radius);
     cursor: pointer;
-    font-size: var(--m-size-v2-font);
+    font-size: var(--sa-size-font);
     transition: all 0.3s;
-    min-width: var(--m-size-v2-height);
+    min-width: var(--sa-size-height);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -323,32 +323,32 @@
   }
 
   .sa-editor-toolbar_input {
-    border-radius: var(--m-size-v2-radius);
+    border-radius: var(--sa-size-radius);
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     input {
-      padding: 2px calc(var(--m-size-v2-padding) / 2);
+      padding: 2px calc(var(--sa-size-padding) / 2);
       font-size: 14px;
       font-style: italic;
       transition: all 0.3s;
       width: 300px;
       border: 1px solid var(--sa-color-border);
       border-right: none;
-      border-top-left-radius: var(--m-size-v2-radius);
-      border-bottom-left-radius: var(--m-size-v2-radius);
+      border-top-left-radius: var(--sa-size-radius);
+      border-bottom-left-radius: var(--sa-size-radius);
     }
     div {
       border: 1px solid var(--sa-color-border);
-      padding: 2px calc(var(--m-size-v2-padding));
+      padding: 2px calc(var(--sa-size-padding));
       font-size: 12px;
       color: var(--sa-color-primary);
       font-style: italic;
       transition: all 0.3s;
-      min-width: var(--m-size-v2-height);
-      border-top-right-radius: var(--m-size-v2-radius);
-      border-bottom-right-radius: var(--m-size-v2-radius);
+      min-width: var(--sa-size-height);
+      border-top-right-radius: var(--sa-size-radius);
+      border-bottom-right-radius: var(--sa-size-radius);
       &:hover {
         color: var(--sa-color-white);
         background-color: var(--sa-color-primary);
@@ -357,7 +357,7 @@
     }
     .sa-editor-toolbar_input-del {
       margin-left: 4px;
-      border-radius: var(--m-size-v2-radius);
+      border-radius: var(--sa-size-radius);
       color: var(--sa-color-danger);
       &:hover {
         color: var(--sa-color-white);
@@ -374,7 +374,7 @@
   position: fixed;
   background-color: white;
   border: 1px solid var(--sa-color-border);
-  border-radius: var(--m-size-v2-radius);
+  border-radius: var(--sa-size-radius);
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.5);
   z-index: 1000;
   .menu-item {

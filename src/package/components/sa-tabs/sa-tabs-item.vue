@@ -145,26 +145,26 @@ watch(
 }
 
 .sa-tabs-item-body_fix.padding-top {
-  height: calc(100% - calc(var(--m-component-padding-size, 10px)));
-  padding-top: calc(var(--m-component-padding-size, 10px)) !important;
+  height: calc(100% - calc(var(--sa-size-padding, 10px)));
+  padding-top: calc(var(--sa-size-padding, 10px)) !important;
 }
 .sa-tabs-item-body_fix.padding-left {
-  width: calc(100% - calc(var(--m-component-padding-size, 10px)));
-  padding-left: calc(var(--m-component-padding-size, 10px)) !important;
+  width: calc(100% - calc(var(--sa-size-padding, 10px)));
+  padding-left: calc(var(--sa-size-padding, 10px)) !important;
 }
 .sa-tabs-item-body_fix.padding-bottom {
-  height: calc(100% - calc(var(--m-component-padding-size, 10px)));
-  padding-bottom: calc(var(--m-component-padding-size, 10px)) !important;
+  height: calc(100% - calc(var(--sa-size-padding, 10px)));
+  padding-bottom: calc(var(--sa-size-padding, 10px)) !important;
 }
 .sa-tabs-item-body_fix.padding-right {
-  width: calc(100% - calc(var(--m-component-padding-size, 10px)));
-  padding-right: calc(var(--m-component-padding-size, 10px)) !important;
+  width: calc(100% - calc(var(--sa-size-padding, 10px)));
+  padding-right: calc(var(--sa-size-padding, 10px)) !important;
 }
 .sa-tabs-item-body_fix.padding-top.padding-bottom {
-  height: calc(100% - calc(var(--m-component-padding-size, 10px)) * 2);
+  height: calc(100% - calc(var(--sa-size-padding, 10px)) * 2);
 }
 .sa-tabs-item-body_fix.padding-left.padding-right {
-  width: calc(100% - calc(var(--m-component-padding-size, 10px)) * 2);
+  width: calc(100% - calc(var(--sa-size-padding, 10px)) * 2);
 }
 
 .sa-tabs-item.active {

@@ -40,7 +40,7 @@
       <sa-button
         v-if="inValue?.length && !display"
         :title="languagePackage['clearAddedfiles']"
-        style="--m-component-font-size: 12px; --m-component-height-size: 24px"
+        style="--sa-size-font: 12px; --sa-size-height: 24px"
         class="btn-width ml-size-v2"
         is="trash"
         :disabled="disabled"

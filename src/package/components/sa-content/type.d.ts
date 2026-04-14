@@ -92,7 +92,7 @@ type SaltedContentType = {
   requestHeader: any;
 };
 
-export type MManagerV2Type = SaltedContentType & {
+export type SaltedUIType = SaltedContentType & {
   /**
    * **语言**
    * @type `languageKey` | `undefined`

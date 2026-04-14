@@ -215,8 +215,8 @@ watch(
     display: flex !important;
     width: 18px;
     height: 7px;
-    font-size: calc(var(--m-component-font-size, 13px) + 8px);
-    color: var(--m-scrollbar-thumb-color);
+    font-size: calc(var(--sa-size-font, 13px) + 8px);
+    color: var(--sa-color-hover);
   }
   .order-act {
     color: var(--m-color-primary);
@@ -234,8 +234,8 @@ watch(
     display: flex !important;
     width: inherit;
     height: 100%;
-    font-size: calc(var(--m-component-font-size, 13px) + 1px);
-    color: var(--m-scrollbar-thumb-color);
+    font-size: calc(var(--sa-size-font, 13px) + 1px);
+    color: var(--sa-color-hover);
   }
 
   .filter-act {
@@ -247,7 +247,7 @@ watch(
 }
 .sa-table-cell_header-span {
   overflow: hidden;
-  color: var(--m-font-color);
+  color: var(--sa-color-font);
   text-overflow: ellipsis;
   white-space: nowrap;
   line-height: 1.6em;
@@ -269,7 +269,7 @@ watch(
   .is_required {
     &::before {
       margin-right: 4px;
-      color: var(--m-color-danger);
+      color: var(--sa-color-danger);
       content: "*";
     }
   }
@@ -280,7 +280,7 @@ watch(
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  font-size: var(--m-component-font-size) !important;
+  font-size: var(--sa-size-font) !important;
   .body_cell_text-rel {
     display: inline;
   }

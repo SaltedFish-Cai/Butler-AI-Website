@@ -158,9 +158,9 @@ defineExpose({ leftAll90: () => leftAll90(PDF_ID.value + "-pdf") });
   .setting-item {
     padding: 5px 16px;
     &:hover {
-      color: var(--el-color-primary);
+      color: var(--sa-color-primary);
       cursor: pointer;
-      background-color: var(--el-color-primary-light-8);
+      background-color: var(--sa-color-primary-light-8);
     }
   }
 }

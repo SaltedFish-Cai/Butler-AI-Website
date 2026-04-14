@@ -69,7 +69,7 @@ const formatBadge = computed(() => {
   &:hover {
     text-decoration: initial;
     background-color: var(--vp-c-bg-soft-up);
-    border-color: var(--el-color-primary);
+    border-color: var(--sa-color-primary);
     box-shadow: var(--vp-shadow-2);
   }
   .box {

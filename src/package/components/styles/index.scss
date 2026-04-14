@@ -21,7 +21,7 @@
     justify-content: center;
 
     font-size: 42px;
-    color: var(--el-color-primary);
+    color: var(--sa-color-primary);
     animation: loadings 1s;
     animation-timing-function: linear;
     animation-iteration-count: infinite;
@@ -37,43 +37,43 @@
 }
 
 .no-more-v2 {
-  padding: var(--m-size-v2-padding, 10px);
-  font-size: calc(var(--m-size-v2-font, 16px));
+  padding: var(--sa-size-padding, 10px);
+  font-size: calc(var(--sa-size-font, 16px));
   color: var(--sa-color-info);
   text-align: center;
 }
 
 .m-card {
   box-sizing: border-box;
-  padding: var(--m-component-padding-size, 10px);
+  padding: var(--sa-size-padding, 10px);
   overflow-x: hidden;
   background-color: var(--el-bg-color);
   border: 1px solid var(--el-border-color-light);
   border-radius: 6px;
   box-shadow: 0 0 12px rgba(0, 0, 0, 0.05);
-  font-size: var(--m-component-font-size, 13px);
+  font-size: var(--sa-size-font, 13px);
 }
 
 .m-display-v2 {
   width: 100%;
-  font-size: var(--m-component-font-size, 13px);
+  font-size: var(--sa-size-font, 13px);
   word-wrap: break-word;
   word-break: break-all;
-  padding: 1px calc(var(--m-component-padding-size, 10px) * 1);
+  padding: 1px calc(var(--sa-size-padding, 10px) * 1);
   box-sizing: border-box;
   transition: var(--sa-animation-time, 0.2s);
-  padding: calc(var(--m-component-padding-size, 10px) / 3) calc(var(--m-component-padding-size, 10px) / 1.2);
-  line-height: calc(var(--m-component-height-size, 24px) - var(--m-component-height-size, 24px) / 4);
+  padding: calc(var(--sa-size-padding, 10px) / 3) calc(var(--sa-size-padding, 10px) / 1.2);
+  line-height: calc(var(--sa-size-height, 24px) - var(--sa-size-height, 24px) / 4);
   border-radius: 3px;
-  border: 1px solid var(--m-border-color);
-  background-color: var(--m-send-bg-color-lighter);
+  border: 1px solid var(--sa-color-border);
+  background-color: var(--sa-color-send-bg);
 }
 
 .m-contrast-v2 {
   margin-top: 2px;
   position: relative;
-  color: var(--m-color-danger);
-  font-size: var(--m-component-font-size, 13px) !important;
+  color: var(--sa-color-danger);
+  font-size: var(--sa-size-font, 13px) !important;
   line-height: 1.3em;
   padding-right: 25px;
   width: initial !important;
@@ -93,7 +93,7 @@
   &::before {
     position: absolute;
     right: -5px;
-    font-size: calc(var(--m-size-v2-font) - 2px);
+    font-size: calc(var(--sa-size-font) - 2px);
     transform: scale(0.9);
     display: inline-block;
     content: "（原）";

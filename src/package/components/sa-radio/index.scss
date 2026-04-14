@@ -1,8 +1,8 @@
 .sa-radio-item {
   position: relative;
   width: max-content;
-  // height: calc(var(--m-size-v2-height) - var(--m-size-v2-height) / 4);
-  line-height: calc(var(--m-size-v2-height) - var(--m-size-v2-height) / 4);
+  // height: calc(var(--sa-size-height) - var(--sa-size-height) / 4);
+  line-height: calc(var(--sa-size-height) - var(--sa-size-height) / 4);
   user-select: none;
 
   .sa-radio-item-input-inner {
@@ -24,8 +24,8 @@
 
     .sa-radio-item-input {
       margin: 0;
-      height: calc(var(--m-size-v2-height) * 0.6);
-      width: calc(var(--m-size-v2-height) * 0.6);
+      height: calc(var(--sa-size-height) * 0.6);
+      width: calc(var(--sa-size-height) * 0.6);
       box-sizing: border-box;
       display: flex;
       justify-content: center;
@@ -54,8 +54,8 @@
     }
     .sa-radio-item-label {
       transition: var(--sa-animation-time, 0.2s);
-      margin-left: calc(var(--m-size-v2-padding) / 2);
-      font-size: calc(var(--m-size-v2-font) - 1px);
+      margin-left: calc(var(--sa-size-padding) / 2);
+      font-size: calc(var(--sa-size-font) - 1px);
     }
   }
 }
@@ -118,6 +118,6 @@
   flex-wrap: wrap;
   border: 1px solid transparent;
   .sa-radio-item {
-    margin: calc(var(--m-size-v2-padding) / 3) calc(var(--m-size-v2-padding) / 2);
+    margin: calc(var(--sa-size-padding) / 3) calc(var(--sa-size-padding) / 2);
   }
 }

@@ -37,8 +37,8 @@
   top: -100%;
   left: -100%;
   z-index: 210;
-  border: 1px solid var(--m-border-color);
-  border-radius: var(--m-size-v2-radius);
+  border: 1px solid var(--sa-color-border);
+  border-radius: var(--sa-size-radius);
   box-shadow: 0px 0 5px 0px rgba(0, 0, 0, 0.15);
 
   .sa-popover-arrow {
@@ -49,19 +49,19 @@
     width: 10px;
     box-sizing: border-box;
     transform: translateX(-50%) rotate(45deg);
-    background: var(--m-bg-color);
-    border: 1px solid var(--m-border-color);
+    background: var(--sa-color-bg);
+    border: 1px solid var(--sa-color-border);
     z-index: -1;
   }
 
   .sa-popover-content {
-    background: var(--m-bg-color);
+    background: var(--sa-color-bg);
     box-sizing: border-box;
-    color: var(--m-font-color);
-    font-size: var(--m-component-font-size);
-    padding: calc(var(--m-component-padding-size, 10px) / 1.5);
+    color: var(--sa-color-font);
+    font-size: var(--sa-size-font);
+    padding: calc(var(--sa-size-padding, 10px) / 1.5);
     overflow-wrap: break-word;
-    border-radius: var(--m-size-v2-radius);
+    border-radius: var(--sa-size-radius);
     z-index: 220;
     > .sa-tag {
       transform: translateX(0px);

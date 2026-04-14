@@ -35,9 +35,9 @@ const RefLabelContainer = ref();
   // display: flex;
   // align-items: center;
   // justify-content: flex-start;
-  font-size: calc(var(--m-component-font-size, 13px) + 1px);
+  font-size: calc(var(--sa-size-font, 13px) + 1px);
   font-weight: bold;
-  color: var(--m-title-color);
+  color: var(--sa-color-font);
   word-break: break-all;
 }
 .sa-form_label {

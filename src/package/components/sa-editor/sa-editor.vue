@@ -45,7 +45,7 @@
           class="theme-toggle-btn"
           v-model="isDarkTheme"
           :style="{
-            '--m-size-v2-height': '25px',
+            '--sa-size-height': '25px',
             '--sa-color-primary': '#3c414a'
           }"
           :iconStyle="{

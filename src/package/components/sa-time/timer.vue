@@ -474,10 +474,10 @@ watch(
   display: inline-flex;
   align-items: center;
   width: 100%;
-  padding: calc(var(--m-size-v2-padding) / 3) calc(var(--m-size-v2-padding) / 1.2);
+  padding: calc(var(--sa-size-padding) / 3) calc(var(--sa-size-padding) / 1.2);
   color: var(--sa-color-default);
-  font-size: var(--m-size-v2-font);
-  border-radius: var(--m-size-v2-radius);
+  font-size: var(--sa-size-font);
+  border-radius: var(--sa-size-radius);
   line-height: 1.5715;
   background: none;
   border: 1px solid var(--sa-color-border);
@@ -518,13 +518,13 @@ watch(
 .m-timer-v2-input-inner {
   width: 24px;
   flex: 1;
-  height: calc(var(--m-size-v2-height) - var(--m-size-v2-height) / 4);
+  height: calc(var(--sa-size-height) - var(--sa-size-height) / 4);
   border: none;
   outline: none;
   background: transparent;
   text-align: center;
   z-index: 211;
-  font-size: var(--m-size-v2-font);
+  font-size: var(--sa-size-font);
 }
 
 .m-timer-v2-panel {
@@ -548,18 +548,18 @@ watch(
 }
 
 .m-timer-v2-time-title {
-  padding: calc(var(--m-size-v2-padding) / 2) calc(var(--m-size-v2-padding) / 1);
+  padding: calc(var(--sa-size-padding) / 2) calc(var(--sa-size-padding) / 1);
   font-weight: 500;
   color: rgba(0, 0, 0, 0.85);
   text-align: center;
   border-bottom: 1px solid var(--sa-color-border);
-  font-size: var(--m-size-v2-font);
+  font-size: var(--sa-size-font);
 }
 
 .m-timer-v2-time-list {
   max-height: 160px;
   overflow-y: auto;
-  font-size: var(--m-size-v2-font);
+  font-size: var(--sa-size-font);
 
   &::-webkit-scrollbar {
     width: 0px;
@@ -568,7 +568,7 @@ watch(
 }
 
 .m-timer-v2-time-item {
-  padding: calc(var(--m-size-v2-padding) / 2) calc(var(--m-size-v2-padding) / 1);
+  padding: calc(var(--sa-size-padding) / 2) calc(var(--sa-size-padding) / 1);
   text-align: center;
   cursor: pointer;
   transition: background-color var(--sa-animation-time, 0.2s);
@@ -587,7 +587,7 @@ watch(
 .m-timer-v2-panel-footer {
   display: flex;
   justify-content: space-between;
-  padding: var(--m-size-v2-padding);
+  padding: var(--sa-size-padding);
   border-top: 1px solid var(--sa-color-border);
 }
 </style>
