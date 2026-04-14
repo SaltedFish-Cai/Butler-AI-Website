@@ -1,4 +1,5 @@
-import { isNil } from "lodash";
+import _ from "lodash";
+const { isNil } = _;
 
 export function findData(data, options) {
   let text = "";

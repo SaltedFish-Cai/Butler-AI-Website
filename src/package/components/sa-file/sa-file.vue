@@ -122,14 +122,14 @@
 
 <script lang="ts" setup>
 import { ref, computed, ComputedRef, watch, inject } from "vue";
-import lodashPkg, { isNil } from "lodash";
+import _ from "lodash";
 import { SaFileType, SaFileDataType } from "./type";
 import { ajaxUpload } from "./ajax";
 import { M_Message, M_MessageBox } from "../feedback";
 import { SaltedGlobalConfigType } from "../sa-content/type";
 // import { useDownload } from "../m-media-view/use-download";
 
-const { isEqual, debounce } = lodashPkg;
+const { isEqual, debounce, isNil } = _;
 const props = withDefaults(defineProps<SaFileType>(), {});
 
 const inValue = ref(props.modelValue);

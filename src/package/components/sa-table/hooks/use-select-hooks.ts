@@ -1,7 +1,9 @@
 // # Import
 import { computed, ref } from "vue";
 import { SaTableType, SaTableUseType } from "../type";
-import { cloneDeep } from "lodash";
+import _ from "lodash";
+
+const { cloneDeep } = _;
 
 // type allType = Array<boolean | number | string> | boolean | number | string | null | undefined;
 

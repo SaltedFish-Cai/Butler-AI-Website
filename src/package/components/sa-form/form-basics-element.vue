@@ -318,11 +318,13 @@ import formLabel from "./form-label.vue";
 import SaFormItem from "./sa-form-item.vue"; // 添加这行
 import groupItem from "./components/group-item.vue";
 
-import { isNil } from "lodash";
+import _ from "lodash";
 
 import { ConfigContextType, SaFormItemType } from "./type";
 import { MOptionV2Type } from "../manager-type";
 import { GetSystemAddressMap } from "../api/form";
+
+const { isNil } = _;
 
 // # Var
 type BasicsItemPropsType = {

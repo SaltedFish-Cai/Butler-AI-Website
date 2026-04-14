@@ -76,7 +76,7 @@ import {
   ComputedRef,
   inject
 } from "vue";
-import lodashPkg, { debounce } from "lodash";
+import _ from "lodash";
 import SaFormControl from "./sa-form-control.vue";
 
 import inBrowser from "../tools/inBrowser";
@@ -90,7 +90,7 @@ import { DatePickerShortcut } from "../sa-time/type";
 import { SaltedGlobalConfigType } from "../sa-content/type";
 
 // # Var
-const { cloneDeep, isEqual } = lodashPkg;
+const { cloneDeep, isEqual, debounce } = _;
 
 const props = withDefaults(defineProps<SaFormProps>(), {
   contrastData: () => ({}),

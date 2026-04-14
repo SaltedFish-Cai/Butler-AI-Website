@@ -100,13 +100,13 @@
 import { ref, computed, watch, nextTick, provide, inject, ComputedRef } from "vue";
 import SaCascaderOption from "./sa-cascader-option.vue";
 import { SaCascaderType } from "./type";
-import lodashPkg, { cloneDeep } from "lodash";
+import _ from "lodash";
 import { randChar } from "../tools/rand-char";
 import { getElementPosition } from "../utils/getElementPosition";
 import { findData as findDataSelect } from "./find-data";
 import { SaltedGlobalConfigType } from "../sa-content/type";
 
-const { isEqual, isNil } = lodashPkg;
+const { isEqual, isNil, cloneDeep } = _;
 const popoverRef = ref();
 const selectRef = ref();
 const isFocus = ref(false);

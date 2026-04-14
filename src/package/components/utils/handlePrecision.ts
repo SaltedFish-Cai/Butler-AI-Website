@@ -1,4 +1,5 @@
-import { isNil } from "lodash";
+import _ from "lodash";
+const { isNil } = _;
 
 // 处理小数精度（避免四舍五入）
 export function handlePrecision(value, precision, round = false) {

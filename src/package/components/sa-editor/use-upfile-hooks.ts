@@ -1,10 +1,11 @@
 import { computed, ComputedRef, ref, Ref } from "vue";
-import { debounce } from "lodash";
 import { M_Message } from "../feedback";
 import { SaFileDataType } from "../sa-file/type";
 import { ajaxUpload } from "../sa-file/ajax";
 import { SaltedGlobalConfigType } from "../sa-content/type";
 import { SaEditorType } from "./type";
+import _ from "lodash";
+const { debounce } = _;
 
 export const useUpFileHooks = (
   props: SaEditorType,

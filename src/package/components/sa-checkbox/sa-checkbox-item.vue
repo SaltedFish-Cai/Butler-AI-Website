@@ -26,7 +26,8 @@
 <script lang="ts" setup>
 import { computed, ref, watch } from "vue";
 import { SaCheckboxItemType } from "./type";
-import { isNil } from "lodash";
+import _ from "lodash";
+const { isNil } = _;
 
 const props = withDefaults(defineProps<SaCheckboxItemType>(), {});
 

@@ -1,7 +1,9 @@
-import { cloneDeep } from "lodash";
+import _ from "lodash";
 import { SaTableItemType, SaTableUseItemType } from "../type";
 import { setWidthToNumber } from "./string-number";
 import { Ref, ref } from "vue";
+
+const { cloneDeep } = _;
 
 const positionWidthIndex = ref(-1);
 const dragIng = ref(false);

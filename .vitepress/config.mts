@@ -46,7 +46,7 @@ export default {
       // { text: "指南", link: "/document/guide/quickstart", activeMatch: "/guide/" },
       {
         text: "👍 Salted-UI 框架",
-        link: "/document/SaltedUI_Doc/m-icon/readme",
+        link: "/document/SaltedUI_Doc/sa-icon/readme",
         activeMatch: "/SaltedUI_Doc/"
       },
       { text: "🤯 AI学习", link: "/document/study/ai/selection", activeMatch: "/study/" },

@@ -30,15 +30,15 @@ const formConfig: MStructureV2Type.FormV2[] = [
 
 | 单元格类型                                                       | 描述       |
 | ---------------------------------------------------------------- | ---------- |
-| [SaInputType](/document/SaltedUI_Doc/m-input/readme.html)       | 输入框     |
-| [SaNumberType](/document/SaltedUI_Doc/m-number/readme.html)     | 数字输入框 |
-| [SaSelectType](/document/SaltedUI_Doc/m-select/readme.html)     | 选择器     |
-| [SaCascaderType](/document/SaltedUI_Doc/m-cascader/readme.html) | 联级选择器 |
-| [SaCheckboxType](/document/SaltedUI_Doc/m-checkbox/readme.html) | 多选       |
-| [SaRadioType](/document/SaltedUI_Doc/m-radio/readme.html)       | 单选       |
-| [SaSwitchType](/document/SaltedUI_Doc/m-switch/readme.html)     | 开关       |
-| [SaTimeType](/document/SaltedUI_Doc/m-time/readme.html)         | 时间选择器 |
-| [SaFileType](/document/SaltedUI_Doc/m-file/readme.html)         | 文件选择器 |
+| [SaInputType](/document/SaltedUI_Doc/sa-input/readme.html)       | 输入框     |
+| [SaNumberType](/document/SaltedUI_Doc/sa-number/readme.html)     | 数字输入框 |
+| [SaSelectType](/document/SaltedUI_Doc/sa-select/readme.html)     | 选择器     |
+| [SaCascaderType](/document/SaltedUI_Doc/sa-cascader/readme.html) | 联级选择器 |
+| [SaCheckboxType](/document/SaltedUI_Doc/sa-checkbox/readme.html) | 多选       |
+| [SaRadioType](/document/SaltedUI_Doc/sa-radio/readme.html)       | 单选       |
+| [SaSwitchType](/document/SaltedUI_Doc/sa-switch/readme.html)     | 开关       |
+| [SaTimeType](/document/SaltedUI_Doc/sa-time/readme.html)         | 时间选择器 |
+| [SaFileType](/document/SaltedUI_Doc/sa-file/readme.html)         | 文件选择器 |
 
 ## `SaFormProps`
 
@@ -56,8 +56,8 @@ const formConfig: MStructureV2Type.FormV2[] = [
 | structure       | `Array<MStructureV2Type.FormV2>`                                                                   | —       | 表单配置                           |
 | disabled        | `boolean`                                                                                          | `false` | 设置表单为纯展示                   |
 | display         | `boolean`                                                                                          | `false` | 是否纯展示表单                     |
-| exDependent     | [SaFormExDependentType](/document/SaltedUI_Doc/m-form/readme.html#SaFormexdependenttype)         | —       | 外置依赖                           |
-| exCellDependent | [SaFormCellExDependentType](/document/SaltedUI_Doc/m-form/readme.html#SaFormcellexdependenttype) | —       | 单元格外置依赖                     |
+| exDependent     | [SaFormExDependentType](/document/SaltedUI_Doc/sa-form/readme.html#SaFormexdependenttype)         | —       | 外置依赖                           |
+| exCellDependent | [SaFormCellExDependentType](/document/SaltedUI_Doc/sa-form/readme.html#SaFormcellexdependenttype) | —       | 单元格外置依赖                     |
 | maxSpan         | `1` `2` `3` `4`                                                                                    | `4`     | 最大分栏数                         |
 | exSpan          | `1` `2` `3` `4`                                                                                    | `4`     | 最大分栏数                         |
 

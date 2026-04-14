@@ -84,7 +84,8 @@ import * as prettier from "prettier/standalone";
 import * as prettierHtmlParser from "prettier/parser-html";
 import hljs from "highlight.js";
 
-import { debounce } from "lodash";
+import _ from "lodash";
+const { debounce } = _;
 
 // 定义props
 const props = withDefaults(defineProps<SaEditorType>(), {});

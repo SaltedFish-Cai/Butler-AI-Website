@@ -23,7 +23,7 @@ const tableConfig: MStructureV2Type.TableV2[] = [
 | fixed      | `"left"` `"right"`                                                      | —       | 表列固定位置             |
 | unitText   | `string`                                                                | —       | 单位文本                 |
 | textWarp   | `string`                                                                | —       | 单元格内文字折行依据     |
-| cellConfig | [CellItemType](/document/SaltedUI_Doc/m-table/readme.html#cellitemtype) | —       | 单元格使用类型，详细配置 |
+| cellConfig | [CellItemType](/document/SaltedUI_Doc/sa-table/readme.html#cellitemtype) | —       | 单元格使用类型，详细配置 |
 | useSenior  | `boolean`                                                               | `true`  | `是否使用高级筛选        |
 | useSum     | `boolean`                                                               | `false` | 是否计入合计内容         |
 
@@ -31,22 +31,22 @@ const tableConfig: MStructureV2Type.TableV2[] = [
 
 | 单元格类型                                                       | 描述       |
 | ---------------------------------------------------------------- | ---------- |
-| [SaInputType](/document/SaltedUI_Doc/m-input/readme.html)       | 输入框     |
-| [SaNumberType](/document/SaltedUI_Doc/m-number/readme.html)     | 数字输入框 |
-| [SaSelectType](/document/SaltedUI_Doc/m-select/readme.html)     | 选择器     |
-| [SaCascaderType](/document/SaltedUI_Doc/m-cascader/readme.html) | 联级选择器 |
-| [SaCheckboxType](/document/SaltedUI_Doc/m-checkbox/readme.html) | 多选       |
-| [SaRadioType](/document/SaltedUI_Doc/m-radio/readme.html)       | 单选       |
-| [SaSwitchType](/document/SaltedUI_Doc/m-switch/readme.html)     | 开关       |
-| [SaTimeType](/document/SaltedUI_Doc/m-time/readme.html)         | 时间选择器 |
-| [SaFileType](/document/SaltedUI_Doc/m-file/readme.html)         | 文件选择器 |
+| [SaInputType](/document/SaltedUI_Doc/sa-input/readme.html)       | 输入框     |
+| [SaNumberType](/document/SaltedUI_Doc/sa-number/readme.html)     | 数字输入框 |
+| [SaSelectType](/document/SaltedUI_Doc/sa-select/readme.html)     | 选择器     |
+| [SaCascaderType](/document/SaltedUI_Doc/sa-cascader/readme.html) | 联级选择器 |
+| [SaCheckboxType](/document/SaltedUI_Doc/sa-checkbox/readme.html) | 多选       |
+| [SaRadioType](/document/SaltedUI_Doc/sa-radio/readme.html)       | 单选       |
+| [SaSwitchType](/document/SaltedUI_Doc/sa-switch/readme.html)     | 开关       |
+| [SaTimeType](/document/SaltedUI_Doc/sa-time/readme.html)         | 时间选择器 |
+| [SaFileType](/document/SaltedUI_Doc/sa-file/readme.html)         | 文件选择器 |
 
 ## `SaTableType`
 
 | 字段               | 是否必填                                                                                              | 默认值  | 描述                                                 |
 | ------------------ | ----------------------------------------------------------------------------------------------------- | ------- | ---------------------------------------------------- |
 | id                 | `string`                                                                                              | —       | 表格 ID                                              |
-| structure          | [MStructureV2Type.TableV2](/document/SaltedUI_Doc/m-table/readme.html#mstructurev2type-tablev2)       | —       | 表格列配置项                                         |
+| structure          | [MStructureV2Type.TableV2](/document/SaltedUI_Doc/sa-table/readme.html#mstructurev2type-tablev2)       | —       | 表格列配置项                                         |
 | useSelect          | `boolean`                                                                                             | `false` | 是否使用选择器                                       |
 | useRadio           | `boolean`                                                                                             | `false` | 是否使用单选器                                       |
 | useChildren        | `boolean`                                                                                             | `false` | 是否使用子项选择器                                   |
@@ -64,9 +64,9 @@ const tableConfig: MStructureV2Type.TableV2[] = [
 | useOverflowTooltip | `boolean`                                                                                             | `true`  | 是否使用文字超出后 Tooltip 提示完整内容              |
 | embeddedToolButton | `boolean`                                                                                             | `false` | 是否显示表格功能按钮嵌入式样式                       |
 | exOptions          | `MOptionV2Type.Default`                                                                               | —       | 外置筛选依赖                                         |
-| exDependent        | [SaTableExDependentType](/document/SaltedUI_Doc/m-table/readme.html#SaTableexdependenttype)         | —       | 外置依赖                                             |
-| exCellDependent    | [SaTableCellExDependentType](/document/SaltedUI_Doc/m-table/readme.html#SaTablecellexdependenttype) | —       | 单元格外置依赖                                       |
-| exPagination       | [ExPaginationType](/document/SaltedU/m-table/readme.html#expaginationtype-外置页码配置)             | —       | 外置依赖                                             |
+| exDependent        | [SaTableExDependentType](/document/SaltedUI_Doc/sa-table/readme.html#SaTableexdependenttype)         | —       | 外置依赖                                             |
+| exCellDependent    | [SaTableCellExDependentType](/document/SaltedUI_Doc/sa-table/readme.html#SaTablecellexdependenttype) | —       | 单元格外置依赖                                       |
+| exPagination       | [ExPaginationType](/document/SaltedUI_Doc/sa-table/readme.html#expaginationtype-外置页码配置)             | —       | 外置依赖                                             |
 
 | summaryConfig | sumText?: string; 合计文字 unitText?: string; // 单位文字 | — | 自定义合计参数 |
 | summaryFunction | (params: any) => string[] | — | 自定义合计方法 |
@@ -279,7 +279,7 @@ function validatorRules({ value, callback }) { // [!code warning]
 
 ## 标记（Tag）
 
-使用 [useDictionaries](/document/SaltedU/tools/dictionaries.html#获取字典选项-usedictionaries) 获取字典结果更快捷。
+使用 [useDictionaries](/document/SaltedUI_Doc/tools/dictionaries.html#获取字典选项-usedictionaries) 获取字典结果更快捷。
 
 ```typescript
 const tableConfig: MStructureType.Table[] = [

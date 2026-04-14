@@ -1,6 +1,6 @@
 # Icon 图标
 
-常用的图标，多用于 [`sa-button`](/document/SaltedUI_Doc/m-button/readme) 的图标选择。
+常用的图标，多用于 [`sa-button`](/document/SaltedUI_Doc/sa-button/readme) 的图标选择。
 
 ## `SaIconType`
 

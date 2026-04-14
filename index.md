@@ -15,7 +15,7 @@ hero:
   actions:
     - theme: brand
       text: 👍 Salted-UI
-      link: /document/SaltedUI_Doc/m-button/readme
+      link: /document/SaltedUI_Doc/sa-button/readme
     - theme: img
       text: 🚀 微信群聊二维码
       link: //saltedfish.frontend-m.online/file/wx.jpg
@@ -24,7 +24,7 @@ features:
   - icon: 👍
     title: Salted-UI
     details: Salted-UI 使用纯 Vue3 实现的 UI 框架 🤪🤪🤪
-    link: /document/SaltedUI_Doc/m-button/readme
+    link: /document/SaltedUI_Doc/sa-button/readme
   - icon: 🤹‍♀️
     title: AI 学习旅程
     details: AI 学习旅程，提供学习路径，帮助快速上手。 🤪🤪🤪

@@ -88,7 +88,8 @@ import { ScrollbarV2Type } from "./type";
 import { startDrag, listenElementScroll, observeElementResize } from "./scrollListener";
 import { useIntersectionObserver } from "./useIntersectionObserver";
 import { getElementPosition } from "../utils/getElementPosition";
-import { debounce, isNil } from "lodash";
+import _ from "lodash";
+const { debounce, isNil } = _;
 
 const emits = defineEmits([
   "renderEnd",

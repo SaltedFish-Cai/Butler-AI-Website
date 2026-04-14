@@ -1,7 +1,9 @@
 import { computed, reactive, ref, nextTick } from "vue";
 import { FormItemRule } from "../../sa-form/type";
-import { cloneDeep } from "lodash";
+import _ from "lodash";
 import { SaTableType } from "../type";
+
+const { cloneDeep } = _;
 
 export const useValidateHooks = (
   props: SaTableType,
