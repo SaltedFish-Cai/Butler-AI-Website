@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Obj } from "@/package/manager-ui/global";
+import { Obj } from "@/package/global";
 import { computed, ref, onMounted } from "vue";
 
 const props = defineProps<{

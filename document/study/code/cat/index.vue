@@ -926,7 +926,7 @@ button span {
 <script type="ts" setup>
 import { onMounted, onUnmounted } from "vue";
 import gsap from "https://cdn.skypack.dev/gsap@3.11.0";
-import inBrowser from "../../../../src/package/manager-ui/components/tools/inBrowser";
+import inBrowser from "../../../../src/package/components/tools/inBrowser";
 let FIRING = false;
 const BOUNDS = 25;
 let watchDoc;

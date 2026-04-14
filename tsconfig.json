@@ -26,17 +26,17 @@
     "noEmit": true,
     "baseUrl": "./",
     "paths": {
-      "MTypes": ["src/package/manager-ui/components/global"],
-      "M_Types": ["src/package/manager-ui/components/manager-type"],
+      "MTypes": ["src/package/components/global"],
+      "M_Types": ["src/package/components/manager-type"],
       "public": ["public"],
       "public/*": ["public/*"],
       "@": ["src"],
       "@/*": ["src/*"],
-      "@m/": ["src/package/manager-ui/components"],
-      "@m/*": ["src/package/manager-ui/components/*"],
+      "@m/": ["src/package/components"],
+      "@m/*": ["src/package/components/*"],
       "@mo/": ["src/package/manager-mobile"],
       "@mo/*": ["src/package/manager-mobile/*"],
-      "MTools/*": ["src/package/manager-ui/components/tools/*"]
+      "MTools/*": ["src/package/components/tools/*"]
     },
 
     "noImplicitAny": false
@@ -53,10 +53,10 @@
     "build/**/*.ts",
     "build/**/*.d.ts",
     "vite.config.ts",
-    "src/package/manager-ui/**/*.ts",
-    "src/package/manager-ui/**/*.d.ts",
-    "src/package/manager-ui/**/*.vue",
-    "src/package/manager-ui/**/*.tsx"
+    "src/package/**/*.ts",
+    "src/package/**/*.d.ts",
+    "src/package/**/*.vue",
+    "src/package/**/*.tsx"
   ],
   "exclude": [
     "node_modules",

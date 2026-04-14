@@ -78,7 +78,7 @@
 
 <script lang="ts" setup>
 import { onUnmounted } from "vue";
-import inBrowser from "@/package/manager-ui/components/tools/inBrowser";
+import inBrowser from "@/package/components/tools/inBrowser";
 
 let time;
 if (inBrowser) {

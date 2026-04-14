@@ -23,10 +23,10 @@ import "@nutui/nutui/dist/style.css";
 import "vant/lib/index.css";
 
 // import { mIcon, mButton, mTable, mForm } from "../../src/package/index";
-import ManagerUI from "../../src/package/manager-ui/index";
+import SaltedU from "../../src/package/index";
 
-// import ManagerUi from "../../ManagerUI/es/index";
-// import "../../ManagerUI/es/style.css";
+// import ManagerUi from "../../SaltedU/es/index";
+// import "../../SaltedU/es/style.css";
 
 // scss
 import "../../src/styles/custom.scss";
@@ -70,7 +70,7 @@ export default {
     });
     app.use(ElementPlus);
     app.use(directives);
-    app.use(ManagerUI, {
+    app.use(SaltedU, {
       apiBaseUrl: "",
       requestHeader: {
         Authorization: "",

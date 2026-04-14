@@ -47,12 +47,9 @@ export default {
     nav: [
       // { text: "指南", link: "/document/guide/quickstart", activeMatch: "/guide/" },
       {
-        text: "🤩 UI 框架",
-        items: [
-          { text: "👍 Manager-UI", link: "/document/ManagerUI_V2/m-icon/readme", activeMatch: "/ManagerUI_V2/" },
-          { text: "🤹‍♀️ Manager-UI-Element", link: "/document/ManagerUI/m-color/readme", activeMatch: "/ManagerUI/" }
-        ],
-        activeMatch: "/Manager"
+        text: "👍 Salted-UI 框架",
+        link: "/document/SaltedUI_Doc/m-icon/readme",
+        activeMatch: "/SaltedUI_Doc/"
       },
       { text: "🤯 AI学习", link: "/document/study/ai/selection", activeMatch: "/study/" },
       { text: "🔨 工具站", link: "/document/tools/tools" },
@@ -77,8 +74,8 @@ export default {
     sidebar: {
       "/document/demo/guide": sidebar,
       "/document/md": managerUISidebar,
-      "/document/ManagerUI_V2": managerUIV2Sidebar,
-      "/document/ManagerUI": managerUISidebar,
+      "/document/SaltedUI_Doc": managerUIV2Sidebar,
+      "/document/SaltedU": managerUISidebar,
       "/document/ManagerMobile": ManagerMobileSidebar,
       "/document/ManagerTaro": ManagerTaroSidebar,
       "/document/solution": managerUISidebar,
@@ -270,9 +267,8 @@ export default {
       alias: {
         public: resolve(__dirname, "../public"),
         "@": resolve(__dirname, "../src"),
-        "@m": resolve(__dirname, "../src/package/manager-ui"),
-        "@mo": resolve(__dirname, "../src/package/manager-mobile"),
-        MTools: resolve(__dirname, "../src/package/manager-ui/tools/"),
+        "@m": resolve(__dirname, "../src/package"),
+        MTools: resolve(__dirname, "../src/package/tools/"),
         "vue-i18n": "vue-i18n/dist/vue-i18n.cjs.js"
       }
     }

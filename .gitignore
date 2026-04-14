@@ -16,9 +16,9 @@ docs
 
 .DS_Store
 
-ManagerUI
+SaltedU
 ManagerMobile
-!document/ManagerUI
+!document/SaltedU
 !document/ManagerMobile
 
 script/vitepress/*
