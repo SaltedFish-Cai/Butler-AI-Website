@@ -144,7 +144,7 @@
 // }
 
 .m-hand {
-  transition: var(--m-animation-time, 0.2s);
+  transition: var(--sa-animation-time, 0.2s);
   &:hover {
     color: var(--el-color-primary);
     cursor: pointer;

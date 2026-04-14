@@ -1,0 +1,24 @@
+@use "../styles/animation.scss";
+.sa-overlay {
+  position: fixed;
+  left: 0%;
+  top: 0%;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  width: 100%;
+  height: 100%;
+
+  .sa-overlay-content {
+    position: fixed;
+    left: 0%;
+    top: 0%;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--sa-overlay-color-lighter);
+    transition: var(--sa-animation-time, 0.2s);
+    z-index: 0;
+  }
+}

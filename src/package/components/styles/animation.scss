@@ -13,7 +13,7 @@
 
 .mo-animation-fade-enter-active,
 .mo-animation-fade-leave-active {
-  transition: all var(--m-animation-time, 0.2s) ease;
+  transition: all var(--sa-animation-time, 0.2s) ease;
 }
 
 /* fadeUp */
@@ -31,7 +31,7 @@
 
 .mo-animation-fadeUp-enter-active,
 .mo-animation-fadeUp-leave-active {
-  transition: all var(--m-animation-time, 0.2s) ease;
+  transition: all var(--sa-animation-time, 0.2s) ease;
 }
 
 /* fadeDown */
@@ -49,7 +49,7 @@
 
 .mo-animation-fadeDown-enter-active,
 .mo-animation-fadeDown-leave-active {
-  transition: all var(--m-animation-time, 0.2s) ease;
+  transition: all var(--sa-animation-time, 0.2s) ease;
 }
 
 /* fadeIn */
@@ -65,7 +65,7 @@
 
 .mo-animation-fadeIn-enter-active,
 .mo-animation-fadeIn-leave-active {
-  transition: opacity var(--m-animation-time, 0.2s) ease;
+  transition: opacity var(--sa-animation-time, 0.2s) ease;
 }
 
 /* overlay */
@@ -81,7 +81,7 @@
 
 .mo-dialog-overlay-fade-enter-active,
 .mo-dialog-overlay-fade-leave-active {
-  transition: opacity var(--m-animation-time, 0.2s) ease;
+  transition: opacity var(--sa-animation-time, 0.2s) ease;
 }
 
 /* fadeRightBig */
@@ -144,5 +144,5 @@
 .mo-animation-fadeDownBig-leave-active,
 .mo-animation-fadeUpBig-enter-active,
 .mo-animation-fadeUpBig-leave-active {
-  transition: all var(--m-animation-time, 0.2s) ease;
+  transition: all var(--sa-animation-time, 0.2s) ease;
 }

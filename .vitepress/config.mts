@@ -1,7 +1,6 @@
 import demoBlock from "../src/demo-block";
 
 import { sidebar } from "./sidebar";
-import { managerUISidebar } from "./manager-ui-sidebar";
 import { managerUIV2Sidebar } from "./manager-ui-v2-sidebar";
 import { ManagerMobileSidebar } from "./manager-mobile-sidebar";
 import { ManagerTaroSidebar } from "./manager-taro-sidebar";
@@ -13,7 +12,6 @@ import { resolve } from "path";
 import vueJsx from "@vitejs/plugin-vue-jsx";
 import AutoImport from "unplugin-auto-import/vite";
 import Components from "unplugin-vue-components/vite";
-import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
 import NutUIResolver from "@nutui/auto-import-resolver";
 import { VantResolver } from "@vant/auto-import-resolver";
 
@@ -73,12 +71,9 @@ export default {
     ],
     sidebar: {
       "/document/demo/guide": sidebar,
-      "/document/md": managerUISidebar,
       "/document/SaltedUI_Doc": managerUIV2Sidebar,
-      "/document/SaltedU": managerUISidebar,
       "/document/ManagerMobile": ManagerMobileSidebar,
       "/document/ManagerTaro": ManagerTaroSidebar,
-      "/document/solution": managerUISidebar,
       "/document/study": study
     },
     search:
@@ -252,8 +247,24 @@ export default {
       AutoImport({
         resolvers: [VantResolver()]
       }),
+      // Components({
+      //   resolvers: [VantResolver(), NutUIResolver()]
+      // })
       Components({
-        resolvers: [VantResolver(), NutUIResolver()]
+        // 配置需要自动导入的组件目录
+        dirs: ["src"], // 默认会扫描src/components目录
+
+        // 配置解析器（如使用UI库）
+        resolvers: import("../src/package/components/resolver").then(resolver => resolver.ManagerResolver()),
+
+        // 生成的类型声明文件路径
+        dts: "src/components.d.ts",
+
+        // 搜索子目录
+        deep: true,
+
+        // 允许子目录作为组件的命名空间前缀
+        directoryAsNamespace: false
       })
     ],
     server: {

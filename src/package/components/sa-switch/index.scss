@@ -1,0 +1,92 @@
+.sa-switch {
+  display: inline-flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: calc(var(--m-size-v2-padding, 10px) / 3) 0;
+  border: 1px solid transparent;
+  user-select: none;
+
+  &:hover {
+    cursor: pointer;
+    .sa-switch-inner {
+      border-color: var(--sa-color-primary);
+      box-shadow: 0 0 0 2px var(--sa-color-primary-light-8);
+    }
+  }
+
+  .sa-switch__inner {
+    display: inline-flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: calc(var(--m-size-v2-height) - var(--m-size-v2-height) / 4);
+  }
+
+  .sa-switch-inner {
+    position: relative;
+    width: calc(var(--m-size-v2-height) * 0.9 * 2);
+    height: calc(var(--m-size-v2-height) * 0.9);
+    border-radius: calc(var(--m-size-v2-height) * 0.9);
+    border: 1px solid var(--sa-color-border);
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0px 1px;
+    transition: 0.2s ease-in-out;
+    background-color: var(--sa-color-border);
+  }
+
+  .sa-switch-thumb {
+    width: calc(var(--m-size-v2-height) * 0.7);
+    height: calc(var(--m-size-v2-height) * 0.7);
+    border-radius: 50%;
+    background-color: #fff;
+  }
+
+  .sa-switch-text {
+    color: var(--sa-color-font);
+    font-size: var(--m-size-v2-font);
+  }
+
+  .sa-switch-text + .sa-switch-inner {
+    margin-left: var(--m-size-v2-padding);
+  }
+  .sa-switch-inner + .sa-switch-text {
+    margin-left: var(--m-size-v2-padding);
+  }
+  .sa-switch-text-inactive {
+    font-weight: bold;
+    color: var(--sa-color-primary);
+  }
+}
+
+.sa-switch.is-disabled {
+  &:hover {
+    cursor: not-allowed;
+    .sa-switch-inner {
+      cursor: not-allowed;
+      border-color: var(--sa-color-border);
+      box-shadow: none;
+    }
+  }
+}
+
+.sa-switch.sa-switch-active {
+  .sa-switch-inner {
+    background-color: var(--sa-color-primary);
+    border-color: var(--sa-color-primary);
+    justify-content: flex-end;
+  }
+  .sa-switch-text-inactive {
+    color: var(--sa-color-primary);
+  }
+
+  .sa-switch-text-inactive {
+    font-weight: normal;
+    color: var(--sa-color-font);
+  }
+
+  .sa-switch-text-active {
+    font-weight: bold;
+    color: var(--sa-color-primary);
+  }
+}

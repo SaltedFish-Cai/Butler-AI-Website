@@ -23,7 +23,7 @@ const svg = computed(() => {
     target="_blank"
     rel="noopener"
   >
-    <m-icon-v2 :name="icon" />
+    <sa-icon :name="icon" />
   </a>
 </template>
 

@@ -2,12 +2,12 @@
   <div>
     <!-- form -->
     <template v-if="false">
-      <m-switch-v2 v-model="switchValue" :disabled="disabled" :display="display"></m-switch-v2>
+      <sa-switch v-model="switchValue" :disabled="disabled" :display="display"></sa-switch>
 
       <!-- <m-form ref="formARef" id="form_a" :data="formAData" :structure="formAConfig" :ex-options="exOptions" />
-    <m-button-v2 type="primary" is="submit" index="1" @click="submitAForm"> 提交 </m-button-v2> -->
+    <sa-button type="primary" is="submit" index="1" @click="submitAForm"> 提交 </sa-button> -->
 
-      <m-form-v2
+      <sa-form
         ref="formBRef"
         id="form_b"
         :data="formBData"
@@ -16,7 +16,7 @@
         :ex-cell-dependent="cellDependent"
         :display="switchValue"
       />
-      <m-button-v2 type="primary" is="submit" index="1" @click="submitBForm"> 提交 </m-button-v2>
+      <sa-button type="primary" is="submit" index="1" @click="submitBForm"> 提交 </sa-button>
     </template>
 
     <!-- tabs -->
@@ -30,7 +30,7 @@
         <m-tab-item label="ffffffff" name="ff"> <div style="height: 300px">6</div> </m-tab-item>
       </m-tabs>
 
-      <m-tabs-v2 v-model="tabsIndex" class="h200" mode="portrait">
+      <sa-tabs v-model="tabsIndex" class="h200" mode="portrait">
         <m-tab-v2-item label="aaaaaaaa" name="aa" scroll> <div style="height: 300px">1</div> </m-tab-v2-item>
         <m-tab-v2-item label="bbbbbbbb" name="bb"> <div style="height: 300px">2</div> </m-tab-v2-item>
         <m-tab-v2-item label="cccccccc" name="cc"> <div style="height: 300px">3</div> </m-tab-v2-item>
@@ -41,9 +41,9 @@
         <m-tab-v2-item label="hhhhhhhh" name="hh"> <div style="height: 300px">8</div> </m-tab-v2-item>
         <m-tab-v2-item label="iiiiiiii" name="ii"> <div style="height: 300px">9</div> </m-tab-v2-item>
         <m-tab-v2-item label="jjjjjjjj" name="jj"> <div style="height: 300px">10</div> </m-tab-v2-item>
-      </m-tabs-v2>
+      </sa-tabs>
 
-      <m-tabs-v2 v-model="tabsIndex" class="h200" style-mode="default">
+      <sa-tabs v-model="tabsIndex" class="h200" style-mode="default">
         <m-tab-v2-item label="aaaaaaaa" name="aa" scroll> <div style="height: 300px">1</div> </m-tab-v2-item>
         <m-tab-v2-item label="bbbbbbbb" name="bb"> <div style="height: 300px">2</div> </m-tab-v2-item>
         <m-tab-v2-item label="cccccccc" name="cc"> <div style="height: 300px">3</div> </m-tab-v2-item>
@@ -54,9 +54,9 @@
         <m-tab-v2-item label="hhhhhhhh" name="hh"> <div style="height: 300px">8</div> </m-tab-v2-item>
         <m-tab-v2-item label="iiiiiiii" name="ii"> <div style="height: 300px">9</div> </m-tab-v2-item>
         <m-tab-v2-item label="jjjjjjjj" name="jj"> <div style="height: 300px">10</div> </m-tab-v2-item>
-      </m-tabs-v2>
+      </sa-tabs>
 
-      <m-tabs-v2 v-model="tabsIndex" class="h200" mode="slider">
+      <sa-tabs v-model="tabsIndex" class="h200" mode="slider">
         <m-tab-v2-item label="aaaaaaaa" name="aa"> <div style="height: 300px">1</div> </m-tab-v2-item>
         <m-tab-v2-item label="bbbbbbbb" name="bb"> <div style="height: 300px">2</div> </m-tab-v2-item>
         <m-tab-v2-item label="cccccccc" name="cc"> <div style="height: 300px">3</div> </m-tab-v2-item>
@@ -67,7 +67,7 @@
         <m-tab-v2-item label="hhhhhhhh" name="hh"> <div style="height: 300px">8</div> </m-tab-v2-item>
         <m-tab-v2-item label="iiiiiiii" name="ii"> <div style="height: 300px">9</div> </m-tab-v2-item>
         <m-tab-v2-item label="jjjjjjjj" name="jj"> <div style="height: 300px">10</div> </m-tab-v2-item>
-      </m-tabs-v2>
+      </sa-tabs>
     </template>
 
     <!-- table -->
@@ -75,7 +75,7 @@
       <code-view v-model:html="params"> </code-view>
       {{ JSON.stringify(params) }}
       <div class="h600">
-        <m-table-v2
+        <sa-table
           id="base-table-demo"
           ref="proTable"
           flat
@@ -88,7 +88,7 @@
           useChildren
         >
           <template #operation="{ row, index }">
-            <m-button-v2
+            <sa-button
               key="key1"
               is="save"
               index="1"
@@ -101,32 +101,32 @@
               "
             >
               编辑1
-            </m-button-v2>
-            <m-button-v2 key="key2" type="primary" is="edit" index="2" v-if="isFalse"> 编辑2 </m-button-v2>
-            <m-button-v2 key="key3" type="danger" is="trash" index="3"> 编辑3 </m-button-v2>
-            <m-button-v2 key="key4" type="warning" is="edit" index="4"> 编辑4 </m-button-v2>
-            <m-button-v2 key="key5" type="info" is="edit" index="5"> 编辑5 </m-button-v2>
-            <m-button-v2 key="key6" type="success" is="edit" index="6"> 编辑6 </m-button-v2>
+            </sa-button>
+            <sa-button key="key2" type="primary" is="edit" index="2" v-if="isFalse"> 编辑2 </sa-button>
+            <sa-button key="key3" type="danger" is="trash" index="3"> 编辑3 </sa-button>
+            <sa-button key="key4" type="warning" is="edit" index="4"> 编辑4 </sa-button>
+            <sa-button key="key5" type="info" is="edit" index="5"> 编辑5 </sa-button>
+            <sa-button key="key6" type="success" is="edit" index="6"> 编辑6 </sa-button>
           </template>
-        </m-table-v2>
+        </sa-table>
       </div>
     </template>
 
     <!-- cell -->
     <template v-if="true">
       <m-file v-model="fileData" :disabled="disabled" :display="display" :fileMultiple="3"></m-file>
-      <m-file-v2
+      <sa-file
         v-model="fileData"
         :disabled="disabled"
         :display="display"
         :fileMultiple="3"
         :attachedData="attachedData"
-      ></m-file-v2>
+      ></sa-file>
 
-      <m-select-icon-v2 v-model="selectItem" :disabled="disabled" :display="display"></m-select-icon-v2>
+      <sa-select-icon v-model="selectItem" :disabled="disabled" :display="display"></sa-select-icon>
 
       <m-switch v-model="switchValue" :disabled="disabled" :display="display"></m-switch>
-      <m-switch-v2 v-model="switchValue" :disabled="disabled" :display="display"></m-switch-v2>
+      <sa-switch v-model="switchValue" :disabled="disabled" :display="display"></sa-switch>
 
       <m-cascader
         v-model="cascaderValue"
@@ -136,41 +136,41 @@
         :display="display"
       ></m-cascader>
 
-      <m-cascader-v2
+      <sa-cascader
         v-model="cascaderValue"
         type="cascader"
         :exOptions="cascaderSelect"
         :disabled="disabled"
         :display="display"
-      ></m-cascader-v2>
+      ></sa-cascader>
 
-      <m-checkbox-v2 v-model="checkboxValue" :disabled="disabled" :display="display" :exOptions="select"></m-checkbox-v2>
-      <m-radio-v2 v-model="radioValue" :disabled="disabled" :display="display" :exOptions="select"></m-radio-v2>
-      <!-- <m-checkbox-v2 v-model="checkboxValue" :exOptions="checkboxOptions" :disabled="disabled" :display="display"></m-checkbox-v2> -->
+      <sa-checkbox v-model="checkboxValue" :disabled="disabled" :display="display" :exOptions="select"></sa-checkbox>
+      <sa-radio v-model="radioValue" :disabled="disabled" :display="display" :exOptions="select"></sa-radio>
+      <!-- <sa-checkbox v-model="checkboxValue" :exOptions="checkboxOptions" :disabled="disabled" :display="display"></sa-checkbox> -->
       <div @click="disabled = !disabled">disabled</div>
       <div @click="display = !display">display</div>
 
       <m-title>time</m-title>
       <m-time v-model="timeValue" type="date-time-range"></m-time>
-      <m-time-v2
+      <sa-time
         v-model="timeValue"
         :disabled="disabled"
         :display="display"
         :disabledDateFn="disabledDate"
         type="date-time-picker-group"
         :shortcuts="shortcuts"
-      ></m-time-v2>
-      <m-time-v2
+      ></sa-time>
+      <sa-time
         v-model="timeValue2"
         :disabled="disabled"
         :display="display"
         type="date-time-picker"
         :disabledDateFn="disabledDate"
-      ></m-time-v2>
+      ></sa-time>
 
       <m-title>input</m-title>
       <m-input v-model="inputValue" placeholder="请输入" maxLength="1616" :disabled="disabled" :display="display"></m-input>
-      <m-input-v2 v-model="inputValue" placeholder="请输入" maxLength="1616" :disabled="disabled" :display="display"></m-input-v2>
+      <sa-input v-model="inputValue" placeholder="请输入" maxLength="1616" :disabled="disabled" :display="display"></sa-input>
       <m-title>textarea</m-title>
       <m-input
         v-model="inputValue"
@@ -180,7 +180,7 @@
         :display="display"
         type="textarea"
       ></m-input>
-      <m-input-v2
+      <sa-input
         v-model="inputValue"
         contrastData="bbb"
         placeholder="请输入"
@@ -188,28 +188,28 @@
         type="textarea"
         :disabled="disabled"
         :display="display"
-      ></m-input-v2>
+      ></sa-input>
 
       <m-title>select</m-title>
       <m-select v-model="selectValue2" :exOptions="selectOptions" :disabled="disabled" :display="display"></m-select>
-      <m-select-v2
+      <sa-select
         style="max-width: 300px"
         v-model="selectValue2"
         :contrastData="2"
         :exOptions="selectOptions"
         :disabled="disabled"
         :display="display"
-      ></m-select-v2>
+      ></sa-select>
 
       <m-title>select-multiple</m-title>
-      <m-select-v2
+      <sa-select
         style="max-width: 300px"
         v-model="selectValue"
         type="multiple-select"
         :exOptions="selectOptions"
         :disabled="disabled"
         :display="display"
-      ></m-select-v2>
+      ></sa-select>
       <m-select
         style="max-width: 300px"
         v-model="selectValue"
@@ -222,7 +222,7 @@
       <m-title>number</m-title>
       {{ inputValue3 }}
       <m-number v-model="inputValue3" placeholder="请输入" controls :disabled="disabled" :display="display"></m-number>
-      <m-number-v2
+      <sa-number
         v-model="inputValue3"
         placeholder="请输入"
         :disabled="disabled"
@@ -230,35 +230,35 @@
         :min="-131.12"
         :max="1080.33"
         contrastData="1080.33"
-      ></m-number-v2>
+      ></sa-number>
 
-      <m-popover-v2 trigger="hover">
+      <sa-popover trigger="hover">
         <template #reference>
-          <m-button-v2>Hover Popover</m-button-v2>
+          <sa-button>Hover Popover</sa-button>
         </template>
         <div>
           9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
         </div>
-      </m-popover-v2>
-      <m-button-v2 @click="dialogVisible = !dialogVisible">切换1</m-button-v2>
-      <m-button-v2 @click="drawerVisible = !drawerVisible">切换2</m-button-v2>
+      </sa-popover>
+      <sa-button @click="dialogVisible = !dialogVisible">切换1</sa-button>
+      <sa-button @click="drawerVisible = !drawerVisible">切换2</sa-button>
 
-      <m-dialog-v2 v-model="dialogVisible" title="弹窗" sub-title="弹窗副标题">
+      <sa-dialog v-model="dialogVisible" title="弹窗" sub-title="弹窗副标题">
         <div style="height: 1500px">弹窗内容</div>
         <template #footer>
-          <m-button-v2 type="primary" @click="dialogVisible = false">确定</m-button-v2>
+          <sa-button type="primary" @click="dialogVisible = false">确定</sa-button>
         </template>
-      </m-dialog-v2>
+      </sa-dialog>
 
-      <m-drawer-v2 v-model="drawerVisible" title="弹窗" sub-title="弹窗副标题" scroll>
+      <sa-drawer v-model="drawerVisible" title="弹窗" sub-title="弹窗副标题" scroll>
         <div style="height: 1500px">弹窗内容</div>
         <template #footer>
-          <m-button-v2 type="primary" @click="drawerVisible = false">确定</m-button-v2>
+          <sa-button type="primary" @click="drawerVisible = false">确定</sa-button>
         </template>
-      </m-drawer-v2>
+      </sa-drawer>
 
       <div class="h312">
-        <m-scrollbar-v2
+        <sa-scrollbar
           ref="scrollRef"
           :onScrollEnd="
             val => {
@@ -271,7 +271,7 @@
           <div v-for="value in arr" :key="value" style="width: 1600px; height: 600px; background-color: bisque">
             {{ value }}- cadcsadsccadcsadsccadcsadsccadcsadsccadcsadsccadcsadsccadcsadsccadcsadsccadcsadsc
           </div>
-        </m-scrollbar-v2>
+        </sa-scrollbar>
         <div class="mt10"></div>
         <m-scrollbar always>
           <div style="width: 3200px; height: 3200px; background-color: bisque">
@@ -280,14 +280,14 @@
         </m-scrollbar>
       </div>
 
-      <m-popover-v2>
+      <sa-popover>
         <template #reference>
-          <m-button-v2>切换</m-button-v2>
+          <sa-button>切换</sa-button>
         </template>
         <div>
           9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
         </div>
-      </m-popover-v2>
+      </sa-popover>
     </template>
   </div>
 </template>

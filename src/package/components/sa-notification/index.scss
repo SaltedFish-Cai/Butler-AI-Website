@@ -1,0 +1,84 @@
+// 通知组件样式
+.sa-notification {
+  min-width: 300px;
+  box-sizing: border-box;
+  border-radius: var(--m-size-v2-radius, 3px);
+  border: 1px solid var(--sa-color-border);
+  position: fixed;
+  background-color: var(--sa-color-bg);
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  transition: all var(--sa-animation-time, 0.2s) ease;
+  padding: calc(var(--m-size-v2-padding, 10px));
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  cursor: pointer;
+  &_header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: var(--m-size-v2-font, 13px);
+  }
+
+  &--success {
+    background-color: var(--sa-color-success-light-9);
+    border-color: var(--sa-color-success-light-3);
+    color: var(--sa-color-success);
+  }
+
+  &--warning {
+    background-color: var(--sa-color-warning-light-9);
+    border-color: var(--sa-color-warning-light-3);
+    color: var(--sa-color-warning);
+  }
+
+  &--error {
+    background-color: var(--sa-color-danger-light-9);
+    border-color: var(--sa-color-danger-light-3);
+    color: var(--sa-color-danger);
+  }
+
+  &--info {
+    background-color: var(--sa-color-info-light-9);
+    border-color: var(--sa-color-info-light-3);
+    color: var(--sa-color-info);
+  }
+
+  &__title {
+    font-size: calc(var(--m-size-v2-font, 13px) + 2px);
+    font-weight: 500;
+    color: var(--m-size-v2-font);
+    display: flex;
+    align-items: center;
+  }
+
+  &__content {
+    font-size: var(--m-size-v2-font, 13px);
+    color: var(--m-size-v2-font);
+    line-height: 1.4;
+    margin: 0;
+  }
+
+  &__icon {
+    margin-right: var(--m-size-v2-padding, 10px);
+    flex-shrink: 0;
+    .m-iconfont_icon {
+      font-size: calc(var(--m-size-v2-font, 13px) + 4px) !important;
+    }
+  }
+
+  &__closeBtn {
+    cursor: pointer;
+    color: var(--sa-color-danger);
+    font-size: calc(var(--m-size-v2-font, 13px) + 4px);
+    line-height: 1;
+    opacity: 0.7;
+    .m-iconfont_icon {
+      font-size: calc(var(--m-size-v2-font, 13px) + 4px) !important;
+    }
+    &:hover {
+      opacity: 1;
+    }
+  }
+}

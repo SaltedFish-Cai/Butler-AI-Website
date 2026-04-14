@@ -18,7 +18,7 @@ export const packageSidebar = [
       { text: "Table 表格", link: "/document/demo/component/m-table/readme" },
       { text: "Form 表单", link: "/document/demo/component/m-form/readme" },
       { text: "Editor 富文本", link: "/document/demo/component/m-editor/readme" },
-      { text: "LineMap 关系图", link: "/document/demo/component/m-line-map/readme" }
+      { text: "LineMap 关系图", link: "/document/demo/component/sa-line-map/readme" }
     ]
   },
   {

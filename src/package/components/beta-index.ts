@@ -54,11 +54,7 @@ function installPackage() {
   //   }
   // }, 300);
 
-  const LinkList = [
-    "/library/pdfh5.min.css",
-    "/library/docx@1.6.4.css",
-    "/library/excel@1.7.14.css"
-  ];
+  const LinkList = ["/library/pdfh5.min.css", "/library/docx@1.6.4.css", "/library/excel@1.7.14.css"];
 
   for (let index = 0; index < LinkList.length; index++) {
     const href = LinkList[index];

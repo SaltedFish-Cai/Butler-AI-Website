@@ -74,7 +74,7 @@ export function setThemeColor(themeColor?: string, isDark?: boolean) {
   const style = window.document?.documentElement.style || null;
   const classList = window.document?.documentElement.classList || null;
 
-  classList?.toggle("m-manager-v2", true);
+  classList?.toggle("sa-content", true);
   classList?.toggle("light", true);
   classList?.toggle("dark", isDark);
 
@@ -91,14 +91,14 @@ export function setThemeColor(themeColor?: string, isDark?: boolean) {
     // "--m-font-color": "#606266",
     // "--m-scrollbar-color": "#e4e7ed",
     // "--m-scrollbar-thumb-color": "#909399",
-    // "--m-overlay-v2-color-lighter": "rgba(0,0,0,0.5)",
+    // "--sa-overlay-color-lighter": "rgba(0,0,0,0.5)",
     // "--m-send-bg-color-lighter": "#f5f7fa",
     // "--m-hover-color-lighter": "#c0c4cc",
     // V2
-    // "--m-color-v2-font": "#606266",
-    // "--m-color-v2-cell-bg": "#f9f8fd",
-    // "--m-color-v2-send-bg": "#f5f7fa",
-    // "--m-color-v2-border": "#dcdfe6"
+    // "--sa-color-font": "#606266",
+    // "--sa-color-cell-bg": "#f9f8fd",
+    // "--sa-color-send-bg": "#f5f7fa",
+    // "--sa-color-border": "#dcdfe6"
   };
 
   const DARK_COLOR_MAP = {
@@ -107,14 +107,14 @@ export function setThemeColor(themeColor?: string, isDark?: boolean) {
     // "--m-font-color": "#bdbdc0",
     // "--m-scrollbar-color": "#414243",
     // "--m-scrollbar-thumb-color": "#A3A6AD",
-    // "--m-overlay-v2-color-lighter": "rgba(0,0,0,0.5)",
+    // "--sa-overlay-color-lighter": "rgba(0,0,0,0.5)",
     // "--m-send-bg-color-lighter": "#3c3c3c",
     // "--m-hover-color-lighter": "#6C6E72",
     // V2
-    // "--m-color-v2-font": "#bdbdc0",
-    // "--m-color-v2-cell-bg": "#f9f8fd",
-    // "--m-color-v2-send-bg": "#f9f8fd",
-    // "--m-color-v2-border": "#4C4D4F"
+    // "--sa-color-font": "#bdbdc0",
+    // "--sa-color-cell-bg": "#f9f8fd",
+    // "--sa-color-send-bg": "#f9f8fd",
+    // "--sa-color-border": "#4C4D4F"
   };
 
   const BASE_COLOR_MAP = {
@@ -125,7 +125,7 @@ export function setThemeColor(themeColor?: string, isDark?: boolean) {
 
     "--el-color-primary": THEME_COLOR,
     "--m-color-primary": THEME_COLOR,
-    "--m-color-v2-primary": THEME_COLOR
+    "--sa-color-primary": THEME_COLOR
 
     // "--m-color-info": INFO_COLOR,
     // "--m-color-success": SUCCESS_COLOR,
@@ -133,11 +133,11 @@ export function setThemeColor(themeColor?: string, isDark?: boolean) {
     // "--m-color-danger": DANGER_COLOR,
     // "--m-color-default": DEFAULT_COLOR,
 
-    // "--m-color-v2-info": INFO_COLOR,
-    // "--m-color-v2-success": SUCCESS_COLOR,
-    // "--m-color-v2-warning": WARNING_COLOR,
-    // "--m-color-v2-danger": DANGER_COLOR,
-    // "--m-color-v2-default": DEFAULT_COLOR
+    // "--sa-color-info": INFO_COLOR,
+    // "--sa-color-success": SUCCESS_COLOR,
+    // "--sa-color-warning": WARNING_COLOR,
+    // "--sa-color-danger": DANGER_COLOR,
+    // "--sa-color-default": DEFAULT_COLOR
   };
 
   const COLORS = { ...BASE_COLOR_MAP, ...(isDark ? DARK_COLOR_MAP : LIGHT_COLOR_MAP) };
@@ -154,31 +154,31 @@ export function setThemeColor(themeColor?: string, isDark?: boolean) {
     // const infoColor = isDark ? `${getDarkColor(INFO_COLOR, i / 10)}` : `${getLightColor(INFO_COLOR, i / 10)}`;
     // style?.setProperty(`--el-color-info-light-${i}`, infoColor);
     // style?.setProperty(`--m-color-info-light-${i}`, infoColor);
-    // style?.setProperty(`--m-color-v2-info-light-${i}`, infoColor);
+    // style?.setProperty(`--sa-color-info-light-${i}`, infoColor);
 
     // const successColor = isDark ? `${getDarkColor(SUCCESS_COLOR, i / 10)}` : `${getLightColor(SUCCESS_COLOR, i / 10)}`;
     // style?.setProperty(`--el-color-success-light-${i}`, successColor);
     // style?.setProperty(`--m-color-success-light-${i}`, successColor);
-    // style?.setProperty(`--m-color-v2-success-light-${i}`, successColor);
+    // style?.setProperty(`--sa-color-success-light-${i}`, successColor);
 
     // const warningColor = isDark ? `${getDarkColor(WARNING_COLOR, i / 10)}` : `${getLightColor(WARNING_COLOR, i / 10)}`;
     // style?.setProperty(`--el-color-warning-light-${i}`, warningColor);
     // style?.setProperty(`--m-color-warning-light-${i}`, warningColor);
-    // style?.setProperty(`--m-color-v2-warning-light-${i}`, warningColor);
+    // style?.setProperty(`--sa-color-warning-light-${i}`, warningColor);
 
     // const dangerColor = isDark ? `${getDarkColor(DANGER_COLOR, i / 10)}` : `${getLightColor(DANGER_COLOR, i / 10)}`;
     // style?.setProperty(`--el-color-danger-light-${i}`, dangerColor);
     // style?.setProperty(`--m-color-danger-light-${i}`, dangerColor);
-    // style?.setProperty(`--m-color-v2-danger-light-${i}`, dangerColor);
+    // style?.setProperty(`--sa-color-danger-light-${i}`, dangerColor);
 
     const primaryColor = isDark ? `${getDarkColor(THEME_COLOR, i / 10)}` : `${getLightColor(THEME_COLOR, i / 10)}`;
     style?.setProperty(`--el-color-primary-light-${i}`, primaryColor);
     style?.setProperty(`--m-color-primary-light-${i}`, primaryColor);
-    style?.setProperty(`--m-color-v2-primary-light-${i}`, primaryColor);
+    style?.setProperty(`--sa-color-primary-light-${i}`, primaryColor);
 
     // const defaultColor = isDark ? `${getDarkColor(themeColor, i / 10)}` : `${getLightColor("#909399", i / 10)}`;
     // style?.setProperty(`--el-color-default-light-${i}`, defaultColor);
     // style?.setProperty(`--m-color-default-light-${i}`, defaultColor);
-    // style?.setProperty(`--m-color-v2-default-light-${i}`, defaultColor);
+    // style?.setProperty(`--sa-color-default-light-${i}`, defaultColor);
   }
 }

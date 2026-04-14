@@ -1,0 +1,16 @@
+.sa-badge {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+
+  .sa-badge__content {
+    background-color: var(--m-color-danger);
+    font-size: calc(var(--m-size-v2-font, 13px) * 0.8);
+    border-radius: 20px;
+    padding: 2px 5px;
+    min-height: 6px;
+    line-height: 1em;
+    color: var(--m-font-color-white);
+  }
+}

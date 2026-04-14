@@ -5,18 +5,18 @@
   word-break: break-all;
   padding: 1px calc(var(--m-size-v2-padding) * 1);
   box-sizing: border-box;
-  transition: var(--m-animation-time, 0.2s);
+  transition: var(--sa-animation-time, 0.2s);
   padding: calc(var(--m-size-v2-padding) / 3) calc(var(--m-size-v2-padding) / 1.2);
   line-height: calc(var(--m-size-v2-height) - var(--m-size-v2-height) / 4);
   border-radius: var(--m-size-v2-radius);
-  border: 1px solid var(--m-color-v2-border);
-  background-color: var(--m-color-v2-send-bg);
+  border: 1px solid var(--sa-color-border);
+  background-color: var(--sa-color-send-bg);
 }
 
 .m-contrast-v2 {
   margin-top: 2px;
   position: relative;
-  color: var(--m-color-v2-danger);
+  color: var(--sa-color-danger);
   font-size: calc(var(--m-size-v2-font) - 2px) !important;
   line-height: 1.3em;
   padding-right: 25px;

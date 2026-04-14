@@ -63,9 +63,9 @@ const ManagerUIConfig = ref({
         <div class="content-container">
           <slot name="doc-before" />
           <main class="main">
-            <m-manager-v2 v-bind="ManagerUIConfig">
+            <sa-content v-bind="ManagerUIConfig">
               <Content class="vp-doc" :class="[pageName, theme.externalLinkIcon && 'external-link-icon-enabled']" />
-            </m-manager-v2>
+            </sa-content>
           </main>
           <VPDocFooter>
             <template #doc-footer-before><slot name="doc-footer-before" /></template>

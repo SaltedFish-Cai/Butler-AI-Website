@@ -34,8 +34,6 @@
       "@/*": ["src/*"],
       "@m/": ["src/package/components"],
       "@m/*": ["src/package/components/*"],
-      "@mo/": ["src/package/manager-mobile"],
-      "@mo/*": ["src/package/manager-mobile/*"],
       "MTools/*": ["src/package/components/tools/*"]
     },
 

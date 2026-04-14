@@ -164,7 +164,7 @@ const onCopy = async e => {
   justify-content: center;
   align-items: center;
 
-  .m-icon-v2 {
+  .sa-icon {
     font-size: 25px;
   }
 }

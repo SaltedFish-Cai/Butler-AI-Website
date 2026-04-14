@@ -39,7 +39,7 @@
 .no-more-v2 {
   padding: var(--m-size-v2-padding, 10px);
   font-size: calc(var(--m-size-v2-font, 16px));
-  color: var(--m-color-v2-info);
+  color: var(--sa-color-info);
   text-align: center;
 }
 
@@ -61,7 +61,7 @@
   word-break: break-all;
   padding: 1px calc(var(--m-component-padding-size, 10px) * 1);
   box-sizing: border-box;
-  transition: var(--m-animation-time, 0.2s);
+  transition: var(--sa-animation-time, 0.2s);
   padding: calc(var(--m-component-padding-size, 10px) / 3) calc(var(--m-component-padding-size, 10px) / 1.2);
   line-height: calc(var(--m-component-height-size, 24px) - var(--m-component-height-size, 24px) / 4);
   border-radius: 3px;
