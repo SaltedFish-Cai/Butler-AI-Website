@@ -483,8 +483,7 @@
     --is-equal-6: clamp(0, 1 - abs(var(--diff)), 1);
 
     // 修正后的背景样式
-    background: linear-gradient(to right, #e6f6f2, #e6f6f2);
-    background-color: #ffffff; // 默认底色
+    background: linear-gradient(to right, var(--sa-color-primary-light-9), var(--sa-color-primary-light-9));
     background-size: 100% calc(var(--is-equal-6) * 100%); // 高度根据条件变化
     background-position: 0 0;
     background-repeat: no-repeat;
