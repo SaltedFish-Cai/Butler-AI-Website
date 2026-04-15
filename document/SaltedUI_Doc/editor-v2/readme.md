@@ -7,7 +7,7 @@
 | 字段       | 类型                                                                                 | 默认值 | 描述   |
 | ---------- | ------------------------------------------------------------------------------------ | ------ | ------ |
 | modelValue | `string`                                                                             | —      | 绑定值 |
-| config     | {uploadImage?: [SaFileType](/document/SaltedUI_Doc/sa-file/readme.html#SaFiletype)} | —      | 配置项 |
+| config     | {uploadImage?: [SaFileType](/document/SaltedUI_Doc/file/readme.html#SaFiletype)} | —      | 配置项 |
 
 ## `SaEditorEvents`
 

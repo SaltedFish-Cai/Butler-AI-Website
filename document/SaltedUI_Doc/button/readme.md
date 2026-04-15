@@ -6,7 +6,7 @@
 
 | 属性名        | 类型                                                                    | 默认值    | 描述                                                                          |
 | ------------- | ----------------------------------------------------------------------- | --------- | ----------------------------------------------------------------------------- |
-| is            | `string`                                                                | —         | 内置样式选择 [样式展示](/document/SaltedUI_Doc/sa-button/readme.html#内置样式) |
+| is            | `string`                                                                | —         | 内置样式选择 [样式展示](/document/SaltedUI_Doc/button/readme.html#内置样式) |
 | type          | `default` `info` `primary` `success` `warning`                          | `default` | 类型                                                                          |
 | disabled      | `boolean`                                                               | `false`   | 是否禁用按钮                                                                  |
 | loading       | `boolean`                                                               | `false`   | 是否 `Loading` 状态                                                           |
@@ -14,11 +14,11 @@
 | debounced     | `boolean`                                                               | `true`    | 开启防抖                                                                      |
 | debouncedTime | `number`                                                                | `300`     | 防抖延迟时间                                                                  |
 | iconPosition  | `left` `right`                                                          | `left`    | Icon 位置                                                                     |
-| iconName      | `string`                                                                | —         | icon 图标([`sa-icon`](/document/SaltedUI_Doc/sa-icon/readme.html))           |
+| iconName      | `string`                                                                | —         | icon 图标([`sa-icon`](/document/SaltedUI_Doc/icon/readme.html))           |
 | useFont       | `boolean`                                                               | `true`    | 是否使用字体图标                                                              |
 | useLine       | `boolean`                                                               | `false`   | 是否为链接按钮                                                                |
 | usePlain      | `boolean`                                                               | `true`    | 是否为朴素按钮                                                                |
-| confirmConfig | [`MessageBoxOptions`](/document/SaltedUI_Doc/sa-message-box/readme.html) | —         | 确认弹窗配置                                                                  |
+| confirmConfig | [`MessageBoxOptions`](/document/SaltedUI_Doc/message-box/readme.html) | —         | 确认弹窗配置                                                                  |
 
 ## 基础用法
 
