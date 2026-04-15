@@ -18,15 +18,21 @@
             :isChecked="equalData(item.value, inValue)"
             class="mr-size-v2"
           >
-            <slot name="optionLabel" :scope="item"> {{ item.label }} </slot>
+            <slot name="optionLabel" :scope="item">
+              {{ typeof item.label === "object" ? item.label[languageValue] || item.label["zh-CN"] : item.label }}
+            </slot>
             <template v-if="item.children?.length">({{ item.children.length }})</template></sa-checkbox-item
           >
-          <sa-radio-item v-else-if="isCheck" :isChecked="equalData(item.value, inValue)" class="mr-size-v2">
-            <slot name="optionLabel" :scope="item"> {{ item.label }} </slot>
+          <sa-radio-item v-else-if="isCheck" :isChecked="equalData(item.value, inValue)" class="mr-size">
+            <slot name="optionLabel" :scope="item">
+              {{ typeof item.label === "object" ? item.label[languageValue] || item.label["zh-CN"] : item.label }}
+            </slot>
             <template v-if="item.children?.length">({{ item.children.length }})</template></sa-radio-item
           >
           <template v-else>
-            <slot name="optionLabel" :scope="item"> {{ item.label }} </slot>
+            <slot name="optionLabel" :scope="item">
+              {{ typeof item.label === "object" ? item.label[languageValue] || item.label["zh-CN"] : item.label }}
+            </slot>
             <template v-if="item.children?.length">({{ item.children.length }})</template>
           </template>
         </div>
@@ -51,21 +57,30 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, inject, watch, Ref } from "vue";
+import { ref, inject, watch, Ref, computed, ComputedRef } from "vue";
 import { SaCascaderOptionType } from "./type";
 import { equalData } from "../utils/equalData";
 import { MOptionV2Type } from "../manager-type";
 import SaCascaderOption from "./sa-cascader-option.vue";
+import { SaltedGlobalConfigType } from "../sa-content/type";
 
 const props = withDefaults(defineProps<SaCascaderOptionType>(), {});
 const childExOptions = ref([] as Array<MOptionV2Type.Select>);
 const injectHandleOptionClick: any = inject("handleOptionClick");
-const activeValue: Ref<boolean | number | string> = ref("");
+const activeValue: Ref<boolean | number | string | undefined> = ref("");
+
+const ManagerGlobalConfig = inject("ManagerGlobalConfig") as ComputedRef<SaltedGlobalConfigType>;
+const languageValue = computed(() => {
+  return ManagerGlobalConfig.value?.language?.value || "zh-CN";
+});
 
 function handleOptionClick(item: MOptionV2Type.Select, type: "click" | "over") {
   if (item.children?.length) {
     childExOptions.value = item.children;
     activeValue.value = item.value;
+  } else {
+    childExOptions.value = [];
+    activeValue.value = "";
   }
 
   if ((type === "click" && props.isCheck) || (type === "click" && !item.children?.length)) {

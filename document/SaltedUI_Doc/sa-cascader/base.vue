@@ -1,6 +1,11 @@
 <template>
   <sa-title :padding="['bottom']">基础使用</sa-title>
-  <sa-cascader v-model="value1" :exOptions="exOptions" clearable></sa-cascader>
+  <sa-cascader
+    v-model="value1"
+    :exOptions="exOptions"
+    clearable
+    :title="{ 'en-US': 'Basic Usage', 'zh-CN': '基础使用' }"
+  ></sa-cascader>
 
   <sa-title :padding="['bottom']">Display</sa-title>
   <sa-cascader v-model="value3" :exOptions="exOptions" display></sa-cascader>

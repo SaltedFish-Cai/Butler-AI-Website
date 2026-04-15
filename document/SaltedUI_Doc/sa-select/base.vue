@@ -1,6 +1,6 @@
 <template>
   <sa-title :padding="['bottom']">基础使用</sa-title>
-  <sa-select v-model="value1" :exOptions="exOptions"></sa-select>
+  <sa-select v-model="value1" :exOptions="exOptions" :title="{ 'en-US': 'Basic Usage', 'zh-CN': '基础使用' }"></sa-select>
 
   <sa-title :padding="['bottom']">Display</sa-title>
   <sa-select v-model="value1" :exOptions="exOptions" display></sa-select>

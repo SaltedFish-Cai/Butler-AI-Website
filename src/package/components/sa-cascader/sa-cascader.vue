@@ -13,9 +13,13 @@
       :teleport-to="teleportInContainer ? selectRef : 'body'"
       sticky="left"
       :autoWidth="!exOptionsList.length || !!filterValue"
+      :closeByScroll="false"
     >
       <template #reference>
         <div class="sa-cascader-content">
+          <div v-if="title" :style="{ width: titleWidth }" class="sa-cell-label">
+            {{ typeof title === "string" ? title : title[languageValue] }}
+          </div>
           <div class="sa-cascader-input" :class="[isFocus ? 'is-focus' : '']">
             <!-- tag -->
             <template v-if="tagValue.length > 0 && isMultiple">
@@ -118,7 +122,10 @@ const OptionsHeight = ref("auto");
 
 const SaltedGlobalConfig = inject("SaltedGlobalConfig") as ComputedRef<SaltedGlobalConfigType>;
 const languagePackage = computed(() => {
-  return SaltedGlobalConfig.value?.language?.package?.["cell"] || {};
+  return SaltedGlobalConfig.value?.language?.package?.["cell"] || "zh-CN";
+});
+const languageValue = computed(() => {
+  return SaltedGlobalConfig.value?.language?.value || "zh-CN";
 });
 
 const props = withDefaults(defineProps<SaCascaderType>(), {
@@ -144,7 +151,10 @@ const isCheck = computed(() => {
 });
 
 const filterOptionsList = computed(() => {
-  const filterData = flatExOptions.value.filter(item => !item.children && item.label.includes(filterValue.value));
+  const filterData = flatExOptions.value.filter(item => {
+    const label = typeof item.label === "object" ? item.label[languageValue.value] : item.label;
+    return !item.children && label.includes(filterValue.value);
+  });
   const exData = filterData.map(item => ({
     label: findParent(item, item.label),
     value: item.value,
@@ -161,26 +171,28 @@ const inputValue = computed(() => {
     return flatExOptions.value.find(item => item.value == inValue.value)?.label || inValue.value || "";
   } else {
     const findItem = flatExOptions.value.find(item => item.value == inValue.value);
-    const findText = findItem?.label || "";
+    const findText =
+      (findItem?.label && typeof findItem?.label === "object" ? findItem?.label[languageValue.value] : findItem?.label) || "";
     return findParent(findItem, findText);
   }
 });
 
 const inputPlaceholder = computed(() => {
-  const language = SaltedGlobalConfig.value?.language?.value || "zh-CN";
   const basePlaceholder =
     typeof props.placeholder === "object"
-      ? props.placeholder[language] || languagePackage.value[`selectPlaceholder`]
+      ? props.placeholder[languageValue.value] || languagePackage.value[`selectPlaceholder`]
       : props.placeholder || languagePackage.value[`selectPlaceholder`];
 
   if (Array.isArray(inValue.value) && inValue.value?.length && isMultiple.value) {
     return "";
   } else if (isFocus.value) {
     if (props.useSingleText) {
-      return flatExOptions.value.find(item => item.value == inValue.value)?.label || basePlaceholder;
+      const _label = flatExOptions.value.find(item => item.value == inValue.value)?.label;
+      return (_label && typeof _label === "object" ? _label[languageValue.value] : _label) || basePlaceholder;
     } else {
       const findItem = flatExOptions.value.find(item => item.value == inValue.value);
-      const findText = findItem?.label || "";
+      const findText =
+        (findItem?.label && typeof findItem?.label === "object" ? findItem?.label[languageValue.value] : findItem?.label) || "";
       return findParent(findItem, findText) || basePlaceholder;
     }
   } else {
@@ -204,7 +216,8 @@ let oldValue = props.modelValue;
 
 function findParent(item, findText) {
   if (item?.parent) {
-    const _findText = item.parent.label + " / " + findText;
+    const _findText =
+      (typeof item.parent.label === "object" ? item.parent.label[languageValue.value] : item.parent.label) + " / " + findText;
     return findParent(item.parent, _findText);
   }
   return findText;
@@ -228,6 +241,9 @@ function handleInput({ target }) {
 
 function handleFocus() {
   isFocus.value = true;
+  setTimeout(() => {
+    popoverRef.value.showPopover();
+  }, 200);
 }
 
 function handlePopoverChange(data) {
