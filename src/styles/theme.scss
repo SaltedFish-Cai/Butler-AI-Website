@@ -16,15 +16,135 @@
 }
 
 .sa-content {
+  --vp-nav-height: 65px;
   .VPNav {
+    height: var(--vp-nav-height);
+    box-sizing: border-box;
     background-color: var(--sa-color-primary);
-    --vp-c-text-1: var(--sa-color-white);
-    .VPNavBarMenuLink.active {
-      --vp-c-brand-1: var(--sa-color-white);
+    --vp-c-text-1: var(--sa-color-primary-light-9) !important;
+    --vp-c-text-2: var(--sa-color-font) !important;
+    .VPNavBarMenuLink,
+    .VPNavBarMenuGroup > .button {
+      transition: transform var(--sa-transition-duration, 0.3s) ease-in-out;
+      &:hover {
+        transform: scale(1.2);
+        --vp-c-brand-1: var(--sa-color-white) !important;
+      }
+      &.active {
+        --vp-c-brand-1: var(--sa-color-white) !important;
+      }
     }
-    .DocSearch-Button {
-      background-color: var(--sa-color-white);
+
+    .VPSocialLink {
+      color: var(--vp-c-text-1);
+    }
+    .DocSearch-Button,
+    .DocSearch-Button-Container {
+      --vp-c-text-1: var(--sa-color-font);
+
+      background-color: var(--sa-color-primary-light-9);
       border-radius: calc(var(--sa-size-radius, 3px) + 5px);
+      transition: box-shadow 0.3s ease-in-out;
+      &:hover {
+        --vp-c-text-1: var(--sa-color-primary);
+        box-shadow: 0 0 5px 0 var(--sa-color-primary-light-9);
+      }
+    }
+  }
+
+  .VPSidebarItem {
+    &.level-0 .text {
+      font-size: var(--sa-size-font);
+    }
+    &.level-0 h2.text {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      font-size: calc(var(--sa-size-font) + 2px);
+    }
+    &.level-1.is-active > .item .link > .text {
+      font-style: italic;
+      font-weight: bold;
+      color: var(--sa-color-primary) !important;
+      background-color: var(--sa-color-primary-light-8);
+      border-radius: var(--sa-size-radius);
+    }
+  }
+
+  .vp-doc > div > h2 {
+    margin: 48px 0 0;
+    letter-spacing: -0.02em;
+    line-height: 32px;
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+  .vp-doc > div > table {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    border: 1px solid var(--sa-color-primary-light-8);
+    border-radius: var(--sa-size-radius);
+    overflow: hidden;
+    > thead,
+    tbody {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      tr {
+        width: 100%;
+        display: flex;
+        border: none;
+        border-bottom: 1px solid var(--sa-color-primary-light-8);
+        &:last-child {
+          border-bottom: none;
+        }
+        th,
+        td {
+          border: none;
+          color: var(--sa-color-font);
+
+          &:nth-child(1) {
+            width: 40%;
+          }
+          &:nth-child(2) {
+            width: 100%;
+          }
+          &:nth-child(3) {
+            width: 60%;
+          }
+          &:nth-child(4) {
+            width: 30%;
+          }
+        }
+      }
+    }
+    thead tr th {
+      background-color: var(--sa-color-primary-light-9) !important;
+      border-bottom: 1px solid var(--sa-color-primary-light-8);
+    }
+  }
+
+  .vp-doc > div > h2 > .header-anchor {
+    top: 0;
+  }
+
+  .VPDocFooter {
+    .pager-link {
+      border-radius: var(--sa-size-radius);
+    }
+  }
+}
+
+.sa-content.dark {
+  .VPNav {
+    --vp-c-text-1: var(--sa-color-white) !important;
+    --vp-c-text-2: var(--sa-color-white) !important;
+    .DocSearch-Button,
+    .DocSearch-Button-Container {
+      &:hover {
+        --vp-c-text-1: var(--sa-color-white);
+      }
     }
   }
 }

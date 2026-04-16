@@ -1,5 +1,5 @@
 <template>
-  <div class="vp_title_label">全局配置：</div>
+  <sa-title :padding="['bottom']">全局配置：</sa-title>
   <div class="flex config-box">
     <div class="in_title_label">表列宽缓存：<el-switch v-model="globalConfig.isKeepAliveTableWidth" /></div>
     <div class="in_title_label">表列宽自动列宽： <el-switch v-model="globalConfig.isAutoTableWidth" /></div>

@@ -114,7 +114,7 @@
               <section class="tabs-form-item" v-for="tabGroupItem in item.inMultipleConfig" :key="tabGroupItem.unitName">
                 <!-- 标题 -->
                 <template v-if="tabGroupItem.unitName != 'default'">
-                  <sa-title>
+                  <sa-title :padding="['bottom']">
                     {{ tabGroupItem.unitName }}
                     <el-tooltip v-if="tabGroupItem.unitTip" :content="tabGroupItem.unitTip" placement="right">
                       <sa-icon name="question_line" class="sa-form-title_label-icon"></sa-icon>
@@ -175,7 +175,7 @@
               <section class="tabs-form-item deleted" v-for="tabGroupItem in item.inMultipleConfig" :key="tabGroupItem.unitName">
                 <!-- 标题 -->
                 <template v-if="tabGroupItem.unitName != 'default'">
-                  <sa-title>
+                  <sa-title :padding="['bottom']">
                     {{ tabGroupItem.unitName }}
                     <el-tooltip v-if="tabGroupItem.unitTip" :content="tabGroupItem.unitTip" placement="right">
                       <sa-icon name="question_line" class="sa-form-title_label-icon"></sa-icon>

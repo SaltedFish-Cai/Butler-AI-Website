@@ -2,140 +2,9 @@
 
 `sa-table` 能够快速搭建你需要的表格，只需简单的配置即可创建一个带有 `筛选/搜索/排序/分页` 等功能的完善表格，当然你还可以使用 `插槽` 功能扩展使你的表格更加强大！
 
-## `MStructureV2Type.TableV2`
-
-```typescript
-const tableConfig: MStructureV2Type.TableV2[] = [
-  { label: "Label-Text", prop: "Text" },
-  ...
-];
-```
-
-| 字段       | 类型                                                                    | 类型    | 描述                     |
-| ---------- | ----------------------------------------------------------------------- | ------- | ------------------------ |
-| label      | `Record<"en-US" \| "zh-CN", string>` `string`                           | —       | 表头展示                 |
-| prop       | `string`                                                                | —       | 表头 prop 表 key 字段    |
-| width      | `string` `number`                                                       | —       | 表列列宽                 |
-| isShow     | `boolean`                                                               | `true`  | 是否显示在表格当中       |
-| useSort    | `boolean`                                                               | `true`  | 是否使用排序             |
-| useFilter  | `boolean`                                                               | `true`  | 是否使用筛选             |
-| filterType | `"input"` `"number"` `"select"` `"tag"` `"time"`                        | —       | 筛选时使用类型           |
-| fixed      | `"left"` `"right"`                                                      | —       | 表列固定位置             |
-| unitText   | `string`                                                                | —       | 单位文本                 |
-| textWarp   | `string`                                                                | —       | 单元格内文字折行依据     |
-| cellConfig | [CellItemType](/document/SaltedUI_Doc/table/readme.html#cellitemtype) | —       | 单元格使用类型，详细配置 |
-| useSenior  | `boolean`                                                               | `true`  | `是否使用高级筛选        |
-| useSum     | `boolean`                                                               | `false` | 是否计入合计内容         |
-
-## `CellItemType`
-
-| 单元格类型                                                       | 描述       |
-| ---------------------------------------------------------------- | ---------- |
-| [SaInputType](/document/SaltedUI_Doc/input/readme.html)       | 输入框     |
-| [SaNumberType](/document/SaltedUI_Doc/number/readme.html)     | 数字输入框 |
-| [SaSelectType](/document/SaltedUI_Doc/select/readme.html)     | 选择器     |
-| [SaCascaderType](/document/SaltedUI_Doc/cascader/readme.html) | 联级选择器 |
-| [SaCheckboxType](/document/SaltedUI_Doc/checkbox/readme.html) | 多选       |
-| [SaRadioType](/document/SaltedUI_Doc/radio/readme.html)       | 单选       |
-| [SaSwitchType](/document/SaltedUI_Doc/switch/readme.html)     | 开关       |
-| [SaTimeType](/document/SaltedUI_Doc/time/readme.html)         | 时间选择器 |
-| [SaFileType](/document/SaltedUI_Doc/file/readme.html)         | 文件选择器 |
-
-## `SaTableType`
-
-| 字段               | 是否必填                                                                                              | 默认值  | 描述                                                 |
-| ------------------ | ----------------------------------------------------------------------------------------------------- | ------- | ---------------------------------------------------- |
-| id                 | `string`                                                                                              | —       | 表格 ID                                              |
-| structure          | [MStructureV2Type.TableV2](/document/SaltedUI_Doc/table/readme.html#mstructurev2type-tablev2)       | —       | 表格列配置项                                         |
-| useSelect          | `boolean`                                                                                             | `false` | 是否使用选择器                                       |
-| useRadio           | `boolean`                                                                                             | `false` | 是否使用单选器                                       |
-| useChildren        | `boolean`                                                                                             | `false` | 是否使用子项选择器                                   |
-| useExpand          | `boolean`                                                                                             | `false` | 是否使用展开行                                       |
-| expandAuto         | `boolean`                                                                                             | `false` | 是否自动展开行                                       |
-| requestApi         | `(params, id) => object[]`                                                                            | —       | 表格数据来源接口                                     |
-| requestAuto        | `boolean`                                                                                             | `true`  | 是否自动执行请求                                     |
-| exportApi          | `(params) => object[]`                                                                                | —       | 页面导出按钮触发方法                                 |
-| rowKey             | `string`                                                                                              | —       | 当表格数据多选时，所指定的 `key` 需要保持数据 `唯一` |
-| useToolButton      | `boolean`                                                                                             | `true`  | 是否显示表格 `刷新 / 筛选` 功能                      |
-| usePagination      | `boolean`                                                                                             | `true`  | 是否显示分页功能                                     |
-| useExpandAll       | `boolean`                                                                                             | `true`  | 是否显示展开全部按钮                                 |
-| useSummary         | `boolean`                                                                                             | `false` | 是否显示尾部合集行                                   |
-| useTableIndex      | `boolean`                                                                                             | `false` | 是否显示表格序号                                     |
-| useOverflowTooltip | `boolean`                                                                                             | `true`  | 是否使用文字超出后 Tooltip 提示完整内容              |
-| embeddedToolButton | `boolean`                                                                                             | `false` | 是否显示表格功能按钮嵌入式样式                       |
-| exOptions          | `MOptionV2Type.Default`                                                                               | —       | 外置筛选依赖                                         |
-| exDependent        | [SaTableExDependentType](/document/SaltedUI_Doc/table/readme.html#SaTableexdependenttype)         | —       | 外置依赖                                             |
-| exCellDependent    | [SaTableCellExDependentType](/document/SaltedUI_Doc/table/readme.html#SaTablecellexdependenttype) | —       | 单元格外置依赖                                       |
-| exPagination       | [ExPaginationType](/document/SaltedUI_Doc/table/readme.html#expaginationtype-外置页码配置)             | —       | 外置依赖                                             |
-
-| summaryConfig | sumText?: string; 合计文字 unitText?: string; // 单位文字 | — | 自定义合计参数 |
-| summaryFunction | (params: any) => string[] | — | 自定义合计方法 |
-
-## `SaTableExDependentType`
-
-| 字段         | 类型                                                                                                     | 描述               |
-| ------------ | -------------------------------------------------------------------------------------------------------- | ------------------ |
-| disabledRule | `{ [x: string]: (value) => boolean }`                                                                    | 禁用规则           |
-| displayRule  | `{ [x: string]: (value) => boolean }`                                                                    | 显示规则           |
-| exCellRules  | `{ [x: string]: Array<{ validator: (rule: any, value: any, callback: any) => void; trigger: string }> }` | 单元格外置依赖规则 |
-
-## `SaTableCellExDependentType`
-
-| 字段                  | 类型                                                                             | 描述                   |
-| --------------------- | -------------------------------------------------------------------------------- | ---------------------- |
-| select_RequestApi     | `{ [x: string]: ({ query: string }) => Promise<MOptionV2Type.SelectList> }`      | 选择器请求 Api         |
-| time_disabledDateFn   | `{ [x: string]: (date: any) => boolean }`                                        | 时间选择器禁用日期函数 |
-| time_shortcuts        | `{ [x: string]: DatePickerShortcut[] }`                                          | 时间选择器快捷选项     |
-| file_attachedData     | `{ [x: string]: Record<string, string> }`                                        | 文件上传附带数据       |
-| file_downloadTemplate | `{ [x: string]: () => void }`                                                    | 文件下载模板           |
-| tag_click             | `{ [x: string]: (params: { row: SaTableUseType.SaTableInDataType }) => void }` | 标签点击事件           |
-| tag_disabled          | `{ [x: string]: (params: { value: boolean \| number \| string }) => boolean }`   | 标签禁用函数           |
-
-`ExPaginationType` 外置页码配置
-
-| 字段       | 默认值                                      | 类型       | 描述         |
-| ---------- | ------------------------------------------- | ---------- | ------------ |
-| pageNum    | `1`                                         | `number`   | 当前页数     |
-| pageSize   | `30`                                        | `number`   | 每页条数     |
-| pageSizes  | `[20, 50, 100, 150]`                        | `number[]` | 条数选择范围 |
-| layout     | `"total, sizes, prev, pager, next, jumper"` | `string`   | 页码功能范围 |
-| pagerCount | `5`                                         | `number`   | 页数拆分数量 |
-
-## `SaTableEvents`
-
-| 字段               | 回调                                                                               | 描述                         |
-| ------------------ | ---------------------------------------------------------------------------------- | ---------------------------- |
-| onSelectRowBack    | `(params: { isSelected: boolean; row: any; parentRow: any }) => void`              | 多选框点击回调               |
-| onSelectRowAllBack | `(params: { isSelected: boolean }) => void`                                        | 多选框全选点击回调           |
-| onRadioRowBack     | `(params: { isSelected: boolean; row: any; parentRow: any }) => void`              | 单选框点击回调               |
-| onExpandRowBack    | `(params: { index: number; row: Record<string, string>; state: boolean }) => void` | Expand 展开按钮点击回调      |
-| onExpandRowAllBack | `(state: boolean) => void`                                                         | Expand 展开全部按钮点击回调  |
-| onRenderEnd        | `(getTableList: (params?: Record<string, string>) => Promise<any>) => void`        | 表格渲染完成回调             |
-| onTableCellChange  | `({prop, value, oldValue, option}) => void`                                        | 当单元格变化时调用的回调方法 |
-
-## `DefineExpose`
-
-```typescript
-const proTable = ref();
-async function RefreshTable() {
-  await proTable.value.getTableList(); // [!code warning]
-}
-```
-
-| 方法名称           | 请求参数                                                               | 描述                                         |
-| ------------------ | ---------------------------------------------------------------------- | -------------------------------------------- |
-| getTableList       | `null`                                                                 | 获取表数据，调用 request-api 提供的方法      |
-| cleanTableData     | `null`                                                                 | 清除表格数据                                 |
-| getSubmitTableList | `null`                                                                 | 获取提交表格用数据（校验表格数据并获取数据） |
-| getTableData       | `null`                                                                 | 获取表格内数据                               |
-| setStructure_All   | `(structure: Array<SaTableItemType & SaTableUseItemType>) => void`   | 设置表格所有结构                             |
-| setStructure_Item  | `(prop: string, item: SaTableItemType & SaTableUseItemType) => void` | 设置表格单个结构                             |
-| changeData_All     | `(data: Array<SaTableUseType.SaTableInDataType>) => void`            | 设置表格所有数据                             |
-| changeData_Item    | `(prop: string, value: SaTableUseType.SaTableInDataType) => void`    | 设置表格单个数据                             |
-
 ## 基础使用
 
-最简单的使用方式，只需要配置 `structure` 即表格的结构配置，并添加数据来源 `request-api` 即可完成表格的创建，如果表格数据中存根据 `选项（select）` 获取展示的值，还需配置 `ex-options` 来匹配选项的值。
+只需要配置 `structure` 即表格的结构配置，并添加数据来源 `request-api` 即可完成表格的创建，如果表格数据中存根据 `选项（select）` 获取展示的值，还需配置 `ex-options` 来匹配选项的值。
 点击表格右上角 `工具图标按钮`，即可打开表格的筛选配置，在这里你可以对每一个列进行 `筛选/选择/左右固定/是否展示列` 的处理。
 点击表格右上角 `刷新图标按钮`，即可单独再次获取当前已经筛选后的表数据，数据来源会再次请求 `request-api` 所提供的接口。
 通过 `ref` 可以获取到表格实例，然后带去表格内值的方法，如刷新页面。获取数据等功能
@@ -350,3 +219,133 @@ nextTick(async () => {
 | FooterCenter     | 表底中间区域                                     |
 
 <demo src="./case-slots.vue"></demo>
+
+```typescript
+const tableConfig: MStructureV2Type.TableV2[] = [
+  { label: "Label-Text", prop: "Text" },
+  ...
+];
+```
+
+## `MStructureV2Type.TableV2`
+
+| 字段       | 描述                     | 类型                                                                  | 类型    |
+| ---------- | ------------------------ | --------------------------------------------------------------------- | ------- |
+| label      | 表头展示                 | `Record<"en-US" \| "zh-CN", string>` `string`                         | —       |
+| prop       | 表头 prop 表 key 字段    | `string`                                                              | —       |
+| width      | 表列列宽                 | `string` `number`                                                     | —       |
+| isShow     | 是否显示在表格当中       | `boolean`                                                             | `true`  |
+| useSort    | 是否使用排序             | `boolean`                                                             | `true`  |
+| useFilter  | 是否使用筛选             | `boolean`                                                             | `true`  |
+| filterType | 筛选时使用类型           | `"input"` `"number"` `"select"` `"tag"` `"time"`                      | —       |
+| fixed      | 表列固定位置             | `"left"` `"right"`                                                    | —       |
+| unitText   | 单位文本                 | `string`                                                              | —       |
+| textWarp   | 单元格内文字折行依据     | `string`                                                              | —       |
+| cellConfig | 单元格使用类型，详细配置 | [CellItemType](/document/SaltedUI_Doc/table/readme.html#cellitemtype) | —       |
+| useSenior  | `是否使用高级筛选        | `boolean`                                                             | `true`  |
+| useSum     | 是否计入合计内容         | `boolean`                                                             | `false` |
+
+## `CellItemType`
+
+| 描述       | 单元格类型                                                    |
+| ---------- | ------------------------------------------------------------- |
+| 输入框     | [SaInputType](/document/SaltedUI_Doc/input/readme.html)       |
+| 数字输入框 | [SaNumberType](/document/SaltedUI_Doc/number/readme.html)     |
+| 选择器     | [SaSelectType](/document/SaltedUI_Doc/select/readme.html)     |
+| 联级选择器 | [SaCascaderType](/document/SaltedUI_Doc/cascader/readme.html) |
+| 多选       | [SaCheckboxType](/document/SaltedUI_Doc/checkbox/readme.html) |
+| 单选       | [SaRadioType](/document/SaltedUI_Doc/radio/readme.html)       |
+| 开关       | [SaSwitchType](/document/SaltedUI_Doc/switch/readme.html)     |
+| 时间选择器 | [SaTimeType](/document/SaltedUI_Doc/time/readme.html)         |
+| 文件选择器 | [SaFileType](/document/SaltedUI_Doc/file/readme.html)         |
+
+## `SaTableType`
+
+| 字段               | 描述                                                                                          | 类型                                                                                              | 默认值  |
+| ------------------ | --------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ------- |
+| id                 | 表格 ID                                                                                       | `string`                                                                                          | —       |
+| structure          | [MStructureV2Type.TableV2](/document/SaltedUI_Doc/table/readme.html#mstructurev2type-tablev2) | —                                                                                                 | —       |
+| useSelect          | 是否使用选择器                                                                                | `boolean`                                                                                         | `false` |
+| useRadio           | 是否使用单选器                                                                                | `boolean`                                                                                         | `false` |
+| useChildren        | 是否使用子项选择器                                                                            | `boolean`                                                                                         | `false` |
+| useExpand          | 是否使用展开行                                                                                | `boolean`                                                                                         | `false` |
+| expandAuto         | 是否自动展开行                                                                                | `boolean`                                                                                         | `false` |
+| requestApi         | 表格数据来源接口                                                                              | `(params, id) => object[]`                                                                        | —       |
+| requestAuto        | 是否自动执行请求                                                                              | `boolean`                                                                                         | `true`  |
+| exportApi          | 页面导出按钮触发方法                                                                          | `(params) => object[]`                                                                            | —       |
+| rowKey             | 当表格数据多选时，所指定的 `key` 需要保持数据 `唯一`                                          | `string`                                                                                          | —       |
+| useToolButton      | 是否显示表格 `刷新 / 筛选` 功能                                                               | `boolean`                                                                                         | `true`  |
+| usePagination      | 是否显示分页功能                                                                              | `boolean`                                                                                         | `true`  |
+| useExpandAll       | 是否显示展开全部按钮                                                                          | `boolean`                                                                                         | `true`  |
+| useSummary         | 是否显示尾部合集行                                                                            | `boolean`                                                                                         | `false` |
+| useTableIndex      | 是否显示表格序号                                                                              | `boolean`                                                                                         | `false` |
+| useOverflowTooltip | 是否使用文字超出后 Tooltip 提示完整内容                                                       | `boolean`                                                                                         | `true`  |
+| embeddedToolButton | 是否显示表格功能按钮嵌入式样式                                                                | `boolean`                                                                                         | `false` |
+| exOptions          | 外置筛选依赖                                                                                  | `MOptionV2Type.Default`                                                                           | —       |
+| exDependent        | 外置依赖                                                                                      | [SaTableExDependentType](/document/SaltedUI_Doc/table/readme.html#SaTableexdependenttype)         | —       |
+| exCellDependent    | 单元格外置依赖                                                                                | [SaTableCellExDependentType](/document/SaltedUI_Doc/table/readme.html#SaTablecellexdependenttype) | —       |
+| exPagination       | 外置依赖                                                                                      | [ExPaginationType](/document/SaltedUI_Doc/table/readme.html#expaginationtype-外置页码配置)        | —       |
+| summaryConfig      | 自定义合计参数                                                                                | sumText?: string; 合计文字 unitText?: string; // 单位文字                                         | —       |
+| summaryFunction    | 自定义合计方法                                                                                | (params: any) => string[]                                                                         | —       |
+
+## `SaTableExDependentType`
+
+| 字段         | 描述               | 类型                                                                                                     |
+| ------------ | ------------------ | -------------------------------------------------------------------------------------------------------- |
+| disabledRule | 禁用规则           | `{ [x: string]: (value) => boolean }`                                                                    |
+| displayRule  | 显示规则           | `{ [x: string]: (value) => boolean }`                                                                    |
+| exCellRules  | 单元格外置依赖规则 | `{ [x: string]: Array<{ validator: (rule: any, value: any, callback: any) => void; trigger: string }> }` |
+
+## `SaTableCellExDependentType`
+
+| 字段                  | 描述                   | 类型                                                                           |
+| --------------------- | ---------------------- | ------------------------------------------------------------------------------ |
+| select_RequestApi     | 选择器请求 Api         | `{ [x: string]: ({ query: string }) => Promise<MOptionV2Type.SelectList> }`    |
+| time_disabledDateFn   | 时间选择器禁用日期函数 | `{ [x: string]: (date: any) => boolean }`                                      |
+| time_shortcuts        | 时间选择器快捷选项     | `{ [x: string]: DatePickerShortcut[] }`                                        |
+| file_attachedData     | 文件上传附带数据       | `{ [x: string]: Record<string, string> }`                                      |
+| file_downloadTemplate | 文件下载模板           | `{ [x: string]: () => void }`                                                  |
+| tag_click             | 标签点击事件           | `{ [x: string]: (params: { row: SaTableUseType.SaTableInDataType }) => void }` |
+| tag_disabled          | 标签禁用函数           | `{ [x: string]: (params: { value: boolean \| number \| string }) => boolean }` |
+
+`ExPaginationType` 外置页码配置
+
+| 字段       | 描述         | 默认值                                      | 类型       |
+| ---------- | ------------ | ------------------------------------------- | ---------- |
+| pageNum    | 当前页数     | `1`                                         | `number`   |
+| pageSize   | 每页条数     | `30`                                        | `number`   |
+| pageSizes  | 条数选择范围 | `[20, 50, 100, 150]`                        | `number[]` |
+| layout     | 页码功能范围 | `"total, sizes, prev, pager, next, jumper"` | `string`   |
+| pagerCount | 页数拆分数量 | `5`                                         | `number`   |
+
+## `SaTableEvents`
+
+| 字段               | 描述                         | 回调                                                                               |
+| ------------------ | ---------------------------- | ---------------------------------------------------------------------------------- |
+| onSelectRowBack    | 多选框点击回调               | `(params: { isSelected: boolean; row: any; parentRow: any }) => void`              |
+| onSelectRowAllBack | 多选框全选点击回调           | `(params: { isSelected: boolean }) => void`                                        |
+| onRadioRowBack     | 单选框点击回调               | `(params: { isSelected: boolean; row: any; parentRow: any }) => void`              |
+| onExpandRowBack    | Expand 展开按钮点击回调      | `(params: { index: number; row: Record<string, string>; state: boolean }) => void` |
+| onExpandRowAllBack | Expand 展开全部按钮点击回调  | `(state: boolean) => void`                                                         |
+| onRenderEnd        | 表格渲染完成回调             | `(getTableList: (params?: Record<string, string>) => Promise<any>) => void`        |
+| onTableCellChange  | 当单元格变化时调用的回调方法 | `({prop, value, oldValue, option}) => void`                                        |
+
+## `DefineExpose`
+
+```typescript
+const proTable = ref();
+async function RefreshTable() {
+  await proTable.value.getTableList(); // [!code warning]
+}
+```
+
+| 方法名称           | 描述                                         | 请求参数                                                             |
+| ------------------ | -------------------------------------------- | -------------------------------------------------------------------- |
+| getTableList       | 获取表数据，调用 request-api 提供的方法      | `null`                                                               |
+| cleanTableData     | 清除表格数据                                 | `null`                                                               |
+| getSubmitTableList | 获取提交表格用数据（校验表格数据并获取数据） | `null`                                                               |
+| getTableData       | 获取表格内数据                               | `null`                                                               |
+| setStructure_All   | 设置表格所有结构                             | `(structure: Array<SaTableItemType & SaTableUseItemType>) => void`   |
+| setStructure_Item  | 设置表格单个结构                             | `(prop: string, item: SaTableItemType & SaTableUseItemType) => void` |
+| changeData_All     | 设置表格所有数据                             | `(data: Array<SaTableUseType.SaTableInDataType>) => void`            |
+| changeData_Item    | 设置表格单个数据                             | `(prop: string, value: SaTableUseType.SaTableInDataType) => void`    |

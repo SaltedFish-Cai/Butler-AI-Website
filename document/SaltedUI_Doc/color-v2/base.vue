@@ -6,7 +6,7 @@
 <script lang="ts" setup>
 import { ref } from "vue";
 
-const value = ref("#5940A3");
+const value = ref("#43317A");
 const presetColors = ref([
   "#ff0000",
   "#ff8000",

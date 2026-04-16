@@ -1,15 +1,9 @@
 <template>
-  <div class="vp_title_label">接口请求参数(params)：</div>
+  <sa-title :padding="['bottom']">接口请求参数(params)：</sa-title>
 
   <code-view v-model:html="params"> </code-view>
   <div class="h400">
-    <sa-table
-      id="base-table-v2-demo"
-      ref="proTable"
-      :structure="tableConfig"
-      :request-api="getTableList"
-      :ex-options="exOptions"
-    >
+    <sa-table id="base-table-v2-demo" ref="proTable" :structure="tableConfig" :request-api="getTableList" :ex-options="exOptions">
       <template #operation>
         <sa-button key="key1" is="save" index="1"> 编辑1 </sa-button>
         <sa-button key="key2" is="trash" index="2"> 编辑2 </sa-button>

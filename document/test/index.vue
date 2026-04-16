@@ -1,5 +1,5 @@
 <template>
-  <div class="vp_title_label">FormData结果值：</div>
+  <sa-title :padding="['bottom']">FormData结果值：</sa-title>
 
   <code-view v-model:html="formData"> </code-view>
 

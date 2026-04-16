@@ -159,9 +159,9 @@ const SaltedUIConfig = ref({
   scrollbar-width: none;
 }
 
-.aside-container::-webkit-scrollbar {
+/* .aside-container::-webkit-scrollbar {
   display: none;
-}
+} */
 
 .aside-curtain {
   position: fixed;

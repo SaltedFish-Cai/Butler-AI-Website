@@ -5,11 +5,11 @@
     <div class="in_title_label">是否功能按钮嵌入式样式：<sa-switch v-model="state.embeddedToolButton" /></div>
   </div>
 
-  <div class="vp_title_label">FormData结果值：</div>
+  <sa-title :padding="['bottom']">FormData结果值：</sa-title>
 
   <code-view v-model:html="tableFormData"> </code-view>
 
-  <div class="vp_title_label">效果展示</div>
+  <sa-title :padding="['bottom']">效果展示</sa-title>
   <sa-table
     id="options-table-demo"
     ref="proTable"

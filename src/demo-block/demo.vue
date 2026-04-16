@@ -93,7 +93,7 @@ const onCopy = async e => {
   /* box-shadow: 0 0px 2px #6f6e6e; */
   overflow: hidden;
   border: solid 1px var(--vp-c-divider);
-  border-radius: 5px;
+  border-radius: var(--sa-size-radius);
   transition: 0.2s;
 }
 

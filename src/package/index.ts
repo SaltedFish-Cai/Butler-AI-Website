@@ -13,7 +13,6 @@ import toLocaleString from "./components/tools/toLocaleString";
 import { M_Notification, M_Message, M_MessageBox } from "./components/feedback";
 
 import "./components/style.scss";
-import "./components/styles/index.scss";
 import "./components/styles/pt-size.scss";
 import "./components/styles/flex.scss";
 import "./components/styles/animation.scss";
@@ -27,7 +26,7 @@ import { GlobalState } from "./components/store/type";
 // _Function install
 const install = function (app, options: GlobalState) {
   const {
-    themeColor = "#5940A3",
+    themeColor = "#43317A",
     isDark = false,
     requestHeader,
     tableConfig = {},

@@ -84,10 +84,6 @@ watchPostEffect(() => {
   border-bottom: 1px solid var(--vp-c-divider);
 }
 
-.VPNavBar:not(.home) {
-  background-color: var(--vp-nav-bg-color);
-}
-
 @media (min-width: 960px) {
   .VPNavBar:not(.home) {
     background-color: transparent;

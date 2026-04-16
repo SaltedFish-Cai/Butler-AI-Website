@@ -56,10 +56,6 @@ function onBlur() {
   transition: color 0.25s;
 }
 
-.VPFlyout:hover .text {
-  color: var(--vp-c-text-2);
-}
-
 .VPFlyout:hover .icon {
   fill: var(--vp-c-text-2);
 }

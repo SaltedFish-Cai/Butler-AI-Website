@@ -1,18 +1,18 @@
 # Editor 编辑器
 
+## 组件功能展示
+
 <demo src="./base.vue" ></demo>
 
 ## `SaEditorType`
 
-| 字段       | 类型                                                                                 | 默认值 | 描述   |
-| ---------- | ------------------------------------------------------------------------------------ | ------ | ------ |
-| modelValue | `string`                                                                             | —      | 绑定值 |
-| config     | {uploadImage?: [SaFileType](/document/SaltedUI_Doc/file/readme.html#SaFiletype)} | —      | 配置项 |
+| 字段       | 描述   | 类型                                                                             | 默认值 |
+| ---------- | ------ | -------------------------------------------------------------------------------- | ------ |
+| modelValue | 绑定值 | `string`                                                                         | —      |
+| config     | 配置项 | {uploadImage?: [SaFileType](/document/SaltedUI_Doc/file/readme.html#SaFiletype)} | —      |
 
 ## `SaEditorEvents`
 
-| 字段   | 类型       | 描述           |
-| ------ | ---------- | -------------- |
-| change | `function` | 当值改变时触发 |
-
-## 组件功能展示
+| 字段   | 描述           | 类型       |
+| ------ | -------------- | ---------- |
+| change | 当值改变时触发 | `function` |

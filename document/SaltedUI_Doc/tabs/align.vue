@@ -1,10 +1,10 @@
 <template>
-  <div class="vp_title_label">对其方式：default</div>
+  <sa-title :padding="['bottom']">对其方式：default</sa-title>
   <sa-tabs v-model="activeName">
     <sa-tabs-item label="第一页" name="page1" class="card_style" :padding="['all']"> page1 </sa-tabs-item>
   </sa-tabs>
 
-  <div class="vp_title_label mt10">对其方式：edge</div>
+  <sa-title :padding="['bottom']">对其方式：edge</sa-title>
   <sa-tabs v-model="activeName" align="edge">
     <sa-tabs-item label="第一页" name="page1" class="card_style" :padding="['all']"> page1 </sa-tabs-item>
   </sa-tabs>

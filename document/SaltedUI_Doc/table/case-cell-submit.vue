@@ -1,9 +1,9 @@
 <template>
-  <div class="vp_title_label">FormData结果值：</div>
+  <sa-title :padding="['bottom']">FormData结果值：</sa-title>
 
   <code-view v-model:html="tableFormData"> </code-view>
 
-  <div class="vp_title_label">效果展示</div>
+  <sa-title :padding="['bottom']">效果展示</sa-title>
   <div style="height: 200px">
     <sa-table
       id="cell-table-demo-submit"

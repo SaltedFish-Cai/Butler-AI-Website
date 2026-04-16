@@ -231,4 +231,5 @@ watch(
 
 <style lang="scss">
 @use "./index.scss";
+@use "../cell-style.scss";
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="vp_title_label">组合使用</div>
+  <sa-title :padding="['bottom']">组合使用</sa-title>
   <sa-tabs v-model="activeName2" align="edge" useHeaderLine>
     <sa-tabs-item label="第一页" name="page1" class="card_style">
       <sa-tabs v-model="activeName5" mode="portrait" styleMode="default">

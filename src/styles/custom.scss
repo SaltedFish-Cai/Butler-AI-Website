@@ -101,25 +101,7 @@
 .VPNavBarTitle.has-sidebar .title {
   border-bottom: 0;
 }
-.VPSidebarItem {
-  &.level-0 .text {
-    font-size: 16px;
-  }
-  &.level-0 h2.text {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    font-size: 18px;
-    &::before {
-      display: block;
-      width: 5px;
-      height: 1em;
-      margin-right: 8px;
-      content: "";
-      background-color: var(--sa-color-primary);
-    }
-  }
-}
+
 ::-webkit-scrollbar {
   display: none;
 }

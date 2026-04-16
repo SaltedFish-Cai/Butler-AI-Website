@@ -80,7 +80,7 @@ function syncDirectory(source, target, oldPrefix, newPrefix) {
       content = content.replace(/m-manager-v2/g, "sa-content");
       content = content.replace(/m-display-v2/g, "sa-display-style");
       content = content.replace(/m-contrast-v2/g, "sa-contrast-style");
-      content = content.replace(/00a47e/g, "5940A3");
+      content = content.replace(/00a47e/g, "43317A");
 
       content = content.replace(/package\/manager-ui/g, "package");
       content = content.replace(/components\/m-/g, "components/sa-");

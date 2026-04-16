@@ -2,27 +2,6 @@
 
 常用的弹窗组件。
 
-## `SaDialogType`
-
-| 属性名             | 类型                                             | 默认值  | 描述            |
-| ------------------ | ------------------------------------------------ | ------- | --------------- |
-| modelValue         | `boolean`                                        | `false` | 是否打开 Dialog |
-| size               | `l` `m` `max` `s`                                | `m`     | Dialog 尺寸     |
-| height             | `string` `number` `"auto"` `"default"`           | —       | Dialog 高度     |
-| width              | `string` `number`                                | —       | Dialog 宽度     |
-| offsetX            | `string` `number`                                | `0`     | X 轴偏移量      |
-| offsetY            | `string` `number`                                | `0`     | Y 轴偏移量      |
-| keepAlive          | `boolean`                                        | `false` | 缓存模式        |
-| title              | `string`                                         | —       | Dialog 标题     |
-| subTitle           | `string`                                         | —       | Dialog 子标题   |
-| useFull            | `boolean`                                        | `true`  | 使用全屏模式    |
-| scroll             | `boolean`                                        | `true`  | 开启滚动        |
-| useScrollX         | `boolean`                                        | `false` | 开启 X 轴滚动   |
-| titleAlign         | `center` `left` `right`                          | `left`  | 标题对齐方式    |
-| closeOnClickModal  | `boolean`                                        | `true`  | 点击 Modal 退出 |
-| closeOnPressEscape | `boolean`                                        | `true`  | 按下 Esc 退出   |
-| padding            | `Array<"all"  "bottom"  "left"  "right"  "top">` | —       | 内边距          |
-
 ## 基础用法
 
 开盖即用，更可配置 `自定义` 个性化使用。
@@ -47,9 +26,30 @@
 
 <demo src="./offset.vue"  ></demo>
 
+## `SaDialogType`
+
+| 属性名             | 描述            | 类型                                             | 默认值  |
+| ------------------ | --------------- | ------------------------------------------------ | ------- |
+| modelValue         | 是否打开 Dialog | `boolean`                                        | `false` |
+| size               | Dialog 尺寸     | `l` `m` `max` `s`                                | `m`     |
+| height             | Dialog 高度     | `string` `number` `"auto"` `"default"`           | —       |
+| width              | Dialog 宽度     | `string` `number`                                | —       |
+| offsetX            | X 轴偏移量      | `string` `number`                                | `0`     |
+| offsetY            | Y 轴偏移量      | `string` `number`                                | `0`     |
+| keepAlive          | 缓存模式        | `boolean`                                        | `false` |
+| title              | Dialog 标题     | `string`                                         | —       |
+| subTitle           | Dialog 子标题   | `string`                                         | —       |
+| useFull            | 使用全屏模式    | `boolean`                                        | `true`  |
+| scroll             | 开启滚动        | `boolean`                                        | `true`  |
+| useScrollX         | 开启 X 轴滚动   | `boolean`                                        | `false` |
+| titleAlign         | 标题对齐方式    | `center` `left` `right`                          | `left`  |
+| closeOnClickModal  | 点击 Modal 退出 | `boolean`                                        | `true`  |
+| closeOnPressEscape | 按下 Esc 退出   | `boolean`                                        | `true`  |
+| padding            | 内边距          | `Array<"all"  "bottom"  "left"  "right"  "top">` | —       |
+
 ## 使用 `插槽位置` 展示
 
-| 字段   | 描述        |
-| ------ | ----------- |
-| footer | Dialog 底部 |
-| header | Dialog 标题 |
+| 描述        | 字段   |
+| ----------- | ------ |
+| Dialog 底部 | footer |
+| Dialog 标题 | header |
