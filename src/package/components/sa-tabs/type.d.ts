@@ -78,7 +78,7 @@ export type SaTabsType = {
    * <SaTabs styleMode="card" />
    * ```
    * */
-  styleMode?: "card" | "default";
+  styleMode?: "border-card" | "card" | "default";
 
   /**
    * **对齐方式**
@@ -222,6 +222,19 @@ export type SaTabsItemType = {
    * ```
    * */
   useScrollX?: boolean;
+
+  /**
+   * **是否使用边框**
+   * @type `boolean`
+   * @default `false`
+   * @description 当设置该值为 `true` 时，会使用边框
+   * @description 当设置该值为 `false` 时，不会使用边框
+   * @example
+   * ```tsx
+   * <SaTabsItem useBorder={true} />
+   * ```
+   * */
+  useBorder?: boolean;
 };
 
 export type SaTabsItemTitleType = {

@@ -4,7 +4,7 @@
 
 ## 基础用法
 
-基础样式展示，使用 `padding` 控制内边距
+基础样式展示，组件提供2种样式风格，可以使用 `styleMode` 属性切换风格，使用 `padding` 控制内边距。
 
 <demo src="./base.vue" ></demo>
 

@@ -3,7 +3,7 @@
     :data-name="name"
     :data-label="label"
     class="sa-tabs-item flex-col"
-    :class="[tabsContext.activeName === name ? 'active' : '']"
+    :class="[tabsContext.activeName === name ? 'active' : '', useBorder ? 'use-border' : '']"
     ref="ScrollbarRef"
   >
     <slot name="before"></slot>
@@ -78,7 +78,8 @@ const props = withDefaults(defineProps<SaTabsItemType>(), {
   name: "",
   scroll: false,
   lazy: false,
-  useScrollX: false
+  useScrollX: false,
+  useBorder: false
 });
 
 const tabItemLine = ref();

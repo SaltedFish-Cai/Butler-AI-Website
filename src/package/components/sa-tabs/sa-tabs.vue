@@ -1,7 +1,11 @@
 <template>
   <div
     :class="[props.class, `sa-tabs-mode-${mode}`, `sa-tabs-style_mode-${styleMode}`, `sa-tabs-style_align-${align}`]"
-    :style="{ ...props.style }"
+    :style="{
+      ...props.style,
+      '--sa-tabs-label-left': useLabelLeft - headerScroll + 'px',
+      '--sa-tabs-label-width': useLabelWidth + 'px'
+    }"
     :id="tabsId"
     ref="tabsRef"
   >
@@ -132,6 +136,8 @@ const useScrollY = ref(0);
 const headerScroll = ref(0);
 const headerScrollEnd = ref(false);
 const activeName = ref("");
+const useLabelLeft = ref(0);
+const useLabelWidth = ref(0);
 const emits = defineEmits(["update:modelValue", "tab-change"]);
 
 const _debounce = debounce(setTabsBoxSize, 10, { trailing: true });
@@ -407,14 +413,33 @@ onUnmounted(() => {
 watch(
   () => props.modelValue,
   data => {
-    activeName.value = data;
-    setTabItemPosition();
-    if (slotsTitle.value) {
-      const index = slotsTitle.value.findIndex(item => item?.props?.name == props.modelValue);
-      slotIndex.value = index;
-    }
+    nextTick(() => {
+      activeName.value = data;
+      if (slotsTitle.value) {
+        const index = slotsTitle.value.findIndex(item => item?.props?.name == props.modelValue);
+        slotIndex.value = index;
+      }
+      setLabelPosition();
+    });
   },
   { immediate: true }
+);
+
+function setLabelPosition() {
+  if (props.styleMode != "border-card") return;
+  setTimeout(() => {
+    const el: any = window.document?.querySelector(`.sa-tabs-title_action_${tabsId.value}`);
+    if (el) {
+      const { width } = el.getBoundingClientRect();
+      useLabelLeft.value = el.offsetLeft + 1;
+      useLabelWidth.value = width;
+    }
+  }, 90);
+}
+
+watch(
+  () => activeName.value,
+  () => setLabelPosition()
 );
 
 defineExpose({
