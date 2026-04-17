@@ -72,15 +72,14 @@
 </template>
 
 <script lang="tsx" setup>
-import { computed, ComputedRef, inject, ref, useTemplateRef } from "vue";
-import lodash from "lodash";
+import { computed, ComputedRef, inject, ref, useTemplateRef, nextTick } from "vue";
 import { SaltedGlobalConfigType } from "../../../sa-content/type";
 import { SaStructureType } from "M_Types";
 import { MOptionsType, SaPlaygroundPagesType } from "../../type";
-import MQuickTable from "../m-quick-table.vue";
-import { nextTick } from "process";
+import MQuickTable from "../quick-table.vue";
 
-const { cloneDeep } = lodash;
+import _ from "lodash";
+const { cloneDeep } = _;
 
 const props = defineProps<{
   playgroundItems: SaPlaygroundPagesType[];

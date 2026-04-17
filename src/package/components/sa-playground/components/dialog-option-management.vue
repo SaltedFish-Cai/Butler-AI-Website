@@ -181,10 +181,10 @@ import { MOptionsType } from "../type";
 import { SaOptionType, SaStructureType } from "M_Types";
 import { M_Message, M_MessageBox } from "../../feedback";
 import { SaltedGlobalConfigType } from "../../sa-content/type";
-import MQuickTable from "./m-quick-table.vue";
-import lodash from "lodash";
+import MQuickTable from "./quick-table.vue";
+import _ from "lodash";
 
-const { cloneDeep } = lodash;
+const { cloneDeep } = _;
 
 const SaltedGlobalConfig = inject("SaltedGlobalConfig") as ComputedRef<SaltedGlobalConfigType>;
 const languageValue = computed(() => {

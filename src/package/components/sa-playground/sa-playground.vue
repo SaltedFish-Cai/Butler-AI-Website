@@ -363,9 +363,9 @@ import { SaPlaygroundProps, SaPlaygroundType, SaPlaygroundItem } from "./type";
 import { useSvgHooks } from "./hooks/use-svg-hooks";
 import { useAutoSave } from "./hooks/use-auto-save";
 
-import MItemSvg from "./components/sa-item-svg.vue";
+import MItemSvg from "./components/item-svg.vue";
 
-import MSvgDraggable from "./components/sa-svg-draggable.vue";
+import MSvgDraggable from "./components/svg-draggable.vue";
 
 import DialogEditTableCol from "./components/table-components/dialog-edit-table-col.vue";
 import DialogEditTableColQuick from "./components/table-components/dialog-edit-table-col-quick.vue";
@@ -373,7 +373,7 @@ import DialogEditFormItem from "./components/form-components/dialog-edit-form-it
 import DialogEditFormItemQuick from "./components/form-components/dialog-edit-form-item-quick.vue";
 import DialogEditTabsItemQuick from "./components/tabs-components/dialog-edit-tabs-item-quick.vue";
 
-import MVisibleDialog from "./components/sa-visible-dialog.vue";
+import MVisibleDialog from "./components/visible-dialog.vue";
 import DialogEditButton from "./components/table-components/dialog-edit-button.vue";
 import DialogEditBaseConfig from "./components/dialog-edit-base-config.vue";
 import DialogEditPageConfig from "./components/dialog-edit-page-config.vue";
@@ -383,7 +383,7 @@ import DialogDataStructureManagement from "./components/dialog-data-structure-ma
 import DialogEditPageBaseConfig from "./components/dialog-edit-page-base-config.vue";
 import DialogOptionManagement from "./components/dialog-option-management.vue";
 
-import MSimulatedField from "./components/sa-simulated-field.vue";
+import MSimulatedField from "./components/simulated-field.vue";
 import SaPlaygroundVisible from "./sa-playground-visible.vue";
 
 import { SaStructureType } from "M_Types";

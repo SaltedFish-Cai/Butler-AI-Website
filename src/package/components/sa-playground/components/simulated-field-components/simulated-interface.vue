@@ -47,7 +47,7 @@ import { SaltedGlobalConfigType } from "../../../sa-content/type";
 import { MInterfaceConfig, SaPlaygroundPagesType, MStructureType } from "../../type";
 import { deleteData, getAllData, getDataById, storeData, updateData } from "../../../indexDB/indexDB";
 import { M_Message, M_MessageBox } from "../../../feedback";
-import MQuickTable from "../m-quick-table.vue";
+import MQuickTable from "../quick-table.vue";
 
 const SaltedGlobalConfig = inject("SaltedGlobalConfig") as ComputedRef<SaltedGlobalConfigType>;
 const language = SaltedGlobalConfig.value?.language?.value || "zh-CN";

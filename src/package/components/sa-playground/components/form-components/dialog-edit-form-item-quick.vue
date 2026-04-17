@@ -79,14 +79,14 @@
 
 <script lang="tsx" setup>
 import { computed, ComputedRef, inject, ref } from "vue";
-import lodash from "lodash";
 import { SaltedGlobalConfigType } from "../../../sa-content/type";
 import { SaStructureType } from "M_Types";
 import { cellMapConfig } from "../../configs/cell-config";
 import { MOptionsType } from "../../type";
-import MQuickTable from "../m-quick-table.vue";
+import MQuickTable from "../quick-table.vue";
+import _ from "lodash";
 
-const { cloneDeep } = lodash;
+const { cloneDeep } = _;
 
 const props = defineProps<{
   exOptionsMaps: MOptionsType[];

@@ -157,7 +157,7 @@ import { SaltedGlobalConfigType } from "../../../sa-content/type";
 import { SaStructureType } from "M_Types";
 import { cellMapConfig } from "../../configs/cell-config";
 import { MOptionsType } from "../../type";
-import MQuickTable from "../m-quick-table.vue";
+import MQuickTable from "../quick-table.vue";
 
 import {
   inputConfig,

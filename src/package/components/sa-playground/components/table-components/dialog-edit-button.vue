@@ -268,15 +268,15 @@
 import { computed, ComputedRef, inject, ref, useTemplateRef } from "vue";
 import { SaPlaygroundPageButtonType } from "../type";
 import { MStructureType, SaPlaygroundPagesType, MInterfaceConfig, SaPlaygroundActionFunctionType } from "../../type";
-import MQuickTable from "../m-quick-table.vue";
-import lodash from "lodash";
+import MQuickTable from "../quick-table.vue";
 import { SaltedGlobalConfigType } from "../../../sa-content/type";
 import { SaOptionType, SaStructureType } from "M_Types";
 import { ButtonTypeV2Is } from "../../../sa-button/type";
 import DialogEditButton from "./dialog-edit-button.vue";
 import { M_MessageBox } from "../../../feedback";
 
-const { cloneDeep } = lodash;
+import _ from "lodash";
+const { cloneDeep } = _;
 
 const SaltedGlobalConfig = inject("SaltedGlobalConfig") as ComputedRef<SaltedGlobalConfigType>;
 const language = SaltedGlobalConfig.value?.language?.value || "zh-CN";

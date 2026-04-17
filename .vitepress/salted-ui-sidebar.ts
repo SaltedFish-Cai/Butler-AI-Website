@@ -32,6 +32,7 @@ export const saltedUISidebar = [
       { text: "Tabs 选项卡", link: "/document/SaltedUI_Doc/tabs/readme" },
       { text: "Table 表格", link: "/document/SaltedUI_Doc/table/readme" },
       { text: "Form 表单", link: "/document/SaltedUI_Doc/form/readme" },
+      { text: "Playground 可视化配置面板-New🌟", link: "/document/SaltedUI_Doc/playground/readme" },
       { text: "Editor 编辑器-New🌟", link: "/document/SaltedUI_Doc/editor-v2/readme" }
     ]
   },

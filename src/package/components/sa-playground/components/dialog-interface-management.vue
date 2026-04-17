@@ -57,7 +57,7 @@ import { MInterfaceConfig, MStructureType } from "../type";
 import { SaOptionType, SaStructureType } from "M_Types";
 import { M_Message, M_MessageBox } from "../../feedback";
 import { SaltedGlobalConfigType } from "../../sa-content/type";
-import MQuickTable from "./m-quick-table.vue";
+import MQuickTable from "./quick-table.vue";
 
 const SaltedGlobalConfig = inject("SaltedGlobalConfig") as ComputedRef<SaltedGlobalConfigType>;
 const languageValue = computed(() => {
