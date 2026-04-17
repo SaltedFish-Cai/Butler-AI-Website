@@ -16,7 +16,7 @@ import { VantResolver } from "@vant/auto-import-resolver";
 export default {
   srcDir: "./",
   outDir: ".vitepress/dist",
-  base: process.env.DEPLOY_TARGET === "gh-pages" ? "/Pancakefish-Website/" : "/",
+  base: process.env.DEPLOY_TARGET === "gh-pages" ? "/saltedfish-Website/" : "/",
   cleanUrls: true,
   lang: "zh-CN",
   // lang: 'en-US',
@@ -122,7 +122,7 @@ export default {
             options: {
               appId: "IAB2LW1YC9",
               apiKey: "7137ff10d7023a7fd954b56a313c2076",
-              indexName: "Pancakefish.frontend-m.online",
+              indexName: "saltedfish.frontend-m.online",
               insights: true,
               askAi: "M7l8pndQS3kV",
 
@@ -215,8 +215,8 @@ export default {
           },
     // 社交信息栏
     socialLinks: [
-      { icon: "gitee", link: "https://gitee.com/PancakeFish-Cai/Pancakefish-Website" },
-      { icon: "github", link: "https://github.com/PancakeFish-Cai/Pancakefish-Website" }
+      { icon: "gitee", link: "https://gitee.com/saltedfish-Cai/saltedfish-Website" },
+      { icon: "github", link: "https://github.com/saltedfish-Cai/saltedfish-Website" }
     ],
     // 底部信息栏
     footer: {
@@ -282,7 +282,7 @@ export default {
   },
   head: [
     ["meta", { name: "theme-color", content: "#3eaf7c" }],
-    ["link", { rel: "icon", href: `//Pancakefish.frontend-m.online/logo-ui.svg` }],
+    ["link", { rel: "icon", href: `//saltedfish.frontend-m.online/logo-ui.svg` }],
     ["meta", { name: "algolia-site-verification", content: "601BD5B794ABD061" }],
     ["script", { src: "https://unpkg.com/@algolia/sitesearch@latest/dist/search.min.js" }],
     ["link", { rel: "stylesheet", href: "https://unpkg.com/@algolia/sitesearch@latest/dist/search.min.css" }],

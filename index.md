@@ -18,7 +18,7 @@ hero:
       link: /document/PancakeUI_Doc/button/readme
     - theme: img
       text: 🚀 微信群聊二维码
-      link: //Pancakefish.frontend-m.online/file/wx.jpg
+      link: //saltedfish.frontend-m.online/file/wx.jpg
 
 features:
   - icon: 👍

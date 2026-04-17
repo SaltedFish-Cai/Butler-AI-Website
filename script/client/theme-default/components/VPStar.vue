@@ -17,7 +17,7 @@ setTimeout(() => {
         <span class="tail"> <span></span> <span></span> <span></span> </span>
       </div>
     </div>
-    <!-- <div class="typewriter">欢迎来到 PancakeFish 站点</div> -->
+    <!-- <div class="typewriter">欢迎来到 saltedfish 站点</div> -->
   </div>
 </template>
 

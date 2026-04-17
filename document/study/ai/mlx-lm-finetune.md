@@ -2,7 +2,7 @@
 
 本项目使用 **MLX-LM** 库在 Mac mini M4 24G 上对 Qwen2-1.5B 模型进行 LoRA 微调，以适应鱼病护理相关的问答任务。
 
-项目地址：[https://gitee.com/PancakeFish-Cai/ai-study-project/tree/master/unsloth-finetune](https://gitee.com/PancakeFish-Cai/ai-study-project/tree/master/unsloth-finetune)
+项目地址：[https://gitee.com/saltedfish-Cai/ai-study-project/tree/master/unsloth-finetune](https://gitee.com/saltedfish-Cai/ai-study-project/tree/master/unsloth-finetune)
 
 :::warning 注意
 该项目只可以在 Apple Silicon 芯片的 Mac 上运行。

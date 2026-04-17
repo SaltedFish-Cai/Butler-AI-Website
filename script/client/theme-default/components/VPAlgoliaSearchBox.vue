@@ -96,7 +96,7 @@ function initialize(userOptions: DefaultTheme.AlgoliaSearchOptions) {
   //   container: "#docsearch",
   //   appId: "IAB2LW1YC9",
   //   apiKey: "7137ff10d7023a7fd954b56a313c2076",
-  //   indexName: "Pancakefish.frontend-m.online",
+  //   indexName: "saltedfish.frontend-m.online",
   //   insights: true, // 必须开启，AI 依赖事件追踪
   //   askAi: "M7l8pndQS3kV"
   // });
