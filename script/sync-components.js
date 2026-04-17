@@ -55,7 +55,7 @@ function syncDirectory(source, target, oldPrefix, newPrefix) {
     const targetPath = path.join(target, newFileName);
 
     // 忽略路径 文件
-    const ignorePaths = ["m-icon-v2/iconfont", "m-icon-v2/file", "m-icon-v2/mathematics", "m-editor-v2/index", "api/"];
+    const ignorePaths = ["m-icon-v2/iconfont", "m-icon-v2/file", "m-icon-v2/mathematics", "m-editor/index", "api/"];
     const relativePath = path.relative(sourceDir, sourcePath);
 
     if (ignorePaths.some(ignore => relativePath.includes(ignore))) {
