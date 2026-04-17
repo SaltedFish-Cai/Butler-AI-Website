@@ -11,20 +11,20 @@ const playgroundConfig = ref({
   id: "demo-playground",
   name: "示例配置面板",
   description: "一个基础的可视化配置面板示例",
-  adminX: 0,
-  adminY: 0,
-  adminScale: 1,
+  adminX: 349.8549201997348,
+  adminY: 243.42883886104323,
+  adminScale: 0.8300843858898644,
   pagesConfigs: [
     {
       pageId: "page-1",
       name: "基础配置",
-      x: 0,
-      y: 0,
+      x: -100.24033635872281,
+      y: -91.39560079765903,
       itemConfigs: [
         {
           itemId: "form-1",
-          width: 400,
-          height: 300,
+          width: 520,
+          height: 100,
           type: "form",
           structure: [
             {
@@ -33,11 +33,7 @@ const playgroundConfig = ref({
               type: "input",
               rules: [{ required: true }]
             },
-            {
-              label: { "zh-CN": "项目描述", "en-US": "Description" },
-              prop: "description",
-              type: "input"
-            },
+            { label: { "zh-CN": "项目描述", "en-US": "Description" }, prop: "description", type: "input" },
             {
               label: { "zh-CN": "项目状态", "en-US": "Status" },
               prop: "status",
@@ -58,11 +54,7 @@ const playgroundConfig = ref({
                 { label: "低", value: "low" }
               ]
             },
-            {
-              label: { "zh-CN": "启用通知", "en-US": "Enable Notification" },
-              prop: "enableNotification",
-              type: "switch"
-            }
+            { label: { "zh-CN": "启用通知", "en-US": "Enable Notification" }, prop: "enableNotification", type: "switch" }
           ],
           actionButtons: [],
           exOptions: {},
@@ -73,33 +65,18 @@ const playgroundConfig = ref({
     {
       pageId: "page-2",
       name: "高级设置",
-      x: 500,
-      y: 0,
+      x: -255.0154652772236,
+      y: 130.39990764718888,
       itemConfigs: [
         {
           itemId: "form-2",
-          width: 400,
-          height: 250,
+          width: 520,
+          height: 100,
           type: "form",
           structure: [
-            {
-              label: { "zh-CN": "创建时间", "en-US": "Create Time" },
-              prop: "createTime",
-              type: "date-picker"
-            },
-            {
-              label: { "zh-CN": "截止日期", "en-US": "Deadline" },
-              prop: "deadline",
-              type: "date-time-picker"
-            },
-            {
-              label: { "zh-CN": "预算", "en-US": "Budget" },
-              prop: "budget",
-              type: "number",
-              min: 0,
-              precision: 2,
-              unit: "元"
-            }
+            { label: { "zh-CN": "创建时间", "en-US": "Create Time" }, prop: "createTime", type: "date-picker" },
+            { label: { "zh-CN": "截止日期", "en-US": "Deadline" }, prop: "deadline", type: "date-time-picker" },
+            { label: { "zh-CN": "预算", "en-US": "Budget" }, prop: "budget", type: "number", min: 0, precision: 2, unit: "元" }
           ],
           actionButtons: [],
           exOptions: {},
@@ -109,13 +86,7 @@ const playgroundConfig = ref({
     }
   ],
   interfaceConfigs: [
-    {
-      id: "save-project",
-      name: "保存项目",
-      apiUrl: "/api/projects/save",
-      apiType: "post",
-      dataStructure: "project"
-    },
+    { id: "save-project", name: "保存项目", apiUrl: "/api/projects/save", apiType: "post", dataStructure: "project" },
     {
       id: "get-project",
       name: "获取项目",
