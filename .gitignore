@@ -16,9 +16,9 @@ docs
 
 .DS_Store
 
-SaltedU
+PancakeUI
 ManagerMobile
-!document/SaltedU
+!document/PancakeUI
 !document/ManagerMobile
 
 script/vitepress/*

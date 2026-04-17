@@ -53,7 +53,7 @@ import {
   checkboxConfig,
   switchConfig
 } from "../../configs/cell-config";
-import { SaltedGlobalConfigType } from "../../../sa-content/type";
+import { PancakeGlobalConfigType } from "../../../sa-content/type";
 import { MOptionsType } from "../../type";
 
 import _ from "lodash";
@@ -64,8 +64,8 @@ const props = defineProps<{
   editItem?: SaStructureType.FormV2;
 }>();
 
-const SaltedGlobalConfig = inject("SaltedGlobalConfig") as ComputedRef<SaltedGlobalConfigType>;
-const language = SaltedGlobalConfig.value?.language?.value || "zh-CN";
+const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
+const language = PancakeGlobalConfig.value?.language?.value || "zh-CN";
 
 // @ options
 const exOptions = ref<Record<string, string>>({});

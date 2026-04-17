@@ -9,7 +9,7 @@ class MessageBoxManagerImpl implements MessageBoxManager {
   add(options: MessageBoxOptions): MessageBoxInstance {
     // 生成唯一ID
     const id = `notification_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-    const languageKey = window.SaltedGlobalConfig.language || "zh-CN";
+    const languageKey = window.PancakeGlobalConfig.language || "zh-CN";
     // 合并默认选项
     const mergedOptions = {
       ...options,

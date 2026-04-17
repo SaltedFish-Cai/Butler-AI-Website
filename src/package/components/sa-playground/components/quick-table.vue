@@ -75,12 +75,12 @@
 <script lang="tsx" setup>
 import { ref, computed, ComputedRef, inject, onMounted, watch, nextTick } from "vue";
 import { SaOptionType, SaStructureType } from "M_Types";
-import { SaltedGlobalConfigType } from "../../sa-content/type";
+import { PancakeGlobalConfigType } from "../../sa-content/type";
 
 const id = ref("table_" + new Date().getTime().toString());
-const SaltedGlobalConfig = inject("SaltedGlobalConfig") as ComputedRef<SaltedGlobalConfigType>;
+const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
 const languageValue = computed(() => {
-  return SaltedGlobalConfig.value?.language?.value || "zh-CN";
+  return PancakeGlobalConfig.value?.language?.value || "zh-CN";
 });
 
 const operationStyle = ref("");

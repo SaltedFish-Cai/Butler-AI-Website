@@ -66,10 +66,10 @@ import excelView from "./excel-view.vue";
 import wordView from "./word-view.vue";
 import textView from "./text-view.vue";
 import { useTemplateRef } from "vue";
-import { SaltedGlobalConfigType } from "../sa-content/type";
+import { PancakeGlobalConfigType } from "../sa-content/type";
 import { M_Message } from "../feedback";
 
-const SaltedGlobalConfig = inject("SaltedGlobalConfig") as ComputedRef<SaltedGlobalConfigType>;
+const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
 
 const visible = ref(false);
 const zoomIndex = ref(1);
@@ -94,7 +94,7 @@ const props = withDefaults(defineProps<SaMediaViewItemType>(), {});
 // }
 
 const languagePackage = computed(() => {
-  return SaltedGlobalConfig.value?.language?.package["cell"] || {};
+  return PancakeGlobalConfig.value?.language?.package["cell"] || {};
 });
 
 function openFile() {
@@ -137,8 +137,8 @@ const fileType = computed(() => {
 // #Function 现在文件
 function downFile() {
   const config = {
-    requestHeader: SaltedGlobalConfig.value?.requestHeader,
-    downloadHose: SaltedGlobalConfig.value?.file_config?.downloadHose || ""
+    requestHeader: PancakeGlobalConfig.value?.requestHeader,
+    downloadHose: PancakeGlobalConfig.value?.file_config?.downloadHose || ""
   };
   if (props.filePath)
     useDownload(config, props.filePath, props.fileName || props?.file?.OriginalName || props?.file?.FileName || "文件");

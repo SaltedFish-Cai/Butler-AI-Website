@@ -79,7 +79,7 @@
 
 <script lang="tsx" setup>
 import { computed, ComputedRef, inject, ref } from "vue";
-import { SaltedGlobalConfigType } from "../../../sa-content/type";
+import { PancakeGlobalConfigType } from "../../../sa-content/type";
 import { SaStructureType } from "M_Types";
 import { cellMapConfig } from "../../configs/cell-config";
 import { MOptionsType } from "../../type";
@@ -93,8 +93,8 @@ const props = defineProps<{
   authorizationFunction?: Array<SaStructureType.TableV2>;
 }>();
 
-const SaltedGlobalConfig = inject("SaltedGlobalConfig") as ComputedRef<SaltedGlobalConfigType>;
-const language = SaltedGlobalConfig.value?.language?.value || "zh-CN";
+const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
+const language = PancakeGlobalConfig.value?.language?.value || "zh-CN";
 
 const tableConfig = ref<SaStructureType.TableV2[]>([
   { prop: "label", label: { "en-US": "Column Name", "zh-CN": "列名" }, width: "300px" },

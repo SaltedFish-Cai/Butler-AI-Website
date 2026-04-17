@@ -43,14 +43,14 @@
 <script lang="tsx" setup>
 import { ComputedRef, inject, ref, useTemplateRef, computed, onMounted, nextTick } from "vue";
 import { SaOptionType, SaStructureType } from "M_Types";
-import { SaltedGlobalConfigType } from "../../../sa-content/type";
+import { PancakeGlobalConfigType } from "../../../sa-content/type";
 import { MInterfaceConfig, SaPlaygroundPagesType, MStructureType } from "../../type";
 import { deleteData, getAllData, getDataById, storeData, updateData } from "../../../indexDB/indexDB";
 import { M_Message, M_MessageBox } from "../../../feedback";
 import MQuickTable from "../quick-table.vue";
 
-const SaltedGlobalConfig = inject("SaltedGlobalConfig") as ComputedRef<SaltedGlobalConfigType>;
-const language = SaltedGlobalConfig.value?.language?.value || "zh-CN";
+const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
+const language = PancakeGlobalConfig.value?.language?.value || "zh-CN";
 const visibleTableRef = useTemplateRef("visibleTableRef");
 const props = withDefaults(
   defineProps<{

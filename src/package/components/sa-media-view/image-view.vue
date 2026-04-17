@@ -36,16 +36,16 @@ import { ref, onMounted, computed, watch, inject, ComputedRef } from "vue";
 import { useGetBlob } from "./use-download";
 import randChar from "../tools/rand-char";
 import { mouseUp, left90, leftAll90 } from "./rotate-fn";
-import { SaltedGlobalConfigType } from "../sa-content/type";
+import { PancakeGlobalConfigType } from "../sa-content/type";
 
 const imgRef = ref();
 const scrollRef = ref();
 const mediaImage = ref("");
 const IMG_ID = ref(randChar());
 
-const SaltedGlobalConfig = inject("SaltedGlobalConfig") as ComputedRef<SaltedGlobalConfigType>;
+const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
 const languagePackage = computed(() => {
-  return SaltedGlobalConfig.value?.language?.package["media"] || {};
+  return PancakeGlobalConfig.value?.language?.package["media"] || {};
 });
 
 // const startDistance = ref(0);
@@ -62,8 +62,8 @@ const menuSettingVisible = ref(false);
 
 onMounted(async () => {
   const config = {
-    requestHeader: SaltedGlobalConfig.value?.requestHeader,
-    downloadHose: SaltedGlobalConfig.value?.file_config?.downloadHose || ""
+    requestHeader: PancakeGlobalConfig.value?.requestHeader,
+    downloadHose: PancakeGlobalConfig.value?.file_config?.downloadHose || ""
   };
   const blobData = await useGetBlob(config, textUrl);
   if (blobData) {

@@ -9,7 +9,7 @@
 | 字段       | 描述   | 类型                                                                             | 默认值 |
 | ---------- | ------ | -------------------------------------------------------------------------------- | ------ |
 | modelValue | 绑定值 | `string`                                                                         | —      |
-| config     | 配置项 | {uploadImage?: [SaFileType](/document/SaltedUI_Doc/file/readme.html#SaFiletype)} | —      |
+| config     | 配置项 | {uploadImage?: [SaFileType](/document/PancakeUI_Doc/file/readme.html#SaFiletype)} | —      |
 
 ## `SaEditorEvents`
 

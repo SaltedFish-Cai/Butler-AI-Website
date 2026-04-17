@@ -5,19 +5,19 @@
 <script lang="ts" setup>
 import { ref, onMounted, inject, ComputedRef } from "vue";
 import { useGetBlob } from "./use-download";
-import { SaltedGlobalConfigType } from "../sa-content/type";
+import { PancakeGlobalConfigType } from "../sa-content/type";
 
 const props = withDefaults(defineProps<{ filePath: string; zoom: number }>(), {});
 const textUrl = String(props.filePath);
 
 // # Excel
 const excelRef = ref();
-const SaltedGlobalConfig = inject("SaltedGlobalConfig") as ComputedRef<SaltedGlobalConfigType>;
+const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
 
 onMounted(async () => {
   const config = {
-    requestHeader: SaltedGlobalConfig.value?.requestHeader,
-    downloadHose: SaltedGlobalConfig.value?.file_config?.downloadHose || ""
+    requestHeader: PancakeGlobalConfig.value?.requestHeader,
+    downloadHose: PancakeGlobalConfig.value?.file_config?.downloadHose || ""
   };
   const blob = await useGetBlob(config, textUrl);
   if (blob) {

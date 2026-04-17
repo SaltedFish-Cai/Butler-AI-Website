@@ -393,8 +393,8 @@ function showPopover() {
         // 开始观察目标元素位置变化
         startObserving();
         if (props.closeByScroll) {
-          window.SaltedGlobalConfig.PopoverList = window.SaltedGlobalConfig.PopoverList || {};
-          window.SaltedGlobalConfig.PopoverList[id.value] = hidePopover;
+          window.PancakeGlobalConfig.PopoverList = window.PancakeGlobalConfig.PopoverList || {};
+          window.PancakeGlobalConfig.PopoverList[id.value] = hidePopover;
         }
       });
     });
@@ -410,8 +410,8 @@ function hidePopover() {
   // 停止观察目标元素
   stopObserving();
   // 删除全局事件监听
-  if (window.SaltedGlobalConfig?.PopoverList?.[id.value]) {
-    delete window.SaltedGlobalConfig.PopoverList[id.value];
+  if (window.PancakeGlobalConfig?.PopoverList?.[id.value]) {
+    delete window.PancakeGlobalConfig.PopoverList[id.value];
   }
 }
 

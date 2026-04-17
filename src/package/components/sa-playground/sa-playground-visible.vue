@@ -204,7 +204,7 @@ import {
 import { M_Message, M_MessageBox } from "../feedback";
 import SaPlaygroundVisible from "./sa-playground-visible.vue";
 import useDictionariesAll from "../tools/dictionaries-all";
-import { SaltedGlobalConfigType } from "../sa-content/type";
+import { PancakeGlobalConfigType } from "../sa-content/type";
 import { SaOptionType, SaStructureType } from "M_Types";
 import { deleteDataByKey, getAllData, queryData, storeData, updateData } from "../indexDB/indexDB";
 import { SaPlaygroundPageButtonType } from "./components/type";
@@ -213,8 +213,8 @@ import { dictType } from "../tools/type";
 import _ from "lodash";
 const { isNil } = _;
 
-const SaltedGlobalConfig = inject("SaltedGlobalConfig") as ComputedRef<SaltedGlobalConfigType>;
-const language = SaltedGlobalConfig.value?.language?.value || "zh-CN";
+const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
+const language = PancakeGlobalConfig.value?.language?.value || "zh-CN";
 const pageClickButtonConfig = ref<SaPlaygroundPageButtonType>();
 const findNextPage = ref<boolean>(false);
 

@@ -29,7 +29,7 @@ import { ref, computed, onMounted, onUnmounted } from "vue";
 import type { MessageOptions } from "./type";
 import SaIcon from "../sa-icon/sa-icon.vue";
 
-const language = window.SaltedGlobalConfig?.language || "zh-CN";
+const language = window.PancakeGlobalConfig?.language || "zh-CN";
 
 // Props
 const props = defineProps<{
@@ -88,8 +88,8 @@ const handleClick = () => {
     onClick();
   }
   if (closeOnPressEscape) {
-    window.SaltedGlobalConfig.escapeMap = window.SaltedGlobalConfig.escapeMap || [];
-    window.SaltedGlobalConfig.escapeMap = window.SaltedGlobalConfig.escapeMap.filter(item => item != props.id);
+    window.PancakeGlobalConfig.escapeMap = window.PancakeGlobalConfig.escapeMap || [];
+    window.PancakeGlobalConfig.escapeMap = window.PancakeGlobalConfig.escapeMap.filter(item => item != props.id);
   }
 };
 
@@ -102,14 +102,14 @@ const handleClose = () => {
     onClose();
   }
   if (closeOnPressEscape) {
-    window.SaltedGlobalConfig.escapeMap = window.SaltedGlobalConfig.escapeMap || [];
-    window.SaltedGlobalConfig.escapeMap = window.SaltedGlobalConfig.escapeMap.filter(item => item != props.id);
+    window.PancakeGlobalConfig.escapeMap = window.PancakeGlobalConfig.escapeMap || [];
+    window.PancakeGlobalConfig.escapeMap = window.PancakeGlobalConfig.escapeMap.filter(item => item != props.id);
   }
 };
 
 // #添加ESC键监听
 function handleKeyDown(e) {
-  const escapeMap = window.SaltedGlobalConfig.escapeMap || [];
+  const escapeMap = window.PancakeGlobalConfig.escapeMap || [];
   if (e.key === "Escape" && escapeMap[escapeMap.length - 1] === props.id) {
     handleClose();
   }
@@ -123,8 +123,8 @@ onMounted(() => {
   }, 10);
   closeOnPressEscape && document.addEventListener("keydown", handleKeyDown);
   if (closeOnPressEscape) {
-    window.SaltedGlobalConfig.escapeMap = window.SaltedGlobalConfig.escapeMap || [];
-    window.SaltedGlobalConfig.escapeMap.push(props.id);
+    window.PancakeGlobalConfig.escapeMap = window.PancakeGlobalConfig.escapeMap || [];
+    window.PancakeGlobalConfig.escapeMap.push(props.id);
   }
 });
 

@@ -4,7 +4,7 @@ import _ from "lodash";
 const { isNil } = _;
 
 export function findData(data, options: SaOptionType.SelectList) {
-  const language = window.SaltedGlobalConfig?.language || "zh-CN";
+  const language = window.PancakeGlobalConfig?.language || "zh-CN";
 
   let text = "";
   if (!options?.length) return "--";

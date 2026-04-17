@@ -65,8 +65,8 @@ const props = defineProps<{
   options: MessageBoxOptions;
 }>();
 
-const languagePackage = languageMap[window.SaltedGlobalConfig?.language || "zh-CN"]["message"];
-const language = window.SaltedGlobalConfig?.language || "zh-CN";
+const languagePackage = languageMap[window.PancakeGlobalConfig?.language || "zh-CN"]["message"];
+const language = window.PancakeGlobalConfig?.language || "zh-CN";
 
 // 解构选项
 const {
@@ -117,8 +117,8 @@ const handleClick = () => {
     clearTimeout(timer.value);
   }
   if (closeOnPressEscape) {
-    window.SaltedGlobalConfig.escapeMap = window.SaltedGlobalConfig.escapeMap || [];
-    window.SaltedGlobalConfig.escapeMap = window.SaltedGlobalConfig.escapeMap.filter(item => item != props.id);
+    window.PancakeGlobalConfig.escapeMap = window.PancakeGlobalConfig.escapeMap || [];
+    window.PancakeGlobalConfig.escapeMap = window.PancakeGlobalConfig.escapeMap.filter(item => item != props.id);
   }
 };
 
@@ -129,14 +129,14 @@ const handleClose = () => {
     clearTimeout(timer.value);
   }
   if (closeOnPressEscape) {
-    window.SaltedGlobalConfig.escapeMap = window.SaltedGlobalConfig.escapeMap || [];
-    window.SaltedGlobalConfig.escapeMap = window.SaltedGlobalConfig.escapeMap.filter(item => item != props.id);
+    window.PancakeGlobalConfig.escapeMap = window.PancakeGlobalConfig.escapeMap || [];
+    window.PancakeGlobalConfig.escapeMap = window.PancakeGlobalConfig.escapeMap.filter(item => item != props.id);
   }
 };
 
 // #添加ESC键监听
 function handleKeyDown(e) {
-  const escapeMap = window.SaltedGlobalConfig.escapeMap || [];
+  const escapeMap = window.PancakeGlobalConfig.escapeMap || [];
   if (e.key === "Escape" && escapeMap[escapeMap.length - 1] === props.id) {
     handleClose();
   }
@@ -150,8 +150,8 @@ onMounted(() => {
   }, 10);
   closeOnPressEscape && document.addEventListener("keydown", handleKeyDown);
   if (closeOnPressEscape) {
-    window.SaltedGlobalConfig.escapeMap = window.SaltedGlobalConfig.escapeMap || [];
-    window.SaltedGlobalConfig.escapeMap.push(props.id);
+    window.PancakeGlobalConfig.escapeMap = window.PancakeGlobalConfig.escapeMap || [];
+    window.PancakeGlobalConfig.escapeMap.push(props.id);
   }
 });
 

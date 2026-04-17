@@ -379,13 +379,13 @@ import { useScrollHooks } from "./hooks/use-scroll-hooks";
 import { useSelectHooks } from "./hooks/use-select-hooks";
 import { useDragHooks } from "./hooks/use-drag-hooks";
 import { useValidateHooks } from "./hooks/use-validate-hooks";
-import { SaltedGlobalConfigType } from "../sa-content/type";
+import { PancakeGlobalConfigType } from "../sa-content/type";
 import { splitArray } from "../utils/arraySplit";
 
 import _ from "lodash";
 const { cloneDeep, debounce } = _;
 
-const SaltedGlobalConfig = inject("SaltedGlobalConfig") as ComputedRef<SaltedGlobalConfigType>;
+const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
 
 const mScrollbarListRef = useTemplateRef("mScrollbarListRef");
 const mScrollbarHeaderListRef = ref();
@@ -460,9 +460,9 @@ const useStickyViewIn = ref(false);
 
 const parentScrollbarRef = inject("parentScrollbarRef");
 
-const languagePackage = computed(() => SaltedGlobalConfig.value?.language?.package?.["table"] || {});
-const language = computed(() => SaltedGlobalConfig.value?.language?.value || "zh-CN");
-const infiniteScroll = computed(() => SaltedGlobalConfig.value?.table_config?.infiniteScroll || false);
+const languagePackage = computed(() => PancakeGlobalConfig.value?.language?.package?.["table"] || {});
+const language = computed(() => PancakeGlobalConfig.value?.language?.value || "zh-CN");
+const infiniteScroll = computed(() => PancakeGlobalConfig.value?.table_config?.infiniteScroll || false);
 const isScrollHeaderIng = ref(false);
 
 // # Hooks
@@ -555,12 +555,12 @@ const showTableList: Ref<Array<Array<SaTableUseType.SaTableInDataType>>> = compu
 
 provide(
   "languagePackage",
-  computed(() => SaltedGlobalConfig.value?.language?.package?.["table"] || {})
+  computed(() => PancakeGlobalConfig.value?.language?.package?.["table"] || {})
 );
 
 provide(
   "language",
-  computed(() => SaltedGlobalConfig.value?.language?.value || "zh-CN")
+  computed(() => PancakeGlobalConfig.value?.language?.value || "zh-CN")
 );
 
 provide(
@@ -580,7 +580,7 @@ provide(
 
 provide(
   "useGlobalSeniorFilter",
-  computed(() => SaltedGlobalConfig.value?.table_config?.useSeniorFilter || false)
+  computed(() => PancakeGlobalConfig.value?.table_config?.useSeniorFilter || false)
 );
 
 const exDisabled = ref({} as { [x: string]: (value) => boolean });

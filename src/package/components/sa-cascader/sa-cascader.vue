@@ -107,7 +107,7 @@ import { SaCascaderType } from "./type";
 import { randChar } from "../tools/rand-char";
 import { getElementPosition } from "../utils/getElementPosition";
 import { findData as findDataSelect } from "./find-data";
-import { SaltedGlobalConfigType } from "../sa-content/type";
+import { PancakeGlobalConfigType } from "../sa-content/type";
 
 import _ from "lodash";
 const { isEqual, isNil, cloneDeep } = _;
@@ -121,12 +121,12 @@ const waitTag = ref(false);
 
 const OptionsHeight = ref("auto");
 
-const SaltedGlobalConfig = inject("SaltedGlobalConfig") as ComputedRef<SaltedGlobalConfigType>;
+const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
 const languagePackage = computed(() => {
-  return SaltedGlobalConfig.value?.language?.package?.["cell"] || {};
+  return PancakeGlobalConfig.value?.language?.package?.["cell"] || {};
 });
 const languageValue = computed(() => {
-  return SaltedGlobalConfig.value?.language?.value || "zh-CN";
+  return PancakeGlobalConfig.value?.language?.value || "zh-CN";
 });
 
 const props = withDefaults(defineProps<SaCascaderType>(), {

@@ -52,11 +52,11 @@ import { M_Message, M_MessageBox } from "../../feedback";
 
 import DataManagement from "./simulated-field-components/data-management.vue";
 import SimulatedInterface from "./simulated-field-components/simulated-interface.vue";
-import { SaltedGlobalConfigType } from "../../sa-content/type";
+import { PancakeGlobalConfigType } from "../../sa-content/type";
 import { clearAllData } from "../../indexDB/indexDB";
 
-const SaltedGlobalConfig = inject("SaltedGlobalConfig") as ComputedRef<SaltedGlobalConfigType>;
-const language = SaltedGlobalConfig.value?.language?.value || "zh-CN";
+const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
+const language = PancakeGlobalConfig.value?.language?.value || "zh-CN";
 
 const props = withDefaults(
   defineProps<{

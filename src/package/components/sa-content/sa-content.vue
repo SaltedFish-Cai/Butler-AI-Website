@@ -5,7 +5,7 @@
 <script lang="ts" setup>
 import { provide, reactive, computed, watch } from "vue";
 import { setThemeColor } from "../tools/color";
-import { SaltedGlobalConfigType, SaltedUIType } from "./type";
+import { PancakeGlobalConfigType, PancakeUIType } from "./type";
 import languageMap from "../language.json";
 import { createLog } from "../utils/develop-log";
 import _ from "lodash";
@@ -20,7 +20,7 @@ provide("getManagerV2GlobalZIndex", () => {
 });
 
 console.log("++++++++++> 11111:", 11111);
-const props = withDefaults(defineProps<SaltedUIType>(), {});
+const props = withDefaults(defineProps<PancakeUIType>(), {});
 /**
  * # 状态
  */
@@ -37,14 +37,14 @@ const state = reactive({
   address_config: props.address_config,
   file_config: props.file_config,
   requestHeader: props.requestHeader
-} as SaltedGlobalConfigType);
+} as PancakeGlobalConfigType);
 
-window.SaltedGlobalConfig = { ...state, language: (state?.language?.value || "zh-CN") as any };
+window.PancakeGlobalConfig = { ...state, language: (state?.language?.value || "zh-CN") as any };
 
 provide(
-  "SaltedGlobalConfig",
+  "PancakeGlobalConfig",
   computed(() => {
-    window.SaltedGlobalConfig = { ...state, language: (state?.language?.value || "zh-CN") as any };
+    window.PancakeGlobalConfig = { ...state, language: (state?.language?.value || "zh-CN") as any };
     return state;
   })
 );
@@ -91,7 +91,7 @@ function setManagerV2TableInfiniteScroll(value) {
   state.table_config = { ...state.table_config, ...value };
 }
 
-function setManagerV2Config(type: keyof SaltedGlobalConfigType & {}, config: any) {
+function setManagerV2Config(type: keyof PancakeGlobalConfigType & {}, config: any) {
   if (type == "language") setManagerV2Language(config);
   else if (type == "themeColor" || type == "isDark") setManagerV2ThemeColor(config.themeColor, config.isDark);
   else if (type == "size") setManagerV2Size(config.size);

@@ -98,7 +98,7 @@ import pdfView from "./pdf-view.vue";
 import excelView from "./excel-view.vue";
 import wordView from "./word-view.vue";
 import textView from "./text-view.vue";
-import { SaltedGlobalConfigType } from "../sa-content/type";
+import { PancakeGlobalConfigType } from "../sa-content/type";
 
 const visible = ref(false);
 const viewIndex = ref(0);
@@ -114,9 +114,9 @@ const props = withDefaults(defineProps<SaMediaViewType>(), {
   hideBtn: false
 });
 
-const SaltedGlobalConfig = inject("SaltedGlobalConfig") as ComputedRef<SaltedGlobalConfigType>;
+const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
 const languagePackage = computed(() => {
-  return SaltedGlobalConfig.value?.language?.package["media"] || {};
+  return PancakeGlobalConfig.value?.language?.package["media"] || {};
 });
 
 function openFile() {
@@ -180,16 +180,16 @@ const fileType = computed(() => {
 function downFile() {
   const _viewIndex = viewIndex.value;
   const config = {
-    requestHeader: SaltedGlobalConfig.value?.requestHeader,
-    downloadHose: SaltedGlobalConfig.value?.file_config?.downloadHose || ""
+    requestHeader: PancakeGlobalConfig.value?.requestHeader,
+    downloadHose: PancakeGlobalConfig.value?.file_config?.downloadHose || ""
   };
   useDownload(config, props.fileList[_viewIndex]?.filePath, props.fileList[_viewIndex]?.fileName || "文件");
 }
 
 function downAll() {
   const config = {
-    requestHeader: SaltedGlobalConfig.value?.requestHeader,
-    downloadHose: SaltedGlobalConfig.value?.file_config?.downloadHose || ""
+    requestHeader: PancakeGlobalConfig.value?.requestHeader,
+    downloadHose: PancakeGlobalConfig.value?.file_config?.downloadHose || ""
   };
   for (let i = 0; i < props.fileList.length; i++) {
     useDownload(config, props.fileList[i]?.filePath, props.fileList[i]?.fileName || "文件");

@@ -99,7 +99,7 @@ import { equalData } from "../utils/equalData";
 import { getElementPosition } from "../utils/getElementPosition";
 import { SaOptionType } from "../manager-type";
 import { findData as findDataSelect } from "./find-data";
-import { SaltedGlobalConfigType } from "../sa-content/type";
+import { PancakeGlobalConfigType } from "../sa-content/type";
 import SaScrollbar from "../sa-scrollbar/sa-scrollbar.vue";
 
 import _ from "lodash";
@@ -115,12 +115,12 @@ const awaitSelecting = ref(false);
 
 const OptionsHeight = ref("auto");
 
-const SaltedGlobalConfig = inject("SaltedGlobalConfig") as ComputedRef<SaltedGlobalConfigType>;
+const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
 const languagePackage = computed(() => {
-  return SaltedGlobalConfig.value?.language?.package?.["cell"] || "zh-CN";
+  return PancakeGlobalConfig.value?.language?.package?.["cell"] || "zh-CN";
 });
 const languageValue = computed(() => {
-  return SaltedGlobalConfig.value?.language?.value || "zh-CN";
+  return PancakeGlobalConfig.value?.language?.value || "zh-CN";
 });
 const props = withDefaults(defineProps<SaSelectType>(), {
   id: randChar(),

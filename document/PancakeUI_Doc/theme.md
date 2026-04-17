@@ -1,6 +1,6 @@
 # 定制主题
 
-salted-ui 的样式使用了 [Scss](https://www.sass.hk/) 作为开发语言，你可以根据需求进行相应调整。并且提供方法 `setManagerTheme` 用于更换主题颜色，如果只需要变更黑暗或明亮模式，可直接使用 `setManagerThemeDark` 进行设置。
+Pancake-UI 的样式使用了 [Scss](https://www.sass.hk/) 作为开发语言，你可以根据需求进行相应调整。并且提供方法 `setManagerTheme` 用于更换主题颜色，如果只需要变更黑暗或明亮模式，可直接使用 `setManagerThemeDark` 进行设置。
 
 ## setManagerTheme 变更主题
 

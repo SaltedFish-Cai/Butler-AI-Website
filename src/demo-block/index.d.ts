@@ -3,7 +3,7 @@ declare module "*.vue" {
   export default component;
 }
 
-declare module "salted-ui" {
+declare module "Pancake-UI" {
   const demoblock: (md: any) => void;
   export default demoblock;
 }

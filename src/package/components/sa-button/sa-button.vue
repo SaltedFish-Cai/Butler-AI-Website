@@ -40,7 +40,7 @@ import { SaButtonType } from "./type";
 import inBrowser from "../tools/inBrowser";
 import { M_MessageBox } from "../feedback";
 
-import { SaltedGlobalConfigType } from "../sa-content/type";
+import { PancakeGlobalConfigType } from "../sa-content/type";
 
 import _ from "lodash";
 const { debounce } = _;
@@ -61,10 +61,10 @@ const props = withDefaults(defineProps<SaButtonType>(), {
 
 const emit = defineEmits(["click", "confirmClick", "deleteClick", "submitClick"]);
 
-const SaltedGlobalConfig = inject("SaltedGlobalConfig") as ComputedRef<SaltedGlobalConfigType>;
+const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
 
 const languageValue = computed(() => {
-  return SaltedGlobalConfig.value?.language?.value || "zh-CN";
+  return PancakeGlobalConfig.value?.language?.value || "zh-CN";
 });
 const state = reactive({
   id: new Date().getTime() + Math.random(),

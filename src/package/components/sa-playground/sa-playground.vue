@@ -408,8 +408,8 @@ const props = withDefaults(defineProps<SaPlaygroundProps>(), {
   })
 });
 
-const SaltedGlobalConfig = inject("SaltedGlobalConfig") as Ref<any>;
-const language = computed(() => SaltedGlobalConfig.value?.language?.value || "zh-CN");
+const PancakeGlobalConfig = inject("PancakeGlobalConfig") as Ref<any>;
+const language = computed(() => PancakeGlobalConfig.value?.language?.value || "zh-CN");
 
 // 表格组件引用
 const tableRefs = ref<Record<string, any>>({});

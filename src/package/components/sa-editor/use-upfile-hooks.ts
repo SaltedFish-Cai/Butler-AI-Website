@@ -2,7 +2,7 @@ import { computed, ComputedRef, ref, Ref } from "vue";
 import { M_Message } from "../feedback";
 import { SaFileDataType } from "../sa-file/type";
 import { ajaxUpload } from "../sa-file/ajax";
-import { SaltedGlobalConfigType } from "../sa-content/type";
+import { PancakeGlobalConfigType } from "../sa-content/type";
 import { SaEditorType } from "./type";
 
 import _ from "lodash";
@@ -11,7 +11,7 @@ const { debounce } = _;
 export const useUpFileHooks = (
   props: SaEditorType,
   fileInput: Ref<any>,
-  SaltedGlobalConfig: ComputedRef<SaltedGlobalConfigType>,
+  PancakeGlobalConfig: ComputedRef<PancakeGlobalConfigType>,
   editorRef: Ref<any>
 ) => {
   const upImageLoading = ref(false);
@@ -20,15 +20,15 @@ export const useUpFileHooks = (
 
   // @ computed 上传配置
   const fileConfigData = computed(() => {
-    const headerData = SaltedGlobalConfig.value?.requestHeader || {};
-    const fileApi = SaltedGlobalConfig.value?.file_config;
-    const apiBaseUrl = SaltedGlobalConfig.value?.baseHost;
+    const headerData = PancakeGlobalConfig.value?.requestHeader || {};
+    const fileApi = PancakeGlobalConfig.value?.file_config;
+    const apiBaseUrl = PancakeGlobalConfig.value?.baseHost;
     return { headerData, fileApi, apiBaseUrl };
   });
 
   // @ computed 语言包
   const languagePackage = computed(() => {
-    return SaltedGlobalConfig.value?.language?.package?.["file"] || {};
+    return PancakeGlobalConfig.value?.language?.package?.["file"] || {};
   });
 
   const requestHeader = computed(() => {

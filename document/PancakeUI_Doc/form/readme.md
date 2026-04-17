@@ -190,15 +190,15 @@ const formConfig: MStructureV2Type.FormV2[] = [
 
 | 描述       | 单元格类型                                                    |
 | ---------- | ------------------------------------------------------------- |
-| 输入框     | [SaInputType](/document/SaltedUI_Doc/input/readme.html)       |
-| 数字输入框 | [SaNumberType](/document/SaltedUI_Doc/number/readme.html)     |
-| 选择器     | [SaSelectType](/document/SaltedUI_Doc/select/readme.html)     |
-| 联级选择器 | [SaCascaderType](/document/SaltedUI_Doc/cascader/readme.html) |
-| 多选       | [SaCheckboxType](/document/SaltedUI_Doc/checkbox/readme.html) |
-| 单选       | [SaRadioType](/document/SaltedUI_Doc/radio/readme.html)       |
-| 开关       | [SaSwitchType](/document/SaltedUI_Doc/switch/readme.html)     |
-| 时间选择器 | [SaTimeType](/document/SaltedUI_Doc/time/readme.html)         |
-| 文件选择器 | [SaFileType](/document/SaltedUI_Doc/file/readme.html)         |
+| 输入框     | [SaInputType](/document/PancakeUI_Doc/input/readme.html)       |
+| 数字输入框 | [SaNumberType](/document/PancakeUI_Doc/number/readme.html)     |
+| 选择器     | [SaSelectType](/document/PancakeUI_Doc/select/readme.html)     |
+| 联级选择器 | [SaCascaderType](/document/PancakeUI_Doc/cascader/readme.html) |
+| 多选       | [SaCheckboxType](/document/PancakeUI_Doc/checkbox/readme.html) |
+| 单选       | [SaRadioType](/document/PancakeUI_Doc/radio/readme.html)       |
+| 开关       | [SaSwitchType](/document/PancakeUI_Doc/switch/readme.html)     |
+| 时间选择器 | [SaTimeType](/document/PancakeUI_Doc/time/readme.html)         |
+| 文件选择器 | [SaFileType](/document/PancakeUI_Doc/file/readme.html)         |
 
 ## `SaFormProps`
 
@@ -216,8 +216,8 @@ const formConfig: MStructureV2Type.FormV2[] = [
 | 表单配置                           | structure       | `Array<MStructureV2Type.FormV2>`                                                               | —       |
 | 设置表单为纯展示                   | disabled        | `boolean`                                                                                      | `false` |
 | 是否纯展示表单                     | display         | `boolean`                                                                                      | `false` |
-| 外置依赖                           | exDependent     | [SaFormExDependentType](/document/SaltedUI_Doc/form/readme.html#SaFormexdependenttype)         | —       |
-| 单元格外置依赖                     | exCellDependent | [SaFormCellExDependentType](/document/SaltedUI_Doc/form/readme.html#SaFormcellexdependenttype) | —       |
+| 外置依赖                           | exDependent     | [SaFormExDependentType](/document/PancakeUI_Doc/form/readme.html#SaFormexdependenttype)         | —       |
+| 单元格外置依赖                     | exCellDependent | [SaFormCellExDependentType](/document/PancakeUI_Doc/form/readme.html#SaFormcellexdependenttype) | —       |
 | 最大分栏数                         | maxSpan         | `1` `2` `3` `4`                                                                                | `4`     |
 | 最大分栏数                         | exSpan          | `1` `2` `3` `4`                                                                                | `4`     |
 

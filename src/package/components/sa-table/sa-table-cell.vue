@@ -311,7 +311,7 @@ import { findData as findDataSwitch } from "../sa-switch/find-data";
 import { findData as findDataSelect } from "../sa-select/find-data";
 import { SaOptionType } from "../manager-type";
 import { SaFormChildType } from "../sa-form/type";
-import { SaltedGlobalConfigType } from "../sa-content/type";
+import { PancakeGlobalConfigType } from "../sa-content/type";
 
 type TableCellType = {
   structure: Array<SaTableUseItemType>;
@@ -331,7 +331,7 @@ type TableCellType = {
 };
 
 const props = withDefaults(defineProps<TableCellType>(), {});
-const SaltedGlobalConfig = inject("SaltedGlobalConfig") as ComputedRef<SaltedGlobalConfigType>;
+const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
 
 // const exFunction = ref({} as Record<string, string>);
 // const exFormatter = ref({} as Record<string, string>);
@@ -356,7 +356,7 @@ function setCellDisplayValue(row: SaTableUseType.SaTableInDataType, prop: string
     return keepDecimalPlaces(row[prop], cellConfig.precision);
   } else if (type == "switch") {
     const _exOptions = exOptions.value[prop];
-    return findDataSwitch(row[prop], _exOptions, SaltedGlobalConfig.value?.language?.value);
+    return findDataSwitch(row[prop], _exOptions, PancakeGlobalConfig.value?.language?.value);
   } else if (
     type == "radio" ||
     type == "checkbox" ||

@@ -19,12 +19,12 @@
 
 <script lang="ts" setup>
 import { reactive, inject, ComputedRef, onMounted, nextTick, onUnmounted } from "vue";
-import { SaltedGlobalConfigType } from "../sa-content/type";
+import { PancakeGlobalConfigType } from "../sa-content/type";
 import { M_Message } from "../feedback";
 
 const props = withDefaults(defineProps<{ id: string }>(), { id: "" });
 
-const SaltedGlobalConfig = inject("SaltedGlobalConfig") as ComputedRef<SaltedGlobalConfigType>;
+const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
 const menu = reactive({
   visible: false,
   top: "-100%",
@@ -64,7 +64,7 @@ function onContextMenu(e) {
   menu.visible = !menu.visible;
 }
 
-if (SaltedGlobalConfig.value.env == "development") {
+if (PancakeGlobalConfig.value.env == "development") {
   onMounted(() => {
     nextTick(() => {
       const element = window.document.getElementById(props.id);

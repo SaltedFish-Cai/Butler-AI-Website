@@ -22,15 +22,15 @@
 <script lang="ts" setup>
 import { computed, ComputedRef, inject, ref, watch } from "vue";
 import { SaRadioItemType } from "./type";
-import { SaltedGlobalConfigType } from "../sa-content/type";
+import { PancakeGlobalConfigType } from "../sa-content/type";
 
 import _ from "lodash";
 const { isNil } = _;
 
 const props = withDefaults(defineProps<SaRadioItemType>(), {});
 
-const SaltedGlobalConfig = inject("SaltedGlobalConfig") as ComputedRef<SaltedGlobalConfigType>;
-const language = SaltedGlobalConfig.value?.language?.value || "zh-CN";
+const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
+const language = PancakeGlobalConfig.value?.language?.value || "zh-CN";
 
 const inValue = ref(props.modelValue);
 const emits = defineEmits(["update:modelValue", "change"]);

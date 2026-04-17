@@ -1,7 +1,7 @@
 import demoBlock from "../src/demo-block";
 
 import { sidebar } from "./sidebar";
-import { saltedUISidebar } from "./salted-ui-sidebar";
+import { PancakeUISidebar } from "./pancake-sidebar";
 import { packageCode } from "./package-code";
 import { study } from "./study";
 
@@ -16,11 +16,11 @@ import { VantResolver } from "@vant/auto-import-resolver";
 export default {
   srcDir: "./",
   outDir: ".vitepress/dist",
-  base: process.env.DEPLOY_TARGET === "gh-pages" ? "/Saltedfish-Website/" : "/",
+  base: process.env.DEPLOY_TARGET === "gh-pages" ? "/Pancakefish-Website/" : "/",
   cleanUrls: true,
   lang: "zh-CN",
   // lang: 'en-US',
-  title: "Salted-Fish", // 标题
+  title: "Butler", // 标题
   description: "老咸鱼的站点", // 描述
   env: "manager",
   lastUpdated: true, // 上次更新时间
@@ -43,9 +43,9 @@ export default {
     nav: [
       // { text: "指南", link: "/document/guide/quickstart", activeMatch: "/guide/" },
       {
-        text: "👍 Salted-UI 框架",
-        link: "/document/SaltedUI_Doc/icon/readme",
-        activeMatch: "/SaltedUI_Doc/"
+        text: "👍 Pancake-UI 框架",
+        link: "/document/PancakeUI_Doc/icon/readme",
+        activeMatch: "/PancakeUI_Doc/"
       },
       { text: "🤯 AI学习", link: "/document/study/ai/selection", activeMatch: "/study/" },
       { text: "🔨 工具站", link: "/document/tools/tools" },
@@ -69,7 +69,7 @@ export default {
     ],
     sidebar: {
       "/document/demo/guide": sidebar,
-      "/document/SaltedUI_Doc": saltedUISidebar,
+      "/document/PancakeUI_Doc": PancakeUISidebar,
       "/document/study": study
     },
     search:
@@ -122,7 +122,7 @@ export default {
             options: {
               appId: "IAB2LW1YC9",
               apiKey: "7137ff10d7023a7fd954b56a313c2076",
-              indexName: "saltedfish.frontend-m.online",
+              indexName: "Pancakefish.frontend-m.online",
               insights: true,
               askAi: "M7l8pndQS3kV",
 
@@ -215,8 +215,8 @@ export default {
           },
     // 社交信息栏
     socialLinks: [
-      { icon: "gitee", link: "https://gitee.com/SaltedFish-Cai/Saltedfish-Website" },
-      { icon: "github", link: "https://github.com/SaltedFish-Cai/Saltedfish-Website" }
+      { icon: "gitee", link: "https://gitee.com/PancakeFish-Cai/Pancakefish-Website" },
+      { icon: "github", link: "https://github.com/PancakeFish-Cai/Pancakefish-Website" }
     ],
     // 底部信息栏
     footer: {
@@ -282,7 +282,7 @@ export default {
   },
   head: [
     ["meta", { name: "theme-color", content: "#3eaf7c" }],
-    ["link", { rel: "icon", href: `//saltedfish.frontend-m.online/logo-ui.svg` }],
+    ["link", { rel: "icon", href: `//Pancakefish.frontend-m.online/logo-ui.svg` }],
     ["meta", { name: "algolia-site-verification", content: "601BD5B794ABD061" }],
     ["script", { src: "https://unpkg.com/@algolia/sitesearch@latest/dist/search.min.js" }],
     ["link", { rel: "stylesheet", href: "https://unpkg.com/@algolia/sitesearch@latest/dist/search.min.css" }],

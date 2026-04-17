@@ -86,7 +86,7 @@ const Component = {
     if (Object.keys(components).length == 0) {
       return;
     }
-    window.log.msg("SaltedU", "正在使用开发版");
+    window.log.msg("PancakeUI", "正在使用开发版");
     for (const path in components) {
       const name = path.slice(path.lastIndexOf("/") + 1, path.lastIndexOf("."));
       if (!name.includes("v2")) {

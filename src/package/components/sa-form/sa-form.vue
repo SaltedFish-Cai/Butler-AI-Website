@@ -86,7 +86,7 @@ import formItem from "./form-basics-element.vue";
 import { SaFormItemType, SaFormChildType, SaFormProps, ConfigContextType, FormDataType } from "./type";
 import { ExMultipleConfigType, MultipleConfigType } from "./type";
 import { DatePickerShortcut } from "../sa-time/type";
-import { SaltedGlobalConfigType } from "../sa-content/type";
+import { PancakeGlobalConfigType } from "../sa-content/type";
 
 import _ from "lodash";
 const { cloneDeep, isEqual, debounce } = _;
@@ -139,7 +139,7 @@ const inConfigObj: Record<string, any> = {};
 
 const ruleTabsFormRef: Record<string, { submitTabsForm: () => Promise<boolean | undefined> }> = {};
 // const setRuleTabsFormRefDebounce = debounce(setRuleTabsFormRef, 200, { trailing: true });
-const SaltedGlobalConfig = inject("SaltedGlobalConfig") as ComputedRef<SaltedGlobalConfigType>;
+const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
 const injectSetScrollToIntersect = inject("setScrollToIntersect") as (
   el: Element,
   callback?: () => void,
@@ -155,8 +155,8 @@ const configContext: Ref<ConfigContextType> = ref({
   contrastData: computed(() => props.contrastData),
   alwaysContrast: computed(() => props.alwaysContrast),
   display: computed(() => props.display),
-  languagePackage: computed(() => SaltedGlobalConfig.value?.language?.package?.["form"] || {}),
-  language: computed(() => SaltedGlobalConfig.value?.language?.value || "zh-CN"),
+  languagePackage: computed(() => PancakeGlobalConfig.value?.language?.package?.["form"] || {}),
+  language: computed(() => PancakeGlobalConfig.value?.language?.value || "zh-CN"),
   exOptions: computed(() => props.exOptions),
   exDependent: computed(() => props.exDependent),
   exCellDependent: computed(() => props.exCellDependent),
@@ -277,7 +277,7 @@ function setRule(
         message:
           typeof item.message == "string"
             ? item.message
-            : item.message?.[SaltedGlobalConfig.value?.language?.value || "zh-CN"] ||
+            : item.message?.[PancakeGlobalConfig.value?.language?.value || "zh-CN"] ||
               configContext.value.languagePackage["requiredMessage"]
       };
       return data;
@@ -334,10 +334,10 @@ function setMultipleConfig(configItem: ExMultipleConfigType, baseIndex: number) 
 
       // // placeholder
       // item.placeholder = item.languagePlaceholder
-      //   ? item.languagePlaceholder[SaltedGlobalConfig.value?.language?.value || "zh-CN"]
+      //   ? item.languagePlaceholder[PancakeGlobalConfig.value?.language?.value || "zh-CN"]
       //   : typeof item.placeholder == "string"
       //   ? item.placeholder
-      //   : item?.placeholder?.[SaltedGlobalConfig.value?.language?.value || "zh-CN"] || item?.placeholder;
+      //   : item?.placeholder?.[PancakeGlobalConfig.value?.language?.value || "zh-CN"] || item?.placeholder;
 
       item.display = item.display != undefined ? item.display : props.display;
       item.disabled = item.disabled == undefined ? configItem.disabled : item.disabled;
@@ -347,7 +347,7 @@ function setMultipleConfig(configItem: ExMultipleConfigType, baseIndex: number) 
 
       const _tabsGroupName =
         typeof item?.unitName == "object"
-          ? item?.unitName?.[SaltedGlobalConfig.value?.language?.value || "zh-CN"]
+          ? item?.unitName?.[PancakeGlobalConfig.value?.language?.value || "zh-CN"]
           : item.unitName || "default";
 
       // if (Array.isArray(configItem.inMultipleConfig)) {
@@ -385,7 +385,7 @@ function setMultipleConfig(configItem: ExMultipleConfigType, baseIndex: number) 
           unitName: _tabsGroupName,
           unitTip: String(
             typeof configItem.unitTip == "object"
-              ? configItem.unitTip?.[SaltedGlobalConfig.value?.language?.value || "zh-CN"] || configItem.unitTip
+              ? configItem.unitTip?.[PancakeGlobalConfig.value?.language?.value || "zh-CN"] || configItem.unitTip
               : configItem.unitTip || ""
           ),
           configs: [item]
@@ -409,7 +409,7 @@ function setMultipleConfig(configItem: ExMultipleConfigType, baseIndex: number) 
       unitName: _groupName,
       unitTip: String(
         typeof configItem.unitTip == "object"
-          ? configItem.unitTip?.[SaltedGlobalConfig.value?.language?.value || "zh-CN"] || configItem.unitTip
+          ? configItem.unitTip?.[PancakeGlobalConfig.value?.language?.value || "zh-CN"] || configItem.unitTip
           : configItem.unitTip || ""
       ),
       configs: [configItem]
@@ -427,7 +427,7 @@ function initConfig() {
     const propsArr = inConfig.value.map(item => {
       const _groupName =
         typeof item.unitName == "object"
-          ? item.unitName?.[SaltedGlobalConfig.value?.language?.value || "zh-CN"]
+          ? item.unitName?.[PancakeGlobalConfig.value?.language?.value || "zh-CN"]
           : item.unitName || "default";
       if (!baseInMultipleConfigKeys.includes(_groupName)) {
         baseInMultipleConfigKeys.push(_groupName);

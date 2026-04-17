@@ -8,7 +8,7 @@
 
 ```typescript
 import useDictionaries from "MTools/dictionaries"; // [!code warning]
-import { mTagOptionType } from "SaltedU/global";// [!code warning]
+import { mTagOptionType } from "PancakeUI/global";// [!code warning]
 
 const exOptions = ref({});
 nextTick(async () => {
@@ -23,7 +23,7 @@ nextTick(async () => {
 
 ```typescript
 import useDictionaries from "MTools/dictionaries-all"; // [!code warning]
-import { mSelectOptionType } from "SaltedU/global";// [!code warning]
+import { mSelectOptionType } from "PancakeUI/global";// [!code warning]
 
 const exOptions = ref({});
 nextTick(async () => {

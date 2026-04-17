@@ -32,16 +32,16 @@ import { ref, Ref, onMounted, onUnmounted, nextTick, computed, inject, ComputedR
 import { useGetBlob } from "./use-download";
 import randChar from "../tools/rand-char";
 import { mouseUp, left90, leftAll90 } from "./rotate-fn";
-import { SaltedGlobalConfigType } from "../sa-content/type";
+import { PancakeGlobalConfigType } from "../sa-content/type";
 
 // import Pdfh5 from "./pdf/js/pdfh5";
 // import "./pdf/css/pdfh5.css";
 // import Pdfh5 from "pdfh5";
 // import "pdfh5/css/pdfh5.css";
 
-const SaltedGlobalConfig = inject("SaltedGlobalConfig") as ComputedRef<SaltedGlobalConfigType>;
+const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
 const languagePackage = computed(() => {
-  return SaltedGlobalConfig.value?.language?.package["media"] || {};
+  return PancakeGlobalConfig.value?.language?.package["media"] || {};
 });
 
 const pdf: Ref<any> = ref(null);
@@ -55,8 +55,8 @@ const menuSettingVisible = ref(false);
 
 onMounted(async () => {
   const config = {
-    requestHeader: SaltedGlobalConfig.value?.requestHeader,
-    downloadHose: SaltedGlobalConfig.value?.file_config?.downloadHose || ""
+    requestHeader: PancakeGlobalConfig.value?.requestHeader,
+    downloadHose: PancakeGlobalConfig.value?.file_config?.downloadHose || ""
   };
   const blobData = await useGetBlob(config, textUrl);
   if (blobData) {

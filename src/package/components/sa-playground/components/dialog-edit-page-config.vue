@@ -40,15 +40,15 @@
 import { computed, ComputedRef, inject, ref, useTemplateRef } from "vue";
 import { MInterfaceConfig, SaPlaygroundItem, MStructureType } from "../type";
 import { SaOptionType, SaStructureType } from "M_Types";
-import { SaltedGlobalConfigType } from "../../sa-content/type";
+import { PancakeGlobalConfigType } from "../../sa-content/type";
 
 const formRef = useTemplateRef("formRef");
 
 const props = defineProps<{ dataStructures: MStructureType[]; interfaceConfigs: MInterfaceConfig[] }>();
 const emit = defineEmits(["handleEditItemBaseSubmit"]);
 
-const SaltedGlobalConfig = inject("SaltedGlobalConfig") as ComputedRef<SaltedGlobalConfigType>;
-const language = SaltedGlobalConfig.value?.language?.value || "zh-CN";
+const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
+const language = PancakeGlobalConfig.value?.language?.value || "zh-CN";
 
 const visible = ref(false);
 const editItemData = ref<SaPlaygroundItem>({} as SaPlaygroundItem);

@@ -25,7 +25,7 @@ function resolveComponent$1(name, options) {
     partialNameItem = partialName.replace("-group", "");
   }
   return {
-    from: `SaltedU/${partialNameItem}/${partialName}.vue`
+    from: `PancakeUI/${partialNameItem}/${partialName}.vue`
     // sideEffects: getSideEffectsLegacy(partialName, options)
   };
 }

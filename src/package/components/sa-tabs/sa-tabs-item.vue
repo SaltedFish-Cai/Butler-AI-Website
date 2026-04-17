@@ -54,12 +54,12 @@
 // #
 import { ref, onMounted, inject, provide, watch, computed, ComputedRef } from "vue";
 import { SaTabsItemType } from "./type";
-import { SaltedGlobalConfigType } from "../sa-content/type";
+import { PancakeGlobalConfigType } from "../sa-content/type";
 // import { randChar } from "../tools/rand-char";
 
-const SaltedGlobalConfig = inject("SaltedGlobalConfig") as ComputedRef<SaltedGlobalConfigType>;
+const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
 const languageValue = computed(() => {
-  return SaltedGlobalConfig.value?.language?.value || "zh-CN";
+  return PancakeGlobalConfig.value?.language?.value || "zh-CN";
 });
 
 const scrollbarRef = ref();

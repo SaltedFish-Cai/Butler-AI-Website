@@ -89,26 +89,26 @@
 import { ref, computed, ComputedRef, watch, onMounted, nextTick, inject } from "vue";
 import { SaInputType } from "./type";
 import { randChar } from "../tools/rand-char";
-import { SaltedGlobalConfigType } from "../sa-content/type";
+import { PancakeGlobalConfigType } from "../sa-content/type";
 
 import _ from "lodash";
 const { isEqual, isNil } = _;
 
-const SaltedGlobalConfig = inject("SaltedGlobalConfig") as ComputedRef<SaltedGlobalConfigType>;
+const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
 
 const inputRef = ref();
 const textareaRef = ref();
 const isFocus = ref(false);
 
 const languagePackage = computed(() => {
-  return SaltedGlobalConfig.value?.language?.package?.["cell"] || {};
+  return PancakeGlobalConfig.value?.language?.package?.["cell"] || {};
 });
 const languageValue = computed(() => {
-  return SaltedGlobalConfig.value?.language?.value || "zh-CN";
+  return PancakeGlobalConfig.value?.language?.value || "zh-CN";
 });
 
 const computedPlaceholder: ComputedRef<string> = computed(() => {
-  const language = SaltedGlobalConfig.value?.language?.value || "zh-CN";
+  const language = PancakeGlobalConfig.value?.language?.value || "zh-CN";
   return typeof props.placeholder === "object"
     ? props.placeholder[language] || languagePackage.value[`inputPlaceholder`]
     : props.placeholder || languagePackage.value[`inputPlaceholder`];

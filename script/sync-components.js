@@ -74,7 +74,7 @@ function syncDirectory(source, target, oldPrefix, newPrefix) {
 
       // 替换内容
       content = content.replace(new RegExp(oldPrefix, "g"), newPrefix);
-      content = content.replace(/ManagerGlobal/g, "SaltedGlobal");
+      content = content.replace(/ManagerGlobal/g, "PancakeGlobal");
 
       content = content.replace(/--m-font-/g, "--sa-");
       content = content.replace(/m-manager-v2/g, "sa-content");

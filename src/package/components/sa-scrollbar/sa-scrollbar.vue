@@ -220,8 +220,8 @@ onMounted(() => {
         }
 
         // 关闭所有popover
-        if (Object.keys(window.SaltedGlobalConfig?.PopoverList || {}).length && prop.useClosePopover) {
-          Object.values(window.SaltedGlobalConfig.PopoverList || {}).forEach((item: any) => item?.());
+        if (Object.keys(window.PancakeGlobalConfig?.PopoverList || {}).length && prop.useClosePopover) {
+          Object.values(window.PancakeGlobalConfig.PopoverList || {}).forEach((item: any) => item?.());
         }
       },
       ({ scrollTop, scrollLeft, scrollData }) => {

@@ -100,7 +100,7 @@ import { randChar } from "../tools/rand-char";
 import MDateTimePanel from "./date-time-panel.vue";
 import MYearPanel from "./year-panel.vue";
 import { convertValue, isValidDate } from "./utils";
-import { SaltedGlobalConfigType } from "../sa-content/type";
+import { PancakeGlobalConfigType } from "../sa-content/type";
 
 import _ from "lodash";
 const { isEqual, isNil, cloneDeep } = _;
@@ -136,17 +136,17 @@ const isFocus = ref(false);
 const inputRef = ref();
 const internalValue: Ref<string[] | string | null> = ref(isRange.value ? [] : null);
 
-const SaltedGlobalConfig = inject("SaltedGlobalConfig") as ComputedRef<SaltedGlobalConfigType>;
+const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
 
 const inputPlaceholder = computed(() => {
-  const language = SaltedGlobalConfig.value?.language?.value || "zh-CN";
+  const language = PancakeGlobalConfig.value?.language?.value || "zh-CN";
   return typeof props.placeholder === "object"
     ? props.placeholder[language] || languagePackage.value[`selectPlaceholder`]
     : props.placeholder || languagePackage.value[`selectPlaceholder`];
 });
 
 const languagePackage = computed(() => {
-  return SaltedGlobalConfig.value?.language?.package?.["cell"] || {};
+  return PancakeGlobalConfig.value?.language?.package?.["cell"] || {};
 });
 
 const inValue = ref(props.modelValue || []);

@@ -73,7 +73,7 @@ import office from "./config/office.json";
 import shop from "./config/shop.json";
 import cityJson from "./config/city.json";
 import network from "./config/network.json";
-import { SaltedGlobalConfigType } from "../sa-content/type";
+import { PancakeGlobalConfigType } from "../sa-content/type";
 
 import _ from "lodash";
 const { isEqual, isNil } = _;
@@ -102,13 +102,13 @@ const selectRef = ref();
 const selectItem = ref(props.modelValue || "finger_press_line");
 const hoverItem = ref("finger_press_line");
 
-const SaltedGlobalConfig = inject("SaltedGlobalConfig") as ComputedRef<SaltedGlobalConfigType>;
+const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
 const languagePackage = computed(() => {
-  return SaltedGlobalConfig.value?.language?.package?.["cell"] || {};
+  return PancakeGlobalConfig.value?.language?.package?.["cell"] || {};
 });
 
 const inputPlaceholder = computed(() => {
-  const language = SaltedGlobalConfig.value?.language?.value || "zh-CN";
+  const language = PancakeGlobalConfig.value?.language?.value || "zh-CN";
   return typeof props.placeholder === "object"
     ? props.placeholder[language] || languagePackage.value[`clickChangeIcon`]
     : props.placeholder || languagePackage.value[`clickChangeIcon`];

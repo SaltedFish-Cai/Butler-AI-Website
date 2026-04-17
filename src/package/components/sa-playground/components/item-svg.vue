@@ -156,8 +156,8 @@ import { M_Message } from "../../feedback";
 import _ from "lodash";
 const { isNil, isArray } = _;
 
-const SaltedGlobalConfig = inject("SaltedGlobalConfig") as Ref<any>;
-const language = computed(() => SaltedGlobalConfig.value?.language?.value || "zh-CN");
+const PancakeGlobalConfig = inject("PancakeGlobalConfig") as Ref<any>;
+const language = computed(() => PancakeGlobalConfig.value?.language?.value || "zh-CN");
 
 // 接收props
 const props = defineProps<{

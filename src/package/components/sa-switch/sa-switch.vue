@@ -41,12 +41,12 @@
 import { computed, ComputedRef, inject, ref, Ref, watch } from "vue";
 import { SaSwitchType } from "./type";
 import { findData } from "./find-data";
-import { SaltedGlobalConfigType } from "../sa-content/type";
+import { PancakeGlobalConfigType } from "../sa-content/type";
 
 import _ from "lodash";
 const { isEqual, isNil } = _;
 
-const SaltedGlobalConfig = inject("SaltedGlobalConfig") as ComputedRef<SaltedGlobalConfigType>;
+const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
 
 const props = withDefaults(defineProps<SaSwitchType>(), {
   activeValue: 1,
@@ -54,7 +54,7 @@ const props = withDefaults(defineProps<SaSwitchType>(), {
   contrastData: undefined
 });
 // const exOptionsList = ref(props?.exOptions || []);
-const language = computed(() => SaltedGlobalConfig.value?.language?.value || "zh-CN");
+const language = computed(() => PancakeGlobalConfig.value?.language?.value || "zh-CN");
 const inValue: Ref<boolean | number | string | undefined> = ref(props.modelValue);
 const emits = defineEmits(["update:modelValue", "change"]);
 
@@ -103,8 +103,8 @@ const options = computed(() => {
   const {
     activeValue = true,
     inActiveValue = false,
-    activeText = SaltedGlobalConfig.value?.language?.value == "zh-CN" ? "是" : "Yes",
-    inActiveText = SaltedGlobalConfig.value?.language?.value == "zh-CN" ? "否" : "No"
+    activeText = PancakeGlobalConfig.value?.language?.value == "zh-CN" ? "是" : "Yes",
+    inActiveText = PancakeGlobalConfig.value?.language?.value == "zh-CN" ? "否" : "No"
   } = props.exOptions || props;
 
   const _opt = changeType(typeIs, {

@@ -184,7 +184,7 @@ import { ComputedRef, inject, nextTick, onMounted, onUnmounted, ref, Ref } from 
 import { SaEditorType, Tool } from "./type";
 import { toolsConfig } from "./tools-config";
 import { useUpFileHooks } from "./use-upfile-hooks";
-import { SaltedGlobalConfigType } from "../sa-content/type";
+import { PancakeGlobalConfigType } from "../sa-content/type";
 
 import _ from "lodash";
 const { throttle } = _;
@@ -207,7 +207,7 @@ const sourceCodeMode = ref(props.isSourceCodeMode);
 // 定义emits
 const emit = defineEmits(["popverChange", "sourceCodeModeChange"]);
 
-const SaltedGlobalConfig = inject("SaltedGlobalConfig") as ComputedRef<SaltedGlobalConfigType>;
+const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
 
 const fileInput = ref();
 const popoverReferenceRef = ref({});
@@ -219,7 +219,7 @@ const injectSourceCodeRef = inject("provideSourceCodeRef") as Ref<any>;
 
 const updateLineNumbers = inject("updateLineNumbers") as () => void;
 
-const { fileChange } = useUpFileHooks(props, fileInput, SaltedGlobalConfig, injectEditorRef);
+const { fileChange } = useUpFileHooks(props, fileInput, PancakeGlobalConfig, injectEditorRef);
 
 const toolbarTools: Ref<Tool[]> = ref(toolsConfig);
 const popoverVisible = ref(false);

@@ -5,7 +5,7 @@ type apiType = {
   type: string;
 };
 
-type SaltedGlobal = {
+type PancakeGlobal = {
   /**
    * **环境**
    * @type `string` | `undefined`
@@ -92,7 +92,7 @@ type SaltedGlobal = {
   requestHeader: any;
 };
 
-export type SaManagerType = SaltedGlobal & {
+export type SaManagerType = PancakeGlobal & {
   /**
    * **语言**
    * @type `languageKey` | `undefined`
@@ -103,7 +103,7 @@ export type SaManagerType = SaltedGlobal & {
   language?: languageKey;
 };
 
-export type SaltedGlobalConfigType = SaltedGlobal & {
+export type PancakeGlobalConfigType = PancakeGlobal & {
   /**
    * **语言**
    * @type `languageKey` | `undefined`

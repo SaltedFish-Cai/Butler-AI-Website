@@ -5,7 +5,7 @@ import { useData } from "../composables/data";
 import { useSidebar } from "../composables/sidebar";
 import VPDocAside from "./VPDocAside.vue";
 import VPDocFooter from "./VPDocFooter.vue";
-import { SaltedUIType } from "M_Types";
+import { PancakeUIType } from "M_Types";
 import { advancedQueryApi, groupAdvancedQueryApi } from "public/file/mock-api";
 const { theme } = useData();
 
@@ -16,7 +16,7 @@ const pageName = computed(() => route.path.replace(/[./]+/g, "_").replace(/_html
 
 const Host = "";
 
-const SaltedUIConfig = ref({
+const PancakeUIConfig = ref({
   env: "local",
   language: "zh-CN",
   size: "default",
@@ -36,7 +36,7 @@ const SaltedUIConfig = ref({
     downloadHose: Host + "/UploadFile/getfile?filepath=",
     compareKey: "FileId"
   }
-} as SaltedUIType);
+} as PancakeUIType);
 </script>
 
 <template>
@@ -63,7 +63,7 @@ const SaltedUIConfig = ref({
         <div class="content-container">
           <slot name="doc-before" />
           <main class="main">
-            <sa-manager v-bind="SaltedUIConfig">
+            <sa-manager v-bind="PancakeUIConfig">
               <Content class="vp-doc" :class="[pageName, theme.externalLinkIcon && 'external-link-icon-enabled']" />
             </sa-manager>
           </main>

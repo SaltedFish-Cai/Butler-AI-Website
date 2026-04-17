@@ -73,7 +73,7 @@
 
 <script lang="tsx" setup>
 import { computed, ComputedRef, inject, ref, useTemplateRef, nextTick } from "vue";
-import { SaltedGlobalConfigType } from "../../../sa-content/type";
+import { PancakeGlobalConfigType } from "../../../sa-content/type";
 import { SaStructureType } from "M_Types";
 import { MOptionsType, SaPlaygroundPagesType } from "../../type";
 import MQuickTable from "../quick-table.vue";
@@ -99,8 +99,8 @@ const exOptionsComputed = computed(() => {
   return exOptionsData;
 });
 
-const SaltedGlobalConfig = inject("SaltedGlobalConfig") as ComputedRef<SaltedGlobalConfigType>;
-const language = SaltedGlobalConfig.value?.language?.value || "zh-CN";
+const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
+const language = PancakeGlobalConfig.value?.language?.value || "zh-CN";
 const visibleTableRef = useTemplateRef("visibleTableRef");
 
 const tableConfig = ref<SaStructureType.TableV2[]>([

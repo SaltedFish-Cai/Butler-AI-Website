@@ -66,28 +66,28 @@ function deleteDirectory(targetDir) {
 
 // 使用示例
 // const sourceDir = "./document";
-// const targetDir = "/Users/caiqi/Project/saltedfish-website-github/document";
+// const targetDir = "/Users/caiqi/Project/Pancakefish-website-github/document";
 
 // deleteDirectory(targetDir);
 // moveDirectory(sourceDir, targetDir);
 
 // // // 使用示例
 // const sourceDir1 = "./src/package";
-// const targetDir1 = "/Users/caiqi/Project/saltedfish-website-github/src/package";
+// const targetDir1 = "/Users/caiqi/Project/Pancakefish-website-github/src/package";
 
 // deleteDirectory(targetDir1);
 // moveDirectory(sourceDir1, targetDir1);
 
 // // // 使用示例
 // const sourceDir2 = "./script/vitepress/dist/client/theme-default";
-// const targetDir2 = "/Users/caiqi/Project/saltedfish-website-github/script/vitepress/dist/client/theme-default";
+// const targetDir2 = "/Users/caiqi/Project/Pancakefish-website-github/script/vitepress/dist/client/theme-default";
 
 // deleteDirectory(targetDir2);
 // moveDirectory(sourceDir2, targetDir2);
 
 // // // 使用示例
 // const sourceDir3 = "./vitepress-ui";
-// const targetDir3 = "/Users/caiqi/Project/saltedfish-website-github/vitepress-ui";
+// const targetDir3 = "/Users/caiqi/Project/Pancakefish-website-github/vitepress-ui";
 
 // deleteDirectory(targetDir3);
 // moveDirectory(sourceDir3, targetDir3);

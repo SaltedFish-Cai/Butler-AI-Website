@@ -1,5 +1,5 @@
 // # Import
-import { SaltedGlobalConfigType } from "../sa-content/type";
+import { PancakeGlobalConfigType } from "../sa-content/type";
 
 /**
  * @description 获取字典(链接关系)
@@ -8,7 +8,7 @@ import { SaltedGlobalConfigType } from "../sa-content/type";
  * @param params 参数
  * @returns 字典(链接关系)
  */
-export async function GetConditionals(config: SaltedGlobalConfigType, useType: "group" | "link", params?: objectType) {
+export async function GetConditionals(config: PancakeGlobalConfigType, useType: "group" | "link", params?: objectType) {
   let API = config?.table_config?.advancedQueryApi;
 
   if (useType == "group") {

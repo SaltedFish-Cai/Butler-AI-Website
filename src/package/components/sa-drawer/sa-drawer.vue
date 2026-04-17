@@ -92,7 +92,7 @@
 // # Import
 import { reactive, watch, onMounted, onUnmounted, computed, inject, ComputedRef } from "vue";
 import { SaDrawerType } from "./type";
-import { SaltedGlobalConfigType } from "../sa-content/type";
+import { PancakeGlobalConfigType } from "../sa-content/type";
 
 // # Var
 const props = withDefaults(defineProps<SaDrawerType>(), {
@@ -112,8 +112,8 @@ const state = reactive({
   fullscreen: false
 });
 
-const SaltedGlobalConfig = inject("SaltedGlobalConfig") as ComputedRef<SaltedGlobalConfigType>;
-const language = computed(() => SaltedGlobalConfig.value?.language?.value || "zh-CN");
+const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
+const language = computed(() => PancakeGlobalConfig.value?.language?.value || "zh-CN");
 
 // #Function 关闭弹窗回调
 function closeMenu() {

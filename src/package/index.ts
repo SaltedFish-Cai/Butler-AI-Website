@@ -38,11 +38,11 @@ const install = function (app, options: GlobalState) {
 
   if (inBrowser) {
     window.log = { info, error, warning, success, msg };
-    window.log.msg("SaltedU", "Version " + packageFile.version);
+    window.log.msg("PancakeUI", "Version " + packageFile.version);
     window.toLocaleString = toLocaleString;
   }
 
-  if (!app._context.components["SaltedU"]) {
+  if (!app._context.components["PancakeUI"]) {
     app.use(pinia);
     app.use(dictionaries);
     app.use(dictionariesAll);
@@ -75,7 +75,7 @@ const install = function (app, options: GlobalState) {
 };
 
 export default {
-  name: "SaltedU",
+  name: "PancakeUI",
   install
 };
 

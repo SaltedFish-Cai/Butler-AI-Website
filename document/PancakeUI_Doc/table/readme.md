@@ -148,7 +148,7 @@ function validatorRules({ value, callback }) { // [!code warning]
 
 ## 标记（Tag）
 
-使用 [useDictionaries](/document/SaltedUI_Doc/tools/dictionaries.html#获取字典选项-usedictionaries) 获取字典结果更快捷。
+使用 [useDictionaries](/document/PancakeUI_Doc/tools/dictionaries.html#获取字典选项-usedictionaries) 获取字典结果更快捷。
 
 ```typescript
 const tableConfig: MStructureType.Table[] = [
@@ -241,7 +241,7 @@ const tableConfig: MStructureV2Type.TableV2[] = [
 | fixed      | 表列固定位置             | `"left"` `"right"`                                                    | —       |
 | unitText   | 单位文本                 | `string`                                                              | —       |
 | textWarp   | 单元格内文字折行依据     | `string`                                                              | —       |
-| cellConfig | 单元格使用类型，详细配置 | [CellItemType](/document/SaltedUI_Doc/table/readme.html#cellitemtype) | —       |
+| cellConfig | 单元格使用类型，详细配置 | [CellItemType](/document/PancakeUI_Doc/table/readme.html#cellitemtype) | —       |
 | useSenior  | `是否使用高级筛选        | `boolean`                                                             | `true`  |
 | useSum     | 是否计入合计内容         | `boolean`                                                             | `false` |
 
@@ -249,22 +249,22 @@ const tableConfig: MStructureV2Type.TableV2[] = [
 
 | 描述       | 单元格类型                                                    |
 | ---------- | ------------------------------------------------------------- |
-| 输入框     | [SaInputType](/document/SaltedUI_Doc/input/readme.html)       |
-| 数字输入框 | [SaNumberType](/document/SaltedUI_Doc/number/readme.html)     |
-| 选择器     | [SaSelectType](/document/SaltedUI_Doc/select/readme.html)     |
-| 联级选择器 | [SaCascaderType](/document/SaltedUI_Doc/cascader/readme.html) |
-| 多选       | [SaCheckboxType](/document/SaltedUI_Doc/checkbox/readme.html) |
-| 单选       | [SaRadioType](/document/SaltedUI_Doc/radio/readme.html)       |
-| 开关       | [SaSwitchType](/document/SaltedUI_Doc/switch/readme.html)     |
-| 时间选择器 | [SaTimeType](/document/SaltedUI_Doc/time/readme.html)         |
-| 文件选择器 | [SaFileType](/document/SaltedUI_Doc/file/readme.html)         |
+| 输入框     | [SaInputType](/document/PancakeUI_Doc/input/readme.html)       |
+| 数字输入框 | [SaNumberType](/document/PancakeUI_Doc/number/readme.html)     |
+| 选择器     | [SaSelectType](/document/PancakeUI_Doc/select/readme.html)     |
+| 联级选择器 | [SaCascaderType](/document/PancakeUI_Doc/cascader/readme.html) |
+| 多选       | [SaCheckboxType](/document/PancakeUI_Doc/checkbox/readme.html) |
+| 单选       | [SaRadioType](/document/PancakeUI_Doc/radio/readme.html)       |
+| 开关       | [SaSwitchType](/document/PancakeUI_Doc/switch/readme.html)     |
+| 时间选择器 | [SaTimeType](/document/PancakeUI_Doc/time/readme.html)         |
+| 文件选择器 | [SaFileType](/document/PancakeUI_Doc/file/readme.html)         |
 
 ## `SaTableType`
 
 | 字段               | 描述                                                                                          | 类型                                                                                              | 默认值  |
 | ------------------ | --------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ------- |
 | id                 | 表格 ID                                                                                       | `string`                                                                                          | —       |
-| structure          | [MStructureV2Type.TableV2](/document/SaltedUI_Doc/table/readme.html#mstructurev2type-tablev2) | —                                                                                                 | —       |
+| structure          | [MStructureV2Type.TableV2](/document/PancakeUI_Doc/table/readme.html#mstructurev2type-tablev2) | —                                                                                                 | —       |
 | useSelect          | 是否使用选择器                                                                                | `boolean`                                                                                         | `false` |
 | useRadio           | 是否使用单选器                                                                                | `boolean`                                                                                         | `false` |
 | useChildren        | 是否使用子项选择器                                                                            | `boolean`                                                                                         | `false` |
@@ -282,9 +282,9 @@ const tableConfig: MStructureV2Type.TableV2[] = [
 | useOverflowTooltip | 是否使用文字超出后 Tooltip 提示完整内容                                                       | `boolean`                                                                                         | `true`  |
 | embeddedToolButton | 是否显示表格功能按钮嵌入式样式                                                                | `boolean`                                                                                         | `false` |
 | exOptions          | 外置筛选依赖                                                                                  | `MOptionV2Type.Default`                                                                           | —       |
-| exDependent        | 外置依赖                                                                                      | [SaTableExDependentType](/document/SaltedUI_Doc/table/readme.html#SaTableexdependenttype)         | —       |
-| exCellDependent    | 单元格外置依赖                                                                                | [SaTableCellExDependentType](/document/SaltedUI_Doc/table/readme.html#SaTablecellexdependenttype) | —       |
-| exPagination       | 外置依赖                                                                                      | [ExPaginationType](/document/SaltedUI_Doc/table/readme.html#expaginationtype-外置页码配置)        | —       |
+| exDependent        | 外置依赖                                                                                      | [SaTableExDependentType](/document/PancakeUI_Doc/table/readme.html#SaTableexdependenttype)         | —       |
+| exCellDependent    | 单元格外置依赖                                                                                | [SaTableCellExDependentType](/document/PancakeUI_Doc/table/readme.html#SaTablecellexdependenttype) | —       |
+| exPagination       | 外置依赖                                                                                      | [ExPaginationType](/document/PancakeUI_Doc/table/readme.html#expaginationtype-外置页码配置)        | —       |
 | summaryConfig      | 自定义合计参数                                                                                | sumText?: string; 合计文字 unitText?: string; // 单位文字                                         | —       |
 | summaryFunction    | 自定义合计方法                                                                                | (params: any) => string[]                                                                         | —       |
 

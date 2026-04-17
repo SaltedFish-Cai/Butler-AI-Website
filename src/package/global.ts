@@ -3,7 +3,7 @@ import { useBaseStore as TableBaseStoreType } from "./components/m-table/hooks/s
 
 import { GlobalState } from "./components/m-table/type";
 import toLocaleString from "./components/tools/toLocaleString";
-import { SaltedGlobalConfigType } from "./components/sa-content/type";
+import { PancakeGlobalConfigType } from "./components/sa-content/type";
 
 // _Message global
 declare module "vue" {
@@ -42,7 +42,7 @@ declare global {
     wangEditor: any;
     MTableSortableData: {};
     globalZIndex: number;
-    SaltedGlobalConfig: SaltedGlobalConfigType & {
+    PancakeGlobalConfig: PancakeGlobalConfigType & {
       language: languageKey;
       escapeMap?: string[];
       PopoverList?: {

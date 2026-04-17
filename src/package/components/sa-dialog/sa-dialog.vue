@@ -128,7 +128,7 @@ const state = reactive({
   fullscreen: false
 });
 
-const language = window.SaltedGlobalConfig?.language || "zh-CN";
+const language = window.PancakeGlobalConfig?.language || "zh-CN";
 
 // #Computed setSize
 const setSize = computed(() => {
@@ -234,15 +234,15 @@ function isNumber(value) {
 
 // #Function 关闭弹窗回调
 function closeMenu() {
-  window.SaltedGlobalConfig.escapeMap = window.SaltedGlobalConfig.escapeMap || [];
-  window.SaltedGlobalConfig.escapeMap = window.SaltedGlobalConfig.escapeMap.filter(item => item != openId);
+  window.PancakeGlobalConfig.escapeMap = window.PancakeGlobalConfig.escapeMap || [];
+  window.PancakeGlobalConfig.escapeMap = window.PancakeGlobalConfig.escapeMap.filter(item => item != openId);
   emits("update:modelValue", false);
   emits("closed", false);
 }
 
 // #添加ESC键监听
 function handleKeyDown(e) {
-  const escapeMap = window.SaltedGlobalConfig.escapeMap || [];
+  const escapeMap = window.PancakeGlobalConfig.escapeMap || [];
   if (e.key === "Escape" && state.visible && escapeMap[escapeMap.length - 1] === openId) {
     if (state.fullscreen && props.size != "full") {
       state.fullscreen = false;
@@ -281,9 +281,9 @@ watch(
       scrollChildChange();
     }
     if (data && props.closeOnPressEscape) {
-      window.SaltedGlobalConfig.escapeMap = window.SaltedGlobalConfig.escapeMap || [];
+      window.PancakeGlobalConfig.escapeMap = window.PancakeGlobalConfig.escapeMap || [];
       openId = new Date().getTime().toString();
-      window.SaltedGlobalConfig.escapeMap.push(openId);
+      window.PancakeGlobalConfig.escapeMap.push(openId);
     }
     if (props.size == "full") {
       state.fullscreen = true;

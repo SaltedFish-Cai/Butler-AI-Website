@@ -78,7 +78,7 @@
 </template>
 
 <script lang="ts" setup>
-import { SaltedGlobalConfigType } from "../sa-content/type";
+import { PancakeGlobalConfigType } from "../sa-content/type";
 import { computed, ComputedRef, inject, ref, useTemplateRef } from "vue";
 import { SaFileDataType, SaFileType } from "./type";
 import { M_Message } from "../feedback";
@@ -94,10 +94,10 @@ const emits = defineEmits(["update:modelValue", "change", "changeState"]);
 const fileInput = useTemplateRef("fileInput");
 const isDragging = ref(false);
 
-const SaltedGlobalConfig = inject("SaltedGlobalConfig") as ComputedRef<SaltedGlobalConfigType>;
+const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
 
 const languagePackage = computed(() => {
-  return SaltedGlobalConfig.value?.language?.package?.["file"] || {};
+  return PancakeGlobalConfig.value?.language?.package?.["file"] || {};
 });
 
 const inValue = ref(props.modelValue);
@@ -118,9 +118,9 @@ const requestHeader = computed(() => {
 
 // @ computed 上传配置
 const fileConfigData = computed(() => {
-  const headerData = SaltedGlobalConfig.value?.requestHeader || {};
-  const fileApi = SaltedGlobalConfig.value?.file_config;
-  const apiBaseUrl = SaltedGlobalConfig.value?.baseHost;
+  const headerData = PancakeGlobalConfig.value?.requestHeader || {};
+  const fileApi = PancakeGlobalConfig.value?.file_config;
+  const apiBaseUrl = PancakeGlobalConfig.value?.baseHost;
   return { headerData, fileApi, apiBaseUrl };
 });
 

@@ -5,7 +5,7 @@ import inBrowser from "../tools/inBrowser";
 // # Var
 if (inBrowser) {
   const script = window.document?.createElement("script") || {};
-  const useDomain = window.location.href.includes("Saltedfish-Website") ? "/Saltedfish-Website" : "";
+  const useDomain = window.location.href.includes("Pancakefish-Website") ? "/Pancakefish-Website" : "";
   script.src = useDomain + "/library/wangeditor.js";
   window.document?.head?.appendChild(script);
 }

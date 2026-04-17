@@ -4,7 +4,7 @@ import { ComputedRef, inject, reactive, toRefs } from "vue";
 import inBrowser from "../../tools/inBrowser";
 import { GetConditionals } from "../../api/table";
 import { SaOptionType } from "../../manager-type";
-import { SaltedGlobalConfigType } from "../../sa-content/type";
+import { PancakeGlobalConfigType } from "../../sa-content/type";
 
 export const useSeniorFilterHooks = () => {
   // # Var
@@ -12,16 +12,16 @@ export const useSeniorFilterHooks = () => {
     seniorFilterOptions: { LineConditional: [] as SaOptionType.SelectList, linkOptions: [] as SaOptionType.SelectList },
     seniorFilterData: { visible: false, propItem: {} as Record<string, string> }
   });
-  const SaltedGlobalConfig = inject("SaltedGlobalConfig") as ComputedRef<SaltedGlobalConfigType>;
-  if (inBrowser && SaltedGlobalConfig.value?.table_config?.advancedQueryApi) {
+  const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
+  if (inBrowser && PancakeGlobalConfig.value?.table_config?.advancedQueryApi) {
     GetDictionaries();
   }
 
   // #Function 获取高级搜索关系字典
   async function GetDictionaries() {
-    const Data: any = await GetConditionals(SaltedGlobalConfig.value, "link");
+    const Data: any = await GetConditionals(PancakeGlobalConfig.value, "link");
     state.seniorFilterOptions.LineConditional = Data.ConditionalType;
-    const List: any = await GetConditionals(SaltedGlobalConfig.value, "group", { keys: "FilterLinkNextType" });
+    const List: any = await GetConditionals(PancakeGlobalConfig.value, "group", { keys: "FilterLinkNextType" });
     state.seniorFilterOptions.linkOptions = List.FilterLinkNextType;
   }
 

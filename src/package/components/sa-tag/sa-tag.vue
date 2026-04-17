@@ -32,10 +32,10 @@ import { onMounted, ref, Ref, watch, nextTick, inject, ComputedRef } from "vue";
 import { SaTagType, TagListType } from "./type";
 import { getElementPosition } from "../utils/getElementPosition";
 
-import { SaltedGlobalConfigType } from "../sa-content/type";
+import { PancakeGlobalConfigType } from "../sa-content/type";
 
-const SaltedGlobalConfig = inject("SaltedGlobalConfig") as ComputedRef<SaltedGlobalConfigType>;
-const language = SaltedGlobalConfig.value?.language?.value || "zh-CN";
+const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
+const language = PancakeGlobalConfig.value?.language?.value || "zh-CN";
 
 const props = withDefaults(defineProps<SaTagType>(), {
   useCollapse: true

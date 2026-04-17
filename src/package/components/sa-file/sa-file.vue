@@ -125,7 +125,7 @@ import { ref, computed, ComputedRef, watch, inject } from "vue";
 import { SaFileType, SaFileDataType } from "./type";
 import { ajaxUpload } from "./ajax";
 import { M_Message, M_MessageBox } from "../feedback";
-import { SaltedGlobalConfigType } from "../sa-content/type";
+import { PancakeGlobalConfigType } from "../sa-content/type";
 // import { useDownload } from "../m-media-view/use-download";
 import _ from "lodash";
 const { isEqual, debounce, isNil } = _;
@@ -142,14 +142,14 @@ const loading = ref(false);
 const uploadFilesList: { name: string; size: number }[] = [];
 const ajaxFileList: Record<string, string>[] = [];
 
-const SaltedGlobalConfig = inject("SaltedGlobalConfig") as ComputedRef<SaltedGlobalConfigType>;
+const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
 
 const languagePackage = computed(() => {
-  return SaltedGlobalConfig.value?.language?.package?.["file"] || {};
+  return PancakeGlobalConfig.value?.language?.package?.["file"] || {};
 });
 
 const computedPlaceholder: ComputedRef<string> = computed(() => {
-  const language = SaltedGlobalConfig.value?.language?.value || "zh-CN";
+  const language = PancakeGlobalConfig.value?.language?.value || "zh-CN";
 
   return typeof props.placeholder === "object"
     ? props.placeholder[language] || languagePackage.value[`uploadText`]
@@ -158,9 +158,9 @@ const computedPlaceholder: ComputedRef<string> = computed(() => {
 
 // @ computed 上传配置
 const fileConfigData = computed(() => {
-  const headerData = SaltedGlobalConfig.value?.requestHeader || {};
-  const fileApi = SaltedGlobalConfig.value?.file_config;
-  const apiBaseUrl = SaltedGlobalConfig.value?.baseHost;
+  const headerData = PancakeGlobalConfig.value?.requestHeader || {};
+  const fileApi = PancakeGlobalConfig.value?.file_config;
+  const apiBaseUrl = PancakeGlobalConfig.value?.baseHost;
   return { headerData, fileApi, apiBaseUrl };
 });
 
@@ -387,7 +387,7 @@ function eq(data, contrastData) {
     return true;
   }
 
-  const compareKey = SaltedGlobalConfig.value?.file_config?.compareKey || "FileId";
+  const compareKey = PancakeGlobalConfig.value?.file_config?.compareKey || "FileId";
 
   return !isEqual(
     data?.map?.(item => item[compareKey])?.sort((a, b) => a.replace(/\D/g, "") - b.replace(/\D/g, "")),

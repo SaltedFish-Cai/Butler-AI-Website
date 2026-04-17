@@ -6,7 +6,7 @@ import languageMap from "../language.json";
 
 // # useBaseStore
 export const useBaseStore = defineStore({
-  id: "salted-ui-global-configs",
+  id: "Pancake-UI-global-configs",
   state: (): GlobalState & toolsState => ({
     themeColor: "#43317A",
     isDark: false,
@@ -271,5 +271,5 @@ export const useBaseStore = defineStore({
       this.languagePackage = languageMap[language];
     }
   },
-  persist: piniaPersistConfig("salted-ui-global-configs")
+  persist: piniaPersistConfig("Pancake-UI-global-configs")
 });

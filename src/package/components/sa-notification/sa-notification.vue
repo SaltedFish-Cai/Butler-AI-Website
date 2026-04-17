@@ -39,8 +39,8 @@ const props = defineProps<{
   options: NotificationOptions;
 }>();
 
-const languagePackage = languageMap[window.SaltedGlobalConfig?.language || "zh-CN"]["message"];
-const language = window.SaltedGlobalConfig?.language || "zh-CN";
+const languagePackage = languageMap[window.PancakeGlobalConfig?.language || "zh-CN"]["message"];
+const language = window.PancakeGlobalConfig?.language || "zh-CN";
 
 // 解构选项
 const {

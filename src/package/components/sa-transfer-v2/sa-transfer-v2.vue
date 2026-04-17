@@ -98,7 +98,7 @@ import lodashPkg from "lodash";
 import { randChar } from "../tools/rand-char";
 import { MOptionV2Type } from "../manager-type";
 import { findData as findDataSelect } from "./find-data";
-import { SaltedGlobalConfigType } from "../sa-content/type";
+import { PancakeGlobalConfigType } from "../sa-content/type";
 
 const props = withDefaults(defineProps<SaTransferV2Type>(), {
   id: randChar()
@@ -132,9 +132,9 @@ const filterSelectedList = computed(() => {
 const { isEqual, isNil } = lodashPkg;
 const selectRef = ref();
 
-const SaltedGlobalConfig = inject("SaltedGlobalConfig") as ComputedRef<SaltedGlobalConfigType>;
+const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
 const languagePackage = computed(() => {
-  return SaltedGlobalConfig.value?.language?.package?.["cell"] || {};
+  return PancakeGlobalConfig.value?.language?.package?.["cell"] || {};
 });
 
 let oldValue = props.modelValue;

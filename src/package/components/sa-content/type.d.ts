@@ -5,7 +5,7 @@ type apiType = {
   type: string;
 };
 
-type SaltedContentType = {
+type PancakeContentType = {
   /**
    * **环境**
    * @type `string` | `undefined`
@@ -92,7 +92,7 @@ type SaltedContentType = {
   requestHeader: any;
 };
 
-export type SaltedUIType = SaltedContentType & {
+export type PancakeUIType = PancakeContentType & {
   /**
    * **语言**
    * @type `languageKey` | `undefined`
@@ -103,7 +103,7 @@ export type SaltedUIType = SaltedContentType & {
   language?: languageKey;
 };
 
-export type SaltedGlobalConfigType = SaltedContentType & {
+export type PancakeGlobalConfigType = PancakeContentType & {
   /**
    * **语言**
    * @type `languageKey` | `undefined`

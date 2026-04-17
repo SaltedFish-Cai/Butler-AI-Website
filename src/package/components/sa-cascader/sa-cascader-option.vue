@@ -62,16 +62,16 @@ import { SaCascaderOptionType } from "./type";
 import { equalData } from "../utils/equalData";
 import { SaOptionType } from "../manager-type";
 import SaCascaderOption from "./sa-cascader-option.vue";
-import { SaltedGlobalConfigType } from "../sa-content/type";
+import { PancakeGlobalConfigType } from "../sa-content/type";
 
 const props = withDefaults(defineProps<SaCascaderOptionType>(), {});
 const childExOptions = ref([] as Array<SaOptionType.Select>);
 const injectHandleOptionClick: any = inject("handleOptionClick");
 const activeValue: Ref<boolean | number | string | undefined> = ref("");
 
-const SaltedGlobalConfig = inject("SaltedGlobalConfig") as ComputedRef<SaltedGlobalConfigType>;
+const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
 const languageValue = computed(() => {
-  return SaltedGlobalConfig.value?.language?.value || "zh-CN";
+  return PancakeGlobalConfig.value?.language?.value || "zh-CN";
 });
 
 function handleOptionClick(item: SaOptionType.Select, type: "click" | "over") {

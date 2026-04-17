@@ -11,7 +11,7 @@ class MessageManagerTypeImpl implements MessageManagerType {
   add(options: MessageOptions): MessageInstance {
     // 生成唯一ID
     const id = `Message_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-    const languageKey = window.SaltedGlobalConfig.language || "zh-CN";
+    const languageKey = window.PancakeGlobalConfig.language || "zh-CN";
 
     // 合并默认选项
     const mergedOptions = {

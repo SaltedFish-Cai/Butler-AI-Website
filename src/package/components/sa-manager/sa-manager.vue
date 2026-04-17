@@ -5,7 +5,7 @@
 <script lang="ts" setup>
 import { provide, reactive, computed, watch } from "vue";
 import { setThemeColor } from "../tools/color";
-import { SaltedGlobalConfigType, SaManagerType } from "./type";
+import { PancakeGlobalConfigType, SaManagerType } from "./type";
 import languageMap from "../language.json";
 
 import { createLog } from "../utils/develop-log";
@@ -40,14 +40,14 @@ const state = reactive({
   address_config: props.address_config,
   file_config: props.file_config,
   requestHeader: props.requestHeader
-} as SaltedGlobalConfigType);
+} as PancakeGlobalConfigType);
 
-window.SaltedGlobalConfig = { ...state, language: (state?.language?.value || "zh-CN") as any };
+window.PancakeGlobalConfig = { ...state, language: (state?.language?.value || "zh-CN") as any };
 
 provide(
-  "SaltedGlobalConfig",
+  "PancakeGlobalConfig",
   computed(() => {
-    window.SaltedGlobalConfig = { ...state, language: (state?.language?.value || "zh-CN") as any };
+    window.PancakeGlobalConfig = { ...state, language: (state?.language?.value || "zh-CN") as any };
     return state;
   })
 );
@@ -94,7 +94,7 @@ function setSaAnagerTableInfiniteScroll(value) {
   state.table_config = { ...state.table_config, ...value };
 }
 
-function setSaAnagerConfig(type: keyof SaltedGlobalConfigType & {}, config: any) {
+function setSaAnagerConfig(type: keyof PancakeGlobalConfigType & {}, config: any) {
   if (type == "language") setSaAnagerLanguage(config);
   else if (type == "themeColor" || type == "isDark") setSaAnagerThemeColor(config.themeColor, config.isDark);
   else if (type == "size") setSaAnagerSize(config.size);

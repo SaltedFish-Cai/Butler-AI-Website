@@ -41,8 +41,8 @@ export default defineConfig({
           format: "es",
           entryFileNames: "[name].js",
           preserveModules: true,
-          // 配置打包根目录 - SaltedU
-          dir: "SaltedU/es",
+          // 配置打包根目录 - PancakeUI
+          dir: "PancakeUI/es",
           preserveModulesRoot: "src/package"
         }
       ]
@@ -59,7 +59,7 @@ export default defineConfig({
     // 为ManagerUI生成类型声明
     dts({
       entryRoot: "./src/package/",
-      outDir: "SaltedU/es",
+      outDir: "PancakeUI/es",
       // include: ["**/*.ts"],
       exclude: ["node_modules", "dist", "**/*.js"]
     }),
@@ -71,7 +71,7 @@ export default defineConfig({
       async closeBundle() {
         try {
           const projectRoot = resolve(__dirname, "../../../");
-          const managerUIRoot = path.join(projectRoot, "SaltedU");
+          const managerUIRoot = path.join(projectRoot, "PancakeUI");
           const managerUIV2Root = path.join(projectRoot, "ManagerUIV2");
 
           // 确保ManagerUIV2目录存在
@@ -96,9 +96,9 @@ export default defineConfig({
 
 // 复制UMD文件
 function copyUMDFile(managerUIRoot, managerUIV2Root) {
-  const umdSourcePath = path.join(managerUIRoot, "umd", "salted-ui.umd.js");
+  const umdSourcePath = path.join(managerUIRoot, "umd", "Pancake-UI.umd.js");
   const umdTargetPath = path.join(managerUIV2Root, "umd");
-  const umdTargetFile = path.join(umdTargetPath, "salted-ui-v2.umd.js");
+  const umdTargetFile = path.join(umdTargetPath, "Pancake-UI-v2.umd.js");
 
   if (fs.existsSync(umdSourcePath)) {
     // 确保目标目录存在

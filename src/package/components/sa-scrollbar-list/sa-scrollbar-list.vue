@@ -66,10 +66,10 @@
 import { ref, reactive, onMounted, onBeforeUnmount, nextTick, computed, inject, ComputedRef } from "vue";
 import { randChar } from "../tools/rand-char";
 import { SaScrollbarListType } from "./type";
-import { SaltedGlobalConfigType } from "../sa-content/type";
+import { PancakeGlobalConfigType } from "../sa-content/type";
 
-const SaltedGlobalConfig = inject("SaltedGlobalConfig") as ComputedRef<SaltedGlobalConfigType>;
-const languagePackage = computed(() => SaltedGlobalConfig.value?.language?.package?.["cell"] || {});
+const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
+const languagePackage = computed(() => PancakeGlobalConfig.value?.language?.package?.["cell"] || {});
 
 const scrollBarList = ref();
 // const emits = defineEmits(["scroll"]);
