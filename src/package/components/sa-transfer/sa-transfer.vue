@@ -18,7 +18,7 @@
       </div>
       <div class="sa-transfer-select-box_options">
         <sa-input v-if="useSearch" :disabled="props.disabled" class="sa-transfer-input-inner" v-model="searchAll" />
-        <sa-scrollbar :useBackTop="false">
+        <sa-scrollbar :useBackTop="false" :useScrollX="false">
           <div
             v-for="(item, index) in searchAllSelectList"
             :key="String(item.value)"
@@ -48,7 +48,7 @@
       </div>
       <div class="sa-transfer-select-box_options">
         <sa-input v-if="useSearch" :disabled="props.disabled" class="sa-transfer-input-inner" v-model="searchSelected" />
-        <sa-scrollbar :useBackTop="false">
+        <sa-scrollbar :useBackTop="false" :useScrollX="false">
           <div
             v-for="(item, index) in filterSelectedList"
             :key="String(item.value)"
