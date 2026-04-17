@@ -84,8 +84,8 @@ import { SaStructureType } from "M_Types";
 import { cellMapConfig } from "../../configs/cell-config";
 import { MOptionsType } from "../../type";
 import MQuickTable from "../quick-table.vue";
-import _ from "lodash";
 
+import _ from "lodash";
 const { cloneDeep } = _;
 
 const props = defineProps<{

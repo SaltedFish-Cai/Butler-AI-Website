@@ -73,10 +73,10 @@ import office from "./config/office.json";
 import shop from "./config/shop.json";
 import cityJson from "./config/city.json";
 import network from "./config/network.json";
-import lodashPkg from "lodash";
 import { SaltedGlobalConfigType } from "../sa-content/type";
 
-const { isEqual, isNil } = lodashPkg;
+import _ from "lodash";
+const { isEqual, isNil } = _;
 
 // # Var
 const Config = ref([

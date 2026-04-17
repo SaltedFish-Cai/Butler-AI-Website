@@ -17,7 +17,9 @@
         :maxlength="maxLength"
       />
       <div class="flex-end clean-box">
-        <div v-if="maxLength" class="sa-input-word-limit">{{ inValue?.length || 0 }}{{ maxLength ? " / " + maxLength : "" }}</div>
+        <div v-if="maxLength" class="sa-input-word-limit">
+          {{ inValue?.length || 0 }}{{ maxLength ? " / " + maxLength : "" }}
+        </div>
         <sa-icon v-if="!disabled && clearable && inValue" name="close_circle_line" class="clear-icon" @click="clearInput" />
       </div>
     </div>
@@ -60,13 +62,14 @@
 <script lang="ts" setup>
 import { ref, computed, ComputedRef, watch, onMounted, nextTick, inject } from "vue";
 import { SaInputType } from "./type";
-import lodashPkg from "lodash";
 import { randChar } from "../tools/rand-char";
 import { SaltedGlobalConfigType } from "../sa-content/type";
 
+import _ from "lodash";
+const { isEqual, isNil } = _;
+
 const SaltedGlobalConfig = inject("SaltedGlobalConfig") as ComputedRef<SaltedGlobalConfigType>;
 
-const { isEqual, isNil } = lodashPkg;
 const inputRef = ref();
 const textareaRef = ref();
 const isFocus = ref(false);

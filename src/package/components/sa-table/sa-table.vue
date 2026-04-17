@@ -361,7 +361,6 @@ import {
   onMounted,
   ComputedRef
 } from "vue";
-import lodashPkg from "lodash";
 
 import mLightTableCell from "./sa-table-cell.vue";
 // import loading1 from "./loading-1.vue";
@@ -383,9 +382,11 @@ import { useValidateHooks } from "./hooks/use-validate-hooks";
 import { SaltedGlobalConfigType } from "../sa-content/type";
 import { splitArray } from "../utils/arraySplit";
 
+import _ from "lodash";
+const { cloneDeep, debounce } = _;
+
 const SaltedGlobalConfig = inject("SaltedGlobalConfig") as ComputedRef<SaltedGlobalConfigType>;
 
-const { cloneDeep, debounce } = lodashPkg;
 const mScrollbarListRef = useTemplateRef("mScrollbarListRef");
 const mScrollbarHeaderListRef = ref();
 const filterRef = useTemplateRef("filterRef");

@@ -185,6 +185,7 @@ import { SaEditorType, Tool } from "./type";
 import { toolsConfig } from "./tools-config";
 import { useUpFileHooks } from "./use-upfile-hooks";
 import { SaltedGlobalConfigType } from "../sa-content/type";
+
 import _ from "lodash";
 const { throttle } = _;
 

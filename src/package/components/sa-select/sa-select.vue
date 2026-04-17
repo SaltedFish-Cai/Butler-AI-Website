@@ -94,7 +94,6 @@
 <script lang="ts" setup>
 import { ref, computed, watch, nextTick, ComputedRef, inject, useTemplateRef, onMounted } from "vue";
 import { SaSelectType } from "./type";
-import lodashPkg from "lodash";
 import { randChar } from "../tools/rand-char";
 import { equalData } from "../utils/equalData";
 import { getElementPosition } from "../utils/getElementPosition";
@@ -103,7 +102,9 @@ import { findData as findDataSelect } from "./find-data";
 import { SaltedGlobalConfigType } from "../sa-content/type";
 import SaScrollbar from "../sa-scrollbar/sa-scrollbar.vue";
 
-const { isEqual, isNil, debounce } = lodashPkg;
+import _ from "lodash";
+const { isEqual, isNil, debounce } = _;
+
 const popoverRef = useTemplateRef("popoverRef");
 const selectRef = ref();
 const isFocus = ref(false);

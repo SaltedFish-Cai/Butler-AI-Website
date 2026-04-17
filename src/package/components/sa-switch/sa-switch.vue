@@ -40,9 +40,11 @@
 <script lang="ts" setup>
 import { computed, ComputedRef, inject, ref, Ref, watch } from "vue";
 import { SaSwitchType } from "./type";
-import lodashPkg from "lodash";
 import { findData } from "./find-data";
 import { SaltedGlobalConfigType } from "../sa-content/type";
+
+import _ from "lodash";
+const { isEqual, isNil } = _;
 
 const SaltedGlobalConfig = inject("SaltedGlobalConfig") as ComputedRef<SaltedGlobalConfigType>;
 
@@ -51,7 +53,6 @@ const props = withDefaults(defineProps<SaSwitchType>(), {
   inActiveValue: 0,
   contrastData: undefined
 });
-const { isEqual, isNil } = lodashPkg;
 // const exOptionsList = ref(props?.exOptions || []);
 const language = computed(() => SaltedGlobalConfig.value?.language?.value || "zh-CN");
 const inValue: Ref<boolean | number | string | undefined> = ref(props.modelValue);

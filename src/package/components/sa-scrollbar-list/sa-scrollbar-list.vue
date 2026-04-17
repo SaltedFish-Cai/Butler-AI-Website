@@ -159,7 +159,6 @@ async function getTableList(pageNum?: number) {
   const Data = await props.requestApi(_query);
   // tableRef?.value?.scrollTo(0, 0);
 
-  // const deepData = lodash.cloneDeep(Data);
   const deepData = Data;
 
   const _data = props.showPagination ? deepData.List || deepData : deepData;

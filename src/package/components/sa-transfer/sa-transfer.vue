@@ -94,11 +94,13 @@
 <script lang="ts" setup>
 import { ref, Ref, computed, watch, onMounted, onUnmounted, inject, ComputedRef } from "vue";
 import { SaTransferType } from "./type";
-import lodashPkg from "lodash";
 import { randChar } from "../tools/rand-char";
 import { SaOptionType } from "../manager-type";
 import { findData as findDataSelect } from "./find-data";
 import { SaltedGlobalConfigType } from "../sa-content/type";
+
+import _ from "lodash";
+const { isEqual, isNil } = _;
 
 const props = withDefaults(defineProps<SaTransferType>(), {
   id: randChar()
@@ -129,7 +131,6 @@ const filterSelectedList = computed(() => {
   return selectedList.value;
 });
 
-const { isEqual, isNil } = lodashPkg;
 const selectRef = ref();
 
 const SaltedGlobalConfig = inject("SaltedGlobalConfig") as ComputedRef<SaltedGlobalConfigType>;

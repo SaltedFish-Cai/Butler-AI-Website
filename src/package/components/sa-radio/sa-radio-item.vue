@@ -22,8 +22,10 @@
 <script lang="ts" setup>
 import { computed, ComputedRef, inject, ref, watch } from "vue";
 import { SaRadioItemType } from "./type";
-import { isNil } from "lodash";
 import { SaltedGlobalConfigType } from "../sa-content/type";
+
+import _ from "lodash";
+const { isNil } = _;
 
 const props = withDefaults(defineProps<SaRadioItemType>(), {});
 

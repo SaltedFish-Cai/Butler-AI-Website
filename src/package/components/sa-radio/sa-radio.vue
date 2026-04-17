@@ -40,10 +40,11 @@
 <script lang="ts" setup>
 import { ref, watch } from "vue";
 import { SaRadioType } from "./type";
-import lodashPkg from "lodash";
+
+import _ from "lodash";
+const { isEqual, isNil } = _;
 
 const props = withDefaults(defineProps<SaRadioType>(), {});
-const { isEqual, isNil } = lodashPkg;
 const exOptionsList = ref(props?.exOptions || []);
 
 const inValue = ref(props.modelValue);

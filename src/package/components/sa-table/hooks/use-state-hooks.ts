@@ -2,9 +2,11 @@
 import { Reactive, Ref, ref, reactive, nextTick } from "vue";
 import { SaTableType, SaTableItemType, SaTableUseItemType, SaTableUseType } from "../type";
 import { useObserverHooks } from "./use-observer-hooks";
-import lodashPkg from "lodash";
 import { setWidthToNumber, setWidthToString } from "./string-number";
 import { SaFormChildType } from "../../sa-form/type";
+
+import _ from "lodash";
+const { debounce, isNil, cloneDeep } = _;
 
 export const useStateHooks = (
   props: SaTableType,
@@ -21,7 +23,6 @@ export const useStateHooks = (
     infiniteScroll
   }
 ) => {
-  const { debounce, isNil, cloneDeep } = lodashPkg;
   const { listenCellInView, listenCellChildChange, clearListen } = useObserverHooks(props, {
     mScrollbarListRef,
     contentRef,

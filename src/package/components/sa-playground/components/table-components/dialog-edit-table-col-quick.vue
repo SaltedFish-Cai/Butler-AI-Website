@@ -171,7 +171,6 @@ import {
 import { editTableColConfig, editOtherTableColConfig, filterType, exOptionsById } from "../../configs/table-config";
 
 import _ from "lodash";
-
 const { cloneDeep } = _;
 
 const props = defineProps<{

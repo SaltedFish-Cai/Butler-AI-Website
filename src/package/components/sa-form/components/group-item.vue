@@ -55,12 +55,12 @@ import { Ref, ref, inject, computed, onMounted } from "vue";
 // import formLabel from "../form-label.vue";
 import formItem from "../form-basics-element.vue";
 import { GroupItemPropsType } from "../item";
-import lodashPkg from "lodash";
 import { ConfigContextType, SaFormChildType, SaFormItemType } from "../type";
 import { SaOptionType } from "../../manager-type";
 import { findData } from "../../sa-select/find-data";
 
-const { isNil, isEqual } = lodashPkg;
+import _ from "lodash";
+const { isNil, isEqual } = _;
 // # Var
 const props = withDefaults(defineProps<GroupItemPropsType>(), {});
 

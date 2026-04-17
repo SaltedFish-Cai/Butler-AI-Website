@@ -26,8 +26,9 @@
 <script lang="ts" setup>
 import { computed, ComputedRef, inject, ref, watch } from "vue";
 import { SaCheckBoxItemType } from "./type";
-import _ from "lodash";
 import { SaltedGlobalConfigType } from "../sa-content/type";
+
+import _ from "lodash";
 const { isNil } = _;
 
 const props = withDefaults(defineProps<SaCheckBoxItemType>(), {});

@@ -37,7 +37,9 @@
 import { nextTick, onMounted, onUnmounted, useSlots, ref, Ref, inject, watch } from "vue";
 import { SaPopoverType } from "./type";
 import { getElementPosition } from "../utils/getElementPosition";
-import { cloneDeep, throttle } from "lodash";
+
+import _ from "lodash";
+const { cloneDeep, throttle } = _;
 
 const props = withDefaults(defineProps<SaPopoverType>(), {
   trigger: "click",

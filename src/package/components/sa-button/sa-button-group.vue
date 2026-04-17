@@ -7,7 +7,7 @@
 <script lang="ts" setup>
 // # Import
 // import { reactive, onBeforeMount, useSlots, nextTick, watch } from "vue";
-// import lodashPkg from "lodash";
+// import _ from "lodash";
 // import { SaButtonType } from "./type";
 // import inBrowser from "../tools/inBrowser";
 withDefaults(

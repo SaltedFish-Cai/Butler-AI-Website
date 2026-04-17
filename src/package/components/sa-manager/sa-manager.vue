@@ -7,9 +7,13 @@ import { provide, reactive, computed, watch } from "vue";
 import { setThemeColor } from "../tools/color";
 import { SaltedGlobalConfigType, SaManagerType } from "./type";
 import languageMap from "../language.json";
-import { isNil } from "lodash";
+
 import { createLog } from "../utils/develop-log";
 import { useZIndex } from "element-plus";
+
+import _ from "lodash";
+const { isNil } = _;
+
 /**
  * # 获取全局 Z 索引
  */

@@ -361,11 +361,12 @@ import formLabel from "./form-label.vue";
 import mFormV2Item from "./sa-form-item.vue"; // 添加这行
 import groupItem from "./components/group-item.vue";
 
-import { isNil } from "lodash";
-
 import { ConfigContextType, SaFormItemType } from "./type";
 import { SaOptionType } from "../manager-type";
 import { GetSystemAddressMap } from "../api/form";
+
+import _ from "lodash";
+const { isNil } = _;
 
 // # Var
 type BasicsItemPropsType = {

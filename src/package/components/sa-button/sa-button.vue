@@ -36,15 +36,15 @@
 <script lang="ts" setup>
 // # Import
 import { reactive, onBeforeMount, useSlots, nextTick, watch, inject, ComputedRef, computed } from "vue";
-import lodashPkg from "lodash";
 import { SaButtonType } from "./type";
 import inBrowser from "../tools/inBrowser";
 import { M_MessageBox } from "../feedback";
 
 import { SaltedGlobalConfigType } from "../sa-content/type";
 
-// # Var
-const { debounce } = lodashPkg;
+import _ from "lodash";
+const { debounce } = _;
+
 const props = withDefaults(defineProps<SaButtonType>(), {
   debounced: true,
   debouncedTime: 300,

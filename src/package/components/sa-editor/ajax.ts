@@ -1,6 +1,6 @@
 // # Import
-import lodashPkg from "lodash";
-const { isNil } = lodashPkg;
+import _ from "lodash";
+const { isNil } = _;
 
 const SCOPE = "ElUpload";
 

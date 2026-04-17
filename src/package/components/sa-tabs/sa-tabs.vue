@@ -101,15 +101,14 @@
 <script lang="ts" setup>
 // # Import
 import { ref, onMounted, onUnmounted, useSlots, watch, nextTick, provide, computed } from "vue";
-import lodashPkg from "lodash";
 import { randChar } from "../tools/rand-char";
 import titleItem from "./sa-tabs-label.vue";
 import { SaTabsType } from "./type";
 import inBrowser from "../tools/inBrowser";
 import { getElementPosition } from "../utils/getElementPosition";
 
-// # Var
-const { debounce } = lodashPkg;
+import _ from "lodash";
+const { debounce } = _;
 
 const props = withDefaults(defineProps<SaTabsType>(), {
   modelValue: "",

@@ -1,13 +1,14 @@
 // # Import
 import { nextTick } from "vue";
 import { useIntersectionObserver } from "../../utils/useIntersectionObserver";
-import lodashPkg from "lodash";
+
+import _ from "lodash";
+const { debounce } = _;
 
 export const useObserverHooks = (
   props,
   { mScrollbarListRef, contentRef, isIntersectingList, isInViewList, setCellWidth, infiniteScroll }
 ) => {
-  const { debounce } = lodashPkg;
   let observer;
   // # Function 关闭监听
   function closeObserver() {

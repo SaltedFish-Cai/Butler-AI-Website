@@ -4,6 +4,7 @@ import { SaFileDataType } from "../sa-file/type";
 import { ajaxUpload } from "../sa-file/ajax";
 import { SaltedGlobalConfigType } from "../sa-content/type";
 import { SaEditorType } from "./type";
+
 import _ from "lodash";
 const { debounce } = _;
 

@@ -96,12 +96,14 @@
 <script lang="ts" setup>
 import { ref, Ref, computed, watch, inject, ComputedRef } from "vue";
 import { SaTimeType } from "./type";
-import lodashPkg from "lodash";
 import { randChar } from "../tools/rand-char";
 import MDateTimePanel from "./date-time-panel.vue";
 import MYearPanel from "./year-panel.vue";
 import { convertValue, isValidDate } from "./utils";
 import { SaltedGlobalConfigType } from "../sa-content/type";
+
+import _ from "lodash";
+const { isEqual, isNil, cloneDeep } = _;
 
 const DateTimeMap = {
   "date-picker-group": 1,
@@ -128,7 +130,6 @@ const emits = defineEmits(["update:modelValue", "change", "remoteMethod"]);
 const isRange = computed(() => {
   return props.type.endsWith("-group");
 });
-const { isEqual, isNil, cloneDeep } = lodashPkg;
 const popoverRef = ref();
 const selectRef = ref();
 const isFocus = ref(false);

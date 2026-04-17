@@ -46,13 +46,14 @@
 <script lang="ts" setup>
 import { ref, computed, ComputedRef, watch, onMounted, onUnmounted, inject, nextTick } from "vue";
 import { SaNumberType } from "./type";
-import lodashPkg from "lodash";
 import { randChar } from "../tools/rand-char";
 
 import { handlePrecision, keepDecimalPlaces } from "../utils/handlePrecision";
 import { SaltedGlobalConfigType } from "../sa-content/type";
 
-const { isEqual, isNil } = lodashPkg;
+import _ from "lodash";
+const { isEqual, isNil } = _;
+
 const inputRef = ref();
 const isFocus = ref(false);
 let setRange = false;

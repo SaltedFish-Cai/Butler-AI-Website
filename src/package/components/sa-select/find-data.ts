@@ -1,5 +1,7 @@
-import { isNil } from "lodash";
 import { SaOptionType } from "M_Types";
+
+import _ from "lodash";
+const { isNil } = _;
 
 export function findData(data, options: SaOptionType.SelectList) {
   const language = window.SaltedGlobalConfig?.language || "zh-CN";

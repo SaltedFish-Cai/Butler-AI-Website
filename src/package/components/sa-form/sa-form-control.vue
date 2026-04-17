@@ -7,8 +7,10 @@
 
 <script lang="tsx" setup>
 import { ref, reactive, defineEmits, watch, computed, provide, inject, Ref } from "vue";
-import { cloneDeep, isEqual } from "lodash";
 import { ConfigContextType, FormItemRule } from "./type";
+
+import _ from "lodash";
+const { cloneDeep, isEqual } = _;
 
 // 定义组件属性
 const props = withDefaults(
