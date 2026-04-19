@@ -4,7 +4,10 @@ import _ from "lodash";
 const { isNil } = _;
 
 export function findData(data, options: PaOptionType.SelectList) {
-  const language = window.PancakeGlobalConfig?.language || "zh-CN";
+  // SSR-safe: check if window exists
+  const language = typeof window !== "undefined" 
+    ? window.PancakeGlobalConfig?.language || "zh-CN"
+    : "zh-CN";
 
   let text = "";
   if (!options?.length) return "--";

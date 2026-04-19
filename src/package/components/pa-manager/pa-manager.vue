@@ -3,7 +3,7 @@
 </template>
 
 <script lang="ts" setup>
-import { provide, reactive, computed, watch } from "vue";
+import { provide, reactive, computed, watch, onMounted } from "vue";
 import { setThemeColor } from "../tools/color";
 import { PancakeGlobalConfigType, PaManagerType } from "./type";
 import languageMap from "../language.json";
@@ -14,13 +14,15 @@ import { useZIndex } from "element-plus";
 import _ from "lodash";
 const { isNil } = _;
 
+// SSR-safe global Z index
+let globalZIndex = 1000;
+
 /**
  * # 获取全局 Z 索引
  */
-window.globalZIndex = window.globalZIndex || 1000;
 const { nextZIndex } = useZIndex();
 provide("getPaAnagerGlobalZIndex", () => {
-  return nextZIndex() || window.globalZIndex++;
+  return nextZIndex() || globalZIndex++;
 });
 
 const props = withDefaults(defineProps<PaManagerType>(), {});
@@ -42,20 +44,26 @@ const state = reactive({
   requestHeader: props.requestHeader
 } as PancakeGlobalConfigType);
 
-window.PancakeGlobalConfig = { ...state, language: (state?.language?.value || "zh-CN") as any };
+// SSR-safe window initialization
+onMounted(() => {
+  if (typeof window !== "undefined") {
+    window.globalZIndex = window.globalZIndex || 1000;
+    window.PancakeGlobalConfig = { ...state, language: (state?.language?.value || "zh-CN") as any };
+    window.developLog = createLog(props.env || "product");
+  }
+});
 
 provide(
   "PancakeGlobalConfig",
   computed(() => {
-    window.PancakeGlobalConfig = { ...state, language: (state?.language?.value || "zh-CN") as any };
+    if (typeof window !== "undefined") {
+      window.PancakeGlobalConfig = { ...state, language: (state?.language?.value || "zh-CN") as any };
+    }
     return state;
   })
 );
 
-window.developLog = createLog(props.env || "product");
-
 setThemeColor(state.themeColor, state.isDark || false);
-// setPaAnagerSize(state.size || "default");
 
 /**
  * # 设置主题颜色
@@ -69,10 +77,12 @@ function setPaAnagerThemeColor(themeColor, isDark) {
 }
 
 function setPaAnagerSize(size: "default" | "large" | "small") {
-  const classList = window.document?.documentElement.classList || null;
-  classList?.toggle("small", size == "small");
-  classList?.toggle("default", size == "default");
-  classList?.toggle("large", size == "large");
+  if (typeof window !== "undefined") {
+    const classList = window.document?.documentElement.classList || null;
+    classList?.toggle("small", size == "small");
+    classList?.toggle("default", size == "default");
+    classList?.toggle("large", size == "large");
+  }
 }
 
 /**
@@ -124,19 +134,6 @@ watch(
     deep: true
   }
 );
-
-// setThemeColor(state.themeColor, state.isDark);
-
-// watch(
-//   () => props,
-//   newVal => {
-//     state.themeColor = newVal.themeColor;
-//   },
-//   {
-//     immediate: true,
-//     deep: true
-//   }
-// );
 </script>
 
 <style lang="scss">
