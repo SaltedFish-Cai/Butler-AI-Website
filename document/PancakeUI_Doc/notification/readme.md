@@ -1,24 +1,60 @@
-# Notification 通知弹窗
+# Notification 通知
 
-通知弹窗组件，用于显示操作结果或提示信息。
+通知组件，用于显示系统通知消息。
 
 ## 基础用法
 
 <demo src="./base.vue"></demo>
 
+## 快捷方法
+
+```ts
+import { M_Notification } from "@/package/components/feedback";
+
+// 成功通知
+M_Notification.success({
+  title: "成功",
+  message: "操作已完成"
+});
+
+// 警告通知
+M_Notification.warning({
+  title: "警告",
+  message: "请注意"
+});
+
+// 错误通知（使用 danger）
+M_Notification.danger({
+  title: "错误",
+  message: "操作失败"
+});
+
+// 信息通知
+M_Notification.info({
+  title: "提示",
+  message: "新消息"
+});
+
+// 关闭所有通知
+M_Notification.closeAll();
+```
+
 ## `NotificationOptions`
 
-| 属性名                   | 描述                                                 | 类型                                                        | 默认值        |
-| ------------------------ | ---------------------------------------------------- | ----------------------------------------------------------- | ------------- |
-| title                    | 弹窗标题，支持多语言                                 | `Record<"en-US" \| "zh-CN", string>`                        | —             |
-| message                  | 弹窗消息，支持多语言                                 | `Record<"en-US" \| "zh-CN", string>`                        | —             |
-| type                     | 弹窗类型，影响弹窗样式和按钮类型                     | `default` `info` `primary` `success` `warning` `danger`     | `default`     |
-| duration                 | 弹窗显示时间，单位为毫秒，设为 0 则不会自动关闭      | `number`                                                    | `3000`        |
-| customClass              | 自定义弹窗类名，用于自定义弹窗样式                   | `string`                                                    | —             |
-| onClick                  | 确认按钮点击回调函数                                 | `() => void`                                                | —             |
-| onClose                  | 取消按钮点击回调函数                                 | `() => void`                                                | —             |
-| offset                   | 弹窗偏移量，单位为像素                               | `number`                                                    | `0`           |
-| position                 | 弹窗位置，默认在右上角                               | `"bottom-left"` `"bottom-right"` `"top-left"` `"top-right"` | `"top-right"` |
-| dangerouslyUseHTMLString | 是否使用 HTML 字符串渲染消息，默认不使用 HTML 字符串 | `boolean`                                                   | `false`       |
-| zIndex                   | 弹窗的 z-index 值，默认自增长                        | `number`                                                    | —             |
-| icon                     | 弹窗图标，支持自定义图标                             | `string`                                                    | —             |
+| 属性名                   | 描述                                                 | 类型                                                    | 默认值      |
+| ------------------------ | ---------------------------------------------------- | ------------------------------------------------------- | ----------- |
+| title                    | 通知标题，支持多语言                                 | `Record<"en-US" \| "zh-CN", string>`                    | —           |
+| message                  | 通知消息，支持多语言                                 | `Record<"en-US" \| "zh-CN", string>`                    | —           |
+| type                     | 通知类型，影响通知样式                               | `"primary" \| "success" \| "warning" \| "danger" \| "info"` | `primary` |
+| duration                 | 通知显示时间，单位毫秒                               | `number`                                                | `4500`      |
+| position                 | 通知位置                                             | `"top-right" \| "top-left" \| "bottom-right" \| "bottom-left"` | `top-right` |
+| offset                   | 通知偏移量，单位像素                                 | `number`                                                | —           |
+| customClass              | 自定义通知类名                                       | `string`                                                | —           |
+| dangerouslyUseHTMLString | 是否使用 HTML 字符串渲染消息                         | `boolean`                                               | `false`     |
+| zIndex                   | 通知的 z-index 值                                    | `number`                                                | —           |
+| onClick                  | 点击通知回调                                         | `() => void`                                            | —           |
+| onClose                  | 关闭通知回调                                         | `() => void`                                            | —           |
+
+::: warning 注意
+类型使用 `danger` 而非 `error`，与其他组件保持一致。
+:::

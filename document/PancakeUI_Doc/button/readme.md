@@ -55,7 +55,7 @@
 | 属性名        | 描述                                                                        | 类型                                                                  | 默认值    |
 | ------------- | --------------------------------------------------------------------------- | --------------------------------------------------------------------- | --------- |
 | is            | 内置样式选择 [样式展示](/document/PancakeUI_Doc/button/readme.html#内置样式) | `string`                                                              | —         |
-| type          | 类型                                                                        | `default` `info` `primary` `success` `warning`                        | `default` |
+| type          | 类型                                                                        | `danger` `default` `info` `primary` `success` `warning`                        | `default` |
 | disabled      | 是否禁用按钮                                                                | `boolean`                                                             | `false`   |
 | loading       | 是否 `Loading` 状态                                                         | `boolean`                                                             | `false`   |
 | loadingBy     | 自动 `Loading` 监听依赖源                                                   | `string`                                                              | —         |

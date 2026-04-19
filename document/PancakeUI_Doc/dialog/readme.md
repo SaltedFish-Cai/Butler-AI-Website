@@ -42,7 +42,7 @@
 | useFull            | 使用全屏模式    | `boolean`                                        | `true`  |
 | scroll             | 开启滚动        | `boolean`                                        | `true`  |
 | useScrollX         | 开启 X 轴滚动   | `boolean`                                        | `false` |
-| titleAlign         | 标题对齐方式    | `center` `left` `right`                          | `left`  |
+| titleAlign         | 标题对齐方式    | `center` `left` `right`                          | `center`  |
 | closeOnClickModal  | 点击 Modal 退出 | `boolean`                                        | `true`  |
 | closeOnPressEscape | 按下 Esc 退出   | `boolean`                                        | `true`  |
 | padding            | 内边距          | `Array<"all"  "bottom"  "left"  "right"  "top">` | —       |

@@ -40,6 +40,6 @@
 | ------------ | ------------ | ----------------- | ------ |
 | FileId       | 文件 ID      | `string`          | —      |
 | FullPath     | 完整路径     | `string` `number` | —      |
-| FileName     | 文件名       | `boolean`         | —      |
-| FileUrl      | 文件相对路径 | `boolean`         | —      |
-| OriginalName | 相对文件名   | `boolean`         | —      |
+| FileName     | 文件名       | `string` | `undefined` | —      |
+| FileUrl      | 文件相对路径 | `string` | `undefined` | —      |
+| OriginalName | 相对文件名   | `string` | `undefined` | —      |
