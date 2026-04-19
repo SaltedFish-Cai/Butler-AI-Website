@@ -128,7 +128,7 @@ const state = reactive({
   fullscreen: false
 });
 
-const language = window.PancakeGlobalConfig?.language || "zh-CN";
+const language = typeof window !== "undefined" && typeof window !== "undefined" && window.PancakeGlobalConfig?.language || "zh-CN" || "zh-CN";
 
 // #Computed setSize
 const setSize = computed(() => {
@@ -234,15 +234,17 @@ function isNumber(value) {
 
 // #Function 关闭弹窗回调
 function closeMenu() {
-  window.PancakeGlobalConfig.escapeMap = window.PancakeGlobalConfig.escapeMap || [];
-  window.PancakeGlobalConfig.escapeMap = window.PancakeGlobalConfig.escapeMap.filter(item => item != openId);
+  if (typeof window !== "undefined") {
+    window.PancakeGlobalConfig.escapeMap = window.PancakeGlobalConfig.escapeMap || [];
+    window.PancakeGlobalConfig.escapeMap = window.PancakeGlobalConfig.escapeMap.filter(item => item != openId);
+  }
   emits("update:modelValue", false);
   emits("closed", false);
 }
 
 // #添加ESC键监听
 function handleKeyDown(e) {
-  const escapeMap = window.PancakeGlobalConfig.escapeMap || [];
+  const escapeMap = typeof window !== "undefined" && window.PancakeGlobalConfig.escapeMap || [];
   if (e.key === "Escape" && state.visible && escapeMap[escapeMap.length - 1] === openId) {
     if (state.fullscreen && props.size != "full") {
       state.fullscreen = false;
@@ -280,7 +282,7 @@ watch(
     if (data) {
       scrollChildChange();
     }
-    if (data && props.closeOnPressEscape) {
+    if (data && props.closeOnPressEscape && typeof window !== "undefined") {
       window.PancakeGlobalConfig.escapeMap = window.PancakeGlobalConfig.escapeMap || [];
       openId = new Date().getTime().toString();
       window.PancakeGlobalConfig.escapeMap.push(openId);

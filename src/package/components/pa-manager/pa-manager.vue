@@ -78,7 +78,7 @@ function setPaAnagerThemeColor(themeColor, isDark) {
 
 function setPaAnagerSize(size: "default" | "large" | "small") {
   if (typeof window !== "undefined") {
-    const classList = window.document?.documentElement.classList || null;
+    const classList = typeof window !== "undefined" && window.document?.documentElement.classList || null;
     classList?.toggle("small", size == "small");
     classList?.toggle("default", size == "default");
     classList?.toggle("large", size == "large");

@@ -35,7 +35,7 @@ export function useAutoSave(
     const key = saveFn;
     finalSaveFn = data => {
       try {
-        sessionStorage.setItem(key, JSON.stringify(data));
+        if (typeof sessionStorage !== "undefined") sessionStorage.setItem(key, JSON.stringify(data));
       } catch (error) {
         throw new Error("保存到sessionStorage失败");
       }
@@ -44,7 +44,7 @@ export function useAutoSave(
     // 如果提供了sessionKey，则自动保存到sessionStorage
     finalSaveFn = data => {
       try {
-        sessionStorage.setItem(sessionKey, JSON.stringify(data));
+        if (typeof sessionStorage !== "undefined") sessionStorage.setItem(sessionKey, JSON.stringify(data));
       } catch (error) {
         throw new Error("保存到sessionStorage失败");
       }
@@ -105,7 +105,7 @@ export function useAutoSave(
     if (!key) {
       throw new Error("没有提供sessionKey");
     }
-    sessionStorage.removeItem(key);
+    if (typeof sessionStorage !== "undefined") sessionStorage.removeItem(key);
     console.log("++++++++++> 停止自动保存:");
   };
 
@@ -145,7 +145,7 @@ export function useAutoSave(
       if (!key) {
         throw new Error("没有提供sessionKey");
       }
-      const savedValue = sessionStorage.getItem(key);
+      const savedValue = typeof sessionStorage !== "undefined" ? sessionStorage.getItem(key) : null;
       return savedValue ? JSON.parse(savedValue) : null;
     } catch (error) {
       console.error("获取保存值失败:", error);

@@ -319,7 +319,7 @@ async function FetchSaveAndFilter() {
     // delete item?.fixedValue;
     return { ...item };
   });
-  window.developLog.json({ Filter }, "保存并搜索", "info");
+  typeof window !== "undefined" && window.developLog.json({ Filter }, "保存并搜索", "info");
 
   injectCleanTableData();
   injectSetTableConfig(newArray);

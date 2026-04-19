@@ -589,7 +589,7 @@ const scrollBarList = ref();
 
 onBeforeMount(() => {
   if (!props.id) {
-    window.developLog.log("警告", "PaTable 组件参数 id 必填", "warning");
+    typeof window !== "undefined" && window.developLog.log("警告", "PaTable 组件参数 id 必填", "warning");
     return;
   }
 });
@@ -762,7 +762,7 @@ watch(
     }
 
     state.PageNum = showIndexNumber + 1;
-    window.developLog.log("当前页面", state.PageNum, "danger");
+    typeof window !== "undefined" && window.developLog.log("当前页面", state.PageNum, "danger");
     state.oldPageIndex = showIndexNumber;
     return;
     // for (let i = 0; i < newVal.length; i++) {

@@ -12,7 +12,7 @@ export const useObserverHooks = (
   let observer;
   // # Function 关闭监听
   function closeObserver() {
-    window.developLog.log(`关闭监听——元素进入视窗`, props.id, "danger");
+    typeof window !== "undefined" && window.developLog.log(`关闭监听——元素进入视窗`, props.id, "danger");
     if (isIntersectingList.value.length) {
       isIntersectingList.value.forEach((item: any) => {
         item.stopObserving();
@@ -45,7 +45,7 @@ export const useObserverHooks = (
       }
     }
 
-    window.developLog.log(`打开监听——元素进入视窗`, props.id, "success");
+    typeof window !== "undefined" && window.developLog.log(`打开监听——元素进入视窗`, props.id, "success");
     const Els = document.querySelectorAll(`#${props.id} .m-scrollbar-more`);
     if (Els.length) {
       for (let i = 0; i < Els.length; i++) {
@@ -68,7 +68,7 @@ export const useObserverHooks = (
 
   function listenChildCell(callback?) {
     if (observer?.disconnect) return;
-    window.developLog.log(`打开监听——子元素宽度变化`, props.id, "success");
+    typeof window !== "undefined" && window.developLog.log(`打开监听——子元素宽度变化`, props.id, "success");
     observer = new window.MutationObserver(setCellWidth);
     const config = { childList: true };
     if (contentRef.value) {
@@ -88,7 +88,7 @@ export const useObserverHooks = (
   const listenCellChildChange = {
     create: debounce(listenChildCell, 200),
     close: () => {
-      window.developLog.log(`关闭监听——子元素宽度变化`, props.id, "danger");
+      typeof window !== "undefined" && window.developLog.log(`关闭监听——子元素宽度变化`, props.id, "danger");
       observer?.disconnect?.();
       observer = null;
     }

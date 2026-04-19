@@ -54,15 +54,15 @@ export function getElementPosition(el, parentElement?: HTMLElement, paddingBox =
     y: rect.y,
     // 相对于文档的位置（考虑页面滚动）
     pageTop: rect.top + window.pageYOffset,
-    pageBottom: window.innerHeight - rect.bottom + window.pageYOffset,
+    pageBottom: typeof window !== "undefined" ? window.innerHeight : 0 - rect.bottom + window.pageYOffset,
     pageLeft: rect.left + window.pageXOffset,
-    pageRight: window.innerWidth - rect.right + window.pageXOffset,
+    pageRight: typeof window !== "undefined" ? window.innerWidth : 0 - rect.right + window.pageXOffset,
 
     // 相对于窗口的位置（考虑页面滚动）
     windowTop: rect.top,
-    windowBottom: window.innerHeight - rect.bottom,
+    windowBottom: typeof window !== "undefined" ? window.innerHeight : 0 - rect.bottom,
     windowLeft: rect.left,
-    windowRight: window.innerWidth - rect.right,
+    windowRight: typeof window !== "undefined" ? window.innerWidth : 0 - rect.right,
 
     // 检查是否超出视口右侧
     outRight: rect.right > viewportWidth,

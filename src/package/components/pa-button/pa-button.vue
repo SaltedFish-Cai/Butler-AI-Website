@@ -142,7 +142,7 @@ function realClick() {
   if (props.debounced) lock = true;
 
   nextTick(() => {
-    const EL = window.document.querySelector(props.loadingBy);
+    const EL = typeof window !== "undefined" && window.document.querySelector(props.loadingBy);
     if (EL && inBrowser) {
       state.isLoading = true;
 
@@ -154,7 +154,7 @@ function realClick() {
 
       const config = { childList: true };
       const callback = () => {
-        const EL = window.document.querySelector(props.loadingBy);
+        const EL = typeof window !== "undefined" && window.document.querySelector(props.loadingBy);
         if (!EL) {
           clearTimeout(safeLock);
           state.isLoading = false;

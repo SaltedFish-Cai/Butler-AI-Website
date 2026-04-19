@@ -186,31 +186,31 @@ export const useBaseStore = defineStore({
       if (this.language) this.changeLanguage(this.language);
 
       // # 组件字体大小
-      // window.document.documentElement?.style?.setProperty(
+      // typeof window !== "undefined" && window.document.documentElement?.style?.setProperty(
       //   "--pa-size-font",
       //   13 + (this.size == "small" ? -1 : this.size == "large" ? 1 : 0) + "px"
       // );
 
       // # 组件高度
-      // window.document.documentElement?.style?.setProperty(
+      // typeof window !== "undefined" && window.document.documentElement?.style?.setProperty(
       //   "--pa-size-height",
       //   28 + (this.size == "small" ? -4 : this.size == "large" ? 1 : 0) + "px"
       // );
 
       // # 组件内边距
-      // window.document.documentElement?.style?.setProperty(
+      // typeof window !== "undefined" && window.document.documentElement?.style?.setProperty(
       //   "--pa-size-padding",
       //   10 + (this.size == "small" ? -3 : this.size == "large" ? 2 : 0) + "px"
       // );
 
       // # 组件字体大小
-      // window.document.documentElement?.style?.setProperty("--m-component-font-base", 13 + "px");
+      // typeof window !== "undefined" && window.document.documentElement?.style?.setProperty("--m-component-font-base", 13 + "px");
 
       // # 组件高度
-      // window.document.documentElement?.style?.setProperty("--m-component-height-base", 28 + "px");
+      // typeof window !== "undefined" && window.document.documentElement?.style?.setProperty("--m-component-height-base", 28 + "px");
 
       // # 组件内边距
-      // window.document.documentElement?.style?.setProperty("--pa-size-padding", 10 + "px");
+      // typeof window !== "undefined" && window.document.documentElement?.style?.setProperty("--pa-size-padding", 10 + "px");
     },
 
     /**

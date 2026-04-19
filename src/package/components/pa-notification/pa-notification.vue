@@ -39,8 +39,8 @@ const props = defineProps<{
   options: NotificationOptions;
 }>();
 
-const languagePackage = languageMap[window.PancakeGlobalConfig?.language || "zh-CN"]["message"];
-const language = window.PancakeGlobalConfig?.language || "zh-CN";
+const languagePackage = languageMap[typeof window !== "undefined" && typeof window !== "undefined" && window.PancakeGlobalConfig?.language || "zh-CN" || "zh-CN"]["message"];
+const language = typeof window !== "undefined" && typeof window !== "undefined" && window.PancakeGlobalConfig?.language || "zh-CN" || "zh-CN";
 
 // 解构选项
 const {

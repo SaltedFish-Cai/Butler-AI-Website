@@ -186,7 +186,7 @@ async function validate(): Promise<{ valid: boolean; errors?: Record<string, str
   const errorList = Object.values(errorsMessage.value).filter(msg => msg !== "");
   const valid = errorList.length === 0;
   if (!valid) {
-    window.developLog.json(errorsMessage.value, "校验错误", "warning");
+    typeof window !== "undefined" && window.developLog.json(errorsMessage.value, "校验错误", "warning");
   }
   emit("validate", valid, errorsMessage.value);
   return { valid, errors: valid ? undefined : errorsMessage.value };

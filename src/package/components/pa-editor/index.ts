@@ -4,9 +4,9 @@ import inBrowser from "../tools/inBrowser";
 
 // # Var
 if (inBrowser) {
-  const script = window.document?.createElement("script") || {};
+  const script = typeof window !== "undefined" && window.document?.createElement("script") || {};
   script.src = "/DocumentToDms/library/wangEditor.js";
-  window.document?.head?.appendChild(script);
+  typeof window !== "undefined" && window.document?.head?.appendChild(script);
 }
 
 // #Function install

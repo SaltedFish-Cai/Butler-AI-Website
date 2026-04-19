@@ -163,7 +163,7 @@ function handleInput({ target }, panel?: "end" | "start") {
   // 验证日期格式
   if (value && !isValidDate(value)) {
     // 如果日期格式不合法，可以在这里处理错误
-    window.developLog.log("日期格式不合法:", value, "warning");
+    typeof window !== "undefined" && window.developLog.log("日期格式不合法:", value, "warning");
     // 可以选择不清空输入，让用户继续编辑
     return;
   }

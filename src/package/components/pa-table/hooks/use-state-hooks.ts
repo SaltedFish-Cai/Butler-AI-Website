@@ -347,7 +347,7 @@ export const useStateHooks = (
       (state.tableData?.length && state.tableData[_pageNum]?.length && state.tableData[_pageNum][1].type != "empty")
     ) {
       if (props.useSummary && !props.usePagination) debounceGetSummary();
-      window.developLog.log("当前页数据已经存在", _pageNum, "info");
+      typeof window !== "undefined" && window.developLog.log("当前页数据已经存在", _pageNum, "info");
 
       state.tableLoadingSize = 100;
       clearInterval(intervalId);
@@ -527,7 +527,7 @@ export const useStateHooks = (
       const exOut = ["selection", "radio", "expand", "row"];
       const _tableStructure = cloneDeep(tableStructure.value);
 
-      const indexArr = window.document?.querySelectorAll(`#${props.id} .find_cell_index`);
+      const indexArr = typeof window !== "undefined" && window.document?.querySelectorAll(`#${props.id} .find_cell_index`);
       let maxIndexNumber = 20;
       indexArr?.forEach(item => {
         if (item.clientWidth > maxIndexNumber) {
@@ -540,7 +540,7 @@ export const useStateHooks = (
           item.width = setWidthToString(maxIndexNumber);
           return;
         }
-        const operation_item = window.document?.querySelectorAll(`#${props.id} .find_cell_${item.prop}`);
+        const operation_item = typeof window !== "undefined" && window.document?.querySelectorAll(`#${props.id} .find_cell_${item.prop}`);
         let useWidth = 0;
 
         if (operation_item && operation_item.length > 0) {
@@ -566,10 +566,10 @@ export const useStateHooks = (
       });
 
       if (contentClientWidth > allWidth) {
-        window.developLog.log(`滚动条值大于所有宽度`, props.id, "info");
+        typeof window !== "undefined" && window.developLog.log(`滚动条值大于所有宽度`, props.id, "info");
         state.useAverageWidth = 1;
       } else {
-        window.developLog.log(`滚动条值大于所有宽度`, props.id, "info");
+        typeof window !== "undefined" && window.developLog.log(`滚动条值大于所有宽度`, props.id, "info");
         state.useAverageWidth = 0;
         if (maxIndex != -1) _tableStructure[maxIndex].width = "";
       }

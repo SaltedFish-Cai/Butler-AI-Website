@@ -38,7 +38,7 @@ export const useScrollHooks = (
 
   // # Function 分页更改
   async function handleCurrentChange(value) {
-    window.developLog.log("分页更改", value, "info");
+    typeof window !== "undefined" && window.developLog.log("分页更改", value, "info");
     nextTick(async () => {
       state.PageNum = value;
       await getTableList({ Page: { PageNum: value } }, true);
@@ -58,7 +58,7 @@ export const useScrollHooks = (
 
   // # Function 每页条数改变
   function handleSizeChange(val: number, exQuery?: Record<string, any>) {
-    window.developLog.log("每页条数改变", val, "info");
+    typeof window !== "undefined" && window.developLog.log("每页条数改变", val, "info");
     nextTick(async () => {
       await getTableList({ Page: { PageSize: val }, ...exQuery }, true);
       nextTick(async () => {

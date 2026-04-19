@@ -47,7 +47,7 @@ function copyInfo() {
 function copyUrl() {
   const copyInput = document.createElement("input");
   document.body.appendChild(copyInput);
-  copyInput.setAttribute("value", `${window.location.hash.split("#")[1]?.split("?")[0]}`);
+  copyInput.setAttribute("value", `${typeof window !== "undefined" && window.location.hash.split("#")[1]?.split("?")[0]}`);
   copyInput.select();
   document.execCommand("Copy");
   M_Message.success({
@@ -67,7 +67,7 @@ function onContextMenu(e) {
 if (PancakeGlobalConfig.value.env == "development") {
   onMounted(() => {
     nextTick(() => {
-      const element = window.document.getElementById(props.id);
+      const element = typeof window !== "undefined" && window.document.getElementById(props.id);
       if (element) {
         element.addEventListener("contextmenu", onContextMenu);
       }
@@ -75,7 +75,7 @@ if (PancakeGlobalConfig.value.env == "development") {
   });
 
   onUnmounted(() => {
-    const element = window.document.getElementById(props.id);
+    const element = typeof window !== "undefined" && window.document.getElementById(props.id);
     if (element) {
       element.removeEventListener("contextmenu", onContextMenu);
     }

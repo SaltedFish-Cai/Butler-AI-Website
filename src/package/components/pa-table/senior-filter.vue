@@ -261,7 +261,7 @@ async function submitTabsForm() {
     props: props.propItem.prop
   };
 
-  window.developLog.json(_advancedFilter, "高级搜索对象", "success");
+  typeof window !== "undefined" && window.developLog.json(_advancedFilter, "高级搜索对象", "success");
 
   state.advancedFilter = {
     fieldName: "",

@@ -67,11 +67,11 @@ onMounted(async () => {
   };
   const blobData = await useGetBlob(config, textUrl);
   if (blobData) {
-    const _data = window.URL.createObjectURL(blobData);
+    const _data = typeof window !== "undefined" && window.URL.createObjectURL(blobData);
     mediaImage.value = _data;
 
     setTimeout(() => {
-      window.URL.revokeObjectURL(_data);
+      typeof window !== "undefined" && window.URL.revokeObjectURL(_data);
     }, 1000);
   }
 });

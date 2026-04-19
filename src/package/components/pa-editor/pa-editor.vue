@@ -244,7 +244,7 @@ onMounted(() => {
 const saveCursorPosition = () => {
   if (!editorRef.value) return;
 
-  const selection = window.getSelection();
+  const selection = typeof window !== "undefined" ? window.getSelection() : null();
   if (selection && selection.rangeCount > 0) {
     // 保存当前选中的范围
     savedCursorRange = selection.getRangeAt(0).cloneRange();
@@ -547,7 +547,7 @@ watch(
 //   p.innerHTML = "&nbsp;";
 
 //   // 插入新的段落
-//   const selection = window.getSelection();
+//   const selection = typeof window !== "undefined" ? window.getSelection() : null();
 //   if (selection && selection.rangeCount > 0) {
 //     const range = selection.getRangeAt(0);
 //     range.deleteContents();
@@ -568,7 +568,7 @@ const onPaste = (e: ClipboardEvent) => {
   const text = e.clipboardData?.getData("text/plain") || "";
 
   // 插入内容
-  const selection = window.getSelection();
+  const selection = typeof window !== "undefined" ? window.getSelection() : null();
   if (selection && selection.rangeCount > 0) {
     const range = selection.getRangeAt(0);
     range.deleteContents();
@@ -642,7 +642,7 @@ function getEditorValue() {
 function insertTextAtCursor(text: string) {
   console.log("++++++++++> text:", text);
   editorRef.value?.focus?.();
-  const selection = window.getSelection();
+  const selection = typeof window !== "undefined" ? window.getSelection() : null();
   if (selection) {
     try {
       // 如果有保存的光标位置，则恢复它

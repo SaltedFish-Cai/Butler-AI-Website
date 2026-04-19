@@ -82,7 +82,7 @@ export const useUpFileHooks = (
           div.appendChild(img);
 
           // 插入到编辑器中
-          const selection = window.getSelection();
+          const selection = typeof window !== "undefined" ? window.getSelection() : null();
           if (selection && selection.rangeCount > 0) {
             const range = selection.getRangeAt(0);
             range.deleteContents();
@@ -115,7 +115,7 @@ export const useUpFileHooks = (
         div.appendChild(img);
 
         // 插入到编辑器中
-        const selection = window.getSelection();
+        const selection = typeof window !== "undefined" ? window.getSelection() : null();
         if (selection && selection.rangeCount > 0) {
           const range = selection.getRangeAt(0);
           range.deleteContents();

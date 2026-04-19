@@ -93,7 +93,7 @@ const executeCommand = (command: string, value?: any) => {
       });
 
       // 选中新插入的第一行单元格
-      const selection = window.getSelection();
+      const selection = typeof window !== "undefined" ? window.getSelection() : null();
       if (selection && rows.length > 0) {
         const firstRowCells = Array.from(rows[0].querySelectorAll("td, th"));
         const newCell: any = firstRowCells[insertIndex];
@@ -137,7 +137,7 @@ const executeCommand = (command: string, value?: any) => {
       });
 
       // 将光标移动到当前行的对应列单元格
-      const selection = window.getSelection();
+      const selection = typeof window !== "undefined" ? window.getSelection() : null();
       if (selection) {
         const currentRow = cellInfo.row;
         const currentCells = Array.from(currentRow.querySelectorAll("td, th"));
@@ -191,7 +191,7 @@ const executeCommand = (command: string, value?: any) => {
       }
 
       // 选中新行的第一个单元格
-      const selection = window.getSelection();
+      const selection = typeof window !== "undefined" ? window.getSelection() : null();
       if (selection) {
         const newCell = newRow.querySelector("td");
         if (newCell) {
@@ -232,7 +232,7 @@ const executeCommand = (command: string, value?: any) => {
       rowParent.removeChild(row);
 
       // 将光标移动到目标行的对应列单元格
-      const selection = window.getSelection();
+      const selection = typeof window !== "undefined" ? window.getSelection() : null();
       if (selection && targetRow) {
         const targetCells = Array.from(targetRow.querySelectorAll("td, th"));
         const targetCell: any = targetCells[cellInfo.colIndex] || targetCells[0];
@@ -259,7 +259,7 @@ const executeTableCommand = (command: string, value?: any) => {
   // 先选择表格单元格
   const range = document.createRange();
   range.selectNode(selectedTableCell.value);
-  const selection = window.getSelection();
+  const selection = typeof window !== "undefined" ? window.getSelection() : null();
   selection?.removeAllRanges();
   selection?.addRange(range);
   // 执行表格命令

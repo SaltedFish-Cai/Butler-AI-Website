@@ -392,7 +392,7 @@ function showPopover() {
       nextTick(() => {
         // 开始观察目标元素位置变化
         startObserving();
-        if (props.closeByScroll) {
+        if (props.closeByScroll && typeof window !== "undefined") {
           window.PancakeGlobalConfig.PopoverList = window.PancakeGlobalConfig.PopoverList || {};
           window.PancakeGlobalConfig.PopoverList[id.value] = hidePopover;
         }
@@ -410,8 +410,8 @@ function hidePopover() {
   // 停止观察目标元素
   stopObserving();
   // 删除全局事件监听
-  if (window.PancakeGlobalConfig?.PopoverList?.[id.value]) {
-    delete window.PancakeGlobalConfig.PopoverList[id.value];
+  if (typeof window !== "undefined" && window.PancakeGlobalConfig?.PopoverList?.[id.value]) {
+    if (typeof window !== "undefined") delete window.PancakeGlobalConfig.PopoverList[id.value];
   }
 }
 

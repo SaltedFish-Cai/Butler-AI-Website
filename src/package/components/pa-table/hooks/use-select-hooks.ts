@@ -50,9 +50,9 @@ export const useSelectHooks = (
 
   // 添加全局键盘事件监听
   if (typeof window !== "undefined" && props.useSelect) {
-    window.developLog.log(`添加监听——键盘事件`, props.id, "success");
-    window.addEventListener("keydown", handleKeyDown);
-    window.addEventListener("keyup", handleKeyUp);
+    typeof window !== "undefined" && window.developLog.log(`添加监听——键盘事件`, props.id, "success");
+    if (typeof window !== "undefined") window.addEventListener("keydown", handleKeyDown);
+    if (typeof window !== "undefined") window.addEventListener("keyup", handleKeyUp);
   }
 
   // # Function 选择行
@@ -244,10 +244,10 @@ export const useSelectHooks = (
 
   // 清理函数
   const cleanup = () => {
-    window.developLog.log(`关闭监听——键盘事件`, props.id, "danger");
+    typeof window !== "undefined" && window.developLog.log(`关闭监听——键盘事件`, props.id, "danger");
     if (typeof window !== "undefined") {
-      window.removeEventListener("keydown", handleKeyDown);
-      window.removeEventListener("keyup", handleKeyUp);
+      if (typeof window !== "undefined") window.removeEventListener("keydown", handleKeyDown);
+      if (typeof window !== "undefined") window.removeEventListener("keyup", handleKeyUp);
     }
   };
 
