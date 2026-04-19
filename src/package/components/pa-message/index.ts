@@ -30,9 +30,9 @@ Message.warning = (options: MessageOptions | string): MessageInstance => {
 
 Message.danger = (options: MessageOptions | string): MessageInstance => {
   if (typeof options === "string") {
-    return Message({ message: options, type: "error" });
+    return Message({ message: options, type: "danger" });
   }
-  return Message({ ...options, type: "error" });
+  return Message({ ...options, type: "danger" });
 };
 
 Message.info = (options: MessageOptions | string): MessageInstance => {

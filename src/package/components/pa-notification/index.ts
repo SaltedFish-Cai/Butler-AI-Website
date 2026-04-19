@@ -28,11 +28,11 @@ Notification.warning = (options: NotificationOptions | string): NotificationInst
   return Notification({ ...options, type: "warning" });
 };
 
-Notification.error = (options: NotificationOptions | string): NotificationInstance => {
+Notification.danger = (options: NotificationOptions | string): NotificationInstance => {
   if (typeof options === "string") {
-    return Notification({ message: options, type: "error" });
+    return Notification({ message: options, type: "danger" });
   }
-  return Notification({ ...options, type: "error" });
+  return Notification({ ...options, type: "danger" });
 };
 
 Notification.info = (options: NotificationOptions | string): NotificationInstance => {

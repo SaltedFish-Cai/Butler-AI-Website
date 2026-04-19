@@ -1,7 +1,7 @@
 import type { ComponentPublicInstance } from "vue";
 
 // 通知类型
-export type MessageType = "error" | "info" | "success" | "warning";
+export type MessageType = "danger" | "info" | "success" | "warning";
 
 type languageKey = "en-US" | "zh-CN";
 

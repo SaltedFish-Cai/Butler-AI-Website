@@ -549,7 +549,6 @@ onMounted(() => {
  */
 async function getSubmitForm() {
   if (initialization.value == -1) {
-    // window.ElMessage.error({ "en-US": "Please configure the structure first", "zh-CN": "请先配置结构" });
     return;
   }
 
