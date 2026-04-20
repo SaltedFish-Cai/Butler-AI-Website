@@ -290,7 +290,7 @@ function setTabsBoxSize() {
   nextTick(() => {
     const tabId = tabsRef?.value?.id;
     const _id = `${tabId}-tab-titles`;
-    const tabsTitleEl = window.document?.getElementById(_id);
+    const tabsTitleEl = typeof window !== "undefined" && window.document?.getElementById(_id);
     if (tabsTitleEl) {
       tabsTitle = {
         scrollWidth: tabsTitleEl.scrollWidth,
@@ -427,7 +427,7 @@ watch(
 function setLabelPosition() {
   if (props.styleMode != "border-card") return;
   setTimeout(() => {
-    const el: any = window.document?.querySelector(`.pa-tabs-title_action_${tabsId.value}`);
+    const el: any = typeof window !== "undefined" && window.document?.querySelector(`.pa-tabs-title_action_${tabsId.value}`);
     if (el) {
       const { width } = el.getBoundingClientRect();
       useLabelLeft.value = el.offsetLeft + 1;

@@ -229,7 +229,7 @@ const editorRef = inject("provideEditorRef") as Ref<HTMLDivElement | null>;
 
 // 更新工具栏工具的激活状态
 const isToolActiveArrayFn = () => {
-  const selection = window.getSelection();
+  const selection = typeof window !== "undefined" ? window.getSelection() : null();
 
   if (!selection || selection.rangeCount === 0) return;
 
@@ -293,7 +293,7 @@ const isToolActiveArrayFn = () => {
 
 // 判断选中的文本是否是某个标签下的所有文本内容
 const isSelectedTextFullTagContent = () => {
-  const selection = window.getSelection();
+  const selection = typeof window !== "undefined" ? window.getSelection() : null();
   if (!selection || selection.rangeCount === 0) {
     return { isFull: false, parentElement: null };
   }
@@ -367,7 +367,7 @@ const executeCommand = (command: string, value?: any) => {
   if (command === "backColor" && value) {
     // 在执行编辑操作前保存当前状态到撤销栈
     saveToUndoStack();
-    const selection = window.getSelection();
+    const selection = typeof window !== "undefined" ? window.getSelection() : null();
 
     if (selection && selection.rangeCount > 0) {
       const range = selection.getRangeAt(0);
@@ -412,7 +412,7 @@ const executeCommand = (command: string, value?: any) => {
   else if (command === "foreColor" && value) {
     // 在执行编辑操作前保存当前状态到撤销栈
     saveToUndoStack();
-    const selection = window.getSelection();
+    const selection = typeof window !== "undefined" ? window.getSelection() : null();
 
     if (selection && selection.rangeCount > 0) {
       const range = selection.getRangeAt(0);
@@ -457,7 +457,7 @@ const executeCommand = (command: string, value?: any) => {
     saveToUndoStack();
     document.execCommand("formatBlock", false, "<p>");
 
-    const selection = window.getSelection();
+    const selection = typeof window !== "undefined" ? window.getSelection() : null();
 
     if (selection && selection.rangeCount > 0) {
       const range = selection.getRangeAt(0);
@@ -503,7 +503,7 @@ const executeCommand = (command: string, value?: any) => {
   else if (command === "createLink") {
     // 在执行编辑操作前保存当前状态到撤销栈
     saveToUndoStack();
-    const selection = window.getSelection();
+    const selection = typeof window !== "undefined" ? window.getSelection() : null();
     if (selection && selection.rangeCount > 0) {
       const range = selection.getRangeAt(0);
 
@@ -573,7 +573,7 @@ const executeCommand = (command: string, value?: any) => {
     saveToUndoStack();
     const { rows = 3, cols = 3 } = typeof value === "object" ? value : {};
 
-    const selection = window.getSelection();
+    const selection = typeof window !== "undefined" ? window.getSelection() : null();
     if (selection && selection.rangeCount > 0) {
       const range = selection.getRangeAt(0);
 

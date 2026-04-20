@@ -29,7 +29,7 @@ import { ref, computed, onMounted, onUnmounted } from "vue";
 import type { MessageOptions } from "./type";
 import PaIcon from "../pa-icon/pa-icon.vue";
 
-const language = window.PancakeGlobalConfig?.language || "zh-CN";
+const language = typeof window !== "undefined" && typeof window !== "undefined" && window.PancakeGlobalConfig?.language || "zh-CN" || "zh-CN";
 
 // Props
 const props = defineProps<{
@@ -88,8 +88,6 @@ const handleClick = () => {
     onClick();
   }
   if (closeOnPressEscape) {
-    window.PancakeGlobalConfig.escapeMap = window.PancakeGlobalConfig.escapeMap || [];
-    window.PancakeGlobalConfig.escapeMap = window.PancakeGlobalConfig.escapeMap.filter(item => item != props.id);
   }
 };
 
@@ -102,14 +100,12 @@ const handleClose = () => {
     onClose();
   }
   if (closeOnPressEscape) {
-    window.PancakeGlobalConfig.escapeMap = window.PancakeGlobalConfig.escapeMap || [];
-    window.PancakeGlobalConfig.escapeMap = window.PancakeGlobalConfig.escapeMap.filter(item => item != props.id);
   }
 };
 
 // #添加ESC键监听
 function handleKeyDown(e) {
-  const escapeMap = window.PancakeGlobalConfig.escapeMap || [];
+  const escapeMap = typeof window !== "undefined" && window.PancakeGlobalConfig.escapeMap || [];
   if (e.key === "Escape" && escapeMap[escapeMap.length - 1] === props.id) {
     handleClose();
   }
@@ -123,8 +119,7 @@ onMounted(() => {
   }, 10);
   closeOnPressEscape && document.addEventListener("keydown", handleKeyDown);
   if (closeOnPressEscape) {
-    window.PancakeGlobalConfig.escapeMap = window.PancakeGlobalConfig.escapeMap || [];
-    window.PancakeGlobalConfig.escapeMap.push(props.id);
+    typeof window !== "undefined" && window.PancakeGlobalConfig.escapeMap.push(props.id);
   }
 });
 

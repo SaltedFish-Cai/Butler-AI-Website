@@ -9,7 +9,7 @@ class MessageBoxManagerImpl implements MessageBoxManager {
   add(options: MessageBoxOptions): MessageBoxInstance {
     // 生成唯一ID
     const id = `notification_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-    const languageKey = window.PancakeGlobalConfig.language || "zh-CN";
+    const languageKey = typeof window !== "undefined" && typeof window !== "undefined" && typeof window !== "undefined" && window.PancakeGlobalConfig?.language || "zh-CN" || "zh-CN" || "zh-CN";
     // 合并默认选项
     const mergedOptions = {
       ...options,
@@ -59,10 +59,10 @@ class MessageBoxManagerImpl implements MessageBoxManager {
     const handleClose = (event: CustomEvent) => {
       if (event.detail.id === id) {
         this.close(id);
-        window.removeEventListener("notification-closed", handleClose as EventListener);
+        if (typeof window !== "undefined") window.removeEventListener("notification-closed", handleClose as EventListener);
       }
     };
-    window.addEventListener("notification-closed", handleClose as EventListener);
+    if (typeof window !== "undefined") window.addEventListener("notification-closed", handleClose as EventListener);
 
     return instance;
   }

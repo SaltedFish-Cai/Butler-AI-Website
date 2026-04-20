@@ -160,13 +160,13 @@ const handleKeyUp = (event: KeyboardEvent) => {
 };
 
 onMounted(() => {
-  window.addEventListener("keydown", handleKeyDown);
-  window.addEventListener("keyup", handleKeyUp);
+  if (typeof window !== "undefined") window.addEventListener("keydown", handleKeyDown);
+  if (typeof window !== "undefined") window.addEventListener("keyup", handleKeyUp);
 });
 
 onUnmounted(() => {
-  window.removeEventListener("keydown", handleKeyDown);
-  window.removeEventListener("keyup", handleKeyUp);
+  if (typeof window !== "undefined") window.removeEventListener("keydown", handleKeyDown);
+  if (typeof window !== "undefined") window.removeEventListener("keyup", handleKeyUp);
 });
 
 /**

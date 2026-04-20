@@ -83,7 +83,7 @@ export const useValidateHooks = (
     const errorList = Object.values(errorsMessage.value).filter(msg => msg !== "");
     const valid = errorList.length === 0;
     if (!valid) {
-      window.developLog.json(errorsMessage.value, "校验错误", "warning");
+      typeof window !== "undefined" && window.developLog.json(errorsMessage.value, "校验错误", "warning");
     }
 
     return { valid, errors: valid ? undefined : errorsMessage.value };

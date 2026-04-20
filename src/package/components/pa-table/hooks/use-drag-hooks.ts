@@ -64,12 +64,12 @@ export const useDragHooks = (tableStructure: Ref<Array<PaTableItemType & PaTable
       basePositionIndex = -1;
       positionWidthIndex.value = -1;
 
-      window.removeEventListener("mousemove", handleDragWidthOver);
-      window.removeEventListener("mouseup", handleDragWidthEnd);
+      if (typeof window !== "undefined") window.removeEventListener("mousemove", handleDragWidthOver);
+      if (typeof window !== "undefined") window.removeEventListener("mouseup", handleDragWidthEnd);
     };
 
-    window.addEventListener("mousemove", handleDragWidthOver);
-    window.addEventListener("mouseup", handleDragWidthEnd);
+    if (typeof window !== "undefined") window.addEventListener("mousemove", handleDragWidthOver);
+    if (typeof window !== "undefined") window.addEventListener("mouseup", handleDragWidthEnd);
   };
 
   return {

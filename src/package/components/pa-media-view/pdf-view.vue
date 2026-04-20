@@ -60,7 +60,7 @@ onMounted(async () => {
   };
   const blobData = await useGetBlob(config, textUrl);
   if (blobData) {
-    const _data = window.URL.createObjectURL(blobData);
+    const _data = typeof window !== "undefined" && window.URL.createObjectURL(blobData);
     nextTick(() => {
       pdf.value = new window.Pdfh5("#" + PDF_ID.value + "-pdf", {
         pdfurl: _data,
@@ -71,7 +71,7 @@ onMounted(async () => {
       });
       pdf.value.on("complete", function () {
         // status: string, msg: string, time: string
-        window.URL.revokeObjectURL(_data);
+        typeof window !== "undefined" && window.URL.revokeObjectURL(_data);
         const el = document.getElementById(PDF_ID.value + "-pdf");
         if (el) {
           const container = el.querySelectorAll(".pageContainer");

@@ -1,6 +1,6 @@
 export const useTableHooks = () => {
   const getCurrentTableCell = () => {
-    const selection = window.getSelection();
+    const selection = typeof window !== "undefined" ? window.getSelection() : null();
     if (!selection || selection.rangeCount === 0) return null;
     let node = selection.anchorNode;
 

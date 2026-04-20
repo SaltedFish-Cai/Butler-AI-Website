@@ -23,7 +23,7 @@ export const useToolsHooks = (
       const block = document.queryCommandValue("formatBlock");
       return block === tool.value?.replace(/[<>]/g, "");
     } else if (tool.command === "backColor") {
-      const selection = window.getSelection();
+      const selection = typeof window !== "undefined" ? window.getSelection() : null();
       if (selection && selection.rangeCount > 0) {
         const range = selection.getRangeAt(0);
 
@@ -51,7 +51,7 @@ export const useToolsHooks = (
       }
       return false;
     } else if (tool.command === "foreColor") {
-      const selection = window.getSelection();
+      const selection = typeof window !== "undefined" ? window.getSelection() : null();
       if (selection && selection.rangeCount > 0) {
         const range = selection.getRangeAt(0);
 
@@ -91,7 +91,7 @@ export const useToolsHooks = (
   }
 
   function findFontSize() {
-    const selection = window.getSelection();
+    const selection = typeof window !== "undefined" ? window.getSelection() : null();
     if (selection && selection.rangeCount > 0) {
       const range = selection.getRangeAt(0);
 
@@ -117,7 +117,7 @@ export const useToolsHooks = (
   }
 
   function findLinkeText() {
-    const selection = window.getSelection();
+    const selection = typeof window !== "undefined" ? window.getSelection() : null();
     if (selection && selection.rangeCount > 0) {
       const range = selection.getRangeAt(0);
 

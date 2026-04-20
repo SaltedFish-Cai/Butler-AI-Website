@@ -203,7 +203,7 @@ function createSpanStyle() {
         baseSpanSize.value = 6;
       }
     } else {
-      const boxWidth = window.document?.getElementById(props.id || "default");
+      const boxWidth = typeof window !== "undefined" && window.document?.getElementById(props.id || "default");
       if (!boxWidth) return;
       const maxSpanList = {
         4: [6, 8, 12, 24],
@@ -602,7 +602,7 @@ async function clean_All() {
 
 // # Expose 重置结构配置
 function setStructure_All(newConfig: Array<PaFormItemType>) {
-  window.developLog.json(newConfig, "setStructure_All", "success");
+  typeof window !== "undefined" && window.developLog.json(newConfig, "setStructure_All", "success");
   inConfig.value = cloneDeep(newConfig);
   clearTimeout(initLoadingTime);
   if (inConfig.value?.length > 0) {
@@ -768,7 +768,7 @@ watch(
 watch(
   () => props.data,
   () => {
-    window.developLog.log("注意", "组件内使用数据隔离方案，请使用 changeData_All 或 changeData_Item 方法变更内部数据", "danger");
+    typeof window !== "undefined" && window.developLog.log("注意", "组件内使用数据隔离方案，请使用 changeData_All 或 changeData_Item 方法变更内部数据", "danger");
     // if (value && Object.keys(value).length > 0) {
     //   const cloneData = props.deepData ? cloneDeep(value) : value;
     //   formData.value = cloneData;

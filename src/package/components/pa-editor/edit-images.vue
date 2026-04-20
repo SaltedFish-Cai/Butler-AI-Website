@@ -64,7 +64,7 @@ const executeCommand = (command: string, value?: any) => {
     // 在执行图片操作前保存当前状态到撤销栈
     saveToUndoStack();
     // 获取选中的图片
-    const selection: any = window.getSelection();
+    const selection: any = typeof window !== "undefined" ? window.getSelection() : null();
     const anchorNode = selection?.anchorNode;
     let imageElement: any = null;
 
@@ -126,7 +126,7 @@ const executeCommand = (command: string, value?: any) => {
     // 在执行图片操作前保存当前状态到撤销栈
     saveToUndoStack();
     // 获取选中的图片
-    const selection: any = window.getSelection();
+    const selection: any = typeof window !== "undefined" ? window.getSelection() : null();
     const anchorNode = selection?.anchorNode;
     let imageElement: any = null;
 
@@ -173,7 +173,7 @@ const executeCommand = (command: string, value?: any) => {
     // 在执行图片操作前保存当前状态到撤销栈
     saveToUndoStack();
     // 获取选中的图片
-    const selection: any = window.getSelection();
+    const selection: any = typeof window !== "undefined" ? window.getSelection() : null();
     const anchorNode = selection?.anchorNode;
     let imageElement: any = null;
 
@@ -240,7 +240,7 @@ const executeImageCommand = (command: string, value?: string) => {
   // 先选择图片
   const range = document.createRange();
   range.selectNode(selectedImageElement.value);
-  const selection = window.getSelection();
+  const selection = typeof window !== "undefined" ? window.getSelection() : null();
   selection?.removeAllRanges();
   selection?.addRange(range);
   // 执行命令

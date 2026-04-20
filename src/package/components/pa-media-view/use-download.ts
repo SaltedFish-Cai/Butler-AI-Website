@@ -163,16 +163,16 @@ export const useDownload = async (config = { downloadHose: "", requestHeader: {}
             const _navigator: any = window.navigator;
             return _navigator.msSaveOrOpenBlob(res, `${fileName}` || `${new Date().getTime()}.xlsx`);
           }
-          const blobUrl = window.URL.createObjectURL(res);
-          const exportFile = window.document.createElement("a");
+          const blobUrl = typeof window !== "undefined" && window.URL.createObjectURL(res);
+          const exportFile = typeof window !== "undefined" && window.document.createElement("a");
           exportFile.style.display = "none";
           exportFile.download = `${fileName}` || `${new Date().getTime()}.xlsx`;
           exportFile.href = blobUrl;
-          window.document.body.appendChild(exportFile);
+          typeof window !== "undefined" && window.document.body.appendChild(exportFile);
           exportFile.click();
           // 去除下载对 url 的影响
-          window.document.body.removeChild(exportFile);
-          window.URL.revokeObjectURL(blobUrl);
+          typeof window !== "undefined" && window.document.body.removeChild(exportFile);
+          typeof window !== "undefined" && window.URL.revokeObjectURL(blobUrl);
         });
       }
     });

@@ -54,7 +54,7 @@ const breakPoint = ref<BreakPoint>("xl");
 
 // 计算当前断点
 const calculateBreakPoint = () => {
-  const width = window.innerWidth;
+  const width = typeof window !== "undefined" ? window.innerWidth : 0;
   if (width < 384) return "xs";
   if (width < 768) return "sm";
   if (width < 992) return "md";
@@ -70,12 +70,12 @@ const handleResize = () => {
 // 组件挂载时初始化断点并添加事件监听
 onMounted(() => {
   breakPoint.value = calculateBreakPoint();
-  window.addEventListener("resize", handleResize);
+  if (typeof window !== "undefined") window.addEventListener("resize", handleResize);
 });
 
 // 组件卸载时移除事件监听
 onUnmounted(() => {
-  window.removeEventListener("resize", handleResize);
+  if (typeof window !== "undefined") window.removeEventListener("resize", handleResize);
 });
 
 // 提供断点信息给子组件

@@ -53,10 +53,10 @@ class NotificationManagerImpl implements NotificationManager {
     const handleClose = (event: CustomEvent) => {
       if (event.detail.id === id) {
         this.close(id);
-        window.removeEventListener("notification-closed", handleClose as EventListener);
+        if (typeof window !== "undefined") window.removeEventListener("notification-closed", handleClose as EventListener);
       }
     };
-    window.addEventListener("notification-closed", handleClose as EventListener);
+    if (typeof window !== "undefined") window.addEventListener("notification-closed", handleClose as EventListener);
 
     setTimeout(() => {
       this.repositionNotifications();
