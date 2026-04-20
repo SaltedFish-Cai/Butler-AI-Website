@@ -16,7 +16,7 @@ import { VantResolver } from "@vant/auto-import-resolver";
 export default {
   srcDir: "./",
   outDir: ".vitepress/dist",
-  base: process.env.DEPLOY_TARGET === "gh-pages" ? "/saltedfish-Website/" : "/",
+  base: process.env.DEPLOY_TARGET === "gh-pages" ? "/Butler-AI-Website/" : "/",
   cleanUrls: true,
   lang: "zh-CN",
   // lang: 'en-US',
@@ -215,8 +215,8 @@ export default {
           },
     // 社交信息栏
     socialLinks: [
-      { icon: "gitee", link: "https://gitee.com/saltedfish-Cai/saltedfish-Website" },
-      { icon: "github", link: "https://github.com/saltedfish-Cai/saltedfish-Website" }
+      { icon: "gitee", link: "https://gitee.com/saltedfish-Cai/Butler-AI-Website" },
+      { icon: "github", link: "https://github.com/saltedfish-Cai/Butler-AI-Website" }
     ],
     // 底部信息栏
     footer: {

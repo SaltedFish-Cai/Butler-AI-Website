@@ -8,10 +8,10 @@
 
 基于 Vue3 原生开发，无需依赖 Element-Plus。更轻量级，更灵活，更易于定制与扩展。🤪🤪🤪
 
-[文档与展示地址点这里](http://manager.frontend-m.online/)
+[文档与展示地址点这里](http://butler.frontend-m.online/)
 
 ## 相关地址：
 
-- [Github 仓库](https://github.com/saltedfish-Cai/saltedfish-Website)：saltedfish-Website 项目的 Github 仓库 欢迎参与贡献与点赞
-- [Gitee 仓库](https://gitee.com/saltedfish-Cai/saltedfish-website)：saltedfish-Website 项目的 Gitee 仓库 欢迎参与贡献与点赞
-- [saltedfish-Website 站点](http://manager.frontend-m.online)：saltedfish-Website 项目的站点地址 欢迎访问
+- [Github 仓库](https://github.com/saltedfish-Cai/Butler-AI-Website)：Butler-AI-Website 项目的 Github 仓库 欢迎参与贡献与点赞
+- [Gitee 仓库](https://gitee.com/saltedfish-Cai/Butler-AI-Website)：Butler-AI-Website 项目的 Gitee 仓库 欢迎参与贡献与点赞
+- [Butler-AI-Website 站点](http://butler.frontend-m.online)：Butler-AI-Website 项目的站点地址 欢迎访问
