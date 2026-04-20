@@ -14,6 +14,9 @@ import MDocFooter from "../../src/components/box-nav/MDocFooter.vue";
 // import MAsideSponsors from "../../src/components/box-nav/MAsideSponsors.vue";
 import NavLinks from "../../src/components/box-nav/NavLinks.vue";
 
+// 首页装饰组件
+import HomeDecorations from "./components/HomeDecorations.vue";
+
 import directives from "../../src/directives/index";
 
 import ElementPlus from "element-plus";
@@ -102,6 +105,9 @@ export default {
     app.component("demo", demo);
 
     app.component("NavLinks", NavLinks);
+    
+    // 注册首页装饰组件
+    app.component("HomeDecorations", HomeDecorations);
 
     app.provide("DEV", process.env.NODE_ENV === "development");
     const _window: any = typeof window == "undefined" ? global : window;

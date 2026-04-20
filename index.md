@@ -45,9 +45,5 @@ features:
     link: /document/study/ai/selection
 ---
 
-<!-- 自定义组件 -->
-<!-- <script setup>
-import home from './components/home.vue';
-</script>
-
-<home /> -->
+<!-- 首页装饰组件 -->
+<HomeDecorations />
