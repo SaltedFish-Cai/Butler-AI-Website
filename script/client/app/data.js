@@ -28,7 +28,7 @@ export function initData(route) {
         })
       : ref(false);
 
-  const themeColor = useStorage(THEME_COLOR_KEY, "#43317A");
+  const themeColor = useStorage(THEME_COLOR_KEY, "#64605b");
   const themeSize = useStorage(THEME_SIZE_KEY, "default");
 
   return {

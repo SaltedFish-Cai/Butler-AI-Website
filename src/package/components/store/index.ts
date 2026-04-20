@@ -8,7 +8,7 @@ import languageMap from "../language.json";
 export const useBaseStore = defineStore({
   id: "Pancake-UI-global-configs",
   state: (): GlobalState & toolsState => ({
-    themeColor: "#43317A",
+    themeColor: "#64605b",
     isDark: false,
     requestHeader: {},
     tableConfig: {},

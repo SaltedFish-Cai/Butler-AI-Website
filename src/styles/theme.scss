@@ -1,3 +1,5 @@
+@use '../package/components/styles/theme.scss';
+
 /* dark/light radial transition */
 ::view-transition-old(root),
 ::view-transition-new(root) {

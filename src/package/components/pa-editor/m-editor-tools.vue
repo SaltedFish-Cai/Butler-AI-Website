@@ -212,7 +212,7 @@ const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<Pancake
 const fileInput = ref();
 const popoverReferenceRef = ref({});
 
-const presetColors = ["#43317A", "#67c23a", "#e6a23c", "#f56c6c", "#909399", "#bdbdc0", "#f9f8fd", "#ffffff"];
+const presetColors = ["#64605b", "#67c23a", "#e6a23c", "#f56c6c", "#909399", "#bdbdc0", "#f9f8fd", "#ffffff"];
 
 const injectEditorRef = inject("provideEditorRef") as Ref<any>;
 const injectSourceCodeRef = inject("provideSourceCodeRef") as Ref<any>;

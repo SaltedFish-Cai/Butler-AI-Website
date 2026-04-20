@@ -20,7 +20,7 @@ export default {
   cleanUrls: true,
   lang: "zh-CN",
   // lang: 'en-US',
-  title: "Butler", // 标题
+  title: "Butler-AI", // 标题
   description: "老咸鱼的站点", // 描述
   env: "manager",
   lastUpdated: true, // 上次更新时间
@@ -43,7 +43,7 @@ export default {
     nav: [
       // { text: "指南", link: "/document/guide/quickstart", activeMatch: "/guide/" },
       {
-        text: "👍 Pancake-UI 框架",
+        text: "🥞 Pancake-UI 框架",
         link: "/document/PancakeUI_Doc/icon/readme",
         activeMatch: "/PancakeUI_Doc/"
       },
