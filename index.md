@@ -1,13 +1,13 @@
 ---
 layout: home
 
-title: Butler
-titleTemplate: Butler
+title: Butler-AI
+titleTemplate: Butler-AI
 editLink: true
 lastUpdated: true
 
 hero:
-  name: Butler
+  name: Butler-AI
   tagline: [Pancake-UI]
   image:
     src: /logo-ui.svg
