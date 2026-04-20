@@ -10,7 +10,7 @@ hero:
   name: Butler-AI
   tagline: [Pancake-UI]
   image:
-    src: /logo-ui.svg
+    src: /play.gif
     alt: logo
   actions:
     - theme: brand
