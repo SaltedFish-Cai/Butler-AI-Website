@@ -164,14 +164,13 @@
 
 /* 背景渐变流动 */
 .VPHome::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: 
-    radial-gradient(ellipse 80% 50% at 20% 40%, rgba(2, 136, 209, 0.15) 0%, transparent 50%),
+  background: radial-gradient(ellipse 80% 50% at 20% 40%, rgba(2, 136, 209, 0.15) 0%, transparent 50%),
     radial-gradient(ellipse 60% 40% at 80% 60%, rgba(81, 177, 155, 0.12) 0%, transparent 50%),
     radial-gradient(ellipse 50% 30% at 50% 80%, rgba(2, 195, 150, 0.1) 0%, transparent 50%);
   animation: gradientFlow 15s ease-in-out infinite;
@@ -180,7 +179,8 @@
 }
 
 @keyframes gradientFlow {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 1;
     transform: scale(1) rotate(0deg);
   }
@@ -196,14 +196,13 @@
 
 /* 漂浮几何图形 */
 .VPHome::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-image: 
-    radial-gradient(circle at 10% 20%, rgba(2, 136, 209, 0.3) 0%, transparent 3%),
+  background-image: radial-gradient(circle at 10% 20%, rgba(2, 136, 209, 0.3) 0%, transparent 3%),
     radial-gradient(circle at 90% 10%, rgba(81, 177, 155, 0.25) 0%, transparent 4%),
     radial-gradient(circle at 15% 70%, rgba(2, 195, 150, 0.2) 0%, transparent 2.5%),
     radial-gradient(circle at 85% 80%, rgba(2, 136, 209, 0.2) 0%, transparent 3%),
@@ -215,7 +214,8 @@
 }
 
 @keyframes floatParticles {
-  0%, 100% {
+  0%,
+  100% {
     transform: translate(0, 0) scale(1);
     opacity: 0.6;
   }
@@ -244,36 +244,6 @@
   position: relative;
 }
 
-.VPHero::before {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: 
-    conic-gradient(from 0deg at 50% 50%, 
-      transparent 0deg, 
-      rgba(2, 136, 209, 0.03) 60deg, 
-      transparent 120deg,
-      rgba(81, 177, 155, 0.03) 180deg,
-      transparent 240deg,
-      rgba(2, 195, 150, 0.03) 300deg,
-      transparent 360deg);
-  animation: rotateGlow 30s linear infinite;
-  pointer-events: none;
-  z-index: 0;
-}
-
-@keyframes rotateGlow {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
 /* Features卡片悬浮效果 */
 .VPFeature {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -286,15 +256,13 @@
 
 /* 深色模式适配 */
 .dark .VPHome::before {
-  background: 
-    radial-gradient(ellipse 80% 50% at 20% 40%, rgba(2, 136, 209, 0.08) 0%, transparent 50%),
+  background: radial-gradient(ellipse 80% 50% at 20% 40%, rgba(2, 136, 209, 0.08) 0%, transparent 50%),
     radial-gradient(ellipse 60% 40% at 80% 60%, rgba(81, 177, 155, 0.06) 0%, transparent 50%),
     radial-gradient(ellipse 50% 30% at 50% 80%, rgba(2, 195, 150, 0.05) 0%, transparent 50%);
 }
 
 .dark .VPHome::after {
-  background-image: 
-    radial-gradient(circle at 10% 20%, rgba(2, 136, 209, 0.15) 0%, transparent 3%),
+  background-image: radial-gradient(circle at 10% 20%, rgba(2, 136, 209, 0.15) 0%, transparent 3%),
     radial-gradient(circle at 90% 10%, rgba(81, 177, 155, 0.12) 0%, transparent 4%),
     radial-gradient(circle at 15% 70%, rgba(2, 195, 150, 0.1) 0%, transparent 2.5%),
     radial-gradient(circle at 85% 80%, rgba(2, 136, 209, 0.1) 0%, transparent 3%);
