@@ -8,7 +8,21 @@ lastUpdated: true
 
 hero:
   name: Butler-AI
-  tagline: [Pancake-UI]
+  tagline:
+    [
+      如果你也对前端开发感兴趣,
+      欢迎来到Butler-AI站点,
+      这里有开源的 Pancake-UI 组件库,
+      AI 学习旅程的文档,
+      加入微信群聊,
+      一起学习和分享
+    ]
+  textline:
+    [
+      "关于巴特勒（Butler）：",
+      "身份属性：他是《绝区零》中维多利亚家政阵营专属的 S 级邦布。",
+      "角色特点：巴特勒以其标志性的绅士小胡子和燕尾服造型深受玩家喜爱，他甚至会在战斗中用平底锅煎饼。"
+    ]
   image:
     src: /play.gif
     alt: logo

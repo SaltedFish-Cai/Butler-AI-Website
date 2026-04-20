@@ -233,12 +233,6 @@
   }
 }
 
-/* 确保内容在动画层之上 */
-.VPHome > * {
-  position: relative;
-  z-index: 1;
-}
-
 /* Hero区域增强 */
 .VPHero {
   position: relative;
