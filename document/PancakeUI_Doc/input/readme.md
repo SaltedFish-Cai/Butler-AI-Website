@@ -8,28 +8,34 @@
 
 ## 组件功能展示
 
-<demo src="./base.vue" ></demo>
+<demo src="./base.vue"></demo>
 
 ## `SaInputType`
 
-| 字段           | 描述                         | 类型                                           | 默认值  |
-| -------------- | ---------------------------- | ---------------------------------------------- | ------- |
-| modelValue     | 绑定值                       | `string`                                       | —       |
-| placeholder    | 输入框提示                   | `Record<"en-US" \| "zh-CN", string>` `string`  | —       |
-| disabled       | 禁用状态                     | `boolean`                                      | `false` |
-| display        | 纯展示                       | `boolean`                                      | `false` |
-| maxLength      | 内容长度的最大数             | `string` `number`                              | —       |
-| clearable      | 显示清除按钮                 | `boolean`                                      | `true`  |
-| autofocus      | 自动获取焦点                 | `boolean`                                      | `false` |
-| inputParser    | 指定从格式化器输入中提取的值 | `(value: string) => string` `undefined`        | `false` |
-| inputFormatter | 指定输入值的格式             | `(value: number/string) => string` `undefined` | `false` |
-| contrastData   | 对比用原数据                 | `number` `string`                              | —       |
-| alwaysContrast | 是否总是显示对不数据         | `boolean`                                      | `false` |
+| 字段 | 描述 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| id | 组件唯一标识 | `string` | — |
+| class | 自定义类名 | `string` | — |
+| style | 自定义样式 | `Record<string, string>` | — |
+| modelValue | 绑定值 | `string` `number` | — |
+| type | 输入框类型 | `input` `textarea` `text` | `text` |
+| title | 标题 | `Record<"en-US" \| "zh-CN", string>` `string` | — |
+| titleWidth | 标题宽度 | `string` | `100px` |
+| placeholder | 输入框提示 | `Record<"en-US" \| "zh-CN", string>` `string` | — |
+| disabled | 禁用状态 | `boolean` | `false` |
+| display | 纯展示 | `boolean` | `false` |
+| maxLength | 内容长度的最大数 | `string` `number` | — |
+| clearable | 显示清除按钮 | `boolean` | `true` |
+| autofocus | 自动获取焦点 | `boolean` | `false` |
+| inputParser | 指定从格式化器输入中提取的值 | `(value: string) => string` `undefined` | `false` |
+| inputFormatter | 指定输入值的格式 | `(value: number/string) => string` `undefined` | `false` |
+| contrastData | 对比用原数据 | `number` `string` | — |
+| alwaysContrast | 是否总是显示对比数据 | `boolean` | `false` |
 
 ## `SaInputEvents`
 
-| 字段   | 描述           | 类型       |
-| ------ | -------------- | ---------- |
+| 字段 | 描述 | 类型 |
+| --- | --- | --- |
 | change | 当值改变时触发 | `function` |
 
 ## Props
