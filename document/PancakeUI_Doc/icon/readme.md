@@ -20,6 +20,11 @@
 | ------ | --------- | -------- | ------ |
 | name   | icon 名称 | `string` | —      |
 | tip    | icon 提示 | `string` | —      |
+| id | 组件唯一标识 | `string` | `undefined` |
+| class | 自定义类名 | `Array<string> | string` | `undefined` |
+| style | 自定义样式 | `Record<string, string>` | `undefined` |
+| onClick | 点击Icon执行方法 | `(event) => void` | `undefined` |
+
 
 ## Icon 选择
 

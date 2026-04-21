@@ -349,3 +349,8 @@ async function RefreshTable() {
 | setStructure_Item  | 设置表格单个结构                             | `(prop: string, item: SaTableItemType & SaTableUseItemType) => void` |
 | changeData_All     | 设置表格所有数据                             | `(data: Array<SaTableUseType.SaTableInDataType>) => void`            |
 | changeData_Item    | 设置表格单个数据                             | `(prop: string, value: SaTableUseType.SaTableInDataType) => void`    |
+| class | 自定义类名 | `string` | `undefined` |
+| style | 自定义样式 | `Record<string, string>` | `undefined` |
+| onTableChange | 表格数据变化时触发 | `(data) => void` | `undefined` |
+
+| onTableChange | 表格数据变化时触发 | `(data) => void` | `undefined` |

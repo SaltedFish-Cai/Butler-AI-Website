@@ -27,3 +27,5 @@
 | closeOnPressEscape | 是否按下 `Escape` 键关闭抽屉弹窗，默认开启           | `boolean`                                                | `true`   |
 | padding            | 弹窗内边距                                           | `Array<"all" \| "bottom" \| "left" \| "right" \| "top">` | —        |
 | position           | 弹窗位置                                             | `"bottom"` `"left"` `"right"` `"top"`                    | `right`  |
+| id | 唯一标识 | `string` | `undefined` |
+

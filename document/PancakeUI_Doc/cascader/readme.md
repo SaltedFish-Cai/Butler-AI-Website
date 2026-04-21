@@ -43,3 +43,22 @@
 | disabled | 禁用状态 | `boolean`                                         | `false` |
 | base     | 默认数据 | `any`                                             |         |
 | tagStyle | 标签样式 | `{bgColor?: string, textColor?: string}` `string` |         |
+
+
+## Props
+
+| 属性名 | 描述 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| id | 组件唯一标识 | `string` | `undefined` |
+| class | 自定义类名 | `string` | `undefined` |
+| style | 自定义样式 | `Record<string, string>` | `undefined` |
+| title | 表单项标签 | `Record<languageKey, string> | string` | `undefined` |
+| titleWidth | 表单项标签宽度 | `string` | `100px` |
+| teleportInContainer | 是否使用 Teleport 挂载到容器 | `boolean` | `false` |
+| onChange | 数据变更回调函数 | `({ value, oldValue, option }) => void` | `undefined` |
+| OptionsHeight | 选项高度 | `string` | `48px` |
+| inValue | 当前值 | `Array<number | string> | number | string` | `undefined` |
+| isCheck | 是否为 Check 模式 | `boolean` | `false` |
+| isFilter | 是否为过滤模式 | `boolean` | `false` |
+| isMultiple | 是否为多选模式 | `boolean` | `false` |
+| isMultiple | 是否为多选模式 | `boolean` | `false` |

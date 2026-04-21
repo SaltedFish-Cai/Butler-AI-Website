@@ -53,3 +53,5 @@
 | ----------- | ------ |
 | Dialog 底部 | footer |
 | Dialog 标题 | header |
+| id | 唯一标识 | `string` | `undefined` |
+

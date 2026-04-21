@@ -43,3 +43,16 @@
 | FileName     | 文件名       | `string` | `undefined` | —      |
 | FileUrl      | 文件相对路径 | `string` | `undefined` | —      |
 | OriginalName | 相对文件名   | `string` | `undefined` | —      |
+
+
+## Props
+
+| 属性名 | 描述 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| id | 组件唯一标识 | `string` | `undefined` |
+| class | 自定义类名 | `string` | `undefined` |
+| style | 自定义样式 | `Record<string, string>` | `undefined` |
+| fileIncludeText | 允许上传文件类型的文本描述 | `string[]` | `undefined` |
+| fileExcludeText | 不允许上传文件类型的文本描述 | `string[]` | `undefined` |
+| onChange | 数据变更回调函数 | `({ value, oldValue }) => void` | `undefined` |
+| onChange | 数据变更回调函数 | `({ value, oldValue }) => void` | `undefined` |

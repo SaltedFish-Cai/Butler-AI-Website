@@ -29,3 +29,25 @@
 | 字段   | 描述           | 类型       |
 | ------ | -------------- | ---------- |
 | change | 当值改变时触发 | `function` |
+
+
+## Props
+
+| 属性名 | 描述 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| id | 组件唯一标识 | `string` | `undefined` |
+| class | 自定义类名 | `string` | `undefined` |
+| style | 自定义样式 | `Record<string, string>` | `undefined` |
+| type | Time 类型 | `MDatePickerType` | `date-picker-group` |
+| display | 纯展示模式 | `boolean` | `false` |
+| placeholder | 表单项占位符 | `Record<languageKey, string> | string` | `undefined` |
+| disabled | 是否禁用 | `boolean` | `false` |
+| teleportInContainer | 是否将弹出层挂载到容器中 | `boolean` | `false` |
+| disabledDateFn | 禁用日期判断方法 | `(date) => boolean` | `undefined` |
+| shortcuts | 快捷选项 | `DatePickerShortcut[]` | `undefined` |
+| contrastData | 对比数据 | `string[] | string` | `undefined` |
+| alwaysContrast | 是否显示对比数据 | `boolean` | `false` |
+| onChange | 数据变更回调函数 | `({ value, oldValue }) => void` | `undefined` |
+| onFocus | 在组件 Input 获得焦点时触发 | `({ value }) => void` | `undefined` |
+| onBlur | 在组件 Input 失去焦点时触发 | `({ value }) => void` | `undefined` |
+| onBlur | 在组件 Input 失去焦点时触发 | `({ value }) => void` | `undefined` |

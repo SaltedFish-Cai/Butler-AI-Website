@@ -52,3 +52,27 @@
 | directlyScrollStart | 当滚动条直接滚动开始时触发，`不存在`节流延迟，返回 `true` or `false`   | `function` |
 | directlyScrollLeft  | 当滚动条直接滚动到左侧时触发，`不存在`节流延迟，返回 `true` or `false` | `function` |
 | directlyScrollRight | 当滚动条直接滚动到右侧时触发，`不存在`节流延迟，返回 `true` or `false` | `function` |
+
+
+## Props
+
+| 属性名 | 描述 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| class | 自定义类名 | `string` | `undefined` |
+| style | 自定义样式 | `Record<string, string>` | `undefined` |
+| contentStyle | 自定义内容样式 | `Record<string, string>` | `undefined` |
+| useShadow | 是否使用阴影 | `boolean` | `true` |
+| useBackTop | 是否显示回到顶部按钮 | `boolean` | `true` |
+| showThumb | 是否显示滚动条 | `boolean` | `true` |
+| styleMode | 样式模式 | `color` `default` | `default` |
+| paddingWidth | 滚动条宽度 | `number | string` | `10` |
+| intersectClassName | 监听元素类名 | `string` | `undefined` |
+| padding | 是否使用内边距 | `Array` | `[]` |
+| border | 是否使用边框 | `Array` | `[]` |
+| paddingBorder | 是否使用内边距边框 | `Array` | `[]` |
+| defaultScrollVerticalThumb | 默认垂直滚动条位置 | `number` | `0` |
+| defaultScrollHorizontalThumb | 默认水平滚动条位置 | `number` | `0` |
+| useClosePopover | 是否点击外部关闭 | `boolean` | `true` |
+| parentBoxRef | 父元素引用 | `Ref<HTMLElement | undefined>` | `undefined` |
+| useScrollY | 是否开启垂直滚动条 | `boolean` | `true` |
+| useScrollX | 是否开启水平滚动条 | `boolean` | `true` |

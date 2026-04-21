@@ -266,3 +266,5 @@ async function submitForm() {
 | setStructure_Item | 设置表格单个结构                           | `(prop: string, item: MStructureV2Type.FormV2) => void` |
 | changeData_All    | 设置表格所有数据                           | `(data: Array<object>) => void`                         |
 | changeData_Item   | 设置表格单个数据                           | `(prop: string, value: object) => void`                 |
+| class | 自定义类名 | `string` | `undefined` |
+| style | 自定义样式 | `Record<string, string>` | `undefined` |

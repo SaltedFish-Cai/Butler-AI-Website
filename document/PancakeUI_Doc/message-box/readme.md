@@ -59,6 +59,9 @@ M_MessageBox.confirm({
 | onClose                  | 取消按钮点击回调函数                                                 | `() => void`                                            | —         |
 | dangerouslyUseHTMLString | 是否使用 HTML 字符串渲染消息，默认不使用 HTML 字符串                 | `boolean`                                               | `false`   |
 | zIndex                   | 弹窗的 z-index 值，默认自增长                                        | `number`                                                | —         |
+| closeOnPressEscape | 是否在关闭时移除DOM元素 | `boolean` | `true` |
+
+| closeOnPressEsc | 是否在关闭时移除DOM元素 | `boolean` | `true` |
 
 ## 最佳实践
 

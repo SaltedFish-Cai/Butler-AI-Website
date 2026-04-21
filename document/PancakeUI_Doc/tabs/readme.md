@@ -90,3 +90,10 @@
 | 字段       | 描述              | 类型       |
 | ---------- | ----------------- | ---------- |
 | tab-change | 当 tab 切换时触发 | `function` |
+| id | 多表时唯一ID | `string` | `undefined` |
+| class | 自定义类名 | `string` | `undefined` |
+| style | 自定义样式 | `Record<string, string>` | `undefined` |
+| padding | 是否使用内边距 | `Array<top | left | bottom | right | all>` | `[]` |
+| useBorder | 是否使用边框 | `boolean` | `false` |
+| onTabChange | Tab变更回调函数 | `({ name, index }) => void` | `undefined` |
+
