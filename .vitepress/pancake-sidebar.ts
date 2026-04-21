@@ -4,7 +4,7 @@ export const PancakeUISidebar = [
   //   items: [{ text: "定制主题", link: "/document/PancakeUI_Doc/theme" }]
   // },
   {
-    text: "基础组件(原生)",
+    text: "基础组件",
     items: [
       { text: "Icon 图标", link: "/document/PancakeUI_Doc/icon/readme" },
       { text: "Button 按钮", link: "/document/PancakeUI_Doc/button/readme" },
@@ -13,7 +13,7 @@ export const PancakeUISidebar = [
     ]
   },
   {
-    text: "Cell单元(原生)",
+    text: "Cell单元",
     items: [
       { text: "Input 输入框", link: "/document/PancakeUI_Doc/input/readme" },
       { text: "Number 数字框", link: "/document/PancakeUI_Doc/number/readme" },
@@ -27,7 +27,7 @@ export const PancakeUISidebar = [
     ]
   },
   {
-    text: "高阶组件(原生)",
+    text: "高阶组件",
     items: [
       { text: "Tabs 选项卡", link: "/document/PancakeUI_Doc/tabs/readme" },
       { text: "Table 表格", link: "/document/PancakeUI_Doc/table/readme" },
@@ -37,7 +37,7 @@ export const PancakeUISidebar = [
     ]
   },
   {
-    text: "反馈组件(原生)",
+    text: "反馈组件",
     items: [
       { text: "Dialog 弹窗", link: "/document/PancakeUI_Doc/dialog/readme" },
       { text: "Message 消息提示", link: "/document/PancakeUI_Doc/message/readme" },
