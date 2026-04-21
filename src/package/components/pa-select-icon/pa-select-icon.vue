@@ -73,7 +73,7 @@ import office from "./config/office.json";
 import shop from "./config/shop.json";
 import cityJson from "./config/city.json";
 import network from "./config/network.json";
-import { PancakeGlobalConfigType } from "../pa-content/type";
+import { PancakeGlobalConfigType } from "../pa-manager/type";
 
 import _ from "lodash";
 const { isEqual, isNil } = _;

@@ -1,5 +1,31 @@
 export interface ScrollbarV2Type {
   /**
+   * **组件唯一标识**
+   * @type `string` | `undefined`
+   * @default `undefined`
+   * @description 当设置该值时，会作为组件的唯一标识
+   * */
+  id?: string;
+
+  /**
+   * **自定义类名**
+   * @type `string`
+   * @default `undefined`
+   * @description 当设置该值时，会添加到组件的类名中
+   * @description 该值的类型为 `string`，可以是任意类型
+   * */
+  class?: string;
+
+  /**
+   * **自定义样式**
+   * @type `Record<string, string>`
+   * @default `undefined`
+   * @description 当设置该值时，会添加到组件的样式中
+   * @description 该值的类型为 `Record<string, string>`，可以是任意类型
+   * */
+  style?: Record<string, string | undefined>;
+
+  /**
    * @description 是否使用阴影
    * @default true
    * @description styleMode='color'时：默认为 false
@@ -30,24 +56,6 @@ export interface ScrollbarV2Type {
    * @default true
    */
   showThumb?: boolean;
-
-  /**
-   * **自定义类名**
-   * @type `string`
-   * @default `undefined`
-   * @description 当设置该值时，会添加到组件的类名中
-   * @description 该值的类型为 `string`，可以是任意类型
-   * */
-  class?: string;
-
-  /**
-   * **自定义样式**
-   * @type `Record<string, string>`
-   * @default `undefined`
-   * @description 当设置该值时，会添加到组件的样式中
-   * @description 该值的类型为 `Record<string, string>`，可以是任意类型
-   * */
-  style?: Record<string, string>;
 
   /**
    * **自定义内容样式**

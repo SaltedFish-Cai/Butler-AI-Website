@@ -22,7 +22,7 @@
 <script lang="ts" setup>
 import { computed, ComputedRef, inject, ref, watch } from "vue";
 import { PaRadioItemType } from "./type";
-import { PancakeGlobalConfigType } from "../pa-content/type";
+import { PancakeGlobalConfigType } from "../pa-manager/type";
 
 import _ from "lodash";
 const { isNil } = _;

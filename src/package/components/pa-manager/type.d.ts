@@ -5,6 +5,13 @@ type apiType = {
   type: string;
 };
 
+type ConditionalType = {
+  Value: string;
+  Description: string;
+  DictionaryExplanation: string;
+  DescriptionEn: string;
+};
+
 type PancakeGlobal = {
   /**
    * **环境**
@@ -58,8 +65,10 @@ type PancakeGlobal = {
    * @description 该值的类型为 `object`，可以是任意类型
    * */
   table_config: {
-    groupAdvancedQueryApi?: apiType;
-    advancedQueryApi?: apiType;
+    groupAdvancedQueryApi?: apiType | { FilterLinkNextType: Array<ConditionalType> };
+    advancedQueryApi?:
+      | apiType
+      | { ConditionalType: Array<ConditionalType>; SqlJoinType: Array<ConditionalType>; LineConditional: Array<ConditionalType> };
     useSeniorFilter?: boolean;
     infiniteScroll?: boolean;
   };

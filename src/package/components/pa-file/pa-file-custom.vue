@@ -78,7 +78,7 @@
 </template>
 
 <script lang="ts" setup>
-import { PancakeGlobalConfigType } from "../pa-content/type";
+import { PancakeGlobalConfigType } from "../pa-manager/type";
 import { computed, ComputedRef, inject, ref, useTemplateRef } from "vue";
 import { PaFileDataType, PaFileType } from "./type";
 import { M_Message } from "../feedback";

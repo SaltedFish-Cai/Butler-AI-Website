@@ -32,7 +32,7 @@ const classes = computed(() => [
   { "has-active": hasActiveLink.value }
 ]);
 
-function onItemInteraction(e: MouseEvent | Event) {
+function onItemInteraction(e: Event | MouseEvent) {
   if ("key" in e && e.key !== "Enter") {
     return;
   }
@@ -47,7 +47,7 @@ function onCaretClick() {
 <template>
   <component :is="sectionTag" class="VPSidebarItem" :class="classes">
     <div
-      v-if="item.text"
+      v-if="item.text && item.isShow != false"
       class="item"
       :role="itemRole"
       v-on="item.items ? { click: onItemInteraction, keydown: onItemInteraction } : {}"

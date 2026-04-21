@@ -2,7 +2,7 @@ import { computed, ComputedRef, ref, Ref } from "vue";
 import { M_Message } from "../feedback";
 import { PaFileDataType } from "../pa-file/type";
 import { ajaxUpload } from "../pa-file/ajax";
-import { PancakeGlobalConfigType } from "../pa-content/type";
+import { PancakeGlobalConfigType } from "../pa-manager/type";
 import { PaEditorType } from "./type";
 
 import _ from "lodash";

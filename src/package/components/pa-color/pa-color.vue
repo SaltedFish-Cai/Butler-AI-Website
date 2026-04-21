@@ -10,7 +10,12 @@
           <div class="pa-color-preview-text">{{ currentColor }}</div>
         </div>
       </template>
-      <pa-color-item v-model="currentColor"></pa-color-item>
+      <pa-color-item
+        v-model="currentColor"
+        :preset-colors="props.presetColors"
+        :show-alpha="props.showAlpha"
+        :show-input="props.showInput"
+      ></pa-color-item>
     </pa-popover>
   </div>
 </template>
@@ -21,14 +26,10 @@ import { PaColorType } from "./type";
 
 // Props定义
 const props = withDefaults(defineProps<PaColorType>(), {
-  id: undefined,
-  class: undefined,
-  style: undefined,
   modelValue: "#000000",
   disabled: false,
-  showAlpha: false,
-  presetColors: undefined,
-  onChange: undefined
+  showAlpha: true,
+  showInput: true
 });
 
 // Emits定义

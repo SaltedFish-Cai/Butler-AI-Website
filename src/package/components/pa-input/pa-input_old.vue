@@ -63,7 +63,7 @@
 import { ref, computed, ComputedRef, watch, onMounted, nextTick, inject } from "vue";
 import { PaInputType } from "./type";
 import { randChar } from "../tools/rand-char";
-import { PancakeGlobalConfigType } from "../pa-content/type";
+import { PancakeGlobalConfigType } from "../pa-manager/type";
 
 import _ from "lodash";
 const { isEqual, isNil } = _;

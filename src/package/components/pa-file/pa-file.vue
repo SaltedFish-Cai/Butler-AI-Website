@@ -125,7 +125,7 @@ import { ref, computed, ComputedRef, watch, inject } from "vue";
 import { PaFileType, PaFileDataType } from "./type";
 import { ajaxUpload } from "./ajax";
 import { M_Message, M_MessageBox } from "../feedback";
-import { PancakeGlobalConfigType } from "../pa-content/type";
+import { PancakeGlobalConfigType } from "../pa-manager/type";
 // import { useDownload } from "../m-media-view/use-download";
 import _ from "lodash";
 const { isEqual, debounce, isNil } = _;

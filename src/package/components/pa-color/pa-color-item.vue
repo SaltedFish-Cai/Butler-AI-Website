@@ -16,13 +16,13 @@
       </div>
 
       <!-- 透明度选择条 -->
-      <div class="pa-color-picker-alpha-area" v-if="props.showAlpha">
+      <div class="pa-color-picker-alpha-area" v-if="showAlpha">
         <div
-          class="pa-color-picker-alpha-gradient"
+          class="pa-color-picker-alpha-area-gradient"
           :style="{ backgroundColor: currentColorWithoutAlpha }"
           @mousedown="onAlphaAreaMouseDown"
         ></div>
-        <div class="pa-color-picker-alpha-pointer" :style="{ top: `${100 - alpha * 100}%` }"></div>
+        <div class="pa-color-picker-alpha-area-pointer" :style="{ left: `${100 - alpha * 100}%` }"></div>
       </div>
     </div>
 
@@ -37,7 +37,7 @@
           placeholder="#000000"
         />
       </div>
-      <div class="pa-color-picker-inputs-group" v-if="props.showAlpha">
+      <!-- <div class="pa-color-picker-inputs-group" v-if="props.showAlpha">
         <input
           type="number"
           class="pa-color-picker-input"
@@ -48,7 +48,7 @@
           step="0.01"
           placeholder="Alpha"
         />
-      </div>
+      </div> -->
     </div>
 
     <!-- 预设颜色列表 -->
@@ -70,15 +70,10 @@ import { PaColorType } from "./type";
 
 // Props定义
 const props = withDefaults(defineProps<PaColorType>(), {
-  id: undefined,
-  class: undefined,
-  style: undefined,
   modelValue: "#000000",
-  value: "#000000",
   disabled: false,
   showAlpha: false,
-  showInput: false,
-  presetColors: undefined
+  showInput: false
 });
 
 // Emits定义
@@ -88,7 +83,7 @@ const emit = defineEmits<{
 }>();
 
 // 状态定义
-const currentColor = ref(props.value || props.modelValue);
+const currentColor = ref(props.modelValue);
 const hue = ref(0);
 const saturation = ref(0);
 const value = ref(0);
@@ -331,9 +326,9 @@ const handleAlphaAreaMouseMove = (e: MouseEvent) => {
 
   const target = alphaAreaRef.value;
   const rect = target.getBoundingClientRect();
-  const y = Math.max(0, Math.min(e.clientY - rect.top, rect.height));
+  const x = Math.max(0, Math.min(e.clientX - rect.left, rect.width));
 
-  alpha.value = 1 - y / rect.height;
+  alpha.value = parseFloat((1 - x / rect.width).toFixed(2));
   alphaInput.value = alpha.value;
 
   updateColorFromHsv();
@@ -351,10 +346,10 @@ const onHexInputChange = () => {
   }
 };
 
-const onAlphaInputChange = () => {
-  alpha.value = Math.max(0, Math.min(alphaInput.value, 1));
-  updateColorFromHsv();
-};
+// const onAlphaInputChange = () => {
+//   alpha.value = Math.max(0, Math.min(alphaInput.value, 1));
+//   updateColorFromHsv();
+// };
 
 const selectPresetColor = (color: string) => {
   currentColor.value = color;

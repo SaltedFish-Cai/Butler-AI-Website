@@ -56,7 +56,7 @@ import { computed, ComputedRef, inject, ref, useTemplateRef, watch } from "vue";
 import { MInterfaceConfig, MStructureType } from "../type";
 import { PaOptionType, PaStructureType } from "M_Types";
 import { M_Message, M_MessageBox } from "../../feedback";
-import { PancakeGlobalConfigType } from "../../pa-content/type";
+import { PancakeGlobalConfigType } from "../../pa-manager/type";
 import MQuickTable from "./quick-table.vue";
 
 const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;

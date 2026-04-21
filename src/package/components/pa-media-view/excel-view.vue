@@ -5,7 +5,7 @@
 <script lang="ts" setup>
 import { ref, onMounted, inject, ComputedRef } from "vue";
 import { useGetBlob } from "./use-download";
-import { PancakeGlobalConfigType } from "../pa-content/type";
+import { PancakeGlobalConfigType } from "../pa-manager/type";
 
 const props = withDefaults(defineProps<{ filePath: string; zoom: number }>(), {});
 const textUrl = String(props.filePath);

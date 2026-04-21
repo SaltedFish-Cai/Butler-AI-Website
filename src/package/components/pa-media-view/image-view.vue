@@ -36,7 +36,7 @@ import { ref, onMounted, computed, watch, inject, ComputedRef } from "vue";
 import { useGetBlob } from "./use-download";
 import randChar from "../tools/rand-char";
 import { mouseUp, left90, leftAll90 } from "./rotate-fn";
-import { PancakeGlobalConfigType } from "../pa-content/type";
+import { PancakeGlobalConfigType } from "../pa-manager/type";
 
 const imgRef = ref();
 const scrollRef = ref();

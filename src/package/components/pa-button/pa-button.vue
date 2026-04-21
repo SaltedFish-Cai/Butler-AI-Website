@@ -40,7 +40,7 @@ import { PaButtonType } from "./type";
 import inBrowser from "../tools/inBrowser";
 import { M_MessageBox } from "../feedback";
 
-import { PancakeGlobalConfigType } from "../pa-content/type";
+import { PancakeGlobalConfigType } from "../pa-manager/type";
 
 import _ from "lodash";
 const { debounce } = _;

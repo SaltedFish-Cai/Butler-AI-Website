@@ -49,7 +49,7 @@ import { PaNumberType } from "./type";
 import { randChar } from "../tools/rand-char";
 
 import { handlePrecision, keepDecimalPlaces } from "../utils/handlePrecision";
-import { PancakeGlobalConfigType } from "../pa-content/type";
+import { PancakeGlobalConfigType } from "../pa-manager/type";
 
 import _ from "lodash";
 const { isEqual, isNil } = _;

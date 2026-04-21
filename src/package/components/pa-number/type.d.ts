@@ -89,7 +89,7 @@ export type PaNumberType = {
   /**
    * **是否显示控制按钮**
    * @type `boolean`
-   * @default `false`
+   * @default `true`
    * @description 当设置该值为 `true` 时，会显示控制按钮
    * @description 当设置该值为 `false` 时，不会显示控制按钮
    * @example
@@ -232,4 +232,30 @@ export type PaNumberType = {
    * ```
    * */
   onChange?: ({ value, oldValue }) => void;
+
+  /**
+   * **失去焦点时触发**
+   * @type `() => void`
+   * @default `undefined`
+   * @description 当设置该值为 `() => void` 时，会使用该值作为回调函数
+   * @description 当设置该值为 `undefined` 时，不会使用回调函数
+   * @example
+   * ```tsx
+   * <MInput onBlur={() => { console.log('失去焦点') }} />
+   * ```
+   * */
+  onBlur?: () => void;
+
+  /**
+   * **获得焦点时触发**
+   * @type `() => void`
+   * @default `undefined`
+   * @description 当设置该值为 `() => void` 时，会使用该值作为回调函数
+   * @description 当设置该值为 `undefined` 时，不会使用回调函数
+   * @example
+   * ```tsx
+   * <MInput onFocus={() => { console.log('获得焦点') }} />
+   * ```
+   * */
+  onFocus?: () => void;
 };

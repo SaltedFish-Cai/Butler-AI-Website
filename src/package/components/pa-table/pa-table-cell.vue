@@ -311,7 +311,7 @@ import { findData as findDataSwitch } from "../pa-switch/find-data";
 import { findData as findDataSelect } from "../pa-select/find-data";
 import { PaOptionType } from "../manager-type";
 import { PaFormChildType } from "../pa-form/type";
-import { PancakeGlobalConfigType } from "../pa-content/type";
+import { PancakeGlobalConfigType } from "../pa-manager/type";
 
 type TableCellType = {
   structure: Array<PaTableUseItemType>;

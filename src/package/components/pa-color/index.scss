@@ -71,7 +71,6 @@
     position: relative;
     width: 100%;
     height: 150px;
-    border-radius: 4px;
     overflow: hidden;
     cursor: crosshair;
     margin-bottom: var(--pa-size-padding);
@@ -138,12 +137,11 @@
   // 透明度选择条
   &-alpha-area {
     position: relative;
-    width: 200px;
+    width: 100%;
     height: 12px;
-    border-radius: 6px;
     overflow: hidden;
     cursor: pointer;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
 
     &-gradient {
       width: 100%;
@@ -157,7 +155,7 @@
     &-pointer {
       position: absolute;
       top: -2px;
-      width: 6px;
+      width: 3px;
       height: 16px;
       border-radius: 3px;
       border: 1px solid #fff;

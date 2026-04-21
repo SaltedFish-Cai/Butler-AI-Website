@@ -60,12 +60,23 @@
 import { ref, inject, watch, Ref, computed, ComputedRef } from "vue";
 import { PaCascaderOptionType } from "./type";
 import { equalData } from "../utils/equalData";
-import { PaOptionType } from "../manager-type";
+import { SaOptionType } from "../manager-type";
 import PaCascaderOption from "./pa-cascader-option.vue";
-import { PancakeGlobalConfigType } from "../pa-content/type";
+import { PancakeGlobalConfigType } from "../pa-manager/type";
 
-const props = withDefaults(defineProps<PaCascaderOptionType>(), {});
-const childExOptions = ref([] as Array<PaOptionType.Select>);
+const props = withDefaults(
+  defineProps<
+    PaCascaderOptionType & {
+      isCheck: boolean;
+      isMultiple: boolean;
+      isFilter?: boolean;
+      inValue?: Array<number | string> | number | string;
+      OptionsHeight?: string;
+    }
+  >(),
+  {}
+);
+const childExOptions = ref([] as Array<SaOptionType.Select>);
 const injectHandleOptionClick: any = inject("handleOptionClick");
 const activeValue: Ref<boolean | number | string | undefined> = ref("");
 
@@ -74,7 +85,7 @@ const languageValue = computed(() => {
   return PancakeGlobalConfig.value?.language?.value || "zh-CN";
 });
 
-function handleOptionClick(item: PaOptionType.Select, type: "click" | "over") {
+function handleOptionClick(item: SaOptionType.Select, type: "click" | "over") {
   if (item.children?.length) {
     childExOptions.value = item.children;
     activeValue.value = item.value;

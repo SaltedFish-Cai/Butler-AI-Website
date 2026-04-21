@@ -92,7 +92,7 @@
 // # Import
 import { reactive, watch, onMounted, onUnmounted, computed, inject, ComputedRef } from "vue";
 import { PaDrawerType } from "./type";
-import { PancakeGlobalConfigType } from "../pa-content/type";
+import { PancakeGlobalConfigType } from "../pa-manager/type";
 
 // # Var
 const props = withDefaults(defineProps<PaDrawerType>(), {

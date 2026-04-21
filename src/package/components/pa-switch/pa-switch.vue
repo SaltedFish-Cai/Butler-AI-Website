@@ -41,7 +41,7 @@
 import { computed, ComputedRef, inject, ref, Ref, watch } from "vue";
 import { PaSwitchType } from "./type";
 import { findData } from "./find-data";
-import { PancakeGlobalConfigType } from "../pa-content/type";
+import { PancakeGlobalConfigType } from "../pa-manager/type";
 
 import _ from "lodash";
 const { isEqual, isNil } = _;

@@ -32,7 +32,7 @@ import { ref, Ref, onMounted, onUnmounted, nextTick, computed, inject, ComputedR
 import { useGetBlob } from "./use-download";
 import randChar from "../tools/rand-char";
 import { mouseUp, left90, leftAll90 } from "./rotate-fn";
-import { PancakeGlobalConfigType } from "../pa-content/type";
+import { PancakeGlobalConfigType } from "../pa-manager/type";
 
 // import Pdfh5 from "./pdf/js/pdfh5";
 // import "./pdf/css/pdfh5.css";

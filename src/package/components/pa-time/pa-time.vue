@@ -100,7 +100,7 @@ import { randChar } from "../tools/rand-char";
 import MDateTimePanel from "./date-time-panel.vue";
 import MYearPanel from "./year-panel.vue";
 import { convertValue, isValidDate } from "./utils";
-import { PancakeGlobalConfigType } from "../pa-content/type";
+import { PancakeGlobalConfigType } from "../pa-manager/type";
 
 import _ from "lodash";
 const { isEqual, isNil, cloneDeep } = _;

@@ -49,10 +49,7 @@
 
           <div v-if="paddingBorder?.includes('top') || paddingBorder?.includes('all')" class="pa-border_padding_top"></div>
           <div v-if="paddingBorder?.includes('left') || paddingBorder?.includes('all')" class="pa-border_padding_left"></div>
-          <div
-            v-if="paddingBorder?.includes('bottom') || paddingBorder?.includes('all')"
-            class="pa-border_padding_bottom"
-          ></div>
+          <div v-if="paddingBorder?.includes('bottom') || paddingBorder?.includes('all')" class="pa-border_padding_bottom"></div>
           <div v-if="paddingBorder?.includes('right') || paddingBorder?.includes('all')" class="pa-border_padding_right"></div>
           <slot></slot>
         </div>
@@ -120,8 +117,6 @@ const prop = withDefaults(defineProps<ScrollbarV2Type>(), {
   styleMode: "default",
   defaultScrollHorizontalThumb: 0,
   defaultScrollVerticalThumb: 0,
-  useBackTop: undefined,
-  useShadow: undefined,
   paddingWidth: "var(--pa-size-padding, 10px)"
 });
 const id = ref(randChar());
@@ -220,8 +215,13 @@ onMounted(() => {
         }
 
         // 关闭所有popover
-        if (Object.keys(typeof window !== "undefined" && window.PancakeGlobalConfig?.PopoverList || {}).length && prop.useClosePopover) {
-          Object.values(typeof window !== "undefined" && window.PancakeGlobalConfig.PopoverList || {}).forEach((item: any) => item?.());
+        if (
+          Object.keys((typeof window !== "undefined" && window.PancakeGlobalConfig?.PopoverList) || {}).length &&
+          prop.useClosePopover
+        ) {
+          Object.values((typeof window !== "undefined" && window.PancakeGlobalConfig.PopoverList) || {}).forEach((item: any) =>
+            item?.()
+          );
         }
       },
       ({ scrollTop, scrollLeft, scrollData }) => {

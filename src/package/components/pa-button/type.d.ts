@@ -217,4 +217,5 @@ export type PaButtonType = {
   onConfirmClick?: () => void;
   onSubmitClick?: () => void;
   onDeleteClick?: () => void;
+  onClick?: (event?: MouseEvent) => void;
 };

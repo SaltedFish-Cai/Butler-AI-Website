@@ -32,7 +32,7 @@ import { onMounted, ref, Ref, watch, nextTick, inject, ComputedRef } from "vue";
 import { PaTagType, TagListType } from "./type";
 import { getElementPosition } from "../utils/getElementPosition";
 
-import { PancakeGlobalConfigType } from "../pa-content/type";
+import { PancakeGlobalConfigType } from "../pa-manager/type";
 
 const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
 const language = PancakeGlobalConfig.value?.language?.value || "zh-CN";

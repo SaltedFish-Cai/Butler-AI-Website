@@ -97,7 +97,7 @@ import { PaTransferType } from "./type";
 import { randChar } from "../tools/rand-char";
 import { PaOptionType } from "../manager-type";
 import { findData as findDataSelect } from "./find-data";
-import { PancakeGlobalConfigType } from "../pa-content/type";
+import { PancakeGlobalConfigType } from "../pa-manager/type";
 
 import _ from "lodash";
 const { isEqual, isNil } = _;

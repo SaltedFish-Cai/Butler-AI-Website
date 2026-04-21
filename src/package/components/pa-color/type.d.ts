@@ -24,14 +24,6 @@ export type PaColorType = {
   style?: Record<string, string>;
 
   /**
-   * **初始颜色值**
-   * @type `string`
-   * @default `undefined`
-   * @description 当设置该值时，会作为组件的初始颜色值
-   * */
-  value?: string;
-
-  /**
    * **当前选中的颜色值**
    * @type `string`
    * @default `#000000`

@@ -72,7 +72,6 @@
             :isMultiple="isMultiple"
             :isCheck="isCheck"
             :OptionsHeight="OptionsHeight"
-            isFilter
           >
             <template #optionLabel="item">
               <slot name="optionLabel" :scope="item"></slot>
@@ -107,7 +106,7 @@ import { PaCascaderType } from "./type";
 import { randChar } from "../tools/rand-char";
 import { getElementPosition } from "../utils/getElementPosition";
 import { findData as findDataSelect } from "./find-data";
-import { PancakeGlobalConfigType } from "../pa-content/type";
+import { PancakeGlobalConfigType } from "../pa-manager/type";
 
 import _ from "lodash";
 const { isEqual, isNil, cloneDeep } = _;
@@ -137,7 +136,7 @@ const props = withDefaults(defineProps<PaCascaderType>(), {
   useSingleValue: true
 });
 
-const emits = defineEmits(["update:modelValue", "change", "remoteMethod"]);
+const emits = defineEmits(["update:modelValue", "change"]);
 
 const inValue = ref(props.modelValue || []);
 const exOptionsList = ref(props?.exOptions || []);

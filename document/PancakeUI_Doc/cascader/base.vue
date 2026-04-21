@@ -1,11 +1,6 @@
 <template>
   <pa-title :padding="['bottom']">基础使用</pa-title>
-  <pa-cascader
-    v-model="value1"
-    :exOptions="exOptions"
-    clearable
-    :title="{ 'en-US': 'Basic Usage', 'zh-CN': '基础使用' }"
-  ></pa-cascader>
+  <pa-cascader v-model="value1" :exOptions="exOptions" :title="{ 'en-US': 'Basic Usage', 'zh-CN': '基础使用' }"></pa-cascader>
 
   <pa-title :padding="['bottom']">Display</pa-title>
   <pa-cascader v-model="value3" :exOptions="exOptions" display></pa-cascader>

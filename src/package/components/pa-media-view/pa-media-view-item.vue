@@ -66,7 +66,7 @@ import excelView from "./excel-view.vue";
 import wordView from "./word-view.vue";
 import textView from "./text-view.vue";
 import { useTemplateRef } from "vue";
-import { PancakeGlobalConfigType } from "../pa-content/type";
+import { PancakeGlobalConfigType } from "../pa-manager/type";
 import { M_Message } from "../feedback";
 
 const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;

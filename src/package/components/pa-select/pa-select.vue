@@ -97,9 +97,9 @@ import { PaSelectType } from "./type";
 import { randChar } from "../tools/rand-char";
 import { equalData } from "../utils/equalData";
 import { getElementPosition } from "../utils/getElementPosition";
-import { PaOptionType } from "../manager-type";
+import { SaOptionType } from "../manager-type";
 import { findData as findDataSelect } from "./find-data";
-import { PancakeGlobalConfigType } from "../pa-content/type";
+import { PancakeGlobalConfigType } from "../pa-manager/type";
 import PaScrollbar from "../pa-scrollbar/pa-scrollbar.vue";
 
 import _ from "lodash";
@@ -128,7 +128,7 @@ const props = withDefaults(defineProps<PaSelectType>(), {
   clearable: true
 });
 
-const emits = defineEmits(["update:modelValue", "change", "remoteMethod"]);
+const emits = defineEmits(["update:modelValue", "change"]);
 
 const inValue = ref(props.modelValue || []);
 const exOptionsList = ref(props?.exOptions || []);
@@ -321,7 +321,7 @@ async function remoteMethodFn(query) {
     return [];
   }
   if (props.requestApi) {
-    const opt: PaOptionType.SelectList = await props.requestApi({ query: query || "" });
+    const opt: SaOptionType.SelectList = await props.requestApi({ query: query || "" });
     exOptionsList.value = opt || [];
   } else {
     exOptionsList.value = [];

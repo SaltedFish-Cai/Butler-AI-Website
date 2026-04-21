@@ -6,7 +6,7 @@
 // # Import
 import { computed, ComputedRef, inject, Ref } from "vue";
 import { PaTabsItemTitleType } from "./type";
-import { PancakeGlobalConfigType } from "../pa-content/type";
+import { PancakeGlobalConfigType } from "../pa-manager/type";
 const tabsContext = inject("TabsContext") as Ref<{ mode: "default" | "portrait" | "slider" | "sticky"; tabsId: string }>;
 
 // # Var

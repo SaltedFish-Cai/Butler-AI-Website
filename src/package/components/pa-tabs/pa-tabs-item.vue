@@ -54,7 +54,7 @@
 // #
 import { ref, onMounted, inject, provide, watch, computed, ComputedRef } from "vue";
 import { PaTabsItemType } from "./type";
-import { PancakeGlobalConfigType } from "../pa-content/type";
+import { PancakeGlobalConfigType } from "../pa-manager/type";
 // import { randChar } from "../tools/rand-char";
 
 const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;

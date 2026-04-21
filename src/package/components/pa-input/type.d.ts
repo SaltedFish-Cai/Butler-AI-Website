@@ -148,52 +148,6 @@ export type PaInputType = {
   autofocus?: boolean;
 
   /**
-   * **输入框转换**
-   * @type `(value: string) => string` | `undefined`
-   * @default `undefined`
-   * @description 当设置该值为 `(value: string) => string | undefined` 时，会对输入框的值进行转换
-   * @description 当设置该值为 `undefined` 时，不会对输入框的值进行转换
-   * @example
-   * ```tsx
-   * <MInput formatter={(value: string) => value.toUpperCase()} />
-   * ```
-   * @example
-   * ```tsx
-   * <MInput formatter={(value: string) => value.toLowerCase()} />
-   * ```
-   * @example
-   * ```tsx
-   * <MInput formatter={(value: string) => value.replace(/\s/g, '')} />
-   * ```
-   * @example
-   * ```tsx
-   * <MInput formatter={(value: string) => value.replace(/\D/g, '')} />
-   * ```
-   * */
-  inputParser?: (value: string) => string | undefined;
-
-  /**
-   * **输入框转换**
-   * @type `(value: number | string) => string` | `undefined`
-   * @default `undefined`
-   * @description 当设置该值为 `(value: number | string) => string | undefined` 时，会对输入框的值进行转换
-   * @description 当设置该值为 `undefined` 时，不会对输入框的值进行转换
-   * @example
-   * ```tsx
-   * <MInput formatter={(value: number | string) => value.toUpperCase()} />
-   * ```
-   * @example
-   * ```tsx
-   * <MInput formatter={(value: number | string) => value.toLowerCase()} />
-   * ```
-   * @example
-   * ```tsx
-   * <MInput formatter={(value: number | string) => value.replace(/\s/g, '')} />
-   * ```
-   * */
-  inputFormatter?: (value: number | string) => string | undefined;
-
-  /**
    * **对比数据**
    * @type `number` | `string` | `undefined`
    * @default `undefined`
@@ -235,4 +189,43 @@ export type PaInputType = {
    * ```
    * */
   onChange?: ({ value, oldValue }) => void;
+
+  /**
+   * **失去焦点时触发**
+   * @type `() => void`
+   * @default `undefined`
+   * @description 当设置该值为 `() => void` 时，会使用该值作为回调函数
+   * @description 当设置该值为 `undefined` 时，不会使用回调函数
+   * @example
+   * ```tsx
+   * <MInput onBlur={() => { console.log('失去焦点') }} />
+   * ```
+   * */
+  onBlur?: () => void;
+
+  /**
+   * **获得焦点时触发**
+   * @type `() => void`
+   * @default `undefined`
+   * @description 当设置该值为 `() => void` 时，会使用该值作为回调函数
+   * @description 当设置该值为 `undefined` 时，不会使用回调函数
+   * @example
+   * ```tsx
+   * <MInput onFocus={() => { console.log('获得焦点') }} />
+   * ```
+   * */
+  onFocus?: () => void;
+
+  /**
+   * **按下回车键时触发**
+   * @type `() => void`
+   * @default `undefined`
+   * @description 当设置该值为 `() => void` 时，会使用该值作为回调函数
+   * @description 当设置该值为 `undefined` 时，不会使用回调函数
+   * @example
+   * ```tsx
+   * <MInput onEnter={() => { console.log('按下回车键') }} />
+   * ```
+   * */
+  onEnter?: () => void;
 };

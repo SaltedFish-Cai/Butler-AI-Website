@@ -10,15 +10,18 @@
 
 <demo src="./base.vue" ></demo>
 
-## `SaNumberType`
+## Props
 
-| 字段           | 描述                 | 类型                                             | 默认值  |
+| 属性名         | 描述                 | 类型                                             | 默认值  |
 | -------------- | -------------------- | ------------------------------------------------ | ------- |
+| id             | 组件唯一标识         | `string`                                         | -       |
+| class          | 自定义类名           | `string`                                         | -       |
+| style          | 自定义样式           | `Record<string, string>`                         | -       |
 | modelValue     | 绑定值               | `string` `number`                                | —       |
 | placeholder    | 输入框提示           | `Record<"en-US" \| "zh-CN", string>` \| `string` | —       |
 | disabled       | 禁用状态             | `boolean`                                        | `false` |
 | display        | 纯展示               | `boolean`                                        | `false` |
-| controls       | 显示控制器           | `boolean`                                        | `false` |
+| controls       | 显示控制器           | `boolean`                                        | `true`  |
 | max            | 最大值               | `number`                                         | —       |
 | min            | 最小值               | `number`                                         | —       |
 | unit           | 单位                 | `string`                                         | —       |
@@ -28,21 +31,8 @@
 | step           | 计数器步长           | `number`                                         | `1`     |
 | contrastData   | 对比用原数据         | `number` / `string`                              | —       |
 | alwaysContrast | 是否总是显示对不数据 | `boolean`                                        | `false` |
-
-## `SaNumberEvents`
-
-| 字段   | 描述           | 类型       |
-| ------ | -------------- | ---------- |
-| change | 当值改变时触发 | `function` |
-
-## Props
-
-| 属性名     | 描述             | 类型                                    | 默认值      |
-| ---------- | ---------------- | --------------------------------------- | ----------- |
-| id         | 组件唯一标识     | `string`                                | `undefined` |
-| class      | 自定义类名       | `string`                                | `undefined` |
-| style      | 自定义样式       | `Record<string, string>`                | `undefined` |
-| title      | 表单项标签       | `Record<languageKey, string> \| string` | `undefined` |
-| titleWidth | 表单项标签宽度   | `string`                                | `100px`     |
-| onChange   | 数据变更回调函数 | `({ value, oldValue }) => void`         | `undefined` |
-| onChange   | 数据变更回调函数 | `({ value, oldValue }) => void`         | `undefined` |
+| title          | 表单项标签           | `Record<languageKey, string> \| string`          | -       |
+| titleWidth     | 表单项标签宽度       | `string`                                         | -       |
+| onChange       | 数据变更回调函数     | `({ value, oldValue }) => void`                  | -       |
+| onBlur         | 失去焦点时触发       | `() => void`                                     | -       |
+| onFocus        | 获得焦点时触发       | `() => void`                                     | -       |
