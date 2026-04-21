@@ -44,15 +44,14 @@
 | ------ | -------------- | ---------- |
 | change | 当值改变时触发 | `function` |
 
-
 ## Props
 
-| 属性名 | 描述 | 类型 | 默认值 |
-| --- | --- | --- | --- |
-| id | 组件唯一标识 | `string` | `undefined` |
-| class | 自定义类名 | `string` | `undefined` |
-| style | 自定义样式 | `Record<string, string>` | `undefined` |
-| iconStyle | 图标样式 | `Record<string, string>` | `undefined` |
-| activeIcon | 打开图标 | `string` | `undefined` |
-| inActiveIcon | 关闭图标 | `string` | `undefined` |
-| onChange | 数据变更回调函数 | `({ value, oldValue }) => void` | `undefined` |
+| 属性名       | 描述             | 类型                            | 默认值      |
+| ------------ | ---------------- | ------------------------------- | ----------- |
+| id           | 组件唯一标识     | `string`                        | `undefined` |
+| class        | 自定义类名       | `string`                        | `undefined` |
+| style        | 自定义样式       | `Record<string, string>`        | `undefined` |
+| iconStyle    | 图标样式         | `Record<string, string>`        | `undefined` |
+| activeIcon   | 打开图标         | `string`                        | `undefined` |
+| inActiveIcon | 关闭图标         | `string`                        | `undefined` |
+| onChange     | 数据变更回调函数 | `({ value, oldValue }) => void` | `undefined` |

@@ -10,9 +10,9 @@
 
 ## Props
 
-| 字段     | 描述     | 类型                | 默认值 |
-| -------- | -------- | ------------------- | ------ |
-| value    | 徽标值   | `number \| string`  | `''`   |
-| show     | 是否显示 | `boolean`          | `true` |
-| class    | 自定义类名 | `string`         | `undefined` |
-| style    | 自定义样式 | `Record<string, string>` | `undefined` |
+| 字段  | 描述       | 类型                     | 默认值      |
+| ----- | ---------- | ------------------------ | ----------- |
+| value | 徽标值     | `number \| string`       | `''`        |
+| show  | 是否显示   | `boolean`                | `true`      |
+| class | 自定义类名 | `string`                 | `undefined` |
+| style | 自定义样式 | `Record<string, string>` | `undefined` |

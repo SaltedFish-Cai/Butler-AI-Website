@@ -4,7 +4,7 @@
 
 ## 基础用法
 
-基础样式展示，组件提供2种样式风格，可以使用 `styleMode` 属性切换风格，使用 `padding` 控制内边距。
+基础样式展示，组件提供 2 种样式风格，可以使用 `styleMode` 属性切换风格，使用 `padding` 控制内边距。
 
 <demo src="./base.vue" ></demo>
 
@@ -87,13 +87,12 @@
 
 ## `SaTabsEvents`
 
-| 字段       | 描述              | 类型       |
-| ---------- | ----------------- | ---------- |
-| tab-change | 当 tab 切换时触发 | `function` |
-| id | 多表时唯一ID | `string` | `undefined` |
-| class | 自定义类名 | `string` | `undefined` |
-| style | 自定义样式 | `Record<string, string>` | `undefined` |
-| padding | 是否使用内边距 | `Array<top | left | bottom | right | all>` | `[]` |
-| useBorder | 是否使用边框 | `boolean` | `false` |
-| onTabChange | Tab变更回调函数 | `({ name, index }) => void` | `undefined` |
-
+| 字段        | 描述              | 类型                                           |
+| ----------- | ----------------- | ---------------------------------------------- | ----------- |
+| id          | 多表时唯一 ID     | `string`                                       | `undefined` |
+| class       | 自定义类名        | `string`                                       | `undefined` |
+| style       | 自定义样式        | `Record<string, string>`                       | `undefined` |
+| tab-change  | 当 tab 切换时触发 | `function`                                     |
+| padding     | 是否使用内边距    | `Array<top \| right \| left \| bottom \| all>` | `[]`        |
+| useBorder   | 是否使用边框      | `boolean`                                      | `false`     |
+| onTabChange | Tab 变更回调函数  | `({ name, index }) => void`                    | `undefined` |

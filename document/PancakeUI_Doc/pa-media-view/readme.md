@@ -16,11 +16,11 @@
 
 ## Props
 
-| 字段     | 描述             | 类型                           | 默认值 |
-| -------- | ---------------- | ------------------------------ | ------ |
-| file     | 文件源对象       | `objectType`                   | —      |
-| filePath | 文件路径         | `string`                       | —      |
-| fileName | 文件名称         | `string`                       | —      |
-| OriginalName | 原始文件名    | `string`                       | —      |
-| FileName | 文件名           | `string`                       | —      |
-| id       | 组件唯一标识     | `string | undefined`          | `undefined` |
+| 字段         | 描述         | 类型                  | 默认值      |
+| ------------ | ------------ | --------------------- | ----------- |
+| file         | 文件源对象   | `objectType`          | —           |
+| filePath     | 文件路径     | `string`              | —           |
+| fileName     | 文件名称     | `string`              | —           |
+| OriginalName | 原始文件名   | `string`              | —           |
+| FileName     | 文件名       | `string`              | —           |
+| id           | 组件唯一标识 | `string \| undefined` | `undefined` |

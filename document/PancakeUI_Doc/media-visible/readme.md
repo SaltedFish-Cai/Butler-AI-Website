@@ -27,11 +27,10 @@
 | FileUrl      | 文件相对路径 | `boolean`         |        |
 | OriginalName | 相对文件名   | `boolean`         |        |
 
-
 ## Props
 
-| 属性名 | 描述 | 类型 | 默认值 |
-| --- | --- | --- | --- |
-| id | 组件唯一标识 | `string` | `undefined` |
-| fileName | 文件名称 | `string` | `undefined` |
-| fileName | 文件名称 | `string` | `undefined` |
+| 属性名   | 描述         | 类型     | 默认值      |
+| -------- | ------------ | -------- | ----------- |
+| id       | 组件唯一标识 | `string` | `undefined` |
+| fileName | 文件名称     | `string` | `undefined` |
+| fileName | 文件名称     | `string` | `undefined` |

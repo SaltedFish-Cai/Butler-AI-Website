@@ -8,10 +8,10 @@
 
 ## Props
 
-| 字段       | 描述           | 类型               | 默认值  |
-| ---------- | -------------- | ------------------ | ------- |
-| modelValue | 是否显示遮罩   | `boolean`          | `false` |
-| class      | 自定义类名     | `string[] \| string` | `''`   |
-| style      | 自定义样式     | `Record<string, string>` | `undefined` |
-| useBlock   | 是否使用阻塞   | `boolean`          | `true`  |
-| teleportTo | 目标挂载元素   | `HTMLElement`      | `null`  |
+| 字段       | 描述         | 类型                     | 默认值      |
+| ---------- | ------------ | ------------------------ | ----------- |
+| modelValue | 是否显示遮罩 | `boolean`                | `false`     |
+| class      | 自定义类名   | `string[] \| string`     | `''`        |
+| style      | 自定义样式   | `Record<string, string>` | `undefined` |
+| useBlock   | 是否使用阻塞 | `boolean`                | `true`      |
+| teleportTo | 目标挂载元素 | `HTMLElement`            | `null`      |
