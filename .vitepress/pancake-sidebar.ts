@@ -8,7 +8,7 @@ export const PancakeUISidebar = [
     items: [
       { text: "Icon 图标", link: "/document/PancakeUI_Doc/icon/readme" },
       { text: "Button 按钮", link: "/document/PancakeUI_Doc/button/readme" },
-      { text: "Color 颜色选择器", link: "/document/PancakeUI_Doc/color-v2/readme" },
+      { text: "Color 颜色选择器", link: "/document/PancakeUI_Doc/color/readme" },
       { text: "Scrollbar 滚动条", link: "/document/PancakeUI_Doc/scrollbar/readme" }
     ]
   },
