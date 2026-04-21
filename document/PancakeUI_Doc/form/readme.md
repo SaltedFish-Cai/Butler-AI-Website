@@ -220,6 +220,9 @@ const formConfig: MStructureV2Type.FormV2[] = [
 | 单元格外置依赖                     | exCellDependent | [SaFormCellExDependentType](/document/PancakeUI_Doc/form/readme.html#SaFormcellexdependenttype) | —       |
 | 最大分栏数                         | maxSpan         | `1` `2` `3` `4`                                                                                | `4`     |
 | 最大分栏数                         | exSpan          | `1` `2` `3` `4`                                                                                | `4`     |
+| class                            | 自定义类名       | `string`                                                                                       | `undefined` |
+| style                            | 自定义样式       | `Record<string, string>`                                                                      | `undefined` |
+| onFormDataChange                 | 表单数据变化回调 | `(data: object) => void`                                                                       | `undefined` |
 
 ## `SaFormExDependentType`
 
@@ -266,5 +269,26 @@ async function submitForm() {
 | setStructure_Item | 设置表格单个结构                           | `(prop: string, item: MStructureV2Type.FormV2) => void` |
 | changeData_All    | 设置表格所有数据                           | `(data: Array<object>) => void`                         |
 | changeData_Item   | 设置表格单个数据                           | `(prop: string, value: object) => void`                 |
-| class | 自定义类名 | `string` | `undefined` |
-| style | 自定义样式 | `Record<string, string>` | `undefined` |
+
+## `FormItemRule`
+
+| 字段       | 描述             | 类型                                                                                  | 默认值 |
+| ---------- | ---------------- | ------------------------------------------------------------------------------------- | ------ |
+| type       | 验证规则名称     | `"any"` `"array"` `"boolean"` `"date"` `"email"` `"enum"` `"float"` `"hex"` ...   | —      |
+| required   | 是否必填         | `boolean`                                                                            | —      |
+| message    | 验证错误信息     | `string`                                                                             | —      |
+| trigger    | 验证触发方式     | `"blur"` `"change"` `"input"`                                                        | —      |
+| min        | 最小值           | `number`                                                                             | —      |
+| max        | 最大值           | `number`                                                                             | —      |
+| len        | 长度             | `number`                                                                             | —      |
+| pattern    | 正则表达式       | `RegExp`                                                                             | —      |
+| validator  | 自定义验证函数   | `(params) => Promise<void> \| void`                                                  | —      |
+| enum       | 枚举值           | `Array<boolean \| number \| string \| null \| undefined>`                             | —      |
+| transform  | 转换值           | `(value) => any`                                                                     | —      |
+
+## `FormDataType`
+
+| 字段   | 描述         | 类型                  | 默认值 |
+| ------ | ------------ | --------------------- | ------ |
+| name   | 表单名称     | `string`              | —      |
+| isError | 是否有错误   | `boolean`             | —      |

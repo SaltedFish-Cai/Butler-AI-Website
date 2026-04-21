@@ -287,6 +287,16 @@ const tableConfig: MStructureV2Type.TableV2[] = [
 | exPagination       | 外置依赖                                                                                      | [ExPaginationType](/document/PancakeUI_Doc/table/readme.html#expaginationtype-外置页码配置)        | —       |
 | summaryConfig      | 自定义合计参数                                                                                | sumText?: string; 合计文字 unitText?: string; // 单位文字                                         | —       |
 | summaryFunction    | 自定义合计方法                                                                                | (params: any) => string[]                                                                         | —       |
+| class              | 自定义类名                                                                                   | `string`                                                                                         | `undefined` |
+| style              | 自定义样式                                                                                   | `Record<string, string>`                                                                          | `undefined` |
+| useSticky          | 是否使用粘性表头                                                                             | `Element | false`                                                                                      | `false`    |
+| onSelectRowBack    | 多选框点击回调                                                                               | `({ isSelected, row, parentRow }) => void`                                                        | `undefined` |
+| onSelectRowAllBack | 多选框全选回调                                                                               | `(params) => void`                                                                                | `undefined` |
+| onRadioRowBack     | 单选框点击回调                                                                               | `({ isSelected, row, parentRow }) => void`                                                        | `undefined` |
+| onExpandRowBack    | 展开行点击回调                                                                               | `({ index, row, state }) => void`                                                                 | `undefined` |
+| onExpandRowAllBack | 展开全部按钮回调                                                                             | `(state) => void`                                                                                 | `undefined` |
+| onRenderEnd        | 首次渲染完成回调                                                                             | `(getTableList) => void`                                                                           | `undefined` |
+| onTableChange      | 表格数据变化时触发                                                                           | `(data) => void`                                                                                   | `undefined` |
 
 ## `SaTableExDependentType`
 
@@ -349,8 +359,9 @@ async function RefreshTable() {
 | setStructure_Item  | 设置表格单个结构                             | `(prop: string, item: SaTableItemType & SaTableUseItemType) => void` |
 | changeData_All     | 设置表格所有数据                             | `(data: Array<SaTableUseType.SaTableInDataType>) => void`            |
 | changeData_Item    | 设置表格单个数据                             | `(prop: string, value: SaTableUseType.SaTableInDataType) => void`    |
-| class | 自定义类名 | `string` | `undefined` |
-| style | 自定义样式 | `Record<string, string>` | `undefined` |
-| onTableChange | 表格数据变化时触发 | `(data) => void` | `undefined` |
 
-| onTableChange | 表格数据变化时触发 | `(data) => void` | `undefined` |
+## `onTableChange`
+
+| 事件名称      | 描述             | 类型                     |
+| ------------ | ---------------- | ------------------------ |
+| onTableChange | 表格数据变化时触发 | `(data) => void`        |
