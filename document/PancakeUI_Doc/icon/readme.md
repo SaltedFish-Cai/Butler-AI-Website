@@ -24,15 +24,6 @@
 | name    | icon 名称          | `string`                 | —           |
 | tip     | icon 提示          | `string`                 | —           |
 | onClick | 点击 Icon 执行方法 | `(event) => void`        | `undefined` |
-| 属性名 | 描述 | 类型 | 默认值 |
-| --- | --- | --- | --- |
-| id | 组件唯一标识 | `string` | — |
-| class | 自定义类名 | `string` `Array<string>` | — |
-| style | 自定义样式 | `Record<string, string>` | — |
-| name | icon 名称 | `string` | — |
-| tip | icon 提示 | `string` | — |
-| onClick | 点击事件 | `() => void` | — |
-
 
 ## Icon 选择
 

@@ -6,19 +6,19 @@
 
 基础样式展示，组件提供 2 种样式风格，可以使用 `styleMode` 属性切换风格，使用 `padding` 控制内边距。
 
-<demo src="./base.vue"></demo>
+<demo src="./base.vue" ></demo>
 
 ## 混合使用
 
 混合使用展示
 
-<demo src="./group.vue"></demo>
+<demo src="./group.vue" ></demo>
 
 ## 对齐方式展示
 
 对齐方式展示
 
-<demo src="./align.vue"></demo>
+<demo src="./align.vue" ></demo>
 
 ## 自定义标签
 
@@ -36,7 +36,7 @@
 </pa-tabs>
 ```
 
-<demo src="./slot.vue"></demo>
+<demo src="./slot.vue" ></demo>
 
 ## 滚动模式（锚点）
 
@@ -48,7 +48,7 @@
 </pa-tabs>
 ```
 
-<demo src="./slider.vue"></demo>
+<demo src="./slider.vue" ></demo>
 
 ## 内页是否可滚动
 
@@ -60,36 +60,30 @@
 </pa-tabs>
 ```
 
-<demo src="./scroll.vue"></demo>
+<demo src="./scroll.vue" ></demo>
 
 ## `SaTabsProps`
 
-| 属性名 | 描述 | 类型 | 默认值 |
-| --- | --- | --- | --- |
-| id | 组件唯一标识 | `string` | — |
-| class | 自定义类名 | `string` | — |
-| style | 自定义样式 | `Record<string, string>` | — |
-| modelValue | 默认选中 tab | `string` | — |
-| visibleMode | 显示类型 | `display` `visible` | `visible` |
-| mode | 布局模式 | `default` `portrait` `slider` `sticky` | `default` |
-| styleMode | 样式模式 | `default` `card` | `card` |
-| align | 对齐方式 | `edge` `default` | `default` |
-| padding | 内边距 | `Array<"top" \| "left" \| "bottom" \| "right" \| "all">` | — |
-| useHeaderLine | 表头下划线 | `boolean` | `false` |
-| useShadow | 是否使用阴影 | `boolean` | `true` |
-| useBorder | 是否使用边框 | `boolean` | `false` |
+| 属性名        | 描述         | 类型                                   | 默认值    |
+| ------------- | ------------ | -------------------------------------- | --------- |
+| modelValue    | 默认选中 tab | —                                      | —         |
+| visibleMode   | 显示类型     | `display` `visible`                    | `visible` |
+| mode          | 布局模式     | `default` `portrait` `slider` `sticky` | `default` |
+| styleMode     | 样式模式     | `default` `card`                       | `card`    |
+| align         | 对齐方式     | `edge` `default`                       | `default` |
+| useHeaderLine | 表头下划线   | `boolean`                              | `false`   |
+| useShadow     | 是否使用阴影 | `boolean`                              | `true`    |
 
 ## `SaTabsItemProps`
 
-| 属性名 | 描述 | 类型 | 默认值 |
-| --- | --- | --- | --- |
-| label | 标签名 | `number` `string` | — |
-| name | 标签唯一名 | `number` `string` | — |
-| scroll | 是否可以滚动 | `boolean` | `true` |
-| tips | 提示文字 | `number` `string` | — |
-| lazy | 懒加载 | `boolean` `number` | `false` |
-| useScrollX | 是否使用水平滚动 | `boolean` | `false` |
-| useBorder | 是否使用边框 | `boolean` | `false` |
+| 属性名     | 描述             | 类型               | 默认值  |
+| ---------- | ---------------- | ------------------ | ------- |
+| label      | 标签名           | `number` `string`  | —       |
+| name       | 标签唯一名       | `number` `string`  | —       |
+| scroll     | 是否可以滚动     | `boolean`          | `true`  |
+| tips       | 提示文字         | `number` `string`  | —       |
+| lazy       | 懒加载           | `boolean` `number` | `false` |
+| useScrollX | 是否使用水平滚动 | `boolean`          | `false` |
 
 ## `SaTabsEvents`
 
@@ -102,7 +96,3 @@
 | padding     | 是否使用内边距    | `Array<top \| right \| left \| bottom \| all>` | `[]`        |
 | useBorder   | 是否使用边框      | `boolean`                                      | `false`     |
 | onTabChange | Tab 变更回调函数  | `({ name, index }) => void`                    | `undefined` |
-| 字段 | 描述 | 类型 |
-| --- | --- | --- |
-| tab-change | 当 tab 切换时触发 | `function` |
-

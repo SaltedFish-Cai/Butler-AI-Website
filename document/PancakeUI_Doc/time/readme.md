@@ -8,45 +8,26 @@
 
 ## 组件功能展示
 
-<demo src="./base.vue"></demo>
+<demo src="./base.vue" ></demo>
 
 ## `SaTimeType`
 
-| 字段 | 描述 | 类型 | 默认值 |
-| --- | --- | --- | --- |
-| id | 组件唯一标识 | `string` | — |
-| class | 自定义类名 | `string` | — |
-| style | 自定义样式 | `Record<string, string>` | — |
-| modelValue | 表单组件值 | `Array<string>` `string` | — |
-| type | 表单组件类型 | `date-picker-group` `date-picker` `date-time-picker-group` `date-time-picker` `month-picker-group` `month-picker` `time-picker-group` `time-picker` `year-picker-group` `year-picker` | `date-picker` |
-| placeholder | 输入框提示 | `Record<"en-US" \| "zh-CN", string>` `string` | — |
-| disabled | 禁用状态 | `boolean` | `false` |
-| display | 纯展示 | `boolean` | `false` |
-| disabledDateFn | 禁用日期函数 | `(date: any) => boolean` | `undefined` |
-| shortcuts | 快捷选择 | `{ text: string; value: Date[] \| (() => Date[]) }` | — |
-| contrastData | 对比用原数据 | `Array<string>` `string` | — |
-| alwaysContrast | 是否总是显示对不数据 | `boolean` | `false` |
-| teleportInContainer | 是否将弹出层挂载到容器中 | `boolean` | `false` |
-| format | 显示格式 | `string` | — |
-| valueType | 值类型 | `"date"` `"dayjs"` `"string"` | `"date"` |
-| clearable | 是否显示清除按钮 | `boolean` | `true` |
-| editable | 是否可编辑 | `boolean` | `true` |
-| defaultValue | 默认值 | `Date` `Dayjs` `[Date, Dayjs]` | — |
-| defaultTime | 默认时间 | `[Date, Date]` | — |
-| startPlaceholder | 开始占位文本 | `string` | — |
-| endPlaceholder | 结束占位文本 | `string` | — |
-| rangeSeparator | 范围分隔符 | `string` | `'-'` |
-| showTime | 是否显示时间选择 | `boolean` | `false` |
-| disabledDate | 禁用日期判断方法 | `(date: Date) => boolean` | — |
-| popperClass | 弹出层类名 | `string` | — |
-| popperOptions | 弹出层配置 | `object` | — |
-| cellClassName | 单元格类名 | `(date: Date) => string` | — |
-| validateEvent | 是否触发校验 | `boolean` | `true` |
+| 字段           | 描述                 | 类型                                                                                                                                                                                  | 默认值        |
+| -------------- | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- |
+| modelValue     | 表单组件值           | `Array<string>` `string`                                                                                                                                                              | —             |
+| type           | 表单组件类型         | `date-picker-group` `date-picker` `date-time-picker-group` `date-time-picker` `month-picker-group` `month-picker` `time-picker-group` `time-picker` `year-picker-group` `year-picker` | `date-picker` |
+| placeholder    | 输入框提示           | `Record<"en-US" \| "zh-CN", string>` `string`                                                                                                                                         | —             |
+| disabled       | 禁用状态             | `boolean`                                                                                                                                                                             | `false`       |
+| display        | 纯展示               | `boolean`                                                                                                                                                                             | `false`       |
+| disabledDateFn | 禁用日期函数         | `(date: any) => boolean`                                                                                                                                                              | `undefined`   |
+| shortcuts      | 快捷选择             | `{ text: string; value: Date[]  \| (() => Date[]) }`                                                                                                                                  | —             |
+| contrastData   | 对比用原数据         | `Array<string>` `string`                                                                                                                                                              | —             |
+| alwaysContrast | 是否总是显示对不数据 | `boolean`                                                                                                                                                                             | `false`       |
 
 ## `SaTimeEvents`
 
-| 字段 | 描述 | 类型 |
-| --- | --- | --- |
+| 字段   | 描述           | 类型       |
+| ------ | -------------- | ---------- |
 | change | 当值改变时触发 | `function` |
 
 ## Props
@@ -69,6 +50,3 @@
 | onFocus             | 在组件 Input 获得焦点时触发 | `({ value }) => void`                   | `undefined`         |
 | onBlur              | 在组件 Input 失去焦点时触发 | `({ value }) => void`                   | `undefined`         |
 | onBlur              | 在组件 Input 失去焦点时触发 | `({ value }) => void`                   | `undefined`         |
-| focus | 当获得焦点时触发 | `function` |
-| blur | 当失去焦点时触发 | `function` |
-

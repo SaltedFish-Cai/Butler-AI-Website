@@ -6,13 +6,13 @@
 
 使用 `type`、`usePlain` 来定义按钮的样式。
 
-<demo src="./base.vue"></demo>
+<demo src="./base.vue" ></demo>
 
 ## Group 组合
 
 使用 `pa-button-group` 组件来定义按钮的组合样式。
 
-<demo src="./group.vue"></demo>
+<demo src="./group.vue" ></demo>
 
 ## 禁用状态
 
@@ -76,25 +76,3 @@
 | onConfirmClick | 确认点击回调函数                                                             | `() => void`                                                           | `undefined` |
 | onSubmitClick  | 提交点击回调函数                                                             | `() => void`                                                           | `undefined` |
 | onDeleteClick  | 删除点击回调函数                                                             | `() => void`                                                           | `undefined` |
-| 属性名 | 描述 | 类型 | 默认值 |
-| --- | --- | --- | --- |
-| id | 组件唯一标识 | `string` | — |
-| class | 自定义类名 | `string` | — |
-| style | 自定义样式 | `Record<string, string>` | — |
-| text | 按钮文本 | `Record<"en-US" \| "zh-CN", string>` `string` | — |
-| size | 按钮大小 | `large` `small` | — |
-| is | 内置样式选择 [样式展示](/document/PancakeUI_Doc/button/readme.html#内置样式) | `string` | — |
-| type | 类型 | `danger` `default` `info` `primary` `success` `warning` | `default` |
-| disabled | 是否禁用按钮 | `boolean` | `false` |
-| loading | 是否 `Loading` 状态 | `boolean` | `false` |
-| loadingBy | 自动 `Loading` 监听依赖源 | `string` | — |
-| debounced | 开启防抖 | `boolean` | `true` |
-| debouncedTime | 防抖延迟时间 | `number` | `300` |
-| iconPosition | Icon 位置 | `left` `right` | `left` |
-| iconName | icon 图标([`pa-icon`](/document/PancakeUI_Doc/icon/readme.html)) | `string` | — |
-| useFont | 是否使用字体图标 | `boolean` | `true` |
-| useLine | 是否为链接按钮 | `boolean` | `false` |
-| usePlain | 是否为朴素按钮 | `boolean` | `true` |
-| useStop | 是否阻止事件冒泡 | `boolean` | `true` |
-| confirmConfig | 确认弹窗配置 | [`MessageBoxOptions`](/document/PancakeUI_Doc/message-box/readme.html) | — |
-
