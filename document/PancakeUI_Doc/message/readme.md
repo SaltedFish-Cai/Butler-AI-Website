@@ -54,7 +54,7 @@ M_Message({
 | zIndex                   | 弹窗的 z-index 值，默认自增长                        | `number`                                       | —           |
 | onClick                  | 点击消息回调                                         | `() => void`                                   | —           |
 | onClose                  | 弹窗关闭回调，包括点击关闭按钮和自动关闭             | `() => void`                                   | —           |
-| closeOnPressEscape       | 是否在按下 ESC 键时关闭通知                          | `boolean`                                      | `undefined` |
+| closeOnPressEscape       | 是否在按下 ESC 键时关闭通知                          | `boolean`                                      | - |
 
 ::: warning 注意
 类型使用 `danger` 而非 `error`，与其他组件保持一致。

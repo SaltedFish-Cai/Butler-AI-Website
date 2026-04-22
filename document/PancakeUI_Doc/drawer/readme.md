@@ -16,9 +16,9 @@
 
 | 属性名             | 描述                                                 | 类型                                                     | 默认值      |
 | ------------------ | ---------------------------------------------------- | -------------------------------------------------------- | ----------- |
-| id                 | 唯一标识                                             | `string`                                                 | `undefined` |
-| class              | 自定义类名                                           | `string`                                                 | `undefined` |
-| style              | 自定义样式                                           | `Record<string, string>`                                 | `undefined` |
+| id                 | 唯一标识                                             | `string`                                                 | - |
+| class              | 自定义类名                                           | `string`                                                 | - |
+| style              | 自定义样式                                           | `Record<string, string>`                                 | - |
 | modelValue         | 是否打开抽屉弹窗，当设置为 `true` 时，会打开抽屉弹窗 | `boolean`                                                | `false`     |
 | title              | 弹窗标题，支持多语言                                 | `Record<"en-US" \| "zh-CN", string>`                     | —           |
 | subTitle           | 弹窗次标题，支持多语言                               | `Record<"en-US" \| "zh-CN", string>`                     | —           |

@@ -1,6 +1,6 @@
 <template>
   <div class="pa-cascader-option-group-item" style="max-height: 230px" :class="{ 'is-filter': isFilter }">
-    <pa-scrollbar :useBackTop="false" :useShadow="false" :style="{ height: OptionsHeight }">
+    <pa-scrollbar :useBackTop="false" :useShadow="false" :style="{ height: optionsHeight }">
       <div
         v-for="item in exOptions"
         :key="String(item.value)"
@@ -47,7 +47,7 @@
       :inValue="inValue"
       :isMultiple="isMultiple"
       :isCheck="isCheck"
-      :OptionsHeight="OptionsHeight"
+      :optionsHeight="optionsHeight"
     >
       <template #optionLabel="item">
         <slot name="optionLabel" :scope="item"></slot>
@@ -58,25 +58,23 @@
 
 <script lang="ts" setup>
 import { ref, inject, watch, Ref, computed, ComputedRef } from "vue";
-import { PaCascaderOptionType } from "./type";
 import { equalData } from "../utils/equalData";
-import { SaOptionType } from "../manager-type";
+import { PaOptionType } from "../manager-type";
 import PaCascaderOption from "./pa-cascader-option.vue";
 import { PancakeGlobalConfigType } from "../pa-manager/type";
 
 const props = withDefaults(
-  defineProps<
-    PaCascaderOptionType & {
-      isCheck: boolean;
-      isMultiple: boolean;
-      isFilter?: boolean;
-      inValue?: Array<number | string> | number | string;
-      OptionsHeight?: string;
-    }
-  >(),
+  defineProps<{
+    isCheck: boolean;
+    isMultiple: boolean;
+    isFilter?: boolean;
+    inValue?: Array<number | string> | number | string;
+    optionsHeight?: string;
+    exOptions?: Array<PaOptionType.Select>;
+  }>(),
   {}
 );
-const childExOptions = ref([] as Array<SaOptionType.Select>);
+const childExOptions = ref([] as Array<PaOptionType.Select>);
 const injectHandleOptionClick: any = inject("handleOptionClick");
 const activeValue: Ref<boolean | number | string | undefined> = ref("");
 
@@ -85,7 +83,7 @@ const languageValue = computed(() => {
   return PancakeGlobalConfig.value?.language?.value || "zh-CN";
 });
 
-function handleOptionClick(item: SaOptionType.Select, type: "click" | "over") {
+function handleOptionClick(item: PaOptionType.Select, type: "click" | "over") {
   if (item.children?.length) {
     childExOptions.value = item.children;
     activeValue.value = item.value;

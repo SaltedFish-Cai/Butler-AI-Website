@@ -14,8 +14,8 @@
 
 | 字段         | 描述       | 类型                     | 默认值      |
 | ------------ | ---------- | ------------------------ | ----------- |
-| class        | 自定义类名 | `string`                 | `undefined` |
-| style        | 自定义样式 | `Record<string, string>` | `undefined` |
+| class        | 自定义类名 | `string`                 | - |
+| style        | 自定义样式 | `Record<string, string>` | - |
 | tagList      | 标签列表   | `TagListType`            | `[]`        |
 | useCollapse  | 是否折叠   | `boolean`                | `false`     |
 | popoverWidth | 弹出层宽度 | `number`                 | `200`       |

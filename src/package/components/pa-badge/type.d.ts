@@ -1,30 +1,5 @@
 // # Type
-export type PaBadgeType = {
-  /**
-   * **值**
-   * @type `string`
-   * @default `''`
-   * @description 值
-   * @example
-   * ```tsx
-   * <MoDialog value="123" />
-   * ```
-   * */
-  value?: number | string;
-
-  /**
-   * **是否显示**
-   * @type `boolean`
-   * @default `true`
-   * @description 当设置该值为 `true` 时，会显示组件
-   * @description 当设置该值为 `false` 时，会隐藏组件
-   * @example
-   * ```tsx
-   * <MoDialog show={false} />
-   * ```
-   * */
-  show?: boolean;
-
+export type ComponentProps = {
   /**
    * **自定义类名**
    * @type `string`
@@ -42,4 +17,54 @@ export type PaBadgeType = {
    * @description 该值的类型为 `Record<string, string>`，可以是任意类型
    * */
   style?: Record<string, string>;
+
+  /**
+   * **值**
+   * @type `string`
+   * @default `''`
+   * @description 值
+   * @example
+   * ```tsx
+   * <MoDialog value="123" />
+   * ```
+   * */
+  value: number | string;
+
+  /**
+   * **最大值**
+   * @type `number`
+   * @default `0`
+   * @description 最大值
+   * @example
+   * ```tsx
+   * <MoDialog maxValue={100} />
+   * ```
+   * */
+  maxValue?: number | string;
+
+  /**
+   * **是否显示**
+   * @type `boolean`
+   * @default `true`
+   * @description 当设置该值为 `true` 时，会显示组件
+   * @description 当设置该值为 `false` 时，会隐藏组件
+   * @example
+   * ```tsx
+   * <MoDialog show={false} />
+   * ```
+   * */
+  useShow?: boolean;
+
+  /**
+   * **使用小红点显示**
+   * @type `boolean`
+   * @default `false`
+   * @description 当设置该值为 `true` 时，会使用小红点显示
+   * @description 当设置该值为 `false` 时，不会使用小红点显示
+   * @example
+   * ```tsx
+   * <MoDialog useDot={false} />
+   * ```
+   * */
+  useDot?: boolean;
 };

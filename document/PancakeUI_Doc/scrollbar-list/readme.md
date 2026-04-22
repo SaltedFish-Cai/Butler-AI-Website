@@ -10,15 +10,15 @@
 
 | 字段           | 描述                 | 类型                                                     | 默认值      |
 | -------------- | -------------------- | -------------------------------------------------------- | ----------- |
-| class          | 自定义类名           | `string`                                                 | `undefined` |
-| style          | 自定义样式           | `Record<string, string>`                                 | `undefined` |
+| class          | 自定义类名           | `string`                                                 | - |
+| style          | 自定义样式           | `Record<string, string>`                                 | - |
 | styleMode      | 样式模式             | `"color" \| "default"`                                   | `"default"` |
 | requestApi     | 请求表格数据接口     | `(params, id?) => Promise<any> \| any`                   | —           |
 | rowKey         | 行数据 Key           | `string`                                                 | `"id"`      |
 | useShadow      | 是否使用阴影         | `boolean`                                                | `false`     |
 | useBackTop     | 是否显示回到顶部按钮 | `boolean`                                                | `false`     |
 | showPagination | 是否显示分页器       | `boolean`                                                | `true`      |
-| padding        | 内边距方向           | `Array<"all" \| "bottom" \| "left" \| "right" \| "top">` | `undefined` |
+| padding        | 内边距方向           | `Array<"all" \| "bottom" \| "left" \| "right" \| "top">` | - |
 | paddingWidth   | 内边距宽度           | `number`                                                 | `10`        |
 
 ## DefineExpose

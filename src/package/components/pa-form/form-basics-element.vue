@@ -115,8 +115,8 @@
               :placeholder="usePlaceholder"
               :disabled="item.disabled || disabledFn(injectConfigContext.data)"
               :display="useDisplay"
-              :useSingleValue="item.useSingleValue"
-              :useSingleText="item.useSingleText"
+              :useValueBylink="item.useValueBylink"
+              :useTextByLink="item.useTextByLink"
               :clearable="item.clearable"
               :contrastData="item.prop && injectConfigContext.contrastData?.[item.prop]"
               :alwaysContrast="injectConfigContext.alwaysContrast"
@@ -439,7 +439,8 @@ const useExOptions = computed(() => {
 onMounted(async () => {
   if (props.item.type == "address") {
     props.item.type = "cascader" as any;
-    props.item.useSingleValue = false as any;
+    props.item.useValueBylink = false as any;
+    props.item.useTextByLink = true as any;
     const res = await GetSystemAddressMap();
     function setSmallLabel(arrayData) {
       return arrayData.map(item => {
@@ -570,7 +571,8 @@ watch(
   newVal => {
     if (newVal == "address") {
       props.item.type = "cascader" as any;
-      props.item.useSingleValue = false as any;
+      props.item.useValueBylink = false as any;
+      props.item.useTextByLink = true as any;
     }
   }
 );

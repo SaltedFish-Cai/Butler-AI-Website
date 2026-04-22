@@ -36,7 +36,7 @@
 <script lang="ts" setup>
 // # Import
 import { reactive, onBeforeMount, useSlots, nextTick, watch, inject, ComputedRef, computed } from "vue";
-import { PaButtonType } from "./type";
+import { ComponentProps } from "./type";
 import inBrowser from "../tools/inBrowser";
 import { M_MessageBox } from "../feedback";
 
@@ -45,7 +45,7 @@ import { PancakeGlobalConfigType } from "../pa-manager/type";
 import _ from "lodash";
 const { debounce } = _;
 
-const props = withDefaults(defineProps<PaButtonType>(), {
+const props = withDefaults(defineProps<ComponentProps>(), {
   debounced: true,
   debouncedTime: 300,
   disabled: false,

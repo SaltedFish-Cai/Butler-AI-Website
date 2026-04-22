@@ -49,7 +49,7 @@
         </div>
       </template>
       <div class="pa-cascader-options" ref="optionsRef" v-if="!props.disabled && filterOptionsList.length > 0">
-        <!-- <pa-scrollbar noBackTop :useShadow="false" :style="{ height: OptionsHeight }"> -->
+        <!-- <pa-scrollbar noBackTop :useShadow="false" :style="{ height: optionsHeight }"> -->
         <div class="pa-cascader-options-group">
           <pa-cascader-option
             v-if="!filterValue"
@@ -59,7 +59,7 @@
             :isCheck="isCheck"
             :flatExOptions="flatExOptions"
             :exOptionsList="exOptionsList"
-            :OptionsHeight="OptionsHeight"
+            :optionsHeight="optionsHeight"
           >
             <template #optionLabel="item">
               <slot name="optionLabel" :scope="item"></slot>
@@ -71,7 +71,7 @@
             :inValue="inValue"
             :isMultiple="isMultiple"
             :isCheck="isCheck"
-            :OptionsHeight="OptionsHeight"
+            :optionsHeight="optionsHeight"
           >
             <template #optionLabel="item">
               <slot name="optionLabel" :scope="item"></slot>
@@ -84,10 +84,15 @@
       <div v-else class="pa-cascader-no-data">{{ languagePackage["empyt"] }}</div>
     </pa-popover>
   </div>
-  <div v-else class="pa-display-style">
-    <slot name="exDisplay"></slot>
-    <template v-if="$slots.exDisplay"> ( {{ findData(inValue) || "--" }} )</template>
-    <template v-else>{{ findData(inValue) || "--" }}</template>
+  <div v-else class="pa-display-style" :class="[props.class]" :style="{ ...props.style }">
+    <div v-if="title" :style="{ width: titleWidth }" class="pa-cell-label">
+      {{ typeof title === "string" ? title : title[languageValue] }}
+    </div>
+    <div class="pa-display-value_content">
+      <slot name="exDisplay"></slot>
+      <template v-if="$slots.exDisplay"> ( {{ findData(inValue) || "--" }} )</template>
+      <template v-else>{{ findData(inValue) || "--" }}</template>
+    </div>
   </div>
   <div
     v-if="(alwaysContrast && !isNil(contrastData)) || (!isNil(contrastData) && !isEqual(inValue, contrastData))"
@@ -102,7 +107,7 @@
 <script lang="ts" setup>
 import { ref, computed, watch, nextTick, provide, inject, ComputedRef } from "vue";
 import PaCascaderOption from "./pa-cascader-option.vue";
-import { PaCascaderType } from "./type";
+import { ComponentProps } from "./type";
 import { randChar } from "../tools/rand-char";
 import { getElementPosition } from "../utils/getElementPosition";
 import { findData as findDataSelect } from "./find-data";
@@ -118,7 +123,7 @@ const optionsRef = ref();
 const inputRef = ref();
 const waitTag = ref(false);
 
-const OptionsHeight = ref("auto");
+const optionsHeight = ref("auto");
 
 const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
 const languagePackage = computed(() => {
@@ -128,12 +133,14 @@ const languageValue = computed(() => {
   return PancakeGlobalConfig.value?.language?.value || "zh-CN";
 });
 
-const props = withDefaults(defineProps<PaCascaderType>(), {
+const props = withDefaults(defineProps<ComponentProps>(), {
   id: randChar(),
   type: "cascader",
+  disabled: false,
+  display: false,
   clearable: true,
-  useSingleText: false,
-  useSingleValue: true
+  useTextByLink: true,
+  useValueBylink: false
 });
 
 const emits = defineEmits(["update:modelValue", "change"]);
@@ -167,7 +174,7 @@ const inputVal = ref("");
 const inputValue = computed(() => {
   if (isFocus.value || isMultiple.value) {
     return inputVal.value;
-  } else if (props.useSingleText) {
+  } else if (!props.useTextByLink) {
     return flatExOptions.value.find(item => item.value == inValue.value)?.label || inValue.value || "";
   } else {
     const findItem = flatExOptions.value.find(item => item.value == inValue.value);
@@ -186,7 +193,7 @@ const inputPlaceholder = computed(() => {
   if (Array.isArray(inValue.value) && inValue.value?.length && isMultiple.value) {
     return "";
   } else if (isFocus.value) {
-    if (props.useSingleText) {
+    if (!props.useTextByLink) {
       const _label = flatExOptions.value.find(item => item.value == inValue.value)?.label;
       return (_label && typeof _label === "object" ? _label[languageValue.value] : _label) || basePlaceholder;
     } else {
@@ -230,11 +237,11 @@ function findParent(item, findText) {
 function handleInput({ target }) {
   filterValue.value = target.value;
   inputVal.value = target.value;
-  OptionsHeight.value = "auto";
+  optionsHeight.value = "auto";
   nextTick(() => {
     if (optionsRef.value) {
       const position = getElementPosition(optionsRef.value);
-      OptionsHeight.value = ((position?.height && Number(position?.height)) || 0) + "px";
+      optionsHeight.value = ((position?.height && Number(position?.height)) || 0) + "px";
     }
   });
 }
@@ -253,11 +260,11 @@ function handlePopoverChange(data) {
     inputVal.value = "";
   } else {
     inputRef.value.focus();
-    OptionsHeight.value = "auto";
+    optionsHeight.value = "auto";
     setTimeout(() => {
       if (optionsRef.value) {
         const position = getElementPosition(optionsRef.value);
-        OptionsHeight.value = ((position?.height && Number(position?.height)) || 0) + "px";
+        optionsHeight.value = ((position?.height && Number(position?.height)) || 0) + "px";
       }
     }, 100);
   }
@@ -303,7 +310,7 @@ function findData(data) {
   if (props.displayValue) {
     return props.displayValue || "--";
   }
-  return findDataSelect(data, flatExOptions.value);
+  return findDataSelect(data, flatExOptions.value, props.useTextByLink, languageValue.value);
 }
 
 // 清除输入
@@ -350,14 +357,14 @@ function setMapValue(data, parentValue?) {
       item.children = setMapValue(item.children, item.value);
     }
   });
-
+  console.log("++++++++++> _data:", _data);
   return _data;
 }
 
 watch(
   () => props.exOptions,
   data => {
-    exOptionsList.value = !props.useSingleValue ? setMapValue(data) : data || [];
+    exOptionsList.value = props.useValueBylink ? setMapValue(data) : data || [];
     flatExOptions.value = flatOptions(exOptionsList.value);
   },
   { immediate: true, deep: true }

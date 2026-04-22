@@ -204,9 +204,9 @@ const formConfig: MStructureV2Type.FormV2[] = [
 
 | 字段             | 描述                               | 类型                                                                                            | 默认值      |
 | ---------------- | ---------------------------------- | ----------------------------------------------------------------------------------------------- | ----------- |
-| id               | 唯一标识                           | `string`                                                                                        | `undefined` |
-| class            | 自定义类名                         | `string`                                                                                        | `undefined` |
-| style            | 自定义样式                         | `Record<string, string>`                                                                        | `undefined` |
+| id               | 唯一标识                           | `string`                                                                                        | - |
+| class            | 自定义类名                         | `string`                                                                                        | - |
+| style            | 自定义样式                         | `Record<string, string>`                                                                        | - |
 | data             | 外置默认数据(`非双向绑定数据`)     | `object`                                                                                        | —           |
 | contrastData     | 外置对比数据                       | `object`                                                                                        | —           |
 | alwaysContrast   | 是否一直展示对比数据               | `boolean`                                                                                       | `false`     |
@@ -222,7 +222,7 @@ const formConfig: MStructureV2Type.FormV2[] = [
 | exCellDependent  | 单元格外置依赖                     | [SaFormCellExDependentType](/document/PancakeUI_Doc/form/readme.html#SaFormcellexdependenttype) | —           |
 | maxSpan          | 最大分栏数                         | `1` `2` `3` `4`                                                                                 | `4`         |
 | exSpan           | 最大分栏数                         | `1` `2` `3` `4`                                                                                 | `4`         |
-| onFormDataChange | 表单数据变化回调                   | `(data: object) => void`                                                                        | `undefined` |
+| onFormDataChange | 表单数据变化回调                   | `(data: object) => void`                                                                        | - |
 
 ## `SaFormExDependentType`
 

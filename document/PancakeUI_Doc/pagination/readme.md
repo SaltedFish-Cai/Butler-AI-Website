@@ -14,9 +14,9 @@
 
 | 字段        | 描述               | 类型                     | 默认值                                      |
 | ----------- | ------------------ | ------------------------ | ------------------------------------------- |
-| id          | 组件唯一标识       | `string \| undefined`    | `undefined`                                 |
-| class       | 自定义类名         | `string`                 | `undefined`                                 |
-| style       | 自定义样式         | `Record<string, string>` | `undefined`                                 |
+| id          | 组件唯一标识       | `string \| undefined`    | -                                 |
+| class       | 自定义类名         | `string`                 | -                                 |
+| style       | 自定义样式         | `Record<string, string>` | -                                 |
 | currentPage | 当前页码           | `number`                 | `1`                                         |
 | pageSize    | 每页显示数量       | `number`                 | `10`                                        |
 | total       | 总条数             | `number`                 | —                                           |

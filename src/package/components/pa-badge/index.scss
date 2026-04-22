@@ -1,16 +1,29 @@
 .pa-badge {
   position: relative;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
+  width: max-content;
+  height: max-content;
 
   .pa-badge__content {
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(50%, -40%);
     background-color: var(--pa-color-danger);
     font-size: calc(var(--pa-size-font, 13px) * 0.8);
-    border-radius: 20px;
-    padding: 2px 5px;
-    min-height: 6px;
-    line-height: 1em;
+    border-radius: var(--pa-size-radius);
+    padding: 0 calc(var(--pa-size-padding) / 2);
+    line-height: 1.5em;
     color: var(--pa-color-white);
+  }
+
+  .pa-badge__dot {
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(30%, -20%);
+    background-color: var(--pa-color-danger);
+    border-radius: 50%;
+    width: 11px;
+    height: 11px;
   }
 }

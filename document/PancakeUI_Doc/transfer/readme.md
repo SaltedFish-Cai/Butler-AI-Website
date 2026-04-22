@@ -14,17 +14,17 @@
 
 | 字段           | 描述             | 类型                                          | 默认值      |
 | -------------- | ---------------- | --------------------------------------------- | ----------- |
-| id             | 组件唯一标识     | `string \| undefined`                         | `undefined` |
-| class          | 自定义类名       | `string`                                      | `undefined` |
-| style          | 自定义样式       | `Record<string, string>`                      | `undefined` |
-| modelValue     | 双向绑定值       | `Array<boolean \| number \| string>`          | `undefined` |
-| displayValue   | 纯展示数据       | `string`                                      | `undefined` |
+| id             | 组件唯一标识     | `string \| undefined`                         | - |
+| class          | 自定义类名       | `string`                                      | - |
+| style          | 自定义样式       | `Record<string, string>`                      | - |
+| modelValue     | 双向绑定值       | `Array<boolean \| number \| string>`          | - |
+| displayValue   | 纯展示数据       | `string`                                      | - |
 | exOptions      | 外置数据选项     | `PaOptionType.SelectList`                     | —           |
 | optionKey      | 选项 Key         | `string`                                      | `"value"`   |
 | placeholder    | 占位符           | `string`                                      | `"请选择"`  |
 | disabled       | 是否禁用         | `boolean`                                     | `false`     |
 | display        | 纯展示模式       | `boolean`                                     | `false`     |
 | useSearch      | 是否使用搜索     | `boolean`                                     | `false`     |
-| contrastData   | 对比数据         | `Array<number \| string> \| number \| string` | `undefined` |
+| contrastData   | 对比数据         | `Array<number \| string> \| number \| string` | - |
 | alwaysContrast | 是否显示对比数据 | `boolean`                                     | `false`     |
-| onChange       | 数据变化回调     | `({ value, oldValue }) => void`               | `undefined` |
+| onChange       | 数据变化回调     | `({ value, oldValue }) => void`               | - |

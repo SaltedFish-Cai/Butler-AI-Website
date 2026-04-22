@@ -10,8 +10,8 @@
 
 | 字段    | 描述         | 类型                      | 默认值       |
 | ------- | ------------ | ------------------------- | ------------ |
-| id      | 组件唯一标识 | `string \| undefined`     | `undefined`  |
-| class   | 自定义类名   | `Array<string> \| string` | `undefined`  |
-| style   | 自定义样式   | `Record<string, string>`  | `undefined`  |
+| id      | 组件唯一标识 | `string \| undefined`     | -  |
+| class   | 自定义类名   | `Array<string> \| string` | -  |
+| style   | 自定义样式   | `Record<string, string>`  | -  |
 | message | 提示信息     | `string`                  | `'暂无数据'` |
 | icon    | 图标名称     | `string`                  | `'dakai'`    |

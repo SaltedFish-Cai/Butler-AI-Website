@@ -27,7 +27,7 @@ export type ButtonTypeV2Is =
   | "upload"
   | "view";
 
-export type PaButtonType = {
+export type ComponentProps = {
   /**
    * **组件唯一标识**
    * @type `string` | `undefined`
@@ -75,10 +75,10 @@ export type PaButtonType = {
   /**
    * **按钮大小**
    * @type `string`
-   * @default `undefined`
+   * @default `default`
    * @description 可选值为 `small` | `large`
    * */
-  size?: "large" | "small";
+  size?: "default" | "large" | "small";
 
   /**
    * **内置样式**

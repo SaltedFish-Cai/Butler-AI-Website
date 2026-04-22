@@ -19,7 +19,7 @@
 | placeholder    | 输入框提示           | `Record<"en-US" \| "zh-CN", string>` `string`                                                                                                                                         | —             |
 | disabled       | 禁用状态             | `boolean`                                                                                                                                                                             | `false`       |
 | display        | 纯展示               | `boolean`                                                                                                                                                                             | `false`       |
-| disabledDateFn | 禁用日期函数         | `(date: any) => boolean`                                                                                                                                                              | `undefined`   |
+| disabledDateFn | 禁用日期函数         | `(date: any) => boolean`                                                                                                                                                              | -   |
 | shortcuts      | 快捷选择             | `{ text: string; value: Date[]  \| (() => Date[]) }`                                                                                                                                  | —             |
 | contrastData   | 对比用原数据         | `Array<string>` `string`                                                                                                                                                              | —             |
 | alwaysContrast | 是否总是显示对不数据 | `boolean`                                                                                                                                                                             | `false`       |
@@ -34,19 +34,19 @@
 
 | 属性名              | 描述                        | 类型                                    | 默认值              |
 | ------------------- | --------------------------- | --------------------------------------- | ------------------- |
-| id                  | 组件唯一标识                | `string`                                | `undefined`         |
-| class               | 自定义类名                  | `string`                                | `undefined`         |
-| style               | 自定义样式                  | `Record<string, string>`                | `undefined`         |
+| id                  | 组件唯一标识                | `string`                                | -         |
+| class               | 自定义类名                  | `string`                                | -         |
+| style               | 自定义样式                  | `Record<string, string>`                | -         |
 | type                | Time 类型                   | `MDatePickerType`                       | `date-picker-group` |
 | display             | 纯展示模式                  | `boolean`                               | `false`             |
-| placeholder         | 表单项占位符                | `Record<languageKey, string> \| string` | `undefined`         |
+| placeholder         | 表单项占位符                | `Record<languageKey, string> \| string` | -         |
 | disabled            | 是否禁用                    | `boolean`                               | `false`             |
 | teleportInContainer | 是否将弹出层挂载到容器中    | `boolean`                               | `false`             |
-| disabledDateFn      | 禁用日期判断方法            | `(date) => boolean`                     | `undefined`         |
-| shortcuts           | 快捷选项                    | `DatePickerShortcut[]`                  | `undefined`         |
-| contrastData        | 对比数据                    | `string[] \| string`                    | `undefined`         |
+| disabledDateFn      | 禁用日期判断方法            | `(date) => boolean`                     | -         |
+| shortcuts           | 快捷选项                    | `DatePickerShortcut[]`                  | -         |
+| contrastData        | 对比数据                    | `string[] \| string`                    | -         |
 | alwaysContrast      | 是否显示对比数据            | `boolean`                               | `false`             |
-| onChange            | 数据变更回调函数            | `({ value, oldValue }) => void`         | `undefined`         |
-| onFocus             | 在组件 Input 获得焦点时触发 | `({ value }) => void`                   | `undefined`         |
-| onBlur              | 在组件 Input 失去焦点时触发 | `({ value }) => void`                   | `undefined`         |
-| onBlur              | 在组件 Input 失去焦点时触发 | `({ value }) => void`                   | `undefined`         |
+| onChange            | 数据变更回调函数            | `({ value, oldValue }) => void`         | -         |
+| onFocus             | 在组件 Input 获得焦点时触发 | `({ value }) => void`                   | -         |
+| onBlur              | 在组件 Input 失去焦点时触发 | `({ value }) => void`                   | -         |
+| onBlur              | 在组件 Input 失去焦点时触发 | `({ value }) => void`                   | -         |

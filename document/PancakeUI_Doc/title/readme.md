@@ -11,5 +11,5 @@
 | 字段    | 描述           | 类型                                                     | 默认值      |
 | ------- | -------------- | -------------------------------------------------------- | ----------- |
 | line    | 是否使用下划线 | `boolean`                                                | `true`      |
-| tips    | 提示信息       | `string`                                                 | `undefined` |
-| padding | 内边距方向     | `Array<'top' \| 'left' \| 'bottom' \| 'right' \| 'all'>` | `undefined` |
+| tips    | 提示信息       | `string`                                                 | - |
+| padding | 内边距方向     | `Array<'top' \| 'left' \| 'bottom' \| 'right' \| 'all'>` | - |

@@ -89,10 +89,10 @@
 
 | 字段        | 描述              | 类型                                           |
 | ----------- | ----------------- | ---------------------------------------------- | ----------- |
-| id          | 多表时唯一 ID     | `string`                                       | `undefined` |
-| class       | 自定义类名        | `string`                                       | `undefined` |
-| style       | 自定义样式        | `Record<string, string>`                       | `undefined` |
+| id          | 多表时唯一 ID     | `string`                                       | - |
+| class       | 自定义类名        | `string`                                       | - |
+| style       | 自定义样式        | `Record<string, string>`                       | - |
 | tab-change  | 当 tab 切换时触发 | `function`                                     |
 | padding     | 是否使用内边距    | `Array<top \| right \| left \| bottom \| all>` | `[]`        |
 | useBorder   | 是否使用边框      | `boolean`                                      | `false`     |
-| onTabChange | Tab 变更回调函数  | `({ name, index }) => void`                    | `undefined` |
+| onTabChange | Tab 变更回调函数  | `({ name, index }) => void`                    | - |

@@ -1,29 +1,109 @@
-import { SaSwitchOptionType } from "./pa-switch/type";
-import { SaSelectOptionsType } from "./pa-select/type";
+import { PaFormItemType, PaFormRef } from "./pa-form/type";
+import { PaTableItemType, PaTableType } from "./pa-table/type";
+import { PaManagerType } from "./pa-manager/type";
 
-import { SaFormItemType, SaFormRef } from "./pa-form/type";
-import { SaTableItemType, SaTableType } from "./pa-table/type";
+export type LanguageKey = "en-US" | "zh-CN";
 
-import { PancakeUIType as MManagerV2ConfigType } from "./pa-content/type";
-// type MOptionType = {
-//   [x: string]: MOptionType;
-// };
+export type PaSelectOptionsType = {
+  /**
+   * **数据标题**
+   * @type `string`
+   * */
+  label: Record<LanguageKey, string> | string;
 
-export namespace SaOptionType {
-  export type Select = SaSelectOptionsType;
-  export type SelectList = Array<SaSelectOptionsType>;
-  export type Switch = SaSwitchOptionType;
+  /**
+   * **数据值**
+   * @type `boolean` | `number` | `string`
+   * @description 数据值的类型为 `boolean` | `number` | `string`，可以是任意类型
+   * */
+  value: boolean | number | string | undefined;
+
+  /**
+   * **子数据**
+   * @type `Array<MSelectOptionsType>`
+   * @description 子数据的类型为 `Array<MSelectOptionsType>`，可以是任意类型
+   * */
+  children?: Array<PaSelectOptionsType>;
+
+  /**
+   * **是否禁用该选项**
+   * @type `boolean`
+   * @default `false`
+   * @description 当设置该值为 `true` 时，该选项将被禁用
+   * @description 当设置该值为 `false` 时，该选项将不会被禁用
+   * */
+  diPabled?: boolean;
+
+  /**
+   * **源数据**
+   * @type `object`
+   * @description 源数据的类型为 `object`，可以是任意类型
+   * */
+  base?: Record<string, string>;
+
+  /**
+   * **tag样式配置**
+   * @type `object`
+   * @type `bgColor` 背景颜色
+   * @type `textColor` 文字颜色
+   * @description tag样式配置的类型为 `object`，可以是任意类型
+   * */
+  tagStyle?: { bgColor?: string; textColor?: string };
+};
+
+export type PaSwitchOptionType = {
+  /**
+   * **打开值**
+   * @typenumber` | `string`
+   * */
+  activeValue?: number | string;
+
+  /**
+   * **关闭值**
+   * @type `number` | `string`
+   * */
+  inActiveValue?: number | string;
+
+  /**
+   * **打开标题**
+   * @type `string` | `{ [key: "en-US" | "zh-CN"]: string }`
+   * */
+  activeText?: Record<LanguageKey, string> | string;
+
+  /**
+   * **关闭标题**
+   * @type `string` | `{ [key: "en-US" | "zh-CN"]: string }`
+   * */
+  inActiveText?: Record<LanguageKey, string> | string;
+
+  /**
+   * **打开图标**
+   * @type `string`
+   * */
+  activeIcon?: string;
+
+  /**
+   * **关闭图标**
+   * @type `string`
+   * */
+  inActiveIcon?: string;
+};
+
+export namespace PaOptionType {
+  export type Select = PaSelectOptionsType;
+  export type SelectList = Array<PaSelectOptionsType>;
+  export type Switch = PaSwitchOptionType;
   export type Default = { [x: string]: SelectList | Switch };
 }
 
-export namespace SaStructureType {
-  export type FormV2 = SaFormItemType;
-  export type TableV2 = SaTableItemType;
+export namespace PaStructureType {
+  export type FormV2 = PaFormItemType;
+  export type TableV2 = PaTableItemType;
 }
 
-export namespace SaRefType {
-  export type FormV2 = SaFormRef;
-  export type TableV2 = SaTableType;
+export namespace PaRefType {
+  export type FormV2 = PaFormRef;
+  export type TableV2 = PaTableType;
 }
 
-export type PancakeUIType = MManagerV2ConfigType;
+export type PancakeUIType = PaManagerType;

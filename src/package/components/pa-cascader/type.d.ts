@@ -1,8 +1,6 @@
-import { PaOptionType } from "../manager-type";
+import { SaOptionType, LanguageKey } from "../manager-type";
 
-type languageKey = "en-US" | "zh-CN";
-
-export type PaCascaderType = {
+export type ComponentProps = {
   /**
    * **组件唯一标识**
    * @type `string` | `undefined`
@@ -44,33 +42,30 @@ export type PaCascaderType = {
    * @type `string`
    * @description 当设置该值为 `string` 时，会使用该值作为表单项标签
    * */
-  title?: Record<languageKey, string> | string;
+  title?: Record<LanguageKey, string> | string;
 
   /**
    * **表单项标签宽度**
    * @type `string`
-   * @default `100px`
    * @description 当设置该值为 `string` 时，会使用该值作为表单项标签宽度
    * */
   titleWidth?: string;
 
   /**
-   * **是否使用单值模式**
+   * **是否使用'AA-aa'格式的选项值模式**
    * @type `boolean`
    * @default `false`
-   * @description 当设置该值为 `true` 时，会使用单值模式
-   * @description 当设置该值为 `false` 时，不会使用单值模式
+   * @description 当设置该值为 `true` 时，返回值为'AA-aa'格式的选项值
    * */
-  useSingleValue?: boolean;
+  useValueBylink?: boolean;
 
   /**
-   * **是否使用单值模式**
+   * **是否使用'AA/aa'格式的选项标签模式**
    * @type `boolean`
    * @default `false`
-   * @description 当设置该值为 `true` 时，会使用单值模式
-   * @description 当设置该值为 `false` 时，不会使用单值模式
+   * @description 当设置该值为 `true` 时，会显示'AA/aa'格式的选项标签
    * */
-  useSingleText?: boolean;
+  useTextByLink?: boolean;
 
   /**
    * **纯展示数据**
@@ -91,22 +86,22 @@ export type PaCascaderType = {
 
   /**
    * **外置数据**
-   * @type `Array<PaOptionType.Select>`
+   * @type `Array<SaOptionType.Select>`
    * @description 当设置该值时，会使用该值作为配置数据
-   * @description 该值的类型为 `Array<PaOptionType.Select>`，可以是任意类型
+   * @description 该值的类型为 `Array<SaOptionType.Select>`，可以是任意类型
    * @example
    * ```tsx
    * <PaCascader exOptions={[]} />
    * ```
    * */
-  exOptions?: PaOptionType.SelectList;
+  exOptions?: SaOptionType.SelectList;
 
   /**
    * **表单项占位符**
    * @type `string`
    * @description 当设置该值为 `string` 时，会使用该值作为表单项占位符
    * */
-  placeholder?: Record<languageKey, string> | string;
+  placeholder?: Record<LanguageKey, string> | string;
 
   /**
    * **是否禁用**
@@ -193,25 +188,11 @@ export type PaCascaderType = {
    * @type `oldValue` 为旧值
    * @type `option` 为当前选项
    * @default `undefined`
-   * @description 当设置该值为 `({ value, oldValue, option: PaOptionType.Select }) => void` 时，会使用该值作为回调函数
+   * @description 当设置该值为 `({ value, oldValue, option: SaOptionType.Select }) => void` 时，会使用该值作为回调函数
    * @example
    * ```tsx
    * <PaCascader onChange={({value, oldValue, option}) => { console.log(value, oldValue, option) }} />
    * ```
    * */
   onChange?: ({ value, oldValue, option }) => void;
-};
-
-export type PaCascaderOptionType = {
-  /**
-   * **外置数据**
-   * @type `Array<PaOptionType.Select>`
-   * @description 当设置该值时，会使用该值作为配置数据
-   * @description 该值的类型为 `Array<PaOptionType.Select>`，可以是任意类型
-   * @example
-   * ```tsx
-   * <PaCascader exOptions={[]} />
-   * ```
-   * */
-  exOptions?: Array<PaOptionType.Select>;
 };

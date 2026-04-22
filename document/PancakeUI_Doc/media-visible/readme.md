@@ -31,6 +31,6 @@
 
 | 属性名   | 描述         | 类型     | 默认值      |
 | -------- | ------------ | -------- | ----------- |
-| id       | 组件唯一标识 | `string` | `undefined` |
-| fileName | 文件名称     | `string` | `undefined` |
-| fileName | 文件名称     | `string` | `undefined` |
+| id       | 组件唯一标识 | `string` | - |
+| fileName | 文件名称     | `string` | - |
+| fileName | 文件名称     | `string` | - |

@@ -55,7 +55,7 @@
         ref="optionsRef"
         v-if="!props.disabled && filterOptionsList.length > 0"
       >
-        <pa-scrollbar :useBackTop="false" :useShadow="false" :style="{ height: OptionsHeight }" :useClosePopover="false">
+        <pa-scrollbar :useBackTop="false" :useShadow="false" :style="{ height: optionsHeight }" :useClosePopover="false">
           <div
             v-for="item in filterOptionsList"
             :key="String(item.value)"
@@ -113,7 +113,7 @@ const inputRef = ref();
 const waitTag = ref(false);
 const awaitSelecting = ref(false);
 
-const OptionsHeight = ref("auto");
+const optionsHeight = ref("auto");
 
 const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
 const languagePackage = computed(() => {
@@ -200,13 +200,13 @@ let oldValue = props.modelValue;
 
 function setHeight() {
   const position = getElementPosition(optionsRef.value);
-  OptionsHeight.value = ((position?.height && Number(position?.height)) || 0) + "px";
+  optionsHeight.value = ((position?.height && Number(position?.height)) || 0) + "px";
 }
 
 const debounceSetHeight = debounce(setHeight, 100);
 async function handleInput({ target }) {
   filterValue.value = target.value;
-  OptionsHeight.value = "auto";
+  optionsHeight.value = "auto";
 
   if (isOnlineSelect.value) {
     await remoteMethodFn(target.value);
@@ -236,11 +236,11 @@ function handlePopoverChange(data) {
     filterValue.value = "";
   } else {
     inputRef.value.focus();
-    OptionsHeight.value = "auto";
+    optionsHeight.value = "auto";
     setTimeout(() => {
       if (optionsRef.value) {
         const position = getElementPosition(optionsRef.value);
-        OptionsHeight.value = ((position?.height && Number(position?.height)) || 0) + "px";
+        optionsHeight.value = ((position?.height && Number(position?.height)) || 0) + "px";
       }
     }, 100);
   }

@@ -54,7 +54,7 @@ M_Notification.closeAll();
 | zIndex                   | 通知的 z-index 值            | `number`                                                       | —           |
 | onClick                  | 点击通知回调                 | `() => void`                                                   | —           |
 | onClose                  | 关闭通知回调                 | `() => void`                                                   | —           |
-| icon                     | 自定义图标组件               | `VNode`                                                        | `undefined` |
+| icon                     | 自定义图标组件               | `VNode`                                                        | - |
 
 ::: warning 注意
 类型使用 `danger` 而非 `error`，与其他组件保持一致。

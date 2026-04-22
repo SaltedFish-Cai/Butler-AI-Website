@@ -14,8 +14,8 @@
 | baseHost       | API 基础 URL   | `string`                                                                                                                  | -           |
 | themeColor     | 主题颜色       | `string`                                                                                                                  | -           |
 | isDark         | 是否为暗黑模式 | `boolean`                                                                                                                 | `false`     |
-| size           | 组件尺寸       | `'small' \| 'default' \| 'large'`                                                                                         | `'default'` |
-| language       | 语言           | `'zh-CN' \| 'en-US'`                                                                                                      | `'zh-CN'`   |
+| size           | 组件尺寸       | `'small'` ` 'default'` `'large'`                                                                                          | `'default'` |
+| language       | 语言           | `'zh-CN'` `'en-US'`                                                                                                       | `'zh-CN'`   |
 | table_config   | 表格配置       | `TableConfig`                                                                                                             | -           |
 | address_config | 地址配置       | `AddressConfig`                                                                                                           | -           |
 | file_config    | 文件配置       | [`apiType`](/document/PancakeUI_Doc/manager/readme#apitype-api-配置类型) `& { downloadHose: string; compareKey: string }` | -           |

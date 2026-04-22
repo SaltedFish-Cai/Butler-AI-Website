@@ -53,8 +53,8 @@
 
 | 属性名   | 描述             | 类型                                    | 默认值      |
 | -------- | ---------------- | --------------------------------------- | ----------- |
-| id       | 唯一标识         | `string`                                | `undefined` |
-| class    | 自定义类名       | `string`                                | `undefined` |
-| style    | 自定义样式       | `Record<string, string>`                | `undefined` |
-| onChange | 数据变更回调函数 | `({ value, oldValue, option }) => void` | `undefined` |
-| onChange | 数据变更回调函数 | `({ value, oldValue, option }) => void` | `undefined` |
+| id       | 唯一标识         | `string`                                | - |
+| class    | 自定义类名       | `string`                                | - |
+| style    | 自定义样式       | `Record<string, string>`                | - |
+| onChange | 数据变更回调函数 | `({ value, oldValue, option }) => void` | - |
+| onChange | 数据变更回调函数 | `({ value, oldValue, option }) => void` | - |

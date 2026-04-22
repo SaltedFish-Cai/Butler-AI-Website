@@ -263,9 +263,9 @@ const tableConfig: MStructureV2Type.TableV2[] = [
 
 | 字段               | 描述                                                                                           | 类型                                                                                               | 默认值      |
 | ------------------ | ---------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | ----------- |
-| id                 | 多表时唯一 ID                                                                                  | `string`                                                                                           | `undefined` |
-| class              | 自定义类名                                                                                     | `string`                                                                                           | `undefined` |
-| style              | 自定义样式                                                                                     | `Record<string, string>`                                                                           | `undefined` |
+| id                 | 多表时唯一 ID                                                                                  | `string`                                                                                           | - |
+| class              | 自定义类名                                                                                     | `string`                                                                                           | - |
+| style              | 自定义样式                                                                                     | `Record<string, string>`                                                                           | - |
 | structure          | [MStructureV2Type.TableV2](/document/PancakeUI_Doc/table/readme.html#mstructurev2type-tablev2) | —                                                                                                  | —           |
 | useSelect          | 是否使用选择器                                                                                 | `boolean`                                                                                          | `false`     |
 | useRadio           | 是否使用单选器                                                                                 | `boolean`                                                                                          | `false`     |
@@ -290,13 +290,13 @@ const tableConfig: MStructureV2Type.TableV2[] = [
 | summaryConfig      | 自定义合计参数                                                                                 | sumText?: string; 合计文字 unitText?: string; // 单位文字                                          | —           |
 | summaryFunction    | 自定义合计方法                                                                                 | (params: any) => string[]                                                                          | —           |
 | useSticky          | 是否使用粘性表头                                                                               | `boolean`                                                                                          | `false`     |
-| onSelectRowBack    | 多选框点击回调                                                                                 | `({ isSelected, row, parentRow }) => void`                                                         | `undefined` |
-| onSelectRowAllBack | 多选框全选回调                                                                                 | `(params) => void`                                                                                 | `undefined` |
-| onRadioRowBack     | 单选框点击回调                                                                                 | `({ isSelected, row, parentRow }) => void`                                                         | `undefined` |
-| onExpandRowBack    | 展开行点击回调                                                                                 | `({ index, row, state }) => void`                                                                  | `undefined` |
-| onExpandRowAllBack | 展开全部按钮回调                                                                               | `(state) => void`                                                                                  | `undefined` |
-| onRenderEnd        | 首次渲染完成回调                                                                               | `(getTableList) => void`                                                                           | `undefined` |
-| onTableChange      | 表格数据变化时触发                                                                             | `(data) => void`                                                                                   | `undefined` |
+| onSelectRowBack    | 多选框点击回调                                                                                 | `({ isSelected, row, parentRow }) => void`                                                         | - |
+| onSelectRowAllBack | 多选框全选回调                                                                                 | `(params) => void`                                                                                 | - |
+| onRadioRowBack     | 单选框点击回调                                                                                 | `({ isSelected, row, parentRow }) => void`                                                         | - |
+| onExpandRowBack    | 展开行点击回调                                                                                 | `({ index, row, state }) => void`                                                                  | - |
+| onExpandRowAllBack | 展开全部按钮回调                                                                               | `(state) => void`                                                                                  | - |
+| onRenderEnd        | 首次渲染完成回调                                                                               | `(getTableList) => void`                                                                           | - |
+| onTableChange      | 表格数据变化时触发                                                                             | `(data) => void`                                                                                   | - |
 
 ## `SaTableExDependentType`
 

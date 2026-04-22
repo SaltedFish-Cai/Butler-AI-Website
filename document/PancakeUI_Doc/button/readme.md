@@ -50,7 +50,7 @@
 
 <demo src="./confirm.vue"></demo>
 
-## `SaButtonType`
+## ComponentProps
 
 | 属性名         | 描述                                                                         | 类型                                                                   | 默认值      |
 | -------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------- | ----------- |
@@ -70,10 +70,10 @@
 | useLine        | 是否为链接按钮                                                               | `boolean`                                                              | `false`     |
 | usePlain       | 是否为朴素按钮                                                               | `boolean`                                                              | `true`      |
 | confirmConfig  | 确认弹窗配置                                                                 | [`MessageBoxOptions`](/document/PancakeUI_Doc/message-box/readme.html) | -           |
-| text           | 按钮文本，支持多语言                                                         | `Record<languageKey, string> \| string`                                | -           |
-| size           | 按钮大小                                                                     | `large` `small`                                                        | -           |
+| text           | 按钮文本，支持多语言                                                         | `Record<'en-US' \| 'zh-CN', string>` `string`                          | -           |
+| size           | 按钮大小                                                                     | `'default'` `'large'` `'small'`                                        | `default`   |
 | useStop        | 是否阻止事件冒泡                                                             | `boolean`                                                              | `true`      |
+| onClick        | 点击回调函数                                                                 | `(event?: MouseEvent) => void`                                         | -           |
 | onConfirmClick | 确认点击回调函数                                                             | `() => void`                                                           | -           |
 | onSubmitClick  | 提交点击回调函数                                                             | `() => void`                                                           | -           |
 | onDeleteClick  | 删除点击回调函数                                                             | `() => void`                                                           | -           |
-| onClick        | 点击回调函数                                                                 | `(event?: MouseEvent) => void`                                         | -           |
