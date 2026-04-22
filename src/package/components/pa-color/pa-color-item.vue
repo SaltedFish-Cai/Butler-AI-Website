@@ -16,7 +16,7 @@
       </div>
 
       <!-- 透明度选择条 -->
-      <div class="pa-color-picker-alpha-area" v-if="showAlpha">
+      <div class="pa-color-picker-alpha-area" v-if="useAlpha">
         <div
           class="pa-color-picker-alpha-area-gradient"
           :style="{ backgroundColor: currentColorWithoutAlpha }"
@@ -28,7 +28,7 @@
 
     <!-- 颜色值输入区域 -->
     <div class="pa-color-picker-inputs">
-      <div class="pa-color-picker-inputs-group" v-if="props.showInput">
+      <div class="pa-color-picker-inputs-group" v-if="props.useInput">
         <input
           type="text"
           class="pa-color-picker-inputs-input"
@@ -37,7 +37,7 @@
           placeholder="#000000"
         />
       </div>
-      <!-- <div class="pa-color-picker-inputs-group" v-if="props.showAlpha">
+      <!-- <div class="pa-color-picker-inputs-group" v-if="props.useAlpha">
         <input
           type="number"
           class="pa-color-picker-input"
@@ -66,14 +66,12 @@
 
 <script setup lang="ts">
 import { ref, computed, watch, onMounted, onUnmounted } from "vue";
-import { PaColorType } from "./type";
+import { ComponentProps } from "./type";
 
 // Props定义
-const props = withDefaults(defineProps<PaColorType>(), {
-  modelValue: "#000000",
-  disabled: false,
-  showAlpha: false,
-  showInput: false
+const props = withDefaults(defineProps<ComponentProps>(), {
+  useAlpha: true,
+  useInput: true
 });
 
 // Emits定义
@@ -94,7 +92,7 @@ const alphaInput = ref(1);
 // 计算属性
 const hueColor = computed(() => `hsl(${hue.value}, 100%, 50%)`);
 const currentColorWithoutAlpha = computed(() => {
-  const color = hexToRgb(currentColor.value);
+  const color = hexToRgb(String(currentColor.value));
   if (color) {
     return `rgb(${color.r}, ${color.g}, ${color.b})`;
   }
@@ -202,7 +200,7 @@ const updateColorFromHsv = () => {
   const rgb = hsvToRgb(hue.value, saturation.value, value.value);
   let color = rgbToHex(rgb.r, rgb.g, rgb.b);
 
-  if (props.showAlpha) {
+  if (props.useAlpha) {
     color = `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${alpha.value})`;
   }
 
@@ -361,9 +359,9 @@ const selectPresetColor = (color: string) => {
 
 // 生命周期钩子
 onMounted(() => {
-  currentColor.value = props.value || props.modelValue;
-  hexInput.value = props.value || props.modelValue;
-  parseColor(props.value || props.modelValue);
+  currentColor.value = props.modelValue;
+  hexInput.value = String(props.modelValue);
+  parseColor(String(props.modelValue));
 });
 
 onUnmounted(() => {
@@ -377,10 +375,9 @@ onUnmounted(() => {
 
 // 监听props变化
 watch(
-  () => props.value || props.modelValue,
+  () => props.modelValue,
   newValue => {
-    console.log("++++++++++> newValue:", newValue);
-    if (newValue !== currentColor.value) {
+    if (newValue && newValue !== currentColor.value) {
       currentColor.value = newValue;
       hexInput.value = newValue;
       parseColor(newValue);

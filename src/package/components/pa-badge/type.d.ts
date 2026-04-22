@@ -3,7 +3,6 @@ export type ComponentProps = {
   /**
    * **自定义类名**
    * @type `string`
-   * @default `undefined`
    * @description 当设置该值时，会添加到组件的类名中
    * @description 该值的类型为 `string`，可以是任意类型
    * */
@@ -12,7 +11,6 @@ export type ComponentProps = {
   /**
    * **自定义样式**
    * @type `Record<string, string>`
-   * @default `undefined`
    * @description 当设置该值时，会添加到组件的样式中
    * @description 该值的类型为 `Record<string, string>`，可以是任意类型
    * */
@@ -21,7 +19,6 @@ export type ComponentProps = {
   /**
    * **值**
    * @type `string`
-   * @default `''`
    * @description 值
    * @example
    * ```tsx
@@ -33,7 +30,6 @@ export type ComponentProps = {
   /**
    * **最大值**
    * @type `number`
-   * @default `0`
    * @description 最大值
    * @example
    * ```tsx
@@ -45,7 +41,6 @@ export type ComponentProps = {
   /**
    * **是否显示**
    * @type `boolean`
-   * @default `true`
    * @description 当设置该值为 `true` 时，会显示组件
    * @description 当设置该值为 `false` 时，会隐藏组件
    * @example
@@ -58,7 +53,6 @@ export type ComponentProps = {
   /**
    * **使用小红点显示**
    * @type `boolean`
-   * @default `false`
    * @description 当设置该值为 `true` 时，会使用小红点显示
    * @description 当设置该值为 `false` 时，不会使用小红点显示
    * @example

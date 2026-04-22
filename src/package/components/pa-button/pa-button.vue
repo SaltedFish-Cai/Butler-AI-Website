@@ -48,12 +48,8 @@ const { debounce } = _;
 const props = withDefaults(defineProps<ComponentProps>(), {
   debounced: true,
   debouncedTime: 300,
-  disabled: false,
   iconPosition: "left",
-  size: undefined,
-  loading: false,
-  useLine: false,
-  loadingBy: "#nprogress",
+  size: "default",
   useFont: true,
   usePlain: true,
   useStop: true
@@ -142,7 +138,7 @@ function realClick() {
   if (props.debounced) lock = true;
 
   nextTick(() => {
-    const EL = typeof window !== "undefined" && window.document.querySelector(props.loadingBy);
+    const EL = typeof window !== "undefined" && props.loadingBy && window.document.querySelector(props.loadingBy);
     if (EL && inBrowser) {
       state.isLoading = true;
 
@@ -154,7 +150,7 @@ function realClick() {
 
       const config = { childList: true };
       const callback = () => {
-        const EL = typeof window !== "undefined" && window.document.querySelector(props.loadingBy);
+        const EL = typeof window !== "undefined" && props.loadingBy && window.document.querySelector(props.loadingBy);
         if (!EL) {
           clearTimeout(safeLock);
           state.isLoading = false;

@@ -4,7 +4,6 @@ export type ComponentProps = {
   /**
    * **组件唯一标识**
    * @type `string` | `undefined`
-   * @default `undefined`
    * @description 当设置该值时，会作为组件的唯一标识
    * @description 该值的类型为 `string`，可以是任意类型，但是建议不要重复
    * */
@@ -13,7 +12,6 @@ export type ComponentProps = {
   /**
    * **自定义类名**
    * @type `string`
-   * @default `undefined`
    * @description 当设置该值时，会添加到组件的类名中
    * @description 该值的类型为 `string`，可以是任意类型
    * */
@@ -22,7 +20,6 @@ export type ComponentProps = {
   /**
    * **自定义样式**
    * @type `Record<string, string>`
-   * @default `undefined`
    * @description 当设置该值时，会添加到组件的样式中
    * @description 该值的类型为 `Record<string, string>`，可以是任意类型
    * */
@@ -31,7 +28,6 @@ export type ComponentProps = {
   /**
    * **双向绑定值**
    * @type `Array<number | string>` | `number` | `string` | `boolean`
-   * @default `undefined`
    * @description 当设置该值时，会绑定该值
    * @description 该值的类型为 `Array<number | string>` | `number` | `string` | `boolean`，可以是任意类型
    * */
@@ -54,7 +50,6 @@ export type ComponentProps = {
   /**
    * **是否使用'AA-aa'格式的选项值模式**
    * @type `boolean`
-   * @default `false`
    * @description 当设置该值为 `true` 时，返回值为'AA-aa'格式的选项值
    * */
   useValueBylink?: boolean;
@@ -62,7 +57,7 @@ export type ComponentProps = {
   /**
    * **是否使用'AA/aa'格式的选项标签模式**
    * @type `boolean`
-   * @default `false`
+   * @default `true`
    * @description 当设置该值为 `true` 时，会显示'AA/aa'格式的选项标签
    * */
   useTextByLink?: boolean;
@@ -70,7 +65,6 @@ export type ComponentProps = {
   /**
    * **纯展示数据**
    * @type `string`
-   * @default `undefined`
    * @description 当设置该值时，会显示该值
    * @description 该值的类型为 `string`，可以是任意类型
    * */
@@ -106,7 +100,6 @@ export type ComponentProps = {
   /**
    * **是否禁用**
    * @type `boolean`
-   * @default `false`
    * @description 当设置该值为 `true` 时，会禁用该组件
    * @description 当设置该值为 `false` 时，不会禁用该组件
    * @example
@@ -119,7 +112,6 @@ export type ComponentProps = {
   /**
    * **纯展示模式**
    * @type `boolean`
-   * @default `false`
    * @description 当设置该值为 `true` 时，会使用纯展示模式
    * @description 当设置该值为 `false` 时，不会使用纯展示模式
    * @example
@@ -145,7 +137,6 @@ export type ComponentProps = {
   /**
    * **Teleport 目标**
    * @type `boolean`
-   * @default `false`
    * @description 当设置该值为 `true` 时，会将组件挂载到指定的目标元素下
    * @description 该值的类型为 `boolean`，可以是任意类型
    * @example
@@ -158,7 +149,6 @@ export type ComponentProps = {
   /**
    * **对比数据**
    * @type `Array<number | string>` | `number` | `string`
-   * @default `undefined`
    * @description 当设置该值时，会使用该值作为对比数据
    * @description 该值的类型为 `Array<number | string>` | `number` | `string`，可以是任意类型
    * @example
@@ -171,7 +161,6 @@ export type ComponentProps = {
   /**
    * **是否显示对比数据**
    * @type `boolean`
-   * @default `false`
    * @description 当设置该值为 `true` 时，会显示对比数据
    * @description 当设置该值为 `false` 时，不会显示对比数据
    * @example
@@ -187,7 +176,6 @@ export type ComponentProps = {
    * @type `value` 为当前值
    * @type `oldValue` 为旧值
    * @type `option` 为当前选项
-   * @default `undefined`
    * @description 当设置该值为 `({ value, oldValue, option: SaOptionType.Select }) => void` 时，会使用该值作为回调函数
    * @example
    * ```tsx

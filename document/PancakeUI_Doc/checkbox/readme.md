@@ -16,9 +16,9 @@
 
 <demo src="./display.vue" ></demo>
 
-## 单组件使用
+## 单选项使用
 
-使用 `pa-checkbox-item` 展示单组件使用功能，当使用 `isChecked` 属性时，将直接使用该属性值展示选中状态，不受点击控制。
+使用 `<pa-checkbox-item />` 展示单选项使用功能，当使用 `isChecked` 属性时，将直接使用该属性值展示选中状态，不受点击控制。
 
 <demo src="./item.vue" ></demo>
 
@@ -42,11 +42,11 @@
 
 ## ComponentItemProps
 
-| 字段            | 描述     | 类型                                           | 默认值  |
-| --------------- | -------- | ---------------------------------------------- | ------- |
-| modelValue      | 绑定值   | `string` `number` `boolean`                    | —       |
-| label           | 选项名   | ` Record<'en-US' \| 'zh-CN', string>` `string` | —       |
-| value           | 选项值   | `string` `number` `boolean`                    | —       |
-| isChecked       | 是否选中 | `boolean`                                      | `false` |
-| isIndeterminate | 是否半选 | `boolean`                                      | `false` |
-| disabled        | 禁用状态 | `boolean`                                      | —       |
+| 字段            | 描述     | 类型                                           | 默认值 |
+| --------------- | -------- | ---------------------------------------------- | ------ |
+| modelValue      | 绑定值   | `string` `number` `boolean`                    | —      |
+| label           | 选项名   | ` Record<'en-US' \| 'zh-CN', string>` `string` | —      |
+| value           | 选项值   | `string` `number` `boolean`                    | —      |
+| isChecked       | 是否选中 | `boolean`                                      | —      |
+| isIndeterminate | 是否半选 | `boolean`                                      | —      |
+| disabled        | 禁用状态 | `boolean`                                      | —      |

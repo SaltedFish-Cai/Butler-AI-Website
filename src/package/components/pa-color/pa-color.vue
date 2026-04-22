@@ -5,7 +5,7 @@
         <!-- 颜色显示区域 -->
         <div class="pa-color-preview" :class="{ 'pa-color-preview-active': isPickerOpen }" v-if="!props.disabled">
           <div class="pa-color-preview-color" :style="{ backgroundColor: currentColor }">
-            <div class="pa-color-preview-mask" v-if="!isHexColor(currentColor)"></div>
+            <div class="pa-color-preview-mask" v-if="!isHexColor(String(currentColor))"></div>
           </div>
           <div class="pa-color-preview-text">{{ currentColor }}</div>
         </div>
@@ -13,8 +13,8 @@
       <pa-color-item
         v-model="currentColor"
         :preset-colors="props.presetColors"
-        :show-alpha="props.showAlpha"
-        :show-input="props.showInput"
+        :show-alpha="props.useAlpha"
+        :show-input="props.useInput"
       ></pa-color-item>
     </pa-popover>
   </div>
@@ -22,14 +22,12 @@
 
 <script setup lang="ts">
 import { ref, watch, onMounted, onUnmounted } from "vue";
-import { PaColorType } from "./type";
+import { ComponentProps } from "./type";
 
 // Props定义
-const props = withDefaults(defineProps<PaColorType>(), {
-  modelValue: "#000000",
-  disabled: false,
-  showAlpha: true,
-  showInput: true
+const props = withDefaults(defineProps<ComponentProps>(), {
+  useAlpha: true,
+  useInput: true
 });
 
 // Emits定义
@@ -149,7 +147,7 @@ const updateColorFromHsv = () => {
   const rgb = hsvToRgb(hue.value, saturation.value, value.value);
   let color = rgbToHex(rgb.r, rgb.g, rgb.b);
 
-  if (props.showAlpha) {
+  if (props.useAlpha) {
     color = `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${alpha.value})`;
   }
 
@@ -272,8 +270,8 @@ const handleAlphaAreaMouseUp = () => {
 // 生命周期钩子
 onMounted(() => {
   currentColor.value = props.modelValue;
-  hexInput.value = props.modelValue;
-  parseColor(props.modelValue);
+  hexInput.value = String(props.modelValue);
+  parseColor(String(props.modelValue));
 });
 
 onUnmounted(() => {
@@ -289,7 +287,7 @@ onUnmounted(() => {
 watch(
   () => props.modelValue,
   newValue => {
-    if (newValue !== currentColor.value) {
+    if (newValue && newValue !== String(currentColor.value)) {
       currentColor.value = newValue;
       hexInput.value = newValue;
       parseColor(newValue);

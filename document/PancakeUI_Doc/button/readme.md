@@ -59,15 +59,15 @@
 | style          | 自定义样式                                                                   | `Record<string, string>`                                               | -           |
 | is             | 内置样式选择 [样式展示](/document/PancakeUI_Doc/button/readme.html#内置样式) | `string`                                                               | -           |
 | type           | 类型                                                                         | `'danger'` `'default'` `'info'` `'primary'` `'success'` `'warning'`    | `'default'` |
-| disabled       | 是否禁用按钮                                                                 | `boolean`                                                              | `false`     |
-| loading        | 是否 `Loading` 状态                                                          | `boolean`                                                              | `false`     |
+| disabled       | 是否禁用按钮                                                                 | `boolean`                                                              | -           |
+| loading        | 是否 `Loading` 状态                                                          | `boolean`                                                              | -           |
 | loadingBy      | 自动 `Loading` 监听依赖源                                                    | `string`                                                               | -           |
 | debounced      | 开启防抖                                                                     | `boolean`                                                              | `true`      |
 | debouncedTime  | 防抖延迟时间                                                                 | `number`                                                               | `300`       |
 | iconPosition   | Icon 位置                                                                    | `'left'` `'right'`                                                     | `'left'`    |
 | iconName       | icon 图标([`pa-icon`](/document/PancakeUI_Doc/icon/readme.html))             | `string`                                                               | -           |
 | useFont        | 是否使用字体图标                                                             | `boolean`                                                              | `true`      |
-| useLine        | 是否为链接按钮                                                               | `boolean`                                                              | `false`     |
+| useLine        | 是否为链接按钮                                                               | `boolean`                                                              | -           |
 | usePlain       | 是否为朴素按钮                                                               | `boolean`                                                              | `true`      |
 | confirmConfig  | 确认弹窗配置                                                                 | [`MessageBoxOptions`](/document/PancakeUI_Doc/message-box/readme.html) | -           |
 | text           | 按钮文本，支持多语言                                                         | `Record<'en-US' \| 'zh-CN', string>` `string`                          | -           |

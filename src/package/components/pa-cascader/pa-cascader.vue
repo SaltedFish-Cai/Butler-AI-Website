@@ -138,11 +138,8 @@ const languageValue = computed(() => {
 const props = withDefaults(defineProps<ComponentProps>(), {
   id: randChar(),
   type: "cascader",
-  disabled: false,
-  display: false,
   clearable: true,
-  useTextByLink: true,
-  useValueBylink: false
+  useTextByLink: true
 });
 
 const emits = defineEmits(["update:modelValue", "change"]);

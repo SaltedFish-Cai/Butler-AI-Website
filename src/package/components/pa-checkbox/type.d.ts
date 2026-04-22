@@ -4,7 +4,6 @@ export type ComponentItemProps = {
   /**
    * **组件唯一标识**
    * @type `string` | `undefined`
-   * @default `undefined`
    * @description 当设置该值时，会作为组件的唯一标识
    * @description 该值的类型为 `string`，可以是任意类型，但是建议不要重复
    * */
@@ -13,7 +12,6 @@ export type ComponentItemProps = {
   /**
    * **自定义类名**
    * @type `string`
-   * @default `undefined`
    * @description 当设置该值时，会添加到组件的类名中
    * @description 该值的类型为 `string`，可以是任意类型
    * */
@@ -22,7 +20,6 @@ export type ComponentItemProps = {
   /**
    * **自定义样式**
    * @type `Record<string, string>`
-   * @default `undefined`
    * @description 当设置该值时，会添加到组件的样式中
    * @description 该值的类型为 `Record<string, string>`，可以是任意类型
    * */
@@ -31,7 +28,6 @@ export type ComponentItemProps = {
   /**
    * **双向绑定值**
    * @type `boolean` | `number` | `string`
-   * @default `undefined`
    * @description 当设置该值时，会绑定该值
    * @description 当前属性只有作为 `独立组件` 时才会生效
    * @description 该值的类型为 `boolean` | `number` | `string`，可以是任意类型
@@ -41,7 +37,6 @@ export type ComponentItemProps = {
   /**
    * **标签**
    * @type `string`
-   * @default `undefined`
    * @description 当设置该值时，会作为组件的标签
    * @description 该值的类型为 `string`，可以是任意类型
    * */
@@ -50,7 +45,6 @@ export type ComponentItemProps = {
   /**
    * **值**
    * @type `boolean` | `number` | `string`
-   * @default `undefined`
    * @description 当设置该值时，会作为组件的值
    * @description 该值的类型为 `boolean` | `number` | `string`，可以是任意类型
    * */
@@ -59,7 +53,6 @@ export type ComponentItemProps = {
   /**
    * **是否选中**
    * @type `boolean`
-   * @default `false`
    * @description 当设置该值为 `true` 时，会将组件设置为选中状态
    * @description 当设置该值为 `false` 时，不会将组件设置为选中状态
    * @example
@@ -72,7 +65,6 @@ export type ComponentItemProps = {
   /**
    * **是否不确定**
    * @type `boolean`
-   * @default `false`
    * @description 当设置该值为 `true` 时，会将组件设置为不确定状态
    * @description 当设置该值为 `false` 时，不会将组件设置为不确定状态
    * @example
@@ -85,7 +77,6 @@ export type ComponentItemProps = {
   /**
    * **是否禁用**
    * @type `boolean`
-   * @default `false`
    * @description 当设置该值为 `true` 时，会禁用该组件
    * @description 当设置该值为 `false` 时，不会禁用该组件
    * @example
@@ -100,7 +91,6 @@ export type ComponentItemProps = {
    * @type `({ value, oldValue }) => void` | `undefined`
    * @type `value` 为当前值
    * @type `oldValue` 为旧值
-   * @default `undefined`
    * @description 当设置该值时，会使用该值作为回调函数
    * @description 该值的类型为 `({ value, oldValue }) => void` | `undefined`，可以是任意类型
    * @example
@@ -115,7 +105,6 @@ export type ComponentProps = {
   /**
    * **组件唯一标识**
    * @type `string` | `undefined`
-   * @default `undefined`
    * @description 当设置该值时，会作为组件的唯一标识
    * @description 该值的类型为 `string`，可以是任意类型，但是建议不要重复
    * */
@@ -124,7 +113,6 @@ export type ComponentProps = {
   /**
    * **自定义类名**
    * @type `string`
-   * @default `undefined`
    * @description 当设置该值时，会添加到组件的类名中
    * @description 该值的类型为 `string`，可以是任意类型
    * */
@@ -133,7 +121,6 @@ export type ComponentProps = {
   /**
    * **自定义样式**
    * @type `Record<string, string>`
-   * @default `undefined`
    * @description 当设置该值时，会添加到组件的样式中
    * @description 该值的类型为 `Record<string, string>`，可以是任意类型
    * */
@@ -142,7 +129,6 @@ export type ComponentProps = {
   /**
    * **双向绑定值**
    * @type `Array<number | string | boolean>`
-   * @default `undefined`
    * @description 当设置该值时，会绑定该值
    * @description 当前属性只有作为 `独立组件` 时才会生效
    * @description 该值的类型为 `Array<number | string | boolean>`，可以是任意类型
@@ -152,7 +138,6 @@ export type ComponentProps = {
   /**
    * **是否禁用**
    * @type `boolean`
-   * @default `false`
    * @description 当设置该值为 `true` 时，会禁用该组件
    * @description 当设置该值为 `false` 时，不会禁用该组件
    * @example
@@ -187,7 +172,6 @@ export type ComponentProps = {
   /**
    * **纯展示模式**
    * @type `boolean`
-   * @default `false`
    * @description 当设置该值为 `true` 时，会使用纯展示模式
    * @description 当设置该值为 `false` 时，不会使用纯展示模式
    * @example
@@ -200,7 +184,6 @@ export type ComponentProps = {
   /**
    * **纯展示值**
    * @type `string`
-   * @default `undefined`
    * @description 当设置该值时，会使用该值作为纯展示值
    * @description 该值的类型为 `string`，可以是任意类型
    * @example
@@ -225,7 +208,6 @@ export type ComponentProps = {
   /**
    * **是否显示对比数据**
    * @type `boolean`
-   * @default `false`
    * @description 当设置该值为 `true` 时，会显示对比数据
    * @description 当设置该值为 `false` 时，会更具对比数据的结果来决定是否显示对比数据
    * @example
@@ -241,7 +223,6 @@ export type ComponentProps = {
    * @type `value` 为当前值
    * @type `oldValue` 为旧值
    * @type `option` 为当前选项
-   * @default `undefined`
    * @description 当设置该值时，会使用该值作为回调函数
    * @description 该值的类型为 `({ value, oldValue, option: PaOptionType.Select }) => void` | `undefined`，可以是任意类型
    * @example

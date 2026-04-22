@@ -31,7 +31,6 @@ export type ComponentProps = {
   /**
    * **组件唯一标识**
    * @type `string` | `undefined`
-   * @default `undefined`
    * @description 当设置该值时，会作为组件的唯一标识
    * @description 该值的类型为 `string`，可以是任意类型，但是建议不要重复
    * */
@@ -40,7 +39,6 @@ export type ComponentProps = {
   /**
    * **自定义类名**
    * @type `string`
-   * @default `undefined`
    * @description 当设置该值时，会添加到组件的类名中
    * @description 该值的类型为 `string`，可以是任意类型
    * */
@@ -49,7 +47,6 @@ export type ComponentProps = {
   /**
    * **自定义样式**
    * @type `Record<string, string>`
-   * @default `undefined`
    * @description 当设置该值时，会添加到组件的样式中
    * @description 该值的类型为 `Record<string, string>`，可以是任意类型
    * */
@@ -58,7 +55,6 @@ export type ComponentProps = {
   /**
    * **按钮文本**
    * @type `Record<languageKey, string> | string`
-   * @default `undefined`
    * @description 当设置该值时，会显示在按钮上
    * @description 该值的类型为 `Record<languageKey, string> | string`，可以是任意类型
    * @example
@@ -83,7 +79,6 @@ export type ComponentProps = {
   /**
    * **内置样式**
    * @type `string` | `undefined`
-   * @default `undefined`
    * @description 可选值为  `add` | `cancel` | `check` | `download` | `edit` | `export` | `file` | `go` | `import` | `ok` | `refresh` | `remove` | `save` | `search` | `submit` | `switch` | `sync` | `time` | `trash` | `upload` | `view` | `more`
    * */
   is?: ButtonTypeV2Is;
@@ -106,7 +101,6 @@ export type ComponentProps = {
   /**
    * **是否禁用状态**
    * @type `boolean`
-   * @default `false`
    * @description 当设置该值为 `true` 时，按钮为禁用状态
    * @description 当设置该值为 `false` 时，按钮为正常状态
    * */
@@ -115,7 +109,6 @@ export type ComponentProps = {
   /**
    * **加载状态**
    * @type `boolean`
-   * @default `false`
    * @description 当设置该值为 `true` 时，按钮为加载状态
    * @description 当设置该值为 `false` 时，按钮为正常状态
    * */
@@ -124,7 +117,6 @@ export type ComponentProps = {
   /**
    * **自动Loading来源**
    * @type `string` | `undefined`
-   * @default `undefined`
    * @description 当设置该值时，会自动判断是否为 `loading` 状态，且会自动添加 `loading` 样式
    * */
   loadingBy?: string;
@@ -161,7 +153,6 @@ export type ComponentProps = {
   /**
    * **按钮ICON**
    * @type `string` | `undefined`
-   * @default `undefined`
    * @description 当设置该值时，会使用该值作为ICON
    * @description
    * - 该值的类型为 `string`，可以是任意类型
@@ -181,7 +172,6 @@ export type ComponentProps = {
   /**
    * **是否使用下划线按钮**
    * @type `boolean`
-   * @default `false`
    * @description 当设置该值为 `true` 时，会使用下划线按钮
    * @description 当设置该值为 `false` 时，不会使用下划线按钮
    * */
@@ -190,7 +180,7 @@ export type ComponentProps = {
   /**
    * **是否使用朴素按钮**
    * @type `boolean`
-   * @default `false`
+   * @default `true`
    * @description 当设置该值为 `true` 时，会使用朴素按钮
    * @description 当设置该值为 `false` 时，不会使用朴素按钮
    * */
@@ -199,7 +189,6 @@ export type ComponentProps = {
   /**
    * **确认弹窗配置**
    * @type `ConfirmConfig` | `undefined`
-   * @default `undefined`
    * @description 当设置该值时，会开启确认弹窗功能
    * @description 当设置该值为 `undefined` 时，不会开启确认弹窗功能
    * */

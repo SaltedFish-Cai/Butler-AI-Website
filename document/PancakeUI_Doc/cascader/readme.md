@@ -33,12 +33,12 @@
 | style               | 自定义样式                                      | `Record<string, string>`                                                          | -            |
 | modelValue          | 绑定值                                          | `Array<number \| string>` `number` `string`                                       | -            |
 | type                | 组件类型                                        | `'cascader-check'` `'cascader'` `'multiple-cascader-check'` `'multiple-cascader'` | `'cascader'` |
-| useValueBylink      | 非多选模式下，是否使用'AA-aa'格式的选项值模式   | `boolean`                                                                         | `false`      |
+| useValueBylink      | 非多选模式下，是否使用'AA-aa'格式的选项值模式   | `boolean`                                                                         | -            |
 | useTextByLink       | 非多选模式下，是否使用'AA/aa'格式的选项标签模式 | `boolean`                                                                         | `true`       |
 | exOptions           | 选项                                            | [`SaSelectOptionsType`](/document/PancakeUI_Doc/options#saselectoptionstype)      | -            |
 | placeholder         | 输入框提示                                      | `Record<'en-US' \| 'zh-CN', string>` `string`                                     | -            |
-| disabled            | 禁用状态                                        | `boolean`                                                                         | `false`      |
-| display             | 纯展示                                          | `boolean`                                                                         | `false`      |
+| disabled            | 禁用状态                                        | `boolean`                                                                         | -            |
+| display             | 纯展示                                          | `boolean`                                                                         | -            |
 | displayValue        | 纯展示类型下，直接显示值                        | `string`                                                                          | -            |
 | clearable           | 显示清除按钮                                    | `boolean`                                                                         | `true`       |
 | contrastData        | 对比用原数据                                    | `Array<number \| string>` `number` `string`                                       | -            |
