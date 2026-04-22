@@ -21,10 +21,16 @@
       "
     ></pa-radio-item>
   </div>
-  <div v-else class="pa-display-style">
-    <slot name="exDisplay"></slot>
-    <template v-if="$slots.exDisplay"> ( {{ findData(inValue) || "--" }} )</template>
-    <template v-else>{{ findData(inValue) || "--" }}</template>
+
+  <div v-else class="pa-display-style" :class="[props.class]" :style="{ ...props.style }">
+    <div v-if="title" :style="{ width: titleWidth }" class="pa-cell-label">
+      {{ typeof title === "string" ? title : title[languageValue] }}
+    </div>
+    <div class="pa-display-value_content">
+      <slot name="exDisplay"></slot>
+      <template v-if="$slots.exDisplay"> ( {{ findData(inValue) || "--" }} )</template>
+      <template v-else>{{ findData(inValue) || "--" }}</template>
+    </div>
   </div>
 
   <div
@@ -38,11 +44,18 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, watch } from "vue";
+import { ref, watch, computed, inject, ComputedRef } from "vue";
 import { PaRadioType } from "./type";
+import { PancakeGlobalConfigType } from "../pa-manager/type";
+import { findData as findDataSelect } from "../utils/find-data";
 
 import _ from "lodash";
 const { isEqual, isNil } = _;
+
+const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
+const languageValue = computed(() => {
+  return PancakeGlobalConfig.value?.language?.value || "zh-CN";
+});
 
 const props = withDefaults(defineProps<PaRadioType>(), {});
 const exOptionsList = ref(props?.exOptions || []);
@@ -61,18 +74,10 @@ function changeEvent({ value, option }) {
 }
 
 function findData(data) {
-  let text = "";
-  const options = props.exOptions;
-  if (options?.length) {
-    const row = data;
-    for (let index = 0; index < options.length; index++) {
-      const option = options[index];
-      if (option.value == row) {
-        text += option.label;
-      }
-    }
+  if (props.displayValue) {
+    return props.displayValue || "--";
   }
-  return text || "--";
+  return findDataSelect(data, exOptionsList.value, false, languageValue.value);
 }
 
 // #Watch modelValue
