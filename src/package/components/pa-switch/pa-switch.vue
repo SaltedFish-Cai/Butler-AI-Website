@@ -25,36 +25,40 @@
       </div>
     </div>
   </div>
-  <div v-else class="pa-display-style">
-    <slot name="exDisplay"></slot>
-    <template v-if="$slots.exDisplay"> ( {{ findData(inValue, options, language) || "--" }} )</template>
-    <template v-else>{{ findData(inValue, options, language) || "--" }}</template>
+
+  <div v-else class="pa-display-style" :class="[props.class]" :style="{ ...props.style }">
+    <div v-if="title" :style="{ width: titleWidth }" class="pa-cell-label">
+      {{ typeof title === "string" ? title : title[languageValue] }}
+    </div>
+    <div class="pa-display-value_content">
+      <slot name="exDisplay"></slot>
+      <template v-if="$slots.exDisplay"> ( {{ findData(inValue, options) || "--" }} )</template>
+      <template v-else>{{ findData(inValue, options) || "--" }}</template>
+    </div>
   </div>
+
   <div v-if="alwaysContrast || (!isNil(contrastData) && !isEqual(inValue, contrastData))" :class="['pa-contrast-style']">
     <slot name="exContrast"></slot>
-    <template v-if="$slots.exContrast"> ( {{ findData(contrastData, options, language) || "--" }} )</template>
-    <template v-else>{{ findData(contrastData, options, language) || "--" }}</template>
+    <template v-if="$slots.exContrast"> ( {{ findData(contrastData, options) || "--" }} )</template>
+    <template v-else>{{ findData(contrastData, options) || "--" }}</template>
   </div>
 </template>
 
 <script lang="ts" setup>
 import { computed, ComputedRef, inject, ref, Ref, watch } from "vue";
 import { PaSwitchType } from "./type";
-import { findData } from "./find-data";
+import { findData as findDataSwitch } from "./find-data";
 import { PancakeGlobalConfigType } from "../pa-manager/type";
 
 import _ from "lodash";
 const { isEqual, isNil } = _;
 
 const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
-
-const props = withDefaults(defineProps<PaSwitchType>(), {
-  activeValue: 1,
-  inActiveValue: 0,
-  contrastData: undefined
+const languageValue = computed(() => {
+  return PancakeGlobalConfig.value?.language?.value || "zh-CN";
 });
-// const exOptionsList = ref(props?.exOptions || []);
-const language = computed(() => PancakeGlobalConfig.value?.language?.value || "zh-CN");
+
+const props = withDefaults(defineProps<PaSwitchType>(), {});
 const inValue: Ref<boolean | number | string | undefined> = ref(props.modelValue);
 const emits = defineEmits(["update:modelValue", "change"]);
 
@@ -65,6 +69,13 @@ function changeEvent() {
   emits("update:modelValue", value);
   emits("change", { value, oldValue });
   oldValue = value;
+}
+
+function findData(data, opts) {
+  if (props.displayValue) {
+    return props.displayValue || "--";
+  }
+  return findDataSwitch(data, opts, languageValue.value);
 }
 
 function changeType(type, opts) {
@@ -103,15 +114,15 @@ const options = computed(() => {
   const {
     activeValue = true,
     inActiveValue = false,
-    activeText = PancakeGlobalConfig.value?.language?.value == "zh-CN" ? "是" : "Yes",
-    inActiveText = PancakeGlobalConfig.value?.language?.value == "zh-CN" ? "否" : "No"
+    activeText = languageValue.value == "zh-CN" ? "是" : "Yes",
+    inActiveText = languageValue.value == "zh-CN" ? "否" : "No"
   } = props.exOptions || props;
 
   const _opt = changeType(typeIs, {
     activeValue: activeValue,
     inActiveValue: inActiveValue,
-    activeText: typeof activeText == "string" ? activeText : activeText[language.value] || activeText["zh-CN"],
-    inActiveText: typeof inActiveText == "string" ? inActiveText : inActiveText[language.value] || inActiveText["zh-CN"],
+    activeText: typeof activeText == "string" ? activeText : activeText[languageValue.value] || activeText["zh-CN"],
+    inActiveText: typeof inActiveText == "string" ? inActiveText : inActiveText[languageValue.value] || inActiveText["zh-CN"],
     activeIcon: props.activeIcon,
     inActiveIcon: props.inActiveIcon
   });
