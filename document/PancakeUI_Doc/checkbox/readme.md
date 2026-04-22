@@ -34,7 +34,7 @@
 | display        | 纯展示                   | `boolean` `undefined`                                                                    | `undefined` |
 | alwaysContrast | 是否总是显示对不数据     | `boolean` `undefined`                                                                    | `undefined` |
 | displayValue   | 纯展示类型下，直接显示值 | `string` `undefined`                                                                     | `undefined` |
-| exOptions      | 选项                     | [`SaSelectOptionsType`](/document/PancakeUI_Doc/options#saselectoptionstype) `undefined` | `undefined` |
+| exOptions      | 选项                     | [`PaSelectOptionsType`](/document/PancakeUI_Doc/options#paselectoptionstype) `undefined` | `undefined` |
 | contrastData   | 对比用原数据             | `string` `number` `boolean` `undefined`                                                  | `undefined` |
 | title          | 表单项标签               | `Record<'en-US' \| 'zh-CN', string>` `string` `undefined`                                | `undefined` |
 | titleWidth     | 表单项标签宽度           | `string` `undefined`                                                                     | `undefined` |

@@ -36,7 +36,7 @@
 | displayValue        | 纯展示类型下，直接显示值     | `string` `undefined`                                                                                                                   | `undefined` |
 | type                | 组件类型                     | `'multiple-online-select'` `'multiple-request-select'` `'multiple-select'` `'online-select'` `'request-select'` `'select'` `undefined` | `'select'`  |
 | clearable           | 显示清除按钮                 | `boolean` `undefined`                                                                                                                  | `true`      |
-| exOptions           | 选项                         | [`SaSelectOptionsType`](/document/PancakeUI_Doc/options#saselectoptionstype) `undefined`                                               | `undefined` |
+| exOptions           | 选项                         | [`PaSelectOptionsType`](/document/PancakeUI_Doc/options#paselectoptionstype) `undefined`                                               | `undefined` |
 | requestApi          | 异步选项请求接口             | `({ query: string }) => Promise<MOptionV2Type.SelectList>` `undefined`                                                                 | `undefined` |
 | placeholder         | 输入框提示                   | `Record<'en-US' \| 'zh-CN', string>` `string` `undefined`                                                                              | `undefined` |
 | disabled            | 禁用状态                     | `boolean` `undefined`                                                                                                                  | `undefined` |

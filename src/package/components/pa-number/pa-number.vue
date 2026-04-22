@@ -1,10 +1,10 @@
 <template>
   <div v-if="!display" class="pa-number" :class="[props.class, { 'is-disabled': props.disabled }]" :style="{ ...props.style }">
+    <div v-if="title" :style="{ width: titleWidth }" class="pa-cell-label">
+      {{ typeof title === "string" ? title : title[languageValue] }}
+    </div>
     <!-- input -->
     <div class="pa-number-input" :class="[isFocus ? 'is-focus' : '']">
-      <div v-if="title" :style="{ width: titleWidth }" class="pa-cell-label">
-        {{ typeof title === "string" ? title : title[languageValue] }}
-      </div>
       <input
         class="pa-number-input-inner"
         v-model="inValue"

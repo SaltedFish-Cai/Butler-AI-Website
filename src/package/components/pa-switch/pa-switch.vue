@@ -7,6 +7,9 @@
     :style="{ ...props.style }"
     @click="changeEvent"
   >
+    <div v-if="title" :style="{ width: titleWidth }" class="pa-cell-label">
+      {{ typeof title === "string" ? title : title[languageValue] }}
+    </div>
     <div class="pa-switch__inner">
       <div class="pa-switch-text pa-switch-text-inactive">
         {{ options.inActiveText }}
@@ -36,8 +39,10 @@
       <template v-else>{{ findData(inValue, options) || "--" }}</template>
     </div>
   </div>
-
-  <div v-if="alwaysContrast || (!isNil(contrastData) && !isEqual(inValue, contrastData))" :class="['pa-contrast-style']">
+  <div
+    v-if="(alwaysContrast && !isNil(contrastData)) || (!isNil(contrastData) && !isEqual(inValue, contrastData))"
+    :class="['pa-contrast-style']"
+  >
     <slot name="exContrast"></slot>
     <template v-if="$slots.exContrast"> ( {{ findData(contrastData, options) || "--" }} )</template>
     <template v-else>{{ findData(contrastData, options) || "--" }}</template>
@@ -46,7 +51,7 @@
 
 <script lang="ts" setup>
 import { computed, ComputedRef, inject, ref, Ref, watch } from "vue";
-import { PaSwitchType } from "./type";
+import { ComponentProps } from "./type";
 import { findData as findDataSwitch } from "./find-data";
 import { PancakeGlobalConfigType } from "../pa-manager/type";
 
@@ -58,7 +63,9 @@ const languageValue = computed(() => {
   return PancakeGlobalConfig.value?.language?.value || "zh-CN";
 });
 
-const props = withDefaults(defineProps<PaSwitchType>(), {});
+const props = withDefaults(defineProps<ComponentProps>(), {
+  contrastData: undefined
+});
 const inValue: Ref<boolean | number | string | undefined> = ref(props.modelValue);
 const emits = defineEmits(["update:modelValue", "change"]);
 

@@ -36,7 +36,7 @@
 | useTextByLink       | 非多选模式下，是否使用'AA/aa'格式的选项标签模式 | `boolean` `undefined`                                                                         | `true`       |
 | clearable           | 显示清除按钮                                    | `boolean` `undefined`                                                                         | `true`       |
 | useValueBylink      | 非多选模式下，是否使用'AA-aa'格式的选项值模式   | `boolean` `undefined`                                                                         | `undefined`  |
-| exOptions           | 选项                                            | [`SaSelectOptionsType`](/document/PancakeUI_Doc/options#saselectoptionstype) `undefined`      | `undefined`  |
+| exOptions           | 选项                                            | [`PaSelectOptionsType`](/document/PancakeUI_Doc/options#paselectoptionstype) `undefined`      | `undefined`  |
 | placeholder         | 输入框提示                                      | `Record<'en-US' \| 'zh-CN', string>` `string` `undefined`                                     | `undefined`  |
 | disabled            | 禁用状态                                        | `boolean` `undefined`                                                                         | `undefined`  |
 | display             | 纯展示                                          | `boolean` `undefined`                                                                         | `undefined`  |

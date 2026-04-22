@@ -1,48 +1,6 @@
-import { LanguageKey } from "../manager-type";
+import { PaOptionType, LanguageKey } from "../manager-type";
 
-export type PaSwitchOptionType = {
-  /**
-   * **打开值**
-   * @type `number` | `string` | `undefined`
-   * @default `true`
-   * */
-  activeValue?: number | string;
-
-  /**
-   * **关闭值**
-   * @type `number` | `string` | `undefined`
-   * @default `false`
-   * */
-  inActiveValue?: number | string;
-
-  /**
-   * **打开标题**
-   * @type `Record<LanguageKey, string>` | `string` | `undefined`
-   * @default `是` / `Yes`
-   * */
-  activeText?: Record<LanguageKey, string> | string;
-
-  /**
-   * **关闭标题**
-   * @type `Record<LanguageKey, string>` | `string` | `undefined`
-   * @default `否` / `No`
-   * */
-  inActiveText?: Record<LanguageKey, string> | string;
-
-  /**
-   * **打开图标**
-   * @type `string` | `undefined`
-   * */
-  activeIcon?: string;
-
-  /**
-   * **关闭图标**
-   * @type `string` | `undefined`
-   * */
-  inActiveIcon?: string;
-};
-
-export type PaSwitchType = PaSwitchOptionType & {
+export type ComponentProps = PaOptionType.Switch & {
   /**
    * **组件唯一标识**
    * @type `string` | `undefined`
@@ -93,11 +51,11 @@ export type PaSwitchType = PaSwitchOptionType & {
 
   /**
    * **外部配置数据**
-   * @type `PaSwitchOptionType` | `undefined`
+   * @type `PaOptionType.Switch` | `undefined`
    * @default `undefined`
    * @description 当设置该值时，会使用该值作为配置数据
    * */
-  exOptions?: PaSwitchOptionType;
+  exOptions?: PaOptionType.Switch;
 
   /**
    * **纯展示模式**

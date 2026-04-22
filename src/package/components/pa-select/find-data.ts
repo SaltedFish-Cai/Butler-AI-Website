@@ -5,9 +5,12 @@ const { isNil } = _;
 
 export function findData(data, options: PaOptionType.SelectList) {
   // SSR-safe: check if window exists
-  const language = typeof window !== "undefined" 
-    ? typeof window !== "undefined" && typeof window !== "undefined" && window.PancakeGlobalConfig?.language || "zh-CN" || "zh-CN"
-    : "zh-CN";
+  const language =
+    typeof window !== "undefined"
+      ? (typeof window !== "undefined" && typeof window !== "undefined" && window.PancakeGlobalConfig?.language) ||
+        "zh-CN" ||
+        "zh-CN"
+      : "zh-CN";
 
   let text = "";
   if (!options?.length) return "--";
