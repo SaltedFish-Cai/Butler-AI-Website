@@ -11,10 +11,10 @@
 </template>
 
 <script lang="ts" setup>
-import { PaIconType } from "./type";
+import { ComponentProps } from "./type";
 
 // # Var
-const props = withDefaults(defineProps<PaIconType>(), {
+const props = withDefaults(defineProps<ComponentProps>(), {
   name: "magic_line"
 });
 </script>

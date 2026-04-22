@@ -81,7 +81,7 @@
 // # import
 import { ref, Ref, onMounted, onBeforeUnmount, nextTick, watch, provide, computed } from "vue";
 import { randChar } from "../tools/rand-char";
-import { ScrollbarV2Type } from "./type";
+import { ComponentProps } from "./type";
 import { startDrag, listenElementScroll, observeElementResize } from "./scrollListener";
 import { useIntersectionObserver } from "./useIntersectionObserver";
 import { getElementPosition } from "../utils/getElementPosition";
@@ -109,11 +109,13 @@ const emits = defineEmits([
 ]);
 const scrollbarBodyRef = ref();
 const scrollbarBodyContentRef = ref();
-const prop = withDefaults(defineProps<ScrollbarV2Type>(), {
+const prop = withDefaults(defineProps<ComponentProps>(), {
   useScrollY: true,
   useScrollX: true,
   showThumb: true,
   useClosePopover: true,
+  useBackTop: undefined,
+  useShadow: undefined,
   styleMode: "default",
   defaultScrollHorizontalThumb: 0,
   defaultScrollVerticalThumb: 0,

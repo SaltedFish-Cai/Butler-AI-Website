@@ -20,31 +20,31 @@
 
 <demo src="./intersecting.vue" ></demo>
 
-## Props
+## ComponentProps
 
-| 属性名                       | 描述                 | 类型                            | 默认值      |
-| ---------------------------- | -------------------- | ------------------------------- | ----------- |
-| id                           | 唯一标识             | `string`                        | -           |
-| class                        | 自定义类名           | `string`                        | -           |
-| style                        | 自定义样式           | `Record<string, string>`        | -           |
-| contentStyle                 | 自定义内容样式       | `Record<string, string>`        | -           |
-| useShadow                    | 是否使用阴影         | `boolean`                       | `true`      |
-| useBackTop                   | 是否显示回到顶部按钮 | `boolean`                       | `true`      |
-| showThumb                    | 是否显示滚动条       | `boolean`                       | `true`      |
-| styleMode                    | 样式模式             | `'color'` `'default'`           | `'default'` |
-| paddingWidth                 | 滚动条宽度           | `number \| string`              | `10`        |
-| intersectClassName           | 监听元素类名         | `string`                        | -           |
-| padding                      | 是否使用内边距       | `Array`                         | -           |
-| border                       | 是否使用边框         | `Array`                         | -           |
-| paddingBorder                | 是否使用内边距边框   | `Array`                         | -           |
-| defaultScrollVerticalThumb   | 默认垂直滚动条位置   | `number`                        | `0`         |
-| defaultScrollHorizontalThumb | 默认水平滚动条位置   | `number`                        | `0`         |
-| useClosePopover              | 是否点击外部关闭     | `boolean`                       | `true`      |
-| parentBoxRef                 | 父元素引用           | `Ref<HTMLElement \| undefined>` | -           |
-| useScrollY                   | 是否开启垂直滚动条   | `boolean`                       | `true`      |
-| useScrollX                   | 是否开启水平滚动条   | `boolean`                       | `true`      |
+| 属性名                       | 描述                 | 类型                                                                 | 默认值      |
+| ---------------------------- | -------------------- | -------------------------------------------------------------------- | ----------- |
+| id                           | 唯一标识             | `string` `undefined`                                                 | `undefined` |
+| class                        | 自定义类名           | `string` `undefined`                                                 | `undefined` |
+| style                        | 自定义样式           | `Record<string, string>` `undefined`                                 | `undefined` |
+| contentStyle                 | 自定义内容样式       | `Record<string, string>` `undefined`                                 | `undefined` |
+| useShadow                    | 是否使用阴影         | `boolean`                                                            | `true`      |
+| useBackTop                   | 是否显示回到顶部按钮 | `boolean`                                                            | `true`      |
+| showThumb                    | 是否显示滚动条       | `boolean`                                                            | `true`      |
+| styleMode                    | 样式模式             | `'color'` `'default'`                                                | `'default'` |
+| paddingWidth                 | 滚动条宽度           | `number` `string` `undefined`                                        | `10`        |
+| intersectClassName           | 监听元素类名         | `string` `undefined`                                                 | `undefined` |
+| padding                      | 是否使用内边距       | `Array<"all" \| "bottom" \| "left" \| "right" \| "top">` `undefined` | `undefined` |
+| border                       | 是否使用边框         | `Array<"all" \| "bottom" \| "left" \| "right" \| "top">` `undefined` | `undefined` |
+| paddingBorder                | 是否使用内边距边框   | `Array<"all" \| "bottom" \| "left" \| "right" \| "top">` `undefined` | `undefined` |
+| defaultScrollVerticalThumb   | 默认垂直滚动条位置   | `number` `undefined`                                                 | `0`         |
+| defaultScrollHorizontalThumb | 默认水平滚动条位置   | `number` `undefined`                                                 | `0`         |
+| useClosePopover              | 是否点击外部关闭     | `boolean` `undefined`                                                | `true`      |
+| parentBoxRef                 | 父元素引用           | `Ref<HTMLElement \| undefined>` `undefined`                          | `undefined` |
+| useScrollY                   | 是否开启垂直滚动条   | `boolean` `undefined`                                                | `true`      |
+| useScrollX                   | 是否开启水平滚动条   | `boolean` `undefined`                                                | `true`      |
 
-## `SaCascaderEvents`
+## ComponentEvents
 
 | 字段                | 描述                                                                   | 类型       |
 | ------------------- | ---------------------------------------------------------------------- | ---------- |

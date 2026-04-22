@@ -1,4 +1,4 @@
-export interface ScrollbarV2Type {
+export interface ComponentProps {
   /**
    * **组件唯一标识**
    * @type `string` | `undefined`
@@ -9,7 +9,7 @@ export interface ScrollbarV2Type {
 
   /**
    * **自定义类名**
-   * @type `string`
+   * @type `string` | `undefined`
    * @default `undefined`
    * @description 当设置该值时，会添加到组件的类名中
    * @description 该值的类型为 `string`，可以是任意类型
@@ -27,32 +27,37 @@ export interface ScrollbarV2Type {
 
   /**
    * @description 是否使用阴影
-   * @default true
+   * @type `boolean`
+   * @default `true`
    * @description styleMode='color'时：默认为 false
    */
   useShadow?: boolean;
 
   /**
    * @description 是否显示回到顶部按钮
-   * @default true
+   * @type `boolean` | `undefined`
+   * @default `true`
    * @description styleMode='color'时：默认为 false
    */
   useBackTop?: boolean;
 
   /**
    * @description 是否开启垂直滚动条
+   * @type `boolean` | `undefined`
    * @default true
    */
   useScrollY?: boolean;
 
   /**
    * @description 是否开启水平滚动条
+   * @type `boolean` | `undefined`
    * @default true
    */
   useScrollX?: boolean;
 
   /**
-   * @description 是否显示滚动条
+   * @description 是否显示滚动条内容
+   * @type `boolean` | `undefined`
    * @default true
    */
   showThumb?: boolean;
@@ -77,6 +82,7 @@ export interface ScrollbarV2Type {
 
   /**
    * @description 滚动条宽度
+   * @type `number` | `string`
    * @default 10
    */
   paddingWidth?: number | string;
@@ -92,43 +98,50 @@ export interface ScrollbarV2Type {
 
   /**
    * @description 是否使用内边距
-   * @default false
+   * @type `Array<"all" | "bottom" | "left" | "right" | "top">` | `undefined`
+   * @default `undefined`
    */
   padding?: Array<"all" | "bottom" | "left" | "right" | "top">;
 
   /**
    * @description 是否使用边框
-   * @default false
+   * @type `Array<"all" | "bottom" | "left" | "right" | "top">` | `undefined`
+   * @default `undefined`
    */
   border?: Array<"all" | "bottom" | "left" | "right" | "top">;
 
   /**
-   * @description 是否使用内边距边框
-   * @default false
+   * @description 是否使用内边距和边框
+   * @type `Array<"all" | "bottom" | "left" | "right" | "top">` | `undefined`
+   * @default `undefined`
    */
   paddingBorder?: Array<"all" | "bottom" | "left" | "right" | "top">;
 
   /**
    * @description 默认垂直滚动条位置
+   * @type `number` | `undefined`
    * @default 0
    */
   defaultScrollVerticalThumb?: number;
 
   /**
    * @description 默认水平滚动条位置
+   * @type `number` | `undefined`
    * @default 0
    */
   defaultScrollHorizontalThumb?: number;
 
   /**
-   * @description 是否点击外部关闭
-   * @default true
+   * @description 是否点击外部关闭弹窗
+   * @type `boolean` | `undefined`
+   * @default `true`
    */
   useClosePopover?: boolean;
 
   /**
    * @description 父元素引用
-   * @default undefined
+   * @type `Ref<HTMLElement | undefined>` | `undefined`
+   * @default `undefined`
    */
   parentBoxRef?: Ref<HTMLElement | undefined>;
 }
