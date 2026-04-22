@@ -110,7 +110,6 @@
 import { ref, computed, watch, nextTick, provide, inject, ComputedRef } from "vue";
 import PaCascaderOption from "./pa-cascader-option.vue";
 import { ComponentProps } from "./type";
-import { randChar } from "../tools/rand-char";
 import { getElementPosition } from "../utils/getElementPosition";
 import { findData as findDataSelect } from "../utils/find-data";
 import { PancakeGlobalConfigType } from "../pa-manager/type";
@@ -136,15 +135,9 @@ const languageValue = computed(() => {
 });
 
 const props = withDefaults(defineProps<ComponentProps>(), {
-  id: randChar(),
   type: "cascader",
   clearable: true,
-  useValueBylink: false,
-  useTextByLink: true,
-  disabled: false,
-  display: false,
-  alwaysContrast: false,
-  teleportInContainer: false
+  useTextByLink: true
 });
 
 const emits = defineEmits(["update:modelValue", "change"]);

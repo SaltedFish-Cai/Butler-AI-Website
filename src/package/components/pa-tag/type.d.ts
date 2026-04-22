@@ -1,6 +1,8 @@
+import { LanguageKey } from "../manager-type";
+
 export type TagListType = Array<{
-  label: string;
-  value: boolean | number | string;
+  label: Record<LanguageKey, string> | string;
+  value: boolean | number | string | undefined;
 }>;
 
 export type PaTagType = {

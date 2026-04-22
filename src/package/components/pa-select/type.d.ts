@@ -1,6 +1,4 @@
-import { PaOptionType } from "../manager-type";
-
-type languageKey = "en-US" | "zh-CN";
+import { PaOptionType, LanguageKey } from "../manager-type";
 
 export type PaSelectType = {
   /**
@@ -69,7 +67,7 @@ export type PaSelectType = {
    * @type `string`
    * @description 当设置该值为 `string` 时，会使用该值作为表单项标签
    * */
-  title?: Record<languageKey, string> | string;
+  title?: Record<LanguageKey, string> | string;
 
   /**
    * **表单项标签宽度**
@@ -125,7 +123,7 @@ export type PaSelectType = {
    * @type `string`
    * @description 当设置该值为 `string` 时，会使用该值作为表单项占位符
    * */
-  placeholder?: Record<languageKey, string> | string;
+  placeholder?: Record<LanguageKey, string> | string;
 
   /**
    * **是否禁用**
@@ -226,7 +224,7 @@ export type PaSelectOptionsType = {
    * **数据标题**
    * @type `string`
    * */
-  label: Record<languageKey, string> | string;
+  label: Record<LanguageKey, string> | string;
 
   /**
    * **数据值**

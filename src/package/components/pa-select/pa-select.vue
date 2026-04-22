@@ -76,11 +76,18 @@
       <div v-else class="pa-select-no-data">{{ languagePackage["empyt"] }}</div>
     </pa-popover>
   </div>
-  <div v-else class="pa-display-style">
-    <slot name="exDisplay"></slot>
-    <template v-if="$slots.exDisplay"> ( {{ findData(inValue) || "--" }} )</template>
-    <template v-else>{{ findData(inValue) || "--" }}</template>
+
+  <div v-else class="pa-display-style" :class="[props.class]" :style="{ ...props.style }">
+    <div v-if="title" :style="{ width: titleWidth }" class="pa-cell-label">
+      {{ typeof title === "string" ? title : title[languageValue] }}
+    </div>
+    <div class="pa-display-value_content">
+      <slot name="exDisplay"></slot>
+      <template v-if="$slots.exDisplay"> ( {{ findData(inValue) || "--" }} )</template>
+      <template v-else>{{ findData(inValue) || "--" }}</template>
+    </div>
   </div>
+
   <div
     v-if="(alwaysContrast && !isNil(contrastData)) || (!isNil(contrastData) && !isEqual(inValue, contrastData))"
     :class="['pa-contrast-style']"
@@ -97,8 +104,8 @@ import { PaSelectType } from "./type";
 import { randChar } from "../tools/rand-char";
 import { equalData } from "../utils/equalData";
 import { getElementPosition } from "../utils/getElementPosition";
-import { SaOptionType } from "../manager-type";
-import { findData as findDataSelect } from "./find-data";
+import { PaOptionType } from "../manager-type";
+import { findData as findDataSelect } from "../utils/find-data";
 import { PancakeGlobalConfigType } from "../pa-manager/type";
 import PaScrollbar from "../pa-scrollbar/pa-scrollbar.vue";
 
@@ -123,7 +130,6 @@ const languageValue = computed(() => {
   return PancakeGlobalConfig.value?.language?.value || "zh-CN";
 });
 const props = withDefaults(defineProps<PaSelectType>(), {
-  id: randChar(),
   type: "select",
   clearable: true
 });
@@ -294,7 +300,7 @@ function findData(data) {
   if (props.displayValue) {
     return props.displayValue || "--";
   }
-  return findDataSelect(data, exOptionsList.value);
+  return findDataSelect(data, exOptionsList.value, false, languageValue.value);
 }
 
 /**
@@ -321,7 +327,7 @@ async function remoteMethodFn(query) {
     return [];
   }
   if (props.requestApi) {
-    const opt: SaOptionType.SelectList = await props.requestApi({ query: query || "" });
+    const opt: PaOptionType.SelectList = await props.requestApi({ query: query || "" });
     exOptionsList.value = opt || [];
   } else {
     exOptionsList.value = [];

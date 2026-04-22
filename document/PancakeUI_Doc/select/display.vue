@@ -1,5 +1,5 @@
 <template>
-  <pa-select v-model="value1" :exOptions="exOptions" :title="{ 'en-US': 'Basic Usage', 'zh-CN': '基础使用' }"></pa-select>
+  <pa-select v-model="value1" :exOptions="exOptions" display :title="{ 'en-US': 'Basic Usage', 'zh-CN': '基础使用' }"></pa-select>
 </template>
 
 <script lang="ts" setup>
