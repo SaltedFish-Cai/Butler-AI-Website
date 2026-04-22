@@ -24,29 +24,29 @@
 
 ## ComponentProps
 
-| 属性名         | 描述                     | 类型                                                                         | 默认值 |
-| -------------- | ------------------------ | ---------------------------------------------------------------------------- | ------ |
-| id             | 唯一标识                 | `string`                                                                     | -      |
-| class          | 自定义类名               | `string`                                                                     | -      |
-| style          | 自定义样式               | `Record<string, string>`                                                     | -      |
-| modelValue     | 绑定值                   | `Array<boolean \| number \| string>`                                         | —      |
-| disabled       | 禁用状态                 | `boolean`                                                                    | —      |
-| display        | 纯展示                   | `boolean`                                                                    | —      |
-| displayValue   | 纯展示类型下，直接显示值 | `string`                                                                     | -      |
-| exOptions      | 选项                     | [`SaSelectOptionsType`](/document/PancakeUI_Doc/options#saselectoptionstype) | -      |
-| contrastData   | 对比用原数据             | `string` `number` `boolean`                                                  | —      |
-| alwaysContrast | 是否总是显示对不数据     | `boolean`                                                                    | —      |
-| title          | 表单项标签               | `Record<'en-US' \| 'zh-CN', string>` `string`                                | -      |
-| titleWidth     | 表单项标签宽度           | `string`                                                                     | -      |
-| onChange       | 数据变更回调函数         | `({ value, oldValue, option }) => void`                                      | -      |
+| 属性名         | 描述                     | 类型                                                                                     | 默认值      |
+| -------------- | ------------------------ | ---------------------------------------------------------------------------------------- | ----------- |
+| id             | 唯一标识                 | `string` `undefined`                                                                     | `undefined` |
+| class          | 自定义类名               | `string` `undefined`                                                                     | `undefined` |
+| style          | 自定义样式               | `Record<string, string>` `undefined`                                                     | `undefined` |
+| modelValue     | 绑定值                   | `Array<boolean \| number \| string>` `undefined`                                         | `undefined` |
+| disabled       | 禁用状态                 | `boolean`                                                                                | `false`     |
+| display        | 纯展示                   | `boolean`                                                                                | `false`     |
+| displayValue   | 纯展示类型下，直接显示值 | `string` `undefined`                                                                     | `undefined` |
+| exOptions      | 选项                     | [`SaSelectOptionsType`](/document/PancakeUI_Doc/options#saselectoptionstype) `undefined` | `undefined` |
+| contrastData   | 对比用原数据             | `string` `number` `boolean` `undefined`                                                  | `undefined` |
+| alwaysContrast | 是否总是显示对不数据     | `boolean`                                                                                | `false`     |
+| title          | 表单项标签               | `Record<'en-US' \| 'zh-CN', string>` `string` `undefined`                                | `undefined` |
+| titleWidth     | 表单项标签宽度           | `string` `undefined`                                                                     | `undefined` |
+| onChange       | 数据变更回调函数         | `({ value, oldValue, option }) => void`                                                  | `undefined` |
 
 ## ComponentItemProps
 
-| 字段            | 描述     | 类型                                           | 默认值 |
-| --------------- | -------- | ---------------------------------------------- | ------ |
-| modelValue      | 绑定值   | `string` `number` `boolean`                    | —      |
-| label           | 选项名   | ` Record<'en-US' \| 'zh-CN', string>` `string` | —      |
-| value           | 选项值   | `string` `number` `boolean`                    | —      |
-| isChecked       | 是否选中 | `boolean`                                      | —      |
-| isIndeterminate | 是否半选 | `boolean`                                      | —      |
-| disabled        | 禁用状态 | `boolean`                                      | —      |
+| 字段            | 描述     | 类型                                                       | 默认值      |
+| --------------- | -------- | ---------------------------------------------------------- | ----------- |
+| modelValue      | 绑定值   | `string` `number` `boolean` `undefined`                    | `undefined` |
+| label           | 选项名   | ` Record<'en-US' \| 'zh-CN', string>` `string` `undefined` | `undefined` |
+| value           | 选项值   | `string` `number` `boolean` `undefined`                    | `undefined` |
+| isChecked       | 是否选中 | `boolean` `undefined`                                      | `undefined` |
+| isIndeterminate | 是否半选 | `boolean`                                                  | `false`     |
+| disabled        | 禁用状态 | `boolean`                                                  | `false`     |

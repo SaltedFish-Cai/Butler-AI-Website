@@ -26,6 +26,7 @@ import { ComponentProps } from "./type";
 
 // Props定义
 const props = withDefaults(defineProps<ComponentProps>(), {
+  disabled: false,
   useAlpha: true,
   useInput: true
 });

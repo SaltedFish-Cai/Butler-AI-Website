@@ -3,7 +3,6 @@ export type PaDrawerType = {
   /**
    * **是否打开Drawer**
    * @type `boolean`
-   * @default `false`
    * @description 当设置该值为 `true` 时，会打开Drawer
    * @description 当设置该值为 `false` 时，会关闭Drawer
    * @example
@@ -36,7 +35,6 @@ export type PaDrawerType = {
   /**
    * **Drawer次标题**
    * @type `string`
-   * @default `undefined`
    * @description 当设置该值为 `string` 时，Drawer次标题为该值
    * @description 当设置该值为 `undefined` 时，Drawer次标题为空
    * @example
@@ -62,7 +60,7 @@ export type PaDrawerType = {
   /**
    * **高度**
    * @type `string`
-   * @default `500px`
+   * @default `300px`
    * @description 当设置该值为 `string` 时，Drawer高度为该值
    * @description 当设置该值为 `undefined` 时，Drawer高度为 `500px`
    * @example
@@ -101,7 +99,7 @@ export type PaDrawerType = {
   /**
    * **是否点击蒙层关闭Drawer**
    * @type `boolean`
-   * @default `false`
+   * @default `true`
    * @description 当设置该值为 `true` 时，点击蒙层关闭Drawer
    * @description 当设置该值为 `false` 时，不点击蒙层关闭Drawer
    * @example
@@ -114,7 +112,7 @@ export type PaDrawerType = {
   /**
    * **是否使用Esc按钮关闭Drawer**
    * @type `boolean`
-   * @default `false`
+   * @default `true`
    * @description 当设置该值为 `true` 时，使用Esc按钮关闭Drawer
    * @description 当设置该值为 `false` 时，不使用Esc按钮关闭Drawer
    * @example
@@ -127,7 +125,6 @@ export type PaDrawerType = {
   /**
    * **是否使用内边距**
    * @type `Array<"top" | "left" | "bottom" | "right" | "all">`
-   * @default `[]`
    * @description 当设置该值为 `["top", "left"]` 时，使用内边距
    * @description 当设置该值为 `[]` 时，不使用内边距
    * @example

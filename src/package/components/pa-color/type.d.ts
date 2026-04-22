@@ -2,27 +2,31 @@ export type ComponentProps = {
   /**
    * **组件唯一标识**
    * @type `string` | `undefined`
+   * @default `undefined`
    * @description 当设置该值时，会作为组件的唯一标识
    * */
   id?: string;
 
   /**
    * **自定义类名**
-   * @type `string`
+   * @type `string` | `undefined`
+   * @default `undefined`
    * @description 当设置该值时，会添加到组件的类名中
    * */
   class?: string;
 
   /**
    * **自定义样式**
-   * @type `Record<string, string>`
+   * @type `Record<string, string>` | `undefined`
+   * @default `undefined`
    * @description 当设置该值时，会添加到组件的样式中
    * */
   style?: Record<string, string>;
 
   /**
    * **当前选中的颜色值**
-   * @type `string`
+   * @type `string` | `undefined`
+   * @default `undefined`
    * @description 当设置该值时，会作为组件的初始颜色值
    * */
   modelValue?: string;
@@ -30,6 +34,7 @@ export type ComponentProps = {
   /**
    * **是否禁用状态**
    * @type `boolean`
+   * @default `false`
    * @description 当设置该值为 `true` 时，组件为禁用状态
    * */
   disabled?: boolean;
@@ -52,14 +57,15 @@ export type ComponentProps = {
 
   /**
    * **预设颜色列表**
-   * @type `Array<string>`
+   * @type `Array<string>` | `undefined`
+   * @default `undefined`
    * @description 当设置该值时，会显示预设颜色列表
    * */
   presetColors?: Array<string>;
 
   /**
    * **颜色变化时的回调函数**
-   * @type `(color: string) => void`
+   * @type `(color: string) => void` | `undefined`
    * @default `undefined`
    * @description 当颜色变化时，会触发该回调函数
    * */
@@ -67,7 +73,7 @@ export type ComponentProps = {
 
   /**
    * **颜色选择器打开时的回调函数**
-   * @type `() => void`
+   * @type `() => void` | `undefined`
    * @default `undefined`
    * @description 当颜色选择器打开时，会触发该回调函数
    * */
@@ -75,7 +81,7 @@ export type ComponentProps = {
 
   /**
    * **颜色选择器关闭时的回调函数**
-   * @type `() => void`
+   * @type `() => void` | `undefined`
    * @default `undefined`
    * @description 当颜色选择器关闭时，会触发该回调函数
    * */

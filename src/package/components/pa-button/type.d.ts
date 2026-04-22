@@ -1,6 +1,4 @@
-import { MessageBoxOptions } from "@/package/components/pa-message-box/type";
-
-type languageKey = "en-US" | "zh-CN";
+import { MessageBoxOptions, LanguageKey } from "@/package/components/pa-message-box/type";
 
 export type ButtonTypeV2Is =
   | "add"
@@ -38,7 +36,7 @@ export type ComponentProps = {
 
   /**
    * **自定义类名**
-   * @type `string`
+   * @type `string` | `undefined`
    * @description 当设置该值时，会添加到组件的类名中
    * @description 该值的类型为 `string`，可以是任意类型
    * */
@@ -46,7 +44,7 @@ export type ComponentProps = {
 
   /**
    * **自定义样式**
-   * @type `Record<string, string>`
+   * @type `Record<string, string>` | `undefined`
    * @description 当设置该值时，会添加到组件的样式中
    * @description 该值的类型为 `Record<string, string>`，可以是任意类型
    * */
@@ -54,9 +52,9 @@ export type ComponentProps = {
 
   /**
    * **按钮文本**
-   * @type `Record<languageKey, string> | string`
+   * @type `Record<LanguageKey, string> | string` | `undefined`
    * @description 当设置该值时，会显示在按钮上
-   * @description 该值的类型为 `Record<languageKey, string> | string`，可以是任意类型
+   * @description 该值的类型为 `Record<LanguageKey, string> | string`，可以是任意类型
    * @example
    * ```tsx
    * <MoButton text="创建表格" />
@@ -66,15 +64,15 @@ export type ComponentProps = {
    * <MoButton text={{ "en-US": "Create Table", "zh-CN": "创建表格" }} />
    * ```
    * */
-  text?: Record<languageKey, string> | string;
+  text?: Record<LanguageKey, string> | string;
 
   /**
    * **按钮大小**
    * @type `string`
-   * @default `default`
+   * @default `medium`
    * @description 可选值为 `small` | `large`
    * */
-  size?: "default" | "large" | "small";
+  size?: "large" | "medium" | "small";
 
   /**
    * **内置样式**
@@ -86,7 +84,7 @@ export type ComponentProps = {
   /**
    * **按钮样式类型**
    * @type `string`
-   * @default `primary`
+   * @default `default`
    * @description 可选值为 "danger" | "default" | "info" | "primary" | "success" | "warning"
    * @description
    * - 当设置该值为 `primary` 时，按钮为主题色
@@ -101,6 +99,7 @@ export type ComponentProps = {
   /**
    * **是否禁用状态**
    * @type `boolean`
+   * @default `false`
    * @description 当设置该值为 `true` 时，按钮为禁用状态
    * @description 当设置该值为 `false` 时，按钮为正常状态
    * */
@@ -109,6 +108,7 @@ export type ComponentProps = {
   /**
    * **加载状态**
    * @type `boolean`
+   * @default `false`
    * @description 当设置该值为 `true` 时，按钮为加载状态
    * @description 当设置该值为 `false` 时，按钮为正常状态
    * */
@@ -172,6 +172,7 @@ export type ComponentProps = {
   /**
    * **是否使用下划线按钮**
    * @type `boolean`
+   * @default `true`
    * @description 当设置该值为 `true` 时，会使用下划线按钮
    * @description 当设置该值为 `false` 时，不会使用下划线按钮
    * */

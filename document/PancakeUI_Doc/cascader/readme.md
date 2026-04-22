@@ -26,24 +26,24 @@
 
 ## ComponentProps
 
-| 属性名              | 描述                                            | 类型                                                                              | 默认值       |
-| ------------------- | ----------------------------------------------- | --------------------------------------------------------------------------------- | ------------ |
-| id                  | 唯一标识                                        | `string`                                                                          | -            |
-| class               | 自定义类名                                      | `string`                                                                          | -            |
-| style               | 自定义样式                                      | `Record<string, string>`                                                          | -            |
-| modelValue          | 绑定值                                          | `Array<number \| string>` `number` `string`                                       | -            |
-| type                | 组件类型                                        | `'cascader-check'` `'cascader'` `'multiple-cascader-check'` `'multiple-cascader'` | `'cascader'` |
-| useValueBylink      | 非多选模式下，是否使用'AA-aa'格式的选项值模式   | `boolean`                                                                         | -            |
-| useTextByLink       | 非多选模式下，是否使用'AA/aa'格式的选项标签模式 | `boolean`                                                                         | `true`       |
-| exOptions           | 选项                                            | [`SaSelectOptionsType`](/document/PancakeUI_Doc/options#saselectoptionstype)      | -            |
-| placeholder         | 输入框提示                                      | `Record<'en-US' \| 'zh-CN', string>` `string`                                     | -            |
-| disabled            | 禁用状态                                        | `boolean`                                                                         | -            |
-| display             | 纯展示                                          | `boolean`                                                                         | -            |
-| displayValue        | 纯展示类型下，直接显示值                        | `string`                                                                          | -            |
-| clearable           | 显示清除按钮                                    | `boolean`                                                                         | `true`       |
-| contrastData        | 对比用原数据                                    | `Array<number \| string>` `number` `string`                                       | -            |
-| alwaysContrast      | 是否总是显示对不数据                            | `boolean`                                                                         | -            |
-| title               | 表单项标签                                      | `Record<'en-US' \| 'zh-CN', string>` `string`                                     | -            |
-| titleWidth          | 表单项标签宽度                                  | `string`                                                                          | -            |
-| teleportInContainer | 是否使用 Teleport 挂载到容器                    | `boolean`                                                                         | -            |
-| onChange            | 数据变更回调函数                                | `({ value, oldValue, option }) => void`                                           | -            |
+| 属性名              | 描述                                            | 类型                                                                                     | 默认值       |
+| ------------------- | ----------------------------------------------- | ---------------------------------------------------------------------------------------- | ------------ |
+| id                  | 唯一标识                                        | `string`                                                                                 | `undefined`  |
+| class               | 自定义类名                                      | `string`                                                                                 | `undefined`  |
+| style               | 自定义样式                                      | `Record<string, string>`                                                                 | `undefined`  |
+| modelValue          | 绑定值                                          | `Array<number \| string>` `number` `string`                                              | `undefined`  |
+| type                | 组件类型                                        | `'cascader-check'` `'cascader'` `'multiple-cascader-check'` `'multiple-cascader'`        | `'cascader'` |
+| useValueBylink      | 非多选模式下，是否使用'AA-aa'格式的选项值模式   | `boolean`                                                                                | `false`      |
+| useTextByLink       | 非多选模式下，是否使用'AA/aa'格式的选项标签模式 | `boolean`                                                                                | `true`       |
+| exOptions           | 选项                                            | [`SaSelectOptionsType`](/document/PancakeUI_Doc/options#saselectoptionstype) `undefined` | `undefined`  |
+| placeholder         | 输入框提示                                      | `Record<'en-US' \| 'zh-CN', string>` `string` `undefined`                                | `undefined`  |
+| disabled            | 禁用状态                                        | `boolean`                                                                                | `false`      |
+| display             | 纯展示                                          | `boolean`                                                                                | `false`      |
+| displayValue        | 纯展示类型下，直接显示值                        | `string` `undefined`                                                                     | `undefined`  |
+| clearable           | 显示清除按钮                                    | `boolean`                                                                                | `true`       |
+| contrastData        | 对比用原数据                                    | `Array<number \| string>` `number` `string` `undefined`                                  | `undefined`  |
+| alwaysContrast      | 是否总是显示对不数据                            | `boolean`                                                                                | `false`      |
+| title               | 表单项标签                                      | `Record<'en-US' \| 'zh-CN', string>` `string` `undefined`                                | `undefined`  |
+| titleWidth          | 表单项标签宽度                                  | `string` `undefined`                                                                     | `undefined`  |
+| teleportInContainer | 是否使用 Teleport 挂载到容器                    | `boolean`                                                                                | `false`      |
+| onChange            | 数据变更回调函数                                | `({ value, oldValue, option }) => void` `undefined`                                      | `undefined`  |

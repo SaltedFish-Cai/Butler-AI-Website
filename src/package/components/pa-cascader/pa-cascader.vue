@@ -139,7 +139,12 @@ const props = withDefaults(defineProps<ComponentProps>(), {
   id: randChar(),
   type: "cascader",
   clearable: true,
-  useTextByLink: true
+  useValueBylink: false,
+  useTextByLink: true,
+  disabled: false,
+  display: false,
+  alwaysContrast: false,
+  teleportInContainer: false
 });
 
 const emits = defineEmits(["update:modelValue", "change"]);

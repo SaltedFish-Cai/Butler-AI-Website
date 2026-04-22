@@ -98,7 +98,7 @@ import { PancakeGlobalConfigType } from "../pa-manager/type";
 const props = withDefaults(defineProps<PaDrawerType>(), {
   id: "",
   title: "标题",
-  scroll: false,
+  scroll: true,
   useScrollX: false,
   closeOnClickModal: true,
   closeOnPressEscape: true,

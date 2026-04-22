@@ -33,6 +33,8 @@ const { isNil } = _;
 
 const props = withDefaults(defineProps<ComponentItemProps & { isOption?: boolean }>(), {
   isChecked: undefined,
+  disabled: false,
+  isIndeterminate: false,
   isOption: false
 });
 

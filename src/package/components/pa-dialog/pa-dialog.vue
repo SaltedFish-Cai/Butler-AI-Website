@@ -101,12 +101,12 @@
 <script lang="ts" setup>
 // # Import
 import { ref, reactive, watch, computed, onMounted, onUnmounted, nextTick } from "vue";
-import { PaDialogType } from "./type";
+import { ComponentProps } from "./type";
 
 // # Var
-const props = withDefaults(defineProps<PaDialogType>(), {
-  id: "",
+const props = withDefaults(defineProps<ComponentProps>(), {
   size: "m",
+  height: "auto",
   offsetX: 0,
   offsetY: 0,
   keepAlive: true,
@@ -115,9 +115,7 @@ const props = withDefaults(defineProps<PaDialogType>(), {
   closeOnClickModal: true,
   closeOnPressEscape: true,
   titleAlign: "left",
-  scroll: true,
-  useScrollX: false,
-  height: "auto"
+  scroll: true
 });
 let openId = "";
 const emits = defineEmits(["update:modelValue", "closed"]);
@@ -128,7 +126,8 @@ const state = reactive({
   fullscreen: false
 });
 
-const language = typeof window !== "undefined" && typeof window !== "undefined" && window.PancakeGlobalConfig?.language || "zh-CN" || "zh-CN";
+const language =
+  (typeof window !== "undefined" && typeof window !== "undefined" && window.PancakeGlobalConfig?.language) || "zh-CN" || "zh-CN";
 
 // #Computed setSize
 const setSize = computed(() => {
@@ -244,7 +243,7 @@ function closeMenu() {
 
 // #添加ESC键监听
 function handleKeyDown(e) {
-  const escapeMap = typeof window !== "undefined" && window.PancakeGlobalConfig.escapeMap || [];
+  const escapeMap = (typeof window !== "undefined" && window.PancakeGlobalConfig.escapeMap) || [];
   if (e.key === "Escape" && state.visible && escapeMap[escapeMap.length - 1] === openId) {
     if (state.fullscreen && props.size != "full") {
       state.fullscreen = false;

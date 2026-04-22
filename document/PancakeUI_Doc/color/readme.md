@@ -10,18 +10,18 @@
 
 <demo src="./color-picker.vue" control="false"></demo>
 
-## `SaColorType`
+## ComponentProps
 
-| 属性名       | 描述                           | 类型                      | 默认值 |
-| ------------ | ------------------------------ | ------------------------- | ------ |
-| id           | 唯一标识                       | `string`                  | -      |
-| class        | 自定义类名                     | `string`                  | -      |
-| style        | 自定义样式                     | `Record<string, string>`  | -      |
-| modelValue   | 双向绑定值                     | `string`                  | -      |
-| disabled     | 是否禁用按钮                   | `boolean`                 | -      |
-| useInput     | 是否显示颜色值输入框           | `boolean`                 | `true` |
-| useAlpha     | 是否显示透明度选择器           | `boolean`                 | `true` |
-| presetColors | 预设颜色列表，用于快速选择颜色 | `Array<string>`           | -      |
-| onChange     | 颜色变化时的回调函数           | `(color: string) => void` | -      |
-| onOpen       | 颜色选择器打开时的回调函数     | `() => void`              | -      |
-| onClose      | 颜色选择器关闭时的回调函数     | `() => void`              | -      |
+| 属性名       | 描述                           | 类型                                  | 默认值      |
+| ------------ | ------------------------------ | ------------------------------------- | ----------- |
+| id           | 唯一标识                       | `string` `undefined`                  | `undefined` |
+| class        | 自定义类名                     | `string` `undefined`                  | `undefined` |
+| style        | 自定义样式                     | `Record<string, string>` `undefined`  | `undefined` |
+| modelValue   | 双向绑定值                     | `string` `undefined`                  | `undefined` |
+| disabled     | 是否禁用按钮                   | `boolean`                             | `false`     |
+| useInput     | 是否显示颜色值输入框           | `boolean`                             | `true`      |
+| useAlpha     | 是否显示透明度选择器           | `boolean`                             | `true`      |
+| presetColors | 预设颜色列表，用于快速选择颜色 | `Array<string>` `undefined`           | `undefined` |
+| onChange     | 颜色变化时的回调函数           | `(color: string) => void` `undefined` | `undefined` |
+| onOpen       | 颜色选择器打开时的回调函数     | `() => void` `undefined`              | `undefined` |
+| onClose      | 颜色选择器关闭时的回调函数     | `() => void` `undefined`              | `undefined` |

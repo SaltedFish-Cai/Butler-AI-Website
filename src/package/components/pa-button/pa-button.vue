@@ -46,13 +46,16 @@ import _ from "lodash";
 const { debounce } = _;
 
 const props = withDefaults(defineProps<ComponentProps>(), {
+  size: "medium",
+  disabled: false,
+  loading: false,
   debounced: true,
   debouncedTime: 300,
   iconPosition: "left",
-  size: "default",
   useFont: true,
   usePlain: true,
-  useStop: true
+  useStop: true,
+  useLine: false
 });
 
 const emit = defineEmits(["click", "confirmClick", "deleteClick", "submitClick"]);
@@ -67,7 +70,12 @@ const state = reactive({
   maskVisible: false,
   slotsLength: 0,
   isLoading: false,
-  buttonConfig: { iconName: "finger_press_line", type: undefined, plain: true, size: "default" } as any
+  buttonConfig: {
+    iconName: props.iconName || "finger_press_line",
+    type: props.type || "default",
+    plain: props.usePlain || true,
+    size: props.size || "default"
+  } as any
 });
 
 // # Vue onBeforeMount
@@ -175,12 +183,12 @@ watch(
   () => props.is,
   text => {
     const config = {
-      type: "primary",
-      plain: true,
-      iconName: "finger_press_line",
-      color: "",
-      size: ""
+      type: props.type || "primary",
+      plain: props.usePlain || true,
+      iconName: props.iconName || "finger_press_line",
+      size: props.size || "default"
     };
+
     if (text) {
       switch (text) {
         case "search":
