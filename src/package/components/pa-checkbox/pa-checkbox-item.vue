@@ -31,12 +31,7 @@ import { PancakeGlobalConfigType } from "../pa-manager/type";
 import _ from "lodash";
 const { isNil } = _;
 
-const props = withDefaults(defineProps<ComponentItemProps & { isOption?: boolean }>(), {
-  isChecked: undefined,
-  disabled: false,
-  isIndeterminate: false,
-  isOption: false
-});
+const props = withDefaults(defineProps<ComponentItemProps & { isOption?: boolean }>(), { isChecked: undefined });
 
 const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
 const language = PancakeGlobalConfig.value?.language?.value || "zh-CN";

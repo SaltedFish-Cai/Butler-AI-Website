@@ -16,38 +16,41 @@
 
 <demo src="./display.vue" ></demo>
 
+## 单选项使用
+
+使用 `<pa-radio-item />` 展示单选项使用功能，当使用 `isChecked` 属性时，将直接使用该属性值展示选中状态，不受点击控制。
+
+<demo src="./item.vue" ></demo>
+
 ## ComponentProps
 
-| 属性名         | 描述                     | 类型                                                             | 默认值      |
-| -------------- | ------------------------ | ---------------------------------------------------------------- | ----------- |
-| id             | 组件唯一标识             | `string` `undefined`                                             | `undefined` |
-| class          | 自定义类名               | `string` `undefined`                                             | `undefined` |
-| style          | 自定义样式               | `Record<string, string>` `undefined`                             | `undefined` |
-| modelValue     | 绑定值                   | `boolean` `number` `string` `undefined`                          | `undefined` |
-| displayValue   | 纯展示类型下，直接显示值 | `string` `undefined`                                             | `undefined` |
-| disabled       | 禁用状态                 | `boolean` `undefined`                                            | `undefined` |
-| display        | 纯展示                   | `boolean` `undefined`                                            | `undefined` |
+| 属性名         | 描述                     | 类型                                                                                            | 默认值      |
+| -------------- | ------------------------ | ----------------------------------------------------------------------------------------------- | ----------- |
+| id             | 组件唯一标识             | `string` `undefined`                                                                            | `undefined` |
+| class          | 自定义类名               | `string` `undefined`                                                                            | `undefined` |
+| style          | 自定义样式               | `Record<string, string>` `undefined`                                                            | `undefined` |
+| modelValue     | 绑定值                   | `boolean` `number` `string` `undefined`                                                         | `undefined` |
+| displayValue   | 纯展示类型下，直接显示值 | `string` `undefined`                                                                            | `undefined` |
+| disabled       | 禁用状态                 | `boolean` `undefined`                                                                           | `undefined` |
+| display        | 纯展示                   | `boolean` `undefined`                                                                           | `undefined` |
 | exOptions      | 选项                     | [`PaOptionType.SelectList`](/document/PancakeUI_Doc/options#paoptiontypeselectlist) `undefined` | `undefined` |
-| contrastData   | 对比用原数据             | `Array<number \| string>` `undefined`                            | `undefined` |
-| alwaysContrast | 是否总是显示对不数据     | `boolean` `undefined`                                            | `undefined` |
-| title          | 表单项标签               | `Record<LanguageKey, string>` \| `string` `undefined`            | `undefined` |
-| titleWidth     | 表单项标签宽度           | `string` `undefined`                                             | `undefined` |
+| contrastData   | 对比用原数据             | `Array<number \| string>` `undefined`                                                           | `undefined` |
+| alwaysContrast | 是否总是显示对不数据     | `boolean` `undefined`                                                                           | `undefined` |
+| title          | 表单项标签               | `Record<'en-US' \| 'zh-CN', string>` `string` `undefined`                                       | `undefined` |
+| titleWidth     | 表单项标签宽度           | `string` `undefined`                                                                            | `undefined` |
+
+## ComponentItemProps
+
+| 属性名     | 描述     | 类型                                                      | 默认值      |
+| ---------- | -------- | --------------------------------------------------------- | ----------- |
+| modelValue | 绑定值   | `boolean` `number` `string` `undefined`                   | `undefined` |
+| label      | 选项名   | `Record<'en-US' \| 'zh-CN', string>` `string` `undefined` | `undefined` |
+| value      | 选项值   | `boolean` `number` `string` `undefined`                   | `undefined` |
+| isChecked  | 是否选中 | `boolean` `undefined`                                     | `undefined` |
+| disabled   | 禁用状态 | `boolean` `undefined`                                     | `undefined` |
 
 ## ComponentEvents
 
-| 字段     | 描述             | 类型                                    |
-| -------- | ---------------- | --------------------------------------- |
-| onChange | 数据变更回调函数 | `({ value, oldValue, option }) => void` |
-
-## PaRadioItemType
-
-| 属性名     | 描述     | 类型                                            | 默认值      |
-| ---------- | -------- | ----------------------------------------------- | ----------- |
-| id         | 唯一标识 | `string` `undefined`                             | `undefined` |
-| class      | 自定义类名 | `string` `undefined`                           | `undefined` |
-| style      | 自定义样式 | `Record<string, string>` `undefined`           | `undefined` |
-| modelValue | 绑定值   | `boolean` `number` `string` `undefined`         | `undefined` |
-| label      | 选项名   | `Record<LanguageKey, string>` \| `string` `undefined` | `undefined` |
-| value      | 选项值   | `boolean` `number` `string` `undefined`         | `undefined` |
-| isChecked  | 是否选中 | `boolean` `undefined`                           | `undefined` |
-| disabled   | 禁用状态 | `boolean` `undefined`                           | `undefined` |
+| 字段   | 描述             | 类型                                    |
+| ------ | ---------------- | --------------------------------------- |
+| change | 数据变更回调函数 | `({ value, oldValue, option }) => void` |

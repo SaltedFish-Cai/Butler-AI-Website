@@ -1,6 +1,6 @@
 import { PaOptionType, LanguageKey } from "../manager-type";
 
-export type PaSelectType = {
+export type ComponentProps = {
   /**
    * **组件唯一标识**
    * @type `string` | `undefined`

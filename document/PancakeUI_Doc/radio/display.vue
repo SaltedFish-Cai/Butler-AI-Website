@@ -1,11 +1,5 @@
 <template>
-  <pa-radio
-    v-model="value"
-    :ex-options="options"
-    display
-    title="单选项"
-    title-width="80px"
-  />
+  <pa-radio v-model="value" :exOptions="options" display :title="{ 'en-US': 'Basic Usage', 'zh-CN': '基础使用' }"></pa-radio>
 </template>
 
 <script setup lang="ts">

@@ -7,6 +7,9 @@
     :style="{ ...props.style }"
     :disabled="props.disabled"
   >
+    <div v-if="title" :style="{ width: titleWidth }" class="pa-cell-label">
+      {{ typeof title === "string" ? title : title[languageValue] }}
+    </div>
     <pa-radio-item
       v-for="item in exOptionsList"
       :key="String(item.value)"
@@ -45,7 +48,7 @@
 
 <script lang="ts" setup>
 import { ref, watch, computed, inject, ComputedRef } from "vue";
-import { PaRadioType } from "./type";
+import { ComponentProps } from "./type";
 import { PancakeGlobalConfigType } from "../pa-manager/type";
 import { findData as findDataSelect } from "../utils/find-data";
 
@@ -57,7 +60,7 @@ const languageValue = computed(() => {
   return PancakeGlobalConfig.value?.language?.value || "zh-CN";
 });
 
-const props = withDefaults(defineProps<PaRadioType>(), {});
+const props = withDefaults(defineProps<ComponentProps>(), {});
 const exOptionsList = ref(props?.exOptions || []);
 
 const inValue = ref(props.modelValue);

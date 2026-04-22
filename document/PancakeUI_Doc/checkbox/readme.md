@@ -30,15 +30,14 @@
 | class          | 自定义类名               | `string` `undefined`                                                                     | `undefined` |
 | style          | 自定义样式               | `Record<string, string>` `undefined`                                                     | `undefined` |
 | modelValue     | 绑定值                   | `Array<boolean \| number \| string>` `undefined`                                         | `undefined` |
-| disabled       | 禁用状态                 | `boolean`                                                                                | `false`     |
-| display        | 纯展示                   | `boolean`                                                                                | `false`     |
+| disabled       | 禁用状态                 | `boolean` `undefined`                                                                    | `undefined` |
+| display        | 纯展示                   | `boolean` `undefined`                                                                    | `undefined` |
+| alwaysContrast | 是否总是显示对不数据     | `boolean` `undefined`                                                                    | `undefined` |
 | displayValue   | 纯展示类型下，直接显示值 | `string` `undefined`                                                                     | `undefined` |
 | exOptions      | 选项                     | [`SaSelectOptionsType`](/document/PancakeUI_Doc/options#saselectoptionstype) `undefined` | `undefined` |
 | contrastData   | 对比用原数据             | `string` `number` `boolean` `undefined`                                                  | `undefined` |
-| alwaysContrast | 是否总是显示对不数据     | `boolean`                                                                                | `false`     |
 | title          | 表单项标签               | `Record<'en-US' \| 'zh-CN', string>` `string` `undefined`                                | `undefined` |
 | titleWidth     | 表单项标签宽度           | `string` `undefined`                                                                     | `undefined` |
-| onChange       | 数据变更回调函数         | `({ value, oldValue, option }) => void`                                                  | `undefined` |
 
 ## ComponentItemProps
 
@@ -48,5 +47,11 @@
 | label           | 选项名   | ` Record<'en-US' \| 'zh-CN', string>` `string` `undefined` | `undefined` |
 | value           | 选项值   | `string` `number` `boolean` `undefined`                    | `undefined` |
 | isChecked       | 是否选中 | `boolean` `undefined`                                      | `undefined` |
-| isIndeterminate | 是否半选 | `boolean`                                                  | `false`     |
-| disabled        | 禁用状态 | `boolean`                                                  | `false`     |
+| isIndeterminate | 是否半选 | `boolean` `undefined`                                      | `undefined` |
+| disabled        | 禁用状态 | `boolean` `undefined`                                      | `undefined` |
+
+## ComponentEvents
+
+| 字段   | 描述             | 类型                                    |
+| ------ | ---------------- | --------------------------------------- |
+| change | 数据变更回调函数 | `({ value, oldValue, option }) => void` |

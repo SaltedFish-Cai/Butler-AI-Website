@@ -100,8 +100,7 @@
 
 <script lang="ts" setup>
 import { ref, computed, watch, nextTick, ComputedRef, inject, useTemplateRef, onMounted } from "vue";
-import { PaSelectType } from "./type";
-import { randChar } from "../tools/rand-char";
+import { ComponentProps } from "./type";
 import { equalData } from "../utils/equalData";
 import { getElementPosition } from "../utils/getElementPosition";
 import { PaOptionType } from "../manager-type";
@@ -129,7 +128,7 @@ const languagePackage = computed(() => {
 const languageValue = computed(() => {
   return PancakeGlobalConfig.value?.language?.value || "zh-CN";
 });
-const props = withDefaults(defineProps<PaSelectType>(), {
+const props = withDefaults(defineProps<ComponentProps>(), {
   type: "select",
   clearable: true
 });

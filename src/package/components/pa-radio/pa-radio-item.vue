@@ -4,7 +4,7 @@
     :class="[props.class, { 'is-disabled': props.disabled }, { 'is-checked': isChecked }]"
     ref="selectRef"
     :style="{ ...props.style }"
-    @click="changeEvent(inValue === props.value ? null : props.value)"
+    @click="changeEvent"
   >
     <div class="pa-radio-item-input-inner">
       <div class="pa-radio-item-input">
@@ -21,13 +21,13 @@
 
 <script lang="ts" setup>
 import { computed, ComputedRef, inject, ref, watch } from "vue";
-import { PaRadioItemType } from "./type";
+import { ComponentItemProps } from "./type";
 import { PancakeGlobalConfigType } from "../pa-manager/type";
 
 import _ from "lodash";
 const { isNil } = _;
 
-const props = withDefaults(defineProps<PaRadioItemType>(), {});
+const props = withDefaults(defineProps<ComponentItemProps>(), { isChecked: undefined });
 
 const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
 const language = PancakeGlobalConfig.value?.language?.value || "zh-CN";
@@ -43,11 +43,11 @@ const isChecked = computed(() => {
 });
 
 let oldValue = props.modelValue;
-function changeEvent(value) {
-  if (props.disabled) return;
-  emits("update:modelValue", value);
-  emits("change", { value: value, oldValue });
-  oldValue = value;
+function changeEvent() {
+  if (props.disabled || !isNil(props.isChecked)) return;
+  emits("update:modelValue", props.value);
+  emits("change", { value: props.value, oldValue });
+  oldValue = props.value;
   return;
 }
 

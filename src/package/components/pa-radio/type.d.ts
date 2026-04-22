@@ -1,6 +1,6 @@
 import { PaOptionType, LanguageKey } from "../manager-type";
 
-export type PaRadioItemType = {
+export type ComponentItemProps = {
   /**
    * **组件唯一标识**
    * @type `string` | `undefined`
@@ -75,7 +75,7 @@ export type PaRadioItemType = {
   onChange?: ({ value, oldValue, option }) => void;
 };
 
-export type PaRadioType = {
+export type ComponentProps = {
   /**
    * **组件唯一标识**
    * @type `string` | `undefined`
