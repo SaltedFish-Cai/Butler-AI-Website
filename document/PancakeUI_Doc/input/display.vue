@@ -2,8 +2,8 @@
   <pa-input
     v-model="value1"
     maxLength="2000"
-    alwaysContrast
     :contrastData="value2"
+    display
     :title="{ 'en-US': 'Basic Usage', 'zh-CN': '基础使用' }"
   ></pa-input>
 </template>

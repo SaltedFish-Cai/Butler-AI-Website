@@ -28,11 +28,18 @@
       </div>
     </div>
   </div>
-  <div v-else class="pa-display-style">
-    <slot name="exDisplay"></slot>
-    <template v-if="$slots.exDisplay"> ( {{ keepDecimalPlaces(inValue, precision) || "--" }}{{ unit }} )</template>
-    <template v-else>{{ keepDecimalPlaces(inValue, precision) || "--" }}{{ unit }}</template>
+
+  <div v-else class="pa-display-style" :class="[props.class]" :style="{ ...props.style }">
+    <div v-if="title" :style="{ width: titleWidth }" class="pa-cell-label">
+      {{ typeof title === "string" ? title : title[languageValue] }}
+    </div>
+    <div class="pa-display-value_content">
+      <slot name="exDisplay"></slot>
+      <template v-if="$slots.exDisplay"> ( {{ keepDecimalPlaces(inValue, precision) || "--" }}{{ unit }} )</template>
+      <template v-else>{{ keepDecimalPlaces(inValue, precision) || "--" }}{{ unit }}</template>
+    </div>
   </div>
+
   <div
     v-if="(alwaysContrast && !isNil(contrastData)) || (!isNil(contrastData) && !isEqual(inValue, contrastData))"
     :class="['pa-contrast-style']"
@@ -46,7 +53,6 @@
 <script lang="ts" setup>
 import { ref, computed, ComputedRef, watch, onMounted, onUnmounted, inject, nextTick } from "vue";
 import { PaNumberType } from "./type";
-import { randChar } from "../tools/rand-char";
 
 import { handlePrecision, keepDecimalPlaces } from "../utils/handlePrecision";
 import { PancakeGlobalConfigType } from "../pa-manager/type";
@@ -74,15 +80,10 @@ const computedPlaceholder: ComputedRef<string> = computed(() => {
 });
 
 const props = withDefaults(defineProps<PaNumberType>(), {
-  id: randChar(),
-  modelValue: "",
   clearable: true,
-  showPassword: false,
-  autofocus: false,
   controls: true,
   step: 1,
-  precision: 0,
-  unit: ""
+  precision: 0
 });
 
 const inValue = ref(handlePrecision(props.modelValue, props.precision));

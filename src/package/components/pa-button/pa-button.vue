@@ -47,7 +47,6 @@ const { debounce } = _;
 
 const props = withDefaults(defineProps<ComponentProps>(), {
   size: "medium",
-  type: "default",
   debounced: true,
   debouncedTime: 300,
   iconPosition: "left",
@@ -184,7 +183,7 @@ watch(
       type: props.type || "primary",
       plain: props.usePlain || true,
       iconName: props.iconName || "finger_press_line",
-      size: props.size || "default"
+      size: props.size || "medium"
     };
 
     if (text) {

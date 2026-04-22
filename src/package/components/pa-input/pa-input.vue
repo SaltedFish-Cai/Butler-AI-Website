@@ -69,10 +69,16 @@
       </div>
     </div>
   </template>
-  <div v-else class="pa-display-style">
-    <slot name="exDisplay"></slot>
-    <template v-if="$slots.exDisplay"> ( {{ inValue || "--" }} )</template>
-    <template v-else>{{ inValue || "--" }}</template>
+
+  <div v-else class="pa-display-style" :class="[props.class]" :style="{ ...props.style }">
+    <div v-if="title" :style="{ width: titleWidth }" class="pa-cell-label">
+      {{ typeof title === "string" ? title : title[languageValue] }}
+    </div>
+    <div class="pa-display-value_content">
+      <slot name="exDisplay"></slot>
+      <template v-if="$slots.exDisplay"> ( {{ inValue || "--" }} )</template>
+      <template v-else>{{ inValue || "--" }}</template>
+    </div>
   </div>
 
   <div
@@ -87,8 +93,7 @@
 
 <script lang="ts" setup>
 import { ref, computed, ComputedRef, watch, onMounted, nextTick, inject } from "vue";
-import { PaInputType } from "./type";
-import { randChar } from "../tools/rand-char";
+import { ComponentProps } from "./type";
 import { PancakeGlobalConfigType } from "../pa-manager/type";
 
 import _ from "lodash";
@@ -114,12 +119,9 @@ const computedPlaceholder: ComputedRef<string> = computed(() => {
     : props.placeholder || languagePackage.value[`inputPlaceholder`];
 });
 
-const props = withDefaults(defineProps<PaInputType>(), {
-  id: randChar(),
-  modelValue: "",
+const props = withDefaults(defineProps<ComponentProps>(), {
   type: "textarea",
-  clearable: true,
-  autofocus: false
+  clearable: true
 });
 const inValue = ref(String(props.modelValue));
 const emits = defineEmits(["update:modelValue", "change", "blur", "focus", "enter"]);

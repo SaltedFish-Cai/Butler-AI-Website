@@ -1,4 +1,4 @@
-type languageKey = "en-US" | "zh-CN";
+import { LanguageKey } from "../manager-type";
 
 export type PaNumberType = {
   /**
@@ -12,7 +12,7 @@ export type PaNumberType = {
 
   /**
    * **自定义类名**
-   * @type `string`
+   * @type `string` | `undefined`
    * @default `undefined`
    * @description 当设置该值时，会自定义类名
    * @description 该值的类型为 `string`，可以是任意类型
@@ -21,7 +21,7 @@ export type PaNumberType = {
 
   /**
    * **自定义样式**
-   * @type `Record<string, string>`
+   * @type `Record<string, string>` | `undefined`
    * @default `undefined`
    * @description 当设置该值时，会添加到组件的样式中
    * @description 该值的类型为 `Record<string, string>`，可以是任意类型
@@ -30,7 +30,7 @@ export type PaNumberType = {
 
   /**
    * **双向绑定值**
-   * @type `string` | `number`
+   * @type `string` | `number` | `undefined`
    * @default `undefined`
    * @description 当设置该值时，会绑定该值
    * @description 当前属性只有作为 `独立组件` 时才会生效
@@ -40,30 +40,32 @@ export type PaNumberType = {
 
   /**
    * **表单项占位符**
-   * @type `string`
+   * @type `Record<LanguageKey, string>` | `string` | `undefined`
+   * @default `undefined`
    * @description 当设置该值为 `string` 时，会使用该值作为表单项占位符
    * */
-  placeholder?: Record<languageKey, string> | string;
+  placeholder?: Record<LanguageKey, string> | string;
 
   /**
    * **表单项标签**
-   * @type `string`
+   * @type `Record<LanguageKey, string>` | `string` | `undefined`
+   * @default `undefined`
    * @description 当设置该值为 `string` 时，会使用该值作为表单项标签
    * */
-  title?: Record<languageKey, string> | string;
+  title?: Record<LanguageKey, string> | string;
 
   /**
    * **表单项标签宽度**
-   * @type `string`
-   * @default `100px`
+   * @type `string` | `undefined`
+   * @default `undefined`
    * @description 当设置该值为 `string` 时，会使用该值作为表单项标签宽度
    * */
   titleWidth?: string;
 
   /**
    * **是否禁用**
-   * @type `boolean`
-   * @default `false`
+   * @type `boolean` | `undefined`
+   * @default `undefined`
    * @description 当设置该值为 `true` 时，会禁用该组件
    * @description 当设置该值为 `false` 时，不会禁用该组件
    * @example
@@ -75,8 +77,8 @@ export type PaNumberType = {
 
   /**
    * **纯展示模式**
-   * @type `boolean`
-   * @default `false`
+   * @type `boolean` | `undefined`
+   * @default `undefined`
    * @description 当设置该值为 `true` 时，会使用纯展示模式
    * @description 当设置该值为 `false` 时，不会使用纯展示模式
    * @example
@@ -88,7 +90,7 @@ export type PaNumberType = {
 
   /**
    * **是否显示控制按钮**
-   * @type `boolean`
+   * @type `boolean` | `undefined`
    * @default `true`
    * @description 当设置该值为 `true` 时，会显示控制按钮
    * @description 当设置该值为 `false` 时，不会显示控制按钮
@@ -101,7 +103,7 @@ export type PaNumberType = {
 
   /**
    * **最小值**
-   * @type `number`
+   * @type `number` | `undefined`
    * @default `undefined`
    * @description 当设置该值为 `number` 时，会使用该值作为最小值
    * @description 当设置该值为 `undefined` 时，不会使用最小值
@@ -114,7 +116,7 @@ export type PaNumberType = {
 
   /**
    * **最大值**
-   * @type `number`
+   * @type `number` | `undefined`
    * @default `undefined`
    * @description 当设置该值为 `number` 时，会使用该值作为最大值
    * @description 当设置该值为 `undefined` 时，不会使用最大值
@@ -127,7 +129,7 @@ export type PaNumberType = {
 
   /**
    * **单位**
-   * @type `string`
+   * @type `string` | `undefined`
    * @default `undefined`
    * @description 当设置该值为 `string` 时，会使用该值作为单位
    * @description 当设置该值为 `undefined` 时，不会使用单位
@@ -140,8 +142,8 @@ export type PaNumberType = {
 
   /**
    * **精度**
-   * @type `number`
-   * @default `undefined`
+   * @type `number` | `undefined`
+   * @default `0`
    * @description 当设置该值为 `number` 时，会使用该值作为精度
    * @description 当设置该值为 `undefined` 时，不会使用精度
    * @example
@@ -153,7 +155,7 @@ export type PaNumberType = {
 
   /**
    * **显示清除按钮**
-   * @type `boolean`
+   * @type `boolean` | `undefined`
    * @default `true`
    * @description 当设置该值为 `true` 时，会显示清除按钮
    * @description 当设置该值为 `false` 时，不会显示清除按钮
@@ -166,8 +168,8 @@ export type PaNumberType = {
 
   /**
    * **自动聚焦**
-   * @type `boolean`
-   * @default `false`
+   * @type `boolean` | `undefined`
+   * @default `undefined`
    * @description 当设置该值为 `true` 时，会自动聚焦
    * @description 当设置该值为 `false` 时，不会自动聚焦
    * @example
@@ -179,7 +181,7 @@ export type PaNumberType = {
 
   /**
    * **步长**
-   * @type `number`
+   * @type `number` | `undefined`
    * @default `1`
    * @description 当设置该值为 `number` 时，会使用该值作为步长
    * @description 当设置该值为 `undefined` 时，不会使用步长
@@ -209,8 +211,8 @@ export type PaNumberType = {
 
   /**
    * **是否显示对比数据**
-   * @type `boolean`
-   * @default `false`
+   * @type `boolean` | `undefined`
+   * @default `undefined`
    * @description 当设置该值为 `true` 时，会显示对比数据
    * @description 当设置该值为 `false` 时，不会显示对比数据
    * @example
@@ -235,7 +237,7 @@ export type PaNumberType = {
 
   /**
    * **失去焦点时触发**
-   * @type `() => void`
+   * @type `() => void` | `undefined`
    * @default `undefined`
    * @description 当设置该值为 `() => void` 时，会使用该值作为回调函数
    * @description 当设置该值为 `undefined` 时，不会使用回调函数
@@ -248,7 +250,7 @@ export type PaNumberType = {
 
   /**
    * **获得焦点时触发**
-   * @type `() => void`
+   * @type `() => void` | `undefined`
    * @default `undefined`
    * @description 当设置该值为 `() => void` 时，会使用该值作为回调函数
    * @description 当设置该值为 `undefined` 时，不会使用回调函数

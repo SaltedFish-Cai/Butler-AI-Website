@@ -1,6 +1,6 @@
-type languageKey = "en-US" | "zh-CN";
+import { LanguageKey } from "../manager-type";
 
-export type PaInputType = {
+export type ComponentProps = {
   /**
    * **组件唯一标识**
    * @type `string` | `undefined`
@@ -12,7 +12,7 @@ export type PaInputType = {
 
   /**
    * **自定义类名**
-   * @type `string`
+   * @type `string` | `undefined`
    * @default `undefined`
    * @description 当设置该值时，会自定义类名
    * @description 该值的类型为 `string`，可以是任意类型
@@ -21,7 +21,7 @@ export type PaInputType = {
 
   /**
    * **自定义样式**
-   * @type `Record<string, string>`
+   * @type `Record<string, string>` | `undefined`
    * @default `undefined`
    * @description 当设置该值时，会自定义样式
    * @description 该值的类型为 `Record<string, string>`，可以是任意类型
@@ -30,7 +30,7 @@ export type PaInputType = {
 
   /**
    * **双向绑定值**
-   * @type `string` | `number`
+   * @type `string` | `number` | `undefined`
    * @default `undefined`
    * @description 当设置该值时，会绑定该值
    * @description 当前属性只有作为 `独立组件` 时才会生效
@@ -40,8 +40,8 @@ export type PaInputType = {
 
   /**
    * **输入框类型**
-   * @type `input` | `textarea` | `text`
-   * @default `text`
+   * @type `input` | `textarea` | `text` | `undefined`
+   * @default `textarea`
    * @description 当设置该值为 `input` 时，会显示输入框
    * @description 当设置该值为 `textarea` 时，会显示文本域
    * @description 当设置该值为 `text` 时，会显示文本框
@@ -62,30 +62,32 @@ export type PaInputType = {
 
   /**
    * **表单项标签**
-   * @type `string`
+   * @type `string` | `undefined`
+   * @default `undefined`
    * @description 当设置该值为 `string` 时，会使用该值作为表单项标签
    * */
-  title?: Record<languageKey, string> | string;
+  title?: Record<LanguageKey, string> | string;
 
   /**
    * **表单项标签宽度**
-   * @type `string`
-   * @default `100px`
+   * @type `string` | `undefined`
+   * @default `undefined`
    * @description 当设置该值为 `string` 时，会使用该值作为表单项标签宽度
    * */
   titleWidth?: string;
 
   /**
    * **表单项占位符**
-   * @type `string`
+   * @type `string` | `undefined`
+   * @default `undefined`
    * @description 当设置该值为 `string` 时，会使用该值作为表单项占位符
    * */
-  placeholder?: Record<languageKey, string> | string;
+  placeholder?: Record<LanguageKey, string> | string;
 
   /**
    * **是否禁用**
-   * @type `boolean`
-   * @default `false`
+   * @type `boolean` | `undefined`
+   * @default `undefined`
    * @description 当设置该值为 `true` 时，会禁用该组件
    * @description 当设置该值为 `false` 时，不会禁用该组件
    * @example
@@ -97,8 +99,8 @@ export type PaInputType = {
 
   /**
    * **纯展示模式**
-   * @type `boolean`
-   * @default `false`
+   * @type `boolean` | `undefined`
+   * @default `undefined`
    * @description 当设置该值为 `true` 时，会使用纯展示模式
    * @description 当设置该值为 `false` 时，不会使用纯展示模式
    * @example
@@ -123,7 +125,7 @@ export type PaInputType = {
 
   /**
    * **显示清除按钮**
-   * @type `boolean`
+   * @type `boolean` | `undefined`
    * @default `true`
    * @description 当设置该值为 `true` 时，会显示清除按钮
    * @description 当设置该值为 `false` 时，不会显示清除按钮
@@ -136,8 +138,8 @@ export type PaInputType = {
 
   /**
    * **自动聚焦**
-   * @type `boolean`
-   * @default `false`
+   * @type `boolean` | `undefined`
+   * @default `undefined`
    * @description 当设置该值为 `true` 时，会自动聚焦
    * @description 当设置该值为 `false` 时，不会自动聚焦
    * @example
@@ -166,8 +168,8 @@ export type PaInputType = {
 
   /**
    * **是否显示对比数据**
-   * @type `boolean`
-   * @default `false`
+   * @type `boolean` | `undefined`
+   * @default `undefined`
    * @description 当设置该值为 `true` 时，会显示对比数据
    * @description 当设置该值为 `false` 时，不会显示对比数据
    * @example
@@ -192,7 +194,7 @@ export type PaInputType = {
 
   /**
    * **失去焦点时触发**
-   * @type `() => void`
+   * @type `() => void` | `undefined`
    * @default `undefined`
    * @description 当设置该值为 `() => void` 时，会使用该值作为回调函数
    * @description 当设置该值为 `undefined` 时，不会使用回调函数
@@ -205,7 +207,7 @@ export type PaInputType = {
 
   /**
    * **获得焦点时触发**
-   * @type `() => void`
+   * @type `() => void` | `undefined`
    * @default `undefined`
    * @description 当设置该值为 `() => void` 时，会使用该值作为回调函数
    * @description 当设置该值为 `undefined` 时，不会使用回调函数
@@ -218,7 +220,7 @@ export type PaInputType = {
 
   /**
    * **按下回车键时触发**
-   * @type `() => void`
+   * @type `() => void` | `undefined`
    * @default `undefined`
    * @description 当设置该值为 `() => void` 时，会使用该值作为回调函数
    * @description 当设置该值为 `undefined` 时，不会使用回调函数
