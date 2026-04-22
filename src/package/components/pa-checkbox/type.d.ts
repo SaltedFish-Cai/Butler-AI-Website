@@ -1,8 +1,6 @@
-import { PaOptionType } from "../manager-type";
+import { PaOptionType, LanguageKey } from "../manager-type";
 
-type languageKey = "en-US" | "zh-CN";
-
-export type PaCheckBoxItemType = {
+export type ComponentItemProps = {
   /**
    * **组件唯一标识**
    * @type `string` | `undefined`
@@ -47,7 +45,7 @@ export type PaCheckBoxItemType = {
    * @description 当设置该值时，会作为组件的标签
    * @description 该值的类型为 `string`，可以是任意类型
    * */
-  label?: Record<languageKey, string> | string;
+  label?: Record<LanguageKey, string> | string;
 
   /**
    * **值**
@@ -66,7 +64,7 @@ export type PaCheckBoxItemType = {
    * @description 当设置该值为 `false` 时，不会将组件设置为选中状态
    * @example
    * ```tsx
-   * <MSwitch isChecked={true} />
+   * <PaSwitch isChecked={true} />
    * ```
    * */
   isChecked?: boolean;
@@ -79,7 +77,7 @@ export type PaCheckBoxItemType = {
    * @description 当设置该值为 `false` 时，不会将组件设置为不确定状态
    * @example
    * ```tsx
-   * <MSwitch isIndeterminate={true} />
+   * <PaSwitch isIndeterminate={true} />
    * ```
    * */
   isIndeterminate?: boolean;
@@ -92,7 +90,7 @@ export type PaCheckBoxItemType = {
    * @description 当设置该值为 `false` 时，不会禁用该组件
    * @example
    * ```tsx
-   * <MSwitch disabled={true} />
+   * <PaSwitch disabled={true} />
    * ```
    * */
   disabled?: boolean;
@@ -107,13 +105,13 @@ export type PaCheckBoxItemType = {
    * @description 该值的类型为 `({ value, oldValue }) => void` | `undefined`，可以是任意类型
    * @example
    * ```tsx
-   * <MSwitch onChange={({value, oldValue}) => { console.log(value, oldValue) }} />
+   * <PaSwitch onChange={({value, oldValue}) => { console.log(value, oldValue) }} />
    * ```
    * */
   onChange?: ({ value, oldValue }) => void;
 };
 
-export type PaCheckBoxType = {
+export type ComponentProps = {
   /**
    * **组件唯一标识**
    * @type `string` | `undefined`
@@ -159,10 +157,24 @@ export type PaCheckBoxType = {
    * @description 当设置该值为 `false` 时，不会禁用该组件
    * @example
    * ```tsx
-   * <MSwitch disabled={true} />
+   * <PaSwitch disabled={true} />
    * ```
    * */
   disabled?: boolean;
+
+  /**
+   * **表单项标签**
+   * @type `string`
+   * @description 当设置该值为 `string` 时，会使用该值作为表单项标签
+   * */
+  title?: Record<LanguageKey, string> | string;
+
+  /**
+   * **表单项标签宽度**
+   * @type `string`
+   * @description 当设置该值为 `string` 时，会使用该值作为表单项标签宽度
+   * */
+  titleWidth?: string;
 
   /**
    * **外置数据**
@@ -180,10 +192,23 @@ export type PaCheckBoxType = {
    * @description 当设置该值为 `false` 时，不会使用纯展示模式
    * @example
    * ```tsx
-   * <MSwitch display={true} />
+   * <PaSwitch display={true} />
    * ```
    * */
   display?: boolean;
+
+  /**
+   * **纯展示值**
+   * @type `string`
+   * @default `undefined`
+   * @description 当设置该值时，会使用该值作为纯展示值
+   * @description 该值的类型为 `string`，可以是任意类型
+   * @example
+   * ```tsx
+   * <PaSwitch displayValue="123" />
+   * ```
+   * */
+  displayValue?: string;
 
   /**
    * **对比数据**
@@ -192,7 +217,7 @@ export type PaCheckBoxType = {
    * @description 该值的类型为 `Array<number | string>`，可以是任意类型
    * @example
    * ```tsx
-   * <MSwitch contrastData={[1, 2, 3]} />
+   * <PaSwitch contrastData={[1, 2, 3]} />
    * ```
    * */
   contrastData?: Array<number | string>;
@@ -205,7 +230,7 @@ export type PaCheckBoxType = {
    * @description 当设置该值为 `false` 时，会更具对比数据的结果来决定是否显示对比数据
    * @example
    * ```tsx
-   * <MSwitch alwaysContrast={true} />
+   * <PaSwitch alwaysContrast={true} />
    * ```
    * */
   alwaysContrast?: boolean;
@@ -221,7 +246,7 @@ export type PaCheckBoxType = {
    * @description 该值的类型为 `({ value, oldValue, option: PaOptionType.Select }) => void` | `undefined`，可以是任意类型
    * @example
    * ```tsx
-   * <MSwitch onChange={({value, oldValue, option}) => { console.log(value, oldValue, option) }} />
+   * <PaSwitch onChange={({value, oldValue, option}) => { console.log(value, oldValue, option) }} />
    * ```
    * */
   onChange?: ({ value, oldValue, option }) => void;

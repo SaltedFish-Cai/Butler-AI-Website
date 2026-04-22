@@ -7,6 +7,9 @@
     :style="{ ...props.style }"
     :disabled="props.disabled"
   >
+    <div v-if="title" :style="{ width: titleWidth }" class="pa-cell-label">
+      {{ typeof title === "string" ? title : title[languageValue] }}
+    </div>
     <pa-checkbox-item
       v-for="item in exOptionsList"
       :key="String(item.value)"
@@ -14,6 +17,7 @@
       :value="item.value"
       :is-checked="inValue?.includes?.(item.value)"
       :disabled="props.disabled"
+      isOption
       @change="
         ({ value }) => {
           changeEvent({ value, option: item });
@@ -21,10 +25,16 @@
       "
     ></pa-checkbox-item>
   </div>
-  <div v-else class="pa-display-style">
-    <slot name="exDisplay"></slot>
-    <template v-if="$slots.exDisplay"> ( {{ findData(inValue) || "--" }} )</template>
-    <template v-else>{{ findData(inValue) || "--" }}</template>
+
+  <div v-else class="pa-display-style" :class="[props.class]" :style="{ ...props.style }">
+    <div v-if="title" :style="{ width: titleWidth }" class="pa-cell-label">
+      {{ typeof title === "string" ? title : title[languageValue] }}
+    </div>
+    <div class="pa-display-value_content">
+      <slot name="exDisplay"></slot>
+      <template v-if="$slots.exDisplay"> ( {{ findData(inValue) || "--" }} )</template>
+      <template v-else>{{ findData(inValue) || "--" }}</template>
+    </div>
   </div>
 
   <div
@@ -38,14 +48,21 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, watch } from "vue";
-import { PaCheckBoxType } from "./type";
+import { computed, ComputedRef, inject, ref, watch } from "vue";
+import { ComponentProps } from "./type";
+import { PancakeGlobalConfigType } from "../pa-manager/type";
+import { findData as findDataSelect } from "../utils/find-data";
 
 import _ from "lodash";
 const { isEqual, isNil } = _;
 
-const props = withDefaults(defineProps<PaCheckBoxType>(), {});
+const props = withDefaults(defineProps<ComponentProps>(), {});
 const exOptionsList = ref(props?.exOptions || []);
+
+const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
+const languageValue = computed(() => {
+  return PancakeGlobalConfig.value?.language?.value || "zh-CN";
+});
 
 const inValue = ref(props.modelValue || []);
 const emits = defineEmits(["update:modelValue", "change"]);
@@ -64,20 +81,10 @@ function changeEvent({ value, option }) {
 }
 
 function findData(data) {
-  let text = "";
-  const options = props.exOptions;
-  if (Array.isArray(data) && options?.length) {
-    for (let I_index = 0; I_index < data.length; I_index++) {
-      const row = data[I_index];
-      for (let index = 0; index < options.length; index++) {
-        const option = options[index];
-        if (option.value == row) {
-          text += option.label + `${I_index < data.length - 1 ? "，" : ""}`;
-        }
-      }
-    }
+  if (props.displayValue) {
+    return props.displayValue || "--";
   }
-  return text || "--";
+  return findDataSelect(data, props.exOptions, false, languageValue.value);
 }
 
 // #Watch modelValue

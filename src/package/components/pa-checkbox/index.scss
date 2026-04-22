@@ -4,6 +4,7 @@
   // height: calc(var(--pa-size-height) - var(--pa-size-height) / 4);
   line-height: calc(var(--pa-size-height) - var(--pa-size-height) / 4);
   user-select: none;
+  margin: 0 calc(var(--pa-size-padding) / 2);
 
   .pa-checkbox-item-input-inner {
     display: flex;
@@ -56,6 +57,7 @@
     }
   }
 }
+
 .pa-checkbox-item.is-checked,
 .pa-checkbox-item.is-indeterminate {
   .pa-checkbox-item-input {

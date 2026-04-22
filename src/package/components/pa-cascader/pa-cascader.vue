@@ -84,6 +84,7 @@
       <div v-else class="pa-cascader-no-data">{{ languagePackage["empyt"] }}</div>
     </pa-popover>
   </div>
+
   <div v-else class="pa-display-style" :class="[props.class]" :style="{ ...props.style }">
     <div v-if="title" :style="{ width: titleWidth }" class="pa-cell-label">
       {{ typeof title === "string" ? title : title[languageValue] }}
@@ -94,6 +95,7 @@
       <template v-else>{{ findData(inValue) || "--" }}</template>
     </div>
   </div>
+
   <div
     v-if="(alwaysContrast && !isNil(contrastData)) || (!isNil(contrastData) && !isEqual(inValue, contrastData))"
     :class="['pa-contrast-style']"
@@ -110,7 +112,7 @@ import PaCascaderOption from "./pa-cascader-option.vue";
 import { ComponentProps } from "./type";
 import { randChar } from "../tools/rand-char";
 import { getElementPosition } from "../utils/getElementPosition";
-import { findData as findDataSelect } from "./find-data";
+import { findData as findDataSelect } from "../utils/find-data";
 import { PancakeGlobalConfigType } from "../pa-manager/type";
 
 import _ from "lodash";

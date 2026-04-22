@@ -9,7 +9,7 @@
     ]"
     ref="selectRef"
     :style="{ ...props.style }"
-    @click="changeEvent(inValue === props.value ? null : props.value)"
+    @click="changeEvent"
   >
     <div class="pa-checkbox-item-input-inner">
       <div class="pa-checkbox-item-input">
@@ -25,13 +25,16 @@
 
 <script lang="ts" setup>
 import { computed, ComputedRef, inject, ref, watch } from "vue";
-import { PaCheckBoxItemType } from "./type";
+import { ComponentItemProps } from "./type";
 import { PancakeGlobalConfigType } from "../pa-manager/type";
 
 import _ from "lodash";
 const { isNil } = _;
 
-const props = withDefaults(defineProps<PaCheckBoxItemType>(), {});
+const props = withDefaults(defineProps<ComponentItemProps & { isOption?: boolean }>(), {
+  isChecked: undefined,
+  isOption: false
+});
 
 const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
 const language = PancakeGlobalConfig.value?.language?.value || "zh-CN";
@@ -42,16 +45,20 @@ const emits = defineEmits(["update:modelValue", "change"]);
 const isChecked = computed(() => {
   if (!isNil(props.isChecked)) {
     return props.isChecked;
+  } else if (props.isIndeterminate) {
+    return false;
   }
   return inValue.value == props.value;
 });
 
 let oldValue = props.modelValue;
-function changeEvent(value) {
+function changeEvent() {
+  if (props.disabled || !isNil(props.isChecked) || props.isIndeterminate) return;
+  inValue.value = props.isOption ? props.value : inValue.value == props.value ? false : props.value;
   if (props.disabled) return;
-  emits("update:modelValue", value);
-  emits("change", { value: value, oldValue });
-  oldValue = value;
+  emits("update:modelValue", inValue.value);
+  emits("change", { value: inValue.value, oldValue });
+  oldValue = inValue.value;
   return;
 }
 

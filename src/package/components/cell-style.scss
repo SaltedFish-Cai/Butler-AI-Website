@@ -15,8 +15,8 @@
   border: 1px solid var(--pa-color-border);
   background-color: var(--pa-color-send-bg);
   .pa-display-value_content {
-    width: 100%;
-    height: 100%;
+    width: max-content;
+    height: max-content;
   }
 }
 
