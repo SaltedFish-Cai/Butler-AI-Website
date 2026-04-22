@@ -52,28 +52,33 @@
 
 ## ComponentProps
 
-| 属性名         | 描述                                                                         | 类型                                                                               | 默认值      |
-| -------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ----------- |
-| id             | 唯一标识                                                                     | `string` `undefined`                                                               | `undefined` |
-| class          | 自定义类名                                                                   | `string` `undefined`                                                               | `undefined` |
-| style          | 自定义样式                                                                   | `Record<string, string>` `undefined`                                               | `undefined` |
-| text           | 按钮文本，支持多语言                                                         | `Record<'en-US' \| 'zh-CN', string>` `string` `undefined`                          | `undefined` |
-| is             | 内置样式选择 [样式展示](/document/PancakeUI_Doc/button/readme.html#内置样式) | `string` `undefined`                                                               | `undefined` |
-| type           | 类型                                                                         | `'danger'` `'default'` `'info'` `'primary'` `'success'` `'warning'`                | `'default'` |
-| disabled       | 是否禁用按钮                                                                 | `boolean`                                                                          | `false`     |
-| loading        | 是否 `Loading` 状态                                                          | `boolean`                                                                          | `false`     |
-| loadingBy      | 自动 `Loading` 监听依赖源                                                    | `string` `undefined`                                                               | `undefined` |
-| debounced      | 开启防抖                                                                     | `boolean`                                                                          | `true`      |
-| debouncedTime  | 防抖延迟时间                                                                 | `number`                                                                           | `300`       |
-| iconPosition   | Icon 位置                                                                    | `'left'` `'right'`                                                                 | `'left'`    |
-| iconName       | icon 图标([`pa-icon`](/document/PancakeUI_Doc/icon/readme.html))             | `string` `undefined`                                                               | `undefined` |
-| useFont        | 是否使用字体图标                                                             | `boolean`                                                                          | `true`      |
-| useLine        | 是否为链接按钮                                                               | `boolean`                                                                          | `false`     |
-| usePlain       | 是否为朴素按钮                                                               | `boolean`                                                                          | `true`      |
-| confirmConfig  | 确认弹窗配置                                                                 | [`MessageBoxOptions`](/document/PancakeUI_Doc/message-box/readme.html) `undefined` | `undefined` |
-| size           | 按钮大小                                                                     | `'large'` `'medium'` `'small'`                                                     | `medium`    |
-| useStop        | 是否阻止事件冒泡                                                             | `boolean`                                                                          | `true`      |
-| onClick        | 点击回调函数                                                                 | `(event?: MouseEvent) => void`                                                     | `undefined` |
-| onConfirmClick | 确认点击回调函数                                                             | `() => void` `undefined`                                                           | `undefined` |
-| onSubmitClick  | 提交点击回调函数                                                             | `() => void` `undefined`                                                           | `undefined` |
-| onDeleteClick  | 删除点击回调函数                                                             | `() => void` `undefined`                                                           | `undefined` |
+| 属性名        | 描述                                                                         | 类型                                                                               | 默认值      |
+| ------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ----------- |
+| id            | 唯一标识                                                                     | `string` `undefined`                                                               | `undefined` |
+| class         | 自定义类名                                                                   | `string` `undefined`                                                               | `undefined` |
+| style         | 自定义样式                                                                   | `Record<string, string>` `undefined`                                               | `undefined` |
+| useFont       | 是否使用字体图标                                                             | `boolean` `undefined`                                                              | `true`      |
+| usePlain      | 是否为朴素按钮                                                               | `boolean` `undefined`                                                              | `true`      |
+| useStop       | 是否阻止事件冒泡                                                             | `boolean` `undefined`                                                              | `true`      |
+| type          | 类型                                                                         | `'danger'` `'default'` `'info'` `'primary'` `'success'` `'warning'` `undefined`    | `'default'` |
+| debounced     | 开启防抖                                                                     | `boolean` `undefined`                                                              | `true`      |
+| debouncedTime | 防抖延迟时间                                                                 | `number` `undefined`                                                               | `300`       |
+| iconPosition  | Icon 位置                                                                    | `'left'` `'right'` `undefined`                                                     | `'left'`    |
+| size          | 按钮大小                                                                     | `'large'` `'medium'` `'small'` `undefined`                                         | `medium`    |
+| text          | 按钮文本，支持多语言                                                         | `Record<'en-US' \| 'zh-CN', string>` `string` `undefined`                          | `undefined` |
+| is            | 内置样式选择 [样式展示](/document/PancakeUI_Doc/button/readme.html#内置样式) | `string` `undefined`                                                               | `undefined` |
+| disabled      | 是否禁用按钮                                                                 | `boolean` `undefined`                                                              | `undefined` |
+| loading       | 是否 `Loading` 状态                                                          | `boolean` `undefined`                                                              | `undefined` |
+| loadingBy     | 自动 `Loading` 监听依赖源                                                    | `string` `undefined`                                                               | `undefined` |
+| iconName      | icon 图标([`pa-icon`](/document/PancakeUI_Doc/icon/readme.html))             | `string` `undefined`                                                               | `undefined` |
+| useLine       | 是否为链接按钮                                                               | `boolean` `undefined`                                                              | `undefined` |
+| confirmConfig | 确认弹窗配置                                                                 | [`MessageBoxOptions`](/document/PancakeUI_Doc/message-box/readme.html) `undefined` | `undefined` |
+
+## ComponentEvents
+
+| 字段         | 描述             | 类型                           |
+| ------------ | ---------------- | ------------------------------ |
+| click        | 点击按钮执行方法 | `(event?: MouseEvent) => void` |
+| confirmClick | 确认按钮执行方法 | `() => void`                   |
+| submitClick  | 提交按钮执行方法 | `() => void`                   |
+| deleteClick  | 删除按钮执行方法 | `() => void`                   |

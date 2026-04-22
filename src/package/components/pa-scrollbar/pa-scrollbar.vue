@@ -79,7 +79,7 @@
 
 <script lang="ts" setup>
 // # import
-import { ref, Ref, onMounted, onBeforeUnmount, nextTick, watch, provide, computed } from "vue";
+import { ref, Ref, onMounted, onBeforeUnmount, nextTick, watch, provide } from "vue";
 import { randChar } from "../tools/rand-char";
 import { ComponentProps } from "./type";
 import { startDrag, listenElementScroll, observeElementResize } from "./scrollListener";
@@ -87,7 +87,7 @@ import { useIntersectionObserver } from "./useIntersectionObserver";
 import { getElementPosition } from "../utils/getElementPosition";
 
 import _ from "lodash";
-const { debounce, isNil } = _;
+const { debounce } = _;
 
 const emits = defineEmits([
   "renderEnd",
@@ -110,12 +110,12 @@ const emits = defineEmits([
 const scrollbarBodyRef = ref();
 const scrollbarBodyContentRef = ref();
 const prop = withDefaults(defineProps<ComponentProps>(), {
+  useShadow: true,
+  useBackTop: true,
   useScrollY: true,
   useScrollX: true,
   showThumb: true,
   useClosePopover: true,
-  useBackTop: undefined,
-  useShadow: undefined,
   styleMode: "default",
   defaultScrollHorizontalThumb: 0,
   defaultScrollVerticalThumb: 0,
@@ -149,19 +149,6 @@ const useVertical = ref(false);
 const scrollBodyHeight = ref(0);
 
 const isIntersectingList = ref([] as unknown as Ref<{ isIntersecting: Ref<boolean>; stopObserving: () => void; el: Element }[]>);
-
-const useShadow = computed(() => {
-  if (!isNil(prop.useShadow)) {
-    return prop.useShadow;
-  }
-  return prop.styleMode !== "color";
-});
-const useBackTop = computed(() => {
-  if (!isNil(prop.useBackTop)) {
-    return prop.useBackTop;
-  }
-  return prop.styleMode !== "color";
-});
 
 // # onMounted
 onMounted(() => {

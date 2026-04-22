@@ -47,15 +47,13 @@ const { debounce } = _;
 
 const props = withDefaults(defineProps<ComponentProps>(), {
   size: "medium",
-  disabled: false,
-  loading: false,
+  type: "default",
   debounced: true,
   debouncedTime: 300,
   iconPosition: "left",
   useFont: true,
   usePlain: true,
-  useStop: true,
-  useLine: false
+  useStop: true
 });
 
 const emit = defineEmits(["click", "confirmClick", "deleteClick", "submitClick"]);

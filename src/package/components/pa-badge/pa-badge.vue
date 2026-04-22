@@ -12,10 +12,7 @@
 import { computed } from "vue";
 import { ComponentProps } from "./type";
 
-const props = withDefaults(defineProps<ComponentProps>(), {
-  useShow: false,
-  useDot: false
-});
+const props = withDefaults(defineProps<ComponentProps>(), {});
 
 const showVal = computed(() => {
   if (props.maxValue && typeof Number(props.value) === "number") {

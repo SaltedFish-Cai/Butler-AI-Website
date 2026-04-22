@@ -16,14 +16,19 @@
 
 ## ComponentProps
 
-| 属性名  | 描述               | 类型                                 | 默认值         |
-| ------- | ------------------ | ------------------------------------ | -------------- |
-| id      | 唯一标识           | `string` `undefined`                 | `undefined`    |
-| class   | 自定义类名         | `string` `undefined`                 | `undefined`    |
-| style   | 自定义样式         | `Record<string, string>` `undefined` | `undefined`    |
-| name    | icon 名称          | `string` `undefined`                 | `'magic_line'` |
-| tip     | icon 提示          | `string` `undefined`                 | `undefined`    |
-| onClick | 点击 Icon 执行方法 | `(event) => void`                    | `undefined`    |
+| 属性名 | 描述       | 类型                                 | 默认值         |
+| ------ | ---------- | ------------------------------------ | -------------- |
+| id     | 唯一标识   | `string` `undefined`                 | `undefined`    |
+| class  | 自定义类名 | `string` `undefined`                 | `undefined`    |
+| style  | 自定义样式 | `Record<string, string>` `undefined` | `undefined`    |
+| name   | icon 名称  | `string` `undefined`                 | `'magic_line'` |
+| tip    | icon 提示  | `string` `undefined`                 | `undefined`    |
+
+## ComponentEvents
+
+| 字段  | 描述               | 类型              |
+| ----- | ------------------ | ----------------- |
+| click | 点击 Icon 执行方法 | `(event) => void` |
 
 ## Icon 选择
 

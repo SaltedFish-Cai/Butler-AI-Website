@@ -30,5 +30,5 @@
 | style    | 自定义样式     | `Record<string, string>` `undefined` | `undefined` |
 | value    | 徽标值         | `number` `string` `undefined`        | `undefined` |
 | maxValue | 最大值         | `number` `string` `undefined`        | `undefined` |
-| useShow  | 是否显示       | `boolean`                            | `false`     |
-| useDot   | 是否显示小红点 | `boolean`                            | `false`     |
+| useShow  | 是否显示       | `boolean` `undefined`                | `undefined` |
+| useDot   | 是否显示小红点 | `boolean` `undefined`                | `undefined` |
