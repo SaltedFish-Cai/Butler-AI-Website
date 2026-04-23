@@ -150,7 +150,7 @@ export type ComponentProps = {
   /**
    * **是否使用下划线按钮**
    * @type `boolean`
-   * @default `true`
+   * @default `undefined`
    * @description 当设置该值为 `true` 时，会使用下划线按钮
    * */
   useLine?: boolean;

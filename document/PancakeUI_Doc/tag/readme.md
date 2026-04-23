@@ -27,9 +27,9 @@
 | id           | 唯一标识         | `string`                 | -      |
 | class        | 自定义类名       | `Array<string>` `string` | -      |
 | style        | 自定义样式       | `Record<string, string>` | -      |
-| tagList      | 标签列表         | `TagListType`            | `[]`   |
-| useCollapse  | 是否折叠         | `boolean`                | -      |
-| popoverWidth | 弹出层宽度       | `number`                 | `200`  |
+| tagList      | 标签列表         | `TagListType`            | -      |
+| useCollapse  | 是否折叠         | `boolean`                | `true` |
+| popoverWidth | 弹出层宽度       | `number`                 | -      |
 | disabled     | 是否禁用删除功能 | `boolean`                | -      |
 
 ## ComponentEmits

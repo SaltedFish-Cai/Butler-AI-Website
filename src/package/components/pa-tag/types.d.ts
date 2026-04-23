@@ -33,15 +33,15 @@ export type ComponentProps = {
   /**
    * **标签值**
    * @type `TagListType`
-   * @default `[]`
+   * @default `undefined`
    * @description 标签列表
    * */
   tagList: TagListType;
 
   /**
    * **是否折叠**
-   * @type `boolean` | `undefined`
-   * @default `undefined`
+   * @type `boolean`
+   * @default `true`
    * @description 是否折叠标签
    * */
   useCollapse?: boolean;
@@ -49,7 +49,7 @@ export type ComponentProps = {
   /**
    * **弹出层宽度**
    * @type `number`
-   * @default `200`
+   * @default `undefined`
    * @description 弹出层宽度
    * */
   popoverWidth?: number;
