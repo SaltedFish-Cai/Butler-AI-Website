@@ -247,10 +247,10 @@ const props = withDefaults(defineProps<PaXxxType>(), {
 ```markdown
 ## ComponentProps
 
-| 属性名         | 描述         | 类型                        | 默认值      |
-| -------------- | ------------ | --------------------------- | ----------- |
-| modelValue     | 绑定值       | `string` `undefined`        | `undefined` |
-| disabled       | 禁用状态     | `boolean` `undefined`       | `undefined` |
+| 属性名     | 描述     | 类型                         | 默认值 |
+| ---------- | -------- | ---------------------------- | ------ |
+| modelValue | 绑定值   | `string`                     | -      |
+| disabled   | 禁用状态 | `boolean`                    | -      |
 ```
 
 ### 2. 使用 ComponentEvents 格式
@@ -268,20 +268,40 @@ const props = withDefaults(defineProps<PaXxxType>(), {
 ```markdown
 ## ComponentEvents
 
-| 字段     | 描述             | 类型                            |
-| -------- | ---------------- | ------------------------------- |
-| onChange | 数据变更回调函数 | `({ value, oldValue }) => void` |
+| 字段   | 描述             | 类型                            |
+| ------ | ---------------- | ------------------------------- |
+| change | 数据变更回调函数 | `({ value, oldValue }) => void` |
 ```
 
-### 3. 类型列添加 undefined
+### 3. 类型列简化
 
-所有类型列都要加上 `undefined`：
+类型列不再显示 `undefined`，只显示实际类型：
 
 ```markdown
-| modelValue | 绑定值 | `string` `undefined` | `undefined` |
+| modelValue | 绑定值 | `string`           | - |
+| disabled   | 禁用   | `boolean`          | - |
+| title      | 标题   | `LanguagePackageType` `string` | - |
 ```
 
-### 4. 新增 Display 章节
+### 4. 默认值使用 `-`
+
+默认值列使用 `-` 代替 `undefined`：
+
+```markdown
+| 属性名   | 描述   | 类型      | 默认值 |
+| -------- | ------ | --------- | ------ |
+| disabled | 禁用   | `boolean` | -      |
+```
+
+### 5. 多语言类型使用链接
+
+多语言类型使用 `LanguagePackageType` 并链接到 options 文档：
+
+```markdown
+| title | 表单项标签 | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) `string` | - |
+```
+
+### 6. 新增 Display 章节
 
 在基础使用后添加：
 
@@ -293,17 +313,14 @@ const props = withDefaults(defineProps<PaXxxType>(), {
 <demo src="./display.vue"></demo>
 ```
 
-### 5. 新增相关类型表格
+### 7. 新增相关类型表格
 
-如果组件有配置类型（如 `PaSwitchOptionType`），需要单独列出：
+如果组件有配置类型（如 `PaSwitchOptionType`），需要单独列出并链接到 options 文档：
 
 ```markdown
 ## PaSwitchOptionType
 
-| 字段          | 描述         | 类型                                                  | 默认值      |
-| ------------- | ------------ | ----------------------------------------------------- | ----------- |
-| activeValue   | 打开时的值   | `number` `string` `undefined`                         | `true`      |
-| inActiveValue | 关闭时的值   | `number` `string` `undefined`                         | `false`     |
+详见 [PaSwitchOptionType](/document/PancakeUI_Doc/options#paswitchoptiontype)
 ```
 
 ---
@@ -374,10 +391,11 @@ const value = ref("default");
 
 - [ ] 已使用 `ComponentProps` 格式
 - [ ] 已使用 `ComponentEvents` 格式
-- [ ] 类型列已添加 `undefined`
-- [ ] 默认值已改为 `undefined`
+- [ ] 类型列已简化（不显示 `undefined`）
+- [ ] 默认值已改为 `-`
+- [ ] 多语言类型已使用 `LanguagePackageType` 链接
 - [ ] 已添加 Display 纯展示模式章节
-- [ ] 已添加相关类型表格（如有）
+- [ ] 相关类型表格已链接到 options 文档
 
 ### 示例文件
 
@@ -401,4 +419,4 @@ feat: 优化Switch组件类型定义，添加display模式和文档示例
 
 ---
 
-*文档版本：v1.0 | 更新时间：2026年4月*
+*文档版本：v1.1 | 更新时间：2026年4月*

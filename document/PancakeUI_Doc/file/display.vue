@@ -1,7 +1,9 @@
 <template>
   <pa-file
     v-model="fileList"
-    :fileIncludeType="['png', 'jpeg', 'pdf']"
+    display
+    title="附件"
+    title-width="80px"
   />
 </template>
 
