@@ -4,26 +4,36 @@
 
 ## 基础使用
 
+展示一组标签，支持删除折叠。
+
 <demo src="./base.vue"></demo>
 
-## 折叠模式
+## 纯展示模式
+
+如果你不希望标签有删除功能，只展示标签，你可以设置 `disabled` 为 `true`。
+
+<demo src="./close.vue"></demo>
+
+## 非折叠模式
+
+如果你不希望标签折叠，你可以设置 `use-collapse` 为 `false`。
 
 <demo src="./collapse.vue"></demo>
 
 ## ComponentProps
 
-| 属性名       | 描述               | 类型                              | 默认值  |
-| ------------ | ------------------ | --------------------------------- | ------- |
-| id           | 唯一标识           | `string`                          | -       |
-| class        | 自定义类名         | `Array<string>` `string`          | -       |
-| style        | 自定义样式         | `Record<string, string>`          | -       |
-| tagList      | 标签列表           | `TagListType`                     | `[]`    |
-| useCollapse  | 是否折叠           | `boolean`                         | `false` |
-| popoverWidth | 弹出层宽度         | `number`                          | `200`   |
-| disabled     | 是否禁用删除功能   | `boolean`                         | `false` |
+| 属性名       | 描述             | 类型                     | 默认值  |
+| ------------ | ---------------- | ------------------------ | ------- |
+| id           | 唯一标识         | `string`                 | -       |
+| class        | 自定义类名       | `Array<string>` `string` | -       |
+| style        | 自定义样式       | `Record<string, string>` | -       |
+| tagList      | 标签列表         | `TagListType`            | `[]`    |
+| useCollapse  | 是否折叠         | `boolean`                | `false` |
+| popoverWidth | 弹出层宽度       | `number`                 | `200`   |
+| disabled     | 是否禁用删除功能 | `boolean`                | `false` |
 
 ## ComponentEmits
 
-| 事件名    | 描述           | 回调函数                            | 函数参数                    |
-| --------- | -------------- | ----------------------------------- | --------------------------- |
-| removeTag | 删除标签时触发 | `(data: TagListItem) => void`       | `{ label, value }`          |
+| 事件名    | 描述           | 回调函数                      | 函数参数           |
+| --------- | -------------- | ----------------------------- | ------------------ |
+| removeTag | 删除标签时触发 | `(data: TagListItem) => void` | `{ label, value }` |

@@ -83,10 +83,6 @@
       transform: rotate(180deg);
     }
   }
-  .pa-tag-collapse {
-    flex-wrap: nowrap;
-    max-width: 88%;
-  }
 }
 .pa-select.is-disabled {
   background-color: var(--pa-color-send-bg);
@@ -101,10 +97,7 @@
       display: block;
     }
   }
-  .pa-tag-collapse {
-    flex-wrap: nowrap;
-    max-width: calc(100%);
-  }
+
   .pa-select-input,
   .pa-select-input-inner,
   .pa-select-content {

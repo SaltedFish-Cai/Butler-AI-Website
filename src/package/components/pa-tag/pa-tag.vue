@@ -67,6 +67,7 @@ function initPopover() {
         for (let i = 0; i < children.length; i++) {
           const child = children[i];
           const position = getElementPosition(child, tagRef.value as HTMLElement, { top: 0, left: 0, right: 40, bottom: 0 });
+          console.log("++++++++++> child:", child, position?.isFullInParent);
           if (position?.isFullInParent) {
             spliceIndex++;
           }

@@ -1,5 +1,5 @@
 <template>
-  <pa-tag :tag-list="tagList" :use-collapse="false" />
+  <pa-tag :tag-list="tagList" disabled />
 </template>
 
 <script lang="ts" setup>

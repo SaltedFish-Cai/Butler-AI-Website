@@ -40,3 +40,20 @@
     }
   }
 }
+
+.pa-tag-collapse {
+  flex-wrap: nowrap;
+  max-width: calc(100%);
+}
+
+.pa-popover-reference {
+  & > .pa-tag-text {
+    color: var(--pa-color-font);
+    background-color: var(--pa-color-info-light-6);
+    transition: background-color var(--pa-animation-time, 0.2s);
+    &:hover {
+      color: var(--pa-color-white);
+      background-color: var(--pa-color-primary);
+    }
+  }
+}
