@@ -30,6 +30,7 @@ export type ComponentProps = {
   /**
    * **组件唯一标识**
    * @type `string` | `undefined`
+   * @default `undefined`
    * @description 当设置该值时，会作为组件的唯一标识
    * */
   id?: string;
@@ -45,6 +46,7 @@ export type ComponentProps = {
   /**
    * **自定义样式**
    * @type `Record<string, string>` | `undefined`
+   * @default `undefined`
    * @description 当设置该值时，会添加到组件的样式中
    * */
   style?: Record<string, string>;
@@ -52,6 +54,7 @@ export type ComponentProps = {
   /**
    * **按钮文本**
    * @type `LanguagePackageType | string` | `undefined`
+   * @default `undefined`
    * @description 当设置该值时，会显示在按钮上
    * */
   text?: LanguagePackageType | string;
@@ -67,6 +70,7 @@ export type ComponentProps = {
   /**
    * **内置样式**
    * @type `string` | `undefined`
+   * @default `undefined`
    * @description 可选值为 `add` | `cancel` | `check` | `download` | `edit` | `export` | `file` | `go` | `import` | `ok` | `refresh` | `remove` | `save` | `search` | `submit` | `switch` | `sync` | `time` | `trash` | `upload` | `view` | `more`
    * */
   is?: ButtonTypeV2Is;
@@ -98,6 +102,7 @@ export type ComponentProps = {
   /**
    * **自动Loading来源**
    * @type `string` | `undefined`
+   * @default `undefined`
    * @description 当设置该值时，会自动判断是否为 `loading` 状态
    * */
   loadingBy?: string;
@@ -129,6 +134,7 @@ export type ComponentProps = {
   /**
    * **按钮ICON**
    * @type `string` | `undefined`
+   * @default `undefined`
    * @description 当设置该值时，会使用该值作为ICON
    * */
   iconName?: string;
@@ -160,6 +166,7 @@ export type ComponentProps = {
   /**
    * **确认弹窗配置**
    * @type `MessageBoxOptions` | `undefined`
+   * @default `undefined`
    * @description 当设置该值时，会开启确认弹窗功能
    * */
   confirmConfig?: MessageBoxOptions;
@@ -172,8 +179,35 @@ export type ComponentProps = {
    * */
   useStop?: boolean;
 
-  onConfirmClick?: () => void;
-  onSubmitClick?: () => void;
-  onDeleteClick?: () => void;
+  /**
+   * **点击按钮执行方法**
+   * @type `(event: MouseEvent) => void` | `undefined`
+   * @default `undefined`
+   * @description 点击按钮时执行的回调函数
+   * */
   onClick?: (event?: MouseEvent) => void;
+
+  /**
+   * **确认按钮执行方法**
+   * @type `() => void` | `undefined`
+   * @default `undefined`
+   * @description 点击确认按钮时执行的回调函数
+   * */
+  onConfirmClick?: () => void;
+
+  /**
+   * **提交按钮执行方法**
+   * @type `() => void` | `undefined`
+   * @default `undefined`
+   * @description 点击提交按钮时执行的回调函数
+   * */
+  onSubmitClick?: () => void;
+
+  /**
+   * **删除按钮执行方法**
+   * @type `() => void` | `undefined`
+   * @default `undefined`
+   * @description 点击删除按钮时执行的回调函数
+   * */
+  onDeleteClick?: () => void;
 };

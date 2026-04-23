@@ -20,7 +20,7 @@ export type ComponentProps = {
 
   /**
    * **自定义样式**
-   * @type `Record<string, string>`
+   * @type `Record<string, string>` | `undefined`
    * @default `undefined`
    * @description 当设置该值时，会自定义样式
    * */
