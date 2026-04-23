@@ -17,6 +17,25 @@
 
 4. 根据需求进行开发
 
+   - 所有开发任务前，都需要先确认 development-guide.md 中的代码规范
+   - 所有非新建任务，开始前都需要通过 index.ts 中的 install 方法，确认修改组件的范围。
+
+     - 比如安装组件的代码片段如下：
+
+     ```ts
+     // #Function install
+     const install = function (app) {
+       if (!app._context.components["PaColor"]) {
+         app.component("PaColor", PaColor);
+         app.component("PaColorBox", PaColorBox);
+       }
+     };
+     ```
+
+     - 需要检查和修改的文件路径为：
+       - src/package/components/pa-color/pa-color.vue
+       - src/package/components/pa-color/pa-color-box.vue
+
    - 如果需求中包含排查任务
 
      - 先根据需求进行排查，确认问题所在，并询问是否需要修复
@@ -59,6 +78,7 @@
      ```
 
 6. 审核确认后，提交修改到 GitHub 仓库，分支：butler-dev
+
    - 提交信息：描述修改内容，使用 git 提交信息规范 ，例如"fix: 修复登录页面的登录按钮问题"
    - 提交人： ButlerAi211
    - 提交人邮箱：caiqi211@gmail.com

@@ -1,5 +1,5 @@
 <template>
-  <pa-color-item v-model="value" :preset-colors="presetColors" useAlpha> </pa-color-item>
+  <pa-color-box v-model="value" :preset-colors="presetColors" useAlpha> </pa-color-box>
 </template>
 <script lang="ts" setup>
 import { ref } from "vue";
