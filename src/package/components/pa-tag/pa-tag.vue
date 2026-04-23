@@ -29,7 +29,7 @@
 
 <script lang="ts" setup>
 import { onMounted, ref, Ref, watch, nextTick, inject, ComputedRef } from "vue";
-import { PaTagType, TagListType } from "./type";
+import { ComponentProps, TagListType } from "./types";
 import { getElementPosition } from "../utils/getElementPosition";
 
 import { PancakeGlobalConfigType } from "../pa-manager/type";
@@ -37,7 +37,7 @@ import { PancakeGlobalConfigType } from "../pa-manager/type";
 const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
 const language = PancakeGlobalConfig.value?.language?.value || "zh-CN";
 
-const props = withDefaults(defineProps<PaTagType>(), {
+const props = withDefaults(defineProps<ComponentProps>(), {
   useCollapse: true
 });
 const popoverRef = ref();

@@ -5,34 +5,36 @@ export type TagListType = Array<{
   value: boolean | number | string | undefined;
 }>;
 
-export type PaTagType = {
+export type ComponentProps = {
+  /**
+   * **组件唯一标识**
+   * @type `string` | `undefined`
+   * @default `undefined`
+   * @description 当设置该值时，会作为组件的唯一标识
+   * */
+  id?: string;
+
   /**
    * **自定义类名**
-   * @type `string`
+   * @type `Array<string>` | `string` | `undefined`
    * @default `undefined`
    * @description 当设置该值时，会添加到组件的类名中
-   * @description 该值的类型为 `string`，可以是任意类型
    * */
-  class?: string;
+  class?: Array<string> | string;
 
   /**
    * **自定义样式**
-   * @type `Record<string, string>`
+   * @type `Record<string, string>` | `undefined`
    * @default `undefined`
    * @description 当设置该值时，会添加到组件的样式中
-   * @description 该值的类型为 `Record<string, string>`，可以是任意类型
    * */
   style?: Record<string, string>;
 
   /**
    * **标签值**
-   * @type `Array<string|number>`
+   * @type `TagListType`
    * @default `[]`
-   * @description 标签值
-   * @example
-   * ```tsx
-   * <pa-tag modelValue={['1', '2']} />
-   * ```
+   * @description 标签列表
    * */
   tagList: TagListType;
 
@@ -40,11 +42,7 @@ export type PaTagType = {
    * **是否折叠**
    * @type `boolean`
    * @default `false`
-   * @description 是否折叠
-   * @example
-   * ```tsx
-   * <pa-tag modelValue={['1', '2']} useCollapse />
-   * ```
+   * @description 是否折叠标签
    * */
   useCollapse?: boolean;
 
@@ -53,10 +51,6 @@ export type PaTagType = {
    * @type `number`
    * @default `200`
    * @description 弹出层宽度
-   * @example
-   * ```tsx
-   * <pa-tag modelValue={['1', '2']} popoverWidth={200} />
-   * ```
    * */
   popoverWidth?: number;
 
@@ -64,11 +58,7 @@ export type PaTagType = {
    * **是否禁用**
    * @type `boolean`
    * @default `false`
-   * @description 是否禁用
-   * @example
-   * ```tsx
-   * <pa-tag modelValue={['1', '2']} disabled />
-   * ```
+   * @description 是否禁用标签删除功能
    * */
   disabled?: boolean;
 };
