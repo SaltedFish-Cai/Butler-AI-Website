@@ -97,8 +97,8 @@ export default { name: "PaButton", install };
   - class：自定义类名，类型为 Array<string> | string
   - style：自定义样式，类型为 Record<string, string>;
   - 标题、提示信息等需要支持多语言，类型为 LanguagePackageType
-  - 所有非 boolean 类型的属性都非必填属性，默认值为 undefined
   - 所有属性都必须填写注释，注释中必须包含属性的类型、默认值、描述等信息
+  - 属性中的 @default 必须和 Vue 文件中的 withDefaults(defineProps<ComponentProps>(), {}) 中的默认值一致，如果不存在默认值，则填写 undefined
 
 #### 2.3.1 标题、提示信息等多语言示例
 
