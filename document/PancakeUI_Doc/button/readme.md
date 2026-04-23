@@ -24,38 +24,38 @@
 
 使用 `useLine` 来定义按钮的链接样式。
 
-<demo src="./link.vue"></demo>
+<demo src="./link.vue" ></demo>
 
 ## 内置样式
 
 内置样式只需使用 `is` 即可完成样式选择
 
-<demo src="./is.vue"></demo>
+<demo src="./is.vue" ></demo>
 
 ## 防抖按钮
 
 使用 `debounced` 即可控制防抖模式，`debouncedTime` 用于设置延迟触发事件，该功能默认 `开启`
 
-<demo src="./debounced.vue"></demo>
+<demo src="./debounced.vue" ></demo>
 
 ## Icon 位置
 
 使用 `iconPosition` 控制按钮图标显示位置。
 
-<demo src="./position.vue"></demo>
+<demo src="./position.vue" ></demo>
 
 ## 内置执行提示
 
 使用 `@submit-click` `@delete-click` `@confirm-click` 即可开启内置执行提示, 或者配置 `confirmConfig` 来自定义弹窗提示
 
-<demo src="./confirm.vue"></demo>
+<demo src="./confirm.vue" ></demo>
 
 ## ComponentProps
 
 | 属性名        | 描述                                                                         | 类型                                                                                  | 默认值     |
 | ------------- | ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | ---------- |
 | id            | 唯一标识                                                                     | `string`                                                                              | -          |
-| class         | 自定义类名                                                                   | `string`                                                                              | -          |
+| class         | 自定义类名                                                                   | `Array<string>` `string`                                                              | -          |
 | style         | 自定义样式                                                                   | `Record<string, string>`                                                              | -          |
 | useFont       | 是否使用字体图标                                                             | `boolean`                                                                             | `true`     |
 | usePlain      | 是否为朴素按钮                                                               | `boolean`                                                                             | `true`     |
@@ -76,9 +76,9 @@
 
 ## ComponentEmits
 
-| 字段         | 描述             | 类型                           |
-| ------------ | ---------------- | ------------------------------ |
-| click        | 点击按钮执行方法 | `(event?: MouseEvent) => void` |
-| confirmClick | 确认按钮执行方法 | `() => void`                   |
-| submitClick  | 提交按钮执行方法 | `() => void`                   |
-| deleteClick  | 删除按钮执行方法 | `() => void`                   |
+| 事件名       | 描述             | 参数                | 回调函数                        |
+| ------------ | ---------------- | ------------------- | ------------------------------- |
+| click        | 点击按钮执行方法 | `event: MouseEvent` | `(event?: MouseEvent) => void`  |
+| confirmClick | 确认按钮执行方法 | -                   | `() => void`                    |
+| submitClick  | 提交按钮执行方法 | -                   | `() => void`                    |
+| deleteClick  | 删除按钮执行方法 | -                   | `() => void`                    |

@@ -36,7 +36,7 @@
 <script lang="ts" setup>
 // # Import
 import { reactive, onBeforeMount, useSlots, nextTick, watch, inject, ComputedRef, computed } from "vue";
-import { ComponentProps } from "./type";
+import { ComponentProps } from "./types";
 import inBrowser from "../tools/inBrowser";
 import { M_MessageBox } from "../feedback";
 
