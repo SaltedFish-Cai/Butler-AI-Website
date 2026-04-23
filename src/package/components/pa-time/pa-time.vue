@@ -16,6 +16,9 @@
     >
       <template #reference>
         <div class="pa-time-content">
+          <div v-if="title" :style="{ width: titleWidth }" class="pa-cell-label">
+            {{ typeof title === "string" ? title : title[languageValue] }}
+          </div>
           <div v-if="!isRange" class="pa-time-input" :class="[isFocus ? 'is-focus' : '']">
             <input
               class="pa-time-input-inner"
@@ -98,7 +101,7 @@
 
 <script lang="ts" setup>
 import { ref, Ref, computed, watch, inject, ComputedRef } from "vue";
-import { PaTimeType } from "./type";
+import { ComponentProps } from "./type";
 import MDateTimePanel from "./date-time-panel.vue";
 import MYearPanel from "./year-panel.vue";
 import { convertValue, isValidDate } from "./utils";
@@ -122,7 +125,7 @@ const YearMap = {
   "month-picker": 1
 };
 
-const props = withDefaults(defineProps<PaTimeType>(), {
+const props = withDefaults(defineProps<ComponentProps>(), {
   type: "date-picker"
 });
 
@@ -228,4 +231,5 @@ watch(
 
 <style lang="scss">
 @use "./index.scss";
+@use "../cell-style.scss";
 </style>

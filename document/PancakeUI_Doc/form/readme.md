@@ -176,10 +176,10 @@ const formConfig: MStructureV2Type.FormV2[] = [
 | 字段     | 描述                  | 类型                                                                                       | 类型    |
 | -------- | --------------------- | ------------------------------------------------------------------------------------------ | ------- |
 | prop     | 表头 prop 表 key 字段 | `string`                                                                                   | —       |
-| unitName | 单位名称              | `Record<"en-US" \| "zh-CN", string>` `string`                                              | —       |
-| unitTip  | 单位提示              | `Record<"en-US" \| "zh-CN", string>` `string`                                              | —       |
-| label    | 表头展示              | `Record<"en-US" \| "zh-CN", string>` `string`                                              | —       |
-| tip      | 提示信息              | `Record<"en-US" \| "zh-CN", string>` `string`                                              | —       |
+| unitName | 单位名称              | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) `string`                                              | —       |
+| unitTip  | 单位提示              | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) `string`                                              | —       |
+| label    | 表头展示              | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) `string`                                              | —       |
+| tip      | 提示信息              | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) `string`                                              | —       |
 | disabled | 是否禁用              | `boolean`                                                                                  | `false` |
 | rules    | 外置校验规则          | `Array<{ required?: boolean; message?: Record<languageKey, string> \| string }>` `boolean` | `[]`    |
 | exSpan   | 单行分栏              | `1` `2` `3` `4`                                                                            | `4`     |

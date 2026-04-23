@@ -32,7 +32,7 @@ export type PaSelectOptionsType = {
    * @description 当设置该值为 `true` 时，该选项将被禁用
    * @description 当设置该值为 `false` 时，该选项将不会被禁用
    * */
-  diPabled?: boolean;
+  disabled?: boolean;
 
   /**
    * **源数据**

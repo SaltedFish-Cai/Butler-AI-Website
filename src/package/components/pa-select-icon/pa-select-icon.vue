@@ -68,7 +68,7 @@
 
 <script lang="ts" setup>
 import { ref, computed, watch, inject, ComputedRef } from "vue";
-import { PaSelectIconType } from "./type";
+import { ComponentProps } from "./type";
 import iconJson from "./config/icon.json";
 import direction from "./config/direction.json";
 import multiMedia from "./config/multi-media.json";
@@ -96,7 +96,7 @@ const Config = ref([
   { title: "其他图标", name: "default", icons: setIconOptions(iconJson) }
 ]);
 
-const props = defineProps<PaSelectIconType>();
+const props = defineProps<ComponentProps>();
 const emits = defineEmits(["update:modelValue", "change"]);
 
 const selectRef = ref();

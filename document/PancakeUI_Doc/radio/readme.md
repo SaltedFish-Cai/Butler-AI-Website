@@ -24,30 +24,30 @@
 
 ## ComponentProps
 
-| 属性名         | 描述                     | 类型                                                                                            | 默认值      |
-| -------------- | ------------------------ | ----------------------------------------------------------------------------------------------- | ----------- |
-| id             | 组件唯一标识             | `string` `undefined`                                                                            | `undefined` |
-| class          | 自定义类名               | `string` `undefined`                                                                            | `undefined` |
-| style          | 自定义样式               | `Record<string, string>` `undefined`                                                            | `undefined` |
-| modelValue     | 绑定值                   | `boolean` `number` `string` `undefined`                                                         | `undefined` |
-| displayValue   | 纯展示类型下，直接显示值 | `string` `undefined`                                                                            | `undefined` |
-| disabled       | 禁用状态                 | `boolean` `undefined`                                                                           | `undefined` |
-| display        | 纯展示                   | `boolean` `undefined`                                                                           | `undefined` |
-| exOptions      | 选项                     | [`PaOptionType.SelectList`](/document/PancakeUI_Doc/options#paoptiontypeselectlist) `undefined` | `undefined` |
-| contrastData   | 对比用原数据             | `Array<number \| string>` `undefined`                                                           | `undefined` |
-| alwaysContrast | 是否总是显示对不数据     | `boolean` `undefined`                                                                           | `undefined` |
-| title          | 表单项标签               | `Record<'en-US' \| 'zh-CN', string>` `string` `undefined`                                       | `undefined` |
-| titleWidth     | 表单项标签宽度           | `string` `undefined`                                                                            | `undefined` |
+| 属性名         | 描述                     | 类型                                                                                  | 默认值 |
+| -------------- | ------------------------ | ------------------------------------------------------------------------------------- | ------ |
+| id             | 组件唯一标识             | `string`                                                                              | -      |
+| class          | 自定义类名               | `string`                                                                              | -      |
+| style          | 自定义样式               | `Record<string, string>`                                                              | -      |
+| modelValue     | 绑定值                   | `boolean` `number` `string`                                                           | -      |
+| displayValue   | 纯展示类型下，直接显示值 | `string`                                                                              | -      |
+| disabled       | 禁用状态                 | `boolean`                                                                             | -      |
+| display        | 纯展示                   | `boolean`                                                                             | -      |
+| exOptions      | 选项                     | [`PaOptionType.SelectList`](/document/PancakeUI_Doc/options#paoptiontypeselectlist)   | -      |
+| contrastData   | 对比用原数据             | `Array<number \| string>`                                                             | -      |
+| alwaysContrast | 是否总是显示对不数据     | `boolean`                                                                             | -      |
+| title          | 表单项标签               | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) `string` | -      |
+| titleWidth     | 表单项标签宽度           | `string`                                                                              | -      |
 
 ## ComponentItemProps
 
-| 属性名     | 描述     | 类型                                                      | 默认值      |
-| ---------- | -------- | --------------------------------------------------------- | ----------- |
-| modelValue | 绑定值   | `boolean` `number` `string` `undefined`                   | `undefined` |
-| label      | 选项名   | `Record<'en-US' \| 'zh-CN', string>` `string` `undefined` | `undefined` |
-| value      | 选项值   | `boolean` `number` `string` `undefined`                   | `undefined` |
-| isChecked  | 是否选中 | `boolean` `undefined`                                     | `undefined` |
-| disabled   | 禁用状态 | `boolean` `undefined`                                     | `undefined` |
+| 属性名     | 描述     | 类型                                                                                  | 默认值 |
+| ---------- | -------- | ------------------------------------------------------------------------------------- | ------ |
+| modelValue | 绑定值   | `boolean` `number` `string`                                                           | -      |
+| label      | 选项名   | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) `string` | -      |
+| value      | 选项值   | `boolean` `number` `string`                                                           | -      |
+| isChecked  | 是否选中 | `boolean`                                                                             | -      |
+| disabled   | 禁用状态 | `boolean`                                                                             | -      |
 
 ## ComponentEvents
 

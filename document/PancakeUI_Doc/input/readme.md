@@ -18,29 +18,29 @@
 
 ## ComponentProps
 
-| 属性名         | 描述                 | 类型                                                       | 默认值      |
-| -------------- | -------------------- | ---------------------------------------------------------- | ----------- |
-| id             | 组件唯一标识         | `string` `undefined`                                       | `undefined` |
-| class          | 自定义类名           | `string` `undefined`                                       | `undefined` |
-| style          | 自定义样式           | `Record<string, string>` `undefined`                       | `undefined` |
-| clearable      | 显示清除按钮         | `boolean` `undefined`                                      | `true`      |
-| type           | 输入框类型           | `input` `textarea` `text` `undefined`                      | `textarea`  |
-| modelValue     | 绑定值               | `string` `undefined`                                       | `undefined` |
-| placeholder    | 输入框提示           | `Record<"en-US" \| "zh-CN", string>` ` string``undefined ` | `undefined` |
-| disabled       | 禁用状态             | `boolean` `undefined`                                      | `undefined` |
-| display        | 纯展示               | `boolean` `undefined`                                      | `undefined` |
-| maxLength      | 内容长度的最大数     | `string` `number` `undefined`                              | `undefined` |
-| autofocus      | 自动获取焦点         | `boolean` `undefined`                                      | `undefined` |
-| contrastData   | 对比用原数据         | `number` `string` `undefined`                              | `undefined` |
-| alwaysContrast | 是否总是显示对不数据 | `boolean` `undefined`                                      | `undefined` |
-| title          | 表单项标签           | `Record<'en-US' \| 'zh-CN', string>` `string` `undefined`  | `undefined` |
-| titleWidth     | 表单项标签宽度       | `string` `undefined`                                       | `undefined` |
+| 属性名         | 描述                 | 类型                                                                                   | 默认值       |
+| -------------- | -------------------- | -------------------------------------------------------------------------------------- | ------------ |
+| id             | 组件唯一标识         | `string`                                                                               | -            |
+| class          | 自定义类名           | `string`                                                                               | -            |
+| style          | 自定义样式           | `Record<string, string>`                                                               | -            |
+| clearable      | 显示清除按钮         | `boolean`                                                                              | `true`       |
+| type           | 输入框类型           | `'input'` `'textarea'` `'text'`                                                        | `'textarea'` |
+| modelValue     | 绑定值               | `string`                                                                               | -            |
+| placeholder    | 输入框提示           | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) ` string` | -            |
+| disabled       | 禁用状态             | `boolean`                                                                              | -            |
+| display        | 纯展示               | `boolean`                                                                              | -            |
+| maxLength      | 内容长度的最大数     | `string` `number`                                                                      | -            |
+| autofocus      | 自动获取焦点         | `boolean`                                                                              | -            |
+| contrastData   | 对比用原数据         | `number` `string`                                                                      | -            |
+| alwaysContrast | 是否总是显示对不数据 | `boolean`                                                                              | -            |
+| title          | 表单项标签           | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) `string`  | -            |
+| titleWidth     | 表单项标签宽度       | `string`                                                                               | -            |
 
 ## ComponentEvents
 
 | 字段     | 描述             | 类型                            |
 | -------- | ---------------- | ------------------------------- |
-| onChange | 数据变更回调函数 | `({ value, oldValue }) => void` |
-| onBlur   | 失去焦点回调函数 | `() => void`                    |
-| onFocus  | 获得焦点回调函数 | `() => void`                    |
-| onEnter  | 回车回调函数     | `() => void`                    |
+| change | 数据变更回调函数 | `({ value, oldValue }) => void` |
+| blur   | 失去焦点回调函数 | `() => void`                    |
+| focus  | 获得焦点回调函数 | `() => void`                    |
+| enter  | 回车回调函数     | `() => void`                    |

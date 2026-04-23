@@ -1,10 +1,5 @@
 <template>
-  <pa-time
-    v-model="dateValue"
-    display
-    title="日期"
-    title-width="80px"
-  />
+  <pa-time v-model="dateValue" display :title="{ 'en-US': 'Display Mode', 'zh-CN': '展示模式' }" />
 </template>
 
 <script setup lang="ts">

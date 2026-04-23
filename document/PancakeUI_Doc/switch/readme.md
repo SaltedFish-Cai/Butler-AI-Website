@@ -18,27 +18,27 @@
 
 ## ComponentProps
 
-| 属性名         | 描述                     | 类型                                                                                   | 默认值       |
-| -------------- | ------------------------ | -------------------------------------------------------------------------------------- | ------------ |
-| id             | 组件唯一标识             | `string` `undefined`                                                                   | `undefined`  |
-| class          | 自定义类名               | `string` `undefined`                                                                   | `undefined`  |
-| style          | 自定义样式               | `Record<string, string>` `undefined`                                                   | `undefined`  |
-| activeValue    | 打开时的值               | `number` `string` `undefined`                                                          | `true`       |
-| inActiveValue  | 关闭时的值               | `number` `string` `undefined`                                                          | `false`      |
-| activeText     | 打开时的文本             | `Record<'en-US' \| 'zh-CN', string>` `string` `undefined`                              | `是` / `Yes` |
-| inActiveText   | 关闭时的文本             | `Record<'en-US' \| 'zh-CN', string>` `string` `undefined`                              | `否` / `No`  |
-| iconStyle      | 图标样式                 | `Record<string, string>` `undefined`                                                   | `undefined`  |
-| modelValue     | 绑定值                   | `boolean` `number` `string` `undefined`                                                | `undefined`  |
-| displayValue   | 纯展示类型下，直接显示值 | `string` `undefined`                                                                   | `undefined`  |
-| disabled       | 禁用状态                 | `boolean` `undefined`                                                                  | `undefined`  |
-| display        | 纯展示                   | `boolean` `undefined`                                                                  | `undefined`  |
-| activeIcon     | 打开时的图标             | `string` `undefined`                                                                   | `undefined`  |
-| inActiveIcon   | 关闭时的图标             | `string` `undefined`                                                                   | `undefined`  |
-| exOptions      | 选项                     | [`PaSwitchOptionType`](/document/PancakeUI_Doc/options#paswitchoptiontype) `undefined` | `undefined`  |
-| contrastData   | 对比用原数据             | `boolean` `number` `string` `undefined`                                                | `undefined`  |
-| alwaysContrast | 是否总是显示对不数据     | `boolean` `undefined`                                                                  | `undefined`  |
-| title          | 表单项标签               | `Record<'en-US' \| 'zh-CN', string>` `string` `undefined`                              | `undefined`  |
-| titleWidth     | 表单项标签宽度           | `string` `undefined`                                                                   | `undefined`  |
+| 属性名         | 描述                     | 类型                                                                                  | 默认值       |
+| -------------- | ------------------------ | ------------------------------------------------------------------------------------- | ------------ |
+| id             | 组件唯一标识             | `string`                                                                              | -            |
+| class          | 自定义类名               | `string`                                                                              | -            |
+| style          | 自定义样式               | `Record<string, string>`                                                              | -            |
+| activeValue    | 打开时的值               | `number` `string`                                                                     | `true`       |
+| inActiveValue  | 关闭时的值               | `number` `string`                                                                     | `false`      |
+| activeText     | 打开时的文本             | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) `string` | `是` / `Yes` |
+| inActiveText   | 关闭时的文本             | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) `string` | `否` / `No`  |
+| iconStyle      | 图标样式                 | `Record<string, string>`                                                              | -            |
+| modelValue     | 绑定值                   | `boolean` `number` `string`                                                           | -            |
+| displayValue   | 纯展示类型下，直接显示值 | `string`                                                                              | -            |
+| disabled       | 禁用状态                 | `boolean`                                                                             | -            |
+| display        | 纯展示                   | `boolean`                                                                             | -            |
+| activeIcon     | 打开时的图标             | `string`                                                                              | -            |
+| inActiveIcon   | 关闭时的图标             | `string`                                                                              | -            |
+| exOptions      | 选项                     | [`PaSwitchOptionType`](/document/PancakeUI_Doc/options#paswitchoptiontype)            | -            |
+| contrastData   | 对比用原数据             | `boolean` `number` `string`                                                           | -            |
+| alwaysContrast | 是否总是显示对不数据     | `boolean`                                                                             | -            |
+| title          | 表单项标签               | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) `string` | -            |
+| titleWidth     | 表单项标签宽度           | `string`                                                                              | -            |
 
 :::tip 关于优先级
 `exOptions` 下数据会优先替换 `props` 下数据
@@ -46,6 +46,6 @@
 
 ## ComponentEvents
 
-| 字段     | 描述             | 类型                            |
-| -------- | ---------------- | ------------------------------- |
+| 字段   | 描述             | 类型                            |
+| ------ | ---------------- | ------------------------------- |
 | change | 数据变更回调函数 | `({ value, oldValue }) => void` |

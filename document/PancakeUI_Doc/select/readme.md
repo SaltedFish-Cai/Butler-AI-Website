@@ -27,29 +27,40 @@
 
 ## ComponentProps
 
-| 属性名              | 描述                         | 类型                                                                                                                                   | 默认值      |
-| ------------------- | ---------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
-| id                  | 组件唯一标识                 | `string` `undefined`                                                                                                                   | `undefined` |
-| class               | 自定义类名                   | `string` `undefined`                                                                                                                   | `undefined` |
-| style               | 自定义样式                   | `Record<string, string>` `undefined`                                                                                                   | `undefined` |
-| modelValue          | 绑定值                       | `Array<number \| string>` `number` `string` `undefined`                                                                                | `undefined` |
-| displayValue        | 纯展示类型下，直接显示值     | `string` `undefined`                                                                                                                   | `undefined` |
-| type                | 组件类型                     | `'multiple-online-select'` `'multiple-request-select'` `'multiple-select'` `'online-select'` `'request-select'` `'select'` `undefined` | `'select'`  |
-| clearable           | 显示清除按钮                 | `boolean` `undefined`                                                                                                                  | `true`      |
-| exOptions           | 选项                         | [`PaSelectOptionsType`](/document/PancakeUI_Doc/options#paselectoptionstype) `undefined`                                               | `undefined` |
-| requestApi          | 异步选项请求接口             | `({ query: string }) => Promise<MOptionV2Type.SelectList>` `undefined`                                                                 | `undefined` |
-| placeholder         | 输入框提示                   | `Record<'en-US' \| 'zh-CN', string>` `string` `undefined`                                                                              | `undefined` |
-| disabled            | 禁用状态                     | `boolean` `undefined`                                                                                                                  | `undefined` |
-| display             | 纯展示                       | `boolean` `undefined`                                                                                                                  | `undefined` |
-| contrastData        | 对比用原数据                 | `Array<number \| string>` `number` `string` `undefined`                                                                                | `undefined` |
-| alwaysContrast      | 是否总是显示对不数据         | `boolean` `undefined`                                                                                                                  | `undefined` |
-| title               | 表单项标签                   | `Record<'en-US' \| 'zh-CN', string>` `string` `undefined`                                                                              | `undefined` |
-| titleWidth          | 表单项标签宽度               | `string` `undefined`                                                                                                                   | `undefined` |
-| teleportInContainer | 是否使用 Teleport 挂载到容器 | `boolean` `undefined`                                                                                                                  | `undefined` |
-| createUseChange     | 创建时是否使用 change 事件   | `boolean` `undefined`                                                                                                                  | `undefined` |
+| 属性名              | 描述                         | 类型                                                                                                  | 默认值     |
+| ------------------- | ---------------------------- | ----------------------------------------------------------------------------------------------------- | ---------- |
+| id                  | 组件唯一标识                 | `string`                                                                                              | -          |
+| class               | 自定义类名                   | `string`                                                                                              | -          |
+| style               | 自定义样式                   | `Record<string, string>`                                                                              | -          |
+| modelValue          | 绑定值                       | `Array<number \| string>` `number` `string`                                                           | -          |
+| displayValue        | 纯展示类型下，直接显示值     | `string`                                                                                              | -          |
+| type                | 组件类型                     | [`ComponentType`](#componenttype)                                                                     | `'select'` |
+| clearable           | 显示清除按钮                 | `boolean`                                                                                             | `true`     |
+| exOptions           | 选项                         | [`PaSelectOptionsType`](/document/PancakeUI_Doc/options#paselectoptionstype)                          | -          |
+| requestApi          | 异步选项请求接口             | `({ query: string }) => `[`PaSelectOptionsType`](/document/PancakeUI_Doc/options#paselectoptionstype) | -          |
+| placeholder         | 输入框提示                   | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) `string`                 | -          |
+| disabled            | 禁用状态                     | `boolean`                                                                                             | -          |
+| display             | 纯展示                       | `boolean`                                                                                             | -          |
+| contrastData        | 对比用原数据                 | `Array<number \| string>` `number` `string`                                                           | -          |
+| alwaysContrast      | 是否总是显示对不数据         | `boolean`                                                                                             | -          |
+| title               | 表单项标签                   | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) `string`                 | -          |
+| titleWidth          | 表单项标签宽度               | `string`                                                                                              | -          |
+| teleportInContainer | 是否使用 Teleport 挂载到容器 | `boolean`                                                                                             | -          |
+| createUseChange     | 创建时是否使用 change 事件   | `boolean`                                                                                             | -          |
+
+# ComponentType
+
+| 组件类型                    | 描述       |
+| --------------------------- | ---------- |
+| `'select'`                  | 单选器     |
+| `'multiple-select'`         | 多选器     |
+| `'request-select'`          | 异步单选器 |
+| `'multiple-request-select'` | 异步多选器 |
+| `'online-select'`           | 远端单选器 |
+| `'multiple-online-select'`  | 远端多选器 |
 
 ## ComponentEvents
 
-| 字段     | 描述             | 类型                            |
-| -------- | ---------------- | ------------------------------- |
+| 字段   | 描述             | 类型                            |
+| ------ | ---------------- | ------------------------------- |
 | change | 数据变更回调函数 | `({ value, oldValue }) => void` |

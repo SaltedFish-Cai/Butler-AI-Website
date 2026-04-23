@@ -46,13 +46,13 @@ M_MessageBox.confirm({
 
 | 属性名                   | 描述                                                                 | 类型                                                                     | 默认值    |
 | ------------------------ | -------------------------------------------------------------------- | ------------------------------------------------------------------------ | --------- |
-| title                    | 弹窗标题，支持多语言                                                 | `Record<"en-US" \| "zh-CN", string>`                                     | —         |
-| message                  | 弹窗消息，支持多语言                                                 | `Record<"en-US" \| "zh-CN", string>`                                     | —         |
+| title                    | 弹窗标题，支持多语言                                                 | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype)                                     | —         |
+| message                  | 弹窗消息，支持多语言                                                 | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype)                                     | —         |
 | isType                   | 是否为确认弹窗，确认按钮为 `primary` 类型，取消按钮为 `default` 类型 | `"confirm" \| undefined`                                                 | `false`   |
 | type                     | 弹窗类型，影响弹窗样式和按钮类型                                     | `"default" \| "info" \| "primary" \| "success" \| "warning" \| "danger"` | `default` |
 | customClass              | 自定义弹窗类名，用于自定义弹窗样式                                   | `string`                                                                 | —         |
-| confirmButtonText        | 确认按钮文本，支持多语言                                             | `Record<"en-US" \| "zh-CN", string>`                                     | —         |
-| cancelButtonText         | 取消按钮文本，支持多语言                                             | `Record<"en-US" \| "zh-CN", string>`                                     | —         |
+| confirmButtonText        | 确认按钮文本，支持多语言                                             | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype)                                     | —         |
+| cancelButtonText         | 取消按钮文本，支持多语言                                             | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype)                                     | —         |
 | confirmButtonIcon        | 确认按钮图标                                                         | `string`                                                                 | —         |
 | cancelButtonIcon         | 取消按钮图标                                                         | `string`                                                                 | —         |
 | onConfirm                | 确认按钮点击回调函数                                                 | `() => void`                                                             | —         |

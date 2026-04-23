@@ -24,11 +24,11 @@
 
 ## ComponentProps
 
-| 字段     | 描述           | 类型                                 | 默认值      |
-| -------- | -------------- | ------------------------------------ | ----------- |
-| class    | 自定义类名     | `string` `undefined`                 | `undefined` |
-| style    | 自定义样式     | `Record<string, string>` `undefined` | `undefined` |
-| value    | 徽标值         | `number` `string` `undefined`        | `undefined` |
-| maxValue | 最大值         | `number` `string` `undefined`        | `undefined` |
-| useShow  | 是否显示       | `boolean` `undefined`                | `undefined` |
-| useDot   | 是否显示小红点 | `boolean` `undefined`                | `undefined` |
+| 字段     | 描述           | 类型                     | 默认值 |
+| -------- | -------------- | ------------------------ | ------ |
+| class    | 自定义类名     | `string`                 | -      |
+| style    | 自定义样式     | `Record<string, string>` | -      |
+| value    | 徽标值         | `number` `string`        | -      |
+| maxValue | 最大值         | `number` `string`        | -      |
+| useShow  | 是否显示       | `boolean`                | -      |
+| useDot   | 是否显示小红点 | `boolean`                | -      |

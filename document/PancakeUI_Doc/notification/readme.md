@@ -43,8 +43,8 @@ M_Notification.closeAll();
 
 | 属性名                   | 描述                         | 类型                                                           | 默认值      |
 | ------------------------ | ---------------------------- | -------------------------------------------------------------- | ----------- |
-| title                    | 通知标题，支持多语言         | `Record<"en-US" \| "zh-CN", string>`                           | —           |
-| message                  | 通知消息，支持多语言         | `Record<"en-US" \| "zh-CN", string>`                           | —           |
+| title                    | 通知标题，支持多语言         | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype)                           | —           |
+| message                  | 通知消息，支持多语言         | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype)                           | —           |
 | type                     | 通知类型，影响通知样式       | `"primary" \| "success" \| "warning" \| "danger" \| "info"`    | `primary`   |
 | duration                 | 通知显示时间，单位毫秒       | `number`                                                       | `4500`      |
 | position                 | 通知位置                     | `"top-right" \| "top-left" \| "bottom-right" \| "bottom-left"` | `top-right` |

@@ -1,4 +1,3 @@
-import type { Dayjs } from "dayjs";
 import { LanguageKey } from "../manager-type";
 
 export type MDatePickerType =
@@ -13,7 +12,7 @@ export type MDatePickerType =
   | "year-picker-group"
   | "year-picker";
 
-export type PaTimeType = {
+export type ComponentProps = {
   /**
    * **组件唯一标识**
    * @type `string` | `undefined`
@@ -171,86 +170,3 @@ export interface DatePickerShortcut {
   text: string;
   value: Date[] | (() => Date[]);
 }
-
-export interface DatePickerProps {
-  modelValue?: Date | Dayjs | number | string | [Date | Dayjs | number | string, Date | Dayjs | number | string] | null;
-  type?: MDatePickerType;
-  format?: string;
-  valueType?: "date" | "dayjs" | "string";
-  placeholder?: string | [string, string];
-  rangeSeparator?: string;
-  startPlaceholder?: string;
-  endPlaceholder?: string;
-  defaultValue?: Date | Dayjs | [Date | Dayjs, Date | Dayjs];
-  defaultTime?: [Date, Date];
-  disabled?: boolean;
-  editable?: boolean;
-  clearable?: boolean;
-  size?: "default" | "large" | "small";
-  showTime?: boolean;
-  disabledDate?: (date: Date) => boolean;
-  cellClassName?: (date: Date) => string;
-  popperClass?: string;
-  popperOptions?: any;
-  validateEvent?: boolean;
-}
-
-export interface DatePickerEmits {
-  (e: "update:modelValue", value: any): void;
-  (e: "change", value: any): void;
-  (e: "blur", event: FocusEvent): void;
-  (e: "focus", event: FocusEvent): void;
-  (e: "calendar-change", value: [Date, Date]): void;
-  (e: "visible-change", visible: boolean): void;
-  (e: "clear"): void;
-}
-
-export type PaTimerType = {
-  /**
-   * **组件唯一标识**
-   * @type `string` | `undefined`
-   * @default `undefined`
-   * @description 当设置该值时，会作为组件的唯一标识
-   * */
-  id?: string;
-
-  /**
-   * **自定义类名**
-   * @type `string` | `undefined`
-   * @default `undefined`
-   * @description 当设置该值时，会添加到组件的类名中
-   * */
-  class?: string;
-
-  /**
-   * **自定义样式**
-   * @type `Record<string, string>` | `undefined`
-   * @default `undefined`
-   * @description 当设置该值时，会添加到组件的样式中
-   * */
-  style?: Record<string, string>;
-
-  /**
-   * **是否禁用**
-   * @type `boolean` | `undefined`
-   * @default `undefined`
-   * @description 当设置该值为 `true` 时，会禁用组件
-   * */
-  disabled?: boolean;
-
-  /**
-   * **双向绑定值**
-   * @type `string` | `undefined`
-   * @default `undefined`
-   * @description 当设置该值时，会绑定该值
-   * */
-  modelValue?: string;
-
-  /**
-   * **当数据发生变更时触发**
-   * @type `({ value, oldValue }) => void` | `undefined`
-   * @default `undefined`
-   * @description 当设置该值时，会使用该值作为回调函数
-   * */
-  onChange?: ({ value, oldValue }) => void;
-};

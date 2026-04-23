@@ -231,7 +231,7 @@ const tableConfig: MStructureV2Type.TableV2[] = [
 
 | 字段       | 描述                     | 类型                                                                   | 类型    |
 | ---------- | ------------------------ | ---------------------------------------------------------------------- | ------- |
-| label      | 表头展示                 | `Record<"en-US" \| "zh-CN", string>` `string`                          | —       |
+| label      | 表头展示                 | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) `string`                          | —       |
 | prop       | 表头 prop 表 key 字段    | `string`                                                               | —       |
 | width      | 表列列宽                 | `string` `number`                                                      | —       |
 | isShow     | 是否显示在表格当中       | `boolean`                                                              | `true`  |

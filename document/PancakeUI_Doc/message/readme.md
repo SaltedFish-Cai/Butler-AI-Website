@@ -44,8 +44,8 @@ M_Message({
 
 | 属性名                   | 描述                                                 | 类型                                           | 默认值      |
 | ------------------------ | ---------------------------------------------------- | ---------------------------------------------- | ----------- |
-| title                    | 弹窗标题，支持多语言                                 | `Record<"en-US" \| "zh-CN", string>`           | —           |
-| message                  | 弹窗消息，支持多语言                                 | `Record<"en-US" \| "zh-CN", string>`           | —           |
+| title                    | 弹窗标题，支持多语言                                 | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype)           | —           |
+| message                  | 弹窗消息，支持多语言                                 | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype)           | —           |
 | type                     | 弹窗类型，影响弹窗样式                               | `"info" \| "success" \| "warning" \| "danger"` | `info`      |
 | duration                 | 弹窗显示时间，单位毫秒                               | `number`                                       | `3000`      |
 | customClass              | 自定义弹窗类名，用于自定义弹窗样式                   | `string`                                       | —           |

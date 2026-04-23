@@ -20,8 +20,8 @@
 | id                 | 唯一标识                                             | `string`                                                 | -       |
 | class              | 自定义类名                                           | `string`                                                 | -       |
 | style              | 自定义样式                                           | `Record<string, string>`                                 | -       |
-| title              | 弹窗标题，支持多语言                                 | `Record<"en-US" \| "zh-CN", string>`                     | -       |
-| subTitle           | 弹窗次标题，支持多语言                               | `Record<"en-US" \| "zh-CN", string>`                     | -       |
+| title              | 弹窗标题，支持多语言                                 | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype)                     | -       |
+| subTitle           | 弹窗次标题，支持多语言                               | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype)                     | -       |
 | width              | 弹窗宽度，默认 `500px`                               | `string`                                                 | `500px` |
 | height             | 弹窗高度，默认 `300px`                               | `number`                                                 | `300px` |
 | scroll             | 是否开启抽屉弹窗滚动                                 | `boolean`                                                | `true`  |
