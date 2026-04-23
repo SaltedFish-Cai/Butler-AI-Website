@@ -156,9 +156,6 @@ const updateColorFromHsv = () => {
   alphaInput.value = alpha.value;
   emit("update:modelValue", color);
   emit("change", color);
-  if (props.onChange) {
-    props.onChange(color);
-  }
 };
 
 const parseColor = (color: string) => {
