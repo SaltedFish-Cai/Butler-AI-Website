@@ -135,3 +135,10 @@ import { LanguagePackageType } from "../manager-type";
   - const 定义，包含：常量 > props > ref > reactive > 变量 > computed
   - function 定义，包含：事件处理函数
   - watch 定义
+
+#### 2.4.1 组件属性要求（ComponentProps）
+
+- 组件属性必须是实际使用的属性，如果实际组件代码中没有使用该属性，无需删除但需要标记为未使用在注释中。
+- 组件实际使用的属性类型必须和 @type 定义保持一致，实际代码中不可使用其他类型，可使用 Eslint 插件 检查。
+- 如果组件属性是数组类型，必须使用 Array 类型
+- 如果组件属性是对象类型，必须使用 Record 类型
