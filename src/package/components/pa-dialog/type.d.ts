@@ -1,6 +1,5 @@
 // # Type
-
-type languageKey = "en-US" | "zh-CN";
+import { LanguagePackageType } from "../manager-type";
 
 export type ComponentProps = {
   /**
@@ -110,7 +109,7 @@ export type ComponentProps = {
 
   /**
    * **Dialog标题**
-   * @type `string`|`Record<languageKey, string>` | `undefined`
+   * @type `string`|`LanguagePackageType` | `undefined`
    * @default `标题`
    * @description 当设置该值为 `string` 时，Dialog标题为该值
    * @description 当设置该值为 `undefined` 时，Dialog标题为 `标题`
@@ -119,11 +118,11 @@ export type ComponentProps = {
    * <MoDialog title="次标题" />
    * ```
    * */
-  title?: Record<languageKey, string> | string;
+  title?: LanguagePackageType | string;
 
   /**
    * **Dialog副标题**
-   * @type `string`|`Record<languageKey, string>` | `undefined`
+   * @type `string`|`LanguagePackageType` | `undefined`
    * @default `undefined`
    * @description 当设置该值为 `string` 时，Dialog副标题为该值
    * @description 当设置该值为 `undefined` 时，Dialog副标题为 `副标题`
@@ -132,7 +131,7 @@ export type ComponentProps = {
    * <MoDialog subTitle="次标题" />
    * ```
    * */
-  subTitle?: Record<languageKey, string> | string;
+  subTitle?: LanguagePackageType | string;
 
   /**
    * **是否开启全屏按钮**

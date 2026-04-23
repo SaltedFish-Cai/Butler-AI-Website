@@ -30,7 +30,7 @@
 | title               | 表单项标签               | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) `string` | -      |
 | titleWidth          | 表单项标签宽度           | `string`                                                                              | -      |
 
-## ComponentEvents
+## ComponentEmits
 
 | 字段   | 描述           | 类型                            |
 | ------ | -------------- | ------------------------------- |

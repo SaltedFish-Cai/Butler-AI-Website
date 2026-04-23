@@ -49,7 +49,7 @@
 | isChecked  | 是否选中 | `boolean`                                                                             | -      |
 | disabled   | 禁用状态 | `boolean`                                                                             | -      |
 
-## ComponentEvents
+## ComponentEmits
 
 | 字段   | 描述             | 类型                                    |
 | ------ | ---------------- | --------------------------------------- |

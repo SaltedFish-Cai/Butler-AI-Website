@@ -47,7 +47,7 @@
 | titleWidth          | 表单项标签宽度                                  | `string`                                                                              | -            |
 | teleportInContainer | 是否使用 Teleport 挂载到容器                    | `boolean`                                                                             | -            |
 
-## ComponentEvents
+## ComponentEmits
 
 | 字段   | 描述             | 类型                            |
 | ------ | ---------------- | ------------------------------- |

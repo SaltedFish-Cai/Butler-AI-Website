@@ -1,4 +1,5 @@
-import { MessageBoxOptions, LanguageKey } from "@/package/components/pa-message-box/type";
+import { MessageBoxOptions } from "@/package/components/pa-message-box/type";
+import { LanguagePackageType } from "../manager-type";
 
 export type ButtonTypeV2Is =
   | "add"
@@ -52,9 +53,9 @@ export type ComponentProps = {
 
   /**
    * **按钮文本**
-   * @type `Record<LanguageKey, string> | string` | `undefined`
+   * @type `LanguagePackageType | string` | `undefined`
    * @description 当设置该值时，会显示在按钮上
-   * @description 该值的类型为 `Record<LanguageKey, string> | string`，可以是任意类型
+   * @description 该值的类型为 `LanguagePackageType | string`，可以是任意类型
    * @example
    * ```tsx
    * <MoButton text="创建表格" />
@@ -64,7 +65,7 @@ export type ComponentProps = {
    * <MoButton text={{ "en-US": "Create Table", "zh-CN": "创建表格" }} />
    * ```
    * */
-  text?: Record<LanguageKey, string> | string;
+  text?: LanguagePackageType | string;
 
   /**
    * **按钮大小**

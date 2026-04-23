@@ -44,7 +44,7 @@
 | paddingBorder                | 是否使用内边距边框   | `Array<"all" \| "bottom" \| "left" \| "right" \| "top">` | -           |
 | parentBoxRef                 | 父元素引用           | `Ref<HTMLElement \| undefined>`                          | -           |
 
-## ComponentEvents
+## ComponentEmits
 
 | 字段                | 描述                                                                   | 类型       |
 | ------------------- | ---------------------------------------------------------------------- | ---------- |

@@ -1,4 +1,4 @@
-type languageKey = "en-US" | "zh-CN";
+import { LanguageKey } from "../manager-type";
 
 type apiType = {
   url: string;
@@ -104,24 +104,24 @@ type PancakeGlobal = {
 export type PaManagerType = PancakeGlobal & {
   /**
    * **语言**
-   * @type `languageKey` | `undefined`
+   * @type `LanguageKey` | `undefined`
    * @default `undefined`
    * @description 当设置该值时，会自定义语言
-   * @description 该值的类型为 `languageKey`，可以是任意类型
+   * @description 该值的类型为 `LanguageKey`，可以是任意类型
    * */
-  language?: languageKey;
+  language?: LanguageKey;
 };
 
 export type PancakeGlobalConfigType = PancakeGlobal & {
   /**
    * **语言**
-   * @type `languageKey` | `undefined`
+   * @type `LanguageKey` | `undefined`
    * @default `undefined`
    * @description 当设置该值时，会自定义语言
-   * @description 该值的类型为 `languageKey`，可以是任意类型
+   * @description 该值的类型为 `LanguageKey`，可以是任意类型
    * */
   language?: {
-    value: languageKey;
+    value: LanguageKey;
     package: Record<string, Record<string, string>>;
   };
 };

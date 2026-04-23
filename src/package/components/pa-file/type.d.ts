@@ -1,6 +1,6 @@
-import { LanguageKey } from "../manager-type";
+import { LanguagePackageType } from "../manager-type";
 
-export type PaFileType = {
+export type ComponentProps = {
   /**
    * **组件唯一标识**
    * @type `string` | `undefined`
@@ -27,11 +27,11 @@ export type PaFileType = {
 
   /**
    * **双向绑定数据**
-   * @type `Array<PaFileDataType>` | `undefined`
+   * @type `Array<FileDataType>` | `undefined`
    * @default `undefined`
    * @description 当设置该值时，会绑定该值
    * */
-  modelValue?: Array<PaFileDataType>;
+  modelValue?: Array<FileDataType>;
 
   /**
    * **上传文件时附带数据**
@@ -43,11 +43,11 @@ export type PaFileType = {
 
   /**
    * **表单项占位符**
-   * @type `Record<LanguageKey, string>` | `string` | `undefined`
+   * @type `LanguagePackageType` | `string` | `undefined`
    * @default `undefined`
    * @description 当设置该值时，会使用该值作为表单项占位符
    * */
-  placeholder?: Record<LanguageKey, string> | string;
+  placeholder?: LanguagePackageType | string;
 
   /**
    * **是否禁用**
@@ -139,11 +139,11 @@ export type PaFileType = {
 
   /**
    * **对比数据**
-   * @type `Array<PaFileDataType>` | `undefined`
+   * @type `Array<FileDataType>` | `undefined`
    * @default `undefined`
    * @description 当设置该值时，会使用该值作为对比数据
    * */
-  contrastData?: Array<PaFileDataType>;
+  contrastData?: Array<FileDataType>;
 
   /**
    * **是否显示对比数据**
@@ -155,11 +155,11 @@ export type PaFileType = {
 
   /**
    * **表单项标签**
-   * @type `Record<LanguageKey, string>` | `string` | `undefined`
+   * @type `LanguagePackageType` | `string` | `undefined`
    * @default `undefined`
    * @description 当设置该值时，会作为表单项标签
    * */
-  title?: Record<LanguageKey, string> | string;
+  title?: LanguagePackageType | string;
 
   /**
    * **表单项标签宽度**
@@ -178,7 +178,7 @@ export type PaFileType = {
   onChange?: ({ value, oldValue }) => void;
 };
 
-export type PaFileDataType = {
+export type FileDataType = {
   FileId: string;
   FullPath: string;
   FileName?: string;

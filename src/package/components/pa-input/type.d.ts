@@ -1,4 +1,4 @@
-import { LanguageKey } from "../manager-type";
+import { LanguagePackageType } from "../manager-type";
 
 export type ComponentProps = {
   /**
@@ -66,7 +66,7 @@ export type ComponentProps = {
    * @default `undefined`
    * @description 当设置该值为 `string` 时，会使用该值作为表单项标签
    * */
-  title?: Record<LanguageKey, string> | string;
+  title?: LanguagePackageType | string;
 
   /**
    * **表单项标签宽度**
@@ -82,7 +82,7 @@ export type ComponentProps = {
    * @default `undefined`
    * @description 当设置该值为 `string` 时，会使用该值作为表单项占位符
    * */
-  placeholder?: Record<LanguageKey, string> | string;
+  placeholder?: LanguagePackageType | string;
 
   /**
    * **是否禁用**

@@ -1,7 +1,7 @@
-import { LanguageKey } from "../manager-type";
+import { LanguagePackageType } from "../manager-type";
 
 export type TagListType = Array<{
-  label: Record<LanguageKey, string> | string;
+  label: LanguagePackageType | string;
   value: boolean | number | string | undefined;
 }>;
 

@@ -1,4 +1,4 @@
-import { PaOptionType, LanguageKey } from "../manager-type";
+import { PaOptionType, LanguagePackageType } from "../manager-type";
 
 export type ComponentItemProps = {
   /**
@@ -45,7 +45,7 @@ export type ComponentItemProps = {
    * @description 当设置该值时，会作为组件的标签
    * @description 该值的类型为 `string`，可以是任意类型
    * */
-  label?: Record<LanguageKey, string> | string;
+  label?: LanguagePackageType | string;
 
   /**
    * **值**
@@ -166,7 +166,7 @@ export type ComponentProps = {
    * @default `undefined`
    * @description 当设置该值为 `string` 时，会使用该值作为表单项标签
    * */
-  title?: Record<LanguageKey, string> | string;
+  title?: LanguagePackageType | string;
 
   /**
    * **表单项标签宽度**

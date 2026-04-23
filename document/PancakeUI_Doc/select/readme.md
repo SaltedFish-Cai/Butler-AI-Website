@@ -59,7 +59,7 @@
 | `'online-select'`           | 远端单选器 |
 | `'multiple-online-select'`  | 远端多选器 |
 
-## ComponentEvents
+## ComponentEmits
 
 | 字段   | 描述             | 类型                            |
 | ------ | ---------------- | ------------------------------- |

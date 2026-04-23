@@ -80,12 +80,12 @@
 <script lang="ts" setup>
 import { PancakeGlobalConfigType } from "../pa-manager/type";
 import { computed, ComputedRef, inject, ref, useTemplateRef } from "vue";
-import { PaFileDataType, PaFileType } from "./type";
+import { FileDataType, ComponentProps } from "./type";
 import { M_Message } from "../feedback";
 import { ajaxUpload } from "./ajax";
 
 // Props
-const props = withDefaults(defineProps<PaFileType>(), {});
+const props = withDefaults(defineProps<ComponentProps>(), {});
 
 // Emits
 const emits = defineEmits(["update:modelValue", "change", "changeState"]);
@@ -308,7 +308,7 @@ const handleRemove = index => {
 };
 
 // @ computed 上传成功
-const handleSuccess = (response: { Code: Number; Data: PaFileDataType; Message?: string }) => {
+const handleSuccess = (response: { Code: Number; Data: FileDataType; Message?: string }) => {
   if (!response) return;
 
   const { Code, Data, Message } = response;

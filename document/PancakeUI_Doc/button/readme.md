@@ -74,7 +74,7 @@
 | useLine       | 是否为链接按钮                                                               | `boolean`                                                                             | -          |
 | confirmConfig | 确认弹窗配置                                                                 | [`MessageBoxOptions`](/document/PancakeUI_Doc/message-box/readme.html)                | -          |
 
-## ComponentEvents
+## ComponentEmits
 
 | 字段         | 描述             | 类型                           |
 | ------------ | ---------------- | ------------------------------ |

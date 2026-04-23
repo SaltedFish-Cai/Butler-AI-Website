@@ -8,7 +8,4 @@ const install = function (app) {
   }
 };
 
-export default {
-  name: "PaButton",
-  install
-};
+export default { name: "PaButton", install };

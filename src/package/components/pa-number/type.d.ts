@@ -1,4 +1,4 @@
-import { LanguageKey } from "../manager-type";
+import { LanguagePackageType } from "../manager-type";
 
 export type PaNumberType = {
   /**
@@ -40,19 +40,19 @@ export type PaNumberType = {
 
   /**
    * **表单项占位符**
-   * @type `Record<LanguageKey, string>` | `string` | `undefined`
+   * @type `LanguagePackageType` | `string` | `undefined`
    * @default `undefined`
    * @description 当设置该值为 `string` 时，会使用该值作为表单项占位符
    * */
-  placeholder?: Record<LanguageKey, string> | string;
+  placeholder?: LanguagePackageType | string;
 
   /**
    * **表单项标签**
-   * @type `Record<LanguageKey, string>` | `string` | `undefined`
+   * @type `LanguagePackageType` | `string` | `undefined`
    * @default `undefined`
    * @description 当设置该值为 `string` 时，会使用该值作为表单项标签
    * */
-  title?: Record<LanguageKey, string> | string;
+  title?: LanguagePackageType | string;
 
   /**
    * **表单项标签宽度**

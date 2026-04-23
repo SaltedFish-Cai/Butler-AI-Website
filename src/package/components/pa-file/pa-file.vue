@@ -122,7 +122,7 @@
 
 <script lang="ts" setup>
 import { ref, computed, ComputedRef, watch, inject } from "vue";
-import { PaFileType, PaFileDataType } from "./type";
+import { ComponentProps, FileDataType } from "./type";
 import { ajaxUpload } from "./ajax";
 import { M_Message, M_MessageBox } from "../feedback";
 import { PancakeGlobalConfigType } from "../pa-manager/type";
@@ -130,7 +130,7 @@ import { PancakeGlobalConfigType } from "../pa-manager/type";
 import _ from "lodash";
 const { isEqual, debounce, isNil } = _;
 
-const props = withDefaults(defineProps<PaFileType>(), {});
+const props = withDefaults(defineProps<ComponentProps>(), {});
 
 const inValue = ref(props.modelValue);
 let oldValue = props.modelValue;
@@ -204,7 +204,7 @@ const requestHeader = computed(() => {
 });
 
 // @ computed 上传成功
-const handleSuccess = (response: { Code: Number; Data: PaFileDataType; Message?: string }) => {
+const handleSuccess = (response: { Code: Number; Data: FileDataType; Message?: string }) => {
   if (!response) return;
 
   const { Code, Data, Message } = response;
@@ -372,7 +372,7 @@ const removeFile = (index: number) => {
   changeEvent(inValue.value);
 };
 
-// function openFile(file: PaFileDataType) {
+// function openFile(file: FileDataType) {
 //   if (file.FileUrl) {
 //     useDownload(file.FileUrl, file?.OriginalName || file?.FileName);
 //   }

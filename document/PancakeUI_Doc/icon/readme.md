@@ -24,7 +24,7 @@
 | name   | icon 名称  | `string`                 | `'magic_line'` |
 | tip    | icon 提示  | `string`                 | -              |
 
-## ComponentEvents
+## ComponentEmits
 
 | 字段  | 描述               | 类型              |
 | ----- | ------------------ | ----------------- |

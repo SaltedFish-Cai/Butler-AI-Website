@@ -1,10 +1,8 @@
 import { OtherType, GroupType, TabsType } from "./cell";
 import { PaCellType } from "../cell";
-import { PaOptionType } from "../manager-type";
+import { PaOptionType, LanguageKey } from "../manager-type";
 import { DatePickerShortcut } from "../pa-time/type";
 import { PaTransferType } from "../pa-transfer/type";
-
-type languageKey = "en-US" | "zh-CN";
 
 export type PaFormProps = {
   /**
@@ -265,28 +263,28 @@ type BaseType = {
    * @type `string`
    * @description 当设置该值为 `string` 时，会使用该值作为自动划组时使用名
    * */
-  unitName?: Record<languageKey, string> | string;
+  unitName?: LanguagePackageType | string;
 
   /**
    * **自动划组时提示**
    * @type `string`
    * @description 当设置该值为 `string` 时，会使用该值作为自动划组时提示
    * */
-  unitTip?: Record<languageKey, string> | string;
+  unitTip?: LanguagePackageType | string;
 
   /**
    * **表单项标题**
    * @type `string`
    * @description 当设置该值为 `string` 时，会使用该值作为表单项标题
    * */
-  label?: Record<languageKey, string> | string;
+  label?: LanguagePackageType | string;
 
   /**
    * **表单项提示**
    * @type `string`
    * @description 当设置该值为 `string` 时，会使用该值作为表单项提示
    * */
-  tip?: Record<languageKey, string> | string;
+  tip?: LanguagePackageType | string;
 
   /**
    * **是否禁用**
@@ -310,7 +308,7 @@ type BaseType = {
   rules?:
     | Array<{
         required?: boolean;
-        message?: Record<languageKey, string> | string;
+        message?: LanguagePackageType | string;
       }>
     | boolean;
 
@@ -355,9 +353,9 @@ type BaseType = {
   };
 };
 
-export type PaFormChildType = BaseType & StrictUnion<PaCellType | OtherType | (PaTransferType & { type: "transfer" })>;
+export type PaFormChildType = BaseType & StrictUnion<OtherType | PaCellType | (PaTransferType & { type: "transfer" })>;
 export type PaFormItemType = BaseType &
-  StrictUnion<GroupType | PaCellType | OtherType | TabsType | (PaTransferType & { type: "transfer" })>;
+  StrictUnion<GroupType | OtherType | PaCellType | TabsType | (PaTransferType & { type: "transfer" })>;
 
 export type PaFormRef = {
   /**
@@ -553,7 +551,7 @@ export type ConfigContextType = {
   alwaysContrast: boolean;
   display: boolean;
   languagePackage: Record<string, string>;
-  language: languageKey;
+  language: LanguageKey;
   exOptions: PaOptionType.Default;
   exDependent: PaFormExDependentType;
   exCellDependent: PaFormCellExDependentType;

@@ -23,7 +23,7 @@
 | disabled     | 是否禁用按钮                   | `boolean`                | -      |
 | presetColors | 预设颜色列表，用于快速选择颜色 | `Array<string>`          | -      |
 
-## ComponentEvents
+## ComponentEmits
 
 | 字段   | 描述                 | 类型                      |
 | ------ | -------------------- | ------------------------- |

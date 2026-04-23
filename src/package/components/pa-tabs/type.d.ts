@@ -1,4 +1,4 @@
-type languageKey = "en-US" | "zh-CN";
+import { LanguagePackageType } from "../manager-type";
 
 // # type
 export type PaTabsType = {
@@ -144,7 +144,7 @@ export type PaTabsItemType = {
    * <PaTabsItem label="Tab1" />
    * ```
    * */
-  label: Record<languageKey, string> | string;
+  label: LanguagePackageType | string;
 
   /**
    * **Tab唯一Key**

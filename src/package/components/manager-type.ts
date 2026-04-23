@@ -3,13 +3,14 @@ import { PaTableItemType, PaTableType } from "./pa-table/type";
 import { PaManagerType } from "./pa-manager/type";
 
 export type LanguageKey = "en-US" | "zh-CN";
+export type LanguagePackageType = Record<LanguageKey, string>;
 
 export type PaSelectOptionsType = {
   /**
    * **数据标题**
    * @type `string`
    * */
-  label: Record<LanguageKey, string> | string;
+  label: LanguagePackageType | string;
 
   /**
    * **数据值**
@@ -68,13 +69,13 @@ export type PaSwitchOptionType = {
    * **打开标题**
    * @type `string` | `{ [key: "en-US" | "zh-CN"]: string }`
    * */
-  activeText?: Record<LanguageKey, string> | string;
+  activeText?: LanguagePackageType | string;
 
   /**
    * **关闭标题**
    * @type `string` | `{ [key: "en-US" | "zh-CN"]: string }`
    * */
-  inActiveText?: Record<LanguageKey, string> | string;
+  inActiveText?: LanguagePackageType | string;
 
   /**
    * **打开图标**

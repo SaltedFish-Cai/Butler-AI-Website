@@ -1,15 +1,14 @@
 import { ButtonTypeV2Is } from "@/package/components/pa-button/type";
-
-type languageKey = "en-US" | "zh-CN";
+import { LanguagePackageType } from "../manager-type";
 
 export type PaPlaygroundPageButtonType = {
   buttonId?: string;
-  text: Record<languageKey, string>;
+  text: LanguagePackageType;
   type: "danger" | "default" | "info" | "primary" | "success" | "warning";
   icon: string;
   useType?: "dialog" | "HeaderCenter" | "HeaderLeft" | "operation" | "ToolButtonInline";
   is?: ButtonTypeV2Is;
-  isText?: Record<languageKey, string>;
+  isText?: LanguagePackageType;
   styleType: "Built" | "Custom";
   actionType: string | "delete" | "dialog" | "jump" | "null" | "save";
   jumpTarget?: string;
@@ -18,7 +17,7 @@ export type PaPlaygroundPageButtonType = {
   dialogContentId?: string;
   dialogSize?: "l" | "m" | "max" | "s";
   dialogContentButtons?: PaPlaygroundPageButtonType[];
-  dialogTitle?: Record<languageKey, string> | string;
+  dialogTitle?: LanguagePackageType | string;
   dialogSubTitle?: string;
   closeBySave?: number;
   refreshByDialogClose?: number;

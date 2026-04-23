@@ -1,3 +1,5 @@
+import { LanguagePackageType } from "../manager-type";
+
 // # Type
 export type PaDrawerType = {
   /**
@@ -30,7 +32,7 @@ export type PaDrawerType = {
    * <MDrawer title="次标题" />
    * ```
    * */
-  title?: Record<languageKey, string> | string;
+  title?: LanguagePackageType | string;
 
   /**
    * **Drawer次标题**
@@ -42,7 +44,7 @@ export type PaDrawerType = {
    * <MDrawer subTitle="次标题" />
    * ```
    * */
-  subTitle?: Record<languageKey, string> | string;
+  subTitle?: LanguagePackageType | string;
 
   /**
    * **宽度**
