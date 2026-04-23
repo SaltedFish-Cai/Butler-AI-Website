@@ -6,8 +6,6 @@
     :style="{ ...props.style }"
     ref="selectRef"
   >
-    <!-- <pa-icon :name="selectItem" class="pa-select-icon_select-icon" /> -->
-
     <pa-popover
       ref="popoverRef"
       :disabled="disabled"
@@ -16,12 +14,7 @@
       :closeByScroll="false"
     >
       <template #reference>
-        <!-- <div class="reference-btn">
-          <pa-icon :name="selectItem" />
-          {{ inputPlaceholder }}
-        </div> -->
         <pa-button :icon-name="selectItem" type="default" :useStop="false">{{ inputPlaceholder }}</pa-button>
-        <!-- <div class="reference-btn">{{ inputPlaceholder }}</div> -->
       </template>
 
       <pa-tabs v-model="activeName" align="edge">
@@ -48,22 +41,37 @@
     </pa-popover>
   </div>
 
-  <div v-else class="pa-display-style">
-    <slot name="exDisplay"></slot>
-    <template v-if="$slots.exDisplay"> ( <pa-icon :name="selectItem" class="pa-select-icon_select-icon" /> )</template>
-    <template v-else><pa-icon :name="selectItem" class="pa-select-icon_select-icon" /></template>
+  <div v-else class="pa-display-style" :class="[props.class]" :style="{ ...props.style }">
+    <div v-if="title" :style="{ width: titleWidth }" class="pa-cell-label">
+      {{ typeof title === "string" ? title : title[languageValue] }}
+    </div>
+    <div class="pa-display-value_content">
+      <slot name="exDisplay"></slot>
+      <template v-if="$slots.exDisplay">
+        ( <pa-icon :name="selectItem" class="pa-select-icon_select-icon" /> )
+      </template>
+      <template v-else>
+        <pa-icon v-if="!displayValue" :name="selectItem" class="pa-select-icon_select-icon" />
+        <span v-else>{{ displayValue }}</span>
+      </template>
+    </div>
   </div>
+
   <div
     v-if="(alwaysContrast && !isNil(contrastData)) || (!isNil(contrastData) && !isEqual(selectItem, contrastData))"
     :class="['pa-contrast-style']"
   >
     <slot name="exContrast"></slot>
-    <template v-if="$slots.exContrast"> ( <pa-icon :name="contrastData" class="pa-select-icon_select-icon" /> )</template>
-    <template v-else><pa-icon :name="contrastData" class="pa-select-icon_select-icon" /></template>
+    <template v-if="$slots.exContrast">
+      ( <pa-icon :name="contrastData" class="pa-select-icon_select-icon" /> )
+    </template>
+    <template v-else>
+      <pa-icon :name="contrastData" class="pa-select-icon_select-icon" />
+    </template>
   </div>
 </template>
+
 <script lang="ts" setup>
-// # Import
 import { ref, computed, watch, inject, ComputedRef } from "vue";
 import { PaSelectIconType } from "./type";
 import iconJson from "./config/icon.json";
@@ -78,7 +86,6 @@ import { PancakeGlobalConfigType } from "../pa-manager/type";
 import _ from "lodash";
 const { isEqual, isNil } = _;
 
-// # Var
 const Config = ref([
   {
     title: "全部图标",
@@ -98,26 +105,27 @@ const props = defineProps<PaSelectIconType>();
 const emits = defineEmits(["update:modelValue", "change"]);
 
 const selectRef = ref();
-
 const selectItem = ref(props.modelValue || "finger_press_line");
 const hoverItem = ref("finger_press_line");
 
 const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
+const languageValue = computed(() => {
+  return PancakeGlobalConfig.value?.language?.value || "zh-CN";
+});
+
 const languagePackage = computed(() => {
   return PancakeGlobalConfig.value?.language?.package?.["cell"] || {};
 });
 
 const inputPlaceholder = computed(() => {
-  const language = PancakeGlobalConfig.value?.language?.value || "zh-CN";
   return typeof props.placeholder === "object"
-    ? props.placeholder[language] || languagePackage.value[`clickChangeIcon`]
+    ? props.placeholder[languageValue.value] || languagePackage.value[`clickChangeIcon`]
     : props.placeholder || languagePackage.value[`clickChangeIcon`];
 });
 
 const activeName = ref("all");
 let oldValue = props.modelValue;
 
-// #Function 设置Icon选项
 function setIconOptions(icons) {
   const iconOptions = icons.map(item => {
     return { label: item.font_class, value: item.font_class };
@@ -125,7 +133,6 @@ function setIconOptions(icons) {
   return iconOptions;
 }
 
-// #Function 选择Icon
 function selectedIcon(value) {
   selectItem.value = value;
   emits("update:modelValue", value);
@@ -133,12 +140,10 @@ function selectedIcon(value) {
   oldValue = value;
 }
 
-// #Function 悬停Icon
 function hoverIcon(iconText) {
   hoverItem.value = iconText.label;
 }
 
-// #Watch modelValue
 watch(
   () => props.modelValue,
   data => {
