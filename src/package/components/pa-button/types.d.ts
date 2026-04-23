@@ -61,7 +61,7 @@ export type ComponentProps = {
 
   /**
    * **按钮大小**
-   * @type `string`
+   * @type `'large'` `'medium'` `'small'`
    * @default `medium`
    * @description 可选值为 `small` | `large`
    * */
@@ -77,8 +77,8 @@ export type ComponentProps = {
 
   /**
    * **按钮样式类型**
-   * @type `string`
-   * @default `default`
+   * @type `'danger'` `'default'` `'info'` `'primary'` `'success'` `'warning'`
+   * @default `undefined`
    * @description 可选值为 `danger` | `default` | `info` | `primary` | `success` | `warning`
    * */
   type?: "danger" | "default" | "info" | "primary" | "success" | "warning";
@@ -86,7 +86,7 @@ export type ComponentProps = {
   /**
    * **是否禁用状态**
    * @type `boolean`
-   * @default `false`
+   * @default `undefined`
    * @description 当设置该值为 `true` 时，按钮为禁用状态
    * */
   disabled?: boolean;
@@ -94,7 +94,7 @@ export type ComponentProps = {
   /**
    * **加载状态**
    * @type `boolean`
-   * @default `false`
+   * @default `undefined`
    * @description 当设置该值为 `true` 时，按钮为加载状态
    * */
   loading?: boolean;
@@ -125,7 +125,7 @@ export type ComponentProps = {
 
   /**
    * **Icon位置**
-   * @type `left` | `right`
+   * @type `'left'` `'right'`
    * @default `left`
    * @description 可选值为 `left` | `right`
    * */
