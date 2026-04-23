@@ -41,16 +41,16 @@ export type ComponentProps = {
 
   /**
    * **是否显示**
-   * @type `boolean`
-   * @default `false`
+   * @type `boolean` | `undefined`
+   * @default `undefined`
    * @description 当设置该值为 `true` 时，显示徽标
    * */
   useShow?: boolean;
 
   /**
    * **使用小红点显示**
-   * @type `boolean`
-   * @default `false`
+   * @type `boolean` | `undefined`
+   * @default `undefined`
    * @description 当设置该值为 `true` 时，显示小红点
    * */
   useDot?: boolean;

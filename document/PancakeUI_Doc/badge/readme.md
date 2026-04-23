@@ -24,12 +24,12 @@
 
 ## ComponentProps
 
-| 属性名   | 描述           | 类型                              | 默认值  |
-| -------- | -------------- | --------------------------------- | ------- |
-| id       | 唯一标识       | `string`                          | -       |
-| class    | 自定义类名     | `Array<string>` `string`          | -       |
-| style    | 自定义样式     | `Record<string, string>`          | -       |
-| value    | 徽标值         | `number` `string`                 | -       |
-| maxValue | 最大值         | `number` `string`                 | -       |
-| useShow  | 是否显示       | `boolean`                         | `false` |
-| useDot   | 是否显示小红点 | `boolean`                         | `false` |
+| 属性名   | 描述           | 类型                     | 默认值 |
+| -------- | -------------- | ------------------------ | ------ |
+| id       | 唯一标识       | `string`                 | -      |
+| class    | 自定义类名     | `Array<string>` `string` | -      |
+| style    | 自定义样式     | `Record<string, string>` | -      |
+| value    | 徽标值         | `number` `string`        | -      |
+| maxValue | 最大值         | `number` `string`        | -      |
+| useShow  | 是否显示       | `boolean`                | -      |
+| useDot   | 是否显示小红点 | `boolean`                | -      |

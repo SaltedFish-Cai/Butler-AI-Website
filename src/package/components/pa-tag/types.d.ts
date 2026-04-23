@@ -40,8 +40,8 @@ export type ComponentProps = {
 
   /**
    * **是否折叠**
-   * @type `boolean`
-   * @default `false`
+   * @type `boolean` | `undefined`
+   * @default `undefined`
    * @description 是否折叠标签
    * */
   useCollapse?: boolean;
@@ -56,8 +56,8 @@ export type ComponentProps = {
 
   /**
    * **是否禁用**
-   * @type `boolean`
-   * @default `false`
+   * @type `boolean` | `undefined`
+   * @default `undefined`
    * @description 是否禁用标签删除功能
    * */
   disabled?: boolean;
