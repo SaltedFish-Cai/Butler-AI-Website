@@ -10,8 +10,8 @@ export type ComponentProps = {
 
   /**
    * **自定义类名**
-   * @type `string`
-   * @default `undefined`
+   * @type `Array<string>` | `string` | `undefined`
+   * @default  `undefined`
    * @description 当设置该值时，会自定义类名
    * @description 该值的类型为 `string`，可以是任意类型
    * */

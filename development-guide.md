@@ -94,7 +94,7 @@ export default { name: "PaButton", install };
 
 - 组件属性必须包含以下属性
   - id：组件唯一标识，类型为 string
-  - class：自定义类名，类型为 string
+  - class：自定义类名，类型为 Array<string> | string
   - style：自定义样式，类型为 Record<string, string>;
   - 标题、提示信息等需要支持多语言，类型为 LanguagePackageType
   - 所有非 boolean 类型的属性都非必填属性，默认值为 undefined
