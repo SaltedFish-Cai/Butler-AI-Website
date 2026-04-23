@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ComponentProps } from "./type";
+import { ComponentProps } from "./types";
 
 // # Var
 const props = withDefaults(defineProps<ComponentProps>(), {
@@ -20,22 +20,5 @@ const props = withDefaults(defineProps<ComponentProps>(), {
 </script>
 
 <style lang="scss" scoped>
-@use "./iconfont/iconfont.css";
-
-.pa-icon {
-  display: inline-block;
-  font-family: "pa-iconfont" !important;
-  font-size: calc(var(--pa-size-font) + 1px);
-  .m-iconfont_icon {
-    position: relative;
-    z-index: 0;
-    display: inline-block;
-    width: 1em;
-    height: 1em;
-    font-size: inherit;
-    line-height: 1em;
-    font-family: "pa-iconfont" !important;
-    // font-size: calc(var(--pa-size-font) + 1px);
-  }
-}
+@use "./index.scss";
 </style>
