@@ -17,7 +17,6 @@
       <template #reference>
         <div class="pa-time-content">
           <div v-if="!isRange" class="pa-time-input" :class="[isFocus ? 'is-focus' : '']">
-            <!-- input -->
             <input
               class="pa-time-input-inner"
               v-model="inValue"
@@ -31,7 +30,6 @@
             />
           </div>
           <div v-else class="pa-time-input" :class="[isFocus ? 'is-focus' : '']">
-            <!-- input -->
             <input
               class="pa-time-input-inner center"
               v-model="inValue[0]"
@@ -66,7 +64,6 @@
         :disabled-date="disabledDateFn"
         @change="handlePanelChange"
       />
-
       <MYearPanel
         v-else-if="YearMap[type]"
         :model-value="internalValue"
@@ -77,10 +74,16 @@
       />
     </pa-popover>
   </div>
-  <div v-else class="pa-display-style">
-    <slot name="exDisplay"></slot>
-    <template v-if="$slots.exDisplay"> ( {{ findData(inValue) || "--" }} )</template>
-    <template v-else>{{ findData(inValue) || "--" }}</template>
+
+  <div v-else class="pa-display-style" :class="[props.class]" :style="{ ...props.style }">
+    <div v-if="title" :style="{ width: titleWidth }" class="pa-cell-label">
+      {{ typeof title === "string" ? title : title[languageValue] }}
+    </div>
+    <div class="pa-display-value_content">
+      <slot name="exDisplay"></slot>
+      <template v-if="$slots.exDisplay"> ( {{ findData(inValue) || "--" }} )</template>
+      <template v-else>{{ displayValue || findData(inValue) || "--" }}</template>
+    </div>
   </div>
 
   <div
@@ -96,7 +99,6 @@
 <script lang="ts" setup>
 import { ref, Ref, computed, watch, inject, ComputedRef } from "vue";
 import { PaTimeType } from "./type";
-import { randChar } from "../tools/rand-char";
 import MDateTimePanel from "./date-time-panel.vue";
 import MYearPanel from "./year-panel.vue";
 import { convertValue, isValidDate } from "./utils";
@@ -121,7 +123,6 @@ const YearMap = {
 };
 
 const props = withDefaults(defineProps<PaTimeType>(), {
-  id: randChar(),
   type: "date-picker"
 });
 
@@ -137,11 +138,13 @@ const inputRef = ref();
 const internalValue: Ref<string[] | string | null> = ref(isRange.value ? [] : null);
 
 const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
+const languageValue = computed(() => {
+  return PancakeGlobalConfig.value?.language?.value || "zh-CN";
+});
 
 const inputPlaceholder = computed(() => {
-  const language = PancakeGlobalConfig.value?.language?.value || "zh-CN";
   return typeof props.placeholder === "object"
-    ? props.placeholder[language] || languagePackage.value[`selectPlaceholder`]
+    ? props.placeholder[languageValue.value] || languagePackage.value[`selectPlaceholder`]
     : props.placeholder || languagePackage.value[`selectPlaceholder`];
 });
 
@@ -153,18 +156,11 @@ const inValue = ref(props.modelValue || []);
 
 let oldValue = props.modelValue;
 
-/**
- * 处理输入事件
- * @param {Object} e - 事件对象
- */
 function handleInput({ target }, panel?: "end" | "start") {
   const value = target.value;
 
-  // 验证日期格式
   if (value && !isValidDate(value)) {
-    // 如果日期格式不合法，可以在这里处理错误
     typeof window !== "undefined" && window.developLog.log("日期格式不合法:", value, "warning");
-    // 可以选择不清空输入，让用户继续编辑
     return;
   }
 
