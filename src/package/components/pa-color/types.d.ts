@@ -9,11 +9,11 @@ export type ComponentProps = {
 
   /**
    * **自定义类名**
-   * @type `string` | `undefined`
+   * @type `Array<string>` | `string` | `undefined`
    * @default `undefined`
    * @description 当设置该值时，会添加到组件的类名中
    * */
-  class?: string;
+  class?: Array<string> | string;
 
   /**
    * **自定义样式**
@@ -62,28 +62,4 @@ export type ComponentProps = {
    * @description 当设置该值时，会显示预设颜色列表
    * */
   presetColors?: Array<string>;
-
-  /**
-   * **颜色变化时的回调函数**
-   * @type `(color: string) => void` | `undefined`
-   * @default `undefined`
-   * @description 当颜色变化时，会触发该回调函数
-   * */
-  onChange?: (color: string) => void;
-
-  /**
-   * **颜色选择器打开时的回调函数**
-   * @type `() => void` | `undefined`
-   * @default `undefined`
-   * @description 当颜色选择器打开时，会触发该回调函数
-   * */
-  onOpen?: () => void;
-
-  /**
-   * **颜色选择器关闭时的回调函数**
-   * @type `() => void` | `undefined`
-   * @default `undefined`
-   * @description 当颜色选择器关闭时，会触发该回调函数
-   * */
-  onClose?: () => void;
 };

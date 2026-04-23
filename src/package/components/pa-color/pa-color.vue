@@ -22,7 +22,7 @@
 
 <script setup lang="ts">
 import { ref, watch, onMounted, onUnmounted } from "vue";
-import { ComponentProps } from "./type";
+import { ComponentProps } from "./types";
 
 // Props定义
 const props = withDefaults(defineProps<ComponentProps>(), {
