@@ -10,7 +10,7 @@
 
 <script lang="ts" setup>
 import { computed } from "vue";
-import { ComponentProps } from "./type";
+import { ComponentProps } from "./types";
 
 const props = withDefaults(defineProps<ComponentProps>(), {});
 
