@@ -43,7 +43,7 @@
 | display             | 纯展示                       | `boolean` `undefined`                                                                                                                  | `undefined` |
 | contrastData        | 对比用原数据                 | `Array<number \| string>` `number` `string` `undefined`                                                                                | `undefined` |
 | alwaysContrast      | 是否总是显示对不数据         | `boolean` `undefined`                                                                                                                  | `undefined` |
-| title               | 表单项标签                   | `Record<languageKey, string> \| string` `undefined`                                                                                    | `undefined` |
+| title               | 表单项标签                   | `Record<'en-US' \| 'zh-CN', string>` `string` `undefined`                                                                              | `undefined` |
 | titleWidth          | 表单项标签宽度               | `string` `undefined`                                                                                                                   | `undefined` |
 | teleportInContainer | 是否使用 Teleport 挂载到容器 | `boolean` `undefined`                                                                                                                  | `undefined` |
 | createUseChange     | 创建时是否使用 change 事件   | `boolean` `undefined`                                                                                                                  | `undefined` |
@@ -52,4 +52,4 @@
 
 | 字段     | 描述             | 类型                            |
 | -------- | ---------------- | ------------------------------- |
-| onChange | 数据变更回调函数 | `({ value, oldValue }) => void` |
+| change | 数据变更回调函数 | `({ value, oldValue }) => void` |

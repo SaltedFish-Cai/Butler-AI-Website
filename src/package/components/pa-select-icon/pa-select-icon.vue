@@ -14,17 +14,16 @@
       :closeByScroll="false"
     >
       <template #reference>
-        <pa-button :icon-name="selectItem" type="default" :useStop="false">{{ inputPlaceholder }}</pa-button>
+        <div class="flex-center-start">
+          <div v-if="title" :style="{ width: titleWidth }" class="pa-cell-label">
+            {{ typeof title === "string" ? title : title[languageValue] }}
+          </div>
+          <pa-button class="flex1" :icon-name="selectItem" type="default" :useStop="false">{{ inputPlaceholder }}</pa-button>
+        </div>
       </template>
 
       <pa-tabs v-model="activeName" align="edge">
-        <pa-tabs-item
-          v-for="its in Config"
-          :key="its.name"
-          :label="`${its.title}(${its.icons.length})`"
-          :name="its.name"
-          scroll
-        >
+        <pa-tabs-item v-for="its in Config" :key="its.name" :label="`${its.title}(${its.icons.length})`" :name="its.name" scroll>
           <div class="pa-select-icon_popover">
             <template v-for="icon in its.icons" :key="icon.value">
               <pa-icon
@@ -47,9 +46,7 @@
     </div>
     <div class="pa-display-value_content">
       <slot name="exDisplay"></slot>
-      <template v-if="$slots.exDisplay">
-        ( <pa-icon :name="selectItem" class="pa-select-icon_select-icon" /> )
-      </template>
+      <template v-if="$slots.exDisplay"> ( <pa-icon :name="selectItem" class="pa-select-icon_select-icon" /> ) </template>
       <template v-else>
         <pa-icon v-if="!displayValue" :name="selectItem" class="pa-select-icon_select-icon" />
         <span v-else>{{ displayValue }}</span>
@@ -62,9 +59,7 @@
     :class="['pa-contrast-style']"
   >
     <slot name="exContrast"></slot>
-    <template v-if="$slots.exContrast">
-      ( <pa-icon :name="contrastData" class="pa-select-icon_select-icon" /> )
-    </template>
+    <template v-if="$slots.exContrast"> ( <pa-icon :name="contrastData" class="pa-select-icon_select-icon" /> ) </template>
     <template v-else>
       <pa-icon :name="contrastData" class="pa-select-icon_select-icon" />
     </template>

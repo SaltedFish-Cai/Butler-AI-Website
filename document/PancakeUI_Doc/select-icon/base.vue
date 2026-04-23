@@ -1,5 +1,5 @@
 <template>
-  <pa-select-icon v-model="iconName" />
+  <pa-select-icon v-model="iconName" :title="{ 'en-US': 'Basic Usage', 'zh-CN': '基础使用' }" />
 </template>
 
 <script setup lang="ts">
