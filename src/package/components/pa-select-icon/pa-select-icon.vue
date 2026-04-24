@@ -163,7 +163,9 @@ watch(
 );
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+@use "../cell-style.scss";
+
 .pa-select-icon {
   display: inline-flex;
   align-items: center;
@@ -235,9 +237,6 @@ watch(
     }
   }
 }
-</style>
-
-<style lang="scss">
 .pa-select-icon {
   > .pa-popover-reference {
     width: 100%;
