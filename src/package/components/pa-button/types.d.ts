@@ -66,7 +66,7 @@ export type ComponentProps = {
 
   /**
    * **按钮文本**
-   * @type `LanguagePackageType | string` | `undefined`
+   * @type `LanguagePackageType` | `string` | `undefined`
    * @default `undefined`
    * @description 当设置该值时，会显示在按钮上
    * */
