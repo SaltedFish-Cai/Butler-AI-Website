@@ -157,7 +157,7 @@
         height: 20px;
         margin-bottom: calc(var(--pa-size-padding, 10px) / 3);
         color: var(--pa-color-hover);
-        > .m-iconfont {
+        > .pa-icon_font {
           transform: translateY(0.5px);
         }
       }
@@ -169,7 +169,7 @@
         height: 20px;
         color: var(--pa-color-hover);
         margin-top: calc(var(--pa-size-padding, 10px) / 3);
-        > .m-iconfont {
+        > .pa-icon_font {
           transform: translateY(-0.5px);
         }
       }
