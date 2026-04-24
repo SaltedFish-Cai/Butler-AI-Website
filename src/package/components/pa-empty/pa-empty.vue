@@ -1,15 +1,9 @@
 <template>
-  
   <div class="pa-empty">
-    
     <div class="pa-empty_inner" :class="[props.class]" :style="{ ...props.style }">
-      
-      <pa-icon style="font-size: 60px" :name="props.icon" />
-      
-      <div style="text-align: center">{{ messageText }}</div>
-    
+      <pa-icon class="pa-empty_icon" :name="props.icon" />
+      <div class="pa-empty_message">{{ messageText }}</div>
     </div>
-  
   </div>
 </template>
 
@@ -20,7 +14,7 @@ import { PancakeGlobalConfigType } from "../pa-manager/type";
 
 // # Var
 const props = withDefaults(defineProps<ComponentProps>(), {
-  icon: "dakai",
+  icon: "folder_open_line",
   message: "暂无数据"
 });
 

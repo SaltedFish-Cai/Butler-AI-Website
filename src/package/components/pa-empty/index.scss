@@ -7,9 +7,19 @@
   height: 100%;
   font-size: var(--pa-size-font, 13px);
 
+  .pa-empty_icon {
+    font-size: 60px;
+    transform: translate(3px, -5px);
+  }
+  .pa-empty_message {
+    max-width: 75%;
+    text-align: center;
+    line-height: 1.2em;
+  }
+
   .pa-empty_inner {
-    width: 113px;
-    height: 113px;
+    width: 133px;
+    height: 133px;
     display: flex;
     flex-direction: column;
     justify-content: center;
