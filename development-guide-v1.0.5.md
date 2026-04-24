@@ -193,7 +193,7 @@ import { LanguagePackageType } from "../manager-type";
 | id | 唯一标识 | `string` \| `undefined` | `undefined` |
 | class | 自定义类名 | `Array<string>` \| `string` \| `undefined` | `undefined` |
 | style | 自定义样式 | `Record<string, string>` \| `undefined` | `undefined` |
-| tagList | 标签列表 | [`Array`](#tagtype) | - |
+| tagList | 标签列表 | [`Array<TagType>`](#tagtype) | - |
 | useCollapse | 是否折叠 | `boolean` | `true` |
 | disabled | 是否禁用删除功能 | `boolean` \| `undefined` | `undefined` |
 

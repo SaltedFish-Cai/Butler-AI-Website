@@ -316,7 +316,7 @@ const install = function (app) {
 ```markdown
 | 属性名 | 描述 | 类型 | 默认值 |
 | ------ | ---- | ---- | ------ |
-| tagList | 标签列表 | [`Array`](#tagtype) | - |
+| tagList | 标签列表 | [`Array<TagType>`](#tagtype) | - |
 ```
 
 **文档最下方的自定义类型说明**：
