@@ -22,7 +22,7 @@
 
 <script setup lang="ts">
 import { ref, watch, onMounted, onUnmounted } from "vue";
-import { ComponentProps } from "./types";
+import { ComponentProps, ComponentEmits } from "./types";
 
 /**
  * **组件属性**
@@ -35,10 +35,7 @@ const props = withDefaults(defineProps<ComponentProps>(), { useAlpha: true, useI
  * **组件事件定义**
  * @description 定义组件可触发的事件
  * */
-const emit = defineEmits<{
-  (e: "update:modelValue", value: string): void;
-  (e: "change", value: string): void;
-}>();
+const emit = defineEmits<ComponentEmits>();
 
 /**
  * **选择器打开状态**

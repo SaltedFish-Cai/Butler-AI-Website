@@ -63,3 +63,23 @@ export type ComponentProps = {
    * */
   presetColors?: Array<string>;
 };
+
+/**
+ * **组件事件定义**
+ * @description 定义组件可触发的事件
+ * */
+export type ComponentEmits = {
+  /**
+   * **更新模型值事件**
+   * @param `value` `string` 颜色值
+   * @returns `void`
+   * */
+  (e: "update:modelValue", value: string): void;
+
+  /**
+   * **颜色变更事件**
+   * @param `value` `string` 颜色值
+   * @returns `void`
+   * */
+  (e: "change", value: string): void;
+};

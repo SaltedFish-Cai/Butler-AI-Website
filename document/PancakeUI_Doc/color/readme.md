@@ -25,6 +25,7 @@
 
 ## ComponentEmits
 
-| 事件名 | 描述                 | 回调函数                  | 函数参数       |
-| ------ | -------------------- | ------------------------- | -------------- |
-| change | 颜色变化时的回调函数 | `(color: string) => void` | `color: string` |
+| 事件名 | 描述 | 回调函数 |
+| ------ | ---- | -------- |
+| update:modelValue | 更新模型值事件 | `(value: string) => void` |
+| change | 颜色变化时的回调函数 | `(value: string) => void` |
