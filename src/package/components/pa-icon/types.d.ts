@@ -57,7 +57,7 @@ export type ComponentProps = {
 export type ComponentEmits = {
   /**
    * **点击 Icon 事件**
-   * @param `MouseEvent` 鼠标事件对象
+   * @param `event` `MouseEvent` 鼠标事件对象
    * @returns `void`
    * */
   (e: "click", event: MouseEvent): void;

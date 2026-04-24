@@ -152,16 +152,27 @@ export type ComponentProps = {
 - [ ] **defineEmits 使用类型化写法**，禁用数组写法：
   - ❌ 错误：`const emit = defineEmits(["click","change"]);`
   - ✅ 正确：`const emit = defineEmits<ComponentEmits>();`
-  - **ComponentEmits 类型定义格式**：
+  - **ComponentEmits 类型定义格式**（事件名必须使用驼峰命名法）：
     ```typescript
     export type ComponentEmits = {
+      /**
+       * **点击按钮事件**
+       * @param `event` `MouseEvent` 鼠标事件对象
+       * @returns `void`
+       * */
       (e: "click", event: MouseEvent): void;
-      (e: "change", payload: { detail: string }): string;
+
+      /**
+       * **确认按钮点击事件**
+       * @returns `void`
+       * */
+      (e: "confirmClick"): void;
     };
     ```
   - 类型定义需根据实际 `emit()` 调用确定：
     - `emit("click", event)` → `(e: "click", event: MouseEvent): void`
-    - `const val: string = emit("change", { detail: "click" })` → `(e: "change", payload: { detail: string }): string`
+    - `emit("confirmClick")` → `(e: "confirmClick"): void`
+  - **注意**：事件定义间需要空行分隔
 
 ### 示例
 
