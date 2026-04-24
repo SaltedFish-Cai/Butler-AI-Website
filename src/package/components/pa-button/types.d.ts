@@ -1,6 +1,19 @@
+/**
+ * **模块导入**
+ * @description 导入消息弹窗配置类型
+ * */
 import { MessageBoxOptions } from "@/package/components/pa-message-box/type";
+
+/**
+ * **模块导入**
+ * @description 导入多语言类型定义
+ * */
 import { LanguagePackageType } from "../manager-type";
 
+/**
+ * **按钮内置样式类型**
+ * @description 预设按钮样式类型，包含常用的操作按钮图标和样式
+ * */
 export type ButtonTypeV2Is =
   | "add"
   | "cancel"
