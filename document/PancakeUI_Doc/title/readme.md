@@ -4,7 +4,30 @@
 
 ## 基础使用
 
+展示带有装饰性下划线的标题，使用 `line` 控制是否显示下划线。
+
 <demo src="./base.vue">
+</demo>
+
+## 下划线控制
+
+使用 `line` 属性控制是否显示下划线装饰，默认为 `true` 显示下划线。
+
+<demo src="./line.vue">
+</demo>
+
+## 提示信息
+
+使用 `tips` 属性设置标题下方的提示信息，也可通过 `#tips` 插槽自定义提示内容。
+
+<demo src="./tips.vue">
+</demo>
+
+## 内边距设置
+
+使用 `padding` 属性设置标题的内边距方向，支持多个方向组合。
+
+<demo src="./padding.vue">
 </demo>
 
 ## ComponentProps
