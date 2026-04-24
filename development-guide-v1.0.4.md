@@ -149,6 +149,15 @@ import { LanguagePackageType } from "../manager-type";
 - 如果组件属性是数组类型，必须使用 Array 类型
 - 如果组件属性是对象类型，必须使用 Record 类型
 
+#### 2.4.2 组件事件要求（ComponentEmits）
+
+- 组件事件必须是实际使用的事件，如果实际组件代码中没有使用该事件，无需删除但需要标记为未使用在注释中。
+- emits 定义必须和 defineEmits() 中的事件名称一致。
+- 文档中的回调函数、函数参数必须和实际使用中的事件参数一致。
+  - 例如：emits("directlyScrollRight", false) 。
+    回调函数参数为 boolean 类型
+    回调函数为 (data: boolean) => void
+
 ## 3. 组件文件格式要求
 
 ### 3.1 Scss 要求
