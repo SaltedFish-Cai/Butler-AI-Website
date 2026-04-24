@@ -33,8 +33,13 @@
      ```
 
      - 需要检查和修改的文件路径为：
+
        - src/package/components/pa-color/pa-color.vue
        - src/package/components/pa-color/pa-color-box.vue
+
+   - 所有文件修改后都需要进行格式化文档操作保持代码风格一致
+
+     - 使用 Prettier 插件进行代码格式化
 
    - 如果需求中包含排查任务
 

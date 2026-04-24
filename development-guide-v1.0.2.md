@@ -1,5 +1,7 @@
 # Development Guide 开发指南
 
+### 3.2 Types.d.ts
+
 ## 1.组件文档生成原则
 
 - 文档创建源： /src/package/components/{pa-**}/{pa-**|pa-**-**}.vue
@@ -146,3 +148,42 @@ import { LanguagePackageType } from "../manager-type";
 - 组件实际使用的属性类型必须和 @type 定义保持一致，实际代码中不可使用其他类型，可使用 Eslint/Tslint 插件 检查。
 - 如果组件属性是数组类型，必须使用 Array 类型
 - 如果组件属性是对象类型，必须使用 Record 类型
+
+## 3. 组件文件格式要求
+
+### 3.1 Scss 要求
+
+- 代码缩进 2 个空格
+- class 必须使用 BEM 命名规范，例如 pa-empty_icon
+- class 之间用空行隔开
+
+  - 例如：
+
+  ```scss
+  .pa-empty_icon {
+  ...
+  }
+
+  .pa-empty_text {
+  ...
+  }
+  ```
+
+### 3.2 Types.d.ts
+
+- 属性与属性之间用空行隔开
+- import 语句必须放置在组件源文件的顶部
+
+### 3.3 TypeScript 要求
+
+- 代码缩进 2 个空格
+- 方法与方法之间用空行隔开
+- 类型与类型之间用空行隔开
+- 尽量使用一行代码实现功能，减少代码行数
+
+  - 例如：
+
+  ```ts
+  const a = { aa: "123" };
+  if (text) state.buttonConfig.iconName = text;
+  ```
