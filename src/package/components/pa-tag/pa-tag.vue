@@ -43,7 +43,7 @@ import { onMounted, ref, Ref, watch, nextTick, inject, ComputedRef } from "vue";
  * **模块导入**
  * @description 导入组件类型定义
  * */
-import { ComponentProps, TagListType } from "./types";
+import { ComponentProps, TagListType, ComponentEmits } from "./types";
 
 /**
  * **模块导入**
@@ -82,7 +82,7 @@ const props = withDefaults(defineProps<ComponentProps>(), { useCollapse: true })
  * **组件事件定义**
  * @description 定义组件可触发的事件
  * */
-const emits = defineEmits(["removeTag"]);
+const emits = defineEmits<ComponentEmits>();
 
 /**
  * **弹窗组件引用**

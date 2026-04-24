@@ -152,7 +152,9 @@ export type ComponentProps = {
 - [ ] **defineEmits 使用类型化写法**，禁用数组写法：
   - ❌ 错误：`const emit = defineEmits(["click","change"]);`
   - ✅ 正确：`const emit = defineEmits<ComponentEmits>();`
-  - **ComponentEmits 类型定义格式**（事件名必须使用驼峰命名法）：
+  - **ComponentEmits 类型定义格式**：
+    - 事件名必须使用驼峰命名法（如 `confirmClick`）
+    - **例外**：`update:modelValue` 是 Vue 的 v-model 约定，保持不变
     ```typescript
     export type ComponentEmits = {
       /**
