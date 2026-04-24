@@ -8,7 +8,7 @@
 
 ## 一、开发前准备
 
-- [ ] 检查 development-guide.md 版本号是否变化，变化则更新规范
+- [ ] 检查 development-guide.md 版本号是否变化，变化则更新检查清单列表
 - [ ] 通过 `index.ts` 的 install 方法确认组件范围（如 PaColor + PaColorBox 需检查两个文件）
 - [ ] 从 GitHub 仓库获取最新代码（分支：butler-dev）
 
