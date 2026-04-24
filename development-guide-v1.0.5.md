@@ -196,3 +196,99 @@ import { LanguagePackageType } from "../manager-type";
   const a = { aa: "123" };
   if (text) state.buttonConfig.iconName = text;
   ```
+
+### 2.5 自定义类型文档说明
+
+当 ComponentProps 或 ComponentEmits 中使用非标准类型（自定义类型）时，需要在文档最下方添加自定义类型的文档说明。
+
+#### 2.5.1 自定义类型识别
+
+以下类型属于**标准类型**，无需额外说明：
+- 基础类型：`string`、`number`、`boolean`、`undefined`、`null`
+- 数组类型：`Array<T>`
+- 对象类型：`Record<K, V>`
+- 字面量联合类型：`'large' | 'medium' | 'small'`
+- Vue 类型：`MouseEvent`、`Event` 等
+
+以下类型属于**自定义类型**，需要添加文档说明：
+- 项目内定义的类型：如 `TagType`、`TagListType`、`ButtonTypeV2Is` 等
+- 从其他模块导入的类型：如 `LanguagePackageType`
+
+#### 2.5.2 文档格式要求
+
+1. **表格格式**：与 ComponentProps 相同的四列格式（属性名、描述、类型、默认值）
+2. **链接方式**：在 ComponentProps 表格中，将自定义类型名称用链接指向下方的类型说明
+3. **位置**：放在文档最下方，按字母顺序排列
+
+#### 2.5.3 示例（以 Tag 组件为例）
+
+**ComponentProps 表格中的链接写法**：
+
+```markdown
+## ComponentProps
+
+| 属性名 | 描述 | 类型 | 默认值 |
+| ------ | ---- | ---- | ------ |
+| tagList | 标签列表 | [`TagListType`](#taglisttype) | - |
+```
+
+**文档最下方的自定义类型说明**：
+
+```markdown
+## TagType
+
+标签数据结构。
+
+| 属性名 | 描述 | 类型 | 默认值 |
+| ------ | ---- | ---- | ------ |
+| label | 标签显示文本 | `LanguagePackageType` \| `string` | - |
+| value | 标签值 | `boolean` \| `number` \| `string` \| `undefined` | `undefined` |
+
+## TagListType
+
+`Array<TagType>` - 标签数据结构数组。
+```
+
+#### 2.5.4 特殊情况处理
+
+1. **类型别名**：如果是简单的类型别名（如 `TagListType = Array<TagType>`），可以用一行描述说明
+2. **嵌套类型**：如果自定义类型中引用了其他自定义类型，同样使用链接方式
+3. **枚举类型**：如果自定义类型是枚举或字面量联合，列出所有可选值
+
+#### 2.5.5 完整示例
+
+```markdown
+# Tag 标签
+
+`pa-tag` 用于展示一组标签，支持折叠和删除功能。
+
+## ComponentProps
+
+| 属性名 | 描述 | 类型 | 默认值 |
+| ------ | ---- | ---- | ------ |
+| id | 唯一标识 | `string` \| `undefined` | `undefined` |
+| class | 自定义类名 | `Array<string>` \| `string` \| `undefined` | `undefined` |
+| style | 自定义样式 | `Record<string, string>` \| `undefined` | `undefined` |
+| tagList | 标签列表 | [`TagListType`](#taglisttype) | - |
+| useCollapse | 是否折叠 | `boolean` | `true` |
+| disabled | 是否禁用删除功能 | `boolean` \| `undefined` | `undefined` |
+
+## ComponentEmits
+
+| 事件名 | 描述 | 回调函数 |
+| ------ | ---- | -------- |
+| removeTag | 删除标签时触发 | `(data: TagType) => void` |
+
+## TagType
+
+标签数据结构。
+
+| 属性名 | 描述 | 类型 | 默认值 |
+| ------ | ---- | ---- | ------ |
+| label | 标签显示文本 | `LanguagePackageType` \| `string` | - |
+| value | 标签值 | `boolean` \| `number` \| `string` \| `undefined` | `undefined` |
+
+## TagListType
+
+`Array<`[`TagType`](#tagtype)`>` - 标签数据结构数组。
+```

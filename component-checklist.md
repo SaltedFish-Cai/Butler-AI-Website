@@ -412,3 +412,58 @@ function handleClick() {}
 ---
 
 *文档版本：v1.0.5 | 创建时间：2026-04-24*
+
+---
+
+## 九、自定义类型文档说明
+
+当 ComponentProps 或 ComponentEmits 中使用非标准类型（自定义类型）时，需要在文档最下方添加自定义类型的文档说明。
+
+### 识别自定义类型
+
+**标准类型**（无需额外说明）：
+- 基础类型：`string`、`number`、`boolean`、`undefined`、`null`
+- 数组类型：`Array<T>`
+- 对象类型：`Record<K, V>`
+- 字面量联合类型：`'large' | 'medium' | 'small'`
+- Vue 类型：`MouseEvent`、`Event` 等
+
+**自定义类型**（需要添加文档说明）：
+- 项目内定义的类型：如 `TagType`、`TagListType`、`ButtonTypeV2Is`
+- 从其他模块导入的类型：如 `LanguagePackageType`
+
+### 文档格式要求
+
+- [ ] **表格格式**：与 ComponentProps 相同的四列格式（属性名、描述、类型、默认值）
+- [ ] **链接方式**：在 ComponentProps 表格中，将自定义类型名称用链接指向下方的类型说明
+- [ ] **位置**：放在文档最下方，按字母顺序排列
+- [ ] **类型别名**：如果是简单的类型别名，可以用一行描述说明
+
+### 示例
+
+**ComponentProps 表格中的链接写法**：
+
+```markdown
+## ComponentProps
+
+| 属性名 | 描述 | 类型 | 默认值 |
+| ------ | ---- | ---- | ------ |
+| tagList | 标签列表 | [`TagListType`](#taglisttype) | - |
+```
+
+**文档最下方的自定义类型说明**：
+
+```markdown
+## TagType
+
+标签数据结构。
+
+| 属性名 | 描述 | 类型 | 默认值 |
+| ------ | ---- | ---- | ------ |
+| label | 标签显示文本 | `LanguagePackageType` \| `string` | - |
+| value | 标签值 | `boolean` \| `number` \| `string` \| `undefined` | `undefined` |
+
+## TagListType
+
+`Array<`[`TagType`](#tagtype)`>` - 标签数据结构数组。
+```
