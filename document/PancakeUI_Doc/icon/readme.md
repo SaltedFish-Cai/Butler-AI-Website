@@ -28,7 +28,7 @@
 
 | 事件名 | 描述               | 回调函数                   | 函数参数       |
 | ------ | ------------------ | -------------------------- | -------------- |
-| click  | 点击 Icon 执行方法 | `(event: any) => void`     | `event: any`   |
+| click  | 点击 Icon 执行方法 | `(event: MouseEvent) => void`     | `event: MouseEvent`   |
 
 ## Icon 选择
 
