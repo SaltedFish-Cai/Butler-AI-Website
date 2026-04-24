@@ -20,7 +20,7 @@
 - [ ] 类型名称为 `ComponentProps`
 - [ ] 必选属性：`id`、`class`、`style` 存在
 - [ ] **所有 import 语句都有 JSDoc 注释**（格式：`/** **模块导入** @description ... */`）
-- [ ] **所有 export type 都有 JSDoc 注释**（如 ButtonTypeV2Is、TagListType 等）
+- [ ] **所有 export type 都有 JSDoc 注释**（如 ButtonTypeV2Is 等）
 - [ ] **所有属性都有完整 JSDoc 注释**，格式如下：
   ```ts
   /**

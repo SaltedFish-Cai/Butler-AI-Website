@@ -13,12 +13,6 @@ export type TagType = {
   value: boolean | number | string | undefined;
 };
 
-/**
- * **标签列表类型**
- * @description 标签数据结构数组
- * */
-export type TagListType = Array<TagType>;
-
 export type ComponentProps = {
   /**
    * **组件唯一标识**
@@ -46,11 +40,11 @@ export type ComponentProps = {
 
   /**
    * **标签值**
-   * @type `TagListType`
+   * @type `Array<TagType>`
    * @default `undefined`
    * @description 标签列表
    * */
-  tagList: TagListType;
+  tagList: Array<TagType>;
 
   /**
    * **是否折叠**

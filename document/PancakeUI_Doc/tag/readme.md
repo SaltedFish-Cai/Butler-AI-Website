@@ -22,18 +22,18 @@
 
 ## ComponentProps
 
-| 属性名 | 描述 | 类型 | 默认值 |
-| ------ | ---- | ---- | ------ |
-| id | 唯一标识 | `string` \| `undefined` | `undefined` |
-| class | 自定义类名 | `Array<string>` \| `string` \| `undefined` | `undefined` |
-| style | 自定义样式 | `Record<string, string>` \| `undefined` | `undefined` |
-| tagList | 标签列表 | `TagListType` | - |
-| useCollapse | 是否折叠 | `boolean` | `true` |
-| popoverWidth | 弹出层宽度 | `number` \| `undefined` | `undefined` |
-| disabled | 是否禁用删除功能 | `boolean` \| `undefined` | `undefined` |
+| 属性名       | 描述             | 类型                                       | 默认值      |
+| ------------ | ---------------- | ------------------------------------------ | ----------- |
+| id           | 唯一标识         | `string` \| `undefined`                    | `undefined` |
+| class        | 自定义类名       | `Array<string>` \| `string` \| `undefined` | `undefined` |
+| style        | 自定义样式       | `Record<string, string>` \| `undefined`    | `undefined` |
+| tagList      | 标签列表         | `Array<TagType>`                           | -           |
+| useCollapse  | 是否折叠         | `boolean`                                  | `true`      |
+| popoverWidth | 弹出层宽度       | `number` \| `undefined`                    | `undefined` |
+| disabled     | 是否禁用删除功能 | `boolean` \| `undefined`                   | `undefined` |
 
 ## ComponentEmits
 
-| 事件名 | 描述 | 回调函数 |
-| ------ | ---- | -------- |
+| 事件名    | 描述           | 回调函数                  |
+| --------- | -------------- | ------------------------- |
 | removeTag | 删除标签时触发 | `(data: TagType) => void` |

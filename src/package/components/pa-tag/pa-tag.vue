@@ -43,7 +43,7 @@ import { onMounted, ref, Ref, watch, nextTick, inject, ComputedRef } from "vue";
  * **模块导入**
  * @description 导入组件类型定义
  * */
-import { ComponentProps, TagListType, ComponentEmits, TagType } from "./types";
+import { ComponentProps, ComponentEmits, TagType } from "./types";
 
 /**
  * **模块导入**
@@ -93,10 +93,10 @@ const popoverRef = ref();
 
 /**
  * **显示的标签列表**
- * @type `Ref<TagListType>`
+ * @type `Ref<Array<TagType>>`
  * @description 当前显示的标签列表
  * */
-const inValue = ref<TagListType>(props.tagList || []);
+const inValue = ref<Array<TagType>>(props.tagList || []);
 
 /**
  * **标签容器引用**
@@ -107,10 +107,10 @@ const tagRef = ref<HTMLDivElement>();
 
 /**
  * **隐藏的标签列表**
- * @type `Ref<TagListType>`
+ * @type `Ref<Array<TagType>>`
  * @description 被折叠隐藏的标签列表
  * */
-const hideValue: Ref<TagListType> = ref([]);
+const hideValue: Ref<Array<TagType>> = ref([]);
 
 /**
  * **透明度状态**
