@@ -216,3 +216,16 @@ export type ComponentProps = {
    * */
   deleteClick?: () => void;
 };
+
+/**
+ * **组件事件定义**
+ * @description 定义组件可触发的事件
+ * */
+export type ComponentEmits = {
+  /**
+   * **点击按钮事件**
+   * @param `event` `MouseEvent` 鼠标事件对象
+   * @returns `void`
+   * */
+  (e: "click", event: MouseEvent): void;
+};

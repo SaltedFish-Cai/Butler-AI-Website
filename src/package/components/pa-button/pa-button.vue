@@ -43,7 +43,7 @@
  * @description 导入 Vue 组合式 API、类型定义、工具函数等依赖
  * */
 import { reactive, onBeforeMount, useSlots, nextTick, watch, inject, ComputedRef, computed } from "vue";
-import { ComponentProps } from "./types";
+import { ComponentProps, ComponentEmits } from "./types";
 import inBrowser from "../tools/inBrowser";
 import { M_MessageBox } from "../feedback";
 
@@ -71,7 +71,7 @@ const props = withDefaults(defineProps<ComponentProps>(), {
  * **组件事件定义**
  * @description 定义组件可触发的事件列表
  * */
-const emit = defineEmits<{ (e: "click"): void }>();
+const emit = defineEmits<ComponentEmits>();
 
 /**
  * **全局配置注入**
@@ -173,13 +173,13 @@ function btnClick(event: MouseEvent) {
       M_MessageBox.confirm(props.confirmConfig);
       return;
     }
-    _debounce();
+    _debounce(event);
   } else {
     if (props.confirmConfig) {
       M_MessageBox.confirm(props.confirmConfig);
       return;
     }
-    realClick();
+    realClick(event);
   }
 }
 
@@ -188,9 +188,9 @@ function btnClick(event: MouseEvent) {
  * @returns `void`
  * @description 触发 click 事件并处理 loading 状态
  * */
-function realClick() {
+function realClick(event: MouseEvent) {
   if (lock) return;
-  emit("click");
+  emit("click", event);
   if (props.debounced) lock = true;
 
   nextTick(() => {

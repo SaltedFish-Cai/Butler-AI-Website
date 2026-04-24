@@ -76,9 +76,8 @@
 
 ## ComponentEmits
 
-| 事件名       | 描述             | 回调函数                       | 函数参数            |
-| ------------ | ---------------- | ------------------------------ | ------------------- |
-| click        | 点击按钮执行方法 | `(event?: MouseEvent) => void` | `event: MouseEvent` |
-| confirmClick | 确认按钮执行方法 | `() => void`                   | -                   |
+| 事件名 | 描述 | 回调函数 |
+| ------ | ---- | -------- |
+| click | 点击按钮执行方法 | `(event: MouseEvent) => void` |
 | submitClick  | 提交按钮执行方法 | `() => void`                   | -                   |
 | deleteClick  | 删除按钮执行方法 | `() => void`                   | -                   |
