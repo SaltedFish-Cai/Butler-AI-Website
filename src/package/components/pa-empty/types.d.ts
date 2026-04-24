@@ -36,7 +36,7 @@ export type ComponentProps = {
   /**
    * **图标名称**
    * @type `string` | `undefined`
-   * @default `dakai`
+   * @default `folder_open_line`
    * @description 当设置该值时，会显示对应的图标
    * */
   icon?: string;
