@@ -142,61 +142,6 @@ import { LanguagePackageType } from "../manager-type";
   - function 定义，包含：事件处理函数
   - watch 定义
 
-#### 2.4.1 组件属性要求（ComponentProps）
-
-- 组件属性必须是实际使用的属性，如果实际组件代码中没有使用该属性，无需删除但需要标记为未使用在注释中。
-- 组件实际使用的属性类型必须和 @type 定义保持一致，实际代码中不可使用其他类型，可使用 Eslint/Tslint 插件 检查。
-- 如果组件属性是数组类型，必须使用 Array 类型
-- 如果组件属性是对象类型，必须使用 Record 类型
-
-#### 2.4.2 组件事件要求（ComponentEmits）
-
-- 组件事件必须是实际使用的事件，如果实际组件代码中没有使用该事件，无需删除但需要标记为未使用在注释中。
-- emits 定义必须和 defineEmits() 中的事件名称一致。
-- 文档中的回调函数、函数参数必须和实际使用中的事件参数一致。
-  - 例如：emits("directlyScrollRight", false) 。
-    回调函数参数为 boolean 类型
-    回调函数为 (data: boolean) => void
-
-## 3. 组件文件格式要求
-
-### 3.1 Scss 要求
-
-- 代码缩进 2 个空格
-- class 必须使用 BEM 命名规范，例如 pa-empty_icon
-- class 之间用空行隔开
-
-  - 例如：
-
-  ```scss
-  .pa-empty_icon {
-  ...
-  }
-
-  .pa-empty_text {
-  ...
-  }
-  ```
-
-### 3.2 Types.d.ts
-
-- 属性与属性之间用空行隔开
-- import 语句必须放置在组件源文件的顶部
-
-### 3.3 TypeScript 要求
-
-- 代码缩进 2 个空格
-- 方法与方法之间用空行隔开
-- 类型与类型之间用空行隔开
-- 尽量使用一行代码实现功能，减少代码行数
-
-  - 例如：
-
-  ```ts
-  const a = { aa: "123" };
-  if (text) state.buttonConfig.iconName = text;
-  ```
-
 ### 2.5 自定义类型文档说明
 
 当 ComponentProps 或 ComponentEmits 中使用非标准类型（自定义类型）时，需要在文档最下方添加自定义类型的文档说明。
@@ -211,51 +156,30 @@ import { LanguagePackageType } from "../manager-type";
 - Vue 类型：`MouseEvent`、`Event` 等
 
 以下类型属于**自定义类型**，需要添加文档说明：
-- 项目内定义的类型：如 `TagType`、`TagListType`、`ButtonTypeV2Is` 等
-- 从其他模块导入的类型：如 `LanguagePackageType`
+- 项目内定义的类型：如 `TagType`、`ButtonTypeV2Is` 等
+- 从其他模块导入的类型：如 `LanguagePackageType`（需链接到外部文档）
 
 #### 2.5.2 文档格式要求
 
 1. **表格格式**：与 ComponentProps 相同的四列格式（属性名、描述、类型、默认值）
-2. **链接方式**：在 ComponentProps 表格中，将自定义类型名称用链接指向下方的类型说明
+2. **链接方式**：
+   - 当前文档定义的类型：使用锚点链接，如 `[`TagType`](#tagtype)`
+   - 外部已定义的类型：使用完整路径链接，如 `LanguagePackageType` 链接到 `/document/PancakeUI_Doc/options#languagepackagetype`
 3. **位置**：放在文档最下方，按字母顺序排列
 
-#### 2.5.3 示例（以 Tag 组件为例）
+#### 2.5.3 外部类型链接示例
 
-**ComponentProps 表格中的链接写法**：
-
-```markdown
-## ComponentProps
-
-| 属性名 | 描述 | 类型 | 默认值 |
-| ------ | ---- | ---- | ------ |
-| tagList | 标签列表 | [`TagListType`](#taglisttype) | - |
+`LanguagePackageType` 是全局定义的多语言类型，所有组件共用，链接地址为：
+```
+/document/PancakeUI_Doc/options#languagepackagetype
 ```
 
-**文档最下方的自定义类型说明**：
-
+使用示例：
 ```markdown
-## TagType
-
-标签数据结构。
-
-| 属性名 | 描述 | 类型 | 默认值 |
-| ------ | ---- | ---- | ------ |
-| label | 标签显示文本 | `LanguagePackageType` \| `string` | - |
-| value | 标签值 | `boolean` \| `number` \| `string` \| `undefined` | `undefined` |
-
-## TagListType
-
-`Array<TagType>` - 标签数据结构数组。
+| label | 标签显示文本 | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) \| `string` | - |
 ```
 
-#### 2.5.4 特殊情况处理
-
-1. **类型别名**：如果是简单的类型别名（如 `TagListType = Array<TagType>`），可以用一行描述说明
-2. **嵌套类型**：如果自定义类型中引用了其他自定义类型，同样使用链接方式
-3. **枚举类型**：如果自定义类型是枚举或字面量联合，列出所有可选值
-
-#### 2.5.5 完整示例
+#### 2.5.4 完整示例（Tag 组件）
 
 ```markdown
 # Tag 标签
@@ -269,7 +193,7 @@ import { LanguagePackageType } from "../manager-type";
 | id | 唯一标识 | `string` \| `undefined` | `undefined` |
 | class | 自定义类名 | `Array<string>` \| `string` \| `undefined` | `undefined` |
 | style | 自定义样式 | `Record<string, string>` \| `undefined` | `undefined` |
-| tagList | 标签列表 | [`TagListType`](#taglisttype) | - |
+| tagList | 标签列表 | `Array<`[`TagType`](#tagtype)`>` | - |
 | useCollapse | 是否折叠 | `boolean` | `true` |
 | disabled | 是否禁用删除功能 | `boolean` \| `undefined` | `undefined` |
 
@@ -285,10 +209,12 @@ import { LanguagePackageType } from "../manager-type";
 
 | 属性名 | 描述 | 类型 | 默认值 |
 | ------ | ---- | ---- | ------ |
-| label | 标签显示文本 | `LanguagePackageType` \| `string` | - |
+| label | 标签显示文本 | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) \| `string` | - |
 | value | 标签值 | `boolean` \| `number` \| `string` \| `undefined` | `undefined` |
-
-## TagListType
-
-`Array<`[`TagType`](#tagtype)`>` - 标签数据结构数组。
 ```
+
+#### 2.5.5 特殊情况处理
+
+1. **嵌套类型**：如果自定义类型中引用了其他自定义类型，同样使用链接方式
+2. **枚举类型**：如果自定义类型是枚举或字面量联合，列出所有可选值
+3. **外部类型**：如果类型在其他文档中已定义，直接链接到该文档，不在当前文档重复定义

@@ -278,140 +278,6 @@ const install = function (app) {
     app.component("PaButton", PaButton);
     app.component("PaButtonGroup", PaButtonGroup);
   }
-};
-
-export default { name: "PaButton", install };
-```
-
----
-
-## 六、文档检查（document/PancakeUI_Doc/{组件名}/readme.md）
-
-- [ ] 组件名称：`pa-{组件名}` 格式
-- [ ] 组件描述：中文，100字以内
-- [ ] **ComponentProps 表格**：属性名、描述、类型、默认值 四列
-- [ ] **ComponentEmits 表格**：事件名、描述、回调函数 三列（如存在）
-  - 回调函数格式需与 types.d.ts 中 ComponentEmits 类型定义一致
-  - 示例：
-    | 事件名 | 描述 | 回调函数 |
-    | ------ | ---- | -------- |
-    | click | 点击 Icon 执行方法 | `(event: MouseEvent) => void` |
-- [ ] **ComponentSlots 表格**：插槽名称、作用 两列（如存在）
-- [ ] 示例文件 `base.vue` 必须存在
-- [ ] 建议创建 `{属性名}.vue` 示例文件
-
-### 文档目录结构
-
-```
-document/PancakeUI_Doc/
-├── button/
-│   ├── readme.md
-│   ├── base.vue
-│   ├── size.vue
-│   └── disabled.vue
-├── color/
-│   ├── readme.md
-│   └── base.vue
-└── ...
-```
-
----
-
-## 七、代码质量检查
-
-- [ ] ESLint 检查通过
-- [ ] vue-tsc 检查通过
-- [ ] Prettier 格式化通过
-- [ ] 类型定义与实际代码一致（移除属性时检查 .vue 文件引用）
-
-### 检查命令
-
-```bash
-# ESLint 检查
-npx eslint src/package/components/pa-xxx --ext .vue,.ts
-
-# vue-tsc 检查
-npx vue-tsc --noEmit --project tsconfig.json
-
-# Prettier 格式化
-npx prettier --write src/package/components/pa-xxx/**/*.{vue,ts,scss}
-
-# 检查属性引用
-grep -n "props.属性名" src/package/components/pa-xxx/*.vue
-```
-
----
-
-## 八、提交前确认
-
-- [ ] @default 与 withDefaults 默认值一致
-- [ ] 所有修改的文件都已格式化
-- [ ] 样式文件修改后检查 Vue 文件引用并同步修改
-- [ ] 文档和类型定义与代码保持一致
-- [ ] 提交信息使用 Git 规范（如 `fix: xxx`、`feat: xxx`）
-- [ ] 提交人：ButlerAi211，邮箱：caiqi211@gmail.com
-
-### Git 提交规范
-
-| 类型 | 说明 |
-|------|------|
-| `feat` | 新功能 |
-| `fix` | 修复 Bug |
-| `docs` | 文档更新 |
-| `style` | 代码格式调整（不影响功能） |
-| `refactor` | 代码重构 |
-| `test` | 测试相关 |
-| `chore` | 构建/工具相关 |
-
----
-
-## 附录：常见问题
-
-### Q1: @type 中可选属性是否必须加 `| undefined`？
-
-**是的**，可选属性（带 `?`）的 `@type` 必须包含 `| undefined`，除非该属性有默认值。
-
-```ts
-// ❌ 错误
-disabled?: boolean; // @type `boolean`
-
-// ✅ 正确
-disabled?: boolean; // @type `boolean` | `undefined`
-```
-
-### Q2: 单行注释如何处理？
-
-**必须替换为 JSDoc 风格注释**。
-
-```ts
-// ❌ 错误
-// #Function handleClick
-function handleClick() {}
-
-// ✅ 正确
-/**
- * **点击事件处理**
- * @description 处理点击事件
- * */
-function handleClick() {}
-```
-
-### Q3: Scss 中可以有注释吗？
-
-**可以**，但不能使用单行注释 `// xxx`。可以使用多行注释 `/* */` 或直接删除不必要的注释。
-
-```scss
-// ❌ 错误
-// 颜色预览区域
-.pa-color-preview { }
-
-// ✅ 正确（无注释或使用有意义的命名）
-.pa-color-preview { }
-```
-
----
-
-*文档版本：v1.0.5 | 创建时间：2026-04-24*
 
 ---
 
@@ -429,30 +295,31 @@ function handleClick() {}
 - Vue 类型：`MouseEvent`、`Event` 等
 
 **自定义类型**（需要添加文档说明）：
-- 项目内定义的类型：如 `TagType`、`TagListType`、`ButtonTypeV2Is`
-- 从其他模块导入的类型：如 `LanguagePackageType`
+- 项目内定义的类型：如 `TagType`、`ButtonTypeV2Is`
+- 从其他模块导入的类型：如 `LanguagePackageType`（需链接到外部文档）
 
 ### 文档格式要求
 
 - [ ] **表格格式**：与 ComponentProps 相同的四列格式（属性名、描述、类型、默认值）
-- [ ] **链接方式**：在 ComponentProps 表格中，将自定义类型名称用链接指向下方的类型说明
+- [ ] **链接方式**：
+  - 当前文档定义的类型：使用锚点链接，如 `[`TagType`](#tagtype)`
+  - 外部已定义的类型：使用完整路径链接
 - [ ] **位置**：放在文档最下方，按字母顺序排列
-- [ ] **类型别名**：如果是简单的类型别名，可以用一行描述说明
 
-### 示例
+### 外部类型链接
 
-**ComponentProps 表格中的链接写法**：
+`LanguagePackageType` 链接地址：`/document/PancakeUI_Doc/options#languagepackagetype`
 
+### 示例（Tag 组件）
+
+**ComponentProps 表格**：
 ```markdown
-## ComponentProps
-
 | 属性名 | 描述 | 类型 | 默认值 |
 | ------ | ---- | ---- | ------ |
-| tagList | 标签列表 | [`TagListType`](#taglisttype) | - |
+| tagList | 标签列表 | `Array<`[`TagType`](#tagtype)`>` | - |
 ```
 
 **文档最下方的自定义类型说明**：
-
 ```markdown
 ## TagType
 
@@ -460,10 +327,6 @@ function handleClick() {}
 
 | 属性名 | 描述 | 类型 | 默认值 |
 | ------ | ---- | ---- | ------ |
-| label | 标签显示文本 | `LanguagePackageType` \| `string` | - |
+| label | 标签显示文本 | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) \| `string` | - |
 | value | 标签值 | `boolean` \| `number` \| `string` \| `undefined` | `undefined` |
-
-## TagListType
-
-`Array<`[`TagType`](#tagtype)`>` - 标签数据结构数组。
 ```
