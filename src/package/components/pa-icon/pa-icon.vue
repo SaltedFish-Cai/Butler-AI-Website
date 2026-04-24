@@ -1,9 +1,9 @@
 <template>
   <section class="pa-icon" @click="props.onClick" :class="[props.class]" :style="{ ...props.style }">
-    <span v-if="!tip" :class="['m-iconfont', 'm-iconfont_icon', `icon-${name}`]"></span>
+    <span v-if="!tip" :class="['iconfont', 'pa-icon_font', `icon-${name}`]"></span>
     <template v-else>
       <pa-popover trigger="hover">
-        <template #reference> <span class="m-iconfont m-iconfont_icon" :class="'icon-' + name"></span> </template>
+        <template #reference> <span class="iconfont pa-icon_font" :class="'icon-' + name"></span> </template>
         {{ typeof tip === "string" ? tip : tip[languageValue] }}
       </pa-popover>
     </template>
@@ -21,9 +21,12 @@ const props = withDefaults(defineProps<ComponentProps>(), {
 });
 
 const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
-const languageValue = computed(() => {
-  return PancakeGlobalConfig.value?.language?.value || "zh-CN";
-});
+
+/**
+ * **获取当前语言值**
+ * @returns `string` 返回当前语言标识，如 'zh-CN' 或 'en-US'
+ * */
+const languageValue = computed(() => PancakeGlobalConfig.value?.language?.value || "zh-CN");
 </script>
 
 <style lang="scss" scoped>
