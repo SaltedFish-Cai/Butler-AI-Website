@@ -56,6 +56,7 @@
 | defineEmits 类型化 | \`defineEmits<ComponentEmits>()\` |
 | 数组类型 | 使用 \`Array<T>\` 而非 \`T[]\` |
 | 文档类型格式 | 不显示 \`undefined\`，用空格分隔类型 |
+| Array 内部类型 | 使用 `|` 分隔，如 `Array<number | string>` |
 | 默认值表示 | 无默认值用 \`-\` |
 
 ---

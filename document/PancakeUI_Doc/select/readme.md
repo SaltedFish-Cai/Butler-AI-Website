@@ -32,7 +32,7 @@
 | id                  | 组件唯一标识                 | `string`                                                                                          | -          |
 | class               | 自定义类名                   | `Array<string>` `string`                                                                          | -          |
 | style               | 自定义样式                   | `Record<string, string>`                                                                          | -          |
-| modelValue          | 双向绑定值                   | `Array<number string>` `number` `string`                                                          | -          |
+| modelValue          | 双向绑定值                   | `Array<number \| string>` `number` `string`                                                       | -          |
 | displayValue        | 纯展示类型下直接显示值       | `string`                                                                                          | -          |
 | type                | 选择器类型                   | [`ComponentType`](#componenttype)                                                                 | `'select'` |
 | clearable           | 显示清除按钮                 | `boolean`                                                                                         | `true`     |
@@ -41,7 +41,7 @@
 | placeholder         | 输入框占位符                 | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) `string`             | -          |
 | disabled            | 禁用状态                     | `boolean`                                                                                         | -          |
 | display             | 纯展示模式                   | `boolean`                                                                                         | -          |
-| contrastData        | 对比数据                     | `Array<number string>` `number` `string`                                                          | -          |
+| contrastData        | 对比数据                     | `Array<number \| string>` `number` `string`                                                       | -          |
 | alwaysContrast      | 是否总是显示对比数据         | `boolean`                                                                                         | -          |
 | title               | 表单项标签                   | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) `string`             | -          |
 | titleWidth          | 表单项标签宽度               | `string`                                                                                          | -          |

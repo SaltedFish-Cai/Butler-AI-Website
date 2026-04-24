@@ -162,10 +162,15 @@ import { LanguagePackageType } from "../manager-type";
 #### 2.5.2 文档格式要求
 
 1. **表格格式**：与 ComponentProps 相同的四列格式（属性名、描述、类型、默认值）
-2. **链接方式**：
+2. **类型格式**：
+   - 多类型使用空格分隔：`string` `number`
+   - Array 内部类型使用 `\|` 分隔：`Array<number \| string>`
+   - 不显示 `undefined`：`string` 而不是 `string | undefined`
+   - 默认值无则用 `-` 表示
+3. **链接方式**：
    - 当前文档定义的类型：使用锚点链接，如 `[`TagType`](#tagtype)`
    - 外部已定义的类型：使用完整路径链接，如 `LanguagePackageType` 链接到 `/document/PancakeUI_Doc/options#languagepackagetype`
-3. **位置**：放在文档最下方，按字母顺序排列
+4. **位置**：放在文档最下方，按字母顺序排列
 
 #### 2.5.3 外部类型链接示例
 
