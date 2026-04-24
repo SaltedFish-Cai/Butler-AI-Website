@@ -328,5 +328,5 @@ const install = function (app) {
 | 属性名 | 描述 | 类型 | 默认值 |
 | ------ | ---- | ---- | ------ |
 | label | 标签显示文本 | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) `string` | - |
-| value | 标签值 | `boolean` `number` `string` `undefined` | `undefined` |
+| value | 标签值 | `boolean` `number` `string` | - |
 ```
