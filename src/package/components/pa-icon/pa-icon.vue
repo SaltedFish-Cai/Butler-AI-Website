@@ -15,10 +15,20 @@ import { computed, ComputedRef, inject } from "vue";
 import { ComponentProps } from "./types";
 import { PancakeGlobalConfigType } from "../pa-manager/type";
 
+/**
+ * **组件属性**
+ * @type `ComponentProps`
+ * @description 组件的属性对象，包含 name、tip、onClick 等
+ * */
 const props = withDefaults(defineProps<ComponentProps>(), {
   name: "magic_line"
 });
 
+/**
+ * **全局配置注入**
+ * @type `ComputedRef<PancakeGlobalConfigType>`
+ * @description 从父组件注入的全局配置对象，包含语言设置等
+ * */
 const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
 
 /**
