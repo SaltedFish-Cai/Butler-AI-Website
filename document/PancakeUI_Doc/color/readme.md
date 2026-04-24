@@ -14,14 +14,14 @@
 
 | 属性名 | 描述 | 类型 | 默认值 |
 | ------ | ---- | ---- | ------ |
-| id | 唯一标识 | `string` \| `undefined` | `undefined` |
-| class | 自定义类名 | `Array<string>` \| `string` \| `undefined` | `undefined` |
-| style | 自定义样式 | `Record<string, string>` \| `undefined` | `undefined` |
-| modelValue | 当前选中的颜色值 | `string` \| `undefined` | `undefined` |
-| disabled | 是否禁用状态 | `boolean` \| `undefined` | `undefined` |
+| id | 唯一标识 | `string` `undefined` | `undefined` |
+| class | 自定义类名 | `Array<string>` `string` `undefined` | `undefined` |
+| style | 自定义样式 | `Record<string, string>` `undefined` | `undefined` |
+| modelValue | 当前选中的颜色值 | `string` `undefined` | `undefined` |
+| disabled | 是否禁用状态 | `boolean` `undefined` | `undefined` |
 | useAlpha | 是否支持透明度 | `boolean` | `true` |
 | useInput | 是否显示颜色值输入框 | `boolean` | `true` |
-| presetColors | 预设颜色列表 | `Array<string>` \| `undefined` | `undefined` |
+| presetColors | 预设颜色列表 | `Array<string>` `undefined` | `undefined` |
 
 ## ComponentEmits
 

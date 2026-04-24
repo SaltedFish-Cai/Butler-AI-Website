@@ -54,24 +54,24 @@
 
 | 属性名 | 描述 | 类型 | 默认值 |
 | ------ | ---- | ---- | ------ |
-| id | 唯一标识 | `string` \| `undefined` | `undefined` |
-| class | 自定义类名 | `Array<string>` \| `string` \| `undefined` | `undefined` |
-| style | 自定义样式 | `Record<string, string>` \| `undefined` | `undefined` |
-| text | 按钮文本 | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) \| `string` \| `undefined` | `undefined` |
-| size | 按钮大小 | `'large'` \| `'medium'` \| `'small'` | `medium` |
-| is | 内置样式 | [`ButtonTypeV2Is`](#buttontypev2is) \| `undefined` | `undefined` |
-| type | 按钮样式类型 | `'danger'` \| `'default'` \| `'info'` \| `'primary'` \| `'success'` \| `'warning'` \| `undefined` | `undefined` |
-| disabled | 是否禁用状态 | `boolean` \| `undefined` | `undefined` |
-| loading | 加载状态 | `boolean` \| `undefined` | `undefined` |
-| loadingBy | 自动Loading来源 | `string` \| `undefined` | `undefined` |
+| id | 唯一标识 | `string` `undefined` | `undefined` |
+| class | 自定义类名 | `Array<string>` `string` `undefined` | `undefined` |
+| style | 自定义样式 | `Record<string, string>` `undefined` | `undefined` |
+| text | 按钮文本 | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) `string` `undefined` | `undefined` |
+| size | 按钮大小 | `'large'` `'medium'` `'small'` | `medium` |
+| is | 内置样式 | [`ButtonTypeV2Is`](#buttontypev2is) `undefined` | `undefined` |
+| type | 按钮样式类型 | `'danger'` `'default'` `'info'` `'primary'` `'success'` `'warning'` `undefined` | `undefined` |
+| disabled | 是否禁用状态 | `boolean` `undefined` | `undefined` |
+| loading | 加载状态 | `boolean` `undefined` | `undefined` |
+| loadingBy | 自动Loading来源 | `string` `undefined` | `undefined` |
 | debounced | 是否开启防抖功能 | `boolean` | `true` |
 | debouncedTime | 防抖按钮时间 | `number` | `300` |
-| iconPosition | Icon位置 | `'left'` \| `'right'` | `left` |
-| iconName | 按钮ICON | `string` \| `undefined` | `undefined` |
+| iconPosition | Icon位置 | `'left'` `'right'` | `left` |
+| iconName | 按钮ICON | `string` `undefined` | `undefined` |
 | useFont | 是否使用Icon | `boolean` | `true` |
-| useLine | 是否使用下划线按钮 | `boolean` \| `undefined` | `undefined` |
+| useLine | 是否使用下划线按钮 | `boolean` `undefined` | `undefined` |
 | usePlain | 是否使用朴素按钮 | `boolean` | `true` |
-| confirmConfig | 确认弹窗配置 | `MessageBoxOptions` \| `undefined` | `undefined` |
+| confirmConfig | 确认弹窗配置 | `MessageBoxOptions` `undefined` | `undefined` |
 | useStop | 是否阻止事件冒泡 | `boolean` | `true` |
 
 ## ComponentEmits
@@ -87,4 +87,4 @@
 
 预设按钮样式类型。
 
-可选值：`'add'` | `'cancel'` | `'check'` | `'delete'` | `'download'` | `'edit'` | `'export'` | `'file'` | `'go'` | `'import'` | `'more'` | `'ok'` | `'refresh'` | `'remove'` | `'save'` | `'search'` | `'submit'` | `'switch'` | `'sync'` | `'time'` | `'trash'` | `'upload'` | `'view'`
+可选值：`'add'` `'cancel'` `'check'` `'delete'` `'download'` `'edit'` `'export'` `'file'` `'go'` `'import'` `'more'` `'ok'` `'refresh'` `'remove'` `'save'` `'search'` `'submit'` `'switch'` `'sync'` `'time'` `'trash'` `'upload'` `'view'`

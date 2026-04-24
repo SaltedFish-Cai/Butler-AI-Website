@@ -176,7 +176,7 @@ import { LanguagePackageType } from "../manager-type";
 
 使用示例：
 ```markdown
-| label | 标签显示文本 | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) \| `string` | - |
+| label | 标签显示文本 | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) `string` | - |
 ```
 
 #### 2.5.4 完整示例（Tag 组件）
@@ -190,12 +190,12 @@ import { LanguagePackageType } from "../manager-type";
 
 | 属性名 | 描述 | 类型 | 默认值 |
 | ------ | ---- | ---- | ------ |
-| id | 唯一标识 | `string` \| `undefined` | `undefined` |
-| class | 自定义类名 | `Array<string>` \| `string` \| `undefined` | `undefined` |
-| style | 自定义样式 | `Record<string, string>` \| `undefined` | `undefined` |
+| id | 唯一标识 | `string` `undefined` | `undefined` |
+| class | 自定义类名 | `Array<string>` `string` `undefined` | `undefined` |
+| style | 自定义样式 | `Record<string, string>` `undefined` | `undefined` |
 | tagList | 标签列表 | [`Array<TagType>`](#tagtype) | - |
 | useCollapse | 是否折叠 | `boolean` | `true` |
-| disabled | 是否禁用删除功能 | `boolean` \| `undefined` | `undefined` |
+| disabled | 是否禁用删除功能 | `boolean` `undefined` | `undefined` |
 
 ## ComponentEmits
 
@@ -209,8 +209,8 @@ import { LanguagePackageType } from "../manager-type";
 
 | 属性名 | 描述 | 类型 | 默认值 |
 | ------ | ---- | ---- | ------ |
-| label | 标签显示文本 | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) \| `string` | - |
-| value | 标签值 | `boolean` \| `number` \| `string` \| `undefined` | `undefined` |
+| label | 标签显示文本 | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) `string` | - |
+| value | 标签值 | `boolean` `number` `string` `undefined` | `undefined` |
 ```
 
 #### 2.5.5 特殊情况处理

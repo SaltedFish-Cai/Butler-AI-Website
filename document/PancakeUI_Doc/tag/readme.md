@@ -24,13 +24,13 @@
 
 | 属性名 | 描述 | 类型 | 默认值 |
 | ------ | ---- | ---- | ------ |
-| id | 唯一标识 | `string` \| `undefined` | `undefined` |
-| class | 自定义类名 | `Array<string>` \| `string` \| `undefined` | `undefined` |
-| style | 自定义样式 | `Record<string, string>` \| `undefined` | `undefined` |
+| id | 唯一标识 | `string` `undefined` | `undefined` |
+| class | 自定义类名 | `Array<string>` `string` `undefined` | `undefined` |
+| style | 自定义样式 | `Record<string, string>` `undefined` | `undefined` |
 | tagList | 标签列表 | [`Array<TagType>`](#tagtype) | - |
 | useCollapse | 是否折叠 | `boolean` | `true` |
-| popoverWidth | 弹出层宽度 | `number` \| `undefined` | `undefined` |
-| disabled | 是否禁用删除功能 | `boolean` \| `undefined` | `undefined` |
+| popoverWidth | 弹出层宽度 | `number` `undefined` | `undefined` |
+| disabled | 是否禁用删除功能 | `boolean` `undefined` | `undefined` |
 
 ## ComponentEmits
 
@@ -44,5 +44,5 @@
 
 | 属性名 | 描述 | 类型 | 默认值 |
 | ------ | ---- | ---- | ------ |
-| label | 标签显示文本 | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) \| `string` | - |
-| value | 标签值 | `boolean` \| `number` \| `string` \| `undefined` | `undefined` |
+| label | 标签显示文本 | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) `string` | - |
+| value | 标签值 | `boolean` `number` `string` `undefined` | `undefined` |
