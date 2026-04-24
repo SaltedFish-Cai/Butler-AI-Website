@@ -1,9 +1,9 @@
 <template>
   <section class="pa-icon" @click="props.onClick" :class="[props.class]" :style="{ ...props.style }">
-    <span v-if="!tip" :class="['iconfont', 'pa-icon_font', `icon-${name}`]"></span>
+    <span v-if="!tip" :class="['pa-icon_font', `icon-${name}`]"></span>
     <template v-else>
       <pa-popover trigger="hover">
-        <template #reference> <span class="iconfont pa-icon_font" :class="'icon-' + name"></span> </template>
+        <template #reference> <span class="pa-icon_font" :class="'icon-' + name"></span> </template>
         {{ typeof tip === "string" ? tip : tip[languageValue] }}
       </pa-popover>
     </template>
@@ -15,7 +15,6 @@ import { computed, ComputedRef, inject } from "vue";
 import { ComponentProps } from "./types";
 import { PancakeGlobalConfigType } from "../pa-manager/type";
 
-// # Var
 const props = withDefaults(defineProps<ComponentProps>(), {
   name: "magic_line"
 });
