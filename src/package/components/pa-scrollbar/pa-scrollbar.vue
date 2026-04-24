@@ -4,7 +4,7 @@
     class="pa-scrollbar"
     :class="[prop.class, prop.styleMode === 'color' ? 'color-scrollbar' : '']"
     :style="{
-      ...style,
+      ...prop.style,
       '--pa-size-padding_use': prop.paddingWidth
         ? typeof prop.paddingWidth === 'number'
           ? prop.paddingWidth + 'px'
@@ -13,46 +13,58 @@
     }"
   >
     <div class="pa-scrollbar-content">
-      <div v-if="useShadow" class="is-scroll-top" :style="{ opacity: scrollVerticalThumb > 5 ? '1' : '0' }"></div>
+      <div v-if="prop.useShadow" class="is-scroll-top" :style="{ opacity: scrollVerticalThumb > 5 ? '1' : '0' }"></div>
       <div
         :id="id + '_scrollbar_body'"
         class="scrollbar-body"
         :class="{ 'scrollbar-body-y': prop.useScrollY, 'scrollbar-body-x': prop.useScrollX }"
-        :style="{ ...contentStyle }"
+        :style="{ ...prop.contentStyle }"
         ref="scrollbarBodyRef"
       >
         <div
           class="scrollbar-body-content"
           :class="{
-            'padding-top': padding?.includes('top') || padding?.includes('all'),
-            'padding-left': padding?.includes('left') || padding?.includes('all'),
-            'padding-bottom': padding?.includes('bottom') || padding?.includes('all'),
-            'padding-right': padding?.includes('right') || padding?.includes('all')
+            'padding-top': prop.padding?.includes('top') || prop.padding?.includes('all'),
+            'padding-left': prop.padding?.includes('left') || prop.padding?.includes('all'),
+            'padding-bottom': prop.padding?.includes('bottom') || prop.padding?.includes('all'),
+            'padding-right': prop.padding?.includes('right') || prop.padding?.includes('all')
           }"
           :style="{
             '--border-padding-top':
-              padding?.includes('top') || padding?.includes('all') ? `var(--pa-size-padding_use, 10px)` : '',
+              prop.padding?.includes('top') || prop.padding?.includes('all') ? `var(--pa-size-padding_use, 10px)` : '',
             '--border-padding-left':
-              padding?.includes('left') || padding?.includes('all') ? `var(--pa-size-padding_use, 10px)` : '',
+              prop.padding?.includes('left') || prop.padding?.includes('all') ? `var(--pa-size-padding_use, 10px)` : '',
             '--border-padding-bottom':
-              padding?.includes('bottom') || padding?.includes('all') ? `var(--pa-size-padding_use, 10px)` : '',
+              prop.padding?.includes('bottom') || prop.padding?.includes('all') ? `var(--pa-size-padding_use, 10px)` : '',
             '--border-padding-right':
-              padding?.includes('right') || padding?.includes('all') ? `var(--pa-size-padding_use, 10px)` : ''
+              prop.padding?.includes('right') || prop.padding?.includes('all') ? `var(--pa-size-padding_use, 10px)` : ''
           }"
           ref="scrollbarBodyContentRef"
         >
-          <div v-if="border?.includes('top') || border?.includes('all')" class="pa-border_top"></div>
-          <div v-if="border?.includes('left') || border?.includes('all')" class="pa-border_left"></div>
-          <div v-if="border?.includes('bottom') || border?.includes('all')" class="pa-border_bottom"></div>
-          <div v-if="border?.includes('right') || border?.includes('all')" class="pa-border_right"></div>
-          <div v-if="paddingBorder?.includes('top') || paddingBorder?.includes('all')" class="pa-border_padding_top"></div>
-          <div v-if="paddingBorder?.includes('left') || paddingBorder?.includes('all')" class="pa-border_padding_left"></div>
-          <div v-if="paddingBorder?.includes('bottom') || paddingBorder?.includes('all')" class="pa-border_padding_bottom"></div>
-          <div v-if="paddingBorder?.includes('right') || paddingBorder?.includes('all')" class="pa-border_padding_right"></div>
+          <div v-if="prop.border?.includes('top') || prop.border?.includes('all')" class="pa-border_top"></div>
+          <div v-if="prop.border?.includes('left') || prop.border?.includes('all')" class="pa-border_left"></div>
+          <div v-if="prop.border?.includes('bottom') || prop.border?.includes('all')" class="pa-border_bottom"></div>
+          <div v-if="prop.border?.includes('right') || prop.border?.includes('all')" class="pa-border_right"></div>
+          <div
+            v-if="prop.paddingBorder?.includes('top') || prop.paddingBorder?.includes('all')"
+            class="pa-border_padding_top"
+          ></div>
+          <div
+            v-if="prop.paddingBorder?.includes('left') || prop.paddingBorder?.includes('all')"
+            class="pa-border_padding_left"
+          ></div>
+          <div
+            v-if="prop.paddingBorder?.includes('bottom') || prop.paddingBorder?.includes('all')"
+            class="pa-border_padding_bottom"
+          ></div>
+          <div
+            v-if="prop.paddingBorder?.includes('right') || prop.paddingBorder?.includes('all')"
+            class="pa-border_padding_right"
+          ></div>
           <slot></slot>
         </div>
       </div>
-      <div v-if="useShadow" class="is-scroll-end" :style="{ opacity: !isScrollEnd ? '1' : '0' }"></div>
+      <div v-if="prop.useShadow" class="is-scroll-end" :style="{ opacity: !isScrollEnd ? '1' : '0' }"></div>
     </div>
     <div v-if="useVertical && prop.useScrollY && prop.showThumb" class="scrollbar__bar is-vertical">
       <div class="scrollbar__thumb" ref="verticalThumbRef" :style="{ height: verticalThumb + 'px' }"></div>
@@ -61,7 +73,7 @@
       <div class="scrollbar__thumb" ref="horizontalThumbRef" :style="{ width: horizontalThumb + 'px' }"></div>
     </div>
     <pa-icon
-      v-if="useBackTop && prop.useScrollY"
+      v-if="prop.useBackTop && prop.useScrollY"
       :style="{ opacity: scrollVerticalValue > 10 ? '1' : '0', right: `${scrollVerticalValue > 10 ? '24px' : '-20px'}` }"
       name="arow_to_up_line"
       class="pa-scrollbar-back-top m-hand"
