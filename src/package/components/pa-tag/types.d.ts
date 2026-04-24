@@ -56,7 +56,7 @@ export type ComponentProps = {
 
   /**
    * **弹出层宽度**
-   * @type `number`
+   * @type `number` | `undefined`
    * @default `undefined`
    * @description 弹出层宽度
    * */
