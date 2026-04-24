@@ -38,7 +38,10 @@
 </template>
 
 <script lang="ts" setup>
-// # Import
+/**
+ * **模块导入**
+ * @description 导入 Vue 组合式 API、类型定义、工具函数等依赖
+ * */
 import { reactive, onBeforeMount, useSlots, nextTick, watch, inject, ComputedRef, computed } from "vue";
 import { ComponentProps } from "./types";
 import inBrowser from "../tools/inBrowser";
@@ -114,7 +117,10 @@ let lock = false;
  * */
 const _debounce = debounce(realClick, props.debouncedTime, { trailing: true });
 
-// # Vue onBeforeMount
+/**
+ * **组件挂载前生命周期**
+ * @description 初始化插槽信息、图标名称、类型和尺寸配置
+ * */
 onBeforeMount(() => {
   const slots = useSlots();
   state.slotsLength = slots.default ? 1 : 0;
@@ -220,7 +226,10 @@ function realClick() {
   });
 }
 
-// #Watch 处理 is
+/**
+ * **监听 is 属性变化**
+ * @description 根据内置样式类型设置按钮的图标、类型等配置
+ * */
 watch(
   () => props.is,
   text => {
@@ -329,7 +338,10 @@ watch(
   { immediate: true }
 );
 
-// #Watch 处理 iconName
+/**
+ * **监听 iconName 属性变化**
+ * @description 同步更新按钮图标名称
+ * */
 watch(
   () => props.iconName,
   text => {
@@ -338,7 +350,10 @@ watch(
   { immediate: true }
 );
 
-// #Watch 处理 type
+/**
+ * **监听 type 属性变化**
+ * @description 同步更新按钮样式类型
+ * */
 watch(
   () => props.type,
   text => {
