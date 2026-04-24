@@ -33,10 +33,28 @@
 </template>
 
 <script lang="ts" setup>
+/**
+ * **模块导入**
+ * @description 导入 Vue 组合式 API
+ * */
 import { onMounted, ref, Ref, watch, nextTick, inject, ComputedRef } from "vue";
+
+/**
+ * **模块导入**
+ * @description 导入组件类型定义
+ * */
 import { ComponentProps, TagListType } from "./types";
+
+/**
+ * **模块导入**
+ * @description 导入元素位置计算工具函数
+ * */
 import { getElementPosition } from "../utils/getElementPosition";
 
+/**
+ * **模块导入**
+ * @description 导入全局配置类型定义
+ * */
 import { PancakeGlobalConfigType } from "../pa-manager/type";
 
 /**
