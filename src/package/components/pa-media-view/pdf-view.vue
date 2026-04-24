@@ -39,7 +39,7 @@ import { PancakeGlobalConfigType } from "../pa-manager/type";
 // import Pdfh5 from "pdfh5";
 // import "pdfh5/css/pdfh5.css";
 
-const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
+const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 const languagePackage = computed(() => {
   return PancakeGlobalConfig.value?.language?.package["media"] || {};
 });

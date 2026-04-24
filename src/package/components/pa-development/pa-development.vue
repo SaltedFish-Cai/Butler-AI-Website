@@ -24,7 +24,7 @@ import { M_Message } from "../feedback";
 
 const props = withDefaults(defineProps<{ id: string }>(), { id: "" });
 
-const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
+const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 const menu = reactive({
   visible: false,
   top: "-100%",

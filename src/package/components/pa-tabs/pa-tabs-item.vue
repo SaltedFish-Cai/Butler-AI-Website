@@ -57,7 +57,7 @@ import { PaTabsItemType } from "./type";
 import { PancakeGlobalConfigType } from "../pa-manager/type";
 // import { randChar } from "../tools/rand-char";
 
-const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
+const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 const languageValue = computed(() => {
   return PancakeGlobalConfig.value?.language?.value || "zh-CN";
 });

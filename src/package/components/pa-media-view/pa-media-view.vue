@@ -114,7 +114,7 @@ const props = withDefaults(defineProps<PaMediaViewType>(), {
   hideBtn: false
 });
 
-const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
+const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 const languagePackage = computed(() => {
   return PancakeGlobalConfig.value?.language?.package["media"] || {};
 });

@@ -47,7 +47,7 @@ const formRef = useTemplateRef("formRef");
 const props = defineProps<{ dataStructures: MStructureType[]; interfaceConfigs: MInterfaceConfig[] }>();
 const emit = defineEmits(["handleEditItemBaseSubmit"]);
 
-const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
+const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 const language = PancakeGlobalConfig.value?.language?.value || "zh-CN";
 
 const visible = ref(false);

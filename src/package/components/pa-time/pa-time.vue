@@ -140,7 +140,7 @@ const isFocus = ref(false);
 const inputRef = ref();
 const internalValue: Ref<string[] | string | null> = ref(isRange.value ? [] : null);
 
-const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
+const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 const languageValue = computed(() => {
   return PancakeGlobalConfig.value?.language?.value || "zh-CN";
 });

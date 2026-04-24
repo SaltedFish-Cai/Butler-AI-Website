@@ -49,7 +49,7 @@ import { deleteData, getAllData, getDataById, storeData, updateData } from "../.
 import { M_Message, M_MessageBox } from "../../../feedback";
 import MQuickTable from "../quick-table.vue";
 
-const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
+const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 const language = PancakeGlobalConfig.value?.language?.value || "zh-CN";
 const visibleTableRef = useTemplateRef("visibleTableRef");
 const props = withDefaults(

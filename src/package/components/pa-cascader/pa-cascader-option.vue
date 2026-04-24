@@ -78,7 +78,7 @@ const childExOptions = ref([] as Array<PaOptionType.Select>);
 const injectHandleOptionClick: any = inject("handleOptionClick");
 const activeValue: Ref<boolean | number | string | undefined> = ref("");
 
-const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
+const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 const languageValue = computed(() => {
   return PancakeGlobalConfig.value?.language?.value || "zh-CN";
 });

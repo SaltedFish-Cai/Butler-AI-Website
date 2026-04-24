@@ -12,7 +12,7 @@ const tabsContext = inject("TabsContext") as Ref<{ mode: "default" | "portrait" 
 // # Var
 const _props = defineProps<PaTabsItemTitleType>();
 
-const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
+const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 const languageValue = computed(() => {
   return PancakeGlobalConfig.value?.language?.value || "zh-CN";
 });

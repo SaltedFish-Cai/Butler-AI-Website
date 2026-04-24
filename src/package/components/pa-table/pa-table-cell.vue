@@ -331,7 +331,7 @@ type TableCellType = {
 };
 
 const props = withDefaults(defineProps<TableCellType>(), {});
-const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
+const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 
 // const exFunction = ref({} as Record<string, string>);
 // const exFormatter = ref({} as Record<string, string>);

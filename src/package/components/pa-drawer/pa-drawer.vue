@@ -112,7 +112,7 @@ const state = reactive({
   fullscreen: false
 });
 
-const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
+const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 const language = computed(() => PancakeGlobalConfig.value?.language?.value || "zh-CN");
 
 // #Function 关闭弹窗回调

@@ -41,7 +41,7 @@ const props = withDefaults(defineProps<ComponentProps>(), {
  * @type `ComputedRef<PancakeGlobalConfigType>`
  * @description 从父组件注入的全局配置对象
  * */
-const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
+const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 
 /**
  * **当前语言值**

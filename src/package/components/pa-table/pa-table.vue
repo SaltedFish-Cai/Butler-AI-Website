@@ -385,7 +385,7 @@ import { splitArray } from "../utils/arraySplit";
 import _ from "lodash";
 const { cloneDeep, debounce } = _;
 
-const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
+const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 
 const mScrollbarListRef = useTemplateRef("mScrollbarListRef");
 const mScrollbarHeaderListRef = ref();

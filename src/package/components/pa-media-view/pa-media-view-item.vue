@@ -69,7 +69,7 @@ import { useTemplateRef } from "vue";
 import { PancakeGlobalConfigType } from "../pa-manager/type";
 import { M_Message } from "../feedback";
 
-const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
+const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 
 const visible = ref(false);
 const zoomIndex = ref(1);

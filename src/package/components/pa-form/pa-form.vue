@@ -139,7 +139,7 @@ const inConfigObj: Record<string, any> = {};
 
 const ruleTabsFormRef: Record<string, { submitTabsForm: () => Promise<boolean | undefined> }> = {};
 // const setRuleTabsFormRefDebounce = debounce(setRuleTabsFormRef, 200, { trailing: true });
-const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
+const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 const injectSetScrollToIntersect = inject("setScrollToIntersect") as (
   el: Element,
   callback?: () => void,

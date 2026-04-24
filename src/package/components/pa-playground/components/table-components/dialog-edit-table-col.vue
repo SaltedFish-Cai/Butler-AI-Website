@@ -64,7 +64,7 @@ const props = defineProps<{
   editCol?: PaStructureType.TableV2;
 }>();
 
-const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
+const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 const language = PancakeGlobalConfig.value?.language?.value || "zh-CN";
 
 const formRef = useTemplateRef("formRef");

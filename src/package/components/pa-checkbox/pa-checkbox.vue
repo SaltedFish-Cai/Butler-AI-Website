@@ -59,7 +59,7 @@ const { isEqual, isNil } = _;
 const props = withDefaults(defineProps<ComponentProps>(), {});
 const exOptionsList = ref(props?.exOptions || []);
 
-const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
+const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 const languageValue = computed(() => {
   return PancakeGlobalConfig.value?.language?.value || "zh-CN";
 });

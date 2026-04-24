@@ -115,7 +115,7 @@ const hasSubmitClick = computed(() => {
  * @type `ComputedRef<PancakeGlobalConfigType>`
  * @description 从父组件注入的全局配置对象，包含语言设置等
  * */
-const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
+const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 
 /**
  * **获取当前语言值**

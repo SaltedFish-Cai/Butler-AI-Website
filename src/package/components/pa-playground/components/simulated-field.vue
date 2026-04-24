@@ -55,7 +55,7 @@ import SimulatedInterface from "./simulated-field-components/simulated-interface
 import { PancakeGlobalConfigType } from "../../pa-manager/type";
 import { clearAllData } from "../../indexDB/indexDB";
 
-const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
+const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 const language = PancakeGlobalConfig.value?.language?.value || "zh-CN";
 
 const props = withDefaults(

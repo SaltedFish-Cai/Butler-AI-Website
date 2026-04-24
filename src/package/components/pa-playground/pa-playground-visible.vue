@@ -213,7 +213,7 @@ import { dictType } from "../tools/type";
 import _ from "lodash";
 const { isNil } = _;
 
-const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
+const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 const language = PancakeGlobalConfig.value?.language?.value || "zh-CN";
 const pageClickButtonConfig = ref<PaPlaygroundPageButtonType>();
 const findNextPage = ref<boolean>(false);

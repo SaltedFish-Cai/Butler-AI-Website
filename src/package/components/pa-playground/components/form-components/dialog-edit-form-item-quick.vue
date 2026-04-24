@@ -93,7 +93,7 @@ const props = defineProps<{
   authorizationFunction?: Array<PaStructureType.TableV2>;
 }>();
 
-const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
+const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 const language = PancakeGlobalConfig.value?.language?.value || "zh-CN";
 
 const tableConfig = ref<PaStructureType.TableV2[]>([

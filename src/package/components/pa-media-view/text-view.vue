@@ -17,7 +17,7 @@ const props = withDefaults(defineProps<{ filePath: string; zoom: number }>(), {}
 const textUrl = String(props.filePath);
 
 const mediaText = ref("");
-const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
+const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 
 onMounted(async () => {
   const config = {

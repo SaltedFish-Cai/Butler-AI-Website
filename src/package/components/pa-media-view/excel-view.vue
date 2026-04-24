@@ -12,7 +12,7 @@ const textUrl = String(props.filePath);
 
 // # Excel
 const excelRef = ref();
-const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
+const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 
 onMounted(async () => {
   const config = {

@@ -142,7 +142,7 @@ const loading = ref(false);
 const uploadFilesList: { name: string; size: number }[] = [];
 const ajaxFileList: Record<string, string>[] = [];
 
-const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
+const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 
 const languagePackage = computed(() => {
   return PancakeGlobalConfig.value?.language?.package?.["file"] || {};

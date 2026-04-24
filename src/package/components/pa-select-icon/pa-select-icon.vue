@@ -103,7 +103,7 @@ const selectRef = ref();
 const selectItem = ref(props.modelValue || "finger_press_line");
 const hoverItem = ref("finger_press_line");
 
-const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
+const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 const languageValue = computed(() => {
   return PancakeGlobalConfig.value?.language?.value || "zh-CN";
 });

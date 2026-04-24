@@ -278,7 +278,7 @@ import { M_MessageBox } from "../../../feedback";
 import _ from "lodash";
 const { cloneDeep } = _;
 
-const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
+const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 const language = PancakeGlobalConfig.value?.language?.value || "zh-CN";
 const editOperationDialogRef = useTemplateRef("editOperationDialogRef");
 

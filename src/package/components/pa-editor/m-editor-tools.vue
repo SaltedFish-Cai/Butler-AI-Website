@@ -207,7 +207,7 @@ const sourceCodeMode = ref(props.isSourceCodeMode);
 // 定义emits
 const emit = defineEmits(["popverChange", "sourceCodeModeChange"]);
 
-const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
+const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 
 const fileInput = ref();
 const popoverReferenceRef = ref({});

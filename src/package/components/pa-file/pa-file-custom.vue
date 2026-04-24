@@ -94,7 +94,7 @@ const emits = defineEmits(["update:modelValue", "change", "changeState"]);
 const fileInput = useTemplateRef("fileInput");
 const isDragging = ref(false);
 
-const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
+const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 
 const languagePackage = computed(() => {
   return PancakeGlobalConfig.value?.language?.package?.["file"] || {};

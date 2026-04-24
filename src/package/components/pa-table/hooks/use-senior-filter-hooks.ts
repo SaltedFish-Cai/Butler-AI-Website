@@ -12,7 +12,7 @@ export const useSeniorFilterHooks = () => {
     seniorFilterOptions: { LineConditional: [] as PaOptionType.SelectList, linkOptions: [] as PaOptionType.SelectList },
     seniorFilterData: { visible: false, propItem: {} as Record<string, string> }
   });
-  const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
+  const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
   if (inBrowser && PancakeGlobalConfig.value?.table_config?.advancedQueryApi) {
     GetDictionaries();
   }

@@ -29,7 +29,7 @@ const { isNil } = _;
 
 const props = withDefaults(defineProps<ComponentItemProps>(), { isChecked: undefined });
 
-const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
+const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 const language = PancakeGlobalConfig.value?.language?.value || "zh-CN";
 
 const inValue = ref(props.modelValue);
