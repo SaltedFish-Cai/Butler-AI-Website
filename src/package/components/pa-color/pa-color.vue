@@ -10,12 +10,12 @@
           <div class="pa-color-preview-text">{{ currentColor }}</div>
         </div>
       </template>
-      <pa-color-item
+      <pa-color-box
         v-model="currentColor"
         :preset-colors="props.presetColors"
         :show-alpha="props.useAlpha"
         :show-input="props.useInput"
-      ></pa-color-item>
+      ></pa-color-box>
     </pa-popover>
   </div>
 </template>
