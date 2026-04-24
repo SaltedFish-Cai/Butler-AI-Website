@@ -11,6 +11,10 @@
 </template>
 
 <script lang="ts" setup>
+/**
+ * **模块导入**
+ * @description 导入 Vue 组合式 API、类型定义、工具函数等依赖
+ * */
 import { computed, ComputedRef, inject } from "vue";
 import { ComponentProps } from "./types";
 import { PancakeGlobalConfigType } from "../pa-manager/type";
