@@ -1,3 +1,7 @@
+/**
+ * **模块导入**
+ * @description 导入多语言类型定义
+ * */
 import { LanguagePackageType } from "../manager-type";
 
 export type ComponentProps = {
@@ -43,7 +47,7 @@ export type ComponentProps = {
 
   /**
    * **内边距方向**
-   * @type `Array<'top'` `'left'` `'bottom'` `'right'` `'all'` `'null'>` | `undefined`
+   * @type `Array<'top' | 'left' | 'bottom' | 'right' | 'all' | 'null'>` | `undefined`
    * @default `undefined`
    * @description 当设置该值时，会在标题的对应方向添加内边距
    * */
