@@ -1,4 +1,7 @@
-// # Import
+/**
+ * **模块导入**
+ * @description 导入多语言类型定义
+ * */
 import { LanguagePackageType } from "../manager-type";
 
 export type ComponentProps = {
