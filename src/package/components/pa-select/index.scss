@@ -30,6 +30,47 @@
     box-shadow: 0 0 0 2px var(--pa-color-primary-light-8);
   }
 
+  &:has(.pa-select-textarea) {
+    height: auto;
+  }
+
+  &.is-disabled {
+    background-color: var(--pa-color-send-bg);
+
+    &:hover {
+      cursor: not-allowed;
+      border-color: var(--pa-color-border);
+      box-shadow: none;
+      .pa-select-input .clear-icon {
+        display: none;
+      }
+      .pa-select-input .down-icon {
+        display: block;
+      }
+    }
+
+    .pa-select-input,
+    .pa-select-input-inner,
+    .pa-select-content {
+      color: var(--pa-color-info-light-1);
+
+      &:hover {
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  > .pa-popover-reference {
+    width: 100%;
+  }
+
+  .pa-select-content {
+    width: 100%;
+    box-sizing: border-box;
+    padding: calc(var(--pa-size-padding) / 3) calc(var(--pa-size-padding) / 1.2);
+    display: flex;
+  }
+
   .pa-select-input {
     position: relative;
     z-index: 20;
@@ -55,6 +96,7 @@
       font-size: var(--pa-size-font);
       color: var(--pa-color-font);
       background: none;
+
       &::placeholder {
         color: var(--pa-color-info-light-4);
       }
@@ -84,43 +126,6 @@
     }
   }
 }
-.pa-select.is-disabled {
-  background-color: var(--pa-color-send-bg);
-  &:hover {
-    cursor: not-allowed;
-    border-color: var(--pa-color-border);
-    box-shadow: none;
-    .pa-select-input .clear-icon {
-      display: none;
-    }
-    .pa-select-input .down-icon {
-      display: block;
-    }
-  }
-
-  .pa-select-input,
-  .pa-select-input-inner,
-  .pa-select-content {
-    color: var(--pa-color-info-light-1);
-
-    &:hover {
-      cursor: not-allowed;
-    }
-  }
-}
-.pa-select-content {
-  width: 100%;
-  box-sizing: border-box;
-  padding: calc(var(--pa-size-padding) / 3) calc(var(--pa-size-padding) / 1.2);
-  display: flex;
-}
-.pa-select > .pa-popover-reference {
-  width: 100%;
-}
-
-.pa-select:has(.pa-select-textarea) {
-  height: auto;
-}
 
 .pa-select-options {
   .pa-select-option {
@@ -131,22 +136,27 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+
     .check-icon {
       display: none;
     }
+
     &:hover {
       color: var(--pa-color-primary);
       cursor: pointer;
       background-color: var(--pa-color-send-bg);
     }
   }
+
   .pa-select-option.is-active {
     font-weight: bold;
     color: var(--pa-color-primary);
+
     .check-icon {
       display: block;
     }
   }
+
   > .pa-scrollbar > .pa-scrollbar-content > .scrollbar-body > .scrollbar-body-content {
     width: 100% !important;
   }
