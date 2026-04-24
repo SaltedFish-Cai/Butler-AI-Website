@@ -19,17 +19,21 @@
       <pa-icon
         v-if="iconPosition == 'left' && !loading && !state.isLoading && (useFont || state.buttonConfig.iconName)"
         :name="state.buttonConfig.iconName"
-        :class="state.slotsLength || text ? 'mr-btn btn-icon' : ''"
+        :class="state.slotsLength || text ? 'mr-btn pa-button_icon' : ''"
       />
     </slot>
-    <div class="btn-text">
+    <div class="pa-button_text">
       <template v-if="state.slotsLength || text">
         <slot>
           <template v-if="text"> {{ typeof text == "string" ? text : text[languageValue] }} </template>
         </slot>
       </template>
     </div>
-    <pa-icon v-if="iconPosition == 'right' && useFont" :name="state.buttonConfig.iconName" class="ml-btn btn-icon"></pa-icon>
+    <pa-icon
+      v-if="iconPosition == 'right' && useFont"
+      :name="state.buttonConfig.iconName"
+      class="pa-button_ml pa-button_icon"
+    ></pa-icon>
   </button>
 </template>
 
@@ -45,6 +49,11 @@ import { PancakeGlobalConfigType } from "../pa-manager/type";
 import _ from "lodash";
 const { debounce } = _;
 
+/**
+ * **组件属性**
+ * @type `ComponentProps`
+ * @description 组件的属性对象，包含 text、size、type 等
+ * */
 const props = withDefaults(defineProps<ComponentProps>(), {
   size: "medium",
   debounced: true,
@@ -55,13 +64,29 @@ const props = withDefaults(defineProps<ComponentProps>(), {
   useStop: true
 });
 
+/**
+ * **组件事件定义**
+ * @description 定义组件可触发的事件列表
+ * */
 const emit = defineEmits(["click", "confirmClick", "deleteClick", "submitClick"]);
 
+/**
+ * **全局配置注入**
+ * @type `ComputedRef<PancakeGlobalConfigType>`
+ * @description 从父组件注入的全局配置对象，包含语言设置等
+ * */
 const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
 
-const languageValue = computed(() => {
-  return PancakeGlobalConfig.value?.language?.value || "zh-CN";
-});
+/**
+ * **获取当前语言值**
+ * @returns `string` 返回当前语言标识，如 'zh-CN' 或 'en-US'
+ * */
+const languageValue = computed(() => PancakeGlobalConfig.value?.language?.value || "zh-CN");
+
+/**
+ * **组件状态**
+ * @description 存储按钮的内部状态，包括 id、加载状态、按钮配置等
+ * */
 const state = reactive({
   id: new Date().getTime() + Math.random(),
   maskVisible: false,
@@ -75,6 +100,20 @@ const state = reactive({
   } as any
 });
 
+/**
+ * **防抖锁**
+ * @type `boolean`
+ * @description 用于防止按钮重复点击的锁标志
+ * */
+let lock = false;
+
+/**
+ * **防抖函数实例**
+ * @type `Function`
+ * @description lodash 防抖函数实例，用于处理按钮点击防抖
+ * */
+const _debounce = debounce(realClick, props.debouncedTime, { trailing: true });
+
 // # Vue onBeforeMount
 onBeforeMount(() => {
   const slots = useSlots();
@@ -84,8 +123,12 @@ onBeforeMount(() => {
   if (props.size) state.buttonConfig.size = props.size;
 });
 
-// #Function 点击按钮
-const _debounce = debounce(realClick, props.debouncedTime, { trailing: true });
+/**
+ * **按钮点击事件处理**
+ * @param `event` `MouseEvent` 鼠标点击事件对象
+ * @returns `void`
+ * @description 处理按钮点击事件，包括确认弹窗、防抖、loading 状态等
+ * */
 function btnClick(event: MouseEvent) {
   if (props.useStop) event.stopPropagation();
   if (props.onConfirmClick || props.onDeleteClick || props.onSubmitClick) {
@@ -132,11 +175,13 @@ function btnClick(event: MouseEvent) {
     }
     realClick();
   }
-  // toolsStore.setButtonLoadingId(String(state.id));
 }
 
-// #Function 实际点击（Loading）
-let lock = false;
+/**
+ * **实际点击处理**
+ * @returns `void`
+ * @description 触发 click 事件并处理 loading 状态
+ * */
 function realClick() {
   if (lock) return;
   emit("click");
@@ -267,8 +312,6 @@ watch(
         case "more":
           config.iconName = "version_line";
           config.type = "warning";
-          // config.color = "#026ccf";
-          // config.plain = false;
           break;
         case "delete":
           config.iconName = "close_circle_line";
