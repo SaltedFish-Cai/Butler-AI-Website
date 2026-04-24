@@ -181,7 +181,7 @@ function btnClick(event: MouseEvent) {
       message: { "en-US": "Are you sure you want to continue?", "zh-CN": "是否继续当前任务？" },
       confirmButtonText: { "en-US": "Continue", "zh-CN": "继续" },
       type: "success" as "danger" | "success" | "warning",
-      onConfirm: () => emit("confirm-click")
+      onConfirm: () => emit("confirmClick")
     };
 
     if (hasDeleteClick.value) {
@@ -190,7 +190,7 @@ function btnClick(event: MouseEvent) {
         message: { "en-US": "Are you sure you want to delete?", "zh-CN": "是否删除当前选项？" },
         confirmButtonText: { "en-US": "Delete", "zh-CN": "删除" },
         type: "danger" as const,
-        onConfirm: () => emit("delete-click")
+        onConfirm: () => emit("deleteClick")
       };
     }
 
@@ -200,7 +200,7 @@ function btnClick(event: MouseEvent) {
         message: { "en-US": "Are you sure you want to submit?", "zh-CN": "是否继续提交内容？" },
         confirmButtonText: { "en-US": "Submit", "zh-CN": "提交" },
         type: "warning" as const,
-        onConfirm: () => emit("submit-click")
+        onConfirm: () => emit("submitClick")
       };
     }
 

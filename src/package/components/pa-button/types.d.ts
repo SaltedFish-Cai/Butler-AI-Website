@@ -204,19 +204,22 @@ export type ComponentEmits = {
    * @returns `void`
    * */
   (e: "click", event: MouseEvent): void;
+
   /**
    * **确认按钮点击事件**
    * @returns `void`
    * */
-  (e: "confirm-click"): void;
+  (e: "confirmClick"): void;
+
   /**
    * **提交按钮点击事件**
    * @returns `void`
    * */
-  (e: "submit-click"): void;
+  (e: "submitClick"): void;
+
   /**
    * **删除按钮点击事件**
    * @returns `void`
    * */
-  (e: "delete-click"): void;
+  (e: "deleteClick"): void;
 };
