@@ -39,7 +39,7 @@ export type ComponentProps = {
 
   /**
    * **鼠标悬停Icon时提示**
-   * @type `LanguagePackageType` | `string` | `undefined`
+   * @type `LanguagePackageType | string` | `undefined`
    * @default `undefined`
    * @description 鼠标悬停时显示的提示信息
    * */

@@ -33,7 +33,7 @@ export type ComponentProps = {
 
   /**
    * **是否禁用状态**
-   * @type `boolean`
+   * @type `boolean` | `undefined`
    * @default `undefined`
    * @description 当设置该值为 `true` 时，组件为禁用状态
    * */

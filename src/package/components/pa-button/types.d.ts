@@ -74,7 +74,7 @@ export type ComponentProps = {
 
   /**
    * **按钮大小**
-   * @type `'large'` `'medium'` `'small'`
+   * @type `'large'` | `'medium'` | `'small'`
    * @default `medium`
    * @description 可选值为 `small` | `large`
    * */
@@ -82,7 +82,7 @@ export type ComponentProps = {
 
   /**
    * **内置样式**
-   * @type `string` | `undefined`
+   * @type `ButtonTypeV2Is` | `undefined`
    * @default `undefined`
    * @description 可选值为 `add` | `cancel` | `check` | `download` | `edit` | `export` | `file` | `go` | `import` | `ok` | `refresh` | `remove` | `save` | `search` | `submit` | `switch` | `sync` | `time` | `trash` | `upload` | `view` | `more`
    * */
@@ -90,7 +90,7 @@ export type ComponentProps = {
 
   /**
    * **按钮样式类型**
-   * @type `'danger'` `'default'` `'info'` `'primary'` `'success'` `'warning'`
+   * @type `'danger'` | `'default'` | `'info'` | `'primary'` | `'success'` | `'warning'`
    * @default `undefined`
    * @description 可选值为 `danger` | `default` | `info` | `primary` | `success` | `warning`
    * */
@@ -98,7 +98,7 @@ export type ComponentProps = {
 
   /**
    * **是否禁用状态**
-   * @type `boolean`
+   * @type `boolean` | `undefined`
    * @default `undefined`
    * @description 当设置该值为 `true` 时，按钮为禁用状态
    * */
@@ -106,7 +106,7 @@ export type ComponentProps = {
 
   /**
    * **加载状态**
-   * @type `boolean`
+   * @type `boolean` | `undefined`
    * @default `undefined`
    * @description 当设置该值为 `true` 时，按钮为加载状态
    * */
@@ -138,7 +138,7 @@ export type ComponentProps = {
 
   /**
    * **Icon位置**
-   * @type `'left'` `'right'`
+   * @type `'left'` | `'right'`
    * @default `left`
    * @description 可选值为 `left` | `right`
    * */
@@ -162,7 +162,7 @@ export type ComponentProps = {
 
   /**
    * **是否使用下划线按钮**
-   * @type `boolean`
+   * @type `boolean` | `undefined`
    * @default `undefined`
    * @description 当设置该值为 `true` 时，会使用下划线按钮
    * */
