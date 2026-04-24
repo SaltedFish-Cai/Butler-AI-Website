@@ -5,18 +5,16 @@
 </template>
 
 <script lang="ts" setup>
-// # Import
-// import { reactive, onBeforeMount, useSlots, nextTick, watch } from "vue";
-// import _ from "lodash";
-// import { PaButtonType } from "./type";
-// import inBrowser from "../tools/inBrowser";
+/**
+ * **组件属性定义**
+ * @description 按钮组的属性对象
+ * */
 withDefaults(
   defineProps<{
+    /** 按钮组类型 */
     type?: "danger" | "default" | "info" | "primary" | "success" | "warning";
   }>(),
-  {
-    type: "default" as const
-  }
+  { type: "default" as const }
 );
 </script>
 
