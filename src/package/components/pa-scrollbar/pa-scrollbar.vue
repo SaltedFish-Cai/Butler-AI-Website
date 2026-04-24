@@ -96,7 +96,7 @@ import { ComponentProps } from "./types";
  * **模块导入**
  * @description 导入滚动监听相关工具
  * */
-import { startDrag, listenElementScroll, observeElementResize } from "./scrollListener";
+import { startDrag, listenElementScroll, observeElementResize, ScrollUserInfo } from "./scrollListener";
 
 /**
  * **模块导入**
@@ -225,7 +225,7 @@ let removeListen: (() => void) | undefined;
  * @type `Function | undefined`
  * @description 更新滚动监听的函数
  * */
-let updateListen: (() => void) | undefined;
+let updateListen: (parentBoxRef: HTMLElement | undefined) => ScrollUserInfo;
 
 /**
  * **垂直滑块缩放比例**

@@ -1,5 +1,3 @@
-import { Ref } from "vue";
-
 export type ComponentProps = {
   /**
    * **组件唯一标识**
@@ -147,9 +145,9 @@ export type ComponentProps = {
 
   /**
    * **父元素引用**
-   * @type `Ref<HTMLElement | undefined>` | `undefined`
+   * @type `HTMLElement` | `undefined`
    * @default `undefined`
    * @description 父元素引用
    * */
-  parentBoxRef?: Ref<HTMLElement | undefined>;
+  parentBoxRef?: HTMLElement;
 };
