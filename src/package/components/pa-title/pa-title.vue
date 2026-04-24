@@ -1,129 +1,49 @@
 <template>
+  
   <div
     class="pa-title"
     :class="[
+      props.class,
       !!props.line ? '' : 'pa-title_no-line',
       padding?.includes('top') ? 'padding-top' : '',
       padding?.includes('left') ? 'padding-left' : '',
       padding?.includes('bottom') ? 'padding-bottom' : '',
       padding?.includes('right') ? 'padding-right' : ''
     ]"
+    :style="{ ...props.style }"
   >
+    
     <div class="pa-title_box" :class="[!!props.line ? '' : 'pa-title_no-line']">
+      
       <div class="pa-title_text"><slot /></div>
+    
     </div>
+    
     <div class="pa-title_tip">
+      
       <slot name="tips">{{ tips }}</slot>
+    
     </div>
+  
   </div>
 </template>
 
 <script lang="ts" setup>
-// # Import
-import { PaTitleType } from "./type";
+import { computed, inject, ComputedRef } from "vue";
+import { ComponentProps } from "./types";
+import { PancakeGlobalConfigType } from "../pa-manager/type";
 
 // # Var
-const props = withDefaults(defineProps<PaTitleType>(), {
+const props = withDefaults(defineProps<ComponentProps>(), {
   line: true
+});
+
+const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
+const languageValue = computed(() => {
+  return PancakeGlobalConfig.value?.language?.value || "zh-CN";
 });
 </script>
 
-<style lang="scss">
-.pa-title {
-  position: relative;
-  font-weight: bold;
-  font-size: var(--pa-size-font, 16px);
-  margin-left: 0;
-  color: var(--pa-color-primary);
-  width: calc(100% - var(--pa-scroll-padding));
-
-  .pa-title_box {
-    position: relative;
-    &::after {
-      position: absolute;
-      bottom: 0;
-      content: "";
-      display: block;
-      height: calc(var(--pa-size-padding, 10px) * 0.3);
-      border-radius: 0 8px;
-      left: 3px;
-      z-index: 1;
-      width: calc(100% - 3px);
-      background-color: var(--pa-color-primary-light-7);
-    }
-  }
-
-  .pa-title_text {
-    display: inline-flex;
-    width: max-content;
-    position: relative;
-    padding-bottom: calc(var(--pa-size-padding, 10px) * 0.8);
-    &::after {
-      position: absolute;
-      bottom: 0;
-      content: "";
-      display: block;
-      height: calc(var(--pa-size-padding, 10px) * 0.8);
-      border-radius: 0 8px;
-      z-index: 2;
-      left: 0px;
-      width: 100%;
-      background-color: var(--pa-color-primary);
-    }
-  }
-
-  .pa-title_tip {
-    font-size: 14px;
-  }
-}
-
-.pa-title_no-line {
-  padding-bottom: 0px !important;
-  width: max-content;
-  &::after {
-    display: none;
-  }
-  .pa-title_text {
-    padding-bottom: 5px;
-
-    &::after {
-      position: absolute;
-      bottom: 0;
-      content: "";
-      display: block;
-      height: 5px;
-      border-radius: 0 5px;
-      z-index: 2;
-      left: 0px;
-      width: 100%;
-      background-color: var(--pa-color-primary);
-    }
-  }
-}
-.pa-title.padding-top {
-  padding-top: var(--pa-size-padding, 10px);
-}
-.pa-title.padding-left {
-  padding-left: var(--pa-size-padding, 10px);
-  width: calc(100% - calc(var(--pa-size-padding, 10px)));
-}
-.pa-title.padding-bottom {
-  padding-bottom: var(--pa-size-padding, 10px);
-}
-.pa-title.padding-right {
-  padding-right: var(--pa-size-padding, 10px);
-  width: calc(100% - calc(var(--pa-size-padding, 10px)));
-}
-
-.pa-title.padding-left.padding-right {
-  width: calc(100% - calc(var(--pa-size-padding, 10px)) * 2);
-}
-
-// .m-scrollbar:has(> .is-vertical .el-scrollbar__thumb[style*="height"]) {
-//   .el-scrollbar__view {
-//     .pa-title {
-//       --pa-scroll-padding: var(--pa-size-padding, 10px);
-//     }
-//   }
-// }
+<style lang="scss" scoped>
+@use "./index.scss";
 </style>
