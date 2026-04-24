@@ -1,7 +1,7 @@
 # PancakeUI 组件排查清单
 
-> 版本：v1.0.3  
-> 基于 development-guide-v1.0.3.md 和 ai-work-v1.0.2.md 整理  
+> 版本：v1.0.4  
+> 基于 development-guide-v1.0.4.md 和 ai-work-v1.0.2.md 整理  
 > 最后更新：2026-04-24
 
 ---
@@ -149,6 +149,12 @@ export type ComponentProps = {
 - [ ] **TypeScript 代码顺序**：import > const（常量 > props > ref > reactive > 变量 > computed）> function > watch
 - [ ] 变量、函数、类使用驼峰命名法，常量使用全大写下划线分隔
 - [ ] withDefaults 尽量一行代码实现
+- [ ] **defineEmits 使用类型化写法**，禁用数组写法：
+  - ❌ 错误：`const emit = defineEmits(["click","change"]);`
+  - ✅ 正确：`const emit = defineEmits<{ (e: "click"): void; (e: "change", payload: { detail: string }): string }>();`
+  - 类型定义需根据实际 `emit()` 调用确定：
+  - `emit("click")` → `(e: "click"): void`
+  - `const val: string = emit("change", { detail: "click" })` → `(e: "change", payload: { detail: string }): string`
 
 ### 示例
 
@@ -177,7 +183,7 @@ const props = withDefaults(defineProps<ComponentProps>(), { size: "medium" });
  * **组件事件定义**
  * @description 定义组件可触发的事件
  * */
-const emit = defineEmits(["click"]);
+const emit = defineEmits<{ (e: "click"): void }>();
 
 /**
  * **当前值**
@@ -380,4 +386,4 @@ function handleClick() {}
 
 ---
 
-*文档版本：v1.0.3 | 创建时间：2026-04-24*
+*文档版本：v1.0.4 | 创建时间：2026-04-24*

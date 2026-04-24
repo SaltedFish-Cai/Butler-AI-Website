@@ -4,6 +4,10 @@
  * */
 import { LanguagePackageType } from "../manager-type";
 
+/**
+ * **组件属性**
+ * @description 定义组件的属性类型
+ * */
 export type ComponentProps = {
   /**
    * **组件唯一标识**
@@ -39,17 +43,22 @@ export type ComponentProps = {
 
   /**
    * **鼠标悬停Icon时提示**
-   * @type `LanguagePackageType | string` | `undefined`
+   * @type `LanguagePackageType` | `string` | `undefined`
    * @default `undefined`
    * @description 鼠标悬停时显示的提示信息
    * */
   tip?: LanguagePackageType | string;
+};
 
+/**
+ * **组件事件**
+ * @description 定义组件可触发的事件
+ * */
+export type ComponentEmits = {
   /**
-   * **点击Icon执行方法**
-   * @type `(event: any) => void` | `undefined`
-   * @default `undefined`
-   * @description 点击Icon时执行的回调函数
+   * **点击 Icon 事件**
+   * @param `event` `Event` 鼠标事件对象
+   * @returns `void`
    * */
-  onClick?: (event: any) => void;
+  click: (event: Event) => void;
 };
