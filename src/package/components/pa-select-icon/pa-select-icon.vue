@@ -68,7 +68,7 @@
 
 <script lang="ts" setup>
 import { ref, computed, watch, inject, ComputedRef } from "vue";
-import { ComponentProps } from "./type";
+import { ComponentProps, ComponentEmits } from "./types";
 import iconJson from "./config/icon.json";
 import direction from "./config/direction.json";
 import multiMedia from "./config/multi-media.json";
@@ -97,11 +97,14 @@ const Config = ref([
 ]);
 
 const props = defineProps<ComponentProps>();
-const emits = defineEmits(["update:modelValue", "change"]);
+const emits = defineEmits<ComponentEmits>();
 
 const selectRef = ref();
 const selectItem = ref(props.modelValue || "finger_press_line");
 const hoverItem = ref("finger_press_line");
+const activeName = ref("all");
+
+let oldValue = props.modelValue;
 
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 const languageValue = computed(() => {
@@ -118,9 +121,10 @@ const inputPlaceholder = computed(() => {
     : props.placeholder || languagePackage.value[`clickChangeIcon`];
 });
 
-const activeName = ref("all");
-let oldValue = props.modelValue;
-
+/**
+ * **设置图标选项**
+ * @description 将图标数据转换为选项格式
+ * */
 function setIconOptions(icons) {
   const iconOptions = icons.map(item => {
     return { label: item.font_class, value: item.font_class };
@@ -128,6 +132,10 @@ function setIconOptions(icons) {
   return iconOptions;
 }
 
+/**
+ * **选择图标**
+ * @description 选择图标并触发事件
+ * */
 function selectedIcon(value) {
   selectItem.value = value;
   emits("update:modelValue", value);
@@ -135,6 +143,10 @@ function selectedIcon(value) {
   oldValue = value;
 }
 
+/**
+ * **悬停图标**
+ * @description 鼠标悬停图标时更新显示
+ * */
 function hoverIcon(iconText) {
   hoverItem.value = iconText.label;
 }
@@ -168,6 +180,7 @@ watch(
     border: 1px solid var(--pa-color-border);
     border-radius: var(--pa-size-radius, 3px);
     background-color: var(--pa-color-bg);
+
     &:hover {
       cursor: pointer;
       background-color: var(--pa-color-primary-light-9);
@@ -189,12 +202,14 @@ watch(
     border-radius: 50%;
   }
 }
+
 .pa-select-icon_popover {
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
   justify-content: flex-start;
   max-height: 300px;
+
   .pop_icon {
     width: 100%;
     flex: 0 0 calc(100% / 10 - 2px);
@@ -207,6 +222,7 @@ watch(
     border: 1px solid var(--pa-border-color);
     border-radius: 3px;
     box-sizing: border-box;
+
     &:hover {
       background-color: var(--pa-color-info-light-9);
       cursor: pointer;
@@ -237,14 +253,17 @@ watch(
         box-shadow: 0 0 0 2px var(--pa-color-primary-light-8);
       }
     }
+
     > .pa-button {
       width: 100%;
+
       &.hover {
         border-color: var(--pa-color-primary);
         box-shadow: 0 0 0 2px var(--pa-color-primary-light-8);
       }
     }
   }
+
   .pa-scrollbar:has(.scrollbar__bar.is-vertical) {
     & > .pa-scrollbar-content {
       .pa-select-icon_popover {
@@ -253,6 +272,7 @@ watch(
     }
   }
 }
+
 .pa-select-icon.is-disabled {
   > .pa-popover-reference {
     &:hover {

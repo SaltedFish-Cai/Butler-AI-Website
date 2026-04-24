@@ -1,3 +1,7 @@
+/**
+ * **模块导入**
+ * @description 导入多语言类型定义
+ * */
 import { LanguagePackageType } from "../manager-type";
 
 export type ComponentProps = {
@@ -5,23 +9,23 @@ export type ComponentProps = {
    * **组件唯一标识**
    * @type `string` | `undefined`
    * @default `undefined`
-   * @description 当设置该值时，会作为组件的唯一标识
+   * @description 组件的唯一标识符
    * */
   id?: string;
 
   /**
    * **自定义类名**
-   * @type `string` | `undefined`
+   * @type `Array<string>` | `string` | `undefined`
    * @default `undefined`
-   * @description 当设置该值时，会添加到组件的类名中
+   * @description 自定义类名
    * */
-  class?: string;
+  class?: Array<string> | string;
 
   /**
    * **自定义样式**
    * @type `Record<string, string>` | `undefined`
    * @default `undefined`
-   * @description 当设置该值时，会添加到组件的样式中
+   * @description 自定义样式
    * */
   style?: Record<string, string>;
 
@@ -29,15 +33,15 @@ export type ComponentProps = {
    * **双向绑定值**
    * @type `string` | `undefined`
    * @default `undefined`
-   * @description 当设置该值时，会绑定该值
+   * @description 图标选择器绑定值
    * */
   modelValue?: string;
 
   /**
-   * **表单项占位符**
+   * **输入框占位符**
    * @type `LanguagePackageType` | `string` | `undefined`
    * @default `undefined`
-   * @description 当设置该值时，会使用该值作为表单项占位符
+   * @description 输入框占位符文本
    * */
   placeholder?: LanguagePackageType | string;
 
@@ -45,7 +49,7 @@ export type ComponentProps = {
    * **是否禁用**
    * @type `boolean` | `undefined`
    * @default `undefined`
-   * @description 当设置该值为 `true` 时，会禁用该组件
+   * @description 是否禁用图标选择器
    * */
   disabled?: boolean;
 
@@ -53,15 +57,15 @@ export type ComponentProps = {
    * **纯展示模式**
    * @type `boolean` | `undefined`
    * @default `undefined`
-   * @description 当设置该值为 `true` 时，会使用纯展示模式
+   * @description 是否开启纯展示模式
    * */
   display?: boolean;
 
   /**
-   * **纯展示类型下，直接显示值**
+   * **纯展示类型下直接显示值**
    * @type `string` | `undefined`
    * @default `undefined`
-   * @description 当设置该值时，会直接显示该值
+   * @description 纯展示模式下直接显示的值
    * */
   displayValue?: string;
 
@@ -69,7 +73,7 @@ export type ComponentProps = {
    * **Teleport 目标**
    * @type `boolean` | `undefined`
    * @default `undefined`
-   * @description 当设置该值为 `true` 时，会将组件挂载到指定的目标元素下
+   * @description 是否将弹出层挂载到容器内
    * */
   teleportInContainer?: boolean;
 
@@ -77,7 +81,7 @@ export type ComponentProps = {
    * **对比数据**
    * @type `string` | `undefined`
    * @default `undefined`
-   * @description 当设置该值时，会使用该值作为对比数据
+   * @description 用于对比的原数据
    * */
   contrastData?: string;
 
@@ -85,7 +89,7 @@ export type ComponentProps = {
    * **是否显示对比数据**
    * @type `boolean` | `undefined`
    * @default `undefined`
-   * @description 当设置该值为 `true` 时，会显示对比数据
+   * @description 是否总是显示对比数据
    * */
   alwaysContrast?: boolean;
 
@@ -93,7 +97,7 @@ export type ComponentProps = {
    * **表单项标签**
    * @type `LanguagePackageType` | `string` | `undefined`
    * @default `undefined`
-   * @description 当设置该值时，会作为表单项标签
+   * @description 表单项标签文本
    * */
   title?: LanguagePackageType | string;
 
@@ -101,15 +105,27 @@ export type ComponentProps = {
    * **表单项标签宽度**
    * @type `string` | `undefined`
    * @default `undefined`
-   * @description 当设置该值时，会作为表单项标签宽度
+   * @description 表单项标签宽度
    * */
   titleWidth?: string;
+};
+
+/**
+ * **组件事件定义**
+ * @description 定义组件可触发的事件
+ * */
+export type ComponentEmits = {
+  /**
+   * **双向绑定更新事件**
+   * @param `value` `string` 图标名称
+   * @returns `void`
+   * */
+  (e: "update:modelValue", value: string): void;
 
   /**
-   * **当数据发生变更时触发**
-   * @type `({ value, oldValue }) => void` | `undefined`
-   * @default `undefined`
-   * @description 当设置该值时，会使用该值作为回调函数
+   * **图标变更事件**
+   * @param `data` `{ value: string; oldValue: string }` 新值和旧值
+   * @returns `void`
    * */
-  onChange?: ({ value, oldValue }) => void;
+  (e: "change", data: { value: string; oldValue: string }): void;
 };

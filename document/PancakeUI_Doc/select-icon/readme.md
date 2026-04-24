@@ -1,6 +1,6 @@
 # Select Icon 图标选择器
 
-`pa-select-icon` 用于从预设的图标库中选择图标。
+用于从预设的图标库中选择图标，支持多分类展示。
 
 ## 基础使用
 
@@ -17,10 +17,10 @@
 | 属性名              | 描述                     | 类型                                                                                  | 默认值 |
 | ------------------- | ------------------------ | ------------------------------------------------------------------------------------- | ------ |
 | id                  | 组件唯一标识             | `string`                                                                              | -      |
-| class               | 自定义类名               | `string`                                                                              | -      |
+| class               | 自定义类名               | `Array<string>` `string`                                                              | -      |
 | style               | 自定义样式               | `Record<string, string>`                                                              | -      |
 | modelValue          | 双向绑定值               | `string`                                                                              | -      |
-| displayValue        | 纯展示类型下，直接显示值 | `string`                                                                              | -      |
+| displayValue        | 纯展示类型下直接显示值   | `string`                                                                              | -      |
 | placeholder         | 占位符                   | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) `string` | -      |
 | disabled            | 是否禁用                 | `boolean`                                                                             | -      |
 | display             | 纯展示模式               | `boolean`                                                                             | -      |
@@ -32,6 +32,6 @@
 
 ## ComponentEmits
 
-| 字段   | 描述           | 类型                            |
-| ------ | -------------- | ------------------------------- |
-| change | 图标变化时触发 | `({ value, oldValue }) => void` |
+| 事件名 | 描述           | 回调函数                                    |
+| ------ | -------------- | ------------------------------------------- |
+| change | 图标变更时触发 | `(data: { value: string; oldValue: string }) => void` |
