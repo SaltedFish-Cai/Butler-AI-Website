@@ -10,7 +10,6 @@
     opacity: 0.6;
   }
 
-  // 颜色预览区域
   &-preview {
     display: flex;
     align-items: center;
@@ -66,7 +65,6 @@
     margin-bottom: var(--pa-size-padding);
   }
 
-  // 颜色选择区域
   &-color-area {
     position: relative;
     width: 100%;
@@ -105,7 +103,6 @@
     }
   }
 
-  // 色相选择条
   &-hue-area {
     position: relative;
     width: 100%;
@@ -134,7 +131,6 @@
     }
   }
 
-  // 透明度选择条
   &-alpha-area {
     position: relative;
     width: 100%;
@@ -166,7 +162,6 @@
     }
   }
 
-  // 输入区域
   &-inputs {
     &-group {
       margin-bottom: 8px;
@@ -192,7 +187,6 @@
     }
   }
 
-  // 预设颜色列表
   &-presets {
     margin-top: var(--pa-size-padding);
     display: flex;
