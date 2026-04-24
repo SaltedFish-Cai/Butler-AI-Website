@@ -78,7 +78,7 @@ export type ComponentProps = {
 export type ComponentEmits = {
   /**
    * **删除标签事件**
-   * @param `data` `TagListItem` 标签数据
+   * @param `data` `{ label: string; value: boolean | number | string }` 标签数据
    * @returns `void`
    * */
   (e: "removeTag", data: { label: string; value: boolean | number | string }): void;

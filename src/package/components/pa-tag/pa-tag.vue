@@ -122,10 +122,10 @@ const isOpacity = ref(0);
 /**
  * **移除标签**
  * @param `e` `Event` 点击事件
- * @param `data` `object` 标签数据
+ * @param `data` `{ label: string; value: boolean | number | string }` 标签数据
  * @description 触发 removeTag 事件
  * */
-function removeTag(e: Event, data: object) {
+function removeTag(e: Event, data: { label: string; value: boolean | number | string }) {
   e.stopPropagation();
   emits("removeTag", data);
 }
