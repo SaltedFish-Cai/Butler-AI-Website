@@ -9,11 +9,30 @@
 </template>
 
 <script lang="ts" setup>
+/**
+ * **模块导入**
+ * @description 导入 Vue 组合式 API
+ * */
 import { computed } from "vue";
+
+/**
+ * **模块导入**
+ * @description 导入组件类型定义
+ * */
 import { ComponentProps } from "./types";
 
+/**
+ * **组件属性**
+ * @type `ComponentProps`
+ * @description 组件的属性对象
+ * */
 const props = withDefaults(defineProps<ComponentProps>(), {});
 
+/**
+ * **计算属性：显示值**
+ * @returns `number` | `string` 徽标显示的值
+ * @description 根据最大值限制计算实际显示的值
+ * */
 const showVal = computed(() => {
   if (props.maxValue && typeof Number(props.value) === "number") {
     const _maxValue = Number(props.maxValue);

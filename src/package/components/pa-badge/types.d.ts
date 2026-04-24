@@ -1,4 +1,3 @@
-// # Type
 export type ComponentProps = {
   /**
    * **组件唯一标识**
@@ -26,7 +25,8 @@ export type ComponentProps = {
 
   /**
    * **徽标值**
-   * @type `string` | `number`
+   * @type `number` | `string`
+   * @default `undefined`
    * @description 徽标显示的值
    * */
   value: number | string;
