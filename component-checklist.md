@@ -1,7 +1,7 @@
 # PancakeUI 组件排查清单
 
-> 版本：v1.0.4  
-> 基于 development-guide-v1.0.4.md 和 ai-work-v1.0.2.md 整理  
+> 版本：v1.0.5  
+> 基于 development-guide-v1.0.5.md 和 ai-work-v1.0.2.md 整理  
 > 最后更新：2026-04-24
 
 ---
@@ -277,12 +277,12 @@ export default { name: "PaButton", install };
 - [ ] 组件名称：`pa-{组件名}` 格式
 - [ ] 组件描述：中文，100字以内
 - [ ] **ComponentProps 表格**：属性名、描述、类型、默认值 四列
-- [ ] **ComponentEmits 表格**：事件名、描述、回调函数、函数参数 四列（如存在）
+- [ ] **ComponentEmits 表格**：事件名、描述、回调函数 三列（如存在）
   - 回调函数格式需与 types.d.ts 中 ComponentEmits 类型定义一致
   - 示例：
-    | 事件名 | 描述 | 回调函数 | 函数参数 |
-    | ------ | ---- | -------- | -------- |
-    | click | 点击 Icon 执行方法 | `(event: MouseEvent) => void` | `event: MouseEvent` |
+    | 事件名 | 描述 | 回调函数 |
+    | ------ | ---- | -------- |
+    | click | 点击 Icon 执行方法 | `(event: MouseEvent) => void` |
 - [ ] **ComponentSlots 表格**：插槽名称、作用 两列（如存在）
 - [ ] 示例文件 `base.vue` 必须存在
 - [ ] 建议创建 `{属性名}.vue` 示例文件
@@ -398,4 +398,4 @@ function handleClick() {}
 
 ---
 
-*文档版本：v1.0.4 | 创建时间：2026-04-24*
+*文档版本：v1.0.5 | 创建时间：2026-04-24*
