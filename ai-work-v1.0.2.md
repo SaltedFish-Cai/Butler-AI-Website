@@ -37,6 +37,7 @@
        - src/package/components/pa-color/pa-color.vue
        - src/package/components/pa-color/pa-color-box.vue
 
+   - 所有样式文件在修改后需要检查 vue 文件中是否有引用该样式，如果有引用，需要同步修改
    - 所有文件修改后都需要进行格式化文档操作保持代码风格一致
 
      - 使用 Prettier 插件进行代码格式化
