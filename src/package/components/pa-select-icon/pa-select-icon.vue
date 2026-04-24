@@ -104,7 +104,7 @@ const selectItem = ref(props.modelValue || "finger_press_line");
 const hoverItem = ref("finger_press_line");
 const activeName = ref("all");
 
-let oldValue = props.modelValue;
+let oldValue = props.modelValue || "";
 
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 const languageValue = computed(() => {
