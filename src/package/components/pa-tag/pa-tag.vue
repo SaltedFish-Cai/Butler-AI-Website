@@ -43,7 +43,7 @@ import { onMounted, ref, Ref, watch, nextTick, inject, ComputedRef } from "vue";
  * **模块导入**
  * @description 导入组件类型定义
  * */
-import { ComponentProps, TagListType, ComponentEmits } from "./types";
+import { ComponentProps, TagListType, ComponentEmits, TagType } from "./types";
 
 /**
  * **模块导入**
@@ -125,7 +125,7 @@ const isOpacity = ref(0);
  * @param `data` `{ label: string; value: boolean | number | string }` 标签数据
  * @description 触发 removeTag 事件
  * */
-function removeTag(e: Event, data: { label: string; value: boolean | number | string }) {
+function removeTag(e: Event, data: TagType) {
   e.stopPropagation();
   emits("removeTag", data);
 }

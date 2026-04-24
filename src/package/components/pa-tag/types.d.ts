@@ -5,13 +5,19 @@
 import { LanguagePackageType } from "../manager-type";
 
 /**
+ * **标签类型**
+ * @description 标签数据结构
+ * */
+export type TagType = {
+  label: LanguagePackageType | string;
+  value: boolean | number | string | undefined;
+};
+
+/**
  * **标签列表类型**
  * @description 标签数据结构数组
  * */
-export type TagListType = Array<{
-  label: LanguagePackageType | string;
-  value: boolean | number | string | undefined;
-}>;
+export type TagListType = Array<TagType>;
 
 export type ComponentProps = {
   /**
@@ -81,5 +87,5 @@ export type ComponentEmits = {
    * @param `data` `{ label: string; value: boolean | number | string }` 标签数据
    * @returns `void`
    * */
-  (e: "removeTag", data: { label: string; value: boolean | number | string }): void;
+  (e: "removeTag", data: TagType): void;
 };
