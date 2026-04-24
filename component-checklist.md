@@ -95,6 +95,8 @@ export type ComponentProps = {
 
 ## 三、index.scss 检查
 
+- [ ] **组件有独立的 index.scss 文件**（样式不能直接写在 Vue 文件内）
+- [ ] **Vue 文件通过 @use 引入样式**：`@use "./index.scss";`
 - [ ] 缩进为2空格
 - [ ] 根元素类名为 `.pa-{组件名}`（如 `.pa-button`）
 - [ ] 子元素样式类必须包含在根元素类中（BEM 命名：`.pa-button_text`）
