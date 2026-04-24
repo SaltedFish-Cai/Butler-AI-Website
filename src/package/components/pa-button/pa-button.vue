@@ -71,7 +71,7 @@ const props = withDefaults(defineProps<ComponentProps>(), {
  * **组件事件定义**
  * @description 定义组件可触发的事件列表
  * */
-const emit = defineEmits(["click", "confirmClick", "deleteClick", "submitClick"]);
+const emit = defineEmits<{ (e: "click"): void }>();
 
 /**
  * **全局配置注入**
@@ -137,30 +137,30 @@ onBeforeMount(() => {
  * */
 function btnClick(event: MouseEvent) {
   if (props.useStop) event.stopPropagation();
-  if (props.onConfirmClick || props.onDeleteClick || props.onSubmitClick) {
+  if (props.confirmClick || props.deleteClick || props.submitClick) {
     let confirmConfig = {
       title: { "en-US": "Tips", "zh-CN": "温馨提示" },
       message: { "en-US": "Are you sure you want to continue?", "zh-CN": "是否继续当前任务？" },
       confirmButtonText: { "en-US": "Continue", "zh-CN": "继续" },
       type: "success" as "danger" | "success" | "warning",
-      onConfirm: props.onConfirmClick
+      onConfirm: props.confirmClick
     };
-    if (props.onDeleteClick) {
+    if (props.deleteClick) {
       confirmConfig = {
         title: { "en-US": "Notice", "zh-CN": "注意" },
         message: { "en-US": "Are you sure you want to delete?", "zh-CN": "是否删除当前选项？" },
         confirmButtonText: { "en-US": "Delete", "zh-CN": "删除" },
         type: "danger" as const,
-        onConfirm: props.onDeleteClick
+        onConfirm: props.deleteClick
       };
     }
-    if (props.onSubmitClick) {
+    if (props.submitClick) {
       confirmConfig = {
         title: { "en-US": "Tips", "zh-CN": "温馨提示" },
         message: { "en-US": "Are you sure you want to submit?", "zh-CN": "是否继续提交内容？" },
         confirmButtonText: { "en-US": "Submit", "zh-CN": "提交" },
         type: "warning" as const,
-        onConfirm: props.onSubmitClick
+        onConfirm: props.submitClick
       };
     }
     M_MessageBox.confirm(confirmConfig);

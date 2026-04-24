@@ -193,20 +193,12 @@ export type ComponentProps = {
   useStop?: boolean;
 
   /**
-   * **点击按钮执行方法**
-   * @type `(event: MouseEvent) => void` | `undefined`
-   * @default `undefined`
-   * @description 点击按钮时执行的回调函数
-   * */
-  onClick?: (event?: MouseEvent) => void;
-
-  /**
    * **确认按钮执行方法**
    * @type `() => void` | `undefined`
    * @default `undefined`
    * @description 点击确认按钮时执行的回调函数
    * */
-  onConfirmClick?: () => void;
+  confirmClick?: () => void;
 
   /**
    * **提交按钮执行方法**
@@ -214,7 +206,7 @@ export type ComponentProps = {
    * @default `undefined`
    * @description 点击提交按钮时执行的回调函数
    * */
-  onSubmitClick?: () => void;
+  submitClick?: () => void;
 
   /**
    * **删除按钮执行方法**
@@ -222,5 +214,5 @@ export type ComponentProps = {
    * @default `undefined`
    * @description 点击删除按钮时执行的回调函数
    * */
-  onDeleteClick?: () => void;
+  deleteClick?: () => void;
 };
