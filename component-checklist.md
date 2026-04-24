@@ -151,10 +151,17 @@ export type ComponentProps = {
 - [ ] withDefaults 尽量一行代码实现
 - [ ] **defineEmits 使用类型化写法**，禁用数组写法：
   - ❌ 错误：`const emit = defineEmits(["click","change"]);`
-  - ✅ 正确：`const emit = defineEmits<{ (e: "click"): void; (e: "change", payload: { detail: string }): string }>();`
+  - ✅ 正确：`const emit = defineEmits<ComponentEmits>();`
+  - **ComponentEmits 类型定义格式**：
+    ```typescript
+    export type ComponentEmits = {
+      (e: "click", event: MouseEvent): void;
+      (e: "change", payload: { detail: string }): string;
+    };
+    ```
   - 类型定义需根据实际 `emit()` 调用确定：
-  - `emit("click")` → `(e: "click"): void`
-  - `const val: string = emit("change", { detail: "click" })` → `(e: "change", payload: { detail: string }): string`
+    - `emit("click", event)` → `(e: "click", event: MouseEvent): void`
+    - `const val: string = emit("change", { detail: "click" })` → `(e: "change", payload: { detail: string }): string`
 
 ### 示例
 
@@ -183,7 +190,7 @@ const props = withDefaults(defineProps<ComponentProps>(), { size: "medium" });
  * **组件事件定义**
  * @description 定义组件可触发的事件
  * */
-const emit = defineEmits<{ (e: "click"): void }>();
+const emit = defineEmits<ComponentEmits>();
 
 /**
  * **当前值**
