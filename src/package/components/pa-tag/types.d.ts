@@ -1,5 +1,9 @@
 import { LanguagePackageType } from "../manager-type";
 
+/**
+ * **标签列表类型**
+ * @description 标签数据结构数组
+ * */
 export type TagListType = Array<{
   label: LanguagePackageType | string;
   value: boolean | number | string | undefined;
