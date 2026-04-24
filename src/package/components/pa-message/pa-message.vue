@@ -11,11 +11,7 @@
       <div class="pa-message_header">
         <div class="flex-center-start">
           <pa-icon class="pa-message__icon mr-size" name="warning_line"></pa-icon>
-          <div
-            v-if="dangerouslyUseHTMLString"
-            class="pa-message__content"
-            v-html="dangerouslyUseHTMLString ? message : ''"
-          ></div>
+          <div v-if="dangerouslyUseHTMLString" class="pa-message__content" v-html="dangerouslyUseHTMLString ? message : ''"></div>
           <div v-else class="pa-message__content">{{ typeof message === "string" ? message : message?.[language] }}</div>
         </div>
         <pa-icon class="pa-message__closeBtn" @click="handleClose" name="close_line"></pa-icon>
@@ -29,7 +25,8 @@ import { ref, computed, onMounted, onUnmounted } from "vue";
 import type { MessageOptions } from "./type";
 import PaIcon from "../pa-icon/pa-icon.vue";
 
-const language = typeof window !== "undefined" && typeof window !== "undefined" && window.PancakeGlobalConfig?.language || "zh-CN" || "zh-CN";
+const language =
+  (typeof window !== "undefined" && typeof window !== "undefined" && window.PancakeGlobalConfig?.language) || "zh-CN" || "zh-CN";
 
 // Props
 const props = defineProps<{
@@ -105,7 +102,7 @@ const handleClose = () => {
 
 // #添加ESC键监听
 function handleKeyDown(e) {
-  const escapeMap = typeof window !== "undefined" && window.PancakeGlobalConfig.escapeMap || [];
+  const escapeMap = (typeof window !== "undefined" && window.PancakeGlobalConfig.escapeMap) || [];
   if (e.key === "Escape" && escapeMap[escapeMap.length - 1] === props.id) {
     handleClose();
   }
@@ -117,6 +114,7 @@ onMounted(() => {
   setTimeout(() => {
     visible.value = true;
   }, 10);
+  if (!window.PancakeGlobalConfig.escapeMap) window.PancakeGlobalConfig.escapeMap = [];
   closeOnPressEscape && document.addEventListener("keydown", handleKeyDown);
   if (closeOnPressEscape) {
     typeof window !== "undefined" && window.PancakeGlobalConfig.escapeMap.push(props.id);

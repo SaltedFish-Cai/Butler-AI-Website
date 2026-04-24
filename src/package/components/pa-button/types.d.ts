@@ -191,30 +191,6 @@ export type ComponentProps = {
    * @description 当设置该值为 `true` 时，会阻止事件冒泡
    * */
   useStop?: boolean;
-
-  /**
-   * **确认按钮执行方法**
-   * @type `() => void` | `undefined`
-   * @default `undefined`
-   * @description 点击确认按钮时执行的回调函数
-   * */
-  confirmClick?: () => void;
-
-  /**
-   * **提交按钮执行方法**
-   * @type `() => void` | `undefined`
-   * @default `undefined`
-   * @description 点击提交按钮时执行的回调函数
-   * */
-  submitClick?: () => void;
-
-  /**
-   * **删除按钮执行方法**
-   * @type `() => void` | `undefined`
-   * @default `undefined`
-   * @description 点击删除按钮时执行的回调函数
-   * */
-  deleteClick?: () => void;
 };
 
 /**
@@ -228,4 +204,19 @@ export type ComponentEmits = {
    * @returns `void`
    * */
   (e: "click", event: MouseEvent): void;
+  /**
+   * **确认按钮点击事件**
+   * @returns `void`
+   * */
+  (e: "confirm-click"): void;
+  /**
+   * **提交按钮点击事件**
+   * @returns `void`
+   * */
+  (e: "submit-click"): void;
+  /**
+   * **删除按钮点击事件**
+   * @returns `void`
+   * */
+  (e: "delete-click"): void;
 };

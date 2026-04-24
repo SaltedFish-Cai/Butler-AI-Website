@@ -42,7 +42,7 @@
  * **模块导入**
  * @description 导入 Vue 组合式 API、类型定义、工具函数等依赖
  * */
-import { reactive, onBeforeMount, useSlots, nextTick, watch, inject, ComputedRef, computed } from "vue";
+import { reactive, onBeforeMount, useSlots, nextTick, watch, inject, ComputedRef, computed, getCurrentInstance } from "vue";
 import { ComponentProps, ComponentEmits } from "./types";
 import inBrowser from "../tools/inBrowser";
 import { M_MessageBox } from "../feedback";
@@ -72,6 +72,43 @@ const props = withDefaults(defineProps<ComponentProps>(), {
  * @description 定义组件可触发的事件列表
  * */
 const emit = defineEmits<ComponentEmits>();
+
+/**
+ * **实例对象注入**
+ * @type `Instance`
+ * @description 组件的实例对象，包含所有自定义属性和事件
+ * */
+const instance = getCurrentInstance();
+
+/**
+ * **检查是否有外部监听**
+ * @description 检查是否有外部监听 onConfirmClick 事件
+ * @returns `boolean` 是否有外部监听
+ * */
+const hasConfirmClick = computed(() => {
+  const props = instance?.vnode.props || {};
+  return !!(props.onConfirmClick || props["onConfirm-click"]);
+});
+
+/**
+ * **检查是否有外部监听**
+ * @description 检查是否有外部监听 onDeleteClick 事件
+ * @returns `boolean` 是否有外部监听
+ * */
+const hasDeleteClick = computed(() => {
+  const props = instance?.vnode.props || {};
+  return !!(props.onDeleteClick || props["onDelete-click"]);
+});
+
+/**
+ * **检查是否有外部监听**
+ * @description 检查是否有外部监听 onSubmitClick 事件
+ * @returns `boolean` 是否有外部监听
+ * */
+const hasSubmitClick = computed(() => {
+  const props = instance?.vnode.props || {};
+  return !!(props.onSubmitClick || props["onSubmit-click"]);
+});
 
 /**
  * **全局配置注入**
@@ -137,32 +174,36 @@ onBeforeMount(() => {
  * */
 function btnClick(event: MouseEvent) {
   if (props.useStop) event.stopPropagation();
-  if (props.confirmClick || props.deleteClick || props.submitClick) {
+
+  if (hasConfirmClick.value || hasDeleteClick.value || hasSubmitClick.value) {
     let confirmConfig = {
       title: { "en-US": "Tips", "zh-CN": "温馨提示" },
       message: { "en-US": "Are you sure you want to continue?", "zh-CN": "是否继续当前任务？" },
       confirmButtonText: { "en-US": "Continue", "zh-CN": "继续" },
       type: "success" as "danger" | "success" | "warning",
-      onConfirm: props.confirmClick
+      onConfirm: () => emit("confirm-click")
     };
-    if (props.deleteClick) {
+
+    if (hasDeleteClick.value) {
       confirmConfig = {
         title: { "en-US": "Notice", "zh-CN": "注意" },
         message: { "en-US": "Are you sure you want to delete?", "zh-CN": "是否删除当前选项？" },
         confirmButtonText: { "en-US": "Delete", "zh-CN": "删除" },
         type: "danger" as const,
-        onConfirm: props.deleteClick
+        onConfirm: () => emit("delete-click")
       };
     }
-    if (props.submitClick) {
+
+    if (hasSubmitClick.value) {
       confirmConfig = {
         title: { "en-US": "Tips", "zh-CN": "温馨提示" },
         message: { "en-US": "Are you sure you want to submit?", "zh-CN": "是否继续提交内容？" },
         confirmButtonText: { "en-US": "Submit", "zh-CN": "提交" },
         type: "warning" as const,
-        onConfirm: props.submitClick
+        onConfirm: () => emit("submit-click")
       };
     }
+
     M_MessageBox.confirm(confirmConfig);
     return;
   }
