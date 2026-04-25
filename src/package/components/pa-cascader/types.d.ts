@@ -161,5 +161,12 @@ export type ComponentProps = {
 export type ComponentEmits = {
   (e: "update:modelValue", value: Array<number | string> | number | string): void;
 
-  (e: "change", payload: { value: Array<number | string> | number | string; oldValue: Array<number | string> | number | string; option: SaOptionType.Select }): void;
+  (
+    e: "change",
+    payload: {
+      value: Array<number | string> | number | string;
+      oldValue: Array<number | string> | number | string;
+      option: SaOptionType.Select;
+    }
+  ): void;
 };

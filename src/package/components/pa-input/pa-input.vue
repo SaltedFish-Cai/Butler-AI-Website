@@ -5,7 +5,7 @@
         <div v-if="title" :style="{ width: titleWidth }" class="pa-cell-label">
           {{ typeof title === "string" ? title : title[languageValue] }}
         </div>
-        
+
         <div class="pa-input-textarea" :class="[isFocus ? 'is-focus' : '']">
           <div
             v-if="!isFocus"
@@ -14,7 +14,7 @@
           >
             {{ inValue || computedPlaceholder }}
           </div>
-          
+
           <textarea
             ref="textareaRef"
             class="pa-input-textarea-inner textarea"
@@ -39,7 +39,7 @@
               {{ inValue?.length || 0 }}{{ maxLength ? " / " + maxLength : "" }}
             </div>
           </div>
-          
+
           <pa-icon
             v-else-if="!disabled && clearable && inValue && !isFocus"
             name="close_circle_line"
@@ -195,7 +195,7 @@ const adjustTextareaHeight = () => {
   textareaRef.value.scrollTop = scrollTop;
 };
 
-let oldValue: string | undefined = String(props.modelValue);
+let oldValue: string = String(props.modelValue) || "";
 
 /**
  * **限制输入长度**

@@ -27,6 +27,13 @@ export type PaSelectOptionsType = {
   children?: Array<PaSelectOptionsType>;
 
   /**
+   * **父数据**
+   * @type `MSelectOptionsType`
+   * @description 父级的类型为 `MSelectOptionsType`，可以是任意类型
+   * */
+  parent?: PaSelectOptionsType;
+
+  /**
    * **是否禁用该选项**
    * @type `boolean`
    * @default `false`

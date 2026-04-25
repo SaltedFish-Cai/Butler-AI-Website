@@ -139,6 +139,8 @@ import { findData as findDataSelect } from "../utils/find-data";
  * */
 import { PancakeGlobalConfigType } from "../pa-manager/type";
 
+import { PaOptionType } from "@/package/components/manager-type";
+
 /**
  * **模块导入**
  * @description 导入 lodash 工具函数
@@ -246,14 +248,14 @@ const inValue = ref<Array<number | string> | number | string>(props.modelValue |
 
 /**
  * **选项列表**
- * @type `Ref<Array<SaOptionType.Select>>`
+ * @type `Ref<Array<PaOptionType.Select>>`
  * @description 外部传入的选项列表
  * */
 const exOptionsList = ref(props?.exOptions || []);
 
 /**
  * **扁平化选项列表**
- * @type `Ref<Array<SaOptionType.Select>>`
+ * @type `Ref<Array<PaOptionType.Select>>`
  * @description 扁平化处理后的选项列表
  * */
 const flatExOptions = ref(props?.exOptions || []);
@@ -285,7 +287,7 @@ const isCheck = computed(() => {
 
 /**
  * **过滤后的选项列表**
- * @type `ComputedRef<Array<SaOptionType.Select>>`
+ * @type `ComputedRef<Array<PaOptionType.Select>>`
  * @description 根据输入值过滤后的选项列表
  * */
 const filterOptionsList = computed(() => {
@@ -356,7 +358,7 @@ const inputPlaceholder = computed(() => {
 
 /**
  * **标签值列表**
- * @type `ComputedRef<Array<SaOptionType.Select>>`
+ * @type `ComputedRef<Array<PaOptionType.Select>>`
  * @description 多选模式下显示的标签列表
  * */
 const tagValue = computed(() => {
@@ -376,16 +378,16 @@ const tagValue = computed(() => {
  * @type `Array<number | string> | number | string`
  * @description 用于存储上一次的值，用于对比
  * */
-let oldValue: Array<number | string> | number | string = props.modelValue;
+let oldValue: Array<number | string> | number | string = props.modelValue || typeof props.modelValue === "string" ? "" : [];
 
 /**
  * **查找父级标签**
- * @param {SaOptionType.Select} item - 当前选项
+ * @param {PaOptionType.Select} item - 当前选项
  * @param {string | object} findText - 当前文本
  * @returns {string} 拼接后的完整路径文本
  * @description 递归查找父级并拼接标签路径
  * */
-function findParent(item: SaOptionType.Select | undefined, findText: string | object): string {
+function findParent(item: PaOptionType.Select | undefined, findText: object | string): string {
   if (item?.parent) {
     const _findText =
       (typeof item.parent.label === "object" ? item.parent.label[languageValue.value] : item.parent.label) + " / " + findText;
@@ -400,7 +402,7 @@ function findParent(item: SaOptionType.Select | undefined, findText: string | ob
  * @returns {void}
  * @description 处理输入框输入事件，更新过滤值
  * */
-function handleInput({ target }: { target: HTMLInputElement }): void {
+function handleInput({ target }): void {
   filterValue.value = target.value;
   inputVal.value = target.value;
   optionsHeight.value = "auto";
@@ -449,11 +451,11 @@ function handlePopoverChange(data: boolean): void {
 
 /**
  * **处理选项点击**
- * @param {SaOptionType.Select} item - 被点击的选项
+ * @param {PaOptionType.Select} item - 被点击的选项
  * @returns {void}
  * @description 处理选项点击事件，更新选中值
  * */
-function handleOptionClick(item: SaOptionType.Select): void {
+function handleOptionClick(item: PaOptionType.Select): void {
   if (isMultiple.value) {
     waitTag.value = false;
     if (inValue.value && Array.isArray(inValue.value)) {
@@ -461,7 +463,7 @@ function handleOptionClick(item: SaOptionType.Select): void {
       if (_InValue.includes(String(item.value))) {
         inValue.value = inValue.value.filter(val => item.value != val);
       } else {
-        inValue.value.push(item.value);
+        inValue.value.push(typeof item.value === "string" ? item.value : String(item.value));
       }
     }
     nextTick(() => {
@@ -469,7 +471,7 @@ function handleOptionClick(item: SaOptionType.Select): void {
     });
   } else {
     popoverRef.value.hidePopover();
-    inValue.value = item.value;
+    inValue.value = typeof item.value === "string" ? item.value : String(item.value);
   }
   emit("update:modelValue", inValue.value);
   emit("change", { value: inValue.value, oldValue, option: item });
@@ -483,7 +485,7 @@ provide("handleOptionClick", handleOptionClick);
  * @returns {void}
  * @description 从多选值中移除指定标签
  * */
-function removeTag({ value }: { value: number | string }): void {
+function removeTag({ value }): void {
   if (inValue.value && Array.isArray(inValue.value)) {
     const _InValue: Array<string> = inValue.value.map(item => String(item));
     if (_InValue.includes(String(value))) {
@@ -491,7 +493,7 @@ function removeTag({ value }: { value: number | string }): void {
     }
   }
   emit("update:modelValue", inValue.value);
-  emit("change", { value: inValue.value, oldValue });
+  emit("change", { value: inValue.value, oldValue, option: {} as PaOptionType.Select });
   oldValue = inValue.value;
 }
 
@@ -518,7 +520,7 @@ function clearInput(e: MouseEvent): void {
   e.stopPropagation();
   inValue.value = isMultiple.value ? [] : "";
   emit("update:modelValue", "");
-  emit("change", { value: "", oldValue, option: {} as SaOptionType.Select });
+  emit("change", { value: "", oldValue, option: {} as PaOptionType.Select });
   oldValue = inValue.value;
 }
 
@@ -541,11 +543,11 @@ watch(
 
 /**
  * **扁平化选项列表**
- * @param {Array<SaOptionType.Select>} options - 选项列表
- * @returns {Array<SaOptionType.Select>} 扁平化后的列表
+ * @param {Array<PaOptionType.Select>} options - 选项列表
+ * @returns {Array<PaOptionType.Select>} 扁平化后的列表
  * @description 将树形选项列表转换为扁平结构
  * */
-function flatOptions(options: Array<SaOptionType.Select>): Array<SaOptionType.Select> {
+function flatOptions(options: Array<PaOptionType.Select>): Array<PaOptionType.Select> {
   const _options = cloneDeep(options);
   return _options.flatMap(item => {
     if (item.children?.length) {
@@ -560,12 +562,12 @@ function flatOptions(options: Array<SaOptionType.Select>): Array<SaOptionType.Se
 
 /**
  * **设置映射值**
- * @param {Array<SaOptionType.Select>} data - 选项数据
+ * @param {Array<PaOptionType.Select>} data - 选项数据
  * @param {string} parentValue - 父级值
- * @returns {Array<SaOptionType.Select>} 处理后的数据
+ * @returns {Array<PaOptionType.Select>} 处理后的数据
  * @description 递归设置选项值的映射关系
  * */
-function setMapValue(data: Array<SaOptionType.Select>, parentValue?: string): Array<SaOptionType.Select> {
+function setMapValue(data: Array<PaOptionType.Select>, parentValue?: string): Array<PaOptionType.Select> {
   if (!data) return [];
   const _data = cloneDeep(data);
   _data.forEach(item => {

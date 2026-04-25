@@ -1,6 +1,6 @@
 <template>
   <div class="pa-cascader-option-group-item" style="max-height: 230px" :class="{ 'is-filter': isFilter }">
-    <pa-scrollbar :useBackTop="false" :useShadow="false" :style="{ height: optionsHeight }">
+    <pa-scrollbar :useBackTop="false" :useShadow="false" :style="optionsHeight ? { height: optionsHeight } : {}">
       <div
         v-for="item in exOptions"
         :key="String(item.value)"
@@ -184,11 +184,11 @@ watch(
  * @returns {void}
  * @description 递归查找匹配值的索引路径
  * */
-function findIndex(map: Array<PaOptionType.Select>, arr: number[], parentIndex?: number[]): void {
+function findIndex(map: Array<PaOptionType.Select>, arr: number[], parentIndex: number[] = []): void {
   map.forEach((item, index) => {
     if (equalData(item.value, props.inValue)) {
       arr.push(index);
-      if (parentIndex) arr.unshift(...parentIndex);
+      if (parentIndex && parentIndex.length) arr.unshift(...parentIndex);
     } else if (item.children && item.children.length > 0) {
       findIndex(item.children, arr, [...parentIndex, index]);
     }
