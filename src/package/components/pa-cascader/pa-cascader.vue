@@ -21,7 +21,6 @@
             {{ typeof title === "string" ? title : title[languageValue] }}
           </div>
           <div class="pa-cascader-input" :class="[isFocus ? 'is-focus' : '']">
-            <!-- tag -->
             <template v-if="tagValue.length > 0 && isMultiple">
               <pa-tag
                 :tagList="tagValue"
@@ -30,7 +29,6 @@
                 @remove-tag="removeTag"
               ></pa-tag>
             </template>
-            <!-- input -->
             <input
               v-if="waitTag"
               class="pa-cascader-input-inner"
@@ -49,7 +47,6 @@
         </div>
       </template>
       <div class="pa-cascader-options" ref="optionsRef" v-if="!props.disabled && filterOptionsList.length > 0">
-        <!-- <pa-scrollbar noBackTop :useShadow="false" :style="{ height: optionsHeight }"> -->
         <div class="pa-cascader-options-group">
           <pa-cascader-option
             v-if="!filterValue"
@@ -78,7 +75,6 @@
             </template>
           </pa-cascader-option>
         </div>
-        <!-- </pa-scrollbar> -->
       </div>
       <div v-else-if="exOptionsList.length" class="pa-cascader-no-data">{{ languagePackage["empytFind"] }}</div>
       <div v-else class="pa-cascader-no-data">{{ languagePackage["empyt"] }}</div>
@@ -107,53 +103,191 @@
 </template>
 
 <script lang="ts" setup>
+/**
+ * **模块导入**
+ * @description 导入 Vue 组合式 API
+ * */
 import { ref, computed, watch, nextTick, provide, inject, ComputedRef } from "vue";
+
+/**
+ * **模块导入**
+ * @description 导入级联选项子组件
+ * */
 import PaCascaderOption from "./pa-cascader-option.vue";
-import { ComponentProps } from "./type";
+
+/**
+ * **模块导入**
+ * @description 导入组件类型定义
+ * */
+import { ComponentProps, ComponentEmits } from "./types";
+
+/**
+ * **模块导入**
+ * @description 导入元素位置获取工具
+ * */
 import { getElementPosition } from "../utils/getElementPosition";
+
+/**
+ * **模块导入**
+ * @description 导入数据查找工具
+ * */
 import { findData as findDataSelect } from "../utils/find-data";
+
+/**
+ * **模块导入**
+ * @description 导入全局配置类型
+ * */
 import { PancakeGlobalConfigType } from "../pa-manager/type";
 
+/**
+ * **模块导入**
+ * @description 导入 lodash 工具函数
+ * */
 import _ from "lodash";
 const { isEqual, isNil, cloneDeep } = _;
 
+/**
+ * **Popover 组件引用**
+ * @type `Ref`
+ * @description 弹出层组件的引用
+ * */
 const popoverRef = ref();
+
+/**
+ * **选择器容器引用**
+ * @type `Ref`
+ * @description 选择器容器的 DOM 引用
+ * */
 const selectRef = ref();
+
+/**
+ * **焦点状态**
+ * @type `Ref<boolean>`
+ * @description 当前是否处于焦点状态
+ * */
 const isFocus = ref(false);
+
+/**
+ * **选项列表引用**
+ * @type `Ref`
+ * @description 选项列表容器的 DOM 引用
+ * */
 const optionsRef = ref();
+
+/**
+ * **输入框引用**
+ * @type `Ref`
+ * @description 输入框的 DOM 引用
+ * */
 const inputRef = ref();
+
+/**
+ * **等待标签状态**
+ * @type `Ref<boolean>`
+ * @description 是否等待标签渲染完成
+ * */
 const waitTag = ref(false);
 
+/**
+ * **选项列表高度**
+ * @type `Ref<string>`
+ * @description 选项列表的高度值
+ * */
 const optionsHeight = ref("auto");
 
+/**
+ * **全局配置注入**
+ * @type `ComputedRef<PancakeGlobalConfigType>`
+ * @description 从父组件注入的全局配置
+ * */
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
+
+/**
+ * **语言包**
+ * @type `ComputedRef`
+ * @description 当前语言的文本配置
+ * */
 const languagePackage = computed(() => {
   return PancakeGlobalConfig.value?.language?.package?.["cell"] || {};
 });
+
+/**
+ * **当前语言值**
+ * @type `ComputedRef<string>`
+ * @description 当前选中的语言
+ * */
 const languageValue = computed(() => {
   return PancakeGlobalConfig.value?.language?.value || "zh-CN";
 });
 
+/**
+ * **组件属性**
+ * @type `ComponentProps`
+ * @description 组件的属性对象
+ * */
 const props = withDefaults(defineProps<ComponentProps>(), {
   type: "cascader",
   clearable: true,
   useTextByLink: true
 });
 
-const emits = defineEmits(["update:modelValue", "change"]);
+/**
+ * **组件事件定义**
+ * @description 定义组件可触发的事件
+ * */
+const emit = defineEmits<ComponentEmits>();
 
-const inValue = ref(props.modelValue || []);
+/**
+ * **当前值**
+ * @type `Ref<Array<number | string> | number | string>`
+ * @description 当前选中的值
+ * */
+const inValue = ref<Array<number | string> | number | string>(props.modelValue || []);
+
+/**
+ * **选项列表**
+ * @type `Ref<Array<SaOptionType.Select>>`
+ * @description 外部传入的选项列表
+ * */
 const exOptionsList = ref(props?.exOptions || []);
+
+/**
+ * **扁平化选项列表**
+ * @type `Ref<Array<SaOptionType.Select>>`
+ * @description 扁平化处理后的选项列表
+ * */
 const flatExOptions = ref(props?.exOptions || []);
 
+/**
+ * **过滤值**
+ * @type `Ref<string>`
+ * @description 输入框过滤值
+ * */
 const filterValue = ref("");
+
+/**
+ * **是否多选模式**
+ * @type `ComputedRef<boolean>`
+ * @description 根据类型判断是否为多选模式
+ * */
 const isMultiple = computed(() => {
   return props.type == "multiple-cascader-check" || props.type == "multiple-cascader";
 });
+
+/**
+ * **是否带复选框**
+ * @type `ComputedRef<boolean>`
+ * @description 根据类型判断是否显示复选框
+ * */
 const isCheck = computed(() => {
   return props.type == "cascader-check" || props.type == "multiple-cascader-check";
 });
 
+/**
+ * **过滤后的选项列表**
+ * @type `ComputedRef<Array<SaOptionType.Select>>`
+ * @description 根据输入值过滤后的选项列表
+ * */
 const filterOptionsList = computed(() => {
   const filterData = flatExOptions.value.filter(item => {
     const label = typeof item.label === "object" ? item.label[languageValue.value] : item.label;
@@ -167,7 +301,18 @@ const filterOptionsList = computed(() => {
   return exData;
 });
 
+/**
+ * **输入框值**
+ * @type `Ref<string>`
+ * @description 输入框中显示的值
+ * */
 const inputVal = ref("");
+
+/**
+ * **输入框显示值**
+ * @type `ComputedRef<string>`
+ * @description 输入框中实际显示的文本
+ * */
 const inputValue = computed(() => {
   if (isFocus.value || isMultiple.value) {
     return inputVal.value;
@@ -181,6 +326,11 @@ const inputValue = computed(() => {
   }
 });
 
+/**
+ * **输入框占位符**
+ * @type `ComputedRef<string>`
+ * @description 输入框的占位符文本
+ * */
 const inputPlaceholder = computed(() => {
   const basePlaceholder =
     typeof props.placeholder === "object"
@@ -204,6 +354,11 @@ const inputPlaceholder = computed(() => {
   }
 });
 
+/**
+ * **标签值列表**
+ * @type `ComputedRef<Array<SaOptionType.Select>>`
+ * @description 多选模式下显示的标签列表
+ * */
 const tagValue = computed(() => {
   if (isMultiple.value) {
     if (inValue.value && Array.isArray(inValue.value)) {
@@ -216,22 +371,36 @@ const tagValue = computed(() => {
   }
 });
 
-let oldValue = props.modelValue;
+/**
+ * **旧值存储**
+ * @type `Array<number | string> | number | string`
+ * @description 用于存储上一次的值，用于对比
+ * */
+let oldValue: Array<number | string> | number | string = props.modelValue;
 
-function findParent(item, findText) {
+/**
+ * **查找父级标签**
+ * @param {SaOptionType.Select} item - 当前选项
+ * @param {string | object} findText - 当前文本
+ * @returns {string} 拼接后的完整路径文本
+ * @description 递归查找父级并拼接标签路径
+ * */
+function findParent(item: SaOptionType.Select | undefined, findText: string | object): string {
   if (item?.parent) {
     const _findText =
       (typeof item.parent.label === "object" ? item.parent.label[languageValue.value] : item.parent.label) + " / " + findText;
     return findParent(item.parent, _findText);
   }
-  return findText;
+  return findText as string;
 }
 
 /**
- * 处理输入事件
- * @param {Object} e - 事件对象
- */
-function handleInput({ target }) {
+ * **处理输入事件**
+ * @param {Event} event - 输入事件对象
+ * @returns {void}
+ * @description 处理输入框输入事件，更新过滤值
+ * */
+function handleInput({ target }: { target: HTMLInputElement }): void {
   filterValue.value = target.value;
   inputVal.value = target.value;
   optionsHeight.value = "auto";
@@ -243,14 +412,25 @@ function handleInput({ target }) {
   });
 }
 
-function handleFocus() {
+/**
+ * **处理焦点事件**
+ * @returns {void}
+ * @description 处理输入框获取焦点事件
+ * */
+function handleFocus(): void {
   isFocus.value = true;
   setTimeout(() => {
     popoverRef.value.showPopover();
   }, 200);
 }
 
-function handlePopoverChange(data) {
+/**
+ * **处理弹出层变化**
+ * @param {boolean} data - 弹出层显示状态
+ * @returns {void}
+ * @description 处理弹出层显示/隐藏状态变化
+ * */
+function handlePopoverChange(data: boolean): void {
   if (!data) {
     isFocus.value = false;
     filterValue.value = "";
@@ -267,7 +447,13 @@ function handlePopoverChange(data) {
   }
 }
 
-function handleOptionClick(item) {
+/**
+ * **处理选项点击**
+ * @param {SaOptionType.Select} item - 被点击的选项
+ * @returns {void}
+ * @description 处理选项点击事件，更新选中值
+ * */
+function handleOptionClick(item: SaOptionType.Select): void {
   if (isMultiple.value) {
     waitTag.value = false;
     if (inValue.value && Array.isArray(inValue.value)) {
@@ -285,40 +471,61 @@ function handleOptionClick(item) {
     popoverRef.value.hidePopover();
     inValue.value = item.value;
   }
-  emits("update:modelValue", inValue.value);
-  emits("change", { value: inValue.value, oldValue, option: item });
+  emit("update:modelValue", inValue.value);
+  emit("change", { value: inValue.value, oldValue, option: item });
   oldValue = inValue.value;
 }
 provide("handleOptionClick", handleOptionClick);
 
-function removeTag({ value }) {
+/**
+ * **移除标签**
+ * @param {object} param - 包含要移除值的对象
+ * @returns {void}
+ * @description 从多选值中移除指定标签
+ * */
+function removeTag({ value }: { value: number | string }): void {
   if (inValue.value && Array.isArray(inValue.value)) {
     const _InValue: Array<string> = inValue.value.map(item => String(item));
     if (_InValue.includes(String(value))) {
       inValue.value = inValue.value.filter(val => val != value);
     }
   }
-  emits("update:modelValue", inValue.value);
-  emits("change", { value: inValue.value, oldValue });
+  emit("update:modelValue", inValue.value);
+  emit("change", { value: inValue.value, oldValue });
   oldValue = inValue.value;
 }
 
-function findData(data) {
+/**
+ * **查找数据显示**
+ * @param {Array<number | string> | number | string} data - 要查找的数据
+ * @returns {string} 查找到的显示文本
+ * @description 根据值查找对应的显示文本
+ * */
+function findData(data: Array<number | string> | number | string): string {
   if (props.displayValue) {
     return props.displayValue || "--";
   }
   return findDataSelect(data, flatExOptions.value, props.useTextByLink, languageValue.value);
 }
 
-// 清除输入
-function clearInput(e) {
+/**
+ * **清除输入**
+ * @param {MouseEvent} e - 鼠标事件
+ * @returns {void}
+ * @description 清空当前选中的值
+ * */
+function clearInput(e: MouseEvent): void {
   e.stopPropagation();
   inValue.value = isMultiple.value ? [] : "";
-  emits("update:modelValue", "");
-  emits("change", { value: "", oldValue });
+  emit("update:modelValue", "");
+  emit("change", { value: "", oldValue, option: {} as SaOptionType.Select });
   oldValue = inValue.value;
 }
 
+/**
+ * **监听 modelValue 变化**
+ * @description 同步外部传入的值到内部状态
+ * */
 watch(
   () => props.modelValue,
   data => {
@@ -332,7 +539,13 @@ watch(
   { immediate: true }
 );
 
-function flatOptions(options) {
+/**
+ * **扁平化选项列表**
+ * @param {Array<SaOptionType.Select>} options - 选项列表
+ * @returns {Array<SaOptionType.Select>} 扁平化后的列表
+ * @description 将树形选项列表转换为扁平结构
+ * */
+function flatOptions(options: Array<SaOptionType.Select>): Array<SaOptionType.Select> {
   const _options = cloneDeep(options);
   return _options.flatMap(item => {
     if (item.children?.length) {
@@ -345,7 +558,14 @@ function flatOptions(options) {
   });
 }
 
-function setMapValue(data, parentValue?) {
+/**
+ * **设置映射值**
+ * @param {Array<SaOptionType.Select>} data - 选项数据
+ * @param {string} parentValue - 父级值
+ * @returns {Array<SaOptionType.Select>} 处理后的数据
+ * @description 递归设置选项值的映射关系
+ * */
+function setMapValue(data: Array<SaOptionType.Select>, parentValue?: string): Array<SaOptionType.Select> {
   if (!data) return [];
   const _data = cloneDeep(data);
   _data.forEach(item => {
@@ -354,10 +574,13 @@ function setMapValue(data, parentValue?) {
       item.children = setMapValue(item.children, item.value);
     }
   });
-  console.log("++++++++++> _data:", _data);
   return _data;
 }
 
+/**
+ * **监听 exOptions 变化**
+ * @description 同步外部传入的选项列表
+ * */
 watch(
   () => props.exOptions,
   data => {
