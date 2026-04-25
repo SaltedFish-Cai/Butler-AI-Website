@@ -3,11 +3,6 @@
  * @description 导入级联选择器组件
  * */
 import PaCascader from "./pa-cascader.vue";
-
-/**
- * **模块导入**
- * @description 导入级联选项子组件
- * */
 import PaCascaderOption from "./pa-cascader-option.vue";
 
 /**
