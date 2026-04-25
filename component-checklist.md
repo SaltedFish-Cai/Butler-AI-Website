@@ -1,8 +1,8 @@
 # PancakeUI 组件排查清单
 
-> 版本：v1.0.5  
+> 版本：v1.0.6  
 > 基于 development-guide-v1.0.5.md 和 ai-work-v1.0.2.md 整理  
-> 最后更新：2026-04-24
+> 最后更新：2026-04-25
 
 ---
 
@@ -99,7 +99,6 @@ export type ComponentProps = {
 - [ ] **Vue 文件通过 @use 引入样式**：`@use "./index.scss";`
 - [ ] 缩进为2空格
 - [ ] 根元素类名为 `.pa-{组件名}`（如 `.pa-button`）
-- [ ] 子元素样式类必须包含在根元素类中（BEM 命名：`.pa-button_text`）
 - [ ] **无单行注释**（`// xxx`），如有则删除
 - [ ] class 之间有空行分隔
 - [ ] 样式属性使用 CSS 变量（如 `--pa-size-font`、`--pa-color-primary` 等）
