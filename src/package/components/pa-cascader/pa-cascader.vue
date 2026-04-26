@@ -139,6 +139,10 @@ import { findData as findDataSelect } from "../utils/find-data";
  * */
 import { PancakeGlobalConfigType } from "../pa-manager/type";
 
+/**
+ * **模块导入**
+ * @description 导入选项类型定义
+ * */
 import { PaOptionType } from "@/package/components/manager-type";
 
 /**
