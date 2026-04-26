@@ -98,60 +98,218 @@
 </template>
 
 <script lang="ts" setup>
+/**
+ * **模块导入**
+ * @description 导入 Vue 组合式 API
+ * */
 import { ref, computed, watch, nextTick, ComputedRef, inject, useTemplateRef, onMounted } from "vue";
+
+/**
+ * **模块导入**
+ * @description 导入组件类型定义
+ * */
 import { ComponentProps, ComponentEmits } from "./types";
+
+/**
+ * **模块导入**
+ * @description 导入数据比较工具函数
+ * */
 import { equalData } from "../utils/equalData";
+
+/**
+ * **模块导入**
+ * @description 导入元素位置获取工具函数
+ * */
 import { getElementPosition } from "../utils/getElementPosition";
+
+/**
+ * **模块导入**
+ * @description 导入选项类型定义
+ * */
 import { PaOptionType } from "../manager-type";
+
+/**
+ * **模块导入**
+ * @description 导入数据查找工具函数
+ * */
 import { findData as findDataSelect } from "../utils/find-data";
+
+/**
+ * **模块导入**
+ * @description 导入全局配置类型
+ * */
 import { PancakeGlobalConfigType } from "../pa-manager/type";
+
+/**
+ * **模块导入**
+ * @description 导入滚动条组件
+ * */
 import PaScrollbar from "../pa-scrollbar/pa-scrollbar.vue";
 
+/**
+ * **模块导入**
+ * @description 导入 lodash 工具函数
+ * */
 import _ from "lodash";
 const { isEqual, isNil, debounce } = _;
 
+/**
+ * **弹出层引用**
+ * @type `any`
+ * @description 弹出层组件引用
+ * */
 const popoverRef = useTemplateRef("popoverRef");
+
+/**
+ * **选择器容器引用**
+ * @type `any`
+ * @description 选择器容器 DOM 元素引用
+ * */
 const selectRef = ref();
+
+/**
+ * **聚焦状态**
+ * @type `boolean`
+ * @description 当前是否处于聚焦状态
+ * */
 const isFocus = ref(false);
+
+/**
+ * **选项列表引用**
+ * @type `any`
+ * @description 选项列表容器 DOM 元素引用
+ * */
 const optionsRef = ref();
+
+/**
+ * **输入框引用**
+ * @type `any`
+ * @description 输入框 DOM 元素引用
+ * */
 const inputRef = ref();
+
+/**
+ * **等待标签渲染标志**
+ * @type `boolean`
+ * @description 控制多选标签的渲染时机
+ * */
 const waitTag = ref(false);
+
+/**
+ * **等待选择中标志**
+ * @type `boolean`
+ * @description 鼠标是否在选项上悬停
+ * */
 const awaitSelecting = ref(false);
+
+/**
+ * **选项列表高度**
+ * @type `string`
+ * @description 选项列表的动态高度
+ * */
 const optionsHeight = ref("auto");
 
+/**
+ * **全局配置注入**
+ * @type `ComputedRef<PancakeGlobalConfigType>`
+ * @description 注入全局配置对象
+ * */
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
+
+/**
+ * **语言包**
+ * @returns `Record<string, string>` 语言包对象
+ * @description 获取当前语言包配置
+ * */
 const languagePackage = computed(() => {
   return PancakeGlobalConfig.value?.language?.package?.["cell"] || "zh-CN";
 });
+
+/**
+ * **语言值**
+ * @returns `string` 语言代码
+ * @description 获取当前语言设置
+ * */
 const languageValue = computed(() => {
   return PancakeGlobalConfig.value?.language?.value || "zh-CN";
 });
 
+/**
+ * **组件属性**
+ * @type `ComponentProps`
+ * @description 组件的属性对象
+ * */
 const props = withDefaults(defineProps<ComponentProps>(), {
   type: "select",
   clearable: true
 });
 
+/**
+ * **组件事件定义**
+ * @description 定义组件可触发的事件
+ * */
 const emits = defineEmits<ComponentEmits>();
 
+/**
+ * **内部值**
+ * @type `any`
+ * @description 选择器的内部绑定值
+ * */
 const inValue = ref(props.modelValue || []);
+
+/**
+ * **扩展选项列表**
+ * @type `Array<any>`
+ * @description 处理后的选项列表
+ * */
 const exOptionsList = ref(props?.exOptions || []);
+
+/**
+ * **过滤值**
+ * @type `string`
+ * @description 输入框过滤关键词
+ * */
 const filterValue = ref("");
 
+/**
+ * **旧值存储**
+ * @type `any`
+ * @description 存储上一次的值，用于变更事件
+ * */
 let oldValue = props.modelValue;
 
+/**
+ * **是否多选模式**
+ * @returns `boolean` 是否为多选模式
+ * @description 判断当前是否为多选选择器
+ * */
 const isMultiple = computed(() => {
   return props.type == "multiple-select" || props.type == "multiple-online-select" || props.type == "multiple-request-select";
 });
 
+/**
+ * **是否在线选择器**
+ * @returns `boolean` 是否为在线选择器
+ * @description 判断当前是否为在线搜索选择器
+ * */
 const isOnlineSelect = computed(() => {
   return props.type == "online-select" || props.type == "multiple-online-select";
 });
 
+/**
+ * **是否请求选择器**
+ * @returns `boolean` 是否为请求选择器
+ * @description 判断当前是否为远程请求选择器
+ * */
 const isRequestSelect = computed(() => {
   return props.type == "request-select" || props.type == "multiple-request-select";
 });
 
+/**
+ * **过滤后的选项列表**
+ * @returns `Array<any>` 过滤后的选项列表
+ * @description 根据输入关键词过滤选项列表
+ * */
 const filterOptionsList = computed(() => {
   if (isOnlineSelect.value) return exOptionsList.value;
   return exOptionsList.value.filter(item => {
@@ -160,6 +318,11 @@ const filterOptionsList = computed(() => {
   });
 });
 
+/**
+ * **输入框显示值**
+ * @returns `string` 输入框显示的文本
+ * @description 计算输入框应显示的文本内容
+ * */
 const inputValue = computed(() => {
   if (isFocus.value || isMultiple.value) {
     return filterValue.value || "";
@@ -172,6 +335,11 @@ const inputValue = computed(() => {
   }
 });
 
+/**
+ * **输入框占位符**
+ * @returns `string` 占位符文本
+ * @description 计算输入框的占位符文本
+ * */
 const inputPlaceholder = computed(() => {
   if (Array.isArray(inValue.value) && inValue.value?.length && isMultiple.value) {
     return "";
@@ -190,6 +358,11 @@ const inputPlaceholder = computed(() => {
   }
 });
 
+/**
+ * **标签值列表**
+ * @returns `Array<any>` 标签数据列表
+ * @description 多选模式下已选中的标签数据
+ * */
 const tagValue = computed(() => {
   if (isMultiple.value) {
     if (inValue.value && Array.isArray(inValue.value)) {
@@ -211,6 +384,11 @@ function setHeight() {
   optionsHeight.value = ((position?.height && Number(position?.height)) || 0) + "px";
 }
 
+/**
+ * **防抖设置高度函数**
+ * @type `Function`
+ * @description 防抖处理的高度设置函数
+ * */
 const debounceSetHeight = debounce(setHeight, 100);
 
 /**
@@ -357,6 +535,10 @@ async function remoteMethodFn(query) {
   }
 }
 
+/**
+ * **组件挂载生命周期**
+ * @description 初始化组件状态
+ * */
 onMounted(() => {
   if (props.createUseChange) {
     const item = exOptionsList.value.find(item => item.value === props.modelValue);
@@ -364,6 +546,10 @@ onMounted(() => {
   }
 });
 
+/**
+ * **监听 modelValue 变化**
+ * @description 外部值变化时更新内部值
+ * */
 watch(
   () => props.modelValue,
   data => {
@@ -380,6 +566,10 @@ watch(
   { immediate: true }
 );
 
+/**
+ * **监听 exOptions 变化**
+ * @description 外部选项列表变化时更新内部列表
+ * */
 watch(
   () => props.exOptions,
   data => {

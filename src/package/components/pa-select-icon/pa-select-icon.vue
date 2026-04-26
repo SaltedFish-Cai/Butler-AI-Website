@@ -67,8 +67,22 @@
 </template>
 
 <script lang="ts" setup>
+/**
+ * **模块导入**
+ * @description 导入 Vue 组合式 API
+ * */
 import { ref, computed, watch, inject, ComputedRef } from "vue";
+
+/**
+ * **模块导入**
+ * @description 导入组件类型定义
+ * */
 import { ComponentProps, ComponentEmits } from "./types";
+
+/**
+ * **模块导入**
+ * @description 导入图标配置数据
+ * */
 import iconJson from "./config/icon.json";
 import direction from "./config/direction.json";
 import multiMedia from "./config/multi-media.json";
@@ -76,11 +90,25 @@ import office from "./config/office.json";
 import shop from "./config/shop.json";
 import cityJson from "./config/city.json";
 import network from "./config/network.json";
+
+/**
+ * **模块导入**
+ * @description 导入全局配置类型
+ * */
 import { PancakeGlobalConfigType } from "../pa-manager/type";
 
+/**
+ * **模块导入**
+ * @description 导入 lodash 工具函数
+ * */
 import _ from "lodash";
 const { isEqual, isNil } = _;
 
+/**
+ * **图标配置列表**
+ * @type `Array<{title: string, name: string, icons: Array<any>}>`
+ * @description 所有图标分类配置
+ * */
 const Config = ref([
   {
     title: "全部图标",
@@ -96,25 +124,84 @@ const Config = ref([
   { title: "其他图标", name: "default", icons: setIconOptions(iconJson) }
 ]);
 
+/**
+ * **组件属性**
+ * @type `ComponentProps`
+ * @description 组件的属性对象
+ * */
 const props = defineProps<ComponentProps>();
+
+/**
+ * **组件事件定义**
+ * @description 定义组件可触发的事件
+ * */
 const emits = defineEmits<ComponentEmits>();
 
+/**
+ * **选择器容器引用**
+ * @type `any`
+ * @description 选择器容器 DOM 元素引用
+ * */
 const selectRef = ref();
+
+/**
+ * **选中的图标**
+ * @type `string`
+ * @description 当前选中的图标名称
+ * */
 const selectItem = ref(props.modelValue || "finger_press_line");
+
+/**
+ * **悬停图标**
+ * @type `string`
+ * @description 鼠标悬停的图标名称
+ * */
 const hoverItem = ref("finger_press_line");
+
+/**
+ * **当前激活的标签页**
+ * @type `string`
+ * @description 当前显示的图标分类标签页
+ * */
 const activeName = ref("all");
 
+/**
+ * **旧值存储**
+ * @type `string`
+ * @description 存储上一次的值，用于变更事件
+ * */
 let oldValue = props.modelValue || "";
 
+/**
+ * **全局配置注入**
+ * @type `ComputedRef<PancakeGlobalConfigType>`
+ * @description 注入全局配置对象
+ * */
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
+
+/**
+ * **语言值**
+ * @returns `string` 语言代码
+ * @description 获取当前语言设置
+ * */
 const languageValue = computed(() => {
   return PancakeGlobalConfig.value?.language?.value || "zh-CN";
 });
 
+/**
+ * **语言包**
+ * @returns `Record<string, string>` 语言包对象
+ * @description 获取当前语言包配置
+ * */
 const languagePackage = computed(() => {
   return PancakeGlobalConfig.value?.language?.package?.["cell"] || {};
 });
 
+/**
+ * **输入框占位符**
+ * @returns `string` 占位符文本
+ * @description 计算按钮显示的占位符文本
+ * */
 const inputPlaceholder = computed(() => {
   return typeof props.placeholder === "object"
     ? props.placeholder[languageValue.value] || languagePackage.value[`clickChangeIcon`]
@@ -151,6 +238,10 @@ function hoverIcon(iconText) {
   hoverItem.value = iconText.label;
 }
 
+/**
+ * **监听 modelValue 变化**
+ * @description 外部值变化时更新内部值
+ * */
 watch(
   () => props.modelValue,
   data => {
