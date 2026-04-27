@@ -17,7 +17,7 @@ jobs:
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
           subject: "代码推送通知 - ${{ github.repository }}"
-          to: dafantuan@coze.email
+          to: butler@coze.email
           from: GitHub Actions
           content_type: text/plain
           body: |
