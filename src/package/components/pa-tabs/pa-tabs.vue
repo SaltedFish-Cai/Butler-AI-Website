@@ -103,6 +103,10 @@
  * **模块导入**
  * @description 导入 Vue 组合式 API
  * */
+/**
+ * **模块导入**
+ * @description 导入 Vue 组合式 API
+ * */
 import { ref, onMounted, onUnmounted, useSlots, watch, nextTick, provide, computed } from "vue";
 /**
  * **模块导入**
@@ -114,6 +118,10 @@ import { randChar } from "../tools/rand-char";
  * @description 导入标签页标题子组件
  * */
 import titleItem from "./pa-tabs-label.vue";
+/**
+ * **模块导入**
+ * @description 导入组件属性和事件类型定义
+ * */
 import { ComponentProps, ComponentEmits } from "./types";
 /**
  * **模块导入**
@@ -131,8 +139,17 @@ import { getElementPosition } from "../utils/getElementPosition";
  * @description 导入 lodash 工具库
  * */
 import _ from "lodash";
+/**
+ * **解构赋值**
+ * @description 从 lodash 中解构出 debounce 函数
+ * */
 const { debounce } = _;
 
+/**
+ * **组件属性**
+ * @type `ComponentProps`
+ * @description 组件的属性对象
+ * */
 const props = withDefaults(defineProps<ComponentProps>(), {
   modelValue: "",
   visibleMode: "visible",
@@ -329,13 +346,10 @@ function createSlotData(Mandatory = false) {
  * */
 function watchDom() {
   if (tabsRef.value) {
-    // 观察器的配置（需要观察什么变动）
     const config = { childList: true, subtree: true };
 
-    // 创建一个观察器实例并传入回调函数
     observer = new MutationObserver(() => createSlotData());
 
-    // 开始观察目标节点
     observer.observe(tabsRef.value, config);
   }
 }
@@ -433,28 +447,20 @@ const handleWheel = (event: WheelEvent) => {
   const now = Date.now();
   wheelDelta += Math.abs(event.deltaY);
 
-  // 降低敏感度：只有当滚动量达到阈值时才触发月份切换
   if (wheelDelta < 25) {
-    // 滚动量阈值，可以根据需要调整
     return;
   }
 
-  // 防抖处理：避免快速连续滚动
   if (now - lastWheelTime < 50) {
-    // 200ms防抖时间
     return;
   }
 
-  // 重置滚动量和时间
   wheelDelta = 0;
   lastWheelTime = now;
 
-  // 根据滚动方向增减值，使用更精确的计算方法
   if (event.deltaY < 0) {
-    // 向上滚动
     minusScroll();
   } else {
-    // 向下滚动
     addScroll();
   }
 };
@@ -465,7 +471,6 @@ const handleWheel = (event: WheelEvent) => {
  * @description 添加滚轮事件监听
  * */
 function handleMouseEnter() {
-  // 添加滚动事件监听
   const tabsTitleElement = tabsTitleRef.value;
   if (tabsTitleElement) {
     tabsTitleElement.addEventListener("wheel", handleWheel, { passive: false });
