@@ -17,9 +17,10 @@
       :value="item.value"
       :is-checked="inValue == item.value"
       :disabled="props.disabled"
+      isOption
       @change="
         ({ value }) => {
-          changeEvent({ value, option: item });
+          changeEvent({ value: value || '', option: item });
         }
       "
     ></pa-radio-item>
@@ -123,10 +124,10 @@ const emits = defineEmits<ComponentEmits>();
 
 /**
  * **旧值存储**
- * @type `boolean | number | string | undefined`
+ * @type `boolean | number | string`
  * @description 存储上一次的值，用于对比
  * */
-let oldValue: boolean | number | string | undefined = props.modelValue;
+let oldValue: boolean | number | string = props.modelValue || "";
 
 /**
  * **处理变更事件**

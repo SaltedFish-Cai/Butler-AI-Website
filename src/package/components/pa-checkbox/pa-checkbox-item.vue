@@ -54,7 +54,7 @@ const { isNil } = _;
  * @type `ComponentItemProps & { isOption?: boolean }`
  * @description 组件的属性对象
  * */
-const props = withDefaults(defineProps<ComponentItemProps & { isOption?: boolean }>(), { isChecked: undefined });
+const props = withDefaults(defineProps<ComponentItemProps & { isOption?: boolean }>(), { value: "", isChecked: undefined });
 
 /**
  * **全局配置注入**
@@ -72,10 +72,10 @@ const language = PancakeGlobalConfig.value?.language?.value || "zh-CN";
 
 /**
  * **内部值**
- * @type `Ref<boolean | number | string | undefined>`
+ * @type `Ref<boolean | number | string>`
  * @description 复选框子项的内部绑定值
  * */
-const inValue = ref(props.modelValue);
+const inValue = ref(props.modelValue || "");
 
 /**
  * **组件事件定义**
@@ -97,7 +97,7 @@ const isChecked = computed(() => {
   } else if (props.isIndeterminate) {
     return false;
   }
-  return inValue.value == props.value;
+  return String(inValue.value) == String(props.value);
 });
 
 /**
@@ -105,16 +105,17 @@ const isChecked = computed(() => {
  * @type `boolean | number | string | undefined`
  * @description 存储上一次的值，用于对比
  * */
-let oldValue: boolean | number | string | undefined = props.modelValue;
+let oldValue: boolean | number | string = props.modelValue || "";
 
 /**
  * **处理点击事件**
  * @returns `void | undefined`
  * @description 处理复选框子项点击事件
  * */
-function changeEvent(): void | undefined {
-  if (props.disabled || !isNil(props.isChecked) || props.isIndeterminate) return;
-  inValue.value = props.isOption ? props.value : inValue.value == props.value ? false : props.value;
+function changeEvent(): undefined | void {
+  if (props.disabled || (!isNil(props.isChecked) && !props.isOption) || props.isIndeterminate) return;
+  const _data = props.isOption ? props.value : inValue.value == props.value ? "false" : props.value;
+  inValue.value = _data || "";
   if (props.disabled) return;
   emits("update:modelValue", inValue.value);
   emits("change", { value: inValue.value, oldValue });
@@ -129,8 +130,8 @@ function changeEvent(): void | undefined {
 watch(
   () => props.modelValue,
   data => {
-    inValue.value = data;
-    oldValue = data;
+    inValue.value = data || "";
+    oldValue = data || "";
   },
   { immediate: true, deep: true }
 );

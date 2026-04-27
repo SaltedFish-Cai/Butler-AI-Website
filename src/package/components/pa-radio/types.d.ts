@@ -72,6 +72,14 @@ export type ComponentItemProps = {
    * @description 当设置该值为 `true` 时，会禁用该组件
    * */
   disabled?: boolean;
+
+  /**
+   * **是否选项**
+   * @type `boolean` | `undefined`
+   * @default `undefined`
+   * @description 当设置该值为 `true` 时，会将组件设置为选项状态
+   * */
+  isOption?: boolean;
 };
 
 /**
@@ -145,11 +153,11 @@ export type ComponentProps = {
 
   /**
    * **对比数据**
-   * @type `Array<number | string>` | `undefined`
+   * @type `number | string` | `undefined`
    * @default `undefined`
    * @description 当设置该值时，会使用该值作为对比数据
    * */
-  contrastData?: Array<number | string>;
+  contrastData?: number | string;
 
   /**
    * **是否显示对比数据**

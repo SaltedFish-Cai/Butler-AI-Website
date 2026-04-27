@@ -106,8 +106,8 @@ let oldValue: boolean | number | string | undefined = props.modelValue;
  * @returns `void | undefined`
  * @description 处理单选框子项点击事件
  * */
-function changeEvent(): void | undefined {
-  if (props.disabled || !isNil(props.isChecked)) return;
+function changeEvent(): undefined | void {
+  if (props.disabled || (!isNil(props.isChecked) && !props.isOption)) return;
   emits("update:modelValue", props.value);
   emits("change", { value: props.value, oldValue });
   oldValue = props.value;

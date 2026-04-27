@@ -15,12 +15,12 @@
       :key="String(item.value)"
       :label="item.label"
       :value="item.value"
-      :is-checked="inValue?.includes?.(item.value)"
+      :is-checked="inValue?.includes?.(item.value || '')"
       :disabled="props.disabled"
       isOption
       @change="
         ({ value }) => {
-          changeEvent({ value, option: item });
+          changeEvent({ value: value || '', option: item });
         }
       "
     ></pa-checkbox-item>
