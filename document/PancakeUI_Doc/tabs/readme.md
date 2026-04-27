@@ -87,8 +87,8 @@
 
 | 属性名     | 描述             | 类型                            | 默认值      |
 | ---------- | ---------------- | ------------------------------- | ----------- |
-| label      | 标签页显示的名称 | `LanguagePackageType \| string` | `undefined` |
-| name       | 标签页唯一标识   | `number \| string`              | `undefined` |
+| label      | 标签页显示的名称 | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) | string | undefined | `undefined` |
+| name       | 标签页唯一标识   | `number | string`              | `undefined` |
 | scroll     | 是否开启滚动     | `boolean`                       | `true`      |
 | tips       | 提示信息         | `string`                        | `undefined` |
 | lazy       | 懒加载           | `boolean \| number`             | `1000`      |
@@ -121,3 +121,13 @@
 | before  | 内容前插槽     |
 | tips    | 提示信息插槽   |
 | footer  | 底部插槽       |
+
+## 非标准类型说明
+
+| 类型名称 | 说明 | 定义位置 |
+| -------- | ---- | -------- |
+| `ComponentTabsMode` | tabs 布局模式 | [types.d.ts](/document/PancakeUI_Doc/types#componenttabsmode) |
+| `ComponentTabsStyleMode` | tabs 样式模式 | [types.d.ts](/document/PancakeUI_Doc/types#componenttabsstylemode) |
+| `ComponentTabsAlign` | tabs 对齐方式 | [types.d.ts](/document/PancakeUI_Doc/types#componenttabsalign) |
+| `ComponentVisibleMode` | 组件隐藏方式 | [types.d.ts](/document/PancakeUI_Doc/types#componentvisiblemode) |
+| `ComponentPadding` | 组件内边距方向 | [types.d.ts](/document/PancakeUI_Doc/types#componentpadding) |
