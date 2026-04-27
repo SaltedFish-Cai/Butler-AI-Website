@@ -124,10 +124,53 @@
 
 ## 非标准类型说明
 
-| 类型名称 | 说明 | 定义位置 |
-| -------- | ---- | -------- |
-| `ComponentTabsMode` | tabs 布局模式 | [types.d.ts](/document/PancakeUI_Doc/types#componenttabsmode) |
-| `ComponentTabsStyleMode` | tabs 样式模式 | [types.d.ts](/document/PancakeUI_Doc/types#componenttabsstylemode) |
-| `ComponentTabsAlign` | tabs 对齐方式 | [types.d.ts](/document/PancakeUI_Doc/types#componenttabsalign) |
-| `ComponentVisibleMode` | 组件隐藏方式 | [types.d.ts](/document/PancakeUI_Doc/types#componentvisiblemode) |
-| `ComponentPadding` | 组件内边距方向 | [types.d.ts](/document/PancakeUI_Doc/types#componentpadding) |
+### ComponentTabsMode
+
+tabs 布局模式。
+
+| 类型值 | 说明 |
+| ------ | ---- |
+| `default` | 默认布局模式 |
+| `portrait` | 竖屏布局模式 |
+| `slider` | 滚动布局模式 |
+| `sticky` | 粘性布局模式 |
+
+### ComponentTabsStyleMode
+
+tabs 样式模式。
+
+| 类型值 | 说明 |
+| ------ | ---- |
+| `default` | 默认样式 |
+| `card` | 卡片样式 |
+| `border-card` | 边框卡片样式 |
+
+### ComponentTabsAlign
+
+tabs 对齐方式。
+
+| 类型值 | 说明 |
+| ------ | ---- |
+| `default` | 默认对齐 |
+| `edge` | 边缘对齐 |
+
+### ComponentVisibleMode
+
+组件隐藏方式。
+
+| 类型值 | 说明 |
+| ------ | ---- |
+| `display` | 使用 display 隐藏 |
+| `visible` | 使用 visibility 隐藏 |
+
+### ComponentPadding
+
+组件内边距方向。
+
+| 类型值 | 说明 |
+| ------ | ---- |
+| `all` | 全部方向 |
+| `top` | 顶部 |
+| `bottom` | 底部 |
+| `left` | 左侧 |
+| `right` | 右侧 |
