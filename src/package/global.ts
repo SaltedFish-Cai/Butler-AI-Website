@@ -1,11 +1,33 @@
+/**
+ * **模块导入**
+ * @description 导入全局状态管理 Store
+ * */
 import { useBaseStore as GlobalStateType } from "./components/store/index";
+
+/**
+ * **模块导入**
+ * @description 导入表格全局状态管理 Store
+ * */
 import { useBaseStore as TableBaseStoreType } from "./components/pa-table/hooks/store";
 
+/**
+ * **模块导入**
+ * @description 导入表格全局状态类型定义
+ * */
 import { GlobalState } from "./components/pa-table/type";
+
+/**
+ * **模块导入**
+ * @description 导入国际化时间格式化工具
+ * */
 import toLocaleString from "./components/tools/toLocaleString";
+
+/**
+ * **模块导入**
+ * @description 导入 Pancake 全局配置类型定义
+ * */
 import { PancakeGlobalConfigType } from "./components/pa-manager/type";
 
-// _Message global
 declare module "vue" {
   interface GlobalComponents {}
   interface AppContext {
@@ -15,14 +37,18 @@ declare module "vue" {
   }
 }
 
-// type UnionKeys<T> = T extends T ? keyof T : never;
-// type StrictUnionHelper<T, TAll> = T extends any ? Partial<Record<Exclude<UnionKeys<TAll>, keyof T>, never>> & T : never;
-// type StrictUnion<T> = StrictUnionHelper<T, T>;
-
+/**
+ * **对象类型**
+ * @description 通用键值对对象类型定义
+ * */
 export type objectType = {
   [x: string]: any;
 };
 
+/**
+ * **语言键类型**
+ * @description 支持的语言标识类型
+ * */
 export type languageKey = "en-US" | "zh-CN";
 
 declare global {
