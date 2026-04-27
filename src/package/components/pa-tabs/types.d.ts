@@ -69,7 +69,7 @@ export type ComponentProps = {
 
   /**
    * **隐藏 tabs 方式**
-   * @type `'display'` | `'visible'`
+   * @type `'display'` | `'visible'` | `undefined`
    * @default `visible`
    * @description 当设置该值为 `display` 时，隐藏 tabs 内容元素；`visible` 时不隐藏
    * */
@@ -85,31 +85,31 @@ export type ComponentProps = {
 
   /**
    * **样式模式**
-   * @type `'border-card'` | `'card'` | `'default'`
-   * @default `default`
+   * @type `'border-card'` | `'card'` | `'default'` | `undefined`
+   * @default `'card'`
    * @description 预设样式模式：`card` 卡片样式、`default` 默认样式
    * */
   styleMode?: ComponentTabsStyleMode;
 
   /**
    * **对齐方式**
-   * @type `'default'` | `'edge'`
-   * @default `default`
+   * @type `'default'` | `'edge'` | `undefined`
+   * @default `'default'`
    * @description `edge` 边缘对齐、`default` 默认对齐
    * */
   align?: ComponentTabsAlign;
 
   /**
    * **是否使用底线**
-   * @type `boolean`
-   * @default `false`
+   * @type `boolean` | `undefined`
+   * @default `undefined`
    * @description 当设置该值为 `true` 时，使用底线
    * */
   useHeaderLine?: boolean;
 
   /**
    * **是否使用滚动阴影**
-   * @type `boolean`
+   * @type `boolean` | `undefined`
    * @default `true`
    * @description 当设置该值为 `true` 时，使用滚动阴影
    * */
@@ -156,8 +156,8 @@ export type ComponentItemProps = {
 
   /**
    * **是否开启滚动**
-   * @type `boolean`
-   * @default `true`
+   * @type `boolean` | `undefined`
+   * @default `undefined`
    * @description 当设置该值为 `true` 时，开启滚动
    * */
   scroll?: boolean;
@@ -173,7 +173,7 @@ export type ComponentItemProps = {
   /**
    * **懒加载**
    * @type `boolean` | `number` | `undefined`
-   * @default `1000`
+   * @default `undefined`
    * @description `true` 懒加载、`false` 不懒加载、`number` 延迟加载时间（毫秒）
    * */
   lazy?: boolean | number;
@@ -181,23 +181,23 @@ export type ComponentItemProps = {
   /**
    * **是否使用内边距**
    * @type `Array<ComponentPadding>` | `undefined`
-   * @default `[]`
+   * @default `undefined`
    * @description 设置需要添加内边距的方向
    * */
   padding?: Array<ComponentPadding>;
 
   /**
    * **是否使用水平滚动**
-   * @type `boolean`
-   * @default `false`
+   * @type `boolean` | `undefined`
+   * @default `undefined`
    * @description 当设置该值为 `true` 时，使用水平滚动
    * */
   useScrollX?: boolean;
 
   /**
    * **是否使用边框**
-   * @type `boolean`
-   * @default `false`
+   * @type `boolean` | `undefined`
+   * @default `undefined`
    * @description 当设置该值为 `true` 时，使用边框
    * */
   useBorder?: boolean;

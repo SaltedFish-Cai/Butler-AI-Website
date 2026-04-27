@@ -143,12 +143,10 @@ const { debounce } = _;
  * @description 组件的属性对象
  * */
 const props = withDefaults(defineProps<ComponentProps>(), {
-  modelValue: "",
   visibleMode: "visible",
   mode: "default",
   styleMode: "card",
   align: "default",
-  useHeaderLine: false,
   useShadow: true
 });
 
@@ -610,7 +608,7 @@ watch(
   () => props.modelValue,
   data => {
     nextTick(() => {
-      activeName.value = data;
+      activeName.value = data || "";
       if (slotsTitle.value) {
         const index = slotsTitle.value.findIndex(item => item?.props?.name == props.modelValue);
         slotIndex.value = index;

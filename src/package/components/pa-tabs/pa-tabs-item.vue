@@ -32,7 +32,7 @@
           :id="tabsContext.tabsId + '-' + name"
         >
           <pa-title :tips="tips">
-            {{ typeof label === "string" ? label : label[languageValue] }}
+            {{ typeof label === "string" ? label : label?.[languageValue] }}
             <template #tips v-if="$slots['tips']">
               <slot name="tips"></slot>
             </template>
@@ -106,14 +106,7 @@ const initTitle: any = inject("initTitle");
  * @type `ComponentItemProps`
  * @description 组件的属性对象
  * */
-const props = withDefaults(defineProps<ComponentItemProps>(), {
-  label: "",
-  name: "",
-  scroll: false,
-  lazy: false,
-  useScrollX: false,
-  useBorder: false
-});
+const props = withDefaults(defineProps<ComponentItemProps>(), {});
 
 /**
  * **标签项线条引用**
