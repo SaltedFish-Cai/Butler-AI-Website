@@ -63,7 +63,6 @@ import { ComponentItemProps } from "./types";
  * **全局配置**
  * @description 注入 Pancake 全局配置对象
  * */
- * */
 import { PancakeGlobalConfigType } from "../pa-manager/type";
 
 /**
