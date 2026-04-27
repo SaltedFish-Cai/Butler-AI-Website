@@ -88,7 +88,7 @@
 | 属性名     | 描述             | 类型                                                                         | 默认值  |
 | ---------- | ---------------- | ---------------------------------------------------------------------------- | ------- |
 | label      | 标签页显示的名称 | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) | -       |
-| name       | 标签页唯一标识   | `number`                                                                     | -       |
+| name       | 标签页唯一标识   | `number` `string`                                                                     | -       |
 | scroll     | 是否开启滚动     | `boolean`                                                                    | `true`  |
 | tips       | 提示信息         | `string`                                                                     | -       |
 | lazy       | 懒加载           | `boolean` `number`                                                           | `1000`  |
