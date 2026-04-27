@@ -251,6 +251,15 @@ const props = withDefaults(defineProps<ComponentProps>(), {
 const emits = defineEmits<ComponentEmits>();
 
 /**
+ * **是否多选模式**
+ * @returns `boolean` 是否为多选模式
+ * @description 判断当前是否为多选选择器
+ * */
+const isMultiple = computed(() => {
+  return props.type == "multiple-select" || props.type == "multiple-online-select" || props.type == "multiple-request-select";
+});
+
+/**
  * **内部值**
  * @type `any`
  * @description 选择器的内部绑定值
@@ -273,19 +282,10 @@ const filterValue = ref("");
 
 /**
  * **旧值存储**
- * @type `any`
+ * @type `Array<number | string> | number | string`
  * @description 存储上一次的值，用于变更事件
  * */
-let oldValue: string | Array<string> | undefined = props.modelValue;
-
-/**
- * **是否多选模式**
- * @returns `boolean` 是否为多选模式
- * @description 判断当前是否为多选选择器
- * */
-const isMultiple = computed(() => {
-  return props.type == "multiple-select" || props.type == "multiple-online-select" || props.type == "multiple-request-select";
-});
+let oldValue: Array<number | string> | number | string = props.modelValue || (isMultiple.value ? [] : "");
 
 /**
  * **是否在线选择器**
