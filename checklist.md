@@ -12,6 +12,7 @@
 | 10   | index.scss | 文件命名为 index.scss 独立文件，Vue 通过 @use 引入                                                                       |
 | 11   | index.scss | 缩进为 2 空格 统一缩进格式                                                                                               |
 | 12   | index.scss | 根元素类名规范 .pa-{组件名}（如 .pa-button）                                                                             |
+| 13   | index.scss | 子元素使用 BEM 命名 `.pa-button_text`、`.pa-button__icon` |
 | 14   | index.scss | 子元素包含在根元素内 避免全局污染                                                                                        |
 | 15   | index.scss | 无单行注释（// xxx） 如有则删除                                                                                          |
 | 16   | index.scss | 无被注释掉的代码 如有则删除                                                                                              |
