@@ -73,12 +73,12 @@ function setLabel(label: string) {
  * @returns {VNode} 虚拟节点
  * @description 渲染标签页标题内容
  * */
-const RenderTableColumn = (slots) => {
+const RenderTableColumn = (slots: any) => {
   const _slots: any = [];
   for (const key in slots) {
     _slots.push(slots[key]);
   }
-  const className = (props) => {
+  const className = props => {
     const name =
       props?.name == _props.activeName
         ? `pa-tabs-title pa-tabs-title_action pa-tabs-title_action_${tabsContext.value.tabsId}`

@@ -44,6 +44,7 @@
     <slot name="footer"></slot>
   </div>
 </template>
+
 <script lang="ts" setup>
 /**
  * **模块导入**
@@ -163,7 +164,7 @@ defineExpose({
  * */
 watch(
   () => props.name,
-  (newValue: string, oldValue: string) => {
+  () => {
     initTitle();
   },
   { immediate: true }
@@ -175,7 +176,7 @@ watch(
  * */
 watch(
   () => props.label,
-  (newValue: string, oldValue: string) => {
+  () => {
     initTitle();
   },
   { immediate: true }
@@ -218,11 +219,6 @@ watch(
 .pa-tabs-item-body_fix.padding-right {
   padding-right: calc(var(--pa-size-padding, 10px)) !important;
 }
-.pa-tabs-item-body_fix.padding-top.padding-bottom {
-}
-.pa-tabs-item-body_fix.padding-left.padding-right {
-}
-
 .pa-tabs-item.active {
   visibility: visible;
 }
