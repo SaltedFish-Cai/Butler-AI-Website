@@ -3,14 +3,21 @@
 </template>
 
 <script lang="tsx" setup name="TableColumn">
-// # Import
+/**
+ * **模块导入**
+ * @description 导入 Vue 组合式 API
+ * */
 import { computed, ComputedRef, inject, Ref } from "vue";
-import { PaTabsItemTitleType } from "./type";
+import { TabsItemTitleType } from "./types";
 import { PancakeGlobalConfigType } from "../pa-manager/type";
 const tabsContext = inject("TabsContext") as Ref<{ mode: "default" | "portrait" | "slider" | "sticky"; tabsId: string }>;
 
-// # Var
-const _props = defineProps<PaTabsItemTitleType>();
+/**
+ * **组件属性**
+ * @type `TabsItemTitleType`
+ * @description 组件的属性对象
+ * */
+const _props = defineProps<TabsItemTitleType>();
 
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 const languageValue = computed(() => {
@@ -28,7 +35,12 @@ function setLabel(label: string) {
   }
 }
 
-// #Function Render方法
+/**
+ * **渲染标签列表**
+ * @param `slots` `any` 插槽数据
+ * @returns `JSX.Element` 标签列表渲染结果
+ * @description 根据插槽数据渲染标签页标题列表
+ * */
 const RenderTableColumn = slots => {
   const _slots: any = [];
   for (const key in slots) {

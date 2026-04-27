@@ -99,18 +99,41 @@
 </template>
 
 <script lang="ts" setup>
-// # Import
+/**
+ * **模块导入**
+ * @description 导入 Vue 组合式 API
+ * */
 import { ref, onMounted, onUnmounted, useSlots, watch, nextTick, provide, computed } from "vue";
+/**
+ * **模块导入**
+ * @description 导入随机字符生成工具
+ * */
 import { randChar } from "../tools/rand-char";
+/**
+ * **模块导入**
+ * @description 导入标签页标题子组件
+ * */
 import titleItem from "./pa-tabs-label.vue";
-import { PaTabsType } from "./type";
+import { ComponentProps, ComponentEmits } from "./types";
+/**
+ * **模块导入**
+ * @description 导入浏览器环境判断工具
+ * */
 import inBrowser from "../tools/inBrowser";
+/**
+ * **模块导入**
+ * @description 导入元素位置计算工具
+ * */
 import { getElementPosition } from "../utils/getElementPosition";
 
+/**
+ * **模块导入**
+ * @description 导入 lodash 工具库
+ * */
 import _ from "lodash";
 const { debounce } = _;
 
-const props = withDefaults(defineProps<PaTabsType>(), {
+const props = withDefaults(defineProps<ComponentProps>(), {
   modelValue: "",
   visibleMode: "visible",
   mode: "default",
@@ -128,7 +151,6 @@ const overFixWidth = ref(0);
 const defaultSlot = useSlots().default;
 const slotsTitle = ref([] as Array<Record<string, Record<string, string>>>);
 const slotIndex = ref(0);
-// const lineStyle = ref({ width: 0, left: 0 });
 const tabsId = ref(randId);
 const useScrollX = ref(0);
 const useScrollY = ref(0);
@@ -137,7 +159,11 @@ const headerScrollEnd = ref(false);
 const activeName = ref("");
 const useLabelLeft = ref(0);
 const useLabelWidth = ref(0);
-const emits = defineEmits(["update:modelValue", "tab-change"]);
+/**
+ * **组件事件定义**
+ * @description 定义组件可触发的事件
+ * */
+const emit = defineEmits<ComponentEmits>();
 
 const _debounce = debounce(setTabsBoxSize, 10, { trailing: true });
 
@@ -177,7 +203,10 @@ provide("initTitle", () => {
   _debounceTitle();
 });
 
-// # Vue onMounted
+/**
+ * **组件挂载生命周期**
+ * @description 初始化组件状态
+ * */
 onMounted(() => {
   createSlotData();
   const defaultValue = props.modelValue;
@@ -190,17 +219,27 @@ onMounted(() => {
   });
 });
 
-// # Vue onUnmounted
+/**
+ * **组件卸载生命周期**
+ * @description 清理观察器和事件监听
+ * */
 onUnmounted(() => {
   observer?.disconnect && observer?.disconnect();
 });
 
-// # Function 变更Tab
+/**
+ * **变更 Tab**
+ * @param `name` `string` 标签页标识
+ * @param `index` `number` 标签页索引
+ * @param `scrollToIntersect` `boolean` 是否滚动到可见区域
+ * @returns `void`
+ * @description 切换当前激活的标签页
+ * */
 function changeTabs(name, index, scrollToIntersect = true) {
   slotIndex.value = index;
   activeName.value = name;
-  emits("update:modelValue", name);
-  emits("tab-change", { name, index });
+  emit("update:modelValue", name);
+  emit("tabChange", name, index);
 
   if (props.mode === "slider" && scrollToIntersect) {
     const targetEl = document.querySelector(`#${tabsId.value} #${tabsId.value}-${name}`);
@@ -209,7 +248,11 @@ function changeTabs(name, index, scrollToIntersect = true) {
   setTabItemPosition();
 }
 
-// # 更新Tab按钮位置
+/**
+ * **更新 Tab 按钮位置**
+ * @returns `void`
+ * @description 计算并更新当前激活标签的位置
+ * */
 function setTabItemPosition() {
   nextTick(() => {
     const targetEl = document.querySelector(`#${tabsId.value} .pa-tabs-title_action_${tabsId.value}`);
@@ -229,7 +272,12 @@ function setTabItemPosition() {
   });
 }
 
-// # Function 初始化Slot数据
+/**
+ * **初始化 Slot 数据**
+ * @param `Mandatory` `boolean` 是否强制更新
+ * @returns `void`
+ * @description 解析插槽内容生成标签页数据
+ * */
 function createSlotData(Mandatory = false) {
   if (tabsRef.value) {
     if (defaultSlot) {
@@ -251,7 +299,6 @@ function createSlotData(Mandatory = false) {
             {},
             element.type.setup({}, { expose: () => {} })
           );
-          console.log("++++++++++> :", component);
           arr.push(component);
         }
       }
@@ -264,13 +311,17 @@ function createSlotData(Mandatory = false) {
       slotIndex.value = _index < 0 ? 0 : _index;
       const name = slotsTitle.value[slotIndex.value]?.props?.name;
       activeName.value = name;
-      emits("update:modelValue", name);
+      emit("update:modelValue", name);
       _debounce();
     }
   }
 }
 
-// # Function 监听元素节点
+/**
+ * **监听元素节点**
+ * @returns `void`
+ * @description 使用 MutationObserver 监听 DOM 变化
+ * */
 function watchDom() {
   if (tabsRef.value) {
     // 观察器的配置（需要观察什么变动）
@@ -284,7 +335,11 @@ function watchDom() {
   }
 }
 
-// # Function 设置Tabs标题宽度
+/**
+ * **设置 Tabs 标题宽度**
+ * @returns `void`
+ * @description 计算并更新标签标题区域的滚动信息
+ * */
 function setTabsBoxSize() {
   if (!inBrowser) return;
   nextTick(() => {
@@ -304,7 +359,12 @@ function setTabsBoxSize() {
   });
 }
 
-// # Function 处理滚动到可见区域
+/**
+ * **处理滚动到可见区域**
+ * @param `el` `HTMLElement` 可见区域元素
+ * @returns `void`
+ * @description 当标签页滚动到可见区域时切换标签
+ * */
 function handleIntersecting(el) {
   const name = el?.dataset?.name;
   if (name) {
@@ -316,14 +376,22 @@ function handleIntersecting(el) {
   }
 }
 
-// # Function 超出标题（左/上）
+/**
+ * **超出标题（左/上）**
+ * @returns `void`
+ * @description 标题区域向左或向上滚动
+ * */
 function minusScroll() {
   const chr = headerScroll.value - 50;
   headerScroll.value = chr <= 0 ? 0 : chr;
   headerScrollEnd.value = false;
 }
 
-// # Function 超出标题（右/下）
+/**
+ * **超出标题（右/下）**
+ * @returns `void`
+ * @description 标题区域向右或向下滚动
+ * */
 function addScroll() {
   if (props.mode == "portrait" || props.mode == "slider") {
     const { scrollHeight, clientHeight } = tabsTitle;
@@ -348,7 +416,10 @@ function addScroll() {
   }
 }
 
-// # 处理滚动事件
+/**
+ * **处理滚动事件**
+ * @description 鼠标滚轮事件处理函数
+ * */
 let lastWheelTime = 0;
 let wheelDelta = 0;
 const handleWheel = (event: WheelEvent) => {
@@ -383,7 +454,11 @@ const handleWheel = (event: WheelEvent) => {
   }
 };
 
-// # Function 处理鼠标悬停事件
+/**
+ * **处理鼠标悬停事件**
+ * @returns `void`
+ * @description 添加滚轮事件监听
+ * */
 function handleMouseEnter() {
   // 添加滚动事件监听
   const tabsTitleElement = tabsTitleRef.value;
@@ -392,7 +467,11 @@ function handleMouseEnter() {
   }
 }
 
-// # Function 处理鼠标离开事件
+/**
+ * **处理鼠标离开事件**
+ * @returns `void`
+ * @description 移除滚轮事件监听
+ * */
 function handleMouseLeave() {
   const tabsTitleElement = tabsTitleRef.value;
   if (tabsTitleElement) {
@@ -400,7 +479,10 @@ function handleMouseLeave() {
   }
 }
 
-// # 在组件卸载时移除事件监听
+/**
+ * **组件卸载时移除事件监听**
+ * @description 清理滚轮事件监听器
+ * */
 onUnmounted(() => {
   const tabsTitleElement = tabsTitleRef.value;
   if (tabsTitleElement) {
@@ -408,7 +490,10 @@ onUnmounted(() => {
   }
 });
 
-// #Watch modelValue
+/**
+ * **监听 modelValue 变化**
+ * @description 值变化时更新当前激活标签
+ * */
 watch(
   () => props.modelValue,
   data => {

@@ -8,12 +8,7 @@
   >
     <slot name="before"></slot>
     <div class="pa-tabs-item_body" v-if="init">
-      <pa-scrollbar
-        v-if="scroll && tabsContext.mode !== 'slider'"
-        ref="scrollbarRef"
-        :useScrollX="useScrollX"
-        :padding="padding"
-      >
+      <pa-scrollbar v-if="scroll && tabsContext.mode !== 'slider'" ref="scrollbarRef" :useScrollX="useScrollX" :padding="padding">
         <slot></slot>
       </pa-scrollbar>
 
@@ -51,11 +46,13 @@
   </div>
 </template>
 <script lang="ts" setup>
-// #
+/**
+ * **模块导入**
+ * @description 导入 Vue 组合式 API
+ * */
 import { ref, onMounted, inject, provide, watch, computed, ComputedRef } from "vue";
-import { PaTabsItemType } from "./type";
+import { TabsItemProps } from "./types";
 import { PancakeGlobalConfigType } from "../pa-manager/type";
-// import { randChar } from "../tools/rand-char";
 
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 const languageValue = computed(() => {
@@ -72,8 +69,12 @@ const tabsContext = inject("TabsContext") as {
 };
 const initTitle: any = inject("initTitle");
 
-// # Var
-const props = withDefaults(defineProps<PaTabsItemType>(), {
+/**
+ * **组件属性**
+ * @type `TabsItemProps`
+ * @description 组件的属性对象
+ * */
+const props = withDefaults(defineProps<TabsItemProps>(), {
   label: "",
   name: "",
   scroll: false,
@@ -87,7 +88,10 @@ const ScrollbarRef = ref();
 
 const init = ref(false);
 
-// # onMounted
+/**
+ * **组件挂载生命周期**
+ * @description 初始化组件懒加载状态
+ * */
 onMounted(() => {
   if (props.lazy == true) {
     init.value = false;
@@ -107,7 +111,10 @@ defineExpose({
   ScrollbarRef: ScrollbarRef
 });
 
-// #Watch modelValue
+/**
+ * **监听 name 变化**
+ * @description 标签名变化时重新初始化标题数据
+ * */
 watch(
   () => props.name,
   () => {
@@ -115,7 +122,10 @@ watch(
   },
   { immediate: true }
 );
-// #Watch modelValue
+/**
+ * **监听 name 变化**
+ * @description 标签名变化时重新初始化标题数据
+ * */
 watch(
   () => props.label,
   () => {
@@ -146,33 +156,24 @@ watch(
   .pa-tabs-item-body_fix {
     height: calc(100% - 0px);
     box-sizing: border-box;
-    // padding-right: 9px;
-    // padding-bottom: 7px;
-    // padding-left: 9px;
   }
 }
 
 .pa-tabs-item-body_fix.padding-top {
-  // height: calc(100% - calc(var(--pa-size-padding, 10px)));
   padding-top: calc(var(--pa-size-padding, 10px)) !important;
 }
 .pa-tabs-item-body_fix.padding-left {
-  // width: calc(100% - calc(var(--pa-size-padding, 10px)));
   padding-left: calc(var(--pa-size-padding, 10px)) !important;
 }
 .pa-tabs-item-body_fix.padding-bottom {
-  // height: calc(100% - calc(var(--pa-size-padding, 10px)));
   padding-bottom: calc(var(--pa-size-padding, 10px)) !important;
 }
 .pa-tabs-item-body_fix.padding-right {
-  // width: calc(100% - calc(var(--pa-size-padding, 10px)));
   padding-right: calc(var(--pa-size-padding, 10px)) !important;
 }
 .pa-tabs-item-body_fix.padding-top.padding-bottom {
-  // height: calc(100% - calc(var(--pa-size-padding, 10px)) * 2);
 }
 .pa-tabs-item-body_fix.padding-left.padding-right {
-  // width: calc(100% - calc(var(--pa-size-padding, 10px)) * 2);
 }
 
 .pa-tabs-item.active {
