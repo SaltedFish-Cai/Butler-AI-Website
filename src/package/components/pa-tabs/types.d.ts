@@ -8,31 +8,31 @@ import { LanguagePackageType } from "../manager-type";
  * **标签页布局模式**
  * @description 预设标签页布局类型
  * */
-export type TabsMode = "default" | "portrait" | "slider" | "sticky";
+export type ComponentTabsMode = "default" | "portrait" | "slider" | "sticky";
 
 /**
  * **标签页样式模式**
  * @description 预设标签页样式类型
  * */
-export type TabsStyleMode = "border-card" | "card" | "default";
+export type ComponentTabsStyleMode = "border-card" | "card" | "default";
 
 /**
  * **标签页对齐方式**
  * @description 预设标签页对齐方式类型
  * */
-export type TabsAlign = "default" | "edge";
+export type ComponentTabsAlign = "default" | "edge";
 
 /**
  * **标签页隐藏方式**
  * @description 预设标签页隐藏方式类型
  * */
-export type TabsVisibleMode = "display" | "visible";
+export type ComponentVisibleMode = "display" | "visible";
 
 /**
  * **标签页内边距方向**
  * @description 预设标签页内边距方向类型
  * */
-export type TabsPadding = "all" | "bottom" | "left" | "right" | "top";
+export type ComponentPadding = "all" | "bottom" | "left" | "right" | "top";
 
 export type ComponentProps = {
   /**
@@ -73,7 +73,7 @@ export type ComponentProps = {
    * @default `visible`
    * @description 当设置该值为 `display` 时，隐藏 tabs 内容元素；`visible` 时不隐藏
    * */
-  visibleMode?: TabsVisibleMode;
+  visibleMode?: ComponentVisibleMode;
 
   /**
    * **布局模式**
@@ -81,7 +81,7 @@ export type ComponentProps = {
    * @default `default`
    * @description 预设布局模式：`portrait` 左侧栏布局、`slider` 滚动布局、`sticky` 黏性布局、`default` 默认布局
    * */
-  mode?: TabsMode;
+  mode?: ComponentTabsMode;
 
   /**
    * **样式模式**
@@ -89,7 +89,7 @@ export type ComponentProps = {
    * @default `default`
    * @description 预设样式模式：`card` 卡片样式、`default` 默认样式
    * */
-  styleMode?: TabsStyleMode;
+  styleMode?: ComponentTabsStyleMode;
 
   /**
    * **对齐方式**
@@ -97,7 +97,7 @@ export type ComponentProps = {
    * @default `default`
    * @description `edge` 边缘对齐、`default` 默认对齐
    * */
-  align?: TabsAlign;
+  align?: ComponentTabsAlign;
 
   /**
    * **是否使用底线**
@@ -180,11 +180,11 @@ export type ComponentItemProps = {
 
   /**
    * **是否使用内边距**
-   * @type `Array<TabsPadding>` | `undefined`
+   * @type `Array<ComponentPadding>` | `undefined`
    * @default `[]`
    * @description 设置需要添加内边距的方向
    * */
-  padding?: Array<TabsPadding>;
+  padding?: Array<ComponentPadding>;
 
   /**
    * **是否使用水平滚动**
@@ -208,8 +208,31 @@ export type ComponentItemProps = {
  * @description 标签页标题组件的属性类型
  * */
 export type ComponentLabelProps = {
+  /**
+   * **插槽内容**
+   * @type `any`
+   * @description 标签页标题的插槽内容
+   * */
   slots: any;
+
+  /**
+   * **当前激活的标签页名称**
+   * @type `string`
+   * @description 当前选中的标签页标识
+   * */
   activeName: string;
+
+  /**
+   * **标签页切换函数**
+   * @type `any`
+   * @description 切换标签页时调用的回调函数
+   * */
   changeTabs: any;
+
+  /**
+   * **是否为纵向布局模式**
+   * @type `boolean`
+   * @description 当为 `true` 时，标签页以纵向布局显示
+   * */
   portrait: boolean;
 };
