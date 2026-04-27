@@ -62,13 +62,13 @@ export type PaSelectOptionsType = {
 export type PaSwitchOptionType = {
   /**
    * **打开值**
-   * @typenumber` | `string`
+   * @type `boolean` | `number` | `string`
    * */
   activeValue?: boolean | number | string;
 
   /**
    * **关闭值**
-   * @type `number` | `string`
+   * @type `boolean` | `number` | `string`
    * */
   inActiveValue?: boolean | number | string;
 
