@@ -83,6 +83,16 @@ export type ComponentItemProps = {
 };
 
 /**
+ * **复选框子项事件类型**
+ * @description 复选框子项组件可触发的事件
+ * */
+export type ComponentItemEmits = {
+  "update:modelValue": (value: boolean | number | string | undefined) => void;
+
+  change: (payload: { value: boolean | number | string | undefined; oldValue: boolean | number | string | undefined }) => void;
+};
+
+/**
  * **复选框属性类型**
  * @description 复选框组件的属性定义
  * */
@@ -185,18 +195,15 @@ export type ComponentProps = {
 };
 
 /**
- * **组件事件类型**
- * @description 定义组件可触发的事件
+ * **复选框事件类型**
+ * @description 复选框组件可触发的事件
  * */
 export type ComponentEmits = {
-  (e: "update:modelValue", value: Array<boolean | number | string>): void;
+  "update:modelValue": (value: Array<boolean | number | string>) => void;
 
-  (
-    e: "change",
-    payload: {
-      value: Array<boolean | number | string>;
-      oldValue: Array<boolean | number | string>;
-      option: PaOptionType.Select;
-    }
-  ): void;
+  change: (payload: {
+    value: Array<boolean | number | string>;
+    oldValue: Array<boolean | number | string>;
+    option: PaOptionType.Select;
+  }) => void;
 };

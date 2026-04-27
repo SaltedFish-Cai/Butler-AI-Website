@@ -34,7 +34,7 @@ import { computed, ComputedRef, inject, ref, watch } from "vue";
  * **模块导入**
  * @description 导入组件类型定义
  * */
-import { ComponentItemProps } from "./types";
+import { ComponentItemProps, ComponentItemEmits } from "./types";
 
 /**
  * **模块导入**
@@ -81,10 +81,7 @@ const inValue = ref(props.modelValue || "");
  * **组件事件定义**
  * @description 定义组件可触发的事件
  * */
-const emits = defineEmits<{
-  (e: "update:modelValue", value: boolean | number | string | undefined): void;
-  (e: "change", payload: { value: boolean | number | string | undefined; oldValue: boolean | number | string | undefined }): void;
-}>();
+const emits = defineEmits<ComponentItemEmits>();
 
 /**
  * **是否选中**
