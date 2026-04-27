@@ -147,6 +147,10 @@ onMounted(() => {
   }
 });
 
+/**
+ * **暴露组件引用**
+ * @description 暴露滚动条容器引用供父组件使用
+ */
 defineExpose({
   ScrollbarRef: ScrollbarRef
 });
