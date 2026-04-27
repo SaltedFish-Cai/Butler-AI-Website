@@ -1,18 +1,32 @@
+/**
+ * **模块导入**
+ * @description 导入日期处理库
+ * */
 import dayjs from "dayjs";
+
+/**
+ * **模块导入**
+ * @description 导入日期选择器类型定义
+ * */
 import { MDatePickerType } from "./type";
 
 /**
- * 判断是否是合法的日期格式
- * @param {string} dateString - 日期字符串
- * @returns {boolean} - 是否合法
- */
+ * **判断日期格式是否合法**
+ * @param `dateString` `string` 日期字符串
+ * @returns `boolean` 是否合法
+ * @description 判断给定的日期字符串是否符合常见的日期格式
+ * */
 export function isValidDate(dateString: string): boolean {
   if (!dateString || typeof dateString !== "string") {
     return false;
   }
 
-  // 常见的日期格式正则表达式
-  const datePatterns = [
+  /**
+   * **常见日期格式正则表达式列表**
+   * @type `Array<RegExp>`
+   * @description 支持的日期格式模式
+   * */
+  const datePatterns: Array<RegExp> = [
     // YYYY-MM-DD
     /^\d{4}-\d{2}-\d{2}$/,
     // YYYY/MM/DD
@@ -36,7 +50,7 @@ export function isValidDate(dateString: string): boolean {
   ];
 
   // 检查是否符合任一格式
-  const isValidFormat = datePatterns.some(pattern => pattern.test(dateString));
+  const isValidFormat: boolean = datePatterns.some(pattern => pattern.test(dateString));
 
   if (!isValidFormat) {
     return false;
@@ -44,7 +58,7 @@ export function isValidDate(dateString: string): boolean {
 
   // 进一步验证日期的有效性
   try {
-    const date = new Date(dateString);
+    const date: Date = new Date(dateString);
 
     // 检查是否为有效日期
     if (isNaN(date.getTime())) {
@@ -52,11 +66,11 @@ export function isValidDate(dateString: string): boolean {
     }
 
     // 检查日期组件是否合理
-    const parts = dateString.split(/[-/\s:年月日]/);
+    const parts: Array<string> = dateString.split(/[-/\s:年月日]/);
     if (parts.length >= 3) {
-      const year = parseInt(parts[0]);
-      const month = parseInt(parts[1]);
-      const day = parseInt(parts[2]);
+      const year: number = parseInt(parts[0]);
+      const month: number = parseInt(parts[1]);
+      const day: number = parseInt(parts[2]);
 
       // 基本范围检查
       if (month < 1 || month > 12 || day < 1 || day > 31) {
@@ -64,7 +78,7 @@ export function isValidDate(dateString: string): boolean {
       }
 
       // 更精确的日期验证
-      const lastDayOfMonth = new Date(year, month, 0).getDate();
+      const lastDayOfMonth: number = new Date(year, month, 0).getDate();
       if (day > lastDayOfMonth) {
         return false;
       }
@@ -76,24 +90,26 @@ export function isValidDate(dateString: string): boolean {
 }
 
 /**
- * 转换日期格式
- * @param date 日期
- * @returns 转换后的日期字符串
- */
-export function convertValue(type: MDatePickerType, date: dayjs.Dayjs | string) {
+ * **转换日期格式**
+ * @param `type` `MDatePickerType` 日期选择器类型
+ * @param `date` `dayjs.Dayjs | string` 日期值
+ * @returns `string` 转换后的日期字符串
+ * @description 根据日期选择器类型转换日期格式
+ * */
+export function convertValue(type: MDatePickerType, date: dayjs.Dayjs | string): string {
   if (type.includes("year") && (typeof date === "string" || typeof date === "number")) {
-    const _data = date.toString().split("-");
+    const _data: Array<string> = date.toString().split("-");
     date = _data[0] + "-01-01";
   }
   if (type.includes("month") && (typeof date === "string" || typeof date === "number")) {
-    const _data = date.toString().split("-");
+    const _data: Array<string> = date.toString().split("-");
     date = _data[0] + "-" + _data[1] + "-01";
   }
   if (
     (type == "time-picker" && (typeof date === "string" || typeof date === "number")) ||
     (type == "time-picker-group" && (typeof date === "string" || typeof date === "number"))
   ) {
-    const _data = date.toString().split(" ");
+    const _data: Array<string> = date.toString().split(" ");
     date = "2025-01-01 " + _data[_data.length - 1];
   }
 
@@ -103,7 +119,12 @@ export function convertValue(type: MDatePickerType, date: dayjs.Dayjs | string) 
 
   date = dayjs(date);
 
-  const formatMap = {
+  /**
+   * **格式映射表**
+   * @type `Record<MDatePickerType, string>`
+   * @description 日期类型与格式字符串的映射
+   * */
+  const formatMap: Record<MDatePickerType, string> = {
     "time-picker": "HH:mm:ss",
     "time-picker-group": "HH:mm:ss",
     "date-time-picker": "YYYY-MM-DD HH:mm:ss",

@@ -159,8 +159,18 @@ export type ComponentProps = {
  * @description 定义组件可触发的事件
  * */
 export type ComponentEmits = {
+  /**
+   * **更新绑定值事件**
+   * @param `value` `Array<number | string> | number | string` 新的绑定值
+   * @returns `void`
+   * */
   (e: "update:modelValue", value: Array<number | string> | number | string): void;
 
+  /**
+   * **值变更事件**
+   * @param `payload` `{ value: Array<number | string> | number | string; oldValue: Array<number | string> | number | string; option: SaOptionType.Select }` 变更数据
+   * @returns `void`
+   * */
   (
     e: "change",
     payload: {
