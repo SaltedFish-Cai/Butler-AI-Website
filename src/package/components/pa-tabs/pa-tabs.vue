@@ -17,14 +17,12 @@
         <div v-if="$slots['HeaderLeft']" style="margin-right: calc(var(--pa-size-padding, 10px) / 2)">
           <slot name="HeaderLeft"></slot>
         </div>
-        <!-- 上更多 -->
         <pa-icon
           v-if="useScrollY > 0 && (mode === 'portrait' || mode === 'slider')"
           :class="['icons', 'top-icon', headerScroll === 0 ? 'disabled' : '']"
           name="up_small_fill"
           @click="minusScroll"
         />
-        <!-- 左更多 -->
         <pa-icon
           v-else-if="useScrollX > 0"
           :class="['icons', 'left-icon', headerScroll === 0 ? 'disabled' : '']"
@@ -54,14 +52,12 @@
           </div>
         </div>
 
-        <!-- 下更多 -->
         <pa-icon
           v-if="useScrollY > 0 && (mode === 'portrait' || mode === 'slider')"
           :class="['icons', 'down-icon', headerScrollEnd ? 'disabled' : '']"
           name="down_small"
           @click="addScroll"
         />
-        <!-- 右更多 -->
         <pa-icon
           v-else-if="useScrollX > 0"
           :class="['icons', 'right-icon', headerScrollEnd ? 'disabled' : '']"
@@ -99,10 +95,6 @@
 </template>
 
 <script lang="ts" setup>
-/**
- * **模块导入**
- * @description 导入 Vue 组合式 API
- * */
 /**
  * **模块导入**
  * @description 导入 Vue 组合式 API
@@ -162,100 +154,97 @@ const props = withDefaults(defineProps<ComponentProps>(), {
 
 /**
  * **随机 ID**
+ * @type {string}
  * @description 生成组件唯一标识
  * */
 const randId = String(randChar());
 /**
  * **标签页容器引用**
- * @type `Ref<any>`
- * @description 标签页容器的 DOM 引用
- * */
-/**
- * **标签页容器引用**
- * @type `Ref<any>`
+ * @type {Ref<any>}
  * @description 标签页容器的 DOM 引用
  * */
 const tabsRef: any = ref();
 /**
  * **标签页标题容器引用**
- * @type `Ref<any>`
+ * @type {Ref<any>}
  * @description 标签页标题区域的 DOM 引用
  * */
 const tabsTitleRef = ref();
 /**
  * **插槽数据**
- * @type `Ref<any>`
+ * @type {Ref<any>}
  * @description 存储子组件插槽信息
  * */
 const slots: any = ref({});
 /**
  * **溢出固定宽度**
- * @type `Ref<number>`
+ * @type {Ref<number>}
  * @description 标签页标题溢出时的固定宽度
  * */
 const overFixWidth = ref(0);
 /**
  * **默认插槽**
+ * @type {ReturnType<typeof useSlots>['default']}
  * @description 获取默认插槽内容
  * */
 const defaultSlot = useSlots().default;
 /**
  * **标题插槽列表**
- * @type `Ref<Array<Record<string, Record<string, string>>>>`
+ * @type {Ref<Array<Record<string, Record<string, string>>>}
  * @description 存储所有标签页标题的插槽数据
  * */
 const slotsTitle = ref([] as Array<Record<string, Record<string, string>>>);
 /**
  * **当前插槽索引**
- * @type `Ref<number>`
+ * @type {Ref<number>}
  * @description 当前激活的标签页索引
  * */
 const slotIndex = ref(0);
 /**
  * **标签页 ID**
- * @type `Ref<string>`
+ * @type {Ref<string>}
  * @description 组件实例的唯一标识
  * */
 const tabsId = ref(randId);
 /**
  * **水平滚动位置**
- * @type `Ref<number>`
+ * @type {Ref<number>}
  * @description 标签页水平滚动距离
  * */
 const useScrollX = ref(0);
 /**
  * **垂直滚动位置**
- * @type `Ref<number>`
+ * @type {Ref<number>}
  * @description 标签页垂直滚动距离
  * */
 const useScrollY = ref(0);
 /**
  * **标题滚动位置**
- * @type `Ref<number>`
+ * @type {Ref<number>}
  * @description 标题区域的滚动偏移量
  * */
 const headerScroll = ref(0);
 /**
  * **标题滚动结束标志**
- * @type `Ref<boolean>`
+ * @type {Ref<boolean>}
  * @description 标题区域是否滚动到末尾
  * */
 const headerScrollEnd = ref(false);
 /**
  * **当前激活标签名**
- * @type `Ref<string>`
+ * @type {Ref<string>}
  * @description 当前选中标签页的标识
  * */
 const activeName = ref("");
 /**
  * **标签左侧位置**
- * @type `Ref<number>`
+ * @type {Ref<number>}
  * @description 激活标签的左侧位置
  * */
 const useLabelLeft = ref(0);
 /**
  * **标签宽度**
- * @type `Ref<number>`
+ * @type {Ref<number>}
  * @description 激活标签的宽度
  * */
 const useLabelWidth = ref(0);
@@ -285,12 +274,13 @@ const _debounceTitle = debounce(
 
 /**
  * **DOM 观察器**
- * @type `MutationObserver | undefined`
+ * @type {MutationObserver | undefined}
  * @description 监听 DOM 变化的观察器实例
  * */
-let observer;
+let observer: MutationObserver | undefined;
 /**
  * **标题容器尺寸**
+ * @type {{ scrollWidth: number; clientWidth: number; scrollHeight: number; clientHeight: number }}
  * @description 标题区域的滚动尺寸信息
  * */
 let tabsTitle: {
@@ -307,7 +297,7 @@ let tabsTitle: {
 
 /**
  * **滚动容器引用**
- * @type `Ref<any>`
+ * @type {Ref<any>}
  * @description 滚动容器的 DOM 引用
  * */
 const mScrollRef = ref();
@@ -347,6 +337,10 @@ onMounted(() => {
  * */
 onUnmounted(() => {
   observer?.disconnect && observer?.disconnect();
+  const tabsTitleElement = tabsTitleRef.value;
+  if (tabsTitleElement) {
+    tabsTitleElement.removeEventListener("wheel", handleWheel);
+  }
 });
 
 /**
@@ -541,11 +535,25 @@ function addScroll() {
 }
 
 /**
- * **处理滚动事件**
- * @description 鼠标滚轮事件处理函数
+ * **滚轮事件时间戳**
+ * @type {number}
+ * @description 上一次滚轮事件的时间戳
  * */
 let lastWheelTime = 0;
+
+/**
+ * **滚轮事件累积滚动量**
+ * @type {number}
+ * @description 滚轮事件累积的滚动量，用于判断是否触发标签切换
+ * */
 let wheelDelta = 0;
+
+/**
+ * **处理滚轮事件**
+ * @param `event` `WheelEvent` 滚轮事件对象
+ * @returns `void`
+ * @description 监听鼠标滚轮事件，控制标签页滚动切换
+ * */
 const handleWheel = (event: WheelEvent) => {
   event.preventDefault();
 
@@ -595,21 +603,6 @@ function handleMouseLeave() {
 }
 
 /**
- * **组件卸载时移除事件监听**
- * @description 清理滚轮事件监听器
- * */
-onUnmounted(() => {
-  const tabsTitleElement = tabsTitleRef.value;
-  if (tabsTitleElement) {
-    tabsTitleElement.removeEventListener("wheel", handleWheel);
-  }
-});
-
-/**
- * **监听 modelValue 变化**
- * @description 值变化时更新当前激活标签
- * */
-/**
  * **监听 modelValue 变化**
  * @description 同步激活标签页状态
  * */
@@ -628,6 +621,11 @@ watch(
   { immediate: true }
 );
 
+/**
+ * **设置标签位置**
+ * @returns `void`
+ * @description 计算并设置激活标签的左侧位置和宽度
+ * */
 function setLabelPosition() {
   if (props.styleMode != "border-card") return;
   setTimeout(() => {
