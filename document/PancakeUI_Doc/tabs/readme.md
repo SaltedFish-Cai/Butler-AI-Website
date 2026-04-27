@@ -77,9 +77,9 @@
 | style         | 自定义样式       | `Record<string, string>`                        | -         |
 | modelValue    | 双向绑定值       | `string`                                        | -         |
 | visibleMode   | 隐藏 tabs 方式   | [`ComponentVisibleMode`](#componentvisiblemode) | `visible` |
-| mode          | 布局模式         | [`ComponentMode`](#componentmode)               | `default` |
-| styleMode     | 样式模式         | [`ComponentStyleMode`](#componentstylemode)     | `default` |
-| align         | 对齐方式         | [`ComponentAlign`](#componentalign)             | `default` |
+| mode          | 布局模式         | [`ComponentTabsMode`](#componenttabsmode)               | `default` |
+| styleMode     | 样式模式         | [`ComponentTabsStyleMode`](#componenttabsstylemode)     | `default` |
+| align         | 对齐方式         | [`ComponentTabsAlign`](#componenttabsalign)             | `default` |
 | useHeaderLine | 是否使用底线     | `boolean`                                       | `false`   |
 | useShadow     | 是否使用滚动阴影 | `boolean`                                       | `true`    |
 
