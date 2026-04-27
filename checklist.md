@@ -51,9 +51,9 @@
 | 文档       | 文档属性标题必须和 type.d.ts 中定义一致                                                                                                                 |
 | 文档       | 文档中类型必须和 type.d.ts 中定义一致                                                                                                                   |
 | 文档       | 标准类型必须包裹在``中，如`string`、`number` 等                                                                                                         |
-| 文档       | 非标准类型必须在文档最下方说明，如自定义类型、枚举类型等 ，使用表格展示，表头与 ComponentProps 一致，并使用链接指向表格                                 |
+| 文档       | 非标准类型使用链接指向说明 如 [`ComponentMode`](#componentmode)，文档最下方用2列表格（类型值、说明）说明                                 |
 | 文档       | 文档中默认值必须和 type.d.ts 中定义一致                                                                                                                 |
 | 文档       | 数组类型必须包裹在``中，如`Array<T>`，其中 T 为数组元素类型                                                                                             |
 | 文档       | type.d.ts 中类型为`undefined`，文档中不显示，默认值`undefined`显示为`-` 例如： @type `number` \| `string` \| `undefined` 文档中显示为`boolean` `string` |
 | 文档       | 类型 `LanguagePackageType` 链接地址 `/document/PancakeUI_Doc/options#languagepackagetype`                                                               |
-| 文档       | 文档中类型和类型之间用空格隔开                                                                                                                          |
+| 文档       | 文档中类型和类型之间用空格隔开 如 `Array<string>` `string`                                                                                                                          |
