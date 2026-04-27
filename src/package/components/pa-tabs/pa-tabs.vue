@@ -160,21 +160,104 @@ const props = withDefaults(defineProps<ComponentProps>(), {
   useShadow: true
 });
 
+/**
+ * **随机 ID**
+ * @description 生成组件唯一标识
+ * */
 const randId = String(randChar());
+/**
+ * **标签页容器引用**
+ * @type `Ref<any>`
+ * @description 标签页容器的 DOM 引用
+ * */
+/**
+ * **标签页容器引用**
+ * @type `Ref<any>`
+ * @description 标签页容器的 DOM 引用
+ * */
 const tabsRef: any = ref();
+/**
+ * **标签页标题容器引用**
+ * @type `Ref<any>`
+ * @description 标签页标题区域的 DOM 引用
+ * */
 const tabsTitleRef = ref();
+/**
+ * **插槽数据**
+ * @type `Ref<any>`
+ * @description 存储子组件插槽信息
+ * */
 const slots: any = ref({});
+/**
+ * **溢出固定宽度**
+ * @type `Ref<number>`
+ * @description 标签页标题溢出时的固定宽度
+ * */
 const overFixWidth = ref(0);
+/**
+ * **默认插槽**
+ * @description 获取默认插槽内容
+ * */
 const defaultSlot = useSlots().default;
+/**
+ * **标题插槽列表**
+ * @type `Ref<Array<Record<string, Record<string, string>>>>`
+ * @description 存储所有标签页标题的插槽数据
+ * */
 const slotsTitle = ref([] as Array<Record<string, Record<string, string>>>);
+/**
+ * **当前插槽索引**
+ * @type `Ref<number>`
+ * @description 当前激活的标签页索引
+ * */
 const slotIndex = ref(0);
+/**
+ * **标签页 ID**
+ * @type `Ref<string>`
+ * @description 组件实例的唯一标识
+ * */
 const tabsId = ref(randId);
+/**
+ * **水平滚动位置**
+ * @type `Ref<number>`
+ * @description 标签页水平滚动距离
+ * */
 const useScrollX = ref(0);
+/**
+ * **垂直滚动位置**
+ * @type `Ref<number>`
+ * @description 标签页垂直滚动距离
+ * */
 const useScrollY = ref(0);
+/**
+ * **标题滚动位置**
+ * @type `Ref<number>`
+ * @description 标题区域的滚动偏移量
+ * */
 const headerScroll = ref(0);
+/**
+ * **标题滚动结束标志**
+ * @type `Ref<boolean>`
+ * @description 标题区域是否滚动到末尾
+ * */
 const headerScrollEnd = ref(false);
+/**
+ * **当前激活标签名**
+ * @type `Ref<string>`
+ * @description 当前选中标签页的标识
+ * */
 const activeName = ref("");
+/**
+ * **标签左侧位置**
+ * @type `Ref<number>`
+ * @description 激活标签的左侧位置
+ * */
 const useLabelLeft = ref(0);
+/**
+ * **标签宽度**
+ * @type `Ref<number>`
+ * @description 激活标签的宽度
+ * */
 const useLabelWidth = ref(0);
 /**
  * **组件事件定义**
@@ -182,8 +265,16 @@ const useLabelWidth = ref(0);
  * */
 const emit = defineEmits<ComponentEmits>();
 
+/**
+ * **防抖函数**
+ * @description 防抖处理标签页尺寸计算
+ * */
 const _debounce = debounce(setTabsBoxSize, 10, { trailing: true });
 
+/**
+ * **标题防抖函数**
+ * @description 防抖处理标题数据更新
+ * */
 const _debounceTitle = debounce(
   () => {
     createSlotData(true);
@@ -192,7 +283,16 @@ const _debounceTitle = debounce(
   { trailing: true }
 );
 
+/**
+ * **DOM 观察器**
+ * @type `MutationObserver | undefined`
+ * @description 监听 DOM 变化的观察器实例
+ * */
 let observer;
+/**
+ * **标题容器尺寸**
+ * @description 标题区域的滚动尺寸信息
+ * */
 let tabsTitle: {
   scrollWidth: number;
   clientWidth: number;
@@ -205,6 +305,11 @@ let tabsTitle: {
   clientHeight: 0
 };
 
+/**
+ * **滚动容器引用**
+ * @type `Ref<any>`
+ * @description 滚动容器的 DOM 引用
+ * */
 const mScrollRef = ref();
 
 provide(
@@ -504,6 +609,10 @@ onUnmounted(() => {
  * **监听 modelValue 变化**
  * @description 值变化时更新当前激活标签
  * */
+/**
+ * **监听 modelValue 变化**
+ * @description 同步激活标签页状态
+ * */
 watch(
   () => props.modelValue,
   data => {
@@ -531,6 +640,10 @@ function setLabelPosition() {
   }, 90);
 }
 
+/**
+ * **监听 activeName 变化**
+ * @description 更新标签位置
+ * */
 watch(
   () => activeName.value,
   () => setLabelPosition()

@@ -18,6 +18,11 @@ import { ComponentLabelProps } from "./types";
  * @description 导入全局配置类型定义
  * */
 import { PancakeGlobalConfigType } from "../pa-manager/type";
+/**
+ * **标签页上下文**
+ * @type `Ref<{ mode: string; tabsId: string }>`
+ * @description 注入标签页父组件提供的上下文
+ * */
 const tabsContext = inject("TabsContext") as Ref<{ mode: "default" | "portrait" | "slider" | "sticky"; tabsId: string }>;
 
 /**
@@ -27,7 +32,17 @@ const tabsContext = inject("TabsContext") as Ref<{ mode: "default" | "portrait" 
  * */
 const _props = defineProps<ComponentLabelProps>();
 
+/**
+ * **全局配置**
+ * @type `ComputedRef<PancakeGlobalConfigType>`
+ * @description 注入 Pancake 全局配置对象
+ * */
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
+/**
+ * **语言值**
+ * @type `ComputedRef<string>`
+ * @description 当前语言设置
+ * */
 const languageValue = computed(() => {
   return PancakeGlobalConfig.value?.language?.value || "zh-CN";
 });
@@ -48,6 +63,12 @@ function setLabel(label: string) {
  * @param `slots` `any` 插槽数据
  * @returns `JSX.Element` 标签列表渲染结果
  * @description 根据插槽数据渲染标签页标题列表
+ * */
+/**
+ * **渲染标签列组件**
+ * @param `slots` `any` 插槽数据
+ * @returns `VNode` 虚拟节点
+ * @description 渲染标签页标题内容
  * */
 const RenderTableColumn = slots => {
   const _slots: any = [];

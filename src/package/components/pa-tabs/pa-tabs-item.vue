@@ -66,19 +66,43 @@ import { ComponentItemProps } from "./types";
  * */
 import { PancakeGlobalConfigType } from "../pa-manager/type";
 
+/**
+ * **全局配置**
+ * @type `ComputedRef<PancakeGlobalConfigType>`
+ * @description 注入 Pancake 全局配置对象
+ * */
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
+/**
+ * **语言值**
+ * @type `ComputedRef<string>`
+ * @description 当前语言设置
+ * */
 const languageValue = computed(() => {
   return PancakeGlobalConfig.value?.language?.value || "zh-CN";
 });
 
+/**
+ * **滚动条引用**
+ * @type `Ref<any>`
+ * @description 滚动条组件的引用
+ * */
 const scrollbarRef = ref();
 provide("parentScrollbarRef", scrollbarRef);
 
+/**
+ * **标签页上下文**
+ * @description 注入标签页父组件提供的上下文
+ * */
 const tabsContext = inject("TabsContext") as {
   mode: "default" | "portrait" | "slider" | "sticky";
   tabsId: string;
   activeName: string;
 };
+/**
+ * **初始化标题函数**
+ * @type `any`
+ * @description 注入的标题初始化函数
+ * */
 const initTitle: any = inject("initTitle");
 
 /**
@@ -95,9 +119,24 @@ const props = withDefaults(defineProps<ComponentItemProps>(), {
   useBorder: false
 });
 
+/**
+ * **标签项线条引用**
+ * @type `Ref<any>`
+ * @description 标签项底部线条的 DOM 引用
+ * */
 const tabItemLine = ref();
+/**
+ * **滚动条容器引用**
+ * @type `Ref<any>`
+ * @description 滚动条容器的 DOM 引用
+ * */
 const ScrollbarRef = ref();
 
+/**
+ * **初始化状态**
+ * @type `Ref<boolean>`
+ * @description 组件是否已初始化
+ * */
 const init = ref(false);
 
 /**
@@ -123,6 +162,10 @@ defineExpose({
   ScrollbarRef: ScrollbarRef
 });
 
+/**
+ * **监听 name 变化**
+ * @description 标签名变化时重新初始化标题数据
+ * */
 /**
  * **监听 name 变化**
  * @description 标签名变化时重新初始化标题数据
