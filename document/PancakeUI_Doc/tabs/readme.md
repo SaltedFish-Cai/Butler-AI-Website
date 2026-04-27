@@ -107,9 +107,9 @@
 
 | 插槽名      | 作用         |
 | ----------- | ------------ |
-| default     | 默认内容插槽 |
-| HeaderLeft  | 头部左侧插槽 |
-| HeaderRight | 头部右侧插槽 |
+| 'default'     | 默认内容插槽 |
+| 'HeaderLeft'  | 头部左侧插槽 |
+| 'HeaderRight' | 头部右侧插槽 |
 | afterLabel  | 标签后插槽   |
 | footer      | 底部插槽     |
 
@@ -117,9 +117,9 @@
 
 | 插槽名  | 作用         |
 | ------- | ------------ |
-| default | 默认内容插槽 |
+| 'default' | 默认内容插槽 |
 | before  | 内容前插槽   |
-| tips    | 提示信息插槽 |
+| 'tips'    | 提示信息插槽 |
 | footer  | 底部插槽     |
 
 ## 非标准类型说明
@@ -130,10 +130,10 @@ tabs 布局模式。
 
 | 类型值     | 说明         |
 | ---------- | ------------ |
-| `default`  | 默认布局模式 |
-| `portrait` | 竖屏布局模式 |
-| `slider`   | 滚动布局模式 |
-| `sticky`   | 粘性布局模式 |
+| `'default'`  | 默认布局模式 |
+| `'portrait'` | 竖屏布局模式 |
+| `'slider'`   | 滚动布局模式 |
+| `'sticky'`   | 粘性布局模式 |
 
 ### ComponentTabsStyleMode
 
@@ -141,9 +141,9 @@ tabs 样式模式。
 
 | 类型值        | 说明         |
 | ------------- | ------------ |
-| `default`     | 默认样式     |
-| `card`        | 卡片样式     |
-| `border-card` | 边框卡片样式 |
+| `'default'`     | 默认样式     |
+| `'card'`        | 卡片样式     |
+| `'border-card'` | 边框卡片样式 |
 
 ### ComponentTabsAlign
 
@@ -151,8 +151,8 @@ tabs 对齐方式。
 
 | 类型值    | 说明     |
 | --------- | -------- |
-| `default` | 默认对齐 |
-| `edge`    | 边缘对齐 |
+| `'default'` | 默认对齐 |
+| `'edge'`    | 边缘对齐 |
 
 ### ComponentVisibleMode
 
@@ -160,8 +160,8 @@ tabs 对齐方式。
 
 | 类型值    | 说明                 |
 | --------- | -------------------- |
-| `display` | 使用 display 隐藏    |
-| `visible` | 使用 visibility 隐藏 |
+| `'display'` | 使用 display 隐藏    |
+| `'visible'` | 使用 visibility 隐藏 |
 
 ### ComponentPadding
 
@@ -169,8 +169,8 @@ tabs 对齐方式。
 
 | 类型值   | 说明     |
 | -------- | -------- |
-| `all`    | 全部方向 |
-| `top`    | 顶部     |
-| `bottom` | 底部     |
-| `left`   | 左侧     |
-| `right`  | 右侧     |
+| `'all'`    | 全部方向 |
+| `'top'`    | 顶部     |
+| `'bottom'` | 底部     |
+| `'left'`   | 左侧     |
+| `'right'`  | 右侧     |
