@@ -18,7 +18,6 @@
 | index.scss | class 之间有空行分隔 提高可读性                                                                                          |
 | index.scss | 样式属性使用 CSS 变量 如 --pa-color-primary、--pa-size-font                                                              |
 | index.scss | 无硬编码颜色值 使用 CSS 变量而非 #409eff 等                                                                              |
-| index.scss | 无 !important 滥用 仅在必要时使用                                                                                        |
 | Vue 文件   | 所有 import 有 JSDoc 注释 包含 @description ...                                                                          |
 | Vue 文件   | 所有变量有 JSDoc 注释 ref、reactive、computed、let 等                                                                    |
 | Vue 文件   | 所有函数有完整 JSDoc 注释 @param、@returns、@description                                                                 |
