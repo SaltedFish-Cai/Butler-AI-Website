@@ -19,6 +19,7 @@ jobs:
           subject: "代码推送通知 - ${{ github.repository }}"
           to: dafantuan@coze.email
           from: GitHub Actions
+          content_type: text/plain
           body: |
             仓库: ${{ github.repository }}
             分支: ${{ github.ref_name }}
