@@ -17,6 +17,12 @@ import PaRadioItem from "./pa-radio-item.vue";
 import PaRadio from "./pa-radio.vue";
 
 /**
+ * **组件名称**
+ * @description 组件注册名称
+ * */
+const name = "PaRadio";
+
+/**
  * **组件注册函数**
  * @param `app` `App` Vue 应用实例
  * @description 将 PaRadio 和 PaRadioItem 组件注册到 Vue 应用中
@@ -28,4 +34,4 @@ const install = function (app: App) {
   }
 };
 
-export default { name: "PaRadio", install };
+export default { name, install };

@@ -17,6 +17,12 @@ import PaCheckBoxItem from "./pa-checkbox-item.vue";
 import PaCheckBox from "./pa-checkbox.vue";
 
 /**
+ * **组件名称**
+ * @description 组件注册名称
+ * */
+const name = "PaCheckbox";
+
+/**
  * **组件注册函数**
  * @param `app` `App` Vue 应用实例
  * @description 将 PaCheckbox 和 PaCheckboxItem 组件注册到 Vue 应用中
@@ -30,7 +36,4 @@ const install = function (app: App) {
   }
 };
 
-export default {
-  name: "PaCheckbox",
-  install
-};
+export default { name, install };

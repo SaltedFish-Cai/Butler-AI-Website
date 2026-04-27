@@ -11,6 +11,12 @@ import { App } from "vue";
 import PaSelectIcon from "./pa-select-icon.vue";
 
 /**
+ * **组件名称**
+ * @description 组件注册名称
+ * */
+const name = "PaSelectIcon";
+
+/**
  * **组件注册函数**
  * @param `app` `App` Vue 应用实例
  * @description 将 PaSelectIcon 组件注册到 Vue 应用中
@@ -21,4 +27,4 @@ const install = function (app: App) {
   }
 };
 
-export default { name: "PaSelectIcon", install };
+export default { name, install };

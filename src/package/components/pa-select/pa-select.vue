@@ -276,7 +276,7 @@ const filterValue = ref("");
  * @type `any`
  * @description 存储上一次的值，用于变更事件
  * */
-let oldValue = props.modelValue;
+let oldValue: string | Array<string> | undefined = props.modelValue;
 
 /**
  * **是否多选模式**

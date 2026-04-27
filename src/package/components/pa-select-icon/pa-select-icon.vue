@@ -170,7 +170,7 @@ const activeName = ref("all");
  * @type `string`
  * @description 存储上一次的值，用于变更事件
  * */
-let oldValue = props.modelValue || "";
+let oldValue: string = props.modelValue || "";
 
 /**
  * **全局配置注入**

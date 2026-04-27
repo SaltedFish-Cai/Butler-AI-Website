@@ -1,12 +1,13 @@
 /**
  * **模块导入**
- * @description lodash 工具库导入
- * */
-/**
- * **模块导入**
- * @description 文件数据类型定义导入
+ * @description 导入 lodash 工具库
  * */
 import _ from "lodash";
+
+/**
+ * **模块导入**
+ * @description 导入文件数据类型定义
+ * */
 import { FileDataType } from "./types";
 
 /**
