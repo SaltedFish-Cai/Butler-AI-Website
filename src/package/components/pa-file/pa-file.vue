@@ -122,7 +122,7 @@
 
 <script lang="ts" setup>
 import { ref, computed, ComputedRef, watch, inject } from "vue";
-import { ComponentProps, FileDataType } from "./type";
+import { ComponentProps, FileDataType, ComponentEmits } from "./types";
 import { ajaxUpload } from "./ajax";
 import { M_Message, M_MessageBox } from "../feedback";
 import { PancakeGlobalConfigType } from "../pa-manager/type";
@@ -135,7 +135,7 @@ const props = withDefaults(defineProps<ComponentProps>(), {});
 const inValue = ref(props.modelValue);
 let oldValue = props.modelValue;
 
-const emits = defineEmits(["update:modelValue", "change", "changeState"]);
+const emits = defineEmits<ComponentEmits>();
 
 const uploadRef = ref();
 const loading = ref(false);

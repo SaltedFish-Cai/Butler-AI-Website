@@ -1,5 +1,54 @@
+/**
+ * **模块导入**
+ * @description 导入多语言类型定义
+ * */
 import { LanguagePackageType } from "../manager-type";
 
+/**
+ * **文件数据类型**
+ * @description 文件上传后的数据结构
+ * */
+export type FileDataType = {
+  /**
+   * **文件ID**
+   * @type `string`
+   * @description 文件的唯一标识
+   * */
+  FileId: string;
+
+  /**
+   * **文件完整路径**
+   * @type `string`
+   * @description 文件的完整访问路径
+   * */
+  FullPath: string;
+
+  /**
+   * **文件名称**
+   * @type `string` | `undefined`
+   * @description 文件的名称
+   * */
+  FileName?: string;
+
+  /**
+   * **文件URL**
+   * @type `string` | `undefined`
+   * @description 文件的访问URL
+   * */
+  FileUrl?: string;
+
+  /**
+   * **原始文件名**
+   * @type `string` | `undefined`
+   * @description 上传前的原始文件名
+   * */
+  OriginalName?: string;
+};
+
+/**
+ * **文件上传组件属性类型**
+ * @description 文件上传组件的属性定义
+ * */
 export type ComponentProps = {
   /**
    * **组件唯一标识**
@@ -11,11 +60,11 @@ export type ComponentProps = {
 
   /**
    * **自定义类名**
-   * @type `string` | `undefined`
+   * @type `Array<string>` | `string` | `undefined`
    * @default `undefined`
    * @description 当设置该值时，会添加到组件的类名中
    * */
-  class?: string;
+  class?: Array<string> | string;
 
   /**
    * **自定义样式**
@@ -87,7 +136,7 @@ export type ComponentProps = {
    * @default `undefined`
    * @description 当设置该值时，会限制文件类型
    * */
-  fileIncludeType?: string[];
+  fileIncludeType?: Array<string>;
 
   /**
    * **允许上传文件类型的文本描述**
@@ -95,7 +144,7 @@ export type ComponentProps = {
    * @default `undefined`
    * @description 当设置该值时，会显示允许上传文件类型的文本描述
    * */
-  fileIncludeText?: string[];
+  fileIncludeText?: Array<string>;
 
   /**
    * **不允许上传文件类型**
@@ -103,7 +152,7 @@ export type ComponentProps = {
    * @default `undefined`
    * @description 当设置该值时，会限制文件类型
    * */
-  fileExcludeType?: string[];
+  fileExcludeType?: Array<string>;
 
   /**
    * **不允许上传文件类型的文本描述**
@@ -111,7 +160,7 @@ export type ComponentProps = {
    * @default `undefined`
    * @description 当设置该值时，会显示不允许上传文件类型的文本描述
    * */
-  fileExcludeText?: string[];
+  fileExcludeText?: Array<string>;
 
   /**
    * **单个文件上传大小限制**
@@ -168,20 +217,31 @@ export type ComponentProps = {
    * @description 当设置该值时，会作为表单项标签宽度
    * */
   titleWidth?: string;
-
-  /**
-   * **当数据发生变更时触发**
-   * @type `({ value, oldValue }) => void` | `undefined`
-   * @default `undefined`
-   * @description 当设置该值时，会使用该值作为回调函数
-   * */
-  onChange?: ({ value, oldValue }) => void;
 };
 
-export type FileDataType = {
-  FileId: string;
-  FullPath: string;
-  FileName?: string;
-  FileUrl?: string;
-  OriginalName?: string;
+/**
+ * **文件上传组件事件类型**
+ * @description 文件上传组件可触发的事件
+ * */
+export type ComponentEmits = {
+  /**
+   * **更新绑定值事件**
+   * @param `value` `Array<FileDataType>` 新的绑定值
+   * @returns `void`
+   * */
+  (e: "update:modelValue", value: Array<FileDataType>): void;
+
+  /**
+   * **值变更事件**
+   * @param `payload` `{ value: Array<FileDataType>; oldValue: Array<FileDataType> }` 变更数据
+   * @returns `void`
+   * */
+  (e: "change", payload: { value: Array<FileDataType>; oldValue: Array<FileDataType> }): void;
+
+  /**
+   * **状态变更事件**
+   * @param `state` `"Working"` | `"Pending"` 当前状态
+   * @returns `void`
+   * */
+  (e: "changeState", state: "Working" | "Pending"): void;
 };

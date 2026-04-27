@@ -80,7 +80,7 @@
 <script lang="ts" setup>
 import { PancakeGlobalConfigType } from "../pa-manager/type";
 import { computed, ComputedRef, inject, ref, useTemplateRef } from "vue";
-import { FileDataType, ComponentProps } from "./type";
+import { ComponentProps, FileDataType, ComponentEmits } from "./types";
 import { M_Message } from "../feedback";
 import { ajaxUpload } from "./ajax";
 
@@ -88,7 +88,7 @@ import { ajaxUpload } from "./ajax";
 const props = withDefaults(defineProps<ComponentProps>(), {});
 
 // Emits
-const emits = defineEmits(["update:modelValue", "change", "changeState"]);
+const emits = defineEmits<ComponentEmits>();
 
 // Refs
 const fileInput = useTemplateRef("fileInput");
