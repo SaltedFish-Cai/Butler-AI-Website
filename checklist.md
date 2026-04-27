@@ -57,4 +57,4 @@
 | 文档       | type.d.ts 中类型为`undefined`，文档中不显示，默认值`undefined`显示为`-` 例如： @type `number` \| `string` \| `undefined` 文档中显示为`boolean` `string` |
 | 文档       | 类型 `LanguagePackageType` 链接地址 `/document/PancakeUI_Doc/options#languagepackagetype`                                                               |
 | 文档       | 文档中类型和类型之间用空格隔开 如 `Array<string>` `string`                                                                                              |
-| 文档       | 字符串字面量用单引号包裹 如插槽名、类型值等，如 'default'、'portrait'                                                                                   |
+| 文档       | 字符串字面量用反引号包裹单引号内容 如插槽名、类型值等，如 `'default'`、`'portrait'`                                                                                   |
