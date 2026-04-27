@@ -221,9 +221,12 @@ export type ComponentEmits = {
    * @param `payload` `{ value: Array<boolean | number | string>; oldValue: Array<boolean | number | string>; option: PaOptionType.Select }` 变更数据
    * @returns `void`
    * */
-  (e: "change", payload: {
-    value: Array<boolean | number | string>;
-    oldValue: Array<boolean | number | string>;
-    option: PaOptionType.Select;
-  }): void;
+  (
+    e: "change",
+    payload: {
+      value: Array<boolean | number | string>;
+      oldValue: Array<boolean | number | string>;
+      option: PaOptionType.Select;
+    }
+  ): void;
 };
