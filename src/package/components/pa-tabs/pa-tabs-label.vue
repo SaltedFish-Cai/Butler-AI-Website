@@ -23,7 +23,10 @@ import { PancakeGlobalConfigType } from "../pa-manager/type";
  * @type `Ref<{ mode: string; tabsId: string }>`
  * @description 注入标签页父组件提供的上下文
  * */
-const tabsContext = inject("TabsContext") as Ref<{ mode: "default" | "portrait" | "slider" | "sticky"; tabsId: string }>;
+const tabsContext = inject("TabsContext") as Ref<{
+  mode: "default" | "portrait" | "slider" | "sticky";
+  tabsId: string;
+}>;
 
 /**
  * **组件属性**
@@ -47,6 +50,12 @@ const languageValue = computed(() => {
   return PancakeGlobalConfig.value?.language?.value || "zh-CN";
 });
 
+/**
+ * **设置标签**
+ * @param {string | Record<string, string>} label - 标签文本或语言对象
+ * @returns {string | undefined} 返回对应语言的值
+ * @description 根据当前语言设置返回标签文本，支持字符串和语言对象两种格式
+ * */
 function setLabel(label: string) {
   if (typeof label !== "string") return label?.[languageValue.value];
   try {
@@ -59,23 +68,17 @@ function setLabel(label: string) {
 }
 
 /**
- * **渲染标签列表**
- * @param `slots` `any` 插槽数据
- * @returns `JSX.Element` 标签列表渲染结果
- * @description 根据插槽数据渲染标签页标题列表
- * */
-/**
  * **渲染标签列组件**
- * @param `slots` `any` 插槽数据
- * @returns `VNode` 虚拟节点
+ * @param {any} slots - 插槽数据
+ * @returns {VNode} 虚拟节点
  * @description 渲染标签页标题内容
  * */
-const RenderTableColumn = slots => {
+const RenderTableColumn = (slots) => {
   const _slots: any = [];
   for (const key in slots) {
     _slots.push(slots[key]);
   }
-  const className = props => {
+  const className = (props) => {
     const name =
       props?.name == _props.activeName
         ? `pa-tabs-title pa-tabs-title_action pa-tabs-title_action_${tabsContext.value.tabsId}`
