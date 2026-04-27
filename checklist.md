@@ -44,7 +44,7 @@
 | 文档       | ComponentProps 类型一致 与 types.d.ts 中定义一致                                                                                                        |
 | 文档       | ComponentEmits 表格完整 事件名、描述、回调函数 三列                                                                                                     |
 | 文档       | ComponentEmits 回调格式一致 与 types.d.ts 中 ComponentEmits 一致                                                                                        |
-| 文档       | ComponentSlots 表格完整 插槽名称、作用 两列（如存在）                                                                                                   |
+| 文档       | ComponentSlots 表格完整 插槽名称、作用 两列（如存在），插槽名用单引号包裹                                                                                                   |
 | 文档       | 示例文件 base.vue 存在 必须存在                                                                                                                         |
 | 文档       | 示例文件可运行 无语法错误                                                                                                                               |
 | 文档       | 文档根据 ComponentProps 参数创建更多示例                                                                                                                |
@@ -57,3 +57,4 @@
 | 文档       | type.d.ts 中类型为`undefined`，文档中不显示，默认值`undefined`显示为`-` 例如： @type `number` \| `string` \| `undefined` 文档中显示为`boolean` `string` |
 | 文档       | 类型 `LanguagePackageType` 链接地址 `/document/PancakeUI_Doc/options#languagepackagetype`                                                               |
 | 文档       | 文档中类型和类型之间用空格隔开 如 `Array<string>` `string`                                                                                              |
+| 文档       | 字符串字面量用单引号包裹 如插槽名、类型值等，如 'default'、'portrait'                                                                                   |
