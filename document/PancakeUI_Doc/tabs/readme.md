@@ -110,7 +110,7 @@
 | 'default'     | 默认内容插槽 |
 | 'HeaderLeft'  | 头部左侧插槽 |
 | 'HeaderRight' | 头部右侧插槽 |
-| afterLabel  | 标签后插槽   |
+| 'afterLabel'  | 标签后插槽   |
 | 'footer'      | 底部插槽     |
 
 ## ComponentSlots（pa-tabs-item）
