@@ -1,5 +1,13 @@
+/**
+ * **模块导入**
+ * @description 导入多语言类型定义
+ * */
 import { LanguagePackageType } from "../manager-type";
 
+/**
+ * **时间选择器类型**
+ * @description 定义时间选择器的类型枚举
+ * */
 export type MDatePickerType =
   | "date-picker-group"
   | "date-picker"
@@ -12,6 +20,19 @@ export type MDatePickerType =
   | "year-picker-group"
   | "year-picker";
 
+/**
+ * **日期选择器快捷选项类型**
+ * @description 定义日期选择器的快捷选项结构
+ * */
+export type DatePickerShortcut = {
+  text: string;
+  value: Date[] | (() => Date[]);
+};
+
+/**
+ * **时间选择器属性类型**
+ * @description 时间选择器组件的属性定义
+ * */
 export type ComponentProps = {
   /**
    * **组件唯一标识**
@@ -23,11 +44,11 @@ export type ComponentProps = {
 
   /**
    * **自定义类名**
-   * @type `string` | `undefined`
+   * @type `Array<string>` | `string` | `undefined`
    * @default `undefined`
    * @description 当设置该值时，会添加到组件的类名中
    * */
-  class?: string;
+  class?: Array<string> | string;
 
   /**
    * **自定义样式**
@@ -103,11 +124,11 @@ export type ComponentProps = {
 
   /**
    * **快捷选项**
-   * @type `DatePickerShortcut[]` | `undefined`
+   * @type `Array<DatePickerShortcut>` | `undefined`
    * @default `undefined`
    * @description 当设置该值时，会使用该值作为快捷选项
    * */
-  shortcuts?: DatePickerShortcut[];
+  shortcuts?: Array<DatePickerShortcut>;
 
   /**
    * **对比数据**
@@ -115,7 +136,7 @@ export type ComponentProps = {
    * @default `undefined`
    * @description 当设置该值时，会使用该值作为对比数据
    * */
-  contrastData?: string[] | string;
+  contrastData?: Array<string> | string;
 
   /**
    * **是否显示对比数据**
@@ -140,33 +161,31 @@ export type ComponentProps = {
    * @description 当设置该值时，会作为表单项标签宽度
    * */
   titleWidth?: string;
-
-  /**
-   * **当数据发生变更时触发**
-   * @type `({ value, oldValue }) => void` | `undefined`
-   * @default `undefined`
-   * @description 当设置该值时，会使用该值作为回调函数
-   * */
-  onChange?: ({ value, oldValue }) => void;
-
-  /**
-   * **在组件 Input 获得焦点时触发**
-   * @type `({ value }) => void` | `undefined`
-   * @default `undefined`
-   * @description 当设置该值时，会使用该值作为回调函数
-   * */
-  onFocus?: ({ value }) => void;
-
-  /**
-   * **在组件 Input 失去焦点时触发**
-   * @type `({ value }) => void` | `undefined`
-   * @default `undefined`
-   * @description 当设置该值时，会使用该值作为回调函数
-   * */
-  onBlur?: ({ value }) => void;
 };
 
-export interface DatePickerShortcut {
-  text: string;
-  value: Date[] | (() => Date[]);
-}
+/**
+ * **时间选择器事件类型**
+ * @description 时间选择器组件可触发的事件
+ * */
+export type ComponentEmits = {
+  /**
+   * **更新绑定值事件**
+   * @param `value` `Array<string> | string` 新的绑定值
+   * @returns `void`
+   * */
+  (e: "update:modelValue", value: Array<string> | string): void;
+
+  /**
+   * **值变更事件**
+   * @param `payload` `{ value: Array<string> | string; oldValue: Array<string> | string }` 变更数据
+   * @returns `void`
+   * */
+  (e: "change", payload: { value: Array<string> | string; oldValue: Array<string> | string }): void;
+
+  /**
+   * **远程搜索方法**
+   * @param `query` `string` 搜索关键词
+   * @returns `void`
+   * */
+  (e: "remoteMethod", query: string): void;
+};
