@@ -210,29 +210,33 @@ export type ComponentItemProps = {
 export type ComponentLabelProps = {
   /**
    * **插槽内容**
-   * @type `any`
+   * @type `any | undefined`
+   * @default `undefined`
    * @description 标签页标题的插槽内容
    * */
-  slots: any;
+  slots?: any | undefined;
 
   /**
    * **当前激活的标签页名称**
    * @type `string`
+   * @default `''`
    * @description 当前选中的标签页标识
    * */
-  activeName: string;
+  activeName?: string;
 
   /**
    * **标签页切换函数**
-   * @type `any`
+   * @type `any | undefined`
+   * @default `undefined`
    * @description 切换标签页时调用的回调函数
    * */
-  changeTabs: any;
+  changeTabs?: any | undefined;
 
   /**
    * **是否为纵向布局模式**
    * @type `boolean`
+   * @default `false`
    * @description 当为 `true` 时，标签页以纵向布局显示
    * */
-  portrait: boolean;
+  portrait?: boolean;
 };
