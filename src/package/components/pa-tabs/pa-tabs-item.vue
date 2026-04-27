@@ -51,7 +51,7 @@
  * @description 导入 Vue 组合式 API
  * */
 import { ref, onMounted, inject, provide, watch, computed, ComputedRef } from "vue";
-import { TabsItemProps } from "./types";
+import { ComponentItemProps } from "./types";
 import { PancakeGlobalConfigType } from "../pa-manager/type";
 
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
@@ -71,10 +71,10 @@ const initTitle: any = inject("initTitle");
 
 /**
  * **组件属性**
- * @type `TabsItemProps`
+ * @type `ComponentItemProps`
  * @description 组件的属性对象
  * */
-const props = withDefaults(defineProps<TabsItemProps>(), {
+const props = withDefaults(defineProps<ComponentItemProps>(), {
   label: "",
   name: "",
   scroll: false,

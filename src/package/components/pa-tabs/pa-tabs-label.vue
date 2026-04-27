@@ -8,16 +8,16 @@
  * @description 导入 Vue 组合式 API
  * */
 import { computed, ComputedRef, inject, Ref } from "vue";
-import { TabsItemTitleType } from "./types";
+import { ComponentLabelProps } from "./types";
 import { PancakeGlobalConfigType } from "../pa-manager/type";
 const tabsContext = inject("TabsContext") as Ref<{ mode: "default" | "portrait" | "slider" | "sticky"; tabsId: string }>;
 
 /**
  * **组件属性**
- * @type `TabsItemTitleType`
+ * @type `ComponentLabelProps`
  * @description 组件的属性对象
  * */
-const _props = defineProps<TabsItemTitleType>();
+const _props = defineProps<ComponentLabelProps>();
 
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 const languageValue = computed(() => {

@@ -1,9 +1,9 @@
 import { useBaseStore as GlobalStateType } from "./components/store/index";
-import { useBaseStore as TableBaseStoreType } from "./components/m-table/hooks/store";
+import { useBaseStore as TableBaseStoreType } from "./components/pa-table/hooks/store";
 
-import { GlobalState } from "./components/m-table/type";
+import { GlobalState } from "./components/pa-table/type";
 import toLocaleString from "./components/tools/toLocaleString";
-import { PancakeGlobalConfigType } from "./components/pa-content/type";
+import { PancakeGlobalConfigType } from "./components/pa-manager/type";
 
 // _Message global
 declare module "vue" {
@@ -38,6 +38,7 @@ declare global {
     jsPreviewExcel: any;
     jsPreviewDocx: any;
     jsPreviewPdf: any;
+    // eslint-disable-next-line spellcheck/spell-checker
     Pdfh5: any;
     wangEditor: any;
     MTableSortableData: {};

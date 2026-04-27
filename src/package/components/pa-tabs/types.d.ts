@@ -137,7 +137,7 @@ export type ComponentEmits = {
   (e: "tabChange", name: string, index: number): void;
 };
 
-export type TabsItemProps = {
+export type ComponentItemProps = {
   /**
    * **Tab 名称**
    * @type `LanguagePackageType` | `string` | `undefined`
@@ -207,7 +207,7 @@ export type TabsItemProps = {
  * **标签页标题类型**
  * @description 标签页标题组件的属性类型
  * */
-export type TabsItemTitleType = {
+export type ComponentLabelProps = {
   slots: any;
   activeName: string;
   changeTabs: any;

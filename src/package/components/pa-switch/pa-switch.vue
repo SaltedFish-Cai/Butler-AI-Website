@@ -157,7 +157,7 @@ function findData(data: boolean | number | string | undefined, opts: any): strin
   if (props.displayValue) {
     return props.displayValue || "--";
   }
-  return findDataSwitch(data, opts, languageValue.value);
+  return findDataSwitch(data || "", opts, languageValue.value);
 }
 
 /**
