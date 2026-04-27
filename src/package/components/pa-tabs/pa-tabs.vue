@@ -300,9 +300,7 @@ function createSlotData(Mandatory = false) {
             element.type.setup(
               {},
               {
-                expose: () => {
-                  //
-                }
+                expose: () => ({})
               }
             )
           );
