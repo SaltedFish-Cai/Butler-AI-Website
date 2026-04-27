@@ -51,7 +51,19 @@
  * @description 导入 Vue 组合式 API
  * */
 import { ref, onMounted, inject, provide, watch, computed, ComputedRef } from "vue";
+/**
+ * **模块导入**
+ * @description 导入组件属性类型定义
+ * */
 import { ComponentItemProps } from "./types";
+/**
+ * **模块导入**
+ * @description 导入全局配置类型定义
+/**
+ * **全局配置**
+ * @description 注入 Pancake 全局配置对象
+ * */
+ * */
 import { PancakeGlobalConfigType } from "../pa-manager/type";
 
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
