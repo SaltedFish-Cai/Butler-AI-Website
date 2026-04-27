@@ -1,30 +1,30 @@
 # pa-tabs 选项卡
 
-常用的选项卡组件，支持多种布局模式、样式风格和自定义插槽。
+选项卡组件，支持多种布局模式、样式风格和自定义插槽，适用于内容分类展示场景。
 
 ## 基础用法
 
 基础样式展示，组件提供 2 种样式风格，可以使用 `styleMode` 属性切换风格，使用 `padding` 控制内边距。
 
-<demo src="./base.vue" ></demo>
+<demo src="./base.vue"></demo>
 
 ## 横向用法
 
 使用 `portrait` 属性切换为横向布局。
 
-<demo src="./portrait.vue" ></demo>
+<demo src="./portrait.vue"></demo>
 
 ## 混合使用
 
 混合使用展示
 
-<demo src="./group.vue" ></demo>
+<demo src="./group.vue"></demo>
 
 ## 对齐方式展示
 
 对齐方式展示
 
-<demo src="./align.vue" ></demo>
+<demo src="./align.vue"></demo>
 
 ## 自定义标签
 
@@ -42,7 +42,7 @@
 </pa-tabs>
 ```
 
-<demo src="./slot.vue" ></demo>
+<demo src="./slot.vue"></demo>
 
 ## 滚动模式（锚点）
 
@@ -54,7 +54,7 @@
 </pa-tabs>
 ```
 
-<demo src="./slider.vue" ></demo>
+<demo src="./slider.vue"></demo>
 
 ## 内页是否可滚动
 
@@ -66,16 +66,16 @@
 </pa-tabs>
 ```
 
-<demo src="./scroll.vue" ></demo>
+<demo src="./scroll.vue"></demo>
 
 ## ComponentProps
 
 | 属性名        | 描述                 | 类型                                                    | 默认值      |
 | ------------- | -------------------- | ------------------------------------------------------- | ----------- |
-| id            | 组件唯一标识         | `string`                                                | `undefined` |
-| class         | 自定义类名           | `Array<string> \| string`                               | `undefined` |
-| style         | 自定义样式           | `Record<string, string>`                                | `undefined` |
-| modelValue    | 双向绑定值           | `string`                                                | `undefined` |
+| id            | 组件唯一标识         | `string`                                                | `-`         |
+| class         | 自定义类名           | `Array<string> \| string`                               | `-`         |
+| style         | 自定义样式           | `Record<string, string>`                                | `-`         |
+| modelValue    | 双向绑定值           | `string`                                                | `-`         |
 | visibleMode   | 隐藏 tabs 方式       | `'display' \| 'visible'`                                | `visible`   |
 | mode          | 布局模式             | `'default' \| 'portrait' \| 'slider' \| 'sticky'`      | `default`   |
 | styleMode     | 样式模式             | `'border-card' \| 'card' \| 'default'`                  | `default`   |
@@ -87,10 +87,10 @@
 
 | 属性名     | 描述             | 类型                            | 默认值      |
 | ---------- | ---------------- | ------------------------------- | ----------- |
-| label      | 标签页显示的名称 | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) | string | undefined | `undefined` |
-| name       | 标签页唯一标识   | `number | string`              | `undefined` |
+| label      | 标签页显示的名称 | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) | string | undefined | `-` |
+| name       | 标签页唯一标识   | `number | string`              | `-` |
 | scroll     | 是否开启滚动     | `boolean`                       | `true`      |
-| tips       | 提示信息         | `string`                        | `undefined` |
+| tips       | 提示信息         | `string`                        | `-` |
 | lazy       | 懒加载           | `boolean \| number`             | `1000`      |
 | padding    | 内边距方向       | `Array<TabsPadding>`            | `[]`        |
 | useScrollX | 是否使用水平滚动 | `boolean`                       | `false`     |
