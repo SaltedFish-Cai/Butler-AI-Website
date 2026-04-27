@@ -83,6 +83,16 @@ export type ComponentItemProps = {
 };
 
 /**
+ * **单选框子项事件类型**
+ * @description 单选框子项组件可触发的事件
+ * */
+export type ComponentItemEmits = {
+  "update:modelValue": (value: boolean | number | string | undefined) => void;
+
+  change: (payload: { value: boolean | number | string | undefined; oldValue: boolean | number | string | undefined }) => void;
+};
+
+/**
  * **单选框属性类型**
  * @description 单选框组件的属性定义
  * */
@@ -153,7 +163,7 @@ export type ComponentProps = {
 
   /**
    * **对比数据**
-   * @type `number | string` | `undefined`
+   * @type `number` | `string` | `undefined`
    * @default `undefined`
    * @description 当设置该值时，会使用该值作为对比数据
    * */
@@ -185,18 +195,15 @@ export type ComponentProps = {
 };
 
 /**
- * **组件事件类型**
- * @description 定义组件可触发的事件
+ * **单选框事件类型**
+ * @description 单选框组件可触发的事件
  * */
 export type ComponentEmits = {
-  (e: "update:modelValue", value: boolean | number | string): void;
+  "update:modelValue": (value: boolean | number | string) => void;
 
-  (
-    e: "change",
-    payload: {
-      value: boolean | number | string;
-      oldValue: boolean | number | string;
-      option: PaOptionType.Select;
-    }
-  ): void;
+  change: (payload: {
+    value: boolean | number | string;
+    oldValue: boolean | number | string;
+    option: PaOptionType.Select;
+  }) => void;
 };
