@@ -84,11 +84,11 @@ export type ComponentProps = {
 
   /**
    * **上传文件时附带数据**
-   * @type `object` | `undefined`
+   * @type `Record<string, any>` | `undefined`
    * @default `undefined`
    * @description 当设置该值时，会将该值作为请求参数发送到服务器
    * */
-  attachedData?: object;
+  attachedData?: Record<string, any>;
 
   /**
    * **表单项占位符**
@@ -243,5 +243,5 @@ export type ComponentEmits = {
    * @param `state` `"Working"` | `"Pending"` 当前状态
    * @returns `void`
    * */
-  (e: "changeState", state: "Working" | "Pending"): void;
+  (e: "changeState", state: "Pending" | "Working"): void;
 };

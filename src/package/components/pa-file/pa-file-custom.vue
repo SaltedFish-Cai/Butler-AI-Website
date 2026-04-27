@@ -1,5 +1,5 @@
 <template>
-  <div class="upload-container">
+  <div class="pa-file-custom">
     <slot name="reference">
       <div
         class="upload-area"
@@ -152,7 +152,7 @@ const inValue = ref<Array<FileDataType> | undefined>(props.modelValue);
  * @type `Array<FileDataType> | undefined`
  * @description 用于记录上一次的绑定值，支持变更事件回传
  * */
-let oldValue: Array<FileDataType> | undefined = props.modelValue;
+const oldValue: Array<FileDataType> | undefined = props.modelValue;
 
 /**
  * **上传加载状态**
@@ -440,7 +440,7 @@ function actionRequest(ajaxFileList: Array<UploadFileItem>): void {
     onError: () => {
       handleError();
     },
-    onSuccess: (response: { Code: Number; Data: FileDataType | Array<FileDataType>; Message?: string }) => {
+    onSuccess: (response: string | { Code: number; Data: Array<FileDataType> | FileDataType; Message?: string }) => {
       handleSuccess(response);
     }
   };
@@ -461,9 +461,9 @@ const handleRemove = (index: number): void => {
  * @param `response` `{ Code: Number; Data: FileDataType | Array<FileDataType>; Message?: string }` 服务器响应数据
  * @description 处理文件上传成功后的响应，更新组件内部值
  * */
-const handleSuccess = (response: { Code: Number; Data: FileDataType | Array<FileDataType>; Message?: string }): void => {
+const handleSuccess = (response: string | { Code: number; Data: Array<FileDataType> | FileDataType; Message?: string }): void => {
   if (!response) return;
-
+  if (typeof response === "string") return;
   const { Code, Data, Message } = response;
   if (Code == 200) {
     if (!inValue.value) {
@@ -474,7 +474,7 @@ const handleSuccess = (response: { Code: Number; Data: FileDataType | Array<File
         return {
           ...item,
           FileName: item?.OriginalName || item?.FileName,
-          FullPath: fileConfigData.value.apiBaseUrl + item.FileUrl
+          FullPath: (fileConfigData.value.apiBaseUrl || "") + item.FileUrl
         };
       });
       inValue.value.push(..._Data);
@@ -522,225 +522,6 @@ const handleError = (): void => {
 };
 </script>
 
-<style scoped lang="scss">
-/* 上传容器 */
-.upload-container {
-  position: relative;
-  width: 100%;
-}
-
-/* 上传区域 */
-.upload-area {
-  display: inline-flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 150px;
-  border: 1px dashed var(--pa-color-border);
-  border-radius: var(--pa-size-radius);
-  cursor: pointer;
-  background-color: var(--pa-color-send-bg);
-  transition: border-color 0.3s;
-  &:hover {
-    border-color: var(--pa-color-primary);
-  }
-}
-
-.upload-area-drag {
-  border-color: #409eff;
-  background-color: #f0f9ff;
-}
-
-/* 上传图标 */
-.upload-icon {
-  margin-bottom: 15px;
-  font-size: calc(var(--pa-size-font) + 35px);
-  color: var(--pa-color-send-font);
-}
-
-/* 上传文本 */
-.upload-text {
-  text-align: center;
-}
-
-.tips-box {
-  padding-top: var(--pa-size-padding);
-  font-size: var(--pa-size-font);
-  color: var(--pa-color-font);
-}
-
-.light-text {
-  color: var(--pa-color-primary);
-}
-
-.upload-title {
-  font-size: 14px;
-  color: #606266;
-  margin-bottom: 4px;
-}
-
-.upload-tip {
-  font-size: 12px;
-  color: #909399;
-  line-height: 1.5;
-}
-
-/* 文件输入 */
-.upload-input {
-  position: absolute;
-  width: 0;
-  height: 0;
-  opacity: 0;
-  cursor: pointer;
-}
-
-/* 文件列表 */
-.file-list {
-  display: flex;
-  flex-direction: column;
-
-  /* 文件项 */
-  .file-item {
-    display: flex;
-    align-items: center;
-    margin-top: var(--pa-size-padding, 10px);
-    padding: calc(var(--pa-size-padding, 10px) / 2) var(--pa-size-padding, 10px);
-    background-color: var(--pa-color-send-bg);
-    border: 1px solid var(--pa-color-border);
-    border-radius: var(--pa-size-radius);
-    font-size: var(--pa-size-font);
-
-    /* 文件信息 */
-    .file-info {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      overflow: hidden;
-      .file-name {
-        flex: 1;
-        color: var(--pa-color-font);
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-      }
-
-      .file-size {
-        margin-right: calc(var(--pa-size-padding, 10px) / 2);
-        color: var(--pa-color-send-font);
-        font-size: calc(var(--pa-size-font) - 2px);
-        flex-shrink: 0;
-      }
-    }
-
-    .file-icon {
-      margin-right: calc(var(--pa-size-padding, 10px) / 2);
-      transition: var(--pa-animation-time, 0.2s);
-      font-size: calc(var(--pa-size-font, 13px) + 2px);
-    }
-
-    .close-icon {
-      margin-right: 0;
-      margin-left: calc(var(--pa-size-padding, 10px) / 2);
-
-      &:hover {
-        color: var(--pa-color-danger);
-        cursor: pointer;
-      }
-    }
-
-    .loading-icon {
-      margin-right: 0;
-      animation: loadings 1s linear infinite;
-      animation-timing-function: linear;
-      animation-iteration-count: infinite;
-    }
-  }
-}
-
-@keyframes loadings {
-  from {
-    transform: rotate(0);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-/* 预览对话框 */
-.preview-modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 2000;
-}
-
-.preview-content {
-  background-color: white;
-  border-radius: 4px;
-  width: 90%;
-  max-width: 600px;
-  max-height: 80vh;
-  display: flex;
-  flex-direction: column;
-}
-
-.preview-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 16px;
-  border-bottom: 1px solid #ebeef5;
-}
-
-.preview-title {
-  font-size: 16px;
-  color: #303133;
-}
-
-.preview-close {
-  background: none;
-  border: none;
-  font-size: 20px;
-  color: #909399;
-  cursor: pointer;
-  padding: 0;
-  width: 24px;
-  height: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.preview-close:hover {
-  color: #606266;
-}
-
-.preview-body {
-  flex: 1;
-  padding: 16px;
-  overflow: auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.preview-image,
-.preview-video,
-.preview-audio {
-  max-width: 100%;
-  max-height: 100%;
-}
-
-.preview-unsupported {
-  color: #909399;
-  font-size: 14px;
-}
+<style lang="scss">
+@use "./index.scss";
 </style>

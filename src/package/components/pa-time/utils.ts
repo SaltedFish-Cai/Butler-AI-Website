@@ -8,7 +8,7 @@ import dayjs from "dayjs";
  * **模块导入**
  * @description 导入日期选择器类型定义
  * */
-import { MDatePickerType } from "./type";
+import { MDatePickerType } from "./types";
 
 /**
  * **判断日期格式是否合法**

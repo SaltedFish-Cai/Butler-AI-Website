@@ -18,7 +18,10 @@ const { isNil } = _;
  * @returns `string` 显示文本
  * @description 根据值从选项列表中查找对应的显示文本
  * */
-export function findData(data: Array<boolean | number | string> | boolean | number | string, options: PaOptionType.SelectList): string {
+export function findData(
+  data: Array<boolean | number | string> | boolean | number | string,
+  options: PaOptionType.SelectList
+): string {
   // SSR-safe: check if window exists
   const language: string =
     typeof window !== "undefined"

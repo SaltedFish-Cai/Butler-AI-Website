@@ -2,7 +2,7 @@
  * **模块导入**
  * @description 导入选项类型定义
  * */
-import { PaOptionType } from "../manager-type";
+import { LanguagePackageType, PaOptionType } from "../manager-type";
 
 /**
  * **查找显示数据函数**
@@ -19,8 +19,8 @@ export function findData(data: boolean | number | string, options: PaOptionType.
    * @description 合并默认配置和用户配置
    * */
   const baseOptions: {
-    activeText: string;
-    inActiveText: string;
+    activeText: LanguagePackageType | string;
+    inActiveText: LanguagePackageType | string;
     activeValue: boolean | number | string;
     inActiveValue: boolean | number | string;
   } = {
@@ -31,12 +31,12 @@ export function findData(data: boolean | number | string, options: PaOptionType.
   };
 
   let text: string = "";
-  const _options: Array<{ label: string; value: boolean | number | string }> = [
+  const _options: Array<{ label: LanguagePackageType | string; value: boolean | number | string }> = [
     { label: baseOptions.activeText, value: baseOptions.activeValue },
     { label: baseOptions.inActiveText, value: baseOptions.inActiveValue }
   ];
   for (let index: number = 0; index < _options.length; index++) {
-    const option: { label: string; value: boolean | number | string } = _options[index];
+    const option: { label: LanguagePackageType | string; value: boolean | number | string } = _options[index];
     if (option.value == data) {
       text += option.label;
     }

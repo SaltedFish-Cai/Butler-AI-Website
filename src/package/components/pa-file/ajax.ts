@@ -3,6 +3,7 @@
  * @description lodash 工具库导入
  * */
 import _ from "lodash";
+import { FileDataType } from "./types";
 
 /**
  * **模块导入**
@@ -120,9 +121,9 @@ interface AjaxUploadOptions {
   data?: Record<string, unknown>;
   onProgress?: (event: ProgressEvent & { percent: number }) => void;
   onError?: (error: UploadAjaxError) => void;
-  onSuccess?: (response: unknown) => void;
+  onSuccess?: (response: string | { Code: number; Data: Array<FileDataType> | FileDataType; Message?: string }) => void;
   withCredentials?: boolean;
-  headers?: Record<string, unknown> | Headers;
+  headers?: Headers | Record<string, unknown>;
 }
 
 export const ajaxUpload = (option: AjaxUploadOptions): XMLHttpRequest | undefined => {
@@ -144,8 +145,11 @@ export const ajaxUpload = (option: AjaxUploadOptions): XMLHttpRequest | undefine
   const formData: FormData = new FormData();
   if (option.data) {
     for (const [key, value] of Object.entries(option.data)) {
-      if (Array.isArray(value) && value.length) formData.append(key, ...(value as Array<string>));
-      else formData.append(key, String(value));
+      if (Array.isArray(value) && value.length) {
+        value.forEach(item => {
+          formData.append(key, String(item));
+        });
+      } else formData.append(key, String(value));
     }
   }
   for (let index = 0; index < (option.ajaxFileList?.length ?? 0); index++) {

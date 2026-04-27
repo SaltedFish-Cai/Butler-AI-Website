@@ -199,7 +199,7 @@ const loading = ref<boolean>(false);
  * @type `Array<{ name: string; size: number }>`
  * @description 缓存待上传的文件信息
  * */
-const uploadFilesList: Array<{ name: string; size: number }> = [];
+const uploadFilesList: Array<File> = [];
 
 /**
  * **Ajax 请求文件列表**
@@ -315,9 +315,9 @@ const requestHeader = computed(() => {
  * @param `response` `{ Code: Number; Data: FileDataType | Array<FileDataType>; Message?: string }` 服务器响应数据
  * @description 处理文件上传成功后的响应，更新组件内部值
  * */
-const handleSuccess = (response: { Code: Number; Data: FileDataType | Array<FileDataType>; Message?: string }): void => {
+const handleSuccess = (response: string | { Code: Number; Data: Array<FileDataType> | FileDataType; Message?: string }): void => {
   if (!response) return;
-
+  if (typeof response === "string") return;
   const { Code, Data, Message } = response;
   if (Code == 200) {
     if (!inValue.value) {
@@ -328,7 +328,7 @@ const handleSuccess = (response: { Code: Number; Data: FileDataType | Array<File
         return {
           ...item,
           FileName: item?.OriginalName || item?.FileName,
-          FullPath: fileConfigData.value.apiBaseUrl + item.FileUrl
+          FullPath: (fileConfigData.value.apiBaseUrl || "") + item.FileUrl
         };
       });
       inValue.value.push(..._Data);
@@ -376,7 +376,7 @@ const handleFileChange = (event: Event): void => {
   if (loading.value) return;
   uploadFilesList.push(...files);
   fetchUpload();
-  event.target.value = "";
+  (event.target as HTMLInputElement).value = "";
 };
 
 /**
@@ -474,7 +474,7 @@ function actionRequest(ajaxFileList: Array<{ filename: string; file: File }>): v
     onError: () => {
       handleError();
     },
-    onSuccess: (response: { Code: Number; Data: FileDataType | Array<FileDataType>; Message?: string }) => {
+    onSuccess: (response: string | { Code: Number; Data: Array<FileDataType> | FileDataType; Message?: string }) => {
       handleSuccess(response);
     }
   };
@@ -527,8 +527,8 @@ function eq(data: Array<FileDataType> | undefined, contrastData: Array<FileDataT
   const compareKey = PancakeGlobalConfig.value?.file_config?.compareKey || "FileId";
 
   return !isEqual(
-    data?.map?.(item => item[compareKey])?.sort((a, b) => String(a).replace(/\D/g, "") - String(b).replace(/\D/g, "")),
-    _contrastData?.map?.(item => item[compareKey])?.sort((a, b) => String(a).replace(/\D/g, "") - String(b).replace(/\D/g, ""))
+    data?.map?.(item => item[compareKey])?.sort((a, b) => +String(a).replace(/\D/g, "") - +String(b).replace(/\D/g, "")),
+    _contrastData?.map?.(item => item[compareKey])?.sort((a, b) => +String(a).replace(/\D/g, "") - +String(b).replace(/\D/g, ""))
   );
 }
 

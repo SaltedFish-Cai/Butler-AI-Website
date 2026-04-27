@@ -135,6 +135,7 @@ module.exports = {
           "visibilitychange",
           "Braun",
           "Berun",
+          "dayjs",
           "apng",
           "minmax",
           "resize",
