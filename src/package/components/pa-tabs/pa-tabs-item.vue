@@ -22,7 +22,6 @@
           'padding-right': padding?.includes('right') || padding?.includes('all')
         }"
       >
-        <!-- silder模式下显示标题 -->
         <div
           v-if="tabsContext.mode === 'slider'"
           ref="tabItemLine"
@@ -59,9 +58,6 @@ import { ComponentItemProps } from "./types";
 /**
  * **模块导入**
  * @description 导入全局配置类型定义
-/**
- * **全局配置**
- * @description 注入 Pancake 全局配置对象
  * */
 import { PancakeGlobalConfigType } from "../pa-manager/type";
 
@@ -165,24 +161,21 @@ defineExpose({
  * **监听 name 变化**
  * @description 标签名变化时重新初始化标题数据
  * */
-/**
- * **监听 name 变化**
- * @description 标签名变化时重新初始化标题数据
- * */
 watch(
   () => props.name,
-  () => {
+  (newValue: string, oldValue: string) => {
     initTitle();
   },
   { immediate: true }
 );
+
 /**
- * **监听 name 变化**
- * @description 标签名变化时重新初始化标题数据
+ * **监听 label 变化**
+ * @description 标签内容变化时重新初始化标题数据
  * */
 watch(
   () => props.label,
-  () => {
+  (newValue: string, oldValue: string) => {
     initTitle();
   },
   { immediate: true }
