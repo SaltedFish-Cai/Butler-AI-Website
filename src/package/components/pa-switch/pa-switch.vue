@@ -35,19 +35,17 @@
     </div>
     <div class="pa-display-value_content">
       <slot name="exDisplay"></slot>
-      <template v-if="$slots.exDisplay"> ( {{ findData(inValue, options) || "--" }} )
-      </template>
+      <template v-if="$slots.exDisplay"> ( {{ findData(inValue, options) || "--" }} ) </template>
       <template v-else>{{ findData(inValue, options) || "--" }}</template>
     </div>
   </div>
-  
+
   <div
     v-if="(alwaysContrast && !isNil(contrastData)) || (!isNil(contrastData) && !isEqual(inValue, contrastData))"
     :class="['pa-contrast-style']"
   >
     <slot name="exContrast"></slot>
-    <template v-if="$slots.exContrast"> ( {{ findData(contrastData, options) || "--" }} )
-    </template>
+    <template v-if="$slots.exContrast"> ( {{ findData(contrastData, options) || "--" }} ) </template>
     <template v-else>{{ findData(contrastData, options) || "--" }}</template>
   </div>
 </template>
@@ -64,6 +62,12 @@ import { computed, ComputedRef, inject, ref, Ref, watch } from "vue";
  * @description 导入组件类型定义
  * */
 import { ComponentProps, ComponentEmits } from "./types";
+
+/**
+ * **模块导入**
+ * @description 导入选项类型定义
+ * */
+import { PaOptionType } from "../manager-type";
 
 /**
  * **模块导入**
@@ -124,10 +128,10 @@ const emits = defineEmits<ComponentEmits>();
 
 /**
  * **旧值存储**
- * @type `boolean | number | string | undefined`
+ * @type `boolean | number | string`
  * @description 存储上一次的值，用于对比
  * */
-let oldValue = props.modelValue;
+let oldValue: boolean | number | string = props.modelValue || "";
 
 /**
  * **处理点击事件**
@@ -136,7 +140,7 @@ let oldValue = props.modelValue;
  * */
 function changeEvent(): void {
   if (props.disabled || props.display) return;
-  const value = inValue.value == options.value.activeValue ? options.value.inActiveValue : options.value.activeValue;
+  const value = inValue.value == options.value.activeValue ? options.value.inActiveValue || "" : options.value.activeValue || "";
   emits("update:modelValue", value);
   emits("change", { value, oldValue });
   oldValue = value;
@@ -163,7 +167,7 @@ function findData(data: boolean | number | string | undefined, opts: any): strin
  * @returns `object` 转换后的选项
  * @description 根据值的类型转换 activeValue 和 inActiveValue
  * */
-function changeType(type: string, opts: any): object {
+function changeType(type: string, opts: any): PaOptionType.Switch {
   if (type == "string") {
     return {
       activeValue: String(opts.activeValue),
@@ -227,8 +231,8 @@ watch(
   () => props.modelValue,
   data => {
     inValue.value = !isNil(data) ? data : options.value.inActiveValue;
-    oldValue = !isNil(data) ? data : options.value.inActiveValue;
-    emits("update:modelValue", !isNil(data) ? data : options.value.inActiveValue);
+    oldValue = !isNil(data) ? data : options.value.inActiveValue || "";
+    emits("update:modelValue", !isNil(data) ? data : options.value.inActiveValue || "");
   },
   { immediate: true }
 );

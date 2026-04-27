@@ -84,8 +84,7 @@
     </div>
     <div class="pa-display-value_content">
       <slot name="exDisplay"></slot>
-      <template v-if="$slots.exDisplay"> ( {{ findData(inValue) || "--" }} )
-      </template>
+      <template v-if="$slots.exDisplay"> ( {{ findData(inValue) || "--" }} ) </template>
       <template v-else>{{ displayValue || findData(inValue) || "--" }}</template>
     </div>
   </div>
@@ -95,8 +94,7 @@
     :class="['pa-contrast-style']"
   >
     <slot name="exContrast"></slot>
-    <template v-if="$slots.exContrast"> ( {{ findData(contrastData) || "--" }} )
-    </template>
+    <template v-if="$slots.exContrast"> ( {{ findData(contrastData) || "--" }} ) </template>
     <template v-else>{{ findData(contrastData) || "--" }}</template>
   </div>
 </template>
@@ -276,7 +274,7 @@ const inValue = ref<Array<string> | string>(props.modelValue || []);
  * @type `Array<string> | string`
  * @description 存储上一次的值，用于对比
  * */
-let oldValue: Array<string> | string = props.modelValue;
+let oldValue: Array<string> | string = props.modelValue || "";
 
 /**
  * **处理输入事件**
@@ -285,7 +283,7 @@ let oldValue: Array<string> | string = props.modelValue;
  * @returns `void`
  * @description 处理输入框输入事件
  * */
-function handleInput({ target }: { target: HTMLInputElement }, panel?: "end" | "start"): void {
+function handleInput({ target }, panel?: "end" | "start"): void {
   const value = target.value;
 
   if (value && !isValidDate(value)) {
