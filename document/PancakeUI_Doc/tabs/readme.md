@@ -70,57 +70,57 @@
 
 ## ComponentProps
 
-| 属性名        | 描述                 | 类型                                                    | 默认值      |
-| ------------- | -------------------- | ------------------------------------------------------- | ----------- |
-| id            | 组件唯一标识         | `string`                                                | `-`         |
-| class         | 自定义类名           | `Array<string> \| string`                               | `-`         |
-| style         | 自定义样式           | `Record<string, string>`                                | `-`         |
-| modelValue    | 双向绑定值           | `string`                                                | `-`         |
-| visibleMode   | 隐藏 tabs 方式       | `'display' \| 'visible'`                                | `visible`   |
-| mode          | 布局模式             | `'default' \| 'portrait' \| 'slider' \| 'sticky'`      | `default`   |
-| styleMode     | 样式模式             | `'border-card' \| 'card' \| 'default'`                  | `default`   |
-| align         | 对齐方式             | `'default' \| 'edge'`                                   | `default`   |
-| useHeaderLine | 是否使用底线         | `boolean`                                               | `false`     |
-| useShadow     | 是否使用滚动阴影     | `boolean`                                               | `true`      |
+| 属性名        | 描述             | 类型                                            | 默认值    |
+| ------------- | ---------------- | ----------------------------------------------- | --------- |
+| id            | 组件唯一标识     | `string`                                        | -         |
+| class         | 自定义类名       | `Array<string>` `string`                        | -         |
+| style         | 自定义样式       | `Record<string, string>`                        | -         |
+| modelValue    | 双向绑定值       | `string`                                        | -         |
+| visibleMode   | 隐藏 tabs 方式   | [`ComponentVisibleMode`](#componentvisiblemode) | `visible` |
+| mode          | 布局模式         | [`ComponentMode`](#componentmode)               | `default` |
+| styleMode     | 样式模式         | [`ComponentStyleMode`](#componentstylemode)     | `default` |
+| align         | 对齐方式         | [`ComponentAlign`](#componentalign)             | `default` |
+| useHeaderLine | 是否使用底线     | `boolean`                                       | `false`   |
+| useShadow     | 是否使用滚动阴影 | `boolean`                                       | `true`    |
 
-## TabsItemProps
+## ComponentItemProps
 
-| 属性名     | 描述             | 类型                            | 默认值      |
-| ---------- | ---------------- | ------------------------------- | ----------- |
-| label      | 标签页显示的名称 | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) | string | undefined | `-` |
-| name       | 标签页唯一标识   | `number | string`              | `-` |
-| scroll     | 是否开启滚动     | `boolean`                       | `true`      |
-| tips       | 提示信息         | `string`                        | `-` |
-| lazy       | 懒加载           | `boolean \| number`             | `1000`      |
-| padding    | 内边距方向       | `Array<TabsPadding>`            | `[]`        |
-| useScrollX | 是否使用水平滚动 | `boolean`                       | `false`     |
-| useBorder  | 是否使用边框     | `boolean`                       | `false`     |
+| 属性名     | 描述             | 类型                                                                         | 默认值  |
+| ---------- | ---------------- | ---------------------------------------------------------------------------- | ------- |
+| label      | 标签页显示的名称 | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) | -       |
+| name       | 标签页唯一标识   | `number`                                                                     | -       |
+| scroll     | 是否开启滚动     | `boolean`                                                                    | `true`  |
+| tips       | 提示信息         | `string`                                                                     | -       |
+| lazy       | 懒加载           | `boolean` `number`                                                           | `1000`  |
+| padding    | 内边距方向       | [`Array<ComponentPadding>`](#componentpadding)                               | -       |
+| useScrollX | 是否使用水平滚动 | `boolean`                                                                    | `false` |
+| useBorder  | 是否使用边框     | `boolean`                                                                    | `false` |
 
 ## ComponentEmits
 
-| 事件名              | 描述             | 回调函数                                      |
-| ------------------- | ---------------- | --------------------------------------------- |
-| update:modelValue   | 更新绑定值事件   | `(value: string) => void`                     |
-| tabChange           | 标签页切换事件   | `(name: string, index: number) => void`       |
+| 事件名            | 描述           | 回调函数                                |
+| ----------------- | -------------- | --------------------------------------- |
+| update:modelValue | 更新绑定值事件 | `(value: string) => void`               |
+| tabChange         | 标签页切换事件 | `(name: string, index: number) => void` |
 
 ## ComponentSlots（pa-tabs）
 
-| 插槽名      | 作用           |
-| ----------- | -------------- |
-| default     | 默认内容插槽   |
-| HeaderLeft  | 头部左侧插槽   |
-| HeaderRight | 头部右侧插槽   |
-| afterLabel  | 标签后插槽     |
-| footer      | 底部插槽       |
+| 插槽名      | 作用         |
+| ----------- | ------------ |
+| default     | 默认内容插槽 |
+| HeaderLeft  | 头部左侧插槽 |
+| HeaderRight | 头部右侧插槽 |
+| afterLabel  | 标签后插槽   |
+| footer      | 底部插槽     |
 
 ## ComponentSlots（pa-tabs-item）
 
-| 插槽名  | 作用           |
-| ------- | -------------- |
-| default | 默认内容插槽   |
-| before  | 内容前插槽     |
-| tips    | 提示信息插槽   |
-| footer  | 底部插槽       |
+| 插槽名  | 作用         |
+| ------- | ------------ |
+| default | 默认内容插槽 |
+| before  | 内容前插槽   |
+| tips    | 提示信息插槽 |
+| footer  | 底部插槽     |
 
 ## 非标准类型说明
 
@@ -128,49 +128,49 @@
 
 tabs 布局模式。
 
-| 类型值 | 说明 |
-| ------ | ---- |
-| `default` | 默认布局模式 |
+| 类型值     | 说明         |
+| ---------- | ------------ |
+| `default`  | 默认布局模式 |
 | `portrait` | 竖屏布局模式 |
-| `slider` | 滚动布局模式 |
-| `sticky` | 粘性布局模式 |
+| `slider`   | 滚动布局模式 |
+| `sticky`   | 粘性布局模式 |
 
 ### ComponentTabsStyleMode
 
 tabs 样式模式。
 
-| 类型值 | 说明 |
-| ------ | ---- |
-| `default` | 默认样式 |
-| `card` | 卡片样式 |
+| 类型值        | 说明         |
+| ------------- | ------------ |
+| `default`     | 默认样式     |
+| `card`        | 卡片样式     |
 | `border-card` | 边框卡片样式 |
 
 ### ComponentTabsAlign
 
 tabs 对齐方式。
 
-| 类型值 | 说明 |
-| ------ | ---- |
+| 类型值    | 说明     |
+| --------- | -------- |
 | `default` | 默认对齐 |
-| `edge` | 边缘对齐 |
+| `edge`    | 边缘对齐 |
 
 ### ComponentVisibleMode
 
 组件隐藏方式。
 
-| 类型值 | 说明 |
-| ------ | ---- |
-| `display` | 使用 display 隐藏 |
+| 类型值    | 说明                 |
+| --------- | -------------------- |
+| `display` | 使用 display 隐藏    |
 | `visible` | 使用 visibility 隐藏 |
 
 ### ComponentPadding
 
 组件内边距方向。
 
-| 类型值 | 说明 |
-| ------ | ---- |
-| `all` | 全部方向 |
-| `top` | 顶部 |
-| `bottom` | 底部 |
-| `left` | 左侧 |
-| `right` | 右侧 |
+| 类型值   | 说明     |
+| -------- | -------- |
+| `all`    | 全部方向 |
+| `top`    | 顶部     |
+| `bottom` | 底部     |
+| `left`   | 左侧     |
+| `right`  | 右侧     |
