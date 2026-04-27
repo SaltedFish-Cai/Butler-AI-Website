@@ -297,7 +297,14 @@ function createSlotData(Mandatory = false) {
             { ...element.ctx, $t: window.$t },
             {},
             {},
-            element.type.setup({}, { expose: () => {} })
+            element.type.setup(
+              {},
+              {
+                expose: () => {
+                  //
+                }
+              }
+            )
           );
           arr.push(component);
         }

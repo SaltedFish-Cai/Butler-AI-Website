@@ -130,7 +130,9 @@ module.exports = {
         skipWords: [
           "nanoid",
           "wechatcmsapi",
+          "dataset",
           "Wechat",
+          "subtree",
           "WechatTag",
           "visibilitychange",
           "Braun",

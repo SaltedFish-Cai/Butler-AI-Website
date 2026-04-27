@@ -78,6 +78,8 @@ declare global {
     passport: string;
 
     managerPageScale: number;
+
+    $t: (key: string) => string;
   }
   interface log {
     info: (title: string, message?: any) => any;
