@@ -49,7 +49,7 @@
 | 文档       | 示例文件可运行 无语法错误                                                                                                                               |
 | 文档       | 文档根据 ComponentProps 参数创建更多示例                                                                                                                |
 | 文档       | 文档属性标题必须和 types.d.ts 中定义一致 如 types.d.ts 用 ComponentItemProps，文档不能用 TabsItemProps                                                  |
-| 文档       | 文档中类型必须和 type.d.ts 中定义一致                                                                                                                   |
+| 文档       | 文档中所有类型、属性、参数、默认值必须与 types.d.ts 一致，以 types.d.ts 为准                                                                                                                   |
 | 文档       | 标准类型必须包裹在``中，如`string`、`number` 等                                                                                                         |
 | 文档       | 非标准类型使用链接指向说明 如 [`ComponentMode`](#componentmode)，文档最下方用 2 列表格（类型值、说明）说明                                              |
 | 文档       | 文档中默认值必须和 type.d.ts 中定义一致                                                                                                                 |
