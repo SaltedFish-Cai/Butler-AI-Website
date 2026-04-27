@@ -1,5 +1,5 @@
 <template>
-  <pa-file-custom v-model="fileList" :fileIncludeType="['png', 'jpeg', 'pdf']" />
+  <pa-file-custom v-model="fileList" :fileIncludeType="['jpeg', 'pdf']" :fileExcludeType="['png']" />
 </template>
 
 <script lang="ts" setup>

@@ -27,22 +27,24 @@
     </slot>
 
     <div class="tips-box" v-if="!display && (accept || excludeType || fileSingleSize || fileAllSize)">
-      <span v-if="accept">
-        {{ languagePackage["canUploaded"] }} <span class="light-text">{{ acceptText }}</span>
+      <span v-if="accept" class="light-text_box">
+        {{ languagePackage["canUploaded"] }}
+        <span class="light-text_block" v-for="item in acceptText" :key="item">{{ item }}</span>
         {{ languagePackage["typeFile"] }}
       </span>
 
-      <span v-if="excludeType">
-        {{ languagePackage["noCanUploaded"] }} <span class="light-text">{{ excludeText }}</span>
+      <span v-if="excludeType" class="light-text_box">
+        {{ languagePackage["noCanUploaded"] }}
+        <span class="light-text_block" v-for="item in excludeText" :key="item">{{ item }}</span>
         {{ languagePackage["typeFile"] }}
       </span>
 
-      <span v-if="fileSingleSize">
+      <span v-if="fileSingleSize" class="light-text_box">
         {{ languagePackage["singleMax"] }}
         <span class="light-text">{{ fileSingleSize ? (fileSingleSize / 1024).toFixed(2) : 1 }}M</span>
       </span>
 
-      <span v-if="fileAllSize">
+      <span v-if="fileAllSize" class="light-text_box">
         {{ languagePackage["singleMaxAll"] }}
         <span class="light-text">{{ fileAllSize ? (fileAllSize / 1024).toFixed(2) : 1 }}M</span>
       </span>
@@ -234,14 +236,14 @@ const accept = computed(() => {
 
 /**
  * **允许的文件类型文本**
- * @type `ComputedRef<string>`
+ * @type `ComputedRef<Array<string>>`
  * @description 返回允许上传的文件类型的显示文本
  */
 const acceptText = computed(() => {
-  let accept: string | undefined = undefined;
+  let accept: Array<string> | undefined = undefined;
   const { fileIncludeType, fileIncludeText } = props;
-  if (fileIncludeType && Array.isArray(fileIncludeType)) accept = (fileIncludeText || fileIncludeType).join(", ");
-  return accept?.toLowerCase() || "";
+  if (fileIncludeType && Array.isArray(fileIncludeType)) accept = fileIncludeText || fileIncludeType;
+  return accept || [];
 });
 
 /**
@@ -262,10 +264,10 @@ const excludeType = computed(() => {
  * @description 返回不允许上传的文件类型的显示文本
  */
 const excludeText = computed(() => {
-  let exType: string | undefined = undefined;
+  let exType: Array<string> | undefined = undefined;
   const { fileExcludeType, fileExcludeText } = props;
-  if (fileExcludeType && Array.isArray(fileExcludeType)) exType = (fileExcludeText || fileExcludeType).join(", ");
-  return exType?.toLowerCase() || "";
+  if (fileExcludeType && Array.isArray(fileExcludeType)) exType = fileExcludeText || fileExcludeType;
+  return exType || [];
 });
 
 /**

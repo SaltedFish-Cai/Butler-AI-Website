@@ -53,24 +53,24 @@
     </div>
 
     <div class="tips-box" v-if="!display && (accept || excludeType || fileSingleSize || fileAllSize)">
-      <span v-if="accept">
-        {{ languagePackage["canUploaded"] }} <span class="light-text">{{ accept }}</span
+      <span v-if="accept" class="light-text_box">
+        {{ languagePackage["canUploaded"] }} <span class="light-text_block">{{ accept }}</span
         >{{ languagePackage["typeFile"] }}
       </span>
 
-      <span v-if="excludeType">
-        {{ languagePackage["noCanUploaded"] }} <span class="light-text">{{ excludeType }}</span>
+      <span v-if="excludeType" class="light-text_box">
+        {{ languagePackage["noCanUploaded"] }} <span class="light-text_block">{{ excludeType }}</span>
         {{ languagePackage["typeFile"] }}
       </span>
 
-      <span v-if="fileSingleSize">
+      <span v-if="fileSingleSize" class="light-text_box">
         {{ languagePackage["singleMax"] }}
-        <span class="light-text">{{ fileSingleSize ? (fileSingleSize / 1024).toFixed(2) : 1 }}M</span>
+        <span class="light-text_block">{{ fileSingleSize ? (fileSingleSize / 1024).toFixed(2) : 1 }}M</span>
       </span>
 
-      <span v-if="fileAllSize">
+      <span v-if="fileAllSize" class="light-text_box">
         {{ languagePackage["singleMaxAll"] }}
-        <span class="light-text">{{ fileAllSize ? (fileAllSize / 1024).toFixed(2) : 1 }}M</span>
+        <span class="light-text_block">{{ fileAllSize ? (fileAllSize / 1024).toFixed(2) : 1 }}M</span>
       </span>
     </div>
 
