@@ -8,7 +8,15 @@
  * @description 导入 Vue 组合式 API
  * */
 import { computed, ComputedRef, inject, Ref } from "vue";
+/**
+ * **模块导入**
+ * @description 导入标签属性类型定义
+ * */
 import { ComponentLabelProps } from "./types";
+/**
+ * **模块导入**
+ * @description 导入全局配置类型定义
+ * */
 import { PancakeGlobalConfigType } from "../pa-manager/type";
 const tabsContext = inject("TabsContext") as Ref<{ mode: "default" | "portrait" | "slider" | "sticky"; tabsId: string }>;
 
