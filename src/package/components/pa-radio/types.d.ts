@@ -1,5 +1,13 @@
+/**
+ * **模块导入**
+ * @description 导入选项类型和多语言类型定义
+ * */
 import { PaOptionType, LanguagePackageType } from "../manager-type";
 
+/**
+ * **单选框子项属性类型**
+ * @description 单选框子项组件的属性定义
+ * */
 export type ComponentItemProps = {
   /**
    * **组件唯一标识**
@@ -11,11 +19,11 @@ export type ComponentItemProps = {
 
   /**
    * **自定义类名**
-   * @type `string` | `undefined`
+   * @type `Array<string>` | `string` | `undefined`
    * @default `undefined`
    * @description 当设置该值时，会添加到组件的类名中
    * */
-  class?: string;
+  class?: Array<string> | string;
 
   /**
    * **自定义样式**
@@ -29,8 +37,7 @@ export type ComponentItemProps = {
    * **双向绑定值**
    * @type `boolean` | `number` | `string` | `undefined`
    * @default `undefined`
-   * @description 当设置该值时，会绑定该值
-   * @description 当前属性只有作为 `独立组件` 时才会生效
+   * @description 当前属性只有作为独立组件时才会生效
    * */
   modelValue?: boolean | number | string;
 
@@ -65,16 +72,12 @@ export type ComponentItemProps = {
    * @description 当设置该值为 `true` 时，会禁用该组件
    * */
   disabled?: boolean;
-
-  /**
-   * **当数据发生变更时触发**
-   * @type `({ value, oldValue, option }) => void` | `undefined`
-   * @default `undefined`
-   * @description 当设置该值时，会使用该值作为回调函数
-   * */
-  onChange?: ({ value, oldValue, option }) => void;
 };
 
+/**
+ * **单选框属性类型**
+ * @description 单选框组件的属性定义
+ * */
 export type ComponentProps = {
   /**
    * **组件唯一标识**
@@ -86,11 +89,11 @@ export type ComponentProps = {
 
   /**
    * **自定义类名**
-   * @type `string` | `undefined`
+   * @type `Array<string>` | `string` | `undefined`
    * @default `undefined`
    * @description 当设置该值时，会添加到组件的类名中
    * */
-  class?: string;
+  class?: Array<string> | string;
 
   /**
    * **自定义样式**
@@ -105,7 +108,6 @@ export type ComponentProps = {
    * @type `boolean` | `number` | `string` | `undefined`
    * @default `undefined`
    * @description 当设置该值时，会绑定该值
-   * @description 当前属性只有作为 `独立组件` 时才会生效
    * */
   modelValue?: boolean | number | string;
 
@@ -134,7 +136,7 @@ export type ComponentProps = {
   display?: boolean;
 
   /**
-   * **纯展示类型下，直接显示值**
+   * **纯展示值**
    * @type `string` | `undefined`
    * @default `undefined`
    * @description 当设置该值时，会直接显示该值
@@ -172,12 +174,21 @@ export type ComponentProps = {
    * @description 当设置该值时，会作为表单项标签宽度
    * */
   titleWidth?: string;
+};
 
-  /**
-   * **当数据发生变更时触发**
-   * @type `({ value, oldValue, option }) => void` | `undefined`
-   * @default `undefined`
-   * @description 当设置该值时，会使用该值作为回调函数
-   * */
-  onChange?: ({ value, oldValue, option }) => void;
+/**
+ * **组件事件类型**
+ * @description 定义组件可触发的事件
+ * */
+export type ComponentEmits = {
+  (e: "update:modelValue", value: boolean | number | string): void;
+
+  (
+    e: "change",
+    payload: {
+      value: boolean | number | string;
+      oldValue: boolean | number | string;
+      option: PaOptionType.Select;
+    }
+  ): void;
 };
