@@ -1,31 +1,88 @@
 # Time 时间
 
-常用与选择时间相关的场景。
+常用于选择时间相关的场景。
 
 :::warning 注意
 `pa-time` 可独立使用，在 `pa-form/pa-table` 中可使用时，需配置 `prop` 字段。
 :::
 
-## 组件功能展示
+## 日期选择器功能展示
 
-<demo src="./base.vue" ></demo>
+<demo src="./base.vue"></demo>
 
-## `SaTimeType`
+## 时间选择器功能展示
 
-| 字段           | 描述                 | 类型                                                                                                                                                                                  | 默认值        |
-| -------------- | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- |
-| modelValue     | 表单组件值           | `Array<string>` `string`                                                                                                                                                              | —             |
-| type           | 表单组件类型         | `date-picker-group` `date-picker` `date-time-picker-group` `date-time-picker` `month-picker-group` `month-picker` `time-picker-group` `time-picker` `year-picker-group` `year-picker` | `date-picker` |
-| placeholder    | 输入框提示           | `Record<"en-US" \| "zh-CN", string>` `string`                                                                                                                                         | —             |
-| disabled       | 禁用状态             | `boolean`                                                                                                                                                                             | `false`       |
-| display        | 纯展示               | `boolean`                                                                                                                                                                             | `false`       |
-| disabledDateFn | 禁用日期函数         | `(date: any) => boolean`                                                                                                                                                              | `undefined`   |
-| shortcuts      | 快捷选择             | `{ text: string; value: Date[]  \| (() => Date[]) }`                                                                                                                                  | —             |
-| contrastData   | 对比用原数据         | `Array<string>` `string`                                                                                                                                                              | —             |
-| alwaysContrast | 是否总是显示对不数据 | `boolean`                                                                                                                                                                             | `false`       |
+<demo src="./time.vue"></demo>
 
-## `SaTimeEvents`
+## 月份选择器功能展示
 
-| 字段   | 描述           | 类型       |
-| ------ | -------------- | ---------- |
-| change | 当值改变时触发 | `function` |
+<demo src="./month.vue"></demo>
+
+## 年份选择器功能展示
+
+<demo src="./year.vue"></demo>
+
+## Display 纯展示模式
+
+展示单层纯展示模式，使用 `display` 属性开启纯展示模式，如果使用 `displayValue` 属性，将直接显示值。
+
+<demo src="./display.vue"></demo>
+
+## ComponentProps
+
+| 属性名              | 描述                     | 类型                                                                                     | 默认值          |
+| ------------------- | ------------------------ | ---------------------------------------------------------------------------------------- | --------------- |
+| id                  | 组件唯一标识             | `string`                                                                                 | -               |
+| class               | 自定义类名               | `Array<string>` \| `string`                                                              | -               |
+| style               | 自定义样式               | `Record<string, string>`                                                                 | -               |
+| modelValue          | 双向绑定值               | `Array<string>` \| `string`                                                              | -               |
+| displayValue        | 纯展示类型下，直接显示值 | `string`                                                                                 | -               |
+| type                | Time 类型                | [`DatePickerType`](#datepickertype)                                                      | `'date-picker'` |
+| placeholder         | 表单项占位符             | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) \| `string` | -               |
+| disabled            | 是否禁用                 | `boolean`                                                                                | -               |
+| display             | 纯展示模式               | `boolean`                                                                                | -               |
+| teleportInContainer | 是否将弹出层挂载到容器中 | `boolean`                                                                                | -               |
+| disabledDateFn      | 禁用日期判断方法         | `(date: any) => boolean`                                                                 | -               |
+| shortcuts           | 快捷选项                 | [`Array<DatePickerShortcut>`](#datepickershortcut)                                       | -               |
+| contrastData        | 对比数据                 | `Array<string>` \| `string`                                                              | -               |
+| alwaysContrast      | 是否显示对比数据         | `boolean`                                                                                | -               |
+| title               | 表单项标签               | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) \| `string` | -               |
+| titleWidth          | 表单项标签宽度           | `string`                                                                                 | -               |
+
+## DatePickerType
+
+| 字段                       | 描述             |
+| -------------------------- | ---------------- |
+| `'date-picker'`            | 日期选择器       |
+| `'date-picker-group'`      | 日期选择器组     |
+| `'date-time-picker'`       | 日期时间选择器   |
+| `'date-time-picker-group'` | 日期时间选择器组 |
+| `'month-picker-group'`     | 月份选择器组     |
+| `'month-picker'`           | 月份选择器       |
+| `'time-picker-group'`      | 时间选择器组     |
+| `'time-picker'`            | 时间选择器       |
+| `'year-picker-group'`      | 年份选择器组     |
+| `'year-picker'`            | 年份选择器       |
+
+## DatePickerShortcut
+
+| 字段  | 描述         | 类型                         |
+| ----- | ------------ | ---------------------------- |
+| text  | 快捷选项文本 | `string`                     |
+| value | 快捷选项值   | `Date[]` \| `(() => Date[])` |
+
+## ComponentEmits
+
+| 事件名            | 描述                        | 回调函数                                                                                |
+| ----------------- | --------------------------- | --------------------------------------------------------------------------------------- |
+| update:modelValue | 双向绑定值更新时            | `(value: Array<string> \| string) => void`                                              |
+| change            | 数据变更回调函数            | `(data: { value: Array<string> \| string; oldValue: Array<string> \| string }) => void` |
+| focus             | 在组件 Input 获得焦点时触发 | `({ value }) => void`                                                                   |
+| blur              | 在组件 Input 失去焦点时触发 | `({ value }) => void`                                                                   |
+
+## ComponentSlots
+
+| 插槽名称   | 作用                       |
+| ---------- | -------------------------- |
+| exDisplay  | 纯展示模式下自定义展示内容 |
+| exContrast | 对比数据自定义展示内容     |

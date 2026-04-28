@@ -12,9 +12,7 @@ import { MFileType } from "../m-file/type";
 import { MNumberType } from "../m-number/type";
 import { MInputType } from "../m-input/type";
 import { PaFormChildType } from "./type";
-import { PaOptionType } from "../manager-type";
-
-type languageKey = "en-US" | "zh-CN";
+import { PaOptionType, LanguagePackageType } from "../manager-type";
 
 export type CellItemType =
   | MElementAddressType
@@ -63,7 +61,7 @@ type GroupFromConfigType = PaFormChildType & {
    * @type `string`
    * @description 当设置该值为 `string` 时，会使用该值作为表单项标题
    * */
-  label?: Record<languageKey, string> | string;
+  label?: LanguagePackageType | string;
   value: boolean | number | string;
   childLabel?: string;
 };
@@ -78,7 +76,7 @@ export type GroupType = {
 export type TabsType = {
   type?: "tabs-form";
   titleKey?: string; // 分栏tab标题使用字段
-  titleLabel?: Record<languageKey, string> | string; // 多语言tab标题使用字段
+  titleLabel?: LanguagePackageType | string; // 多语言tab标题使用字段
   tabsFormConfig?: PaFormChildType[];
   disabled?: boolean;
   contrastKey?: string;

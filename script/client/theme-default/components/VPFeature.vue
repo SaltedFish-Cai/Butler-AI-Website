@@ -1,36 +1,24 @@
 <script setup lang="ts">
-import type { DefaultTheme } from 'vitepress/theme'
-import VPImage from './VPImage.vue'
-import VPLink from './VPLink.vue'
+import type { DefaultTheme } from "vitepress/theme";
+import VPImage from "./VPImage.vue";
+import VPLink from "./VPLink.vue";
 
 defineProps<{
-  icon?: DefaultTheme.FeatureIcon
-  title: string
-  details?: string
-  link?: string
-  linkText?: string
-  rel?: string
-  target?: string
-}>()
+  icon?: DefaultTheme.FeatureIcon;
+  title: string;
+  details?: string;
+  link?: string;
+  linkText?: string;
+  rel?: string;
+  target?: string;
+}>();
 </script>
 
 <template>
-  <VPLink
-    class="VPFeature"
-    :href="link"
-    :rel="rel"
-    :target="target"
-    :no-icon="true"
-    :tag="link ? 'a' : 'div'"
-  >
+  <VPLink class="VPFeature" :href="link" :rel="rel" :target="target" :no-icon="true" :tag="link ? 'a' : 'div'">
     <article class="box">
       <div v-if="typeof icon === 'object' && icon.wrap" class="icon">
-        <VPImage
-          :image="icon"
-          :alt="icon.alt"
-          :height="icon.height || 48"
-          :width="icon.width || 48"
-        />
+        <VPImage :image="icon" :alt="icon.alt" :height="icon.height || 48" :width="icon.width || 48" />
       </div>
       <VPImage
         v-else-if="typeof icon === 'object'"
@@ -44,9 +32,7 @@ defineProps<{
       <p v-if="details" class="details" v-html="details"></p>
 
       <div v-if="linkText" class="link-text">
-        <p class="link-text-value">
-          {{ linkText }} <span class="vpi-arrow-right link-text-icon" />
-        </p>
+        <p class="link-text-value">{{ linkText }} <span class="vpi-arrow-right link-text-icon" /></p>
       </div>
     </article>
   </VPLink>

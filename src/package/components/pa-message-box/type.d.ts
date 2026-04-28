@@ -1,20 +1,19 @@
 import type { ComponentPublicInstance } from "vue";
+import { LanguagePackageType } from "../manager-type";
 
 // 通知类型
 export type MessageBoxType = "danger" | "info" | "primary" | "success" | "warning";
-
-type languageKey = "en-US" | "zh-CN";
 
 // 通知配置接口
 export interface MessageBoxOptions {
   /**
    * 通知标题
    */
-  title?: Record<languageKey, string> | string;
+  title?: LanguagePackageType | string;
   /**
    * 通知消息
    */
-  message?: Record<languageKey, string> | string;
+  message?: LanguagePackageType | string;
   /**
    * 是否为确认框
    */
@@ -43,11 +42,11 @@ export interface MessageBoxOptions {
   /**
    * 确认按钮文本
    */
-  confirmButtonText?: Record<languageKey, string> | string;
+  confirmButtonText?: LanguagePackageType | string;
   /**
    * 取消按钮文本
    */
-  cancelButtonText?: Record<languageKey, string> | string;
+  cancelButtonText?: LanguagePackageType | string;
   /**
    * 取消按钮图标
    */

@@ -229,26 +229,26 @@ const tableConfig: MStructureV2Type.TableV2[] = [
 
 ## `MStructureV2Type.TableV2`
 
-| 字段       | 描述                     | 类型                                                                  | 类型    |
-| ---------- | ------------------------ | --------------------------------------------------------------------- | ------- |
-| label      | 表头展示                 | `Record<"en-US" \| "zh-CN", string>` `string`                         | —       |
-| prop       | 表头 prop 表 key 字段    | `string`                                                              | —       |
-| width      | 表列列宽                 | `string` `number`                                                     | —       |
-| isShow     | 是否显示在表格当中       | `boolean`                                                             | `true`  |
-| useSort    | 是否使用排序             | `boolean`                                                             | `true`  |
-| useFilter  | 是否使用筛选             | `boolean`                                                             | `true`  |
-| filterType | 筛选时使用类型           | `"input"` `"number"` `"select"` `"tag"` `"time"`                      | —       |
-| fixed      | 表列固定位置             | `"left"` `"right"`                                                    | —       |
-| unitText   | 单位文本                 | `string`                                                              | —       |
-| textWarp   | 单元格内文字折行依据     | `string`                                                              | —       |
+| 字段       | 描述                     | 类型                                                                   | 类型    |
+| ---------- | ------------------------ | ---------------------------------------------------------------------- | ------- |
+| label      | 表头展示                 | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) `string`                          | —       |
+| prop       | 表头 prop 表 key 字段    | `string`                                                               | —       |
+| width      | 表列列宽                 | `string` `number`                                                      | —       |
+| isShow     | 是否显示在表格当中       | `boolean`                                                              | `true`  |
+| useSort    | 是否使用排序             | `boolean`                                                              | `true`  |
+| useFilter  | 是否使用筛选             | `boolean`                                                              | `true`  |
+| filterType | 筛选时使用类型           | `"input"` `"number"` `"select"` `"tag"` `"time"`                       | —       |
+| fixed      | 表列固定位置             | `"left"` `"right"`                                                     | —       |
+| unitText   | 单位文本                 | `string`                                                               | —       |
+| textWarp   | 单元格内文字折行依据     | `string`                                                               | —       |
 | cellConfig | 单元格使用类型，详细配置 | [CellItemType](/document/PancakeUI_Doc/table/readme.html#cellitemtype) | —       |
-| useSenior  | `是否使用高级筛选        | `boolean`                                                             | `true`  |
-| useSum     | 是否计入合计内容         | `boolean`                                                             | `false` |
+| useSenior  | `是否使用高级筛选        | `boolean`                                                              | `true`  |
+| useSum     | 是否计入合计内容         | `boolean`                                                              | `false` |
 
 ## `CellItemType`
 
-| 描述       | 单元格类型                                                    |
-| ---------- | ------------------------------------------------------------- |
+| 描述       | 单元格类型                                                     |
+| ---------- | -------------------------------------------------------------- |
 | 输入框     | [SaInputType](/document/PancakeUI_Doc/input/readme.html)       |
 | 数字输入框 | [SaNumberType](/document/PancakeUI_Doc/number/readme.html)     |
 | 选择器     | [SaSelectType](/document/PancakeUI_Doc/select/readme.html)     |
@@ -261,32 +261,42 @@ const tableConfig: MStructureV2Type.TableV2[] = [
 
 ## `SaTableType`
 
-| 字段               | 描述                                                                                          | 类型                                                                                              | 默认值  |
-| ------------------ | --------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ------- |
-| id                 | 表格 ID                                                                                       | `string`                                                                                          | —       |
-| structure          | [MStructureV2Type.TableV2](/document/PancakeUI_Doc/table/readme.html#mstructurev2type-tablev2) | —                                                                                                 | —       |
-| useSelect          | 是否使用选择器                                                                                | `boolean`                                                                                         | `false` |
-| useRadio           | 是否使用单选器                                                                                | `boolean`                                                                                         | `false` |
-| useChildren        | 是否使用子项选择器                                                                            | `boolean`                                                                                         | `false` |
-| useExpand          | 是否使用展开行                                                                                | `boolean`                                                                                         | `false` |
-| expandAuto         | 是否自动展开行                                                                                | `boolean`                                                                                         | `false` |
-| requestApi         | 表格数据来源接口                                                                              | `(params, id) => object[]`                                                                        | —       |
-| requestAuto        | 是否自动执行请求                                                                              | `boolean`                                                                                         | `true`  |
-| exportApi          | 页面导出按钮触发方法                                                                          | `(params) => object[]`                                                                            | —       |
-| rowKey             | 当表格数据多选时，所指定的 `key` 需要保持数据 `唯一`                                          | `string`                                                                                          | —       |
-| useToolButton      | 是否显示表格 `刷新 / 筛选` 功能                                                               | `boolean`                                                                                         | `true`  |
-| usePagination      | 是否显示分页功能                                                                              | `boolean`                                                                                         | `true`  |
-| useExpandAll       | 是否显示展开全部按钮                                                                          | `boolean`                                                                                         | `true`  |
-| useSummary         | 是否显示尾部合集行                                                                            | `boolean`                                                                                         | `false` |
-| useTableIndex      | 是否显示表格序号                                                                              | `boolean`                                                                                         | `true`  |
-| useOverflowTooltip | 是否使用文字超出后 Tooltip 提示完整内容                                                       | `boolean`                                                                                         | `true`  |
-| embeddedToolButton | 是否显示表格功能按钮嵌入式样式                                                                | `boolean`                                                                                         | `false` |
-| exOptions          | 外置筛选依赖                                                                                  | `MOptionV2Type.Default`                                                                           | —       |
-| exDependent        | 外置依赖                                                                                      | [SaTableExDependentType](/document/PancakeUI_Doc/table/readme.html#SaTableexdependenttype)         | —       |
-| exCellDependent    | 单元格外置依赖                                                                                | [SaTableCellExDependentType](/document/PancakeUI_Doc/table/readme.html#SaTablecellexdependenttype) | —       |
-| exPagination       | 外置依赖                                                                                      | [ExPaginationType](/document/PancakeUI_Doc/table/readme.html#expaginationtype-外置页码配置)        | —       |
-| summaryConfig      | 自定义合计参数                                                                                | sumText?: string; 合计文字 unitText?: string; // 单位文字                                         | —       |
-| summaryFunction    | 自定义合计方法                                                                                | (params: any) => string[]                                                                         | —       |
+| 字段               | 描述                                                                                           | 类型                                                                                               | 默认值      |
+| ------------------ | ---------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | ----------- |
+| id                 | 多表时唯一 ID                                                                                  | `string`                                                                                           | - |
+| class              | 自定义类名                                                                                     | `string`                                                                                           | - |
+| style              | 自定义样式                                                                                     | `Record<string, string>`                                                                           | - |
+| structure          | [MStructureV2Type.TableV2](/document/PancakeUI_Doc/table/readme.html#mstructurev2type-tablev2) | —                                                                                                  | —           |
+| useSelect          | 是否使用选择器                                                                                 | `boolean`                                                                                          | `false`     |
+| useRadio           | 是否使用单选器                                                                                 | `boolean`                                                                                          | `false`     |
+| useChildren        | 是否使用子项选择器                                                                             | `boolean`                                                                                          | `false`     |
+| useExpand          | 是否使用展开行                                                                                 | `boolean`                                                                                          | `false`     |
+| expandAuto         | 是否自动展开行                                                                                 | `boolean`                                                                                          | `false`     |
+| requestApi         | 表格数据来源接口                                                                               | `(params, id) => object[]`                                                                         | —           |
+| requestAuto        | 是否自动执行请求                                                                               | `boolean`                                                                                          | `true`      |
+| exportApi          | 页面导出按钮触发方法                                                                           | `(params) => object[]`                                                                             | —           |
+| rowKey             | 当表格数据多选时，所指定的 `key` 需要保持数据 `唯一`                                           | `string`                                                                                           | —           |
+| useToolButton      | 是否显示表格 `刷新 / 筛选` 功能                                                                | `boolean`                                                                                          | `true`      |
+| usePagination      | 是否显示分页功能                                                                               | `boolean`                                                                                          | `true`      |
+| useExpandAll       | 是否显示展开全部按钮                                                                           | `boolean`                                                                                          | `true`      |
+| useSummary         | 是否显示尾部合集行                                                                             | `boolean`                                                                                          | `false`     |
+| useTableIndex      | 是否显示表格序号                                                                               | `boolean`                                                                                          | `true`      |
+| useOverflowTooltip | 是否使用文字超出后 Tooltip 提示完整内容                                                        | `boolean`                                                                                          | `true`      |
+| embeddedToolButton | 是否显示表格功能按钮嵌入式样式                                                                 | `boolean`                                                                                          | `false`     |
+| exOptions          | 外置筛选依赖                                                                                   | `MOptionV2Type.Default`                                                                            | —           |
+| exDependent        | 外置依赖                                                                                       | [SaTableExDependentType](/document/PancakeUI_Doc/table/readme.html#SaTableexdependenttype)         | —           |
+| exCellDependent    | 单元格外置依赖                                                                                 | [SaTableCellExDependentType](/document/PancakeUI_Doc/table/readme.html#SaTablecellexdependenttype) | —           |
+| exPagination       | 外置依赖                                                                                       | [ExPaginationType](/document/PancakeUI_Doc/table/readme.html#expaginationtype-外置页码配置)        | —           |
+| summaryConfig      | 自定义合计参数                                                                                 | sumText?: string; 合计文字 unitText?: string; // 单位文字                                          | —           |
+| summaryFunction    | 自定义合计方法                                                                                 | (params: any) => string[]                                                                          | —           |
+| useSticky          | 是否使用粘性表头                                                                               | `boolean`                                                                                          | `false`     |
+| onSelectRowBack    | 多选框点击回调                                                                                 | `({ isSelected, row, parentRow }) => void`                                                         | - |
+| onSelectRowAllBack | 多选框全选回调                                                                                 | `(params) => void`                                                                                 | - |
+| onRadioRowBack     | 单选框点击回调                                                                                 | `({ isSelected, row, parentRow }) => void`                                                         | - |
+| onExpandRowBack    | 展开行点击回调                                                                                 | `({ index, row, state }) => void`                                                                  | - |
+| onExpandRowAllBack | 展开全部按钮回调                                                                               | `(state) => void`                                                                                  | - |
+| onRenderEnd        | 首次渲染完成回调                                                                               | `(getTableList) => void`                                                                           | - |
+| onTableChange      | 表格数据变化时触发                                                                             | `(data) => void`                                                                                   | - |
 
 ## `SaTableExDependentType`
 
@@ -349,3 +359,9 @@ async function RefreshTable() {
 | setStructure_Item  | 设置表格单个结构                             | `(prop: string, item: SaTableItemType & SaTableUseItemType) => void` |
 | changeData_All     | 设置表格所有数据                             | `(data: Array<SaTableUseType.SaTableInDataType>) => void`            |
 | changeData_Item    | 设置表格单个数据                             | `(prop: string, value: SaTableUseType.SaTableInDataType) => void`    |
+
+## `onTableChange`
+
+| 事件名称      | 描述               | 类型             |
+| ------------- | ------------------ | ---------------- |
+| onTableChange | 表格数据变化时触发 | `(data) => void` |

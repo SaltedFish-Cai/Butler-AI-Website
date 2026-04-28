@@ -7,6 +7,9 @@
     :style="{ ...props.style }"
     :disabled="props.disabled"
   >
+    <div v-if="title" :style="{ width: titleWidth }" class="pa-cell-label">
+      {{ typeof title === "string" ? title : title[languageValue] }}
+    </div>
     <pa-radio-item
       v-for="item in exOptionsList"
       :key="String(item.value)"
@@ -14,17 +17,24 @@
       :value="item.value"
       :is-checked="inValue == item.value"
       :disabled="props.disabled"
+      isOption
       @change="
         ({ value }) => {
-          changeEvent({ value, option: item });
+          changeEvent({ value: value || '', option: item });
         }
       "
     ></pa-radio-item>
   </div>
-  <div v-else class="pa-display-style">
-    <slot name="exDisplay"></slot>
-    <template v-if="$slots.exDisplay"> ( {{ findData(inValue) || "--" }} )</template>
-    <template v-else>{{ findData(inValue) || "--" }}</template>
+
+  <div v-else class="pa-display-style" :class="[props.class]" :style="{ ...props.style }">
+    <div v-if="title" :style="{ width: titleWidth }" class="pa-cell-label">
+      {{ typeof title === "string" ? title : title[languageValue] }}
+    </div>
+    <div class="pa-display-value_content">
+      <slot name="exDisplay"></slot>
+      <template v-if="$slots.exDisplay"> ( {{ findData(inValue) || "--" }} ) </template>
+      <template v-else>{{ findData(inValue) || "--" }}</template>
+    </div>
   </div>
 
   <div
@@ -32,50 +42,111 @@
     :class="['pa-contrast-style']"
   >
     <slot name="exContrast"></slot>
-    <template v-if="$slots.exContrast"> ( {{ findData(contrastData) || "--" }} )</template>
+    <template v-if="$slots.exContrast"> ( {{ findData(contrastData) || "--" }} ) </template>
     <template v-else>{{ findData(contrastData) || "--" }}</template>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { ref, watch } from "vue";
-import { PaRadioType } from "./type";
-
+/**
+ * **模块导入**
+ * @description 导入 Vue 组合式 API
+ * */
+import { ref, watch, computed, inject, ComputedRef } from "vue";
+/**
+ * **模块导入**
+ * @description 导入组件类型定义
+ * */
+import { ComponentProps, ComponentEmits } from "./types";
+/**
+ * **模块导入**
+ * @description 导入全局配置类型
+ * */
+import { PancakeGlobalConfigType } from "../pa-manager/type";
+/**
+ * **模块导入**
+ * @description 导入数据查找工具函数
+ * */
+import { findData as findDataSelect } from "../utils/find-data";
+/**
+ * **模块导入**
+ * @description 导入 lodash 工具函数
+ * */
 import _ from "lodash";
 const { isEqual, isNil } = _;
-
-const props = withDefaults(defineProps<PaRadioType>(), {});
+/**
+ * **全局配置注入**
+ * @type `ComputedRef<PancakeGlobalConfigType>`
+ * @description 注入全局配置对象
+ * */
+const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
+/**
+ * **当前语言值**
+ * @type `ComputedRef<string>`
+ * @description 当前选中的语言
+ * */
+const languageValue = computed(() => {
+  return PancakeGlobalConfig.value?.language?.value || "zh-CN";
+});
+/**
+ * **组件属性**
+ * @type `ComponentProps`
+ * @description 组件的属性对象
+ * */
+const props = withDefaults(defineProps<ComponentProps>(), {});
+/**
+ * **选项列表**
+ * @type `Ref<Array<PaOptionType.Select>>`
+ * @description 外部传入的选项列表
+ * */
 const exOptionsList = ref(props?.exOptions || []);
-
-const inValue = ref(props.modelValue);
-const emits = defineEmits(["update:modelValue", "change"]);
-
-let oldValue = props.modelValue;
-function changeEvent({ value, option }) {
+/**
+ * **当前值**
+ * @type `Ref<boolean | number | string | undefined>`
+ * @description 当前选中的值
+ * */
+const inValue = ref<boolean | number | string | undefined>(props.modelValue);
+/**
+ * **组件事件定义**
+ * @description 定义组件可触发的事件
+ * */
+const emits = defineEmits<ComponentEmits>();
+/**
+ * **旧值存储**
+ * @type `boolean | number | string`
+ * @description 存储上一次的值，用于对比
+ * */
+let oldValue: boolean | number | string = props.modelValue || "";
+/**
+ * **处理变更事件**
+ * @param `value` 选中的值
+ * @param `option` 选中的选项
+ * @returns `void`
+ * @description 处理单选框选中状态变更
+ * */
+function changeEvent({ value, option }: { value: boolean | number | string; option: any }): void {
   if (props.disabled) return;
   inValue.value = value;
-
   emits("update:modelValue", value);
   emits("change", { value: value, oldValue, option });
   oldValue = value;
 }
-
-function findData(data) {
-  let text = "";
-  const options = props.exOptions;
-  if (options?.length) {
-    const row = data;
-    for (let index = 0; index < options.length; index++) {
-      const option = options[index];
-      if (option.value == row) {
-        text += option.label;
-      }
-    }
+/**
+ * **查找显示数据**
+ * @param `data` 要查找的数据
+ * @returns `string` 显示的文本
+ * @description 根据值查找对应的显示文本
+ * */
+function findData(data: boolean | number | string | undefined): string {
+  if (props.displayValue) {
+    return props.displayValue || "--";
   }
-  return text || "--";
+  return findDataSelect(data, exOptionsList.value, false, languageValue.value);
 }
-
-// #Watch modelValue
+/**
+ * **监听 modelValue 变化**
+ * @description 同步外部传入的值到内部状态
+ * */
 watch(
   () => props.modelValue,
   data => {
@@ -84,8 +155,10 @@ watch(
   },
   { immediate: true, deep: true }
 );
-
-// #Watch exOptionsList
+/**
+ * **监听 exOptions 变化**
+ * @description 同步外部传入的选项列表
+ * */
 watch(
   () => props.exOptions,
   data => {

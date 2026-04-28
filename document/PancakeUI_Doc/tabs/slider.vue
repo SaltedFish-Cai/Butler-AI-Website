@@ -15,13 +15,6 @@ const activeName5 = ref("page3-1");
 </script>
 
 <style scoped lang="scss">
-.vp_title_label {
-  margin-top: 20px;
-  margin-bottom: 5px;
-  &:first-child {
-    margin-top: 0;
-  }
-}
 .max-box {
   height: 200px;
 }

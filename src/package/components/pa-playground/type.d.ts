@@ -1,6 +1,6 @@
 import { PaStructureType, PaOptionType } from "M_Types";
 import { PaPlaygroundPageButtonType } from "./components/type";
-type languageKey = "en-US" | "zh-CN";
+import { LanguagePackageType } from "../manager-type";
 
 export type MInterfaceConfig = {
   id: string;
@@ -26,7 +26,7 @@ export type MStructureTypeItem = {
   id: string;
   prop: string;
   description: string;
-  label: Record<languageKey, string>;
+  label: LanguagePackageType;
   [x: string]: any;
 };
 
@@ -47,7 +47,7 @@ export type PaPlaygroundItem = {
   exOptions: Record<string, string>;
   sourceTable: string;
   actionApi?: string;
-  title?: Record<languageKey, string> | {};
+  title?: LanguagePackageType | {};
   otherProps?: Record<string, any>;
 };
 
@@ -76,7 +76,7 @@ export type PaPlaygroundType = {
 export type PaPlaygroundActionFunctionType = {
   executionMethod: any;
   executionDependencies: Array<{
-    label: Record<languageKey, string>;
+    label: LanguagePackageType;
     key: string;
     type: "input" | "select";
     exOptions?: PaOptionType.SelectList;

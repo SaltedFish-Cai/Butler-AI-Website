@@ -112,6 +112,7 @@
   width: 100%;
   box-sizing: border-box;
   padding: calc(var(--pa-size-padding) / 3) calc(var(--pa-size-padding) / 1.2);
+  display: flex;
 }
 .pa-time > .pa-popover-reference {
   width: 100%;

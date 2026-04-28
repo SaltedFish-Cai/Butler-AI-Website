@@ -17,17 +17,4 @@ const activeName2 = ref("page1");
 const activeName5 = ref("page2-1");
 </script>
 
-<style scoped lang="scss">
-.vp_title_label {
-  margin-top: 20px;
-  margin-bottom: 5px;
-  &:first-child {
-    margin-top: 0;
-  }
-}
-
-.card_style {
-  background-color: #f5f5f5;
-  height: 200px;
-}
-</style>
+<style scoped lang="scss"></style>

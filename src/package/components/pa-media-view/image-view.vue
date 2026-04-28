@@ -36,14 +36,14 @@ import { ref, onMounted, computed, watch, inject, ComputedRef } from "vue";
 import { useGetBlob } from "./use-download";
 import randChar from "../tools/rand-char";
 import { mouseUp, left90, leftAll90 } from "./rotate-fn";
-import { PancakeGlobalConfigType } from "../pa-content/type";
+import { PancakeGlobalConfigType } from "../pa-manager/type";
 
 const imgRef = ref();
 const scrollRef = ref();
 const mediaImage = ref("");
 const IMG_ID = ref(randChar());
 
-const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
+const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 const languagePackage = computed(() => {
   return PancakeGlobalConfig.value?.language?.package["media"] || {};
 });

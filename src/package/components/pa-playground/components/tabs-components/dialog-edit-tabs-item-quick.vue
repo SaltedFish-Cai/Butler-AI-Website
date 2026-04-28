@@ -73,7 +73,7 @@
 
 <script lang="tsx" setup>
 import { computed, ComputedRef, inject, ref, useTemplateRef, nextTick } from "vue";
-import { PancakeGlobalConfigType } from "../../../pa-content/type";
+import { PancakeGlobalConfigType } from "../../../pa-manager/type";
 import { PaStructureType } from "M_Types";
 import { MOptionsType, PaPlaygroundPagesType } from "../../type";
 import MQuickTable from "../quick-table.vue";
@@ -99,7 +99,7 @@ const exOptionsComputed = computed(() => {
   return exOptionsData;
 });
 
-const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
+const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 const language = PancakeGlobalConfig.value?.language?.value || "zh-CN";
 const visibleTableRef = useTemplateRef("visibleTableRef");
 

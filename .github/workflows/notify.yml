@@ -1,0 +1,28 @@
+# name: Email Notification
+
+# on:
+#   push:
+#     branches:
+#       - butler-dev
+
+# jobs:
+#   notify:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Send Email
+#         uses: dawidd6/action-send-mail@v3
+#         with:
+#           server_address: smtp.gmail.com
+#           server_port: 465
+#           username: ${{ secrets.EMAIL_USERNAME }}
+#           password: ${{ secrets.EMAIL_PASSWORD }}
+#           subject: "代码推送通知 - ${{ github.repository }}"
+#           to: dafantuan@coze.email
+#           from: GitHub Actions
+#           content_type: text/plain
+#           body: |
+#             仓库: ${{ github.repository }}
+#             分支: ${{ github.ref_name }}
+#             提交者: ${{ github.actor }}
+#             提交信息: ${{ github.event.head_commit.message }}
+#             链接: https://github.com/${{ github.repository }}/commit/${{ github.sha }}

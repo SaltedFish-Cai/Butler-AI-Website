@@ -1,12 +1,11 @@
 // # Type
+import { LanguagePackageType } from "../manager-type";
 
-type languageKey = "en-US" | "zh-CN";
-
-export type PaDialogType = {
+export type ComponentProps = {
   /**
    * **是否打开Dialog**
-   * @type `boolean`
-   * @default `false`
+   * @type `boolean` | `undefined`
+   * @default `undefined`
    * @description 当设置该值为 `true` 时，会打开Dialog
    * @description 当设置该值为 `false` 时，会关闭Dialog
    * @example
@@ -18,7 +17,8 @@ export type PaDialogType = {
 
   /**
    * **ID**
-   * @type `string`
+   * @type `string` | `undefined`
+   * @default `undefined`
    * @description 当设置该值时，会使用该值作为唯一ID
    * */
   id?: string;
@@ -42,7 +42,7 @@ export type PaDialogType = {
 
   /**
    * **Dialog高度**
-   * @type `number` | `string` | `auto`
+   * @type `number` | `string` | `auto` | `undefined`
    * @default `auto`
    * @description 当设置该值为 `number` 时，Dialog高度为该值
    * @description 当设置该值为 `string` 时，Dialog高度为该值
@@ -56,8 +56,8 @@ export type PaDialogType = {
 
   /**
    * **Dialog宽度**
-   * @type `number` | `string` | `auto`
-   * @default `auto`
+   * @type `number` | `string` | `auto` | `undefined`
+   * @default `undefined`
    * @description 当设置该值为 `number` 时，Dialog宽度为该值
    * @description 当设置该值为 `string` 时，Dialog宽度为该值
    * @description 当设置该值为 `auto` 时，Dialog宽度为自适应
@@ -70,7 +70,7 @@ export type PaDialogType = {
 
   /**
    * **Dialog X轴偏移量**
-   * @type `number` | `string`
+   * @type `number` | `string` | `undefined`
    * @default `0`
    * @description 当设置该值为 `number` 时，Dialog X轴偏移量为该值
    * @description 当设置该值为 `string` 时，Dialog X轴偏移量为该值
@@ -83,7 +83,7 @@ export type PaDialogType = {
 
   /**
    * **Dialog Y轴偏移量**
-   * @type `number` | `string`
+   * @type `number` | `string` | `undefined`
    * @default `0`
    * @description 当设置该值为 `number` 时，Dialog Y轴偏移量为该值
    * @description 当设置该值为 `string` 时，Dialog Y轴偏移量为该值
@@ -97,7 +97,7 @@ export type PaDialogType = {
   /**
    * **是否使用缓存页面**
    * @type `boolean`
-   * @default `false`
+   * @default `true`
    * @description 当设置该值为 `true` 时，会使用缓存页面
    * @description 当设置该值为 `false` 时，不会使用缓存页面
    * @example
@@ -109,7 +109,7 @@ export type PaDialogType = {
 
   /**
    * **Dialog标题**
-   * @type `string`|`Record<languageKey, string>`
+   * @type `string`|`LanguagePackageType` | `undefined`
    * @default `标题`
    * @description 当设置该值为 `string` 时，Dialog标题为该值
    * @description 当设置该值为 `undefined` 时，Dialog标题为 `标题`
@@ -118,12 +118,12 @@ export type PaDialogType = {
    * <MoDialog title="次标题" />
    * ```
    * */
-  title?: Record<languageKey, string> | string;
+  title?: LanguagePackageType | string;
 
   /**
    * **Dialog副标题**
-   * @type `string`|`Record<languageKey, string>`
-   * @default `副标题`
+   * @type `string`|`LanguagePackageType` | `undefined`
+   * @default `undefined`
    * @description 当设置该值为 `string` 时，Dialog副标题为该值
    * @description 当设置该值为 `undefined` 时，Dialog副标题为 `副标题`
    * @example
@@ -131,12 +131,12 @@ export type PaDialogType = {
    * <MoDialog subTitle="次标题" />
    * ```
    * */
-  subTitle?: Record<languageKey, string> | string;
+  subTitle?: LanguagePackageType | string;
 
   /**
    * **是否开启全屏按钮**
    * @type `boolean`
-   * @default `false`
+   * @default `true`
    * @description 当设置该值为 `true` 时，会开启全屏按钮
    * @description 当设置该值为 `false` 时，不会开启全屏按钮
    * @example
@@ -175,7 +175,7 @@ export type PaDialogType = {
   /**
    * **标题位置**
    * @type `left` | `center` | `right`
-   * @default `center`
+   * @default `left`
    * @description 当设置该值为 `left` 时，标题位置为左
    * @description 当设置该值为 `center` 时，标题位置为中
    * @description 当设置该值为 `right` 时，标题位置为右
@@ -190,7 +190,7 @@ export type PaDialogType = {
   /**
    * **是否点击蒙层关闭Dialog**
    * @type `boolean`
-   * @default `false`
+   * @default `true`
    * @description 当设置该值为 `true` 时，点击蒙层关闭Dialog
    * @description 当设置该值为 `false` 时，不点击蒙层关闭Dialog
    * @example
@@ -203,7 +203,7 @@ export type PaDialogType = {
   /**
    * **是否使用Esc按钮关闭Dialog**
    * @type `boolean`
-   * @default `false`
+   * @default `true`
    * @description 当设置该值为 `true` 时，使用Esc按钮关闭Dialog
    * @description 当设置该值为 `false` 时，不使用Esc按钮关闭Dialog
    * @example
@@ -215,8 +215,8 @@ export type PaDialogType = {
 
   /**
    * **是否使用内边距**
-   * @type `Array<"top" | "left" | "bottom" | "right" | "all">`
-   * @default `[]`
+   * @type `Array<"top" | "left" | "bottom" | "right" | "all">` | `undefined`
+   * @default `undefined`
    * @description 当设置该值为 `["top", "left"]` 时，使用内边距
    * @description 当设置该值为 `[]` 时，不使用内边距
    * @example

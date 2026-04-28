@@ -84,7 +84,7 @@ export const useDownload = async (config = { downloadHose: "", requestHeader: {}
     title: "温馨提示",
     dangerouslyUseHTMLString: true,
     message:
-      "<div class='download-message'><span class='m-iconfont m-iconfont_icon icon-loading_line'></span>如果数据庞大会导致下载缓慢，请您耐心等待！</div>",
+      "<div class='download-message'><span class='pa-icon_font icon-loading_line'></span>如果数据庞大会导致下载缓慢，请您耐心等待！</div>",
     type: "info",
     duration: 0,
     customClass: "download-message-info"

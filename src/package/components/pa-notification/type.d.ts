@@ -1,4 +1,5 @@
 import type { VNode, ComponentPublicInstance } from "vue";
+import { LanguagePackageType } from "../manager-type";
 
 // 通知类型
 export type NotificationType = "danger" | "info" | "primary" | "success" | "warning";
@@ -8,11 +9,11 @@ export interface NotificationOptions {
   /**
    * 通知标题
    */
-  title?: Record<languageKey, string> | string;
+  title?: LanguagePackageType | string;
   /**
    * 通知消息
    */
-  message?: Record<languageKey, string> | string;
+  message?: LanguagePackageType | string;
   /**
    * 通知类型
    */

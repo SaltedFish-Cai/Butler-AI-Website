@@ -6,19 +6,19 @@
 
 使用 `type`、`usePlain` 来定义按钮的样式。
 
-<demo src="./base.vue" ></demo>
+<demo src="./base.vue"></demo>
 
 ## Group 组合
 
 使用 `pa-button-group` 组件来定义按钮的组合样式。
 
-<demo src="./group.vue" ></demo>
+<demo src="./group.vue"></demo>
 
 ## 禁用状态
 
 使用 `disabled` 来定义按钮的禁用。
 
-<demo src="./disabled.vue"  ></demo>
+<demo src="./disabled.vue"></demo>
 
 ## 链接按钮
 
@@ -50,20 +50,41 @@
 
 <demo src="./confirm.vue"></demo>
 
-## `SaButtonType`
+## ComponentProps
 
-| 属性名        | 描述                                                                        | 类型                                                                  | 默认值    |
-| ------------- | --------------------------------------------------------------------------- | --------------------------------------------------------------------- | --------- |
-| is            | 内置样式选择 [样式展示](/document/PancakeUI_Doc/button/readme.html#内置样式) | `string`                                                              | —         |
-| type          | 类型                                                                        | `danger` `default` `info` `primary` `success` `warning`                        | `default` |
-| disabled      | 是否禁用按钮                                                                | `boolean`                                                             | `false`   |
-| loading       | 是否 `Loading` 状态                                                         | `boolean`                                                             | `false`   |
-| loadingBy     | 自动 `Loading` 监听依赖源                                                   | `string`                                                              | —         |
-| debounced     | 开启防抖                                                                    | `boolean`                                                             | `true`    |
-| debouncedTime | 防抖延迟时间                                                                | `number`                                                              | `300`     |
-| iconPosition  | Icon 位置                                                                   | `left` `right`                                                        | `left`    |
-| iconName      | icon 图标([`pa-icon`](/document/PancakeUI_Doc/icon/readme.html))             | `string`                                                              | —         |
-| useFont       | 是否使用字体图标                                                            | `boolean`                                                             | `true`    |
-| useLine       | 是否为链接按钮                                                              | `boolean`                                                             | `false`   |
-| usePlain      | 是否为朴素按钮                                                              | `boolean`                                                             | `true`    |
-| confirmConfig | 确认弹窗配置                                                                | [`MessageBoxOptions`](/document/PancakeUI_Doc/message-box/readme.html) | —         |
+| 属性名 | 描述 | 类型 | 默认值 |
+| ------ | ---- | ---- | ------ |
+| id | 唯一标识 | `string` | - |
+| class | 自定义类名 | `Array<string>` `string` | - |
+| style | 自定义样式 | `Record<string, string>` | - |
+| text | 按钮文本 | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) `string` | - |
+| size | 按钮大小 | `'large'` `'medium'` `'small'` | `medium` |
+| is | 内置样式 | [`ButtonTypeV2Is`](#buttontypev2is) | - |
+| type | 按钮样式类型 | `'danger'` `'default'` `'info'` `'primary'` `'success'` `'warning'` | - |
+| disabled | 是否禁用状态 | `boolean` | - |
+| loading | 加载状态 | `boolean` | - |
+| loadingBy | 自动Loading来源 | `string` | - |
+| debounced | 是否开启防抖功能 | `boolean` | `true` |
+| debouncedTime | 防抖按钮时间 | `number` | `300` |
+| iconPosition | Icon位置 | `'left'` `'right'` | `left` |
+| iconName | 按钮ICON | `string` | - |
+| useFont | 是否使用Icon | `boolean` | `true` |
+| useLine | 是否使用下划线按钮 | `boolean` | - |
+| usePlain | 是否使用朴素按钮 | `boolean` | `true` |
+| confirmConfig | 确认弹窗配置 | `MessageBoxOptions` | - |
+| useStop | 是否阻止事件冒泡 | `boolean` | `true` |
+
+## ComponentEmits
+
+| 事件名 | 描述 | 回调函数 |
+| ------ | ---- | -------- |
+| click | 点击按钮事件 | `(event: MouseEvent) => void` |
+| confirmClick | 确认按钮点击事件 | `() => void` |
+| submitClick | 提交按钮点击事件 | `() => void` |
+| deleteClick | 删除按钮点击事件 | `() => void` |
+
+## ButtonTypeV2Is
+
+预设按钮样式类型。
+
+可选值：`'add'` `'cancel'` `'check'` `'delete'` `'download'` `'edit'` `'export'` `'file'` `'go'` `'import'` `'more'` `'ok'` `'refresh'` `'remove'` `'save'` `'search'` `'submit'` `'switch'` `'sync'` `'time'` `'trash'` `'upload'` `'view'`

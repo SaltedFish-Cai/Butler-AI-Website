@@ -98,7 +98,7 @@ import pdfView from "./pdf-view.vue";
 import excelView from "./excel-view.vue";
 import wordView from "./word-view.vue";
 import textView from "./text-view.vue";
-import { PancakeGlobalConfigType } from "../pa-content/type";
+import { PancakeGlobalConfigType } from "../pa-manager/type";
 
 const visible = ref(false);
 const viewIndex = ref(0);
@@ -114,7 +114,7 @@ const props = withDefaults(defineProps<PaMediaViewType>(), {
   hideBtn: false
 });
 
-const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
+const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 const languagePackage = computed(() => {
   return PancakeGlobalConfig.value?.language?.package["media"] || {};
 });

@@ -17,14 +17,12 @@
         <div v-if="$slots['HeaderLeft']" style="margin-right: calc(var(--pa-size-padding, 10px) / 2)">
           <slot name="HeaderLeft"></slot>
         </div>
-        <!-- 上更多 -->
         <pa-icon
           v-if="useScrollY > 0 && (mode === 'portrait' || mode === 'slider')"
           :class="['icons', 'top-icon', headerScroll === 0 ? 'disabled' : '']"
           name="up_small_fill"
           @click="minusScroll"
         />
-        <!-- 左更多 -->
         <pa-icon
           v-else-if="useScrollX > 0"
           :class="['icons', 'left-icon', headerScroll === 0 ? 'disabled' : '']"
@@ -54,14 +52,12 @@
           </div>
         </div>
 
-        <!-- 下更多 -->
         <pa-icon
           v-if="useScrollY > 0 && (mode === 'portrait' || mode === 'slider')"
           :class="['icons', 'down-icon', headerScrollEnd ? 'disabled' : '']"
           name="down_small"
           @click="addScroll"
         />
-        <!-- 右更多 -->
         <pa-icon
           v-else-if="useScrollX > 0"
           :class="['icons', 'right-icon', headerScrollEnd ? 'disabled' : '']"
@@ -99,48 +95,168 @@
 </template>
 
 <script lang="ts" setup>
-// # Import
+/**
+ * **模块导入**
+ * @description 导入 Vue 组合式 API
+ * */
 import { ref, onMounted, onUnmounted, useSlots, watch, nextTick, provide, computed } from "vue";
+/**
+ * **模块导入**
+ * @description 导入随机字符生成工具
+ * */
 import { randChar } from "../tools/rand-char";
+/**
+ * **模块导入**
+ * @description 导入标签页标题子组件
+ * */
 import titleItem from "./pa-tabs-label.vue";
-import { PaTabsType } from "./type";
+/**
+ * **模块导入**
+ * @description 导入组件属性和事件类型定义
+ * */
+import { ComponentProps, ComponentEmits } from "./types";
+/**
+ * **模块导入**
+ * @description 导入浏览器环境判断工具
+ * */
 import inBrowser from "../tools/inBrowser";
+/**
+ * **模块导入**
+ * @description 导入元素位置计算工具
+ * */
 import { getElementPosition } from "../utils/getElementPosition";
-
+/**
+ * **模块导入**
+ * @description 导入 lodash 工具库
+ * */
 import _ from "lodash";
+/**
+ * **解构赋值**
+ * @description 从 lodash 中解构出 debounce 函数
+ * */
 const { debounce } = _;
-
-const props = withDefaults(defineProps<PaTabsType>(), {
-  modelValue: "",
+/**
+ * **组件属性**
+ * @type `ComponentProps`
+ * @description 组件的属性对象
+ * */
+const props = withDefaults(defineProps<ComponentProps>(), {
   visibleMode: "visible",
   mode: "default",
   styleMode: "card",
   align: "default",
-  useHeaderLine: false,
   useShadow: true
 });
-
+/**
+ * **随机 ID**
+ * @type {string}
+ * @description 生成组件唯一标识
+ * */
 const randId = String(randChar());
-const tabsRef: any = ref();
-const tabsTitleRef = ref();
-const slots: any = ref({});
+/**
+ * **标签页容器引用**
+ * @type {Ref<HTMLElement | undefined>}
+ * @description 标签页容器的 DOM 引用
+ * */
+const tabsRef = ref<HTMLElement>();
+/**
+ * **标签页标题容器引用**
+ * @type {Ref<HTMLElement | undefined>}
+ * @description 标签页标题区域的 DOM 引用
+ * */
+const tabsTitleRef = ref<HTMLElement>();
+/**
+ * **插槽数据**
+ * @type {Ref<any>}
+ * @description 存储子组件插槽信息
+ * */
+const slots = ref<any>({});
+/**
+ * **溢出固定宽度**
+ * @type {Ref<number>}
+ * @description 标签页标题溢出时的固定宽度
+ * */
 const overFixWidth = ref(0);
+/**
+ * **默认插槽**
+ * @type {ReturnType<typeof useSlots>['default']}
+ * @description 获取默认插槽内容
+ * */
 const defaultSlot = useSlots().default;
+/**
+ * **标题插槽列表**
+ * @type {Ref<Array<Record<string, Record<string, string>>>>}
+ * @description 存储所有标签页标题的插槽数据
+ * */
 const slotsTitle = ref([] as Array<Record<string, Record<string, string>>>);
+/**
+ * **当前插槽索引**
+ * @type {Ref<number>}
+ * @description 当前激活的标签页索引
+ * */
 const slotIndex = ref(0);
-// const lineStyle = ref({ width: 0, left: 0 });
+/**
+ * **标签页 ID**
+ * @type {Ref<string>}
+ * @description 组件实例的唯一标识
+ * */
 const tabsId = ref(randId);
+/**
+ * **水平滚动位置**
+ * @type {Ref<number>}
+ * @description 标签页水平滚动距离
+ * */
 const useScrollX = ref(0);
+/**
+ * **垂直滚动位置**
+ * @type {Ref<number>}
+ * @description 标签页垂直滚动距离
+ * */
 const useScrollY = ref(0);
+/**
+ * **标题滚动位置**
+ * @type {Ref<number>}
+ * @description 标题区域的滚动偏移量
+ * */
 const headerScroll = ref(0);
+/**
+ * **标题滚动结束标志**
+ * @type {Ref<boolean>}
+ * @description 标题区域是否滚动到末尾
+ * */
 const headerScrollEnd = ref(false);
+/**
+ * **当前激活标签名**
+ * @type {Ref<string>}
+ * @description 当前选中标签页的标识
+ * */
 const activeName = ref("");
+/**
+ * **标签左侧位置**
+ * @type {Ref<number>}
+ * @description 激活标签的左侧位置
+ * */
 const useLabelLeft = ref(0);
+/**
+ * **标签宽度**
+ * @type {Ref<number>}
+ * @description 激活标签的宽度
+ * */
 const useLabelWidth = ref(0);
-const emits = defineEmits(["update:modelValue", "tab-change"]);
-
+/**
+ * **组件事件定义**
+ * @description 定义组件可触发的事件
+ * */
+const emit = defineEmits<ComponentEmits>();
+/**
+ * **防抖函数**
+ * @description 防抖处理标签页尺寸计算
+ * */
 const _debounce = debounce(setTabsBoxSize, 10, { trailing: true });
-
+/**
+ * **标题防抖函数**
+ * @description 防抖处理标题数据更新
+ * */
 const _debounceTitle = debounce(
   () => {
     createSlotData(true);
@@ -148,8 +264,17 @@ const _debounceTitle = debounce(
   500,
   { trailing: true }
 );
-
-let observer;
+/**
+ * **DOM 观察器**
+ * @type {MutationObserver | undefined}
+ * @description 监听 DOM 变化的观察器实例
+ * */
+let observer: MutationObserver | undefined;
+/**
+ * **标题容器尺寸**
+ * @type {{ scrollWidth: number; clientWidth: number; scrollHeight: number; clientHeight: number }}
+ * @description 标题区域的滚动尺寸信息
+ * */
 let tabsTitle: {
   scrollWidth: number;
   clientWidth: number;
@@ -161,9 +286,24 @@ let tabsTitle: {
   scrollHeight: 0,
   clientHeight: 0
 };
-
-const mScrollRef = ref();
-
+/**
+ * **滚轮事件时间戳**
+ * @type {number}
+ * @description 上一次滚轮事件的时间戳
+ * */
+let lastWheelTime = 0;
+/**
+ * **滚轮事件累积滚动量**
+ * @type {number}
+ * @description 滚轮事件累积的滚动量，用于判断是否触发标签切换
+ * */
+let wheelDelta = 0;
+/**
+ * **滚动容器引用**
+ * @type {Ref<any>}
+ * @description 滚动容器的 DOM 引用
+ * */
+const mScrollRef = ref<any>();
 provide(
   "TabsContext",
   computed(() => ({
@@ -172,12 +312,13 @@ provide(
     activeName: activeName.value
   }))
 );
-
 provide("initTitle", () => {
   _debounceTitle();
 });
-
-// # Vue onMounted
+/**
+ * **组件挂载生命周期**
+ * @description 初始化组件状态
+ * */
 onMounted(() => {
   createSlotData();
   const defaultValue = props.modelValue;
@@ -185,31 +326,45 @@ onMounted(() => {
   nextTick(() => {
     watchDom();
     if (props.mode === "slider") {
-      changeTabs(defaultValue, 0);
+      changeTabs(defaultValue as string, 0);
     }
   });
 });
-
-// # Vue onUnmounted
+/**
+ * **组件卸载生命周期**
+ * @description 清理观察器和事件监听
+ * */
 onUnmounted(() => {
   observer?.disconnect && observer?.disconnect();
+  const tabsTitleElement = tabsTitleRef.value;
+  if (tabsTitleElement) {
+    tabsTitleElement.removeEventListener("wheel", handleWheel);
+  }
 });
-
-// # Function 变更Tab
-function changeTabs(name, index, scrollToIntersect = true) {
+/**
+ * **变更 Tab**
+ * @param `name` `string` 标签页标识
+ * @param `index` `number` 标签页索引
+ * @param `scrollToIntersect` `boolean` 是否滚动到可见区域
+ * @returns `void`
+ * @description 切换当前激活的标签页
+ * */
+function changeTabs(name: string, index: number, scrollToIntersect = true) {
   slotIndex.value = index;
   activeName.value = name;
-  emits("update:modelValue", name);
-  emits("tab-change", { name, index });
-
+  emit("update:modelValue", name);
+  emit("tabChange", name, index);
   if (props.mode === "slider" && scrollToIntersect) {
     const targetEl = document.querySelector(`#${tabsId.value} #${tabsId.value}-${name}`);
     if (targetEl) mScrollRef.value?.setScrollToIntersect(targetEl);
   }
   setTabItemPosition();
 }
-
-// # 更新Tab按钮位置
+/**
+ * **更新 Tab 按钮位置**
+ * @returns `void`
+ * @description 计算并更新当前激活标签的位置
+ * */
 function setTabItemPosition() {
   nextTick(() => {
     const targetEl = document.querySelector(`#${tabsId.value} .pa-tabs-title_action_${tabsId.value}`);
@@ -228,16 +383,25 @@ function setTabItemPosition() {
     }
   });
 }
-
-// # Function 初始化Slot数据
+/**
+ * **初始化 Slot 数据**
+ * @param `Mandatory` `boolean` 是否强制更新
+ * @returns `void`
+ * @description 解析插槽内容生成标签页数据
+ * */
 function createSlotData(Mandatory = false) {
   if (tabsRef.value) {
     if (defaultSlot) {
       slots.value = defaultSlot();
     }
-
     const arr: any = [];
-    function setChild(arrayData) {
+    /**
+     * **设置子组件数据**
+     * @param `arrayData` `any[]` 子组件数组数据
+     * @returns `void`
+     * @description 递归解析插槽中的子组件
+     * */
+    function setChild(arrayData: any[]) {
       for (let index = 0; index < arrayData.length; index++) {
         const element = arrayData[index];
         if (element.props) {
@@ -249,42 +413,46 @@ function createSlotData(Mandatory = false) {
             { ...element.ctx, $t: window.$t },
             {},
             {},
-            element.type.setup({}, { expose: () => {} })
+            element.type.setup(
+              {},
+              {
+                expose: () => ({})
+              }
+            )
           );
-          console.log("++++++++++> :", component);
           arr.push(component);
         }
       }
     }
     setChild(slots.value);
-
     if (arr.length != slotsTitle.value.length || Mandatory) {
       slotsTitle.value = arr;
       const _index = slotsTitle.value.findIndex(item => item?.props?.name == props.modelValue);
       slotIndex.value = _index < 0 ? 0 : _index;
       const name = slotsTitle.value[slotIndex.value]?.props?.name;
       activeName.value = name;
-      emits("update:modelValue", name);
+      emit("update:modelValue", name);
       _debounce();
     }
   }
 }
-
-// # Function 监听元素节点
+/**
+ * **监听元素节点**
+ * @returns `void`
+ * @description 使用 MutationObserver 监听 DOM 变化
+ * */
 function watchDom() {
   if (tabsRef.value) {
-    // 观察器的配置（需要观察什么变动）
     const config = { childList: true, subtree: true };
-
-    // 创建一个观察器实例并传入回调函数
     observer = new MutationObserver(() => createSlotData());
-
-    // 开始观察目标节点
     observer.observe(tabsRef.value, config);
   }
 }
-
-// # Function 设置Tabs标题宽度
+/**
+ * **设置 Tabs 标题宽度**
+ * @returns `void`
+ * @description 计算并更新标签标题区域的滚动信息
+ * */
 function setTabsBoxSize() {
   if (!inBrowser) return;
   nextTick(() => {
@@ -303,9 +471,13 @@ function setTabsBoxSize() {
     }
   });
 }
-
-// # Function 处理滚动到可见区域
-function handleIntersecting(el) {
+/**
+ * **处理滚动到可见区域**
+ * @param `el` `HTMLElement` 可见区域元素
+ * @returns `void`
+ * @description 当标签页滚动到可见区域时切换标签
+ * */
+function handleIntersecting(el: HTMLElement) {
   const name = el?.dataset?.name;
   if (name) {
     changeTabs(
@@ -315,15 +487,21 @@ function handleIntersecting(el) {
     );
   }
 }
-
-// # Function 超出标题（左/上）
+/**
+ * **超出标题（左/上）**
+ * @returns `void`
+ * @description 标题区域向左或向上滚动
+ * */
 function minusScroll() {
   const chr = headerScroll.value - 50;
   headerScroll.value = chr <= 0 ? 0 : chr;
   headerScrollEnd.value = false;
 }
-
-// # Function 超出标题（右/下）
+/**
+ * **超出标题（右/下）**
+ * @returns `void`
+ * @description 标题区域向右或向下滚动
+ * */
 function addScroll() {
   if (props.mode == "portrait" || props.mode == "slider") {
     const { scrollHeight, clientHeight } = tabsTitle;
@@ -347,73 +525,79 @@ function addScroll() {
     }
   }
 }
-
-// # 处理滚动事件
-let lastWheelTime = 0;
-let wheelDelta = 0;
-const handleWheel = (event: WheelEvent) => {
-  event.preventDefault();
-
-  const now = Date.now();
-  wheelDelta += Math.abs(event.deltaY);
-
-  // 降低敏感度：只有当滚动量达到阈值时才触发月份切换
-  if (wheelDelta < 25) {
-    // 滚动量阈值，可以根据需要调整
-    return;
-  }
-
-  // 防抖处理：避免快速连续滚动
-  if (now - lastWheelTime < 50) {
-    // 200ms防抖时间
-    return;
-  }
-
-  // 重置滚动量和时间
-  wheelDelta = 0;
-  lastWheelTime = now;
-
-  // 根据滚动方向增减值，使用更精确的计算方法
-  if (event.deltaY < 0) {
-    // 向上滚动
-    minusScroll();
-  } else {
-    // 向下滚动
-    addScroll();
-  }
-};
-
-// # Function 处理鼠标悬停事件
+/**
+ * **处理鼠标悬停事件**
+ * @returns `void`
+ * @description 添加滚轮事件监听
+ * */
 function handleMouseEnter() {
-  // 添加滚动事件监听
   const tabsTitleElement = tabsTitleRef.value;
   if (tabsTitleElement) {
     tabsTitleElement.addEventListener("wheel", handleWheel, { passive: false });
   }
 }
-
-// # Function 处理鼠标离开事件
+/**
+ * **处理鼠标离开事件**
+ * @returns `void`
+ * @description 移除滚轮事件监听
+ * */
 function handleMouseLeave() {
   const tabsTitleElement = tabsTitleRef.value;
   if (tabsTitleElement) {
     tabsTitleElement.removeEventListener("wheel", handleWheel);
   }
 }
-
-// # 在组件卸载时移除事件监听
-onUnmounted(() => {
-  const tabsTitleElement = tabsTitleRef.value;
-  if (tabsTitleElement) {
-    tabsTitleElement.removeEventListener("wheel", handleWheel);
+/**
+ * **设置标签位置**
+ * @returns `void`
+ * @description 计算并设置激活标签的左侧位置和宽度
+ * */
+function setLabelPosition() {
+  if (props.styleMode != "border-card") return;
+  setTimeout(() => {
+    const el: HTMLElement | null =
+      typeof window !== "undefined" ? window.document?.querySelector(`.pa-tabs-title_action_${tabsId.value}`) : null;
+    if (el) {
+      const { width } = el.getBoundingClientRect();
+      useLabelLeft.value = el.offsetLeft + 1;
+      useLabelWidth.value = width;
+    }
+  }, 90);
+}
+/**
+ * **处理滚轮事件**
+ * @param `event` `WheelEvent` 滚轮事件对象
+ * @returns `void`
+ * @description 监听鼠标滚轮事件，控制标签页滚动切换
+ * */
+const handleWheel = (event: WheelEvent) => {
+  event.preventDefault();
+  const now = Date.now();
+  wheelDelta += Math.abs(event.deltaY);
+  if (wheelDelta < 25) {
+    return;
   }
-});
-
-// #Watch modelValue
+  if (now - lastWheelTime < 50) {
+    return;
+  }
+  wheelDelta = 0;
+  lastWheelTime = now;
+  if (event.deltaY < 0) {
+    minusScroll();
+  } else {
+    addScroll();
+  }
+};
+/**
+ * **监听 modelValue 变化**
+ * @param `data` `string` | `undefined` 当前 modelValue 值
+ * @description 同步激活标签页状态
+ * */
 watch(
   () => props.modelValue,
-  data => {
+  (data: string | undefined) => {
     nextTick(() => {
-      activeName.value = data;
+      activeName.value = data || "";
       if (slotsTitle.value) {
         const index = slotsTitle.value.findIndex(item => item?.props?.name == props.modelValue);
         slotIndex.value = index;
@@ -423,24 +607,14 @@ watch(
   },
   { immediate: true }
 );
-
-function setLabelPosition() {
-  if (props.styleMode != "border-card") return;
-  setTimeout(() => {
-    const el: any = typeof window !== "undefined" && window.document?.querySelector(`.pa-tabs-title_action_${tabsId.value}`);
-    if (el) {
-      const { width } = el.getBoundingClientRect();
-      useLabelLeft.value = el.offsetLeft + 1;
-      useLabelWidth.value = width;
-    }
-  }, 90);
-}
-
+/**
+ * **监听 activeName 变化**
+ * @description 更新标签位置
+ * */
 watch(
   () => activeName.value,
   () => setLabelPosition()
 );
-
 defineExpose({
   el: tabsRef
 });

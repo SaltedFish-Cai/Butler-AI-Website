@@ -119,8 +119,8 @@
 
 <script lang="ts" setup>
 import { ref, watch, onMounted, onUnmounted, computed } from "vue";
-import { PaTimerType } from "./type";
 import { randChar } from "../tools/rand-char";
+import { ComponentProps } from "./type";
 
 // Refs
 const popoverRef = ref();
@@ -130,7 +130,7 @@ const secondInputRef = ref();
 const isFocus = ref(false);
 const currentFocus = ref<"hour" | "minute" | "second">("hour");
 
-const props = withDefaults(defineProps<PaTimerType>(), {
+const props = withDefaults(defineProps<ComponentProps>(), {
   id: randChar(),
   modelValue: "",
   clearable: true,
@@ -382,7 +382,7 @@ onMounted(() => {
 
   // 解析初始值
   if (props.modelValue) {
-    const timeParts = props.modelValue.split(":");
+    const timeParts = (props.modelValue as string).split(":");
     if (timeParts.length >= 1) hours.value = timeParts[0];
     if (timeParts.length >= 2) minutes.value = timeParts[1];
     if (timeParts.length >= 3) seconds.value = timeParts[2];
@@ -459,7 +459,7 @@ onUnmounted(() => {
 watch(
   () => props.modelValue,
   data => {
-    const timeParts = data.split(":");
+    const timeParts = (data as string).split(":");
     if (timeParts.length >= 1) hours.value = timeParts[0];
     if (timeParts.length >= 2) minutes.value = timeParts[1];
     if (timeParts.length >= 3) seconds.value = timeParts[2];

@@ -1,9 +1,10 @@
 <template>
-  <pa-title :padding="['bottom']">基础使用</pa-title>
-  <pa-switch v-model="value1" :activeText="'activeText'" :exOptions="exOptions"></pa-switch>
-
-  <pa-title :padding="['bottom']">Display</pa-title>
-  <pa-switch v-model="value1" :activeText="'activeText'" :exOptions="exOptions" display></pa-switch>
+  <pa-switch
+    v-model="value1"
+    :activeText="'activeTextAAA'"
+    :exOptions="exOptions"
+    :title="{ 'en-US': 'Basic Usage', 'zh-CN': '基础使用' }"
+  ></pa-switch>
 </template>
 
 <script lang="ts" setup>

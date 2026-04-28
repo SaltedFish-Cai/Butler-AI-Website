@@ -92,13 +92,13 @@
 // # Import
 import { reactive, watch, onMounted, onUnmounted, computed, inject, ComputedRef } from "vue";
 import { PaDrawerType } from "./type";
-import { PancakeGlobalConfigType } from "../pa-content/type";
+import { PancakeGlobalConfigType } from "../pa-manager/type";
 
 // # Var
 const props = withDefaults(defineProps<PaDrawerType>(), {
   id: "",
   title: "标题",
-  scroll: false,
+  scroll: true,
   useScrollX: false,
   closeOnClickModal: true,
   closeOnPressEscape: true,
@@ -112,7 +112,7 @@ const state = reactive({
   fullscreen: false
 });
 
-const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
+const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 const language = computed(() => PancakeGlobalConfig.value?.language?.value || "zh-CN");
 
 // #Function 关闭弹窗回调

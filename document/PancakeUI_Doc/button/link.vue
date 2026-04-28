@@ -1,18 +1,18 @@
 <template>
   <div class="mb-4">
-    <pa-button iconName="star_arc_line" useLine :plain="false" type="primary">Primary</pa-button>
-    <pa-button iconName="star_arc_line" useLine :plain="false" type="success">Success</pa-button>
-    <pa-button iconName="star_arc_line" useLine :plain="false" type="info">Info</pa-button>
-    <pa-button iconName="star_arc_line" useLine :plain="false" type="warning">Warning</pa-button>
-    <pa-button iconName="star_arc_line" useLine :plain="false" type="danger">Danger</pa-button>
+    <pa-button useLine :plain="false" type="primary">Primary</pa-button>
+    <pa-button useLine :plain="false" type="success">Success</pa-button>
+    <pa-button useLine :plain="false" type="info">Info</pa-button>
+    <pa-button useLine :plain="false" type="warning">Warning</pa-button>
+    <pa-button useLine :plain="false" type="danger">Danger</pa-button>
   </div>
 
   <div class="mb-4">
-    <pa-button iconName="star_arc_line" useLine disabled type="primary">Primary</pa-button>
-    <pa-button iconName="star_arc_line" useLine disabled type="success">Success</pa-button>
-    <pa-button iconName="star_arc_line" useLine disabled type="info">Info</pa-button>
-    <pa-button iconName="star_arc_line" useLine disabled type="warning">Warning</pa-button>
-    <pa-button iconName="star_arc_line" useLine disabled type="danger">Danger</pa-button>
+    <pa-button useLine disabled type="primary">Primary</pa-button>
+    <pa-button useLine disabled type="success">Success</pa-button>
+    <pa-button useLine disabled type="info">Info</pa-button>
+    <pa-button useLine disabled type="warning">Warning</pa-button>
+    <pa-button useLine disabled type="danger">Danger</pa-button>
   </div>
 </template>
 

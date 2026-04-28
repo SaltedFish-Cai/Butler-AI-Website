@@ -180,13 +180,13 @@ import { computed, ComputedRef, inject, ref, useTemplateRef, watch } from "vue";
 import { MOptionsType } from "../type";
 import { PaOptionType, PaStructureType } from "M_Types";
 import { M_Message, M_MessageBox } from "../../feedback";
-import { PancakeGlobalConfigType } from "../../pa-content/type";
+import { PancakeGlobalConfigType } from "../../pa-manager/type";
 import MQuickTable from "./quick-table.vue";
 
 import _ from "lodash";
 const { cloneDeep } = _;
 
-const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
+const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 const languageValue = computed(() => {
   return PancakeGlobalConfig.value?.language?.value || "zh-CN";
 });

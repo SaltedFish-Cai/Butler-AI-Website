@@ -86,7 +86,7 @@ import formItem from "./form-basics-element.vue";
 import { PaFormItemType, PaFormChildType, PaFormProps, ConfigContextType, FormDataType } from "./type";
 import { ExMultipleConfigType, MultipleConfigType } from "./type";
 import { DatePickerShortcut } from "../pa-time/type";
-import { PancakeGlobalConfigType } from "../pa-content/type";
+import { PancakeGlobalConfigType } from "../pa-manager/type";
 
 import _ from "lodash";
 const { cloneDeep, isEqual, debounce } = _;
@@ -139,7 +139,7 @@ const inConfigObj: Record<string, any> = {};
 
 const ruleTabsFormRef: Record<string, { submitTabsForm: () => Promise<boolean | undefined> }> = {};
 // const setRuleTabsFormRefDebounce = debounce(setRuleTabsFormRef, 200, { trailing: true });
-const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
+const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 const injectSetScrollToIntersect = inject("setScrollToIntersect") as (
   el: Element,
   callback?: () => void,
