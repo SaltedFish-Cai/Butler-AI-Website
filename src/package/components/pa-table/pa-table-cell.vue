@@ -205,8 +205,8 @@
               :placeholder="item.cellConfig.placeholder || languagePackage?.['select'] + item.label"
               :disabled="item.cellConfig.disabled"
               :display="item.cellConfig.display"
-              :useSingleValue="item.cellConfig.useSingleValue"
-              :useSingleText="item.cellConfig.useSingleText"
+              :useValueBylink="item.cellConfig.useValueBylink"
+              :useTextByLink="item.cellConfig.useTextByLink"
               :clearable="item.cellConfig.clearable"
               :contrastData="item.cellConfig.contrastData?.[String(item.prop)]"
               :alwaysContrast="item.cellConfig.alwaysContrast"
@@ -311,7 +311,7 @@ import { findData as findDataSwitch } from "../pa-switch/find-data";
 import { findData as findDataSelect } from "../pa-select/find-data";
 import { PaOptionType } from "../manager-type";
 import { PaFormChildType } from "../pa-form/type";
-import { PancakeGlobalConfigType } from "../pa-content/type";
+import { PancakeGlobalConfigType } from "../pa-manager/type";
 
 type TableCellType = {
   structure: Array<PaTableUseItemType>;
@@ -331,7 +331,7 @@ type TableCellType = {
 };
 
 const props = withDefaults(defineProps<TableCellType>(), {});
-const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
+const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 
 // const exFunction = ref({} as Record<string, string>);
 // const exFormatter = ref({} as Record<string, string>);

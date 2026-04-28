@@ -65,8 +65,12 @@ const props = defineProps<{
   options: MessageBoxOptions;
 }>();
 
-const languagePackage = languageMap[typeof window !== "undefined" && typeof window !== "undefined" && window.PancakeGlobalConfig?.language || "zh-CN" || "zh-CN"]["message"];
-const language = typeof window !== "undefined" && typeof window !== "undefined" && window.PancakeGlobalConfig?.language || "zh-CN" || "zh-CN";
+const languagePackage =
+  languageMap[
+    (typeof window !== "undefined" && typeof window !== "undefined" && window.PancakeGlobalConfig?.language) || "zh-CN" || "zh-CN"
+  ]["message"];
+const language =
+  (typeof window !== "undefined" && typeof window !== "undefined" && window.PancakeGlobalConfig?.language) || "zh-CN" || "zh-CN";
 
 // 解构选项
 const {
@@ -132,7 +136,7 @@ const handleClose = () => {
 
 // #添加ESC键监听
 function handleKeyDown(e) {
-  const escapeMap = typeof window !== "undefined" && window.PancakeGlobalConfig.escapeMap || [];
+  const escapeMap = (typeof window !== "undefined" && window.PancakeGlobalConfig.escapeMap) || [];
   if (e.key === "Escape" && escapeMap[escapeMap.length - 1] === props.id) {
     handleClose();
   }
@@ -144,6 +148,7 @@ onMounted(() => {
   setTimeout(() => {
     visible.value = true;
   }, 10);
+  if (!window.PancakeGlobalConfig.escapeMap) window.PancakeGlobalConfig.escapeMap = [];
   closeOnPressEscape && document.addEventListener("keydown", handleKeyDown);
   if (closeOnPressEscape) {
     typeof window !== "undefined" && window.PancakeGlobalConfig.escapeMap.push(props.id);

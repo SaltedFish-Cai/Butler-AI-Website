@@ -97,7 +97,7 @@ import { PaTransferType } from "./type";
 import { randChar } from "../tools/rand-char";
 import { PaOptionType } from "../manager-type";
 import { findData as findDataSelect } from "./find-data";
-import { PancakeGlobalConfigType } from "../pa-content/type";
+import { PancakeGlobalConfigType } from "../pa-manager/type";
 
 import _ from "lodash";
 const { isEqual, isNil } = _;
@@ -133,7 +133,7 @@ const filterSelectedList = computed(() => {
 
 const selectRef = ref();
 
-const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
+const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 const languagePackage = computed(() => {
   return PancakeGlobalConfig.value?.language?.package?.["cell"] || {};
 });

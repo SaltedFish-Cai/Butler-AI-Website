@@ -78,7 +78,7 @@ export class ScrollListener {
   /**
    * 更新滚动条状态
    */
-  public update(element: HTMLElement, parentBoxRef: HTMLElement | null): ScrollUserInfo {
+  public update(element: HTMLElement, parentBoxRef: HTMLElement | undefined): ScrollUserInfo {
     // 为每个已注册的元素重新初始化滚动位置
     const MAX_THUMB_SIZE = 60;
 
@@ -633,7 +633,7 @@ export function listenElementScroll(
   useHorizontal: boolean;
   useVertical: boolean;
   remove: () => void;
-  update: (parentBoxRef: HTMLElement | null) => ScrollUserInfo;
+  update: (parentBoxRef: HTMLElement | undefined) => ScrollUserInfo;
 } {
   const listener = new ScrollListener(options);
   const id = `element-scroll-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
@@ -649,7 +649,7 @@ export function listenElementScroll(
     remove: () => {
       listener.removeElementScrollListener(id);
     },
-    update: (parentBoxRef: HTMLElement | null) => {
+    update: (parentBoxRef: HTMLElement | undefined) => {
       return listener.update(element, parentBoxRef);
     }
   };

@@ -1,10 +1,10 @@
 <template>
   <div v-if="!display" class="pa-number" :class="[props.class, { 'is-disabled': props.disabled }]" :style="{ ...props.style }">
-    <!-- input -->
+    <div v-if="title" :style="{ width: titleWidth }" class="pa-cell-label">
+      {{ typeof title === "string" ? title : title[languageValue] }}
+    </div>
+
     <div class="pa-number-input" :class="[isFocus ? 'is-focus' : '']">
-      <div v-if="title" :style="{ width: titleWidth }" class="pa-cell-label">
-        {{ typeof title === "string" ? title : title[languageValue] }}
-      </div>
       <input
         class="pa-number-input-inner"
         v-model="inValue"
@@ -28,127 +28,193 @@
       </div>
     </div>
   </div>
-  <div v-else class="pa-display-style">
-    <slot name="exDisplay"></slot>
-    <template v-if="$slots.exDisplay"> ( {{ keepDecimalPlaces(inValue, precision) || "--" }}{{ unit }} )</template>
-    <template v-else>{{ keepDecimalPlaces(inValue, precision) || "--" }}{{ unit }}</template>
+
+  <div v-else class="pa-display-style" :class="[props.class]" :style="{ ...props.style }">
+    <div v-if="title" :style="{ width: titleWidth }" class="pa-cell-label">
+      {{ typeof title === "string" ? title : title[languageValue] }}
+    </div>
+    <div class="pa-display-value_content">
+      <slot name="exDisplay"></slot>
+      <template v-if="$slots.exDisplay"> ( {{ keepDecimalPlaces(inValue, precision) || "--" }}{{ unit }} ) </template>
+      <template v-else>{{ keepDecimalPlaces(inValue, precision) || "--" }}{{ unit }}</template>
+    </div>
   </div>
+
   <div
     v-if="(alwaysContrast && !isNil(contrastData)) || (!isNil(contrastData) && !isEqual(inValue, contrastData))"
     :class="['pa-contrast-style']"
   >
     <slot name="exContrast"></slot>
-    <template v-if="$slots.exContrast"> ( {{ keepDecimalPlaces(contrastData, precision) || "--" }}{{ unit }} )</template>
+    <template v-if="$slots.exContrast"> ( {{ keepDecimalPlaces(contrastData, precision) || "--" }}{{ unit }} ) </template>
     <template v-else>{{ keepDecimalPlaces(contrastData, precision) || "--" }}{{ unit }}</template>
   </div>
 </template>
 
 <script lang="ts" setup>
+/**
+ * **模块导入**
+ * @description 导入 Vue 组合式 API
+ * */
 import { ref, computed, ComputedRef, watch, onMounted, onUnmounted, inject, nextTick } from "vue";
-import { PaNumberType } from "./type";
-import { randChar } from "../tools/rand-char";
-
+/**
+ * **模块导入**
+ * @description 导入组件类型定义
+ * */
+import { ComponentProps, ComponentEmits } from "./types";
+/**
+ * **模块导入**
+ * @description 导入精度处理工具函数
+ * */
 import { handlePrecision, keepDecimalPlaces } from "../utils/handlePrecision";
-import { PancakeGlobalConfigType } from "../pa-content/type";
-
+/**
+ * **模块导入**
+ * @description 导入全局配置类型
+ * */
+import { PancakeGlobalConfigType } from "../pa-manager/type";
+/**
+ * **模块导入**
+ * @description 导入 lodash 工具函数
+ * */
 import _ from "lodash";
 const { isEqual, isNil } = _;
-
+/**
+ * **输入框引用**
+ * @type `any`
+ * @description 输入框 DOM 元素引用
+ * */
 const inputRef = ref();
+/**
+ * **聚焦状态**
+ * @type `boolean`
+ * @description 当前是否处于聚焦状态
+ * */
 const isFocus = ref(false);
+/**
+ * **设置范围标志**
+ * @type `boolean`
+ * @description 控制光标位置设置
+ * */
 let setRange = false;
-
-const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
+/**
+ * **上次滚动时间**
+ * @type `number`
+ * @description 用于滚动节流
+ * */
+let lastWheelTime = 0;
+/**
+ * **滚动增量**
+ * @type `number`
+ * @description 累计滚动距离
+ * */
+let wheelDelta = 0;
+/**
+ * **全局配置注入**
+ * @type `ComputedRef<PancakeGlobalConfigType>`
+ * @description 注入全局配置对象
+ * */
+const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
+/**
+ * **语言包**
+ * @returns `Record<string, string>` 语言包对象
+ * @description 获取当前语言包配置
+ * */
 const languagePackage = computed(() => {
   return PancakeGlobalConfig.value?.language?.package?.["cell"] || {};
 });
+/**
+ * **语言值**
+ * @returns `string` 语言代码
+ * @description 获取当前语言设置
+ * */
 const languageValue = computed(() => {
   return PancakeGlobalConfig.value?.language?.value || "zh-CN";
 });
-
+/**
+ * **计算属性：占位符文本**
+ * @returns `string` 占位符文本
+ * @description 根据语言设置计算显示的占位符文本
+ * */
 const computedPlaceholder: ComputedRef<string> = computed(() => {
   const language = PancakeGlobalConfig.value?.language?.value || "zh-CN";
   return typeof props.placeholder === "object"
     ? props.placeholder[language] || languagePackage.value[`inputPlaceholder`]
     : props.placeholder || languagePackage.value[`inputPlaceholder`];
 });
-
-const props = withDefaults(defineProps<PaNumberType>(), {
-  id: randChar(),
-  modelValue: "",
+/**
+ * **组件属性**
+ * @type `ComponentProps`
+ * @description 组件的属性对象
+ * */
+const props = withDefaults(defineProps<ComponentProps>(), {
   clearable: true,
-  showPassword: false,
-  autofocus: false,
   controls: true,
   step: 1,
-  precision: 0,
-  unit: ""
+  precision: 0
 });
-
+/**
+ * **内部值**
+ * @type `string`
+ * @description 数字框的内部绑定值
+ * */
 const inValue = ref(handlePrecision(props.modelValue, props.precision));
-const emits = defineEmits(["update:modelValue", "change", "blur", "focus"]);
-
-// 检查最大最小值限制
+/**
+ * **组件事件定义**
+ * @description 定义组件可触发的事件
+ * */
+const emits = defineEmits<ComponentEmits>();
+/**
+ * **旧值存储**
+ * @type `number | string`
+ * @description 存储上一次的值，用于变更事件
+ * */
+let oldValue: number | string = props.modelValue || "";
+/**
+ * **检查最大最小值限制**
+ * @description 验证当前值是否在 min/max 范围内
+ * */
 function checkMinMaxLimit() {
   if (inValue.value === "" || inValue.value === "-") {
     return;
   }
-
   const numericValue = parseFloat(String(inValue.value));
   if (isNaN(numericValue)) {
     return;
   }
-
-  // 检查最小值限制
   if (props.min !== undefined && numericValue < props.min) {
     inValue.value = props.min.toString();
   }
-
-  // 检查最大值限制
   if (props.max !== undefined && numericValue > props.max) {
     inValue.value = props.max.toString();
   }
 }
-
-function handleInput(event) {
-  // 允许输入数字、小数点、负号和空字符串
-  const inputValue = event.target.value;
-
-  // 使用正则表达式过滤非数字字符（允许数字、小数点、负号）
+/**
+ * **处理输入事件**
+ * @param `event` `Event` 输入事件对象
+ * @description 过滤非数字字符并更新值
+ * */
+function handleInput(event: Event) {
+  const inputValue = (event.target as HTMLInputElement).value;
   const filteredValue = inputValue.replace(/[^0-9.\-]/g, "");
-
-  // 处理多个小数点的情况
   const decimalCount = (filteredValue.match(/\./g) || []).length;
   if (decimalCount > 1) {
-    // 如果有多于一个小数点，只保留第一个
     const firstDecimalIndex = filteredValue.indexOf(".");
     inValue.value =
       filteredValue.substring(0, firstDecimalIndex + 1) + filteredValue.substring(firstDecimalIndex + 1).replace(/\./g, "");
     return;
   }
-
-  // 处理多个负号的情况
   const minusCount = (filteredValue.match(/\-/g) || []).length;
   if (minusCount > 1 || (minusCount === 1 && filteredValue.indexOf("-") !== 0)) {
-    // 如果有多于一个负号，或者负号不在开头，只保留开头的负号
     inValue.value = filteredValue.replace(/\-/g, "");
     if (minusCount > 0) {
       inValue.value = "-" + inValue.value;
     }
     return;
   }
-
-  // 更新输入值
   inValue.value = filteredValue;
-
-  // 检查最大最小值限制
   checkMinMaxLimit();
-
-  // 处理小数精度（避免四舍五入）
   inValue.value = handlePrecision(inValue.value, props.precision);
   if (setRange) {
     setRange = false;
-    // 确保光标位置在数字末尾
     const inputElement = inputRef.value;
     if (inputElement) {
       nextTick(() => {
@@ -156,61 +222,60 @@ function handleInput(event) {
       });
     }
   }
-  // 实时触发更新
   emits("update:modelValue", inValue.value);
 }
-
+/**
+ * **处理变更事件**
+ * @description 验证并格式化最终值
+ * */
 function handleChange() {
-  // 确保最终值是有效的数字格式（允许数字、小数点、负号、空字符串）
   if (inValue.value === "" || inValue.value === "-") {
     inValue.value = "";
   } else {
-    // 验证数字格式，去除无效的字符
     const numericValue = String(inValue.value).replace(/[^0-9.\-]/g, "");
-
-    // 处理多个小数点
     const decimalParts = numericValue.split(".");
     if (decimalParts.length > 2) {
       inValue.value = decimalParts[0] + "." + decimalParts.slice(1).join("");
     } else {
       inValue.value = numericValue;
     }
-
-    // 处理负号位置
     if (String(inValue.value).includes("-") && String(inValue.value).indexOf("-") !== 0) {
       inValue.value = String(inValue.value).replace(/\-/g, "");
     }
   }
-
-  // 检查最大最小值限制
   checkMinMaxLimit();
-
-  // 处理小数精度（避免四舍五入）
   inValue.value = handlePrecision(inValue.value, props.precision);
-
-  emits("change", { value: Number(inValue.value), oldValue: Number(oldValue) });
-  emits("update:modelValue", Number(inValue.value));
+  emits("change", { value: inValue.value, oldValue });
+  emits("update:modelValue", inValue.value);
 }
-
-function handleKeyUp(e) {
-  const value = e.target.value;
-  if (value === "" || value === "-" || (e.target.selectionStart === 0 && e.target.selectionEnd === e.target.value.length)) {
+/**
+ * **处理键盘抬起事件**
+ * @param `e` `KeyboardEvent` 键盘事件对象
+ * @description 判断光标位置
+ * */
+function handleKeyUp(e: KeyboardEvent) {
+  const value = (e.target as HTMLInputElement).value;
+  if (
+    value === "" ||
+    value === "-" ||
+    ((e.target as HTMLInputElement).selectionStart === 0 &&
+      (e.target as HTMLInputElement).selectionEnd === (e.target as HTMLInputElement).value.length)
+  ) {
     setRange = true;
   } else {
     setRange = false;
   }
 }
-
-// 处理键盘事件
+/**
+ * **处理键盘按下事件**
+ * @description 监听上下箭头键
+ * */
 function handleKeyDown(event: KeyboardEvent) {
   if (props.disabled) {
     return;
   }
-
-  // 监听上下箭头键
   if (event.key === "ArrowUp" || event.key === "ArrowDown") {
-    event.preventDefault(); // 阻止默认行为（光标移动）
-
+    event.preventDefault();
     if (event.key === "ArrowUp") {
       handleControl("up");
     } else if (event.key === "ArrowDown") {
@@ -218,14 +283,15 @@ function handleKeyDown(event: KeyboardEvent) {
     }
   }
 }
-
+/**
+ * **处理聚焦事件**
+ * @description 添加事件监听并触发 focus 事件
+ * */
 function handleFocus() {
   isFocus.value = true;
-  // 添加滚动事件监听
   const inputElement = inputRef.value;
   if (inputElement) {
     inputElement.addEventListener("wheel", handleWheel, { passive: false });
-    // 添加键盘事件监听
     inputElement.addEventListener("keydown", handleKeyDown);
   }
   if (inValue.value === "" || inValue.value === "-") {
@@ -244,20 +310,24 @@ function handleFocus() {
   }
   emits("focus");
 }
-
+/**
+ * **处理失焦事件**
+ * @description 移除事件监听并触发 blur 事件
+ * */
 function handleBlur() {
   isFocus.value = false;
   const inputElement = inputRef.value;
   if (inputElement) {
     inputElement.removeEventListener("wheel", handleWheel);
-    // 移除键盘事件监听
     inputElement.removeEventListener("keydown", handleKeyDown);
   }
   emits("blur");
 }
-
+/**
+ * **处理控制按钮点击**
+ * @description 增减数字值
+ * */
 function handleControl(type: "down" | "up") {
-  // 确保当前值是有效的数字
   let currentValue = 0;
   if (inValue.value !== "" && inValue.value !== "-") {
     const numericValue = parseFloat(String(inValue.value));
@@ -265,70 +335,47 @@ function handleControl(type: "down" | "up") {
       currentValue = numericValue;
     }
   }
-
-  // 根据操作类型增减值，使用更精确的计算方法
   let newValue;
   if (type === "up") {
-    // 向上操作，增加值
     newValue = currentValue + props.step;
   } else {
-    // 向下操作，减少值
     newValue = currentValue - props.step;
   }
-
-  // 处理小数精度，避免浮点数精度问题
   if (props.precision !== undefined && props.precision >= 0) {
-    // 使用toFixed处理小数精度，然后转换为数字再转回字符串以避免科学计数法
     newValue = parseFloat(newValue.toFixed(props.precision + 2));
   }
-
   inValue.value = newValue.toString();
-
-  // 检查最大最小值限制
   checkMinMaxLimit();
-
-  // 处理小数精度（避免四舍五入）
   inValue.value = handlePrecision(inValue.value, props.precision);
-
-  // 触发更新
   emits("update:modelValue", inValue.value);
   emits("change", { value: inValue.value, oldValue });
 }
-
-// # 处理清除事件
+/**
+ * **清空输入内容**
+ * @description 清空数字框并触发相关事件
+ * */
 function clearInput() {
   inValue.value = "";
-  emits("update:modelValue", "");
-  emits("change", { value: "", oldValue });
+  emits("update:modelValue", "0");
+  emits("change", { value: "0", oldValue });
 }
-
-// # 处理滚动事件
-let lastWheelTime = 0;
-let wheelDelta = 0;
-const handleWheel = (event: WheelEvent) => {
+/**
+ * **处理滚动事件**
+ * @description 通过滚轮增减数字值
+ * */
+function handleWheel(event: WheelEvent) {
   if (isFocus.value && !props.disabled) {
     event.preventDefault();
-
     const now = Date.now();
     wheelDelta += Math.abs(event.deltaY);
-
-    // 降低敏感度：只有当滚动量达到阈值时才触发月份切换
     if (wheelDelta < 25) {
-      // 滚动量阈值，可以根据需要调整
       return;
     }
-
-    // 防抖处理：避免快速连续滚动
     if (now - lastWheelTime < 50) {
-      // 200ms防抖时间
       return;
     }
-
-    // 重置滚动量和时间
     wheelDelta = 0;
     lastWheelTime = now;
-
-    // 确保当前值是有效的数字
     let currentValue = 0;
     if (inValue.value !== "" && inValue.value !== "-") {
       const numericValue = parseFloat(String(inValue.value));
@@ -336,37 +383,26 @@ const handleWheel = (event: WheelEvent) => {
         currentValue = numericValue;
       }
     }
-
-    // 根据滚动方向增减值，使用更精确的计算方法
     let newValue;
     if (event.deltaY < 0) {
-      // 向上滚动，增加值
       newValue = currentValue - props.step;
     } else {
-      // 向下滚动，减少值
       newValue = currentValue + props.step;
     }
-
-    // 处理小数精度，避免浮点数精度问题
     if (props.precision !== undefined && props.precision >= 0) {
-      // 使用toFixed处理小数精度，然后转换为数字再转回字符串以避免科学计数法
       newValue = parseFloat(newValue.toFixed(props.precision + 2));
     }
-
     inValue.value = newValue.toString();
-
-    // 检查最大最小值限制
     checkMinMaxLimit();
-
-    // 处理小数精度（避免四舍五入）
     inValue.value = handlePrecision(inValue.value, props.precision);
-
-    // 触发更新
     emits("update:modelValue", inValue.value);
     emits("change", { value: inValue.value, oldValue });
   }
-};
-
+}
+/**
+ * **组件挂载生命周期**
+ * @description 初始化组件状态，设置自动聚焦
+ * */
 onMounted(() => {
   if (props.autofocus) {
     setTimeout(() => {
@@ -376,17 +412,20 @@ onMounted(() => {
     }, 300);
   }
 });
-
-// 在组件卸载时移除事件监听
+/**
+ * **组件卸载生命周期**
+ * @description 清理事件监听器
+ * */
 onUnmounted(() => {
   const inputElement = inputRef.value;
   if (inputElement) {
     inputElement.removeEventListener("wheel", handleWheel);
   }
 });
-
-let oldValue: number | string | undefined = props.modelValue;
-
+/**
+ * **监听 modelValue 变化**
+ * @description 外部值变化时更新内部值
+ * */
 watch(
   () => props.modelValue,
   data => {

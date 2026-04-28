@@ -1,47 +1,17 @@
 <template>
-  <pa-title :padding="['bottom']">基础使用</pa-title>
-  <pa-file
-    v-model="value1"
-    :fileIncludeType="['png', 'jpeg']"
-    :fileExcludeType="['jpg']"
-    :exData="exData"
-    :contrastData="value2"
-    :downloadTemplate="
-      () => {
-        M_Message.success('下载模版');
-      }
-    "
-  ></pa-file>
-
-  <pa-title :padding="['bottom']">Display</pa-title>
-  <pa-file v-model="value1" :exData="exData" :contrastData="value2" display></pa-file>
+  <pa-file v-model="fileList" :fileIncludeType="['jpeg', 'pdf']" :fileExcludeType="['png']" />
 </template>
 
 <script lang="ts" setup>
 import { ref } from "vue";
-import { M_Message } from "@/package/components/feedback";
 
-const exData = ref({
-  FileTypeCode: "WorkflowApprovalFile"
-});
-const value1 = ref([
+const fileList = ref([
   {
     FileId: "0000001",
-    FileName: "baidu.png",
-    FileUrl: "//www.baidu.com/img/flexible/logo/pc/result@2.png",
-    FullPath: "//www.baidu.com/img/flexible/logo/pc/result@2.png",
-    OriginalName: "baidu.png"
-  }
-]);
-
-const value2 = ref([
-  {
-    FileId: "000002",
-    FileName: "baidu.png",
-    FullPath: "//www.baidu.com/img/flexible/logo/pc/result@2.png",
-    OriginalName: "baidu.png"
+    FileName: "example.png",
+    FileUrl: "https://via.placeholder.com/150",
+    FullPath: "https://via.placeholder.com/150",
+    OriginalName: "example.png"
   }
 ]);
 </script>
-
-<style></style>

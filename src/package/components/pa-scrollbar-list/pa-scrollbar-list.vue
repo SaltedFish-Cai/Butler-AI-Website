@@ -66,9 +66,9 @@
 import { ref, reactive, onMounted, onBeforeUnmount, nextTick, computed, inject, ComputedRef } from "vue";
 import { randChar } from "../tools/rand-char";
 import { PaScrollbarListType } from "./type";
-import { PancakeGlobalConfigType } from "../pa-content/type";
+import { PancakeGlobalConfigType } from "../pa-manager/type";
 
-const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
+const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 const languagePackage = computed(() => PancakeGlobalConfig.value?.language?.package?.["cell"] || {});
 
 const scrollBarList = ref();

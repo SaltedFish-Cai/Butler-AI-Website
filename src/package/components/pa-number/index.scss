@@ -10,6 +10,7 @@
   display: flex;
   transition: var(--pa-animation-time, 0.2s);
   overflow: hidden;
+
   &:hover {
     border-color: var(--pa-color-primary);
     box-shadow: 0 0 0 2px var(--pa-color-primary-light-8);
@@ -21,6 +22,33 @@
   &:has(.is-focus) {
     border-color: var(--pa-color-primary);
     box-shadow: 0 0 0 2px var(--pa-color-primary-light-8);
+  }
+
+  &:has(.pa-number-input-controls) {
+    padding-right: 0;
+  }
+
+  &.is-disabled {
+    background-color: var(--pa-color-send-bg);
+
+    &:hover {
+      cursor: not-allowed;
+      border-color: var(--pa-color-border);
+      box-shadow: none;
+      .clean-box {
+        cursor: not-allowed;
+        border-color: var(--pa-color-border);
+      }
+    }
+
+    .pa-number-input,
+    .pa-number-input-inner {
+      color: var(--pa-color-info-light-1);
+
+      &:hover {
+        cursor: not-allowed;
+      }
+    }
   }
 
   .pa-number-input {
@@ -39,6 +67,7 @@
       width: 25px;
       height: 100%;
       text-align: center;
+
       .control-icon {
         border-left: 1px solid var(--pa-color-border);
         position: absolute;
@@ -49,7 +78,8 @@
         font-size: calc(var(--pa-size-font, 13px) - 2px);
         background-color: var(--pa-color-send-bg);
         transition: background-color 0.3s;
-        > .m-iconfont_icon {
+
+        > .pa-icon_font {
           line-height: normal;
           display: block;
           width: 100%;
@@ -67,6 +97,7 @@
       .control-icon.top {
         z-index: 1;
         top: calc(0px - var(--pa-size-padding, 10px) / 3);
+
         &::after {
           content: "";
           position: absolute;
@@ -89,9 +120,11 @@
       outline: 0;
       padding: 0;
       height: 100%;
+      line-height: 1.5;
       font-size: var(--pa-size-font, 13px);
       color: var(--pa-color-font);
       background: none;
+
       &::placeholder {
         color: var(--pa-color-info-light-4);
       }
@@ -112,30 +145,6 @@
         color: var(--pa-color-danger);
         cursor: pointer;
       }
-    }
-  }
-}
-.pa-number:has(.pa-number-input-controls) {
-  padding-right: 0;
-}
-.pa-number.is-disabled {
-  background-color: var(--pa-color-send-bg);
-  &:hover {
-    cursor: not-allowed;
-    border-color: var(--pa-color-border);
-    box-shadow: none;
-    .clean-box {
-      cursor: not-allowed;
-      border-color: var(--pa-color-border);
-    }
-  }
-
-  .pa-number-input,
-  .pa-number-input-inner {
-    color: var(--pa-color-info-light-1);
-
-    &:hover {
-      cursor: not-allowed;
     }
   }
 }

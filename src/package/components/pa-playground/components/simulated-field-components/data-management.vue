@@ -31,13 +31,13 @@
 <script lang="tsx" setup>
 import { ComputedRef, inject, ref, useTemplateRef, onMounted, nextTick } from "vue";
 import { PaOptionType, PaStructureType } from "M_Types";
-import { PancakeGlobalConfigType } from "../../../pa-content/type";
+import { PancakeGlobalConfigType } from "../../../pa-manager/type";
 import { MInterfaceConfig, PaPlaygroundPagesType, MStructureType } from "../../type";
 import { getAllData, storeData, updateData } from "../../../indexDB/indexDB";
 import { M_Message } from "../../../feedback";
 import MQuickTable from "../quick-table.vue";
 
-const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
+const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 const language = PancakeGlobalConfig.value?.language?.value || "zh-CN";
 
 const props = withDefaults(

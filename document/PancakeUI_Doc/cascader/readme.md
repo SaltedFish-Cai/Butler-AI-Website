@@ -6,40 +6,58 @@
 `pa-cascader` 可独立使用，在 `pa-form/pa-table` 中可使用时，需配置 `prop` 字段。
 :::
 
-## 组件功能展示
+## 基础用法
 
-<demo src="./base.vue" ></demo>
+组件默认使用 `cascader` 类型，也可以使用 `multiple-cascader` 类型展示多选功能, 并配合 `title` 属性展示标题。
 
-## `SaCascaderType`
+<demo src="./base.vue"></demo>
 
-| 字段           | 描述                     | 类型                                                                      | 默认值     |
-| -------------- | ------------------------ | ------------------------------------------------------------------------- | ---------- |
-| modelValue     | 绑定值                   | `Array<number \| string>` `number` `string`                               | —          |
-| useSingleValue | 是否使用单值模式         | `boolean`                                                                 | `false`    |
-| useSingleText  | 是否使用单文本模式       | `boolean`                                                                 | `false`    |
-| displayValue   | 纯展示类型下，直接显示值 | `string`                                                                  | —          |
-| type           | 组件类型                 | `cascader-check` `cascader` `multiple-cascader-check` `multiple-cascader` | `cascader` |
-| exOptions      | 选项                     | `MOptionV2Type.SelectList`                                                | —          |
-| placeholder    | 输入框提示               | `Record<"en-US" \| "zh-CN", string>` `string`                             | —          |
-| disabled       | 禁用状态                 | `boolean`                                                                 | `false`    |
-| display        | 纯展示                   | `boolean`                                                                 | `false`    |
-| clearable      | 显示清除按钮             | `boolean`                                                                 | `true`     |
-| contrastData   | 对比用原数据             | `Array<number \| string>` `number` `string`                               | —          |
-| alwaysContrast | 是否总是显示对不数据     | `boolean`                                                                 | `false`    |
+## Display 纯展示模式
 
-## `SaCascaderEvents`
+展示单层纯展示模式，使用 `display` 属性开启纯展示模式，如果使用 `displayValue` 属性，将直接显示值。
 
-| 字段   | 描述           | 类型       |
-| ------ | -------------- | ---------- |
-| change | 当值改变时触发 | `function` |
+<demo src="./display.vue"></demo>
 
-## `MOptionV2Type.SelectList(Array<SaSelectOptionsType>)`
+## 单层选择器
 
-| 字段     | 描述     | 类型                                              | 默认值  |
-| -------- | -------- | ------------------------------------------------- | ------- |
-| label    | 选项名   | `string`                                          |         |
-| value    | 选项值   | `string` `number` `boolean`                       |         |
-| children | 子选项   | `Array<SaSelectOptionsType>`                      |         |
-| disabled | 禁用状态 | `boolean`                                         | `false` |
-| base     | 默认数据 | `any`                                             |         |
-| tagStyle | 标签样式 | `{bgColor?: string, textColor?: string}` `string` |         |
+使用 `cascader-check` 展示 `单层` 选择器功能, 使用 `multiple-cascader-check` 展示 `单层多选` 选择器功能
+
+<demo src="./single.vue"></demo>
+
+## ComponentProps
+
+| 属性名              | 描述                                            | 类型                                                                                       | 默认值       |
+| ------------------- | ----------------------------------------------- | ------------------------------------------------------------------------------------------ | ------------ |
+| id                  | 唯一标识                                        | `string`                                                                                   | -            |
+| class               | 自定义类名                                      | `Array<string>` \| `string`                                                                | -            |
+| style               | 自定义样式                                      | `Record<string, string>`                                                                   | -            |
+| modelValue          | 绑定值                                          | `Array<number \| string>` \| `number` \| `string`                                          | -            |
+| type                | 组件类型                                        | `'cascader-check'` \| `'cascader'` \| `'multiple-cascader-check'` \| `'multiple-cascader'` | `'cascader'` |
+| useTextByLink       | 非多选模式下，是否使用'AA/aa'格式的选项标签模式 | `boolean`                                                                                  | `true`       |
+| clearable           | 显示清除按钮                                    | `boolean`                                                                                  | `true`       |
+| useValueBylink      | 非多选模式下，是否使用'AA-aa'格式的选项值模式   | `boolean`                                                                                  | -            |
+| exOptions           | 选项                                            | [`PaSelectOptionsType`](/document/PancakeUI_Doc/options#paselectoptionstype)               | -            |
+| placeholder         | 输入框提示                                      | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) \| `string`   | -            |
+| disabled            | 禁用状态                                        | `boolean`                                                                                  | -            |
+| display             | 纯展示                                          | `boolean`                                                                                  | -            |
+| displayValue        | 纯展示类型下，直接显示值                        | `string`                                                                                   | -            |
+| contrastData        | 对比用原数据                                    | `Array<number \| string>` \| `number` \| `string`                                          | -            |
+| alwaysContrast      | 是否总是显示对不数据                            | `boolean`                                                                                  | -            |
+| title               | 表单项标签                                      | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) \| `string`   | -            |
+| titleWidth          | 表单项标签宽度                                  | `string`                                                                                   | -            |
+| teleportInContainer | 是否使用 Teleport 挂载到容器                    | `boolean`                                                                                  | -            |
+
+## ComponentEmits
+
+| 事件名            | 描述             | 回调函数                                                                                                                                                     |
+| ----------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| update:modelValue | 双向绑定值更新时 | `(value: Array<number \| string> \| number \| string) => void`                                                                                               |
+| change            | 数据变更回调函数 | `(data: { value: Array<number \| string> \| number \| string; oldValue: Array<number \| string> \| number \| string; option: PaOptionType.Select }) => void` |
+
+## ComponentSlots
+
+| 插槽名称    | 作用                       |
+| ----------- | -------------------------- |
+| optionLabel | 自定义选项标签内容         |
+| exDisplay   | 纯展示模式下自定义展示内容 |
+| exContrast  | 对比数据自定义展示内容     |

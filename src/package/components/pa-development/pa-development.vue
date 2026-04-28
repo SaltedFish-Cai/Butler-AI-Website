@@ -19,12 +19,12 @@
 
 <script lang="ts" setup>
 import { reactive, inject, ComputedRef, onMounted, nextTick, onUnmounted } from "vue";
-import { PancakeGlobalConfigType } from "../pa-content/type";
+import { PancakeGlobalConfigType } from "../pa-manager/type";
 import { M_Message } from "../feedback";
 
 const props = withDefaults(defineProps<{ id: string }>(), { id: "" });
 
-const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
+const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 const menu = reactive({
   visible: false,
   top: "-100%",

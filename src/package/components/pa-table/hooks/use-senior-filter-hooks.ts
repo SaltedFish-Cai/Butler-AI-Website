@@ -4,7 +4,7 @@ import { ComputedRef, inject, reactive, toRefs } from "vue";
 import inBrowser from "../../tools/inBrowser";
 import { GetConditionals } from "../../api/table";
 import { PaOptionType } from "../../manager-type";
-import { PancakeGlobalConfigType } from "../../pa-content/type";
+import { PancakeGlobalConfigType } from "../../pa-manager/type";
 
 export const useSeniorFilterHooks = () => {
   // # Var
@@ -12,7 +12,7 @@ export const useSeniorFilterHooks = () => {
     seniorFilterOptions: { LineConditional: [] as PaOptionType.SelectList, linkOptions: [] as PaOptionType.SelectList },
     seniorFilterData: { visible: false, propItem: {} as Record<string, string> }
   });
-  const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
+  const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
   if (inBrowser && PancakeGlobalConfig.value?.table_config?.advancedQueryApi) {
     GetDictionaries();
   }

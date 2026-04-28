@@ -408,7 +408,7 @@ const props = withDefaults(defineProps<PaPlaygroundProps>(), {
   })
 });
 
-const PancakeGlobalConfig = inject("PancakeGlobalConfig") as Ref<any>;
+const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as Ref<any>;
 const language = computed(() => PancakeGlobalConfig.value?.language?.value || "zh-CN");
 
 // 表格组件引用

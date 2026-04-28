@@ -53,7 +53,7 @@ import {
   checkboxConfig,
   switchConfig
 } from "../../configs/cell-config";
-import { PancakeGlobalConfigType } from "../../../pa-content/type";
+import { PancakeGlobalConfigType } from "../../../pa-manager/type";
 import { MOptionsType } from "../../type";
 
 import _ from "lodash";
@@ -64,7 +64,7 @@ const props = defineProps<{
   editItem?: PaStructureType.FormV2;
 }>();
 
-const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
+const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 const language = PancakeGlobalConfig.value?.language?.value || "zh-CN";
 
 // @ options

@@ -379,13 +379,13 @@ import { useScrollHooks } from "./hooks/use-scroll-hooks";
 import { useSelectHooks } from "./hooks/use-select-hooks";
 import { useDragHooks } from "./hooks/use-drag-hooks";
 import { useValidateHooks } from "./hooks/use-validate-hooks";
-import { PancakeGlobalConfigType } from "../pa-content/type";
+import { PancakeGlobalConfigType } from "../pa-manager/type";
 import { splitArray } from "../utils/arraySplit";
 
 import _ from "lodash";
 const { cloneDeep, debounce } = _;
 
-const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
+const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 
 const mScrollbarListRef = useTemplateRef("mScrollbarListRef");
 const mScrollbarHeaderListRef = ref();

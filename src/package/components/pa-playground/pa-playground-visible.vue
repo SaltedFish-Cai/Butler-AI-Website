@@ -204,7 +204,7 @@ import {
 import { M_Message, M_MessageBox } from "../feedback";
 import PaPlaygroundVisible from "./pa-playground-visible.vue";
 import useDictionariesAll from "../tools/dictionaries-all";
-import { PancakeGlobalConfigType } from "../pa-content/type";
+import { PancakeGlobalConfigType } from "../pa-manager/type";
 import { PaOptionType, PaStructureType } from "M_Types";
 import { deleteDataByKey, getAllData, queryData, storeData, updateData } from "../indexDB/indexDB";
 import { PaPlaygroundPageButtonType } from "./components/type";
@@ -213,7 +213,7 @@ import { dictType } from "../tools/type";
 import _ from "lodash";
 const { isNil } = _;
 
-const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
+const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 const language = PancakeGlobalConfig.value?.language?.value || "zh-CN";
 const pageClickButtonConfig = ref<PaPlaygroundPageButtonType>();
 const findNextPage = ref<boolean>(false);

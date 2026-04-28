@@ -1,4 +1,4 @@
-import { PaOptionType } from "../manager-type";
+import { PaOptionType, LanguagePackageType } from "../manager-type";
 import { PaCellItemType } from "../cell";
 import { DatePickerShortcut } from "../pa-time/type";
 import { PaFormChildType } from "../pa-form/type";
@@ -8,8 +8,6 @@ export type PaTableExDependentType = {
   displayRule?: { [x: string]: (value) => boolean };
   exCellRules?: { [x: string]: Array<{ validator: (rule: any, value: any, callback: any) => void; trigger: string }> };
 };
-
-type languageKey = "en-US" | "zh-CN";
 
 export type PaTableCellExDependentType = {
   /**
@@ -585,7 +583,7 @@ export type PaTableItemType = {
    * @type `string`
    * @description 当设置该值为 `string` 时，会使用该值作为表单项标题
    * */
-  label?: Record<languageKey, string> | string;
+  label?: LanguagePackageType | string;
 
   /**
    * **固定宽度**

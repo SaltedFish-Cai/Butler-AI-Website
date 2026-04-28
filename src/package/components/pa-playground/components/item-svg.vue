@@ -156,7 +156,7 @@ import { M_Message } from "../../feedback";
 import _ from "lodash";
 const { isNil, isArray } = _;
 
-const PancakeGlobalConfig = inject("PancakeGlobalConfig") as Ref<any>;
+const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as Ref<any>;
 const language = computed(() => PancakeGlobalConfig.value?.language?.value || "zh-CN");
 
 // 接收props

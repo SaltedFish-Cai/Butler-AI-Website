@@ -43,13 +43,13 @@
 <script lang="tsx" setup>
 import { ComputedRef, inject, ref, useTemplateRef, computed, onMounted, nextTick } from "vue";
 import { PaOptionType, PaStructureType } from "M_Types";
-import { PancakeGlobalConfigType } from "../../../pa-content/type";
+import { PancakeGlobalConfigType } from "../../../pa-manager/type";
 import { MInterfaceConfig, PaPlaygroundPagesType, MStructureType } from "../../type";
 import { deleteData, getAllData, getDataById, storeData, updateData } from "../../../indexDB/indexDB";
 import { M_Message, M_MessageBox } from "../../../feedback";
 import MQuickTable from "../quick-table.vue";
 
-const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
+const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 const language = PancakeGlobalConfig.value?.language?.value || "zh-CN";
 const visibleTableRef = useTemplateRef("visibleTableRef");
 const props = withDefaults(

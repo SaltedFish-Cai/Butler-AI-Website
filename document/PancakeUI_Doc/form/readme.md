@@ -176,10 +176,10 @@ const formConfig: MStructureV2Type.FormV2[] = [
 | 字段     | 描述                  | 类型                                                                                       | 类型    |
 | -------- | --------------------- | ------------------------------------------------------------------------------------------ | ------- |
 | prop     | 表头 prop 表 key 字段 | `string`                                                                                   | —       |
-| unitName | 单位名称              | `Record<"en-US" \| "zh-CN", string>` `string`                                              | —       |
-| unitTip  | 单位提示              | `Record<"en-US" \| "zh-CN", string>` `string`                                              | —       |
-| label    | 表头展示              | `Record<"en-US" \| "zh-CN", string>` `string`                                              | —       |
-| tip      | 提示信息              | `Record<"en-US" \| "zh-CN", string>` `string`                                              | —       |
+| unitName | 单位名称              | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) `string`                                              | —       |
+| unitTip  | 单位提示              | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) `string`                                              | —       |
+| label    | 表头展示              | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) `string`                                              | —       |
+| tip      | 提示信息              | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) `string`                                              | —       |
 | disabled | 是否禁用              | `boolean`                                                                                  | `false` |
 | rules    | 外置校验规则          | `Array<{ required?: boolean; message?: Record<languageKey, string> \| string }>` `boolean` | `[]`    |
 | exSpan   | 单行分栏              | `1` `2` `3` `4`                                                                            | `4`     |
@@ -188,8 +188,8 @@ const formConfig: MStructureV2Type.FormV2[] = [
 
 ## `CellItemType`
 
-| 描述       | 单元格类型                                                    |
-| ---------- | ------------------------------------------------------------- |
+| 描述       | 单元格类型                                                     |
+| ---------- | -------------------------------------------------------------- |
 | 输入框     | [SaInputType](/document/PancakeUI_Doc/input/readme.html)       |
 | 数字输入框 | [SaNumberType](/document/PancakeUI_Doc/number/readme.html)     |
 | 选择器     | [SaSelectType](/document/PancakeUI_Doc/select/readme.html)     |
@@ -202,24 +202,27 @@ const formConfig: MStructureV2Type.FormV2[] = [
 
 ## `SaFormProps`
 
-| 字段                               | 描述            | 类型                                                                                           | 默认值  |
-| ---------------------------------- | --------------- | ---------------------------------------------------------------------------------------------- | ------- |
-| 表单 ID                            | id              | `string`                                                                                       | —       |
-| 外置默认数据(`非双向绑定数据`)     | data            | `object`                                                                                       | —       |
-| 外置对比数据                       | contrastData    | `object`                                                                                       | —       |
-| 是否一直展示对比数据               | alwaysContrast  | `boolean`                                                                                      | `false` |
-| 外置 `Option 参数` 依赖            | exOptions       | `object`                                                                                       | —       |
-| 强制不使用校验                     | useRequired     | `object`                                                                                       | `true`  |
-| 是否不展示 `label`                 | noLabel         | `boolean`                                                                                      | `false` |
-| `label` 宽度，不设置时使用弹性宽度 | labelWidth      | `number`                                                                                       | —       |
-| `labelWidth==true` 时 `label` 位置 | labelPosition   | `'left'` `'top'`                                                                               | —       |
-| 表单配置                           | structure       | `Array<MStructureV2Type.FormV2>`                                                               | —       |
-| 设置表单为纯展示                   | disabled        | `boolean`                                                                                      | `false` |
-| 是否纯展示表单                     | display         | `boolean`                                                                                      | `false` |
-| 外置依赖                           | exDependent     | [SaFormExDependentType](/document/PancakeUI_Doc/form/readme.html#SaFormexdependenttype)         | —       |
-| 单元格外置依赖                     | exCellDependent | [SaFormCellExDependentType](/document/PancakeUI_Doc/form/readme.html#SaFormcellexdependenttype) | —       |
-| 最大分栏数                         | maxSpan         | `1` `2` `3` `4`                                                                                | `4`     |
-| 最大分栏数                         | exSpan          | `1` `2` `3` `4`                                                                                | `4`     |
+| 字段             | 描述                               | 类型                                                                                            | 默认值      |
+| ---------------- | ---------------------------------- | ----------------------------------------------------------------------------------------------- | ----------- |
+| id               | 唯一标识                           | `string`                                                                                        | - |
+| class            | 自定义类名                         | `string`                                                                                        | - |
+| style            | 自定义样式                         | `Record<string, string>`                                                                        | - |
+| data             | 外置默认数据(`非双向绑定数据`)     | `object`                                                                                        | —           |
+| contrastData     | 外置对比数据                       | `object`                                                                                        | —           |
+| alwaysContrast   | 是否一直展示对比数据               | `boolean`                                                                                       | `false`     |
+| exOptions        | 外置 `Option 参数` 依赖            | `object`                                                                                        | —           |
+| useRequired      | 强制不使用校验                     | `object`                                                                                        | `true`      |
+| noLabel          | 是否不展示 `label`                 | `boolean`                                                                                       | `false`     |
+| labelWidth       | `label` 宽度，不设置时使用弹性宽度 | `number`                                                                                        | —           |
+| labelPosition    | `labelWidth==true` 时 `label` 位置 | `'left'` `'top'`                                                                                | —           |
+| structure        | 表单配置                           | `Array<MStructureV2Type.FormV2>`                                                                | —           |
+| disabled         | 设置表单为纯展示                   | `boolean`                                                                                       | `false`     |
+| display          | 是否纯展示表单                     | `boolean`                                                                                       | `false`     |
+| exDependent      | 外置依赖                           | [SaFormExDependentType](/document/PancakeUI_Doc/form/readme.html#SaFormexdependenttype)         | —           |
+| exCellDependent  | 单元格外置依赖                     | [SaFormCellExDependentType](/document/PancakeUI_Doc/form/readme.html#SaFormcellexdependenttype) | —           |
+| maxSpan          | 最大分栏数                         | `1` `2` `3` `4`                                                                                 | `4`         |
+| exSpan           | 最大分栏数                         | `1` `2` `3` `4`                                                                                 | `4`         |
+| onFormDataChange | 表单数据变化回调                   | `(data: object) => void`                                                                        | - |
 
 ## `SaFormExDependentType`
 
@@ -266,3 +269,26 @@ async function submitForm() {
 | setStructure_Item | 设置表格单个结构                           | `(prop: string, item: MStructureV2Type.FormV2) => void` |
 | changeData_All    | 设置表格所有数据                           | `(data: Array<object>) => void`                         |
 | changeData_Item   | 设置表格单个数据                           | `(prop: string, value: object) => void`                 |
+
+## `FormItemRule`
+
+| 字段      | 描述           | 类型                                                                            | 默认值 |
+| --------- | -------------- | ------------------------------------------------------------------------------- | ------ |
+| type      | 验证规则名称   | `"any"` `"array"` `"boolean"` `"date"` `"email"` `"enum"` `"float"` `"hex"` ... | —      |
+| required  | 是否必填       | `boolean`                                                                       | —      |
+| message   | 验证错误信息   | `string`                                                                        | —      |
+| trigger   | 验证触发方式   | `"blur"` `"change"` `"input"`                                                   | —      |
+| min       | 最小值         | `number`                                                                        | —      |
+| max       | 最大值         | `number`                                                                        | —      |
+| len       | 长度           | `number`                                                                        | —      |
+| pattern   | 正则表达式     | `RegExp`                                                                        | —      |
+| validator | 自定义验证函数 | `(params) => Promise<void> \| void`                                             | —      |
+| enum      | 枚举值         | `Array<boolean \| number \| string \| null \| undefined>`                       | —      |
+| transform | 转换值         | `(value) => any`                                                                | —      |
+
+## `FormDataType`
+
+| 字段    | 描述       | 类型      | 默认值 |
+| ------- | ---------- | --------- | ------ |
+| name    | 表单名称   | `string`  | —      |
+| isError | 是否有错误 | `boolean` | —      |

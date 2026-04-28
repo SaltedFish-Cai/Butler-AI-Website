@@ -26,26 +26,28 @@
 
 <demo src="./offset.vue"  ></demo>
 
-## `SaDialogType`
+## ComponentProps
 
-| 属性名             | 描述            | 类型                                             | 默认值  |
-| ------------------ | --------------- | ------------------------------------------------ | ------- |
-| modelValue         | 是否打开 Dialog | `boolean`                                        | `false` |
-| size               | Dialog 尺寸     | `l` `m` `max` `s`                                | `m`     |
-| height             | Dialog 高度     | `string` `number` `"auto"` `"default"`           | —       |
-| width              | Dialog 宽度     | `string` `number`                                | —       |
-| offsetX            | X 轴偏移量      | `string` `number`                                | `0`     |
-| offsetY            | Y 轴偏移量      | `string` `number`                                | `0`     |
-| keepAlive          | 缓存模式        | `boolean`                                        | `false` |
-| title              | Dialog 标题     | `string`                                         | —       |
-| subTitle           | Dialog 子标题   | `string`                                         | —       |
-| useFull            | 使用全屏模式    | `boolean`                                        | `true`  |
-| scroll             | 开启滚动        | `boolean`                                        | `true`  |
-| useScrollX         | 开启 X 轴滚动   | `boolean`                                        | `false` |
-| titleAlign         | 标题对齐方式    | `center` `left` `right`                          | `center`  |
-| closeOnClickModal  | 点击 Modal 退出 | `boolean`                                        | `true`  |
-| closeOnPressEscape | 按下 Esc 退出   | `boolean`                                        | `true`  |
-| padding            | 内边距          | `Array<"all"  "bottom"  "left"  "right"  "top">` | —       |
+| 属性名             | 描述            | 类型                                                                 | 默认值      |
+| ------------------ | --------------- | -------------------------------------------------------------------- | ----------- |
+| id                 | 唯一标识        | `string` `undefined`                                                 | `undefined` |
+| class              | 自定义类名      | `string` `undefined`                                                 | `undefined` |
+| modelValue         | 是否打开 Dialog | `boolean` `undefined`                                                | `undefined` |
+| size               | Dialog 尺寸     | `'l'` `'m'` `'max'` `'s'`                                            | `'m'`       |
+| height             | Dialog 高度     | `string` `number` `'auto'` `'default'` `undefined`                   | `'auto'`    |
+| width              | Dialog 宽度     | `string` `number` `undefined`                                        | `undefined` |
+| offsetX            | X 轴偏移量      | `string` `number` `undefined`                                        | `0`         |
+| offsetY            | Y 轴偏移量      | `string` `number` `undefined`                                        | `0`         |
+| keepAlive          | 缓存模式        | `boolean`                                                            | `true`      |
+| title              | Dialog 标题     | `string` `undefined`                                                 | `'标题'`    |
+| subTitle           | Dialog 子标题   | `string` `undefined`                                                 | `undefined` |
+| useFull            | 使用全屏模式    | `boolean`                                                            | `true`      |
+| scroll             | 开启滚动        | `boolean`                                                            | `true`      |
+| useScrollX         | 开启 X 轴滚动   | `boolean`                                                            | `false`     |
+| titleAlign         | 标题对齐方式    | `'center'` `'left'` `'right'` `undefined`                            | `'left'`    |
+| closeOnClickModal  | 点击 Modal 退出 | `boolean`                                                            | `true`      |
+| closeOnPressEscape | 按下 Esc 退出   | `boolean`                                                            | `true`      |
+| padding            | 内边距          | `Array<"all" \| "bottom" \| "left" \| "right" \| "top">` `undefined` | `undefined` |
 
 ## 使用 `插槽位置` 展示
 

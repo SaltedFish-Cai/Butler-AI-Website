@@ -1,4 +1,7 @@
 .pa-display-style {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
   width: 100%;
   font-size: var(--pa-size-font);
   word-wrap: break-word;
@@ -11,6 +14,10 @@
   border-radius: var(--pa-size-radius);
   border: 1px solid var(--pa-color-border);
   background-color: var(--pa-color-send-bg);
+  .pa-display-value_content {
+    width: max-content;
+    height: max-content;
+  }
 }
 
 .pa-contrast-style {

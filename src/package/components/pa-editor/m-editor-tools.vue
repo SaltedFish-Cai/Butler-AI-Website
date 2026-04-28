@@ -184,7 +184,7 @@ import { ComputedRef, inject, nextTick, onMounted, onUnmounted, ref, Ref } from 
 import { PaEditorType, Tool } from "./type";
 import { toolsConfig } from "./tools-config";
 import { useUpFileHooks } from "./use-upfile-hooks";
-import { PancakeGlobalConfigType } from "../pa-content/type";
+import { PancakeGlobalConfigType } from "../pa-manager/type";
 
 import _ from "lodash";
 const { throttle } = _;
@@ -207,7 +207,7 @@ const sourceCodeMode = ref(props.isSourceCodeMode);
 // 定义emits
 const emit = defineEmits(["popverChange", "sourceCodeModeChange"]);
 
-const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
+const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 
 const fileInput = ref();
 const popoverReferenceRef = ref({});

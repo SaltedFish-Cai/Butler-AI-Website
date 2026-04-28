@@ -1,20 +1,19 @@
 import type { ComponentPublicInstance } from "vue";
+import { LanguagePackageType } from "../manager-type";
 
 // 通知类型
 export type MessageType = "danger" | "info" | "success" | "warning";
-
-type languageKey = "en-US" | "zh-CN";
 
 // 通知配置接口
 export interface MessageOptions {
   /**
    * 通知标题
    */
-  title?: Record<languageKey, string> | string;
+  title?: LanguagePackageType | string;
   /**
    * 通知消息
    */
-  message?: Record<languageKey, string> | string;
+  message?: LanguagePackageType | string;
   /**
    * 通知类型
    */

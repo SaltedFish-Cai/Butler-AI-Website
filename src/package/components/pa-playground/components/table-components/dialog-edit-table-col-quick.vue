@@ -153,7 +153,7 @@
 
 <script lang="tsx" setup>
 import { computed, ComputedRef, inject, ref, useTemplateRef } from "vue";
-import { PancakeGlobalConfigType } from "../../../pa-content/type";
+import { PancakeGlobalConfigType } from "../../../pa-manager/type";
 import { PaStructureType } from "M_Types";
 import { cellMapConfig } from "../../configs/cell-config";
 import { MOptionsType } from "../../type";
@@ -178,7 +178,7 @@ const props = defineProps<{
   authorizationFunction?: Array<PaStructureType.TableV2>;
 }>();
 
-const PancakeGlobalConfig = inject("PancakeGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
+const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 const language = PancakeGlobalConfig.value?.language?.value || "zh-CN";
 
 // # Var

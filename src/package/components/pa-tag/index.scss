@@ -2,7 +2,6 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  // margin-left: -2px;
   transform: translateX(-2px);
   flex-wrap: wrap;
   width: 100%;
@@ -21,13 +20,15 @@
     overflow: hidden;
     width: max-content;
     flex: 0 0 max-content;
-    .pa-tag-text-content {
+
+    .pa-tag-text_content {
       width: max-content;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
     }
-    .close-icon {
+
+    .pa-tag-text_close {
       margin-left: calc(var(--pa-size-padding, 10px) / 2);
       color: var(--pa-color-default);
       transition: var(--pa-animation-time, 0.2s);
@@ -37,6 +38,24 @@
         color: var(--pa-color-danger);
         cursor: pointer;
       }
+    }
+  }
+}
+
+.pa-tag-collapse {
+  flex-wrap: nowrap;
+  max-width: calc(100%);
+}
+
+.pa-popover-reference {
+  & > .pa-tag-text {
+    color: var(--pa-color-font);
+    background-color: var(--pa-color-info-light-6);
+    transition: background-color var(--pa-animation-time, 0.2s);
+
+    &:hover {
+      color: var(--pa-color-white);
+      background-color: var(--pa-color-primary);
     }
   }
 }
