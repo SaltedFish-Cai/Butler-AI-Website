@@ -1,7 +1,7 @@
-// m-col 组件样式
+/** pa-col 组件样式 */
 $--pa-col-gutter: 24px !default;
 
-.m-col {
+.pa-col {
   position: relative;
   min-height: 1px;
   box-sizing: border-box;
@@ -10,26 +10,26 @@ $--pa-col-gutter: 24px !default;
   padding-left: calc(#{($--pa-col-gutter) / 2});
 }
 
-// 清除浮动
-.m-row::after {
+/** 清除浮动 */
+.pa-row::after {
   content: "";
   display: table;
   clear: both;
 }
 
-// 基础列宽样式
+/** 基础列宽样式 */
 @for $i from 1 through 24 {
-  .m-col-#{$i} {
+  .pa-col-#{$i} {
     flex: 0 0 percentage($i / 24);
     max-width: percentage($i / 24);
   }
 
-  .m-col-offset-#{$i} {
+  .pa-col-offset-#{$i} {
     margin-left: percentage($i / 24);
   }
 }
 
-// 响应式断点样式
+/** 响应式断点样式 */
 $--pa-breakpoints: (
   "xs": 0,
   "sm": 384px,
@@ -42,42 +42,42 @@ $--pa-breakpoints: (
 @each $bp, $width in $--pa-breakpoints {
   @media (min-width: $width) {
     @for $i from 1 through 24 {
-      .m-col-#{$bp}-#{$i} {
+      .pa-col-#{$bp}-#{$i} {
         flex: 0 0 percentage($i / 24);
         max-width: percentage($i / 24);
       }
 
-      .m-col-#{$bp}-offset-#{$i} {
+      .pa-col-#{$bp}-offset-#{$i} {
         margin-left: percentage($i / 24);
       }
     }
   }
 }
 
-// 列排序
-.m-col-order-first {
+/** 列排序 */
+.pa-col-order-first {
   order: -1 !important;
 }
 
-.m-col-order-last {
+.pa-col-order-last {
   order: 1000 !important;
 }
 
 @for $i from 0 through 24 {
-  .m-col-order-#{$i} {
+  .pa-col-order-#{$i} {
     order: $i !important;
   }
 }
 
-// 列对齐
-.m-col-align-top {
+/** 列对齐 */
+.pa-col-align-top {
   align-self: flex-start !important;
 }
 
-.m-col-align-middle {
+.pa-col-align-middle {
   align-self: center !important;
 }
 
-.m-col-align-bottom {
+.pa-col-align-bottom {
   align-self: flex-end !important;
 }

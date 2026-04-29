@@ -4,17 +4,33 @@
   </div>
 </template>
 
-<script setup lang="ts" name="MCol">
+<script setup lang="ts" name="PaCol">
+/**
+ * @component PaCol
+ * @description 栅格列组件，需配合 PaRow 使用
+ * @author Butler AI
+ */
 import { computed, inject, ref, Ref } from "vue";
-import type { BreakPoint, Responsive } from "./type";
+import type { BreakPoint, Responsive } from "./types";
+import "./index.scss";
 
+/**
+ * PaCol 组件 Props
+ */
 interface Props {
+  /** 栅格占据的列数（共24列） */
   span?: number;
+  /** 栅格左侧的间隔格数 */
   offset?: number;
+  /** <576px 响应式配置 */
   xs?: Responsive | number;
+  /** ≥576px 响应式配置 */
   sm?: Responsive | number;
+  /** ≥768px 响应式配置 */
   md?: Responsive | number;
+  /** ≥992px 响应式配置 */
   lg?: Responsive | number;
+  /** ≥1200px 响应式配置 */
   xl?: Responsive | number;
 }
 
@@ -27,11 +43,11 @@ const props = withDefaults(defineProps<Props>(), {
   xl: undefined
 });
 
-// 注入断点信息，如果没有则默认使用xl
+/** 注入断点信息，如果没有则默认使用xl */
 const breakPoint = inject<Ref<BreakPoint>>("breakPoint", ref<BreakPoint>("xl"));
 const gutter = inject<Ref<string>>("gutter", ref<string>("0px"));
 
-// 获取当前断点对应的span和offset值
+/** 获取当前断点对应的span值 */
 const currentSpan = computed(() => {
   const responsive = props[breakPoint.value];
   if (props.span) return props.span;
@@ -43,23 +59,12 @@ const currentSpan = computed(() => {
   return props.span;
 });
 
-// const currentOffset = computed(() => {
-//   const responsive = props[breakPoint.value];
-//   const offset = typeof responsive === "number" ? 0 : responsive?.offset;
-//   if (offset !== undefined) {
-//     return offset;
-//   }
-//   return props.offset;
-// });
-
-// 计算样式
+/** 计算样式 */
 const style = computed(() => {
   const span = currentSpan.value || 0;
-  // const offset = currentOffset.value || 0;
 
   const marginValue = gutter.value ? `${gutter.value}` : "0";
   const data = {
-    // 使用CSS变量或直接计算百分比宽度
     flex: `0 0 ${(span / 24) * 100}%`,
     maxWidth: `calc(${span / 24} * 100% - ${marginValue})`,
     marginLeft: marginValue,
@@ -71,19 +76,17 @@ const style = computed(() => {
   return data;
 });
 
-// 计算类名
+/** 计算类名 */
 const classes = computed(() => {
-  const classList = ["m-col"];
+  const classList = ["pa-col"];
 
-  // 添加固定的span和offset类
   if (props.span !== 24) {
-    classList.push(`m-col-${props.span}`);
+    classList.push(`pa-col-${props.span}`);
   }
   if (props.offset > 0) {
-    classList.push(`m-col-offset-${props.offset}`);
+    classList.push(`pa-col-offset-${props.offset}`);
   }
 
-  // 添加响应式类
   const breakPoints: BreakPoint[] = ["xs", "sm", "md", "lg", "xl"];
   breakPoints.forEach(bp => {
     const responsive = props[bp];
@@ -91,11 +94,11 @@ const classes = computed(() => {
       const span = typeof responsive === "number" ? responsive : responsive.span;
 
       if (span !== undefined) {
-        classList.push(`m-col-${bp}-${span}`);
+        classList.push(`pa-col-${bp}-${span}`);
       }
       const offset = typeof responsive === "number" ? 0 : responsive.offset;
       if (offset !== undefined && offset > 0) {
-        classList.push(`m-col-${bp}-offset-${offset}`);
+        classList.push(`pa-col-${bp}-offset-${offset}`);
       }
     }
   });
@@ -105,26 +108,24 @@ const classes = computed(() => {
 </script>
 
 <style lang="scss" scoped>
-.m-col {
+.pa-col {
   position: relative;
   min-height: 1px;
   box-sizing: border-box;
   float: left;
 }
 
-// 基础列宽样式
 @for $i from 1 through 24 {
-  .m-col-#{$i} {
+  .pa-col-#{$i} {
     flex: 0 0 percentage($i / 24);
     max-width: percentage($i / 24);
   }
 
-  .m-col-offset-#{$i} {
+  .pa-col-offset-#{$i} {
     margin-left: percentage($i / 24);
   }
 }
 
-// 响应式断点样式
 $breakpoints: (
   "xs": 0,
   "sm": 384px,
@@ -136,12 +137,12 @@ $breakpoints: (
 @each $bp, $width in $breakpoints {
   @media (min-width: $width) {
     @for $i from 1 through 24 {
-      .m-col-#{$bp}-#{$i} {
+      .pa-col-#{$bp}-#{$i} {
         flex: 0 0 percentage($i / 24);
         max-width: percentage($i / 24);
       }
 
-      .m-col-#{$bp}-offset-#{$i} {
+      .pa-col-#{$bp}-offset-#{$i} {
         margin-left: percentage($i / 24);
       }
     }

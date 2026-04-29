@@ -1,8 +1,15 @@
-// # Import
+/**
+ * @module pa-col
+ * @description 栅格列组件，需配合 pa-row 使用
+ */
+import type { App } from "vue";
 import PaCol from "./pa-col.vue";
 
-// #Function install
-const install = function (app) {
+/**
+ * 注册 PaCol 组件
+ * @param app Vue 应用实例
+ */
+const install = function (app: App): void {
   if (!app._context.components["PaCol"]) app.component("PaCol", PaCol);
 };
 
