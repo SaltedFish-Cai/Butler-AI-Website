@@ -36,7 +36,7 @@ class MessageManagerTypeImpl implements MessageManagerType {
    * */
   add(options: MessageOptions): MessageInstance {
     const id = `Message_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-    const languageKey = typeof window !== "undefined" && window.PancakeGlobalConfig?.language || "zh-CN";
+    const languageKey = (typeof window !== "undefined" && window.PancakeGlobalConfig?.language) || "zh-CN";
     const mergedOptions = {
       ...options,
       title: typeof options.title === "string" ? options.title : options.title?.[languageKey] || "",

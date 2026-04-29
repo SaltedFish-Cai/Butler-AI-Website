@@ -1,4 +1,4 @@
-@use '../package/components/styles/theme.scss';
+@use "../package/components/styles/theme.scss";
 
 /* dark/light radial transition */
 ::view-transition-old(root),
@@ -22,11 +22,25 @@
   --vp-home-hero-image-background-image: linear-gradient(-45deg, var(--pa-color-primary) 50%, #ffffff 50%);
 
   .VPNav {
-    height: var(--vp-nav-height);
-    box-sizing: border-box;
-    background-color: var(--pa-color-primary);
     --vp-c-text-1: var(--pa-color-primary-light-9) !important;
     --vp-c-text-2: var(--pa-color-font) !important;
+
+    height: var(--vp-nav-height);
+    box-sizing: border-box;
+    // background-color: var(--pa-color-primary);
+    border-radius: var(--pa-size-radius);
+    box-shadow: 0 0 10px 0 var(--pa-color-send-font);
+    margin: calc(var(--pa-size-padding) * 1.5);
+    width: calc(100% - var(--pa-size-padding) * 3);
+    box-sizing: border-box;
+    overflow: hidden;
+    .VPNavBar {
+      background-color: var(--pa-color-primary);
+    }
+    .divider {
+      display: none;
+    }
+
     .VPNavBarMenuLink,
     .VPNavBarMenuGroup > .button {
       transition: transform var(--pa-transition-duration, 0.3s) ease-in-out;
@@ -56,24 +70,95 @@
     }
   }
 
-  .VPSidebarItem {
-    &.level-0 .text {
-      font-size: var(--pa-size-font);
-    }
-    &.level-0 h2.text {
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      font-size: calc(var(--pa-size-font) + 2px);
-    }
-    &.level-1.is-active > .item .link > .text {
-      font-style: italic;
-      font-weight: bold;
-      color: var(--pa-color-primary) !important;
-      background-color: var(--pa-color-primary-light-8);
-      border-radius: var(--pa-size-radius);
+  @media (min-width: 960px) {
+    .VPNavBar:not(.has-sidebar):not(.home.top) {
+      --vp-c-text-1: var(--pa-color-font) !important;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(12px);
     }
   }
+
+  @media (min-width: 960px) {
+    .VPContent.has-sidebar {
+      padding-left: calc(var(--vp-sidebar-width) + calc(var(--pa-size-padding) * 2));
+    }
+  }
+  @media (min-width: 960px) {
+    .VPLocalNav.has-sidebar[data-v-da48a524] {
+      margin-left: calc(var(--vp-sidebar-width) + calc(var(--pa-size-padding) * 2));
+      width: calc(100% - calc(var(--vp-sidebar-width) + calc(var(--pa-size-padding) * 2)));
+    }
+  }
+  @media (min-width: 960px) {
+    .VPLocalNav[data-v-da48a524] {
+      top: calc(var(--vp-nav-height) + calc(var(--pa-size-padding) * 3));
+    }
+  }
+  .VPNavOverlay {
+    height: calc(var(--vp-nav-height) + calc(var(--pa-size-padding) * 3));
+  }
+
+  .VPSidebar {
+    padding: 0;
+    margin: calc(var(--vp-nav-height) + calc(var(--pa-size-padding) * 3)) calc(var(--pa-size-padding) * 1.5)
+      calc(var(--pa-size-padding) * 2);
+    border-radius: var(--pa-size-radius);
+    box-shadow: 0 0 10px 0 var(--pa-color-send-font);
+    background-color: var(--pa-color-bg);
+    .nav {
+      margin: calc(var(--pa-size-padding) * 1.5);
+      box-sizing: border-box;
+    }
+    .group {
+      width: 100%;
+      > .VPSidebarItem > .item {
+        position: sticky;
+        top: 0;
+        z-index: 1;
+        background-color: var(--pa-color-bg);
+      }
+    }
+
+    .VPSidebarItem {
+      &.level-0 .text {
+        font-size: var(--pa-size-font);
+      }
+      &.level-0 h2.text {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        font-size: calc(var(--pa-size-font) + 2px);
+      }
+      &.level-1.is-active > .item .link > .text {
+        font-style: italic;
+        font-weight: bold;
+        color: var(--pa-color-primary) !important;
+        background-color: var(--pa-color-primary-light-8);
+        border-radius: var(--pa-size-radius);
+      }
+    }
+  }
+
+  // .VPContent {
+  //   padding: 0 !important;
+  //   margin-left: calc(var(--vp-sidebar-width) + calc(var(--pa-size-padding) * 3)) !important;
+  //   margin-bottom: calc(var(--pa-size-padding) * 3) !important;
+  //   border-radius: var(--pa-size-radius);
+  //   box-shadow: 0 0 10px 0 var(--pa-color-send-font);
+  //   height: calc(100vh - var(--vp-nav-height) - var(--pa-size-padding) * 5);
+  //   overflow: scroll;
+  //   width: calc(100vw - var(--vp-sidebar-width) - calc(var(--pa-size-padding) * 5));
+  //   box-sizing: border-box;
+
+  //   .VPDoc {
+  //     padding-top: 0 !important;
+  //     height: 100%;
+  //     .container {
+  //       height: 100%;
+  //       display: flex;
+  //     }
+  //   }
+  // }
 
   .vp-doc > div > h2 {
     margin: 48px 0 0;
