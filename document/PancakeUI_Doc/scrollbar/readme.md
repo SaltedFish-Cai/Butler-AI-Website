@@ -25,13 +25,13 @@
 | 属性名                       | 描述                 | 类型                                                     | 默认值      |
 | ---------------------------- | -------------------- | -------------------------------------------------------- | ----------- |
 | id                           | 唯一标识             | `string`                                                 | -           |
-| class                        | 自定义类名           | `Array<string>` `string`                                 | -           |
+| class                        | 自定义类名           | `Array<string>` \| `string` | -           |
 | style                        | 自定义样式           | `Record<string, string>`                                 | -           |
 | useShadow                    | 是否使用阴影         | `boolean`                                                | `true`      |
 | useBackTop                   | 是否显示回到顶部按钮 | `boolean`                                                | `true`      |
 | showThumb                    | 是否显示滚动条       | `boolean`                                                | `true`      |
 | styleMode                    | 样式模式             | `'color'` `'default'`                                    | `'default'` |
-| paddingWidth                 | 滚动条宽度           | `number` `string`                                        | `10`        |
+| paddingWidth                 | 滚动条宽度           | `number` \| `string` | `10`        |
 | defaultScrollVerticalThumb   | 默认垂直滚动条位置   | `number`                                                 | `0`         |
 | defaultScrollHorizontalThumb | 默认水平滚动条位置   | `number`                                                 | `0`         |
 | useClosePopover              | 是否点击外部关闭     | `boolean`                                                | `true`      |
@@ -42,7 +42,7 @@
 | padding                      | 是否使用内边距       | `Array<"all" \| "bottom" \| "left" \| "right" \| "top">` | -           |
 | border                       | 是否使用边框         | `Array<"all" \| "bottom" \| "left" \| "right" \| "top">` | -           |
 | paddingBorder                | 是否使用内边距边框   | `Array<"all" \| "bottom" \| "left" \| "right" \| "top">` | -           |
-| parentBoxRef                 | 父元素引用           | `Ref<HTMLElement \| undefined>`                          | -           |
+| parentBoxRef                 | 父元素引用           | `HTMLElement` \| `undefined`                          | -           |
 
 ## ComponentEmits
 
