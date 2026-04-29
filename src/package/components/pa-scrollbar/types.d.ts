@@ -136,11 +136,11 @@ export type ComponentProps = {
   useClosePopover?: boolean;
   /**
    * **父元素引用**
-   * @type `HTMLElement` | `undefined`
+   * @type `HTMLHTMLElement` | `undefined`
    * @default `undefined`
    * @description 父元素引用
    * */
-  parentBoxRef?: HTMLElement;
+  parentBoxRef?: HTMLHTMLElement;
 };
 /**
  * **组件事件类型**
@@ -193,10 +193,10 @@ export type ComponentEmits = {
   (e: "scrollRight", value: boolean): void;
   /**
    * **元素相交事件**
-   * @param `el` `Element` 相交的元素
+   * @param `el` `HTMLElement` 相交的元素
    * @description 滚动条与元素相交时触发
    * */
-  (e: "intersecting", el: Element): void;
+  (e: "intersecting", el: HTMLElement): void;
   /**
    * **直接滚动事件**
    * @description 滚动条直接滚动时触发（无节流延迟）

@@ -266,10 +266,12 @@ const useVertical = ref(false);
 const scrollBodyHeight = ref(0);
 /**
  * **交叉观察列表**
- * @type `Ref<Array<{ isIntersecting: Ref<boolean>; stopObserving: () => void; el: Element }>>`
+ * @type `Ref<Array<{ isIntersecting: Ref<boolean>; stopObserving: () => void; el: HTMLElement }>>`
  * @description 交叉观察器列表
  * */
-const isIntersectingList = ref([] as unknown as Ref<{ isIntersecting: Ref<boolean>; stopObserving: () => void; el: Element }[]>);
+const isIntersectingList = ref(
+  [] as unknown as Ref<{ isIntersecting: Ref<boolean>; stopObserving: () => void; el: HTMLElement }[]>
+);
 /**
  * **组件挂载生命周期**
  * @description 初始化滚动监听
@@ -394,10 +396,10 @@ onMounted(() => {
  * @description 创建交叉观察器监听指定元素
  * */
 function createObserver(intersectClassName: string) {
-  const Els = document.querySelectorAll(`${intersectClassName}`);
+  const Els: any = document.querySelectorAll(`${intersectClassName}`);
   if (Els.length) {
     for (let i = 0; i < Els.length; i++) {
-      const el: Element = Els[i];
+      const el: HTMLElement = Els[i];
       const { isIntersecting, stopObserving } = useIntersectionObserver(el, {
         rootMargin: `0px 0px`,
         threshold: [1],
@@ -453,12 +455,12 @@ function setScrollTop(
 }
 /**
  * **设置滚动到交叉位置**
- * @param `el` `Element` 目标元素
+ * @param `el` `HTMLElement` 目标元素
  * @param `callback` `() => void` 回调函数
  * @param `options` `{ offsetX?: number; offsetY?: number }` 偏移选项
  * @description 滚动到指定元素位置
  * */
-function setScrollToIntersect(el: Element, callback?: () => void, { offsetX = 0, offsetY = 0 } = {}) {
+function setScrollToIntersect(el: HTMLElement, callback?: () => void, { offsetX = 0, offsetY = 0 } = {}) {
   closeObserver();
   const rect = getElementPosition(el, scrollbarBodyContentRef.value);
   if (rect) {

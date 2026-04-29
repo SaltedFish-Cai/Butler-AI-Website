@@ -438,8 +438,10 @@ function hidePopover() {
 function handleGlobalClick(event: MouseEvent) {
   if (!visible.value) return;
   const isClickOnReference =
-    popoverReferenceRef.value && (popoverReferenceRef.value === event.target || popoverReferenceRef.value.contains(event.target as Node));
-  const isClickOnPopover = popoverRef.value && (popoverRef.value === event.target || popoverRef.value.contains(event.target as Node));
+    popoverReferenceRef.value &&
+    (popoverReferenceRef.value === event.target || popoverReferenceRef.value.contains(event.target as Node));
+  const isClickOnPopover =
+    popoverRef.value && (popoverRef.value === event.target || popoverRef.value.contains(event.target as Node));
   if (isClickOnReference || isClickOnPopover) {
     return;
   }
