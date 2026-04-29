@@ -1,4 +1,4 @@
-export type PaPopoverType = {
+export type ComponentProps = {
   /**
    * **弹窗标识**
    * @type `string`
@@ -9,19 +9,17 @@ export type PaPopoverType = {
 
   /**
    * **自定义类名**
-   * @type `string`
+   * @type `Array<string> | string`
    * @default `undefined`
    * @description 当设置该值时，会添加到组件的类名中
-   * @description 该值的类型为 `string`，可以是任意类型
    * */
-  class?: string;
+  class?: Array<string> | string;
 
   /**
    * **弹窗类名**
    * @type `string`
    * @default `undefined`
    * @description 当设置该值时，会添加到弹窗的类名中
-   * @description 该值的类型为 `string`，可以是任意类型
    * */
   popoverClass?: string;
 
@@ -30,7 +28,6 @@ export type PaPopoverType = {
    * @type `Record<string, string>`
    * @default `undefined`
    * @description 当设置该值时，会添加到组件的样式中
-   * @description 该值的类型为 `Record<string, string>`，可以是任意类型
    * */
   style?: Record<string, string>;
 
@@ -39,7 +36,6 @@ export type PaPopoverType = {
    * @type `Record<string, string>`
    * @default `undefined`
    * @description 当设置该值时，会添加到参考元素的样式中
-   * @description 该值的类型为 `Record<string, string>`，可以是任意类型
    * */
   referenceStyle?: Record<string, string>;
 
@@ -62,7 +58,7 @@ export type PaPopoverType = {
 
   /**
    * **弹窗位置**
-   * @type `top` | `bottom`
+   * @type `"bottom" | "top"`
    * @default `top`
    * @description 弹窗位置
    * */
@@ -70,7 +66,7 @@ export type PaPopoverType = {
 
   /**
    * **触发方式**
-   * @type `hover` | `click`
+   * @type `"click" | "hover"`
    * @default `click`
    * @description 触发方式
    * */
@@ -118,7 +114,7 @@ export type PaPopoverType = {
 
   /**
    * **是否粘性**
-   * @type `'left' | 'right' | undefined`
+   * @type `"left" | "right" | undefined`
    * @default `undefined`
    * @description 是否粘性
    * */
@@ -139,4 +135,12 @@ export type PaPopoverType = {
    * @description 弹窗关闭前触发
    * */
   beforeClose?: () => boolean;
+};
+
+export type ComponentEmits = {
+  /**
+   * 弹窗显示状态变化时触发
+   * @param visible 当前显示状态
+   * */
+  (e: "change", visible: boolean): void;
 };

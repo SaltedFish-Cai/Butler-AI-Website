@@ -12,7 +12,6 @@
   </div>
   <template v-if="inRenderEnd && visible">
     <teleport :to="teleportTo || 'body'">
-      <!-- <transition :name="!inTop ? 'mo-animation-fadeUp' : 'mo-animation-fadeDown'"> -->
       <transition name="mo-animation-fadeIn">
         <div
           v-show="visible"
@@ -33,15 +32,14 @@
 </template>
 
 <script lang="ts" setup>
-// # Import
 import { nextTick, onMounted, onUnmounted, useSlots, ref, Ref, inject, watch } from "vue";
-import { PaPopoverType } from "./type";
+import { ComponentProps, ComponentEmits } from "./types.d.ts";
 import { getElementPosition } from "../utils/getElementPosition";
 
 import _ from "lodash";
 const { cloneDeep, throttle } = _;
 
-const props = withDefaults(defineProps<PaPopoverType>(), {
+const props = withDefaults(defineProps<ComponentProps>(), {
   trigger: "click",
   contentClassName: "",
   autoWidth: false,
@@ -50,7 +48,8 @@ const props = withDefaults(defineProps<PaPopoverType>(), {
   sticky: undefined,
   closeByScroll: true
 });
-const emits = defineEmits(["change"]);
+
+const emits = defineEmits<ComponentEmits>();
 
 const id = ref(`popover-${Date.now()}`);
 const inRenderEnd = ref(false);
@@ -59,29 +58,30 @@ const getPaAnagerGlobalZIndex = inject("getPaAnagerGlobalZIndex") as () => numbe
 const zIndex = ref(getPaAnagerGlobalZIndex());
 
 const animationFrameId = ref<number | null>(null);
-// const observer = ref<MutationObserver | null>(null);
 
 const popoverReferenceRef = ref<HTMLElement>();
 const popoverRef = ref<HTMLElement>();
 
-// @ 壳子
 const popoverStyle: Ref<Record<string, string>> = ref({
   top: "auto",
   bottom: "auto",
   left: "auto",
   right: "auto"
 });
-// @ 内容
+
 const popoverContentStyle = ref({});
-// @ 标点
+
 const popoverArrowStyle = ref({});
 
 const visible = ref(false);
 const hoverTimer = ref<any>(null);
 const slots = useSlots();
 
-// # 点击处理
-function handleClick(e) {
+/**
+ * 处理点击事件
+ * @param e 点击事件对象
+ * */
+function handleClick(e: MouseEvent) {
   if (props.stopPropagation) e.stopPropagation();
   if (props.disabled) return;
   const defaultSlots = slots?.reference?.();
@@ -104,18 +104,18 @@ function handleClick(e) {
   showPopover();
 }
 
-// # 鼠标进入处理
+/**
+ * 处理鼠标进入事件
+ * */
 function handleMouseEnter() {
   if (props.disabled) return;
   if (props.trigger !== "hover") return;
 
-  // 清除之前的隐藏计时器
   if (hoverTimer.value) {
     clearTimeout(hoverTimer.value);
     hoverTimer.value = null;
   }
 
-  // 设置显示延迟，避免快速划过时频繁显示
   hoverTimer.value = setTimeout(() => {
     if (!visible.value) {
       showPopover();
@@ -123,18 +123,18 @@ function handleMouseEnter() {
   }, 150);
 }
 
-// # 鼠标离开处理
+/**
+ * 处理鼠标离开事件
+ * */
 function handleMouseLeave() {
   if (props.disabled) return;
   if (props.trigger !== "hover") return;
 
-  // 清除显示计时器
   if (hoverTimer.value) {
     clearTimeout(hoverTimer.value);
     hoverTimer.value = null;
   }
 
-  // 设置隐藏延迟，避免鼠标在弹窗和目标元素之间移动时频繁隐藏
   hoverTimer.value = setTimeout(() => {
     if (visible.value) {
       hidePopover();
@@ -142,22 +142,24 @@ function handleMouseLeave() {
   }, 300);
 }
 
-// # 弹窗鼠标进入处理
+/**
+ * 处理弹窗鼠标进入事件
+ * */
 function handlePopoverEnter() {
   if (props.trigger !== "hover") return;
 
-  // 清除隐藏计时器，防止鼠标移动到弹窗时关闭
   if (hoverTimer.value) {
     clearTimeout(hoverTimer.value);
     hoverTimer.value = null;
   }
 }
 
-// # 弹窗鼠标离开处理
+/**
+ * 处理弹窗鼠标离开事件
+ * */
 function handlePopoverLeave() {
   if (props.trigger !== "hover") return;
 
-  // 设置隐藏延迟
   hoverTimer.value = setTimeout(() => {
     if (visible.value) {
       hidePopover();
@@ -165,7 +167,9 @@ function handlePopoverLeave() {
   }, 300);
 }
 
-// # 初始化计算popover位置
+/**
+ * 重新计算弹窗位置
+ * */
 function recalculatePosition() {
   if (!visible.value || !popoverReferenceRef.value) return;
   const ReferencePosition = getElementPosition(popoverReferenceRef.value);
@@ -174,22 +178,17 @@ function recalculatePosition() {
   let popoverArrowStyleValue = {};
 
   if (ReferencePosition) {
-    // @ 使用外部传入的宽度设置内容宽度
     if (props.popoverWidth) {
       popoverContentStyleValue = { ...popoverContentStyleValue, width: props.popoverWidth + "px" };
-    }
-    // @ 如果使用自动宽度适应设置内容宽度
-    else if (props.autoWidth) {
+    } else if (props.autoWidth) {
       const width = ReferencePosition.width < 200 ? 200 : ReferencePosition.width;
       popoverContentStyleValue = { ...popoverContentStyleValue, width: width + "px" };
     }
     popoverContentStyle.value = popoverContentStyleValue;
 
-    // @ 设置壳子的位置(下)
     popoverStyleValue = { ...popoverStyleValue, bottom: "unset", top: ReferencePosition.bottom + 9 + "px" };
     popoverStyle.value = popoverStyleValue;
 
-    // @ 设置锚点
     let anchorLeftPosition: Record<string, string> = { left: ReferencePosition.left + ReferencePosition.width / 2 + "px" };
     if (props.sticky === "left") {
       anchorLeftPosition = { left: ReferencePosition.windowLeft + 30 + "px" };
@@ -204,14 +203,15 @@ function recalculatePosition() {
     };
     popoverArrowStyle.value = popoverArrowStyleValue;
 
-    // @ 补全定位(左右)
     nextTick(() => {
       checkPositionOverOut();
     });
   }
 }
 
-// # 检查位置是否超出视口
+/**
+ * 检查弹窗是否超出视口
+ * */
 function checkPositionOverOut() {
   const ReferencePosition = getElementPosition(popoverReferenceRef.value);
   const popoverRefPosition = getElementPosition(popoverRef.value);
@@ -220,15 +220,11 @@ function checkPositionOverOut() {
   let popoverStyleValue = cloneDeep(popoverStyle.value);
   const popoverArrowStyleValue = cloneDeep(popoverArrowStyle.value);
 
-  //  @ 设置锚点
   if (props.sticky === "left") {
-    // 黏左侧 👈
     popoverStyleValue = { ...popoverStyleValue, right: "unset", left: ReferencePosition.windowLeft + "px" };
   } else if (props.sticky === "right") {
-    // 黏右侧 👉
     popoverStyleValue = { ...popoverStyleValue, left: "unset", right: ReferencePosition.windowRight + "px" };
   } else {
-    // 默认居中
     popoverStyleValue = {
       ...popoverStyleValue,
       right: "unset",
@@ -248,7 +244,6 @@ function checkPositionOverOut() {
     let popoverStyleValue = cloneDeep(popoverStyle.value);
     let popoverArrowStyleValue = cloneDeep(popoverArrowStyle.value);
 
-    // @ 检查是否超出视口左侧
     if (popoverRefPosition.outLeft) {
       popoverStyleValue = {
         ...popoverStyleValue,
@@ -257,7 +252,6 @@ function checkPositionOverOut() {
       };
     }
 
-    // @ 检查是否超出视口右侧
     if (popoverRefPosition.outRight) {
       popoverStyleValue = {
         ...popoverStyleValue,
@@ -266,7 +260,6 @@ function checkPositionOverOut() {
       };
     }
 
-    // @ 检查是否超出视口底部
     if (popoverRefPosition.outBottom || props.placement === "top") {
       popoverStyleValue = {
         ...popoverStyleValue,
@@ -285,25 +278,14 @@ function checkPositionOverOut() {
   });
 }
 
-// # 开始观察目标元素位置和尺寸变化
+/**
+ * 开始观察目标元素位置和尺寸变化
+ * */
 function startObserving() {
   if (!popoverReferenceRef.value || animationFrameId.value || !popoverRef.value) return;
 
   let lastPosition = getElementPosition(popoverReferenceRef.value);
   let lastPopoverPosition = getElementPosition(popoverRef.value);
-
-  // 使用MutationObserver监听元素尺寸变化
-  // observer.value = new MutationObserver(() => {
-  //   // 当元素尺寸变化时，重新计算popover位置
-  //   recalculatePosition();
-  // });
-
-  // observer.value.observe(popoverRef.value, {
-  //   attributes: true,
-  //   attributeFilter: ["style", "class"], // 监听样式和类名变化
-  //   childList: true,
-  //   subtree: true
-  // });
 
   function listenTarget() {
     const currentPosition = getElementPosition(popoverReferenceRef.value);
@@ -312,8 +294,6 @@ function startObserving() {
       lastPosition &&
       (currentPosition.top !== lastPosition.top || currentPosition.left !== lastPosition.left)
     ) {
-      // 当目标元素坐标位置发生变化时，关闭popover
-      // hidePopover();
       recalculatePosition();
     }
 
@@ -327,7 +307,6 @@ function startObserving() {
       lastPopoverPosition &&
       (popoverRefPosition.width !== lastPopoverPosition.width || popoverRefPosition.height !== lastPopoverPosition.height)
     ) {
-      // 当目标元素尺寸发生变化时，重新计算popover位置
       checkPositionOverOut();
     }
 
@@ -343,7 +322,6 @@ function startObserving() {
     listenTarget();
     listenPopover();
 
-    // 继续监听
     if (visible.value) {
       animationFrameId.value = requestAnimationFrame(throttleCheckPosition);
     }
@@ -351,26 +329,23 @@ function startObserving() {
 
   const throttleCheckPosition = throttle(checkPosition, 300, { trailing: true });
 
-  // 开始监听
   animationFrameId.value = requestAnimationFrame(throttleCheckPosition);
 }
 
-// # 停止观察目标元素
+/**
+ * 停止观察目标元素
+ * */
 function stopObserving() {
   if (animationFrameId.value) {
     cancelAnimationFrame(animationFrameId.value);
     animationFrameId.value = null;
   }
-
-  // if (observer.value) {
-  //   observer.value.disconnect();
-  //   observer.value = null;
-  // }
 }
 
-// # 显示弹窗
+/**
+ * 显示弹窗
+ * */
 function showPopover() {
-  // 初始化弹窗位置样式
   popoverStyle.value = { top: "auto", bottom: "auto", left: "auto", right: "auto" };
   popoverContentStyle.value = {};
   popoverArrowStyle.value = {};
@@ -380,17 +355,14 @@ function showPopover() {
     visible.value = true;
     emits("change", true);
 
-    // 初始计算popover位置
     recalculatePosition();
 
     nextTick(() => {
-      // 如果是点击触发，添加全局点击事件监听
       if (props.trigger === "click") {
         addGlobalClickListener();
       }
 
       nextTick(() => {
-        // 开始观察目标元素位置变化
         startObserving();
         if (props.closeByScroll && typeof window !== "undefined") {
           window.PancakeGlobalConfig.PopoverList = window.PancakeGlobalConfig.PopoverList || {};
@@ -401,68 +373,64 @@ function showPopover() {
   }
 }
 
-// # 隐藏弹窗
+/**
+ * 隐藏弹窗
+ * */
 function hidePopover() {
   visible.value = false;
   emits("change", false);
-  // 移除全局点击事件监听
   removeGlobalClickListener();
-  // 停止观察目标元素
   stopObserving();
-  // 删除全局事件监听
   if (typeof window !== "undefined" && window.PancakeGlobalConfig?.PopoverList?.[id.value]) {
     if (typeof window !== "undefined") delete window.PancakeGlobalConfig.PopoverList[id.value];
   }
 }
 
-// # 全局点击事件处理
-function handleGlobalClick(event) {
+/**
+ * 全局点击事件处理
+ * @param event 点击事件对象
+ * */
+function handleGlobalClick(event: MouseEvent) {
   if (!visible.value) return;
 
-  // 检查点击的是否是目标元素或其子元素
   const isClickOnReference =
-    popoverReferenceRef.value && (popoverReferenceRef.value === event.target || popoverReferenceRef.value.contains(event.target));
+    popoverReferenceRef.value && (popoverReferenceRef.value === event.target || popoverReferenceRef.value.contains(event.target as Node));
 
-  // 检查点击的是否是弹窗本身或其子元素
-  const isClickOnPopover = popoverRef.value && (popoverRef.value === event.target || popoverRef.value.contains(event.target));
-  // 如果点击的是目标元素或弹窗本身，不隐藏
+  const isClickOnPopover = popoverRef.value && (popoverRef.value === event.target || popoverRef.value.contains(event.target as Node));
   if (isClickOnReference || isClickOnPopover) {
     return;
   }
-  // 点击了其他元素，隐藏弹窗
   hidePopover();
 }
 
-// # 添加全局点击事件监听
+/**
+ * 添加全局点击事件监听
+ * */
 function addGlobalClickListener() {
   document.addEventListener("click", handleGlobalClick);
 }
 
-// # 移除全局点击事件监听
+/**
+ * 移除全局点击事件监听
+ * */
 function removeGlobalClickListener() {
   document.removeEventListener("click", handleGlobalClick);
 }
 
-// # 组件挂载和卸载时的事件处理
 onMounted(() => {
-  // 组件挂载时不需要立即添加监听，等点击时再添加
   inRenderEnd.value = true;
 });
 
 onUnmounted(() => {
-  // 组件卸载时确保移除事件监听
   removeGlobalClickListener();
-  // 清除所有计时器
   if (hoverTimer.value) {
     clearTimeout(hoverTimer.value);
     hoverTimer.value = null;
   }
-  // 停止观察目标元素
   stopObserving();
   hidePopover();
 });
 
-// # 暴露获取元素坐标和检查视口的方法给父组件
 defineExpose({ showPopover, hidePopover });
 
 watch(
@@ -473,9 +441,7 @@ watch(
       let popoverContentStyleValue = {};
       if (props.popoverWidth) {
         popoverContentStyleValue = { ...popoverContentStyleValue, width: props.popoverWidth + "px" };
-      }
-      // @ 如果使用自动宽度适应设置内容宽度
-      else if (newVal) {
+      } else if (newVal) {
         const width = ReferencePosition.width < 200 ? 200 : ReferencePosition.width;
         popoverContentStyleValue = { ...popoverContentStyleValue, width: width + "px" };
       }
