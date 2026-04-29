@@ -46,20 +46,23 @@
 
 ## ComponentEmits
 
-| 字段                | 描述                                                                   | 类型       |
-| ------------------- | ---------------------------------------------------------------------- | ---------- |
-| renderEnd           | 当滚动条渲染结束时触发                                                 | `function` |
-| scroll              | 当滚动条滚动时触发，`存在`节流延迟                                     | `function` |
-| scrollEnd           | 当滚动条滚动结束时触发，`存在`节流延迟 ，返回 `true` or `false`        | `function` |
-| scrollStart         | 当滚动条滚动开始时触发 ，`存在`节流延迟 ，返回 `true` or `false`       | `function` |
-| scrollLeft          | 当滚动条滚动到左侧时触发，`存在`节流延迟 ，返回 `true` or `false`      | `function` |
-| scrollRight         | 当滚动条滚动到右侧时触发，`存在`节流延迟 ，返回 `true` or `false`      | `function` |
-| intersecting        | 当滚动条与元素相交时触发 ，返回相交元素的信息                          | `function` |
-| directlyScroll      | 当滚动条直接滚动时触发，`不存在`节流延迟                               | `function` |
-| directlyScrollEnd   | 当滚动条直接滚动结束时触发，`不存在`节流延迟，返回 `true` or `false`   | `function` |
-| directlyScrollStart | 当滚动条直接滚动开始时触发，`不存在`节流延迟，返回 `true` or `false`   | `function` |
-| directlyScrollLeft  | 当滚动条直接滚动到左侧时触发，`不存在`节流延迟，返回 `true` or `false` | `function` |
-| directlyScrollRight | 当滚动条直接滚动到右侧时触发，`不存在`节流延迟，返回 `true` or `false` | `function` |
+| 字段                | 描述                                                                   | 参数类型                              |
+| ------------------- | ---------------------------------------------------------------------- | ------------------------------------- |
+| renderEnd           | 当滚动条渲染结束时触发                                                 | `data: RenderEndData`                 |
+| bodySizeXChange     | 当滚动条水平尺寸变化时触发                                             | -                                     |
+| bodySizeYChange     | 当滚动条垂直尺寸变化时触发                                             | -                                     |
+| scroll              | 当滚动条滚动时触发，`存在`节流延迟                                     | `data: ScrollDataType`                |
+| scrollEnd           | 当滚动条滚动结束时触发，`存在`节流延迟                                 | `value: boolean`                      |
+| scrollStart         | 当滚动条滚动开始时触发，`存在`节流延迟                                 | `value: boolean`                      |
+| scrollLeft          | 当滚动条滚动到左侧时触发，`存在`节流延迟                               | `value: boolean`                      |
+| scrollRight         | 当滚动条滚动到右侧时触发，`存在`节流延迟                               | `value: boolean`                      |
+| intersecting        | 当滚动条与元素相交时触发                                               | `el: Element`                         |
+| directlyScroll      | 当滚动条直接滚动时触发，`不存在`节流延迟                               | `data: DirectlyScrollData`            |
+| scrollChildChange   | 当滚动条子元素变化时触发                                               | `data: ScrollChildChangeData`         |
+| directlyScrollEnd   | 当滚动条直接滚动结束时触发，`不存在`节流延迟                           | `value: boolean`                      |
+| directlyScrollStart | 当滚动条直接滚动开始时触发，`不存在`节流延迟                           | `value: boolean`                      |
+| directlyScrollLeft  | 当滚动条直接滚动到左侧时触发，`不存在`节流延迟                         | `value: boolean`                      |
+| directlyScrollRight | 当滚动条直接滚动到右侧时触发，`不存在`节流延迟                         | `value: boolean`                      |
 
 ## ComponentSlots
 
