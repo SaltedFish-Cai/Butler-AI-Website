@@ -2,7 +2,7 @@ export const PancakeUISidebar = [
   {
     text: "全局配置",
     items: [
-      { text: "Manager 全局配置", link: "/document/PancakeUI_Doc/manager/readme" },
+      { text: "Manager 全局配置", link: "/document/PancakeUI_Doc/manager/readme", iconName: "config-base" },
       { text: "Development 开发工具", link: "/document/PancakeUI_Doc/development/readme", isShow: false }
     ]
   },

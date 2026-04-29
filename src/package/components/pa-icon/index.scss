@@ -1,4 +1,5 @@
-@use "./iconfont/iconfont.css";
+@use "./iconfont/iconfont.css" as icon1;
+@use "./iconfont-2/iconfont.css" as icon2;
 
 .pa-icon {
   display: inline-block;

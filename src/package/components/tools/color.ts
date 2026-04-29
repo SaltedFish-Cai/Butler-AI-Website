@@ -71,8 +71,8 @@ export function getLightColor(color: string, level: number): string {
 export function setThemeColor(themeColor?: string, isDark?: boolean) {
   if (!inBrowser || !themeColor) return;
 
-  const style = typeof window !== "undefined" && window.document?.documentElement.style || null;
-  const classList = typeof window !== "undefined" && window.document?.documentElement.classList || null;
+  const style = (typeof window !== "undefined" && window.document?.documentElement.style) || null;
+  const classList = (typeof window !== "undefined" && window.document?.documentElement.classList) || null;
 
   classList?.toggle("pa-content", true);
   classList?.toggle("light", true);
