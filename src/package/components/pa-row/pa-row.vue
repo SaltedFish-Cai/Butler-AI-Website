@@ -4,15 +4,29 @@
   </div>
 </template>
 
-<script setup lang="ts" name="MRow">
+<script setup lang="ts" name="PaRow">
+/**
+ * @component PaRow
+ * @description 栅格行组件，需配合 PaCol 使用
+ * @author Butler AI
+ */
 import { computed, provide, ref, onMounted, onUnmounted } from "vue";
-import type { BreakPoint } from "@/package/components/pa-col/type";
+import type { RowJustify, RowAlign } from "./types";
+import "./index.scss";
 
+/**
+ * PaRow 组件 Props
+ */
 interface Props {
+  /** 栅格间隔 */
   gutter?: string;
+  /** 边缘栅格间隔 */
   edgeGutter?: string;
-  justify?: "center" | "end" | "space-around" | "space-between" | "start";
-  align?: "bottom" | "middle" | "top";
+  /** 水平排列方式 */
+  justify?: RowJustify;
+  /** 垂直排列方式 */
+  align?: RowAlign;
+  /** 自定义元素标签 */
   tag?: string;
 }
 
@@ -22,24 +36,21 @@ const props = withDefaults(defineProps<Props>(), {
   tag: "div"
 });
 
-// 计算类名
+/** 计算类名 */
 const classes = computed(() => {
-  const classList = ["m-row"];
+  const classList = ["pa-row"];
 
-  // 添加justify类
-  classList.push(`m-row--${props.justify}`);
+  classList.push(`pa-row--${props.justify}`);
 
-  // 添加align类
-  classList.push(`m-row--align-${props.align}`);
+  classList.push(`pa-row--align-${props.align}`);
 
   return classList;
 });
 
-// 计算样式
+/** 计算样式 */
 const style = computed(() => {
   const styles: Record<string, string> = {};
 
-  // 设置gutter
   const _gutter = props.gutter || props.edgeGutter;
   if (_gutter) {
     styles.marginLeft = `calc(0px - ${_gutter})`;
@@ -49,11 +60,14 @@ const style = computed(() => {
   return styles;
 });
 
-// 使用ref存储当前断点
+/** 断点类型 */
+type BreakPoint = "lg" | "md" | "sm" | "xl" | "xs";
+
+/** 当前断点 */
 const breakPoint = ref<BreakPoint>("xl");
 
-// 计算当前断点
-const calculateBreakPoint = () => {
+/** 计算当前断点 */
+const calculateBreakPoint = (): BreakPoint => {
   const width = typeof window !== "undefined" ? window.innerWidth : 0;
   if (width < 384) return "xs";
   if (width < 768) return "sm";
@@ -62,23 +76,23 @@ const calculateBreakPoint = () => {
   return "xl";
 };
 
-// 监听窗口大小变化
-const handleResize = () => {
+/** 监听窗口大小变化 */
+const handleResize = (): void => {
   breakPoint.value = calculateBreakPoint();
 };
 
-// 组件挂载时初始化断点并添加事件监听
+/** 组件挂载时初始化断点并添加事件监听 */
 onMounted(() => {
   breakPoint.value = calculateBreakPoint();
   if (typeof window !== "undefined") window.addEventListener("resize", handleResize);
 });
 
-// 组件卸载时移除事件监听
+/** 组件卸载时移除事件监听 */
 onUnmounted(() => {
   if (typeof window !== "undefined") window.removeEventListener("resize", handleResize);
 });
 
-// 提供断点信息给子组件
+/** 提供断点信息给子组件 */
 provide("breakPoint", breakPoint);
 provide(
   "gutter",
@@ -91,43 +105,41 @@ provide(
 </script>
 
 <style lang="scss" scoped>
-.m-row {
+.pa-row {
   display: flex;
   flex-wrap: wrap;
   box-sizing: border-box;
 }
 
-// 水平对齐方式
-.m-row--start {
+.pa-row--start {
   justify-content: flex-start;
 }
 
-.m-row--end {
+.pa-row--end {
   justify-content: flex-end;
 }
 
-.m-row--center {
+.pa-row--center {
   justify-content: center;
 }
 
-.m-row--space-around {
+.pa-row--space-around {
   justify-content: space-around;
 }
 
-.m-row--space-between {
+.pa-row--space-between {
   justify-content: space-between;
 }
 
-// 垂直对齐方式
-.m-row--align-top {
+.pa-row--align-top {
   align-items: flex-start;
 }
 
-.m-row--align-middle {
+.pa-row--align-middle {
   align-items: center;
 }
 
-.m-row--align-bottom {
+.pa-row--align-bottom {
   align-items: flex-end;
 }
 </style>
