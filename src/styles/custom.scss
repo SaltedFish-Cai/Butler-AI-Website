@@ -88,16 +88,22 @@
 }
 
 /* Color Theme */
-.VPSidebarItem > .item .link > .text {
-  padding: 10px 0 10px 15px;
-}
-.VPSidebarItem.level-1.is-active > .item .link > .text {
-  font-style: italic;
-  font-weight: bold;
-  color: #ffffff !important;
-  background-color: var(--pa-color-primary);
-  border-radius: 5px;
-}
+// .VPSidebarItem > .item .link {
+//   padding: 10px 0 10px 15px;
+//   border-radius: 5px;
+//   .text {
+//     background: none !important
+//   }
+// }
+// .VPSidebarItem.level-1.is-active > .item .link {
+//   font-style: italic;
+//   font-weight: bold;
+//   color: #ffffff !important;
+//   background-color: var(--pa-color-primary);
+//   .text{
+//     color: var(--pa-color-white) !important;
+//   }
+// }
 .VPNavBarTitle.has-sidebar .title {
   border-bottom: 0;
 }

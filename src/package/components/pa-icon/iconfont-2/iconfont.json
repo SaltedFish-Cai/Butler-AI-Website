@@ -6,6 +6,41 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "718584",
+      "name": "edit-media",
+      "font_class": "editmedia",
+      "unicode": "e725",
+      "unicode_decimal": 59173
+    },
+    {
+      "icon_id": "12025564",
+      "name": "pagination",
+      "font_class": "pagination",
+      "unicode": "e604",
+      "unicode_decimal": 58884
+    },
+    {
+      "icon_id": "15838480",
+      "name": "file",
+      "font_class": "file",
+      "unicode": "e724",
+      "unicode_decimal": 59172
+    },
+    {
+      "icon_id": "12309446",
+      "name": "app_badge",
+      "font_class": "app_badge",
+      "unicode": "e7b9",
+      "unicode_decimal": 59321
+    },
+    {
+      "icon_id": "34453166",
+      "name": "assessed-badge",
+      "font_class": "assessed-badge",
+      "unicode": "e84b",
+      "unicode_decimal": 59467
+    },
+    {
       "icon_id": "42575460",
       "name": "delete-circle 2",
       "font_class": "a-delete-circle2",
@@ -1257,6 +1292,13 @@
       "font_class": "group",
       "unicode": "e64f",
       "unicode_decimal": 58959
+    },
+    {
+      "icon_id": "47483268",
+      "name": "col",
+      "font_class": "col-copy",
+      "unicode": "e723",
+      "unicode_decimal": 59171
     },
     {
       "icon_id": "42575404",

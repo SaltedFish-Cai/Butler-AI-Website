@@ -1,5 +1,10 @@
 <template>
-  <section class="pa-icon" @click="handleClick" :class="[props.class]" :style="{ ...props.style }">
+  <section
+    class="pa-icon"
+    @click="handleClick"
+    :class="[props.class]"
+    :style="{ ...props.style, fontFamily: props.fontFamily || 'pa-iconfont' }"
+  >
     <span v-if="!tip" :class="['pa-icon_font', `icon-${name}`]"></span>
     <template v-else>
       <pa-popover trigger="hover">
@@ -23,7 +28,7 @@ import { PancakeGlobalConfigType } from "../pa-manager/type";
  * @type `ComponentProps`
  * @description 组件的属性对象，包含 name、tip 等
  * */
-const props = withDefaults(defineProps<ComponentProps>(), { name: "magic_line" });
+const props = withDefaults(defineProps<ComponentProps>(), { name: "magic_line", fontFamily: "pa-iconfont" });
 /**
  * **组件事件定义**
  * @description 定义组件可触发的事件

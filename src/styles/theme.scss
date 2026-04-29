@@ -129,12 +129,19 @@
         justify-content: flex-start;
         font-size: calc(var(--pa-size-font) + 2px);
       }
-      &.level-1.is-active > .item .link > .text {
+      &.level-1.is-active > .item .link {
         font-style: italic;
         font-weight: bold;
         color: var(--pa-color-primary) !important;
         background-color: var(--pa-color-primary-light-8);
         border-radius: var(--pa-size-radius);
+      }
+      > .item .link {
+        padding: 10px 0 10px 15px;
+        border-radius: 5px;
+        .text {
+          background: none !important;
+        }
       }
     }
   }

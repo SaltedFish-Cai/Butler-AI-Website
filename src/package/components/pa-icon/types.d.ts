@@ -44,6 +44,13 @@ export type ComponentProps = {
    * @description 鼠标悬停时显示的提示信息
    * */
   tip?: LanguagePackageType | string;
+  /**
+   * **字体**
+   * @type `'pa-iconfont'` | `'butler-iconfont'` | `undefined`
+   * @default `'pa-iconfont'`
+   * @description 字体名称
+   */
+  fontFamily?: string;
 };
 
 /**

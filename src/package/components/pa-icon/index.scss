@@ -3,7 +3,6 @@
 
 .pa-icon {
   display: inline-block;
-  font-family: "pa-iconfont" !important;
   font-size: calc(var(--pa-size-font) + 1px);
 
   .pa-icon_font {
@@ -14,6 +13,5 @@
     height: 1em;
     font-size: inherit;
     line-height: 1em;
-    font-family: "pa-iconfont" !important;
   }
 }
