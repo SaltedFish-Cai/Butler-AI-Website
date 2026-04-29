@@ -89,10 +89,8 @@ const onCopy = async e => {
 <style lang="scss" scoped>
 .demo {
   margin: 10px 0;
-
-  /* box-shadow: 0 0px 2px #6f6e6e; */
+  box-shadow: 0 0 10px 0 var(--pa-color-send-font);
   overflow: hidden;
-  border: solid 1px var(--vp-c-divider);
   border-radius: var(--pa-size-radius);
   transition: 0.2s;
 }

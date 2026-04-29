@@ -120,7 +120,7 @@
 <script lang="ts" setup>
 import { ref, watch, onMounted, onUnmounted, computed } from "vue";
 import { randChar } from "../tools/rand-char";
-import { ComponentProps } from "./type";
+import { ComponentProps } from "./types";
 
 // Refs
 const popoverRef = ref();
