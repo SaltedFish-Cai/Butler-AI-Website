@@ -4,7 +4,7 @@ const { debounce, throttle } = _;
 /**
  * 滚动数据接口
  */
-export interface ScrollData {
+export interface ScrollInfoData {
   scrollTop: number;
   scrollLeft: number;
   isAtTop: boolean;
@@ -52,8 +52,8 @@ export class ScrollListener {
   private listeners: Map<
     string,
     {
-      handler: (data: ScrollData) => void;
-      debouncedHandler: (data: ScrollData) => void;
+      handler: (data: ScrollInfoData) => void;
+      debouncedHandler: (data: ScrollInfoData) => void;
       element: HTMLElement;
       scrollHandler: (event: Event) => void;
     }
@@ -137,8 +137,8 @@ export class ScrollListener {
   public addElementScrollListener(
     id: string,
     element: HTMLElement,
-    handler: (data: ScrollData) => void,
-    directlyHandler: (data: { scrollTop: number; scrollLeft: number; scrollData: ScrollData }) => void,
+    handler: (data: ScrollInfoData) => void,
+    directlyHandler: (data: { scrollTop: number; scrollLeft: number; scrollData: ScrollInfoData }) => void,
     options: Partial<ScrollListenerOptions> = {}
   ): void {
     // 检查元素是否有效
@@ -150,7 +150,7 @@ export class ScrollListener {
     const debounceTime = options.debounceTime || this.options.debounceTime;
     // 创建防抖处理函数
     const debouncedHandler = throttle(
-      (data: ScrollData) => {
+      (data: ScrollInfoData) => {
         handler(data);
       },
       debounceTime,
@@ -184,8 +184,8 @@ export class ScrollListener {
    */
   private createScrollHandler(
     element: HTMLElement,
-    debouncedHandler: (data: ScrollData) => void,
-    directlyHandler: (data: { scrollTop: number; scrollLeft: number; scrollData: ScrollData }) => void
+    debouncedHandler: (data: ScrollInfoData) => void,
+    directlyHandler: (data: { scrollTop: number; scrollLeft: number; scrollData: ScrollInfoData }) => void
   ): (event: Event) => void {
     return () => {
       const scrollData = this.getScrollData(element);
@@ -198,7 +198,7 @@ export class ScrollListener {
    * 获取元素滚动数据
    * @param element 要获取滚动数据的元素
    */
-  private getScrollData(element: HTMLElement): ScrollData {
+  private getScrollData(element: HTMLElement): ScrollInfoData {
     const scrollTop = element.scrollTop;
     const scrollLeft = element.scrollLeft;
     const clientHeight = element.clientHeight;
@@ -623,8 +623,8 @@ export class ScrollListener {
  */
 export function listenElementScroll(
   element: HTMLElement,
-  handler: (data: ScrollData) => void,
-  directlyHandler: (data: { scrollTop: number; scrollLeft: number; scrollData: ScrollData }) => void,
+  handler: (data: ScrollInfoData) => void,
+  directlyHandler: (data: { scrollTop: number; scrollLeft: number; scrollData: ScrollInfoData }) => void,
   options: ScrollListenerOptions = { defaultScrollHorizontalThumb: 0, defaultScrollVerticalThumb: 0 }
 ): {
   listener: ScrollListener;
@@ -664,7 +664,7 @@ export function listenElementScroll(
  */
 export function listenMultipleElementsScroll(
   elements: HTMLElement[],
-  handler: (data: ScrollData) => void,
+  handler: (data: ScrollInfoData) => void,
   directlyHandler: (data: { scrollTop: number; scrollLeft: number }) => void,
   options: ScrollListenerOptions = { defaultScrollHorizontalThumb: 0, defaultScrollVerticalThumb: 0 }
 ): { remove: () => void } {

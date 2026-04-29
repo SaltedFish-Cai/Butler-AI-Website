@@ -23,7 +23,4 @@ const install = function (app: App) {
     app.component("PaScrollBar", PaScrollBar);
   }
 };
-export default {
-  name,
-  install
-};
+export default { name, install };

@@ -88,7 +88,7 @@ import { randChar } from "../tools/rand-char";
  * **模块导入**
  * @description 导入组件类型定义
  * */
-import { ComponentProps, ComponentEmits } from "./types";
+import { ComponentProps, ComponentEmits, DirectlyScrollData } from "./types";
 /**
  * **模块导入**
  * @description 导入滚动监听相关工具
@@ -355,7 +355,8 @@ onMounted(() => {
         } else {
           emits("directlyScrollRight", false);
         }
-        emits("directlyScroll", { ...scrollData, scrollTop, scrollLeft, scrollDirectionY, scrollDirectionX });
+        const _data = { ...scrollData, scrollTop, scrollLeft, scrollDirectionY, scrollDirectionX } as DirectlyScrollData;
+        emits("directlyScroll", _data);
       },
       {
         debounceTime: 80,
