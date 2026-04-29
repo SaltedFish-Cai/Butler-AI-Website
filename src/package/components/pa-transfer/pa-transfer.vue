@@ -91,37 +91,22 @@
   </div>
 </template>
 
-<script lang="ts" setup name="PaTransfer">
-/**
- * @component PaTransfer
- * @description 穿梭框组件，在两个列表之间进行数据的选择和移动
- * @author Butler AI
- */
+<script lang="ts" setup>
 import { ref, Ref, computed, watch, onMounted, onUnmounted, inject, ComputedRef } from "vue";
-import type { TransferProps } from "./types";
+import { PaTransferType } from "./type";
 import { randChar } from "../tools/rand-char";
 import { PaOptionType } from "../manager-type";
 import { findData as findDataSelect } from "./find-data";
 import { PancakeGlobalConfigType } from "../pa-manager/type";
-import "./index.scss";
 
 import _ from "lodash";
 const { isEqual, isNil } = _;
 
-/**
- * PaTransfer 组件 Props
- */
-interface Props extends TransferProps {}
-
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<PaTransferType>(), {
   id: randChar()
 });
 
-const emits = defineEmits<{
-  (e: "update:modelValue", value: Array<boolean | number | string>): void;
-  (e: "change", payload: { value: Array<boolean | number | string>; oldValue: Array<boolean | number | string> }): void;
-  (e: "remoteMethod", query: string): void;
-}>();
+const emits = defineEmits(["update:modelValue", "change", "remoteMethod"]);
 
 const exOptionsList = ref(props?.exOptions || []);
 
@@ -161,16 +146,14 @@ let leftAddOrDel = 1;
 let rightAddOrDel = 1;
 
 const isShiftPressed = ref(false);
-
-/** 监听键盘按下事件 */
-const handleKeyDown = (event: KeyboardEvent): void => {
+// 监听键盘事件
+const handleKeyDown = (event: KeyboardEvent) => {
   if (event.key === "Shift") {
     isShiftPressed.value = true;
   }
 };
 
-/** 监听键盘抬起事件 */
-const handleKeyUp = (event: KeyboardEvent): void => {
+const handleKeyUp = (event: KeyboardEvent) => {
   if (event.key === "Shift") {
     isShiftPressed.value = false;
   }
@@ -188,19 +171,16 @@ onUnmounted(() => {
 
 /**
  * 处理选项点击事件
- * @param item - 点击的选项对象
- * @param direction - 方向
- * @param index - 索引
- * @param list - 列表
+ * @param {Object} item - 点击的选项对象
  */
-function handleOptionClick(item: PaOptionType.SelectItem, direction: string, index: number, list: PaOptionType.SelectList): void {
+function handleOptionClick(item, direction, index, list) {
   if (props.disabled) {
     return;
   }
   if (direction === "left") {
     const start = Math.min(leftOldIndex, index);
     const end = Math.max(leftOldIndex, index);
-    let splitArr: Array<boolean | number | string> = [item.value];
+    let splitArr = [item.value];
     if (leftOldIndex != -1 && isShiftPressed.value) {
       splitArr = list.slice(start, end + 1).map(item => item.value);
     }
@@ -218,7 +198,7 @@ function handleOptionClick(item: PaOptionType.SelectItem, direction: string, ind
   } else {
     const start = Math.min(rightOldIndex, index);
     const end = Math.max(rightOldIndex, index);
-    let splitArr: Array<boolean | number | string> = [item.value];
+    let splitArr = [item.value];
     if (leftOldIndex != -1 && isShiftPressed.value) {
       splitArr = list.slice(start, end + 1).map(item => item.value);
     }
@@ -236,11 +216,7 @@ function handleOptionClick(item: PaOptionType.SelectItem, direction: string, ind
   }
 }
 
-/**
- * 处理穿梭按钮点击事件
- * @param direction - 方向
- */
-function handleTransferClick(direction: string): void {
+function handleTransferClick(direction) {
   if (props.disabled) {
     return;
   }
@@ -257,16 +233,15 @@ function handleTransferClick(direction: string): void {
     awaitSelectList.value = [];
   }
 
-  emits("update:modelValue", selectedList.value.map(item => item.value));
+  emits(
+    "update:modelValue",
+    selectedList.value.map(item => item.value)
+  );
   emits("change", { value: selectedList.value.map(item => item.value), oldValue });
   oldValue = selectedList.value.map(item => item.value);
 }
 
-/**
- * 处理全选/取消全选
- * @param direction - 方向
- */
-function handleCheckedChange(direction: string): void {
+function handleCheckedChange(direction) {
   if (props.disabled) {
     return;
   }
@@ -277,11 +252,7 @@ function handleCheckedChange(direction: string): void {
   }
 }
 
-/**
- * 查找数据标签
- * @param data - 数据值
- */
-function findData(data: Array<boolean | number | string>): string {
+function findData(data) {
   if (props.displayValue) {
     return props.displayValue || "--";
   }
@@ -311,3 +282,7 @@ watch(
   { immediate: true, deep: true }
 );
 </script>
+
+<style lang="scss">
+@use "./index.scss";
+</style>
