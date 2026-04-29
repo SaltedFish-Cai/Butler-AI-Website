@@ -79,64 +79,54 @@
  * @description 导入 Vue 组合式 API
  * */
 import { ref, Ref, onMounted, onBeforeUnmount, nextTick, watch, provide } from "vue";
-
 /**
  * **模块导入**
  * @description 导入随机字符生成工具
  * */
 import { randChar } from "../tools/rand-char";
-
 /**
  * **模块导入**
  * @description 导入组件类型定义
  * */
 import { ComponentProps, ComponentEmits } from "./types";
-
 /**
  * **模块导入**
  * @description 导入滚动监听相关工具
  * */
 import { startDrag, listenElementScroll, observeElementResize, ScrollUserInfo } from "./scrollListener";
-
 /**
  * **模块导入**
  * @description 导入交叉观察器工具
  * */
 import { useIntersectionObserver } from "./useIntersectionObserver";
-
 /**
  * **模块导入**
  * @description 导入元素位置计算工具
  * */
 import { getElementPosition } from "../utils/getElementPosition";
-
 /**
  * **模块导入**
  * @description 导入 lodash 工具库
  * */
 import _ from "lodash";
 const { debounce } = _;
-
 /**
  * **组件事件定义**
  * @description 定义组件可触发的事件
  * */
 const emits = defineEmits<ComponentEmits>();
-
 /**
  * **滚动条主体引用**
  * @type `Ref<HTMLElement | undefined>`
  * @description 滚动条主体 DOM 引用
  * */
 const scrollbarBodyRef = ref();
-
 /**
  * **滚动条内容引用**
  * @type `Ref<HTMLElement | undefined>`
  * @description 滚动条内容 DOM 引用
  * */
 const scrollbarBodyContentRef = ref();
-
 /**
  * **组件属性**
  * @type `ComponentProps`
@@ -154,154 +144,132 @@ const prop = withDefaults(defineProps<ComponentProps>(), {
   defaultScrollVerticalThumb: 0,
   paddingWidth: "var(--pa-size-padding, 10px)"
 });
-
 /**
  * **组件唯一标识**
  * @type `Ref<string>`
  * @description 组件的唯一标识
  * */
 const id = ref(randChar());
-
 /**
  * **垂直滑块引用**
  * @type `Ref<HTMLElement | undefined>`
  * @description 垂直滚动条滑块 DOM 引用
  * */
 const verticalThumbRef = ref();
-
 /**
  * **水平滑块引用**
  * @type `Ref<HTMLElement | undefined>`
  * @description 水平滚动条滑块 DOM 引用
  * */
 const horizontalThumbRef = ref();
-
 /**
  * **垂直滚动值**
  * @type `Ref<number>`
  * @description 垂直滚动位置值
  * */
 const scrollVerticalValue = ref(0);
-
 /**
  * **水平滚动值**
  * @type `Ref<number>`
  * @description 水平滚动位置值
  * */
 const scrollHorizontalValue = ref(0);
-
 /**
  * **是否滚动到底部**
  * @type `Ref<boolean>`
  * @description 标识是否已滚动到底部
  * */
 const isScrollEnd = ref(true);
-
 /**
  * **移除监听函数**
  * @type `Function | undefined`
  * @description 移除滚动监听的函数
  * */
 let removeListen: (() => void) | undefined;
-
 /**
  * **更新监听函数**
  * @type `Function | undefined`
  * @description 更新滚动监听的函数
  * */
 let updateListen: (parentBoxRef: HTMLElement | undefined) => ScrollUserInfo;
-
 /**
  * **垂直滑块缩放比例**
  * @type `number`
  * @description 垂直滚动条滑块缩放比例
  * */
 let _verticalThumbScale = 1;
-
 /**
  * **水平滑块缩放比例**
  * @type `number`
  * @description 水平滚动条滑块缩放比例
  * */
 let _horizontalThumbScale = 1;
-
 /**
  * **垂直拖拽控制器**
  * @type `any`
  * @description 垂直滚动条拖拽控制器
  * */
 let verticalDragController: any;
-
 /**
  * **水平拖拽控制器**
  * @type `any`
  * @description 水平滚动条拖拽控制器
  * */
 let horizontalDragController: any;
-
 /**
  * **水平滑块高度**
  * @type `Ref<number>`
  * @description 水平滚动条滑块高度
  * */
 const horizontalThumb = ref(0);
-
 /**
  * **垂直滑块高度**
  * @type `Ref<number>`
  * @description 垂直滚动条滑块高度
  * */
 const verticalThumb = ref(0);
-
 /**
  * **水平滑块位置**
  * @type `Ref<number>`
  * @description 水平滚动条滑块位置
  * */
 const scrollHorizontalThumb = ref(prop.defaultScrollHorizontalThumb);
-
 /**
  * **垂直滑块位置**
  * @type `Ref<number>`
  * @description 垂直滚动条滑块位置
  * */
 const scrollVerticalThumb = ref(prop.defaultScrollVerticalThumb);
-
 /**
  * **监听器实例**
  * @type `Ref<any>`
  * @description 滚动监听器实例
  * */
 const listener = ref();
-
 /**
  * **是否使用水平滚动**
  * @type `Ref<boolean>`
  * @description 标识是否启用水平滚动
  * */
 const useHorizontal = ref(false);
-
 /**
  * **是否使用垂直滚动**
  * @type `Ref<boolean>`
  * @description 标识是否启用垂直滚动
  * */
 const useVertical = ref(false);
-
 /**
  * **滚动主体高度**
  * @type `Ref<number>`
  * @description 滚动主体的高度值
  * */
 const scrollBodyHeight = ref(0);
-
 /**
  * **交叉观察列表**
  * @type `Ref<Array<{ isIntersecting: Ref<boolean>; stopObserving: () => void; el: Element }>>`
  * @description 交叉观察器列表
  * */
 const isIntersectingList = ref([] as unknown as Ref<{ isIntersecting: Ref<boolean>; stopObserving: () => void; el: Element }[]>);
-
 /**
  * **组件挂载生命周期**
  * @description 初始化滚动监听
@@ -419,7 +387,6 @@ onMounted(() => {
     });
   });
 });
-
 /**
  * **创建观察器**
  * @param `intersectClassName` `string` 监听元素的类名
@@ -439,7 +406,6 @@ function createObserver(intersectClassName: string) {
     }
   }
 }
-
 /**
  * **关闭观察器**
  * @description 关闭所有交叉观察器
@@ -452,7 +418,6 @@ function closeObserver() {
     isIntersectingList.value.length = 0;
   }
 }
-
 /**
  * **设置滚动左边距**
  * @param `value` `number` 滚动位置值
@@ -469,7 +434,6 @@ function setScrollLeft(
 ) {
   listener.value.setElementScrollPosition(scrollbarBodyRef.value, { scrollLeft: value, behavior, callback, offsetX, offsetY });
 }
-
 /**
  * **设置滚动顶边距**
  * @param `value` `number` 滚动位置值
@@ -486,7 +450,6 @@ function setScrollTop(
 ) {
   listener.value.setElementScrollPosition(scrollbarBodyRef.value, { scrollTop: value, behavior, callback, offsetX, offsetY });
 }
-
 /**
  * **设置滚动到交叉位置**
  * @param `el` `Element` 目标元素
@@ -524,9 +487,7 @@ function setScrollToIntersect(el: Element, callback?: () => void, { offsetX = 0,
     }
   }
 }
-
 provide("setScrollToIntersect", setScrollToIntersect);
-
 /**
  * **重置观察器**
  * @description 重置交叉观察器
@@ -535,14 +496,12 @@ function resetObserver() {
   closeObserver();
   if (prop.intersectClassName) createObserver(prop.intersectClassName);
 }
-
 /**
  * **防抖更新函数**
  * @type `Function`
  * @description 防抖处理后的更新函数
  * */
 const debounceSetUpdate = debounce(setUpdate, 110);
-
 /**
  * **更新滚动状态**
  * @description 更新滚动条状态和尺寸
@@ -596,7 +555,6 @@ function setUpdate() {
     });
   }
 }
-
 /**
  * **组件卸载前生命周期**
  * @description 清理监听器和控制器
@@ -607,7 +565,6 @@ onBeforeUnmount(() => {
   verticalDragController?.stop?.();
   horizontalDragController?.stop?.();
 });
-
 /**
  * **监听交叉观察列表**
  * @description 监听元素交叉状态变化
@@ -625,7 +582,6 @@ watch(
   },
   { deep: true }
 );
-
 defineExpose({
   update: debounceSetUpdate,
   setScrollTop,
