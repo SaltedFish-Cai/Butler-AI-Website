@@ -60,3 +60,10 @@
 | directlyScrollStart | 当滚动条直接滚动开始时触发，`不存在`节流延迟，返回 `true` or `false`   | `function` |
 | directlyScrollLeft  | 当滚动条直接滚动到左侧时触发，`不存在`节流延迟，返回 `true` or `false` | `function` |
 | directlyScrollRight | 当滚动条直接滚动到右侧时触发，`不存在`节流延迟，返回 `true` or `false` | `function` |
+
+## ComponentSlots
+
+| 插槽名      | 作用         |
+| ----------- | ------------ |
+| `'default'` | 默认内容插槽 |
+| `'footer'`  | 底部插槽     |

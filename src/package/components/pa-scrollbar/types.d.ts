@@ -1,4 +1,12 @@
+/**
+ * **模块导入**
+ * @description 导入滚动信息数据类型
+ * */
 import { ScrollInfoData } from "./scrollListener";
+/**
+ * **组件属性定义**
+ * @description 滚动条组件的属性类型
+ * */
 export type ComponentProps = {
   /**
    * **组件唯一标识**
@@ -225,16 +233,28 @@ export type ComponentEmits = {
   (e: "directlyScrollRight", value: boolean): void;
 };
 
+/**
+ * **滚动数据类型**
+ * @description 滚动条数据结构
+ * */
 export type ScrollDataType = {
   scrollTop: number;
   scrollLeft: number;
 };
 
+/**
+ * **渲染结束数据类型**
+ * @description 渲染结束时返回的数据结构
+ * */
 export type RenderEndData = {
   bodyWidth: number;
   bodyHeight: number;
 };
 
+/**
+ * **直接滚动数据类型**
+ * @description 直接滚动事件的数据结构
+ * */
 export type DirectlyScrollData = ScrollInfoData & {
   scrollTop: number;
   scrollLeft: number;
@@ -242,6 +262,10 @@ export type DirectlyScrollData = ScrollInfoData & {
   scrollDirectionX: number;
 };
 
+/**
+ * **子元素变化数据类型**
+ * @description 子元素变化事件的数据结构
+ * */
 export type ScrollChildChangeData = {
   bodyWidth: number;
   bodyHeight: number;
