@@ -2,33 +2,33 @@
   <slot></slot>
 </template>
 
-<script lang="ts" setup>
+<script lang="ts" setup name="PaManager">
+/** @description Vue 核心响应式 API */
 import { provide, reactive, computed, watch, onMounted } from "vue";
+/** @description 主题颜色设置工具 */
 import { setThemeColor } from "../tools/color";
-import { PancakeGlobalConfigType, PaManagerType } from "./type";
+/** @description 全局配置组件 Props 和运行时类型 */
+import type { ComponentProps, PancakeGlobalConfigType } from "./types";
+/** @description 语言包映射 */
 import languageMap from "../language.json";
-
+/** @description 开发日志工具 */
 import { createLog } from "../utils/develop-log";
+/** @description ZIndex 管理工具 */
 import { useZIndex } from "element-plus";
-
+/** @description 深度工具函数 */
 import _ from "lodash";
 const { isNil } = _;
-
-// SSR-safe global Z index
+/** @description SSR 安全的全局 Z 索引 */
 let globalZIndex = 1000;
-
-/**
- * # 获取全局 Z 索引
- */
+/** @description ZIndex 管理器 */
 const { nextZIndex } = useZIndex();
+/** @description 提供全局 Z 索引获取方法 */
 provide("getPaAnagerGlobalZIndex", () => {
   return nextZIndex() || globalZIndex++;
 });
-
-const props = withDefaults(defineProps<PaManagerType>(), {});
-/**
- * # 状态
- */
+/** @description 组件 Props */
+const props = withDefaults(defineProps<ComponentProps>(), {});
+/** @description 全局配置状态 */
 const state = reactive({
   baseHost: props.baseHost,
   themeColor: props.themeColor,
@@ -43,16 +43,7 @@ const state = reactive({
   file_config: props.file_config,
   requestHeader: props.requestHeader
 } as PancakeGlobalConfigType);
-
-// SSR-safe window initialization
-onMounted(() => {
-  if (typeof window !== "undefined") {
-    window.globalZIndex = window.globalZIndex || 1000;
-    window.PancakeGlobalConfig = { ...state, language: (state?.language?.value || "zh-CN") as any };
-    window.developLog = createLog(props.env || "product");
-  }
-});
-
+/** @description 提供全局配置给子组件 */
 provide(
   "PancakeGlobalConfig",
   computed(() => {
@@ -62,21 +53,26 @@ provide(
     return state;
   })
 );
-
 setThemeColor(state.themeColor, state.isDark || false);
-
 /**
- * # 设置主题颜色
- * @param themeColor 主题颜色
- * @param isDark 是否为暗黑模式
+ * 设置主题颜色
+ * @param themeColor - 主题颜色
+ * @param isDark - 是否为暗黑模式
+ * @returns void
+ * @description 更新主题颜色和暗黑模式状态
  */
-function setPaAnagerThemeColor(themeColor, isDark) {
+function setPaAnagerThemeColor(themeColor: string | undefined, isDark: boolean | undefined): void {
   state.themeColor = !isNil(themeColor) ? themeColor : state.themeColor;
   state.isDark = !isNil(isDark) ? isDark : state.isDark;
   setThemeColor(state.themeColor, state.isDark || false);
 }
-
-function setPaAnagerSize(size: "default" | "large" | "small") {
+/**
+ * 设置组件尺寸
+ * @param size - 组件尺寸
+ * @returns void
+ * @description 更新组件尺寸并切换对应 CSS 类名
+ */
+function setPaAnagerSize(size: "default" | "large" | "small"): void {
   if (typeof window !== "undefined") {
     const classList = (typeof window !== "undefined" && window.document?.documentElement.classList) || null;
     classList?.toggle("small", size == "small");
@@ -84,34 +80,42 @@ function setPaAnagerSize(size: "default" | "large" | "small") {
     classList?.toggle("large", size == "large");
   }
 }
-
 /**
- * # 设置语言
- * @param language 语言
+ * 设置语言
+ * @param language - 语言标识
+ * @returns void
+ * @description 更新语言配置和对应的语言包
  */
-function setPaAnagerLanguage(language: "en-US" | "zh-CN") {
+function setPaAnagerLanguage(language: "en-US" | "zh-CN"): void {
   state.language = {
     value: language,
     package: languageMap[language]
   };
 }
-
 /**
- * # 设置表格无限滚动
- * @param value 是否开启无限滚动
+ * 设置表格无限滚动配置
+ * @param value - 表格配置项
+ * @returns void
+ * @description 更新表格配置
  */
-function setPaAnagerTableInfiniteScroll(value) {
+function setPaAnagerTableInfiniteScroll(value: Record<string, any>): void {
   state.table_config = { ...state.table_config, ...value };
 }
-
-function setPaAnagerConfig(type: keyof PancakeGlobalConfigType & {}, config: any) {
+/**
+ * 统一设置配置项
+ * @param type - 配置类型
+ * @param config - 配置值
+ * @returns void
+ * @description 根据类型调用对应的配置方法
+ */
+function setPaAnagerConfig(type: keyof PancakeGlobalConfigType & {}, config: any): void {
   if (type == "language") setPaAnagerLanguage(config);
   else if (type == "themeColor" || type == "isDark") setPaAnagerThemeColor(config.themeColor, config.isDark);
   else if (type == "size") setPaAnagerSize(config.size);
   else if (type == "table_config") setPaAnagerTableInfiniteScroll(config);
 }
+/** @description 提供配置设置方法给子组件 */
 provide("setPaAnagerConfig", setPaAnagerConfig);
-
 defineExpose({
   setPaAnagerThemeColor,
   setPaAnagerSize,
@@ -119,7 +123,17 @@ defineExpose({
   setPaAnagerTableInfiniteScroll,
   setPaAnagerConfig
 });
-
+/** @description 组件挂载时初始化全局配置和日志 */
+onMounted(() => {
+  if (typeof window !== "undefined") {
+    window.globalZIndex = window.globalZIndex || 1000;
+    window.PancakeGlobalConfig = { ...state, language: (state?.language?.value || "zh-CN") as any };
+    window.developLog = createLog(props.env || "product");
+  }
+});
+/**
+ * @description 监听 props 变化，同步更新全局配置状态
+ */
 watch(
   () => props,
   newVal => {
