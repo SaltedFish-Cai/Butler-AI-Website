@@ -1,6 +1,5 @@
 <template>
   <div :id="ID" class="pa-editor" :style="{ ...props.style }" :class="[props.class]">
-    <!-- 工具栏配置 -->
     <m-editor-tools
       ref="editorToolsRef"
       :isSourceCodeMode="isSourceCodeMode"
@@ -12,29 +11,29 @@
       :ex-button="exButton"
       @popver-change="value => (openPopover = value)"
       @source-code-mode-change="value => (isSourceCodeMode = value)"
-    ></m-editor-tools>
-
+    >
+    </m-editor-tools>
     <pa-scrollbar
       useShadow
       style="flex: 1"
       :useScrollX="false"
-      :contentStyle="isSourceCodeMode == 'code' ? { background: isDarkTheme ? '#1b1b1f' : '#fff' } : {}"
+      :contentStyle="
+        isSourceCodeMode == 'code' ? { background: isDarkTheme ? 'var(--pa-color-dark-bg)' : 'var(--pa-color-white)' } : {}
+      "
     >
       <div v-if="isSourceCodeMode == 'visible'" v-html="editorRef?.innerHTML"></div>
-      <!-- 可视化编辑模式 -->
       <div
         :id="'editor-content'"
         v-show="isSourceCodeMode == 'edit'"
         class="editor-content"
         :class="[openPopover ? 'popver-active' : '']"
-        :style="{ '--pa-color-font': '#1d1d1d' }"
+        :style="{ '--pa-color-font': 'var(--pa-color-font)' }"
         contenteditable
         ref="editorRef"
         @input="onContentChange"
         @paste="onPaste"
         @contextmenu.prevent="handleContextMenu"
       ></div>
-      <!-- 源码编辑模式 -->
       <div v-show="isSourceCodeMode == 'code'" class="source-code-container" :class="[isDarkTheme ? 'github-dark' : 'github']">
         <div class="line-numbers" ref="lineNumbersRef"></div>
         <div class="source-code-editor-container" ref="sourceCodeEditorContainerRef" @scroll="onSourceCodeScroll">
@@ -46,25 +45,25 @@
           v-model="isDarkTheme"
           :style="{
             '--pa-size-height': '25px',
-            '--pa-color-primary': '#3c414a'
+            '--pa-color-primary': 'var(--pa-color-source-code-toggle)'
           }"
           :iconStyle="{
-            color: isDarkTheme ? '#fff' : '#000',
-            backgroundColor: isDarkTheme ? '#3c414a' : '#fff'
+            color: isDarkTheme ? 'var(--pa-color-white)' : 'var(--pa-color-black)',
+            backgroundColor: isDarkTheme ? 'var(--pa-color-source-code-toggle)' : 'var(--pa-color-white)'
           }"
           @change="toggleTheme"
           :activeText="''"
           :inActiveText="''"
           :activeIcon="'moon_line'"
           :inActiveIcon="'sun_line'"
-        ></pa-switch>
+        >
+        </pa-switch>
       </div>
     </pa-scrollbar>
     <div class="editor-footer" v-show="isSourceCodeMode != 'visible' && isSourceCodeMode != 'code'">
       <div></div>
       <span class="word-count">{{ wordCount }} 字</span>
     </div>
-
     <edit-image :id="ID" ref="editImageRef"></edit-image>
     <edit-table ref="editTableRef"></edit-table>
   </div>
@@ -72,128 +71,168 @@
 
 <script setup lang="ts">
 import { ref, watch, onMounted, onUnmounted, Ref, provide, nextTick, useTemplateRef } from "vue";
-import { PaEditorType } from "./type";
-
+import type { ComponentProps, ComponentEmits } from "./types";
 import EditImage from "./edit-images.vue";
 import EditTable from "./edit-table.vue";
 import MEditorTools from "./m-editor-tools.vue";
-
 import { randChar } from "../tools/rand-char";
 import { useToolsHooks } from "./use-tools-hooks";
 import * as prettier from "prettier/standalone";
 import * as prettierHtmlParser from "prettier/parser-html";
 import hljs from "highlight.js";
-
 import _ from "lodash";
+
 const { debounce } = _;
 
-// 定义props
-const props = withDefaults(defineProps<PaEditorType>(), {});
+/**
+ * @description 组件 props 定义
+ */
+const props = withDefaults(defineProps<ComponentProps>(), {});
 
+/**
+ * @description 编辑器唯一 ID
+ */
 const ID = ref(props.id || randChar(6));
+
+/**
+ * @description 图片编辑组件引用
+ */
 const editImageRef = ref();
+
+/**
+ * @description 表格编辑组件引用
+ */
 const editTableRef = ref();
 
+/**
+ * @description 工具栏组件引用
+ */
 const editorToolsRef = useTemplateRef("editorToolsRef");
-// 源码编辑相关
+
+/**
+ * @description 源码编辑 textarea 引用
+ */
 const sourceCodeRef = ref<HTMLTextAreaElement | null>(null);
+
+/**
+ * @description 行号容器引用
+ */
 const lineNumbersRef = ref<HTMLDivElement | null>(null);
 
-// 定义emits
-const emit = defineEmits<{
-  "update:modelValue": [value: string];
-  change: [value: string];
-}>();
+/**
+ * @description 组件事件定义
+ */
+const emit = defineEmits<ComponentEmits>();
 
-// 编辑器引用
+/**
+ * @description 编辑器主内容区域引用
+ */
 const editorRef = ref<HTMLElement | null>(null);
+
+/**
+ * @description 源码高亮覆盖层引用
+ */
 const sourceCodeOverlayRef = ref<HTMLDivElement | null>(null);
+
+/**
+ * @description 源码编辑器容器引用
+ */
 const sourceCodeEditorContainerRef = ref<HTMLDivElement | null>(null);
+
+/**
+ * @description 弹出层是否打开状态
+ */
 const openPopover = ref(false);
 
-// 自定义撤销栈和恢复栈
+/**
+ * @description 撤销栈
+ */
 const undoStack: string[] = [];
+
+/**
+ * @description 恢复栈
+ */
 const redoStack: string[] = [];
+
+/**
+ * @description 栈最大容量
+ */
 const MAX_STACK_SIZE = 50;
 
-// 保存当前编辑器状态到撤销栈
-const saveToUndoStack = () => {
+/**
+ * @description 保存当前编辑器状态到撤销栈
+ */
+function saveToUndoStack(): void {
   if (!editorRef.value) return;
-
-  // 保存当前编辑器内容到撤销栈
   const currentState = editorRef.value.innerHTML;
   undoStack.push(currentState);
-
-  // 限制栈的大小
   if (undoStack.length > MAX_STACK_SIZE) {
     undoStack.shift();
   }
-
-  // 清空恢复栈
   redoStack.length = 0;
-};
+}
 
-// 撤销操作
-const undo = () => {
+/**
+ * @description 撤销操作
+ */
+function undo(): void {
   if (!editorRef.value || undoStack.length === 0) return;
-
-  // 保存当前状态到恢复栈
   const currentState = editorRef.value.innerHTML;
   redoStack.push(currentState);
-
-  // 限制恢复栈大小
   if (redoStack.length > MAX_STACK_SIZE) {
     redoStack.shift();
   }
-
-  // 从撤销栈中弹出并恢复上一个状态
   const previousState = undoStack.pop();
   if (previousState) {
     editorRef.value.innerHTML = previousState;
-    // 触发内容变化事件
     onContentChange();
   }
-};
+}
 
-// 恢复操作
-const redo = () => {
+/**
+ * @description 恢复操作
+ */
+function redo(): void {
   if (!editorRef.value || redoStack.length === 0) return;
-
-  // 保存当前状态到撤销栈
   const currentState = editorRef.value.innerHTML;
   undoStack.push(currentState);
-
-  // 限制撤销栈大小
   if (undoStack.length > MAX_STACK_SIZE) {
     undoStack.shift();
   }
-
-  // 从恢复栈中弹出并恢复下一个状态
   const nextState = redoStack.pop();
   if (nextState) {
     editorRef.value.innerHTML = nextState;
-    // 触发内容变化事件
     onContentChange();
   }
-};
+}
 
-// 主题管理
+/**
+ * @description 是否为暗色主题
+ */
 const isDarkTheme = ref(true);
+
+/**
+ * @description 源码编辑模式状态
+ */
 const isSourceCodeMode: Ref<"code" | "edit" | "visible"> = ref("edit");
 
-// 全屏状态
+/**
+ * @description 全屏状态
+ */
 const isFullscreen = ref(false);
 
-// 保存光标位置的变量
+/**
+ * @description 保存的光标范围
+ */
 let savedCursorRange: Range | null = null;
 
-// 切换全屏功能
-const toggleFullscreen = () => {
+/**
+ * @description 切换全屏功能
+ */
+function toggleFullscreen(): void {
   const editorElement: any = document.getElementById(ID.value);
   if (!editorElement) return;
-
   if (!isFullscreen.value) {
-    // 进入全屏
     if (editorElement.requestFullscreen) {
       editorElement.requestFullscreen();
     } else if (editorElement.webkitRequestFullscreen) {
@@ -204,7 +243,6 @@ const toggleFullscreen = () => {
       (editorElement as any).msRequestFullscreen();
     }
   } else {
-    // 退出全屏
     if (document.exitFullscreen) {
       document.exitFullscreen();
     } else if (document.webkitExitFullscreen) {
@@ -215,73 +253,123 @@ const toggleFullscreen = () => {
       (document as any).msExitFullscreen();
     }
   }
-};
+}
 
-// 监听全屏变化事件
-const handleFullscreenChange = () => {
+/**
+ * @description 处理全屏变化事件
+ */
+function handleFullscreenChange(): void {
   isFullscreen.value = !!(
     document.fullscreenElement ||
     (document as any).webkitFullscreenElement ||
     (document as any).mozFullScreenElement ||
     (document as any).msFullscreenElement
   );
-};
+}
 
-// 注册全屏变化事件监听器
+/**
+ * @description 保存光标位置
+ */
+function saveCursorPosition(): void {
+  if (!editorRef.value) return;
+  const selection = typeof window !== "undefined" ? window.getSelection() : null();
+  if (selection && selection.rangeCount > 0) {
+    savedCursorRange = selection.getRangeAt(0).cloneRange();
+  }
+}
+
+/**
+ * @description 组件挂载时注册全屏变化事件监听器
+ */
 onMounted(() => {
   document.addEventListener("fullscreenchange", handleFullscreenChange);
   document.addEventListener("webkitfullscreenchange", handleFullscreenChange);
   document.addEventListener("mozfullscreenchange", handleFullscreenChange);
   document.addEventListener("MSFullscreenChange", handleFullscreenChange);
-
-  // 为编辑器添加blur事件监听器，保存光标位置
   if (editorRef.value) {
     editorRef.value.addEventListener("blur", saveCursorPosition);
   }
 });
 
-// 保存光标位置的函数
-const saveCursorPosition = () => {
-  if (!editorRef.value) return;
-
-  const selection = typeof window !== "undefined" ? window.getSelection() : null();
-  if (selection && selection.rangeCount > 0) {
-    // 保存当前选中的范围
-    savedCursorRange = selection.getRangeAt(0).cloneRange();
-  }
-};
-
-// 组件卸载时移除事件监听器
+/**
+ * @description 组件卸载时移除事件监听器
+ */
 onUnmounted(() => {
   document.removeEventListener("fullscreenchange", handleFullscreenChange);
   document.removeEventListener("webkitfullscreenchange", handleFullscreenChange);
   document.removeEventListener("mozfullscreenchange", handleFullscreenChange);
   document.removeEventListener("MSFullscreenChange", handleFullscreenChange);
-
-  // 移除编辑器的blur事件监听器
   if (editorRef.value) {
     editorRef.value.removeEventListener("blur", saveCursorPosition);
   }
 });
 
-// 切换主题
-const toggleTheme = () => {
-  // 重新应用语法高亮以更新主题
-  nextTick(() => {
-    applySyntaxHighlighting();
-  });
+/**
+ * @description 切换主题
+ */
+function toggleTheme(): void {
+  isDarkTheme.value = !isDarkTheme.value;
+  applySyntaxHighlighting();
+}
+
+/**
+ * @description 处理源码编辑器滚动事件
+ */
+function onSourceCodeScroll(): void {
+  if (!sourceCodeEditorContainerRef.value) return;
+  if (lineNumbersRef.value) {
+    lineNumbersRef.value.style.marginTop = `-${sourceCodeEditorContainerRef.value.scrollTop}px`;
+  }
+  if (sourceCodeRef.value) {
+    sourceCodeRef.value.scrollTop = sourceCodeEditorContainerRef.value.scrollTop;
+    sourceCodeRef.value.scrollLeft = sourceCodeEditorContainerRef.value.scrollLeft;
+  }
+}
+
+/**
+ * @description 更新源码模式下的行号
+ */
+function updateLineNumbers(): void {
+  if (!sourceCodeRef.value || !lineNumbersRef.value) return;
+  const content = sourceCodeRef.value.value;
+  const lines = content.split("\n");
+  const lineCount = lines.length - 1;
+  let lineNumbersHTML = "";
+  for (let i = 1; i <= lineCount; i++) {
+    lineNumbersHTML += `<div class="line-number">${i}</div>`;
+  }
+  lineNumbersRef.value.innerHTML = lineNumbersHTML;
+}
+
+/**
+ * @description 更新字数统计
+ */
+const updateWordCount = (): void => {
+  if (!editorRef.value) return;
+  const content = editorRef.value.innerText || editorRef.value.textContent || "";
+  wordCount.value = content.length;
 };
 
-// 调用工具hooks
-const {
-  wordCount,
-  isToolActive,
-  findFontSize,
-  updateWordCount,
-  updateWordCountInSourceMode,
-  updateLineNumbers,
-  onSourceCodeScroll
-} = useToolsHooks(ID.value, isSourceCodeMode, editorRef, sourceCodeRef, lineNumbersRef, sourceCodeEditorContainerRef);
+/**
+ * @description 源码模式下的字数统计
+ */
+function updateWordCountInSourceMode(): void {
+  if (!sourceCodeRef.value) return;
+  const content = sourceCodeRef.value.value || "";
+  const textContent = content.replace(/<[^>]*>/g, "");
+  wordCount.value = textContent.length;
+  updateLineNumbers();
+}
+
+const { wordCount, isToolActive, findFontSize } = useToolsHooks(
+  ID.value,
+  isSourceCodeMode,
+  editorRef,
+  sourceCodeRef,
+  lineNumbersRef,
+  sourceCodeEditorContainerRef
+);
+
 provide("provideEditorRef", editorRef);
 provide("provideSourceCodeRef", sourceCodeRef);
 provide("updateLineNumbers", updateLineNumbers);
@@ -290,25 +378,23 @@ provide("undo", undo);
 provide("redo", redo);
 provide("toggleFullscreen", toggleFullscreen);
 
-// 自动格式化代码
-const autoFormatCode = (isFormat = true) => {
+/**
+ * @description 自动格式化代码
+ * @param isFormat - 是否执行格式化
+ */
+function autoFormatCode(isFormat = true): void {
   try {
     if (!sourceCodeRef.value) return;
     const cursorPosition = sourceCodeRef.value.selectionStart;
     const content = sourceCodeRef.value.value;
-
-    // 检查是否刚刚按下了回车键或正在编辑空行
     const wasNewLine = cursorPosition > 0 && content.charAt(cursorPosition - 1) === "\n";
     const nextChar = content.charAt(cursorPosition);
     const isEditingEmptyLine = wasNewLine && (nextChar === "\n" || nextChar === "");
-
-    // 如果正在编辑空行，暂时不进行格式化，以保持用户的输入意图
     if (isEditingEmptyLine && !isFormat) {
       return;
     }
-    // 使用 prettier 格式化代码，强制输出为一行
     const formattedContent = prettier.format(content, {
-      printWidth: 9999, // 非常大的打印宽度，防止自动换行
+      printWidth: 9999,
       parser: "html",
       tabWidth: 2,
       semi: true,
@@ -316,15 +402,13 @@ const autoFormatCode = (isFormat = true) => {
       preserveNewlines: false,
       htmlWhitespaceSensitivity: "ignore",
       endOfLine: "auto",
-      wrapAttributes: "preserve", // 保持所有属性在同一行
-      singleAttributePerLine: true, // 确保每个元素的属性都在同一行
+      wrapAttributes: "preserve",
+      singleAttributePerLine: true,
       trailingComma: "none",
       bracketSpacing: true,
-      bracketSameLine: true, // 确保结束标签与内容在同一行
+      bracketSameLine: true,
       plugins: [prettierHtmlParser]
     });
-
-    // 如果格式化后的内容和原始内容相同，直接返回
     if (formattedContent === content) {
       if (sourceCodeRef.value) {
         sourceCodeRef.value.style.width = `${(sourceCodeOverlayRef.value?.clientWidth || 0) + 5}px`;
@@ -332,196 +416,145 @@ const autoFormatCode = (isFormat = true) => {
       }
       return;
     }
-    // 尝试保持光标位置
-    // 使用更精确的算法来保持光标位置
     let newCursorPosition;
-
     if (wasNewLine) {
-      // 如果刚刚按下了回车键，我们需要找出光标所在的行
       const linesBeforeCursor = content.substring(0, cursorPosition).split("\n");
       const lineNumber = linesBeforeCursor.length;
-
-      // 在格式化后的内容中找到对应的行
       const formattedLines = formattedContent.split("\n");
       if (lineNumber <= formattedLines.length) {
-        // 计算光标应该在的位置
         newCursorPosition = formattedLines.slice(0, lineNumber - 1).join("\n").length + 1;
       } else {
-        // 如果行数不匹配，使用基于比例的算法
         const ratio = cursorPosition / content.length;
         newCursorPosition = Math.round(formattedContent.length * ratio);
       }
     } else {
-      // 尝试找到与原始内容中相同的字符序列来定位光标
       const searchLength = 20;
       const startSearchIndex = Math.max(0, cursorPosition - searchLength);
       const searchString = content.substring(startSearchIndex, cursorPosition);
-
-      // 在格式化后的内容中查找相同的字符序列
       const foundIndex = formattedContent.indexOf(searchString, startSearchIndex - 5);
       if (foundIndex !== -1) {
         newCursorPosition = foundIndex + searchString.length;
       } else {
-        // 如果没有找到，使用基于比例的算法
         const ratio = cursorPosition / content.length;
         newCursorPosition = Math.round(formattedContent.length * ratio);
       }
     }
-
-    // 确保光标位置在有效范围内
     newCursorPosition = Math.max(0, Math.min(newCursorPosition, formattedContent.length));
-
-    // 更新内容
     sourceCodeRef.value.value = formattedContent;
-
-    // 设置光标位置，使用setTimeout确保在内容更新后执行
     setTimeout(() => {
       if (sourceCodeRef.value) {
         sourceCodeRef.value.selectionStart = sourceCodeRef.value.selectionEnd = newCursorPosition;
       }
-      // 应用语法高亮
       nextTick(() => {
         applySyntaxHighlighting();
-        // 确保滚动位置同步
         onSourceCodeScroll();
         if (sourceCodeRef.value) {
-          console.dir(sourceCodeOverlayRef.value?.clientWidth);
           sourceCodeRef.value.style.width = `${(sourceCodeOverlayRef.value?.clientWidth || 0) + 5}px`;
           sourceCodeRef.value.style.height = `${sourceCodeOverlayRef.value?.clientHeight}px`;
         }
       });
     }, 0);
-
-    // 更新内容事件
     emit("update:modelValue", formattedContent);
     emit("change", formattedContent);
-
-    // 更新字数和行号
     updateWordCountInSourceMode();
   } catch (error) {
     console.error("自动格式化失败:", error);
   }
-};
+}
 
-// 创建防抖版本的自动格式化函数
 const debouncedFormatCode = debounce(autoFormatCode, 500);
 
-// @ -------------------------------------------------------------------- 执行编辑命令
-
-// 内容变化事件
-const onContentChange = () => {
-  // 更新内容
+/**
+ * @description 内容变化事件处理
+ */
+function onContentChange(): void {
   if (editorRef.value) {
     const content = editorRef.value.innerHTML;
     emit("update:modelValue", content);
     emit("change", content);
   }
-
-  // 更新工具栏工具的激活状态
   editorToolsRef.value?.isToolActiveArrayFn();
-
-  // 更新字数统计
   updateWordCount();
-};
+}
+
 provide("onContentChange", onContentChange);
 
-// 应用语法高亮
-const applySyntaxHighlighting = () => {
+/**
+ * @description 应用语法高亮
+ */
+function applySyntaxHighlighting(): void {
   if (!sourceCodeRef.value || !sourceCodeOverlayRef.value) return;
-
   const content = sourceCodeRef.value.value;
-  // 使用highlight.js对HTML代码进行语法高亮
   const highlighted = hljs.highlight(content, { language: "xml" }).value;
-  // 更新高亮层内容
   sourceCodeOverlayRef.value.innerHTML = highlighted;
-
-  // 获取所有需要切换主题的元素
   const sourceCodeContainer = sourceCodeRef.value.closest(".source-code-container");
   const lineNumbers = lineNumbersRef.value;
   const sourceCodeEditor = sourceCodeRef.value;
   const sourceCodeOverlay = sourceCodeOverlayRef.value;
-
-  // 根据当前主题更新所有相关元素的类名
   if (isDarkTheme.value) {
-    // 应用暗色主题
     sourceCodeContainer?.classList.add("dark-theme");
     lineNumbers?.classList.add("dark-theme");
     sourceCodeEditor.classList.add("dark-theme");
     sourceCodeOverlay.classList.add("dark-theme");
-
-    // 移除浅色主题
     sourceCodeContainer?.classList.remove("light-theme");
     lineNumbers?.classList.remove("light-theme");
     sourceCodeEditor.classList.remove("light-theme");
     sourceCodeOverlay.classList.remove("light-theme");
   } else {
-    // 应用浅色主题
     sourceCodeContainer?.classList.add("light-theme");
     lineNumbers?.classList.add("light-theme");
     sourceCodeEditor.classList.add("light-theme");
     sourceCodeOverlay.classList.add("light-theme");
-
-    // 移除暗色主题
     sourceCodeContainer?.classList.remove("dark-theme");
     lineNumbers?.classList.remove("dark-theme");
     sourceCodeEditor.classList.remove("dark-theme");
     sourceCodeOverlay.classList.remove("dark-theme");
   }
-
-  // 内容更新后立即同步滚动位置
   onSourceCodeScroll();
-};
+}
 
-// 源码编辑内容变化事件
-const onSourceCodeChange = () => {
-  // 更新内容
+/**
+ * @description 源码编辑内容变化事件处理
+ */
+function onSourceCodeChange(): void {
   if (sourceCodeRef.value) {
     const content = sourceCodeRef.value.value;
-
-    // 立即更新内容，确保用户能看到即时变化
     emit("update:modelValue", content);
     emit("change", content);
   }
-
-  // 更新字数统计
   updateWordCountInSourceMode();
-
-  // 应用语法高亮
   nextTick(() => {
     applySyntaxHighlighting();
-
-    // 在高亮内容更新后再次同步滚动位置
     onSourceCodeScroll();
   });
-
-  // 自动格式化代码（防抖）
   debouncedFormatCode();
-};
+}
 
-// 设置编辑器内容
-const debounceEditorContent = (content: string) => {
-  // 将内容包裹在div标签中
+/**
+ * @description 防抖设置编辑器内容
+ * @param content - 内容字符串
+ */
+function debounceEditorContent(content: string): void {
   let wrappedContent = content;
   if (content && !content.trim().startsWith("<div") && !content.trim().startsWith("<!DOCTYPE")) {
-    wrappedContent = `<div style="color: #1d1d1d;">${content}
+    wrappedContent = `<div style="color: var(--pa-color-font);">${content}
       <p>&nbsp;</p>
       </div>`;
   }
-
   if (editorRef.value && isSourceCodeMode.value !== "code") {
     editorRef.value.innerHTML = wrappedContent;
     updateWordCount();
   }
-
-  // 同时更新源码编辑器内容
   if (sourceCodeRef.value) {
     sourceCodeRef.value.value = wrappedContent;
   }
-};
+}
 
 const setEditorContent = debounce(debounceEditorContent, 500);
 
-// 监听modelValue变化
+/**
+ * @description 监听 modelValue 变化
+ */
 watch(
   () => props.modelValue,
   newVal => {
@@ -532,42 +565,13 @@ watch(
   { immediate: true, deep: true }
 );
 
-// 处理Enter键事件
-// function keyEnter(e: KeyboardEvent) {
-//   if (isSourceCodeMode.value === "code") return;
-//   if (e.key === "Enter") {
-//     // 阻止默认行为
-//   }
-// }
-
-// 添加新值
-// const addNewVal = () => {
-//   // 创建一个新的段落
-//   const p = document.createElement("p");
-//   p.innerHTML = "&nbsp;";
-
-//   // 插入新的段落
-//   const selection = typeof window !== "undefined" ? window.getSelection() : null();
-//   if (selection && selection.rangeCount > 0) {
-//     const range = selection.getRangeAt(0);
-//     range.deleteContents();
-//     range.insertNode(p);
-//     range.setStart(p, 0);
-//     range.collapse(true);
-//     selection.removeAllRanges();
-//     selection.addRange(range);
-//   }
-// };
-
-// 粘贴事件
-const onPaste = (e: ClipboardEvent) => {
-  // 阻止默认行为
+/**
+ * @description 粘贴事件处理
+ * @param e - 剪贴板事件
+ */
+function onPaste(e: ClipboardEvent): void {
   e.preventDefault();
-
-  // 获取粘贴的内容
   const text = e.clipboardData?.getData("text/plain") || "";
-
-  // 插入内容
   const selection = typeof window !== "undefined" ? window.getSelection() : null();
   if (selection && selection.rangeCount > 0) {
     const range = selection.getRangeAt(0);
@@ -577,81 +581,52 @@ const onPaste = (e: ClipboardEvent) => {
     selection.removeAllRanges();
     selection.addRange(range);
   }
-
-  // 更新内容
   onContentChange();
-};
+}
 
-// 处理表格右键菜单显示
-const handleContextMenu = (e: MouseEvent) => {
-  // 检查点击的是否是表格单元格
+/**
+ * @description 处理右键菜单显示
+ * @param e - 鼠标事件
+ */
+function handleContextMenu(e: MouseEvent): void {
   const target = e.target as HTMLElement;
   const tableElement = target.closest("td, th") as HTMLTableCellElement;
   const imgElement = target.closest("img") as HTMLImageElement;
-
   if (tableElement) {
-    // 如果不是点击表格单元格，调用图片右键菜单处理
     editTableRef.value?.handleContextMenu(e);
   } else if (imgElement) {
-    // 如果不是点击表格单元格，调用图片右键菜单处理
     editImageRef.value?.handleContextMenu(e);
   }
-};
+}
 
-// 组件挂载事件
+/**
+ * @description 组件挂载时设置初始内容
+ */
 onMounted(() => {
   setEditorContent(props.modelValue);
-
-  // 设置初始内容
-  // if (editorRef.value) {
-  //   if (props.modelValue) {
-  //     setEditorContent(props.modelValue);
-  //   }
-
-  // // 在编辑器最后一行添加空段落
-  // const p = document.createElement("p");
-  // p.innerHTML = "&nbsp;";
-  // editorRef.value.appendChild(p);
-  // }
-
-  // 支持placeholder
-  // if (editorRef.value && props.placeholder) {
-  //   if (editorRef.value.innerHTML === "") {
-  //     editorRef.value.innerHTML = `<span class="placeholder">${props.placeholder}</span>`;
-  //   }
-
-  //   // 点击编辑器时移除placeholder
-  //   const handleClick = () => {
-  //     const placeholder = editorRef.value?.querySelector(".placeholder");
-  //     if (placeholder) {
-  //       placeholder.remove();
-  //     }
-  //   };
-
-  //   editorRef.value.addEventListener("click", handleClick);
-  // }
-
-  // 添加事件监听
-  // document.addEventListener("keydown", keyEnter);
 });
 
-function getEditorValue() {
+/**
+ * @description 获取编辑器内容
+ * @returns 编辑器 HTML 内容
+ */
+function getEditorValue(): string {
   return editorRef.value?.innerHTML || "";
 }
 
-function insertTextAtCursor(text: string) {
-  console.log("++++++++++> text:", text);
+/**
+ * @description 在光标位置插入文本
+ * @param text - 要插入的文本
+ */
+function insertTextAtCursor(text: string): void {
   editorRef.value?.focus?.();
   const selection = typeof window !== "undefined" ? window.getSelection() : null();
   if (selection) {
     try {
-      // 如果有保存的光标位置，则恢复它
       if (savedCursorRange && editorRef.value?.contains(savedCursorRange.startContainer)) {
         selection.removeAllRanges();
         selection.addRange(savedCursorRange);
       }
-
-      // 如果没有有效的选择范围，创建一个新的范围
       if (selection.rangeCount === 0) {
         const range = document.createRange();
         if (editorRef.value && editorRef.value.childNodes.length > 0) {
@@ -667,8 +642,6 @@ function insertTextAtCursor(text: string) {
         range.collapse(true);
         selection.addRange(range);
       }
-
-      // 插入文本
       const range = selection.getRangeAt(0);
       range.deleteContents();
       range.insertNode(document.createTextNode(text));
@@ -677,7 +650,6 @@ function insertTextAtCursor(text: string) {
       selection.addRange(range);
     } catch (error) {
       console.error("恢复光标位置或插入文本失败:", error);
-      // 如果恢复失败，使用默认行为
       if (selection.rangeCount > 0) {
         const range = selection.getRangeAt(0);
         range.deleteContents();
@@ -690,7 +662,6 @@ function insertTextAtCursor(text: string) {
   }
 }
 
-// 暴露方法
 defineExpose({
   setEditorValue: setEditorContent,
   getEditorValue,

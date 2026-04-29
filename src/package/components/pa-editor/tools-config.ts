@@ -1,12 +1,7 @@
+/**
+ * @description 工具栏配置数据
+ */
 export const toolsConfig = [
-  // {
-  //   command: "",
-  //   icon: "line-height",
-  //   title: "字体",
-  //   children: [
-
-  //   ]
-  // },
   {
     command: "fontSizeArray",
     icon: "14px",
@@ -34,30 +29,17 @@ export const toolsConfig = [
       { command: "formatBlock", icon: "h4", title: "标题4", value: "<h4>" },
       { command: "formatBlock", icon: "h5", title: "标题5", value: "<h5>" },
       { command: "formatBlock", icon: "h6", title: "标题6", value: "<h6>" }
-      // { command: "formatBlock", icon: "line-height", title: "正文", value: "<p>" }
     ]
   },
-
   { command: "bold", icon: "bold", title: "加粗" },
   { command: "italic", icon: "italic", title: "斜体" },
   { command: "underline", icon: "underline", title: "下划线" },
   { command: "strikeThrough", icon: "strikethrough", title: "删除线" },
-
   { command: "justifyLeft", icon: "align-left", title: "左对齐" },
   { command: "justifyCenter", icon: "align-center", title: "居中对齐" },
   { command: "justifyRight", icon: "align-right", title: "右对齐" },
-
-  {
-    command: "backColor",
-    icon: "bg-colors",
-    title: "背景色"
-  },
-  {
-    command: "foreColor",
-    icon: "font-colors",
-    title: "字体颜色"
-  },
-
+  { command: "backColor", icon: "bg-colors", title: "背景色" },
+  { command: "foreColor", icon: "font-colors", title: "字体颜色" },
   {
     command: "unorderedLst",
     icon: "unordered-list",
@@ -76,35 +58,13 @@ export const toolsConfig = [
       { command: "outdent", icon: "menu-fold", title: "减少缩进" }
     ]
   },
-
-  {
-    command: "createLink",
-    icon: "link",
-    title: "链接"
-    // children: [
-    //   { command: "createLink", icon: "link", title: "插入链接" },
-    //   { command: "unlink", icon: "unlink_line", title: "移除链接" }
-    // ]
-  },
-
-  {
-    command: "insertImage",
-    icon: "image",
-    title: "插入图片"
-  },
-  {
-    command: "insertTable",
-    icon: "apps",
-    title: "插入表格"
-  },
-
+  { command: "createLink", icon: "link", title: "链接" },
+  { command: "insertImage", icon: "image", title: "插入图片" },
+  { command: "insertTable", icon: "apps", title: "插入表格" },
   { command: "sourceCode", icon: "code-square", title: "源码" },
-
   { command: "visible", icon: "eye", title: "预览" },
-  // 撤销和恢复按钮
   { command: "undo", icon: "undo", title: "撤销" },
   { command: "redo", icon: "redo", title: "恢复" },
-
   { command: "removeFormat", icon: "eraser", title: "清除格式" },
   { command: "fullscreen", icon: "fullscreen", title: "全屏" }
 ];

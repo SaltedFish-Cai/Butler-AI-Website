@@ -1,27 +1,22 @@
 .github-dark {
   color: #24292e;
   font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+
   pre code.hljs {
     display: block;
     overflow-x: auto;
     padding: 1em;
   }
+
   code.hljs {
     padding: 3px 5px;
-  } /*!
-  Theme: GitHub
-  Description: Light theme as seen on github.com
-  Author: github.com
-  Maintainer: @Hirse
-  Updated: 2021-05-15
+  }
 
-  Outdated base version: https://github.com/primer/github-syntax-light
-  Current colors taken from GitHub's CSS
-*/
   .hljs {
     color: #c9d1d9;
     background: #0d1117;
   }
+
   .hljs-doctag,
   .hljs-keyword,
   .hljs-meta .hljs-keyword,
@@ -31,12 +26,14 @@
   .hljs-variable.language_ {
     color: #b84551;
   }
+
   .hljs-title,
   .hljs-title.class_,
   .hljs-title.class_.inherited__,
   .hljs-title.function_ {
     color: #6f42c1;
   }
+
   .hljs-attr,
   .hljs-literal,
   .hljs-meta,
@@ -47,66 +44,83 @@
   .hljs-variable {
     color: #d19a66;
   }
+
   .hljs-attr {
     color: #c792ea;
   }
+
   .hljs-attribute {
     color: #a9b0bd;
   }
+
   .hljs-number {
     color: #56b6c2;
   }
+
   .hljs-meta .hljs-string,
   .hljs-regexp,
   .hljs-string {
     color: #c3e88d;
   }
+
   .hljs-built_in {
     color: #b9500a;
   }
+
   .hljs-symbol {
     color: #90228c;
   }
+
   .hljs-code,
   .hljs-comment,
   .hljs-formula {
     color: #6a737d;
   }
+
   .hljs-tag {
     color: #89ddff;
   }
+
   .hljs-name,
   .hljs-symbol {
     font-style: italic;
   }
+
   .hljs-name,
   .hljs-quote,
   .hljs-selector-pseudo,
   .hljs-selector-tag {
     color: #f07178;
   }
+
   .hljs-subst {
     color: #24292e;
   }
+
   .hljs-section {
     color: #d19a66;
     font-weight: 700;
   }
+
   .hljs-bullet {
     color: #735c0f;
   }
+
   .hljs-emphasis {
     color: #24292e;
     font-style: italic;
   }
+
   .hljs-strong {
     color: #24292e;
     font-weight: 700;
   }
+
   .hljs-addition {
     color: #e45649;
     background-color: #f0fff4;
   }
+
   .hljs-deletion {
     color: #b31d28;
     background-color: #ffeef0;
