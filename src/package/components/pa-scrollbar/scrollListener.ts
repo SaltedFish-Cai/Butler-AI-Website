@@ -4,7 +4,6 @@
  */
 import _ from "lodash";
 const { debounce, throttle } = _;
-
 /**
  * 滚动数据接口
  */
@@ -19,7 +18,6 @@ export interface ScrollInfoData {
   scrollDirectionX: "left" | "none" | "right";
   element: HTMLElement;
 }
-
 /**
  * 滚动监听器配置
  */
@@ -30,7 +28,6 @@ export interface ScrollListenerOptions {
   defaultScrollHorizontalThumb: number;
   defaultScrollVerticalThumb: number;
 }
-
 export interface ScrollUserInfo {
   horizontalThumb: number;
   verticalThumb: number;
@@ -39,7 +36,6 @@ export interface ScrollUserInfo {
   useHorizontal: boolean;
   useVertical: boolean;
 }
-
 /**
  * 尺寸变化数据接口
  */
@@ -48,7 +44,6 @@ export interface ResizeData {
   height: number;
   element: HTMLElement;
 }
-
 /**
  * 滚动监听器类 - 用于监听指定元素的滚动状态
  */
@@ -616,7 +611,6 @@ export class ScrollListener {
     }
   }
 }
-
 /**
  * 监听指定元素滚动的便捷函数
  * @param element 要监听的DOM元素
@@ -657,7 +651,6 @@ export function listenElementScroll(
     }
   };
 }
-
 /**
  * 监听多个指定元素的滚动状态
  * @param elements 要监听的DOM元素数组
@@ -690,7 +683,6 @@ export function listenMultipleElementsScroll(
     }
   };
 }
-
 /**
  * 检查元素是否在视口中
  * @param element 要检查的元素
@@ -733,10 +725,8 @@ export function isElementInViewport(
     }
   };
 }
-
 // 创建全局滚动监听器实例
 export const scrollListener = new ScrollListener();
-
 /**
  * 手动设置指定元素的滚动位置的便捷函数
  * @param element 要设置滚动位置的DOM元素
@@ -765,7 +755,6 @@ export function setElementScrollPosition(
   const listener = new ScrollListener();
   listener.setElementScrollPosition(element, options);
 }
-
 /**
  * 开始拖拽滑块以变更滚动值的便捷函数
  * @param element 要拖拽的滑块元素
@@ -797,7 +786,6 @@ export function startDrag(
   const listener = new ScrollListener();
   return listener.startDrag(element, targetElement, direction, options);
 }
-
 /**
  * 监听元素尺寸变化的便捷函数
  * @param element 要观察的DOM元素
@@ -819,5 +807,4 @@ export function observeElementResize(element: HTMLElement, handler: (data: Resiz
   const id = `resize-observe-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
   return listener.observeElementResize(id, element, handler);
 }
-
 export default scrollListener;

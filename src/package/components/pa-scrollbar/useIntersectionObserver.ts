@@ -10,7 +10,7 @@ import { ref } from "vue";
  * @returns `IntersectionObserverResult` 包含isIntersecting状态和停止观察方法的对象
  * @description 监听元素是否进入视窗
  * */
-export function useIntersectionObserver(target: Element, options: IntersectionObserverInit = {}): IntersectionObserverResult {
+export function useIntersectionObserver(target: Element, options: IntersectionObserverInit = {}) {
   /**
    * **状态：元素是否在视窗内**
    * @type `Ref<boolean>`
@@ -34,7 +34,7 @@ export function useIntersectionObserver(target: Element, options: IntersectionOb
     }
     const targetElement = target;
     if (!targetElement) return;
-    observer = new IntersectionObserver((entries) => {
+    observer = new IntersectionObserver(entries => {
       const [entry] = entries;
       isIntersecting.value = entry.isIntersecting;
     }, options);
