@@ -1,0 +1,30 @@
+.pa-scrollbar-list_footer {
+  min-width: 100%;
+  &.padding-top {
+    padding-top: var(--pa-size-padding, 10px);
+  }
+  &.padding-left {
+    padding-left: var(--pa-size-padding, 10px);
+    width: calc(100% - calc(var(--pa-size-padding, 10px)));
+    min-width: calc(100% - calc(var(--pa-size-padding, 10px)));
+  }
+  &.padding-right {
+    padding-right: var(--pa-size-padding, 10px);
+    width: calc(100% - calc(var(--pa-size-padding, 10px)));
+    min-width: calc(100% - calc(var(--pa-size-padding, 10px)));
+  }
+  &.padding-left.padding-right {
+    width: calc(100% - calc(var(--pa-size-padding, 10px)) * 2);
+    min-width: calc(100% - calc(var(--pa-size-padding, 10px)) * 2);
+  }
+}
+.pa-loading {
+  text-align: center;
+  padding: var(--pa-size-padding, 10px);
+}
+.no-more {
+  text-align: center;
+  color: var(--pa-color-text-secondary);
+  font-size: var(--pa-size-font);
+  padding: var(--pa-size-padding, 10px);
+}

@@ -6,7 +6,7 @@
       :styleMode="styleMode"
       :padding="padding"
       :paddingWidth="paddingWidth"
-      :intersectClassName="`#${id} .m-scrollbar-more`"
+      :intersectClassName="`#${id} .pa-scrollbar-more`"
       @intersecting="handleIntersecting"
       @directly-scroll-end="handleScrollEnd"
     >
@@ -14,9 +14,7 @@
         <template v-for="(item, index) in state.tableData" :key="index">
           <template v-for="(row, i) in item" :key="props.rowKey || 'key-' + i">
             <template v-if="row.type == 'more'">
-              <div class="m-scrollbar-more" :id="`${id}-more-${row.name}`" :data-name="`more-${row.name}`">
-                <!-- {{ id }} -more- {{ row.name }} -->
-              </div>
+              <div class="pa-scrollbar-more" :id="`${id}-more-${row.name}`" :data-name="`more-${row.name}`"></div>
             </template>
             <slot v-else :row="row"></slot>
           </template>
@@ -25,16 +23,11 @@
       <template v-else-if="!state.tableLoad">
         <slot name="empty"><pa-empty></pa-empty></slot>
       </template>
-
-      <!-- loading -->
       <div v-if="state.tableLoad" class="pa-loading">
-        <m-icon class="loading_font" name="loading_line"></m-icon>
+        <pa-icon class="loading_font" name="loading_line"></pa-icon>
       </div>
-
-      <!-- more -->
       <div v-if="state.tableLoadEnd && state.tableData.length > 0" class="no-more">{{ languagePackage.noMore }}</div>
     </pa-scrollbar>
-
     <slot name="footer">
       <div
         class="flex-center-between pa-scrollbar-list_footer padding-top"
@@ -46,7 +39,6 @@
         <div>
           <slot name="footerLeft"></slot>
         </div>
-
         <pa-pagination
           v-model:current-page="state.pageNum"
           :total="state.pageable.total"
@@ -61,92 +53,114 @@
   </section>
 </template>
 
-<script lang="ts" setup>
-// # import
+<script lang="ts" setup name="PaScrollBarList">
+/** @description Vue 核心响应式 API */
 import { ref, reactive, onMounted, onBeforeUnmount, nextTick, computed, inject, ComputedRef } from "vue";
+/** @description 随机字符生成工具 */
 import { randChar } from "../tools/rand-char";
-import { PaScrollbarListType } from "./type";
+/** @description 滚动列表组件 Props 类型 */
+import type { ComponentProps } from "./types";
+/** @description 全局配置类型 */
 import { PancakeGlobalConfigType } from "../pa-manager/type";
-
+/** @description 滚动列表组件样式 */
+import "./index.scss";
+/** @description 对象类型 */
+type objectType = Record<string, any>;
+/** @description 全局配置注入 */
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
+/** @description 语言包 */
 const languagePackage = computed(() => PancakeGlobalConfig.value?.language?.package?.["cell"] || {});
-
+/** @description 根元素引用 */
 const scrollBarList = ref();
-// const emits = defineEmits(["scroll"]);
-
-const props = withDefaults(defineProps<PaScrollbarListType>(), {
+/** @description 组件 Props */
+const props = withDefaults(defineProps<ComponentProps>(), {
   showPagination: true,
   styleMode: "default"
 });
+/** @description 组件唯一标识 */
 const id = ref(randChar());
+/** @description 滚动条组件引用 */
 const mScrollbarListRef = ref();
-
-let observer;
-
-// # State 表格状态
+/** @description IntersectionObserver 实例 */
+let observer: IntersectionObserver | undefined;
+/** @description 表格状态 */
 const state = reactive({
-  // 表格数据
-  tableData: [] as objectType[],
+  /** @description 表格数据 */
+  tableData: [] as objectType[][],
+  /** @description 扁平化表格数据 */
   flatTableData: [] as objectType[],
+  /** @description 当前页码 */
   pageNum: 1,
-  // 分页数据
+  /** @description 分页数据 */
   pageable: {
-    // 当前页数
+    /** @description 当前页数 */
     pageNum: 1,
-    // 每页显示条数
+    /** @description 每页显示条数 */
     pageSize: 50,
-    // 每页选择页数列表
-    pageSizes: [50, 100, 150],
-    // 总条数
+    /** @description 每页选择页数列表 */
+    pageSizes: [50, 100, 150] as number[],
+    /** @description 总条数 */
     total: 0
   },
-  // 查询参数(只包括查询)
-  searchParam: {},
-  // 初始化默认的查询参数
-  searchInitParam: {},
-  // 总参数(包含分页和查询参数)
-  tableQuery: { Filter: [], AdvancedFilter: [], Page: {}, Params: {}, Sort: [] },
-
+  /** @description 查询参数 */
+  searchParam: {} as Record<string, any>,
+  /** @description 初始化默认的查询参数 */
+  searchInitParam: {} as Record<string, any>,
+  /** @description 总参数 */
+  tableQuery: {
+    Filter: [] as any[],
+    AdvancedFilter: [] as any[],
+    Page: {} as Record<string, any>,
+    Params: {} as Record<string, any>,
+    Sort: [] as any[]
+  },
+  /** @description 是否正在加载 */
   tableLoad: false,
-
+  /** @description 是否加载完毕 */
   tableLoadEnd: false,
-
+  /** @description 是否使用选择表格 */
   useSelectionTable: false,
-
+  /** @description 排序属性 */
   orderProp: "",
-
+  /** @description 是否初始显示 */
   initShow: false
 });
-
-// # onMounted
-onMounted(() => {
-  getTableList();
-});
-
-// # Function 处理滚动到可见区域
-function handleIntersecting(el) {
+/**
+ * 处理滚动到可见区域
+ * @param el - 进入可见区域的元素
+ * @returns void
+ * @description 当 more 标记元素进入可见区域时，更新当前页码
+ */
+function handleIntersecting(el: HTMLElement): void {
   const name = el?.dataset?.name;
   if (name) {
     const index = name.replace("more-", "");
     state.pageNum = Number(index);
   }
 }
-
-// # Function 处理滚动到底部
-function handleScrollEnd(data) {
+/**
+ * 处理滚动到底部
+ * @param data - 滚动到底部的数据
+ * @returns void
+ * @description 当滚动到底部时，加载下一页数据
+ */
+function handleScrollEnd(data: any): void {
   if (state.tableLoadEnd || state.tableLoad) return;
   if (data) getTableList(++state.pageable.pageNum);
 }
-
-async function getTableList(pageNum?: number) {
+/**
+ * 获取表格数据
+ * @param pageNum - 页码
+ * @returns void
+ * @description 请求表格数据并更新状态
+ */
+async function getTableList(pageNum?: number): Promise<void> {
   const _pageNum = (pageNum || state.pageable.pageNum) - 1;
   if (state.tableLoadEnd || state.tableData[_pageNum]?.length) {
     return;
   }
   if (state.tableLoad) return;
   state.tableLoad = true;
-
-  // let { data } = await api({ ...state.searchInitParam, ...state.totalParam });
   const _query = {
     ...state.tableQuery,
     Page: {
@@ -154,109 +168,77 @@ async function getTableList(pageNum?: number) {
       PageSize: state.pageable.pageSize
     }
   };
-
   state.tableQuery = _query;
   const Data = await props.requestApi(_query);
-  // tableRef?.value?.scrollTo(0, 0);
-
   const deepData = Data;
-
   const _data = props.showPagination ? deepData.List || deepData : deepData;
   if (_data.length) {
     const ar = [{ type: "more", name: pageNum || state.pageable.pageNum }, ..._data];
     state.flatTableData = [...state.flatTableData, ..._data];
     state.tableData[_pageNum] = ar;
   }
-
   props.showPagination && updatePageable({ total: deepData.TotalCount });
   state.tableLoad = false;
-
   nextTick(() => {
     mScrollbarListRef.value?.resetObserver();
   });
-
-  // setTimeout(() => {
-  //   if (pageNum && !next) {
-  //     const mpreEl: any = document.querySelector(`#${id.value} #${id.value}-more-${state.pageable.pageNum}`);
-  //     if (mpreEl) setScrollTop(Number(mpreEl?.offsetTop) || 0);
-
-  //     setTimeout(() => {
-  //       if (pageNum) {
-  //         getTableList(pageNum - 1, true);
-  //       }
-  //     }, 1000);
-  //   } else {
-  //     if (pageNum) {
-  //       getTableList(pageNum - 1, true);
-  //     }
-  //   }
-  // }, 0);
-
   if (state.flatTableData.length >= deepData.TotalCount) {
     state.tableLoadEnd = true;
   } else {
     getTableList(++state.pageable.pageNum);
   }
 }
-
-// #Function  更新分页信息
-function updatePageable(resPageable: { pageNum?: number; pageSize?: number; pageSizes?: number[]; total: number }) {
+/**
+ * 更新分页信息
+ * @param resPageable - 分页参数
+ * @returns void
+ * @description 更新分页器状态
+ */
+function updatePageable(resPageable: { pageNum?: number; pageSize?: number; pageSizes?: number[]; total: number }): void {
   Object.assign(state.pageable, resPageable);
 }
-
-// # onBeforeUnmount
+/** @description 组件挂载时获取表格数据 */
+onMounted(() => {
+  getTableList();
+});
+/** @description 组件卸载前断开观察器 */
 onBeforeUnmount(() => {
   if (observer?.disconnect) observer?.disconnect();
 });
-
-// #Function 设置高距离
-function setScrollTop(value) {
+/**
+ * 设置滚动距离
+ * @param value - 滚动距离值
+ * @returns void
+ * @description 调用滚动条组件的滚动方法
+ */
+function setScrollTop(value: number): void {
   mScrollbarListRef?.value?.setScrollToIntersect(value);
 }
-
+/** @description 分页锁 */
 let lock = false;
-function handleCurrentChange(value) {
+/**
+ * 处理当前页码变化
+ * @param value - 新页码
+ * @returns void
+ * @description 分页器页码变化时滚动到对应位置
+ */
+function handleCurrentChange(value: number): void {
   if (lock) return (lock = false);
   if (state.tableLoad) return;
   const mpreEl: any = document.querySelector(`#${id.value} #${id.value}-more-${value}`);
   if (mpreEl) setScrollTop(mpreEl);
-  // state.pageable.pageNum = value;
-  // getTableList(state.pageable.pageNum);
 }
-
-// #Function 刷新列表
-function refresh() {
+/**
+ * 刷新列表
+ * @returns void
+ * @description 重置状态并重新获取数据
+ */
+function refresh(): void {
   state.tableLoadEnd = false;
   state.flatTableData.length = 0;
   state.tableData.length = 0;
   state.pageable.pageNum = 1;
   getTableList(1);
 }
-
 defineExpose({ refresh, setScrollTop, el: mScrollbarListRef });
 </script>
-
-<style lang="scss" scoped>
-.pa-scrollbar-list_footer {
-  min-width: 100%;
-
-  &.padding-top {
-    padding-top: var(--pa-size-padding, 10px);
-  }
-  &.padding-left {
-    padding-left: var(--pa-size-padding, 10px);
-    width: calc(100% - calc(var(--pa-size-padding, 10px)));
-    min-width: calc(100% - calc(var(--pa-size-padding, 10px)));
-  }
-  &.padding-right {
-    padding-right: var(--pa-size-padding, 10px);
-    width: calc(100% - calc(var(--pa-size-padding, 10px)));
-    min-width: calc(100% - calc(var(--pa-size-padding, 10px)));
-  }
-
-  &.padding-left.padding-right {
-    width: calc(100% - calc(var(--pa-size-padding, 10px)) * 2);
-    min-width: calc(100% - calc(var(--pa-size-padding, 10px)) * 2);
-  }
-}
-</style>
