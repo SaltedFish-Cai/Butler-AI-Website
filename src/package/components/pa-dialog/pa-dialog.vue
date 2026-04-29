@@ -30,21 +30,18 @@
                     @click="state.fullscreen = !state.fullscreen"
                   />
                 </div>
-
                 <div v-if="subTitle" class="sub_title_body" :style="{ fontWeight: subTitle ? 'bold' : 'normal' }">
                   <slot name="subTitle">
                     {{ typeof subTitle === "string" ? subTitle : subTitle?.[language] }}
                   </slot>
                 </div>
-
-                <div></div>
+                <div><div></div></div>
               </div>
             </slot>
             <div class="pa-dialog-content_header_close" @click="closeMenu">
               <pa-icon name="close_line" class="flex-center" />
             </div>
           </div>
-
           <div class="pa-dialog-content_body" ref="ScrollbarRef">
             <pa-scrollbar
               v-if="scroll"
@@ -66,7 +63,6 @@
                 <template v-if="keepAlive"> <slot></slot> </template>
               </div>
             </pa-scrollbar>
-
             <div
               v-else
               class="dialog__body flex-col"
@@ -80,7 +76,6 @@
               <template v-if="keepAlive"> <slot></slot> </template>
             </div>
           </div>
-
           <div v-if="$slots['footer'] || $slots['footerLeft'] || $slots['footerRight']" class="pa-dialog-content_footer">
             <div v-if="$slots['footerLeft'] || $slots['footerRight']" class="pa-dialog-content_footer_left">
               <slot name="footerLeft" />
@@ -99,11 +94,26 @@
 </template>
 
 <script lang="ts" setup>
-// # Import
-import { ref, reactive, watch, computed, onMounted, onUnmounted, nextTick } from "vue";
-import { ComponentProps } from "./type";
-
-// # Var
+/**
+ * **模块导入**
+ * @description 导入 Vue 组合式 API
+ * */
+import { ref, Ref, reactive, watch, computed, onMounted, onUnmounted, nextTick } from "vue";
+/**
+ * **模块导入**
+ * @description 导入组件类型定义
+ * */
+import { ComponentProps, ComponentEmits } from "./types";
+/**
+ * **组件事件定义**
+ * @description 定义组件可触发的事件
+ * */
+const emits = defineEmits<ComponentEmits>();
+/**
+ * **组件属性**
+ * @type `ComponentProps`
+ * @description 组件的属性对象
+ * */
 const props = withDefaults(defineProps<ComponentProps>(), {
   size: "m",
   height: "auto",
@@ -117,19 +127,45 @@ const props = withDefaults(defineProps<ComponentProps>(), {
   titleAlign: "left",
   scroll: true
 });
-let openId = "";
-const emits = defineEmits(["update:modelValue", "closed"]);
-const ScrollbarRef = ref();
-const ScrollbarBodyRef = ref();
+/**
+ * **打开标识**
+ * @type `string`
+ * @description 弹窗打开时的唯一标识
+ * */
+let openId: string = "";
+/**
+ * **滚动条引用**
+ * @type `Ref<HTMLElement | undefined>`
+ * @description 滚动条容器 DOM 引用
+ * */
+const ScrollbarRef: Ref<HTMLElement | undefined> = ref();
+/**
+ * **滚动条内容引用**
+ * @type `Ref<HTMLElement | undefined>`
+ * @description 滚动条内容 DOM 引用
+ * */
+const ScrollbarBodyRef: Ref<HTMLElement | undefined> = ref();
+/**
+ * **组件状态**
+ * @type `Ref<{ visible: boolean; fullscreen: boolean }>`
+ * @description 组件的响应式状态
+ * */
 const state = reactive({
   visible: false,
   fullscreen: false
 });
-
-const language =
+/**
+ * **当前语言**
+ * @type `string`
+ * @description 当前使用的语言
+ * */
+const language: string =
   (typeof window !== "undefined" && typeof window !== "undefined" && window.PancakeGlobalConfig?.language) || "zh-CN" || "zh-CN";
-
-// #Computed setSize
+/**
+ * **计算宽度**
+ * @type `ComputedRef<number | string>`
+ * @description 计算弹窗的宽度
+ * */
 const setSize = computed(() => {
   let size: number | string = 500;
   switch (props.size) {
@@ -148,11 +184,13 @@ const setSize = computed(() => {
     default:
       break;
   }
-
   return props.width || size;
 });
-
-// #Computed transform
+/**
+ * **计算偏移**
+ * @type `ComputedRef<number | string>`
+ * @description 计算弹窗的偏移量
+ * */
 const transform = computed(() => {
   let size: number | string = 0;
   switch (props.size) {
@@ -173,8 +211,11 @@ const transform = computed(() => {
   }
   return props.offsetX || size;
 });
-
-// #Computed setOffsetX
+/**
+ * **计算X轴偏移量**
+ * @type `ComputedRef<number | string>`
+ * @description 计算弹窗的X轴偏移量
+ * */
 const setOffsetX = computed(() => {
   let data = transform.value;
   if (props.offsetX) {
@@ -185,10 +226,13 @@ const setOffsetX = computed(() => {
   }
   return data;
 });
-
-// #Computed setOffsetY
+/**
+ * **计算Y轴偏移量**
+ * @type `ComputedRef<number | string>`
+ * @description 计算弹窗的Y轴偏移量
+ * */
 const setOffsetY = computed(() => {
-  let data = 0 as number | string;
+  let data: number | string = 0;
   if (props.offsetY) {
     data = isNumber(props.offsetY) ? props.offsetY + "px" : props.offsetY;
   }
@@ -197,11 +241,13 @@ const setOffsetY = computed(() => {
   }
   return data;
 });
-
-// #Computed setHeight
+/**
+ * **计算高度**
+ * @type `ComputedRef<number | string>`
+ * @description 计算弹窗的高度
+ * */
 const setHeight = computed(() => {
-  let data = 500 as number | string;
-
+  let data: number | string = 500;
   if (props.size == "max") {
     data = "95%";
   } else if (props.size == "l") {
@@ -211,38 +257,44 @@ const setHeight = computed(() => {
   } else if (props.size == "s") {
     data = "50%";
   }
-
   if (props.height && props.height != "auto") {
     data = isNumber(props.height) ? props.height + "px" : props.scroll === false ? "" : props.height;
   }
   if (props.height == "auto" && props.scroll) {
     data = "max-content";
   }
-
   if (state.fullscreen) {
     data = "100%";
   }
-
   return data;
 });
-
-// #Function isNumber
-function isNumber(value) {
-  return Number.isNaN(value / 1) === false;
+/**
+ * **判断是否为数字**
+ * @param `value` `unknown` 要判断的值
+ * @returns `boolean` 是否为数字
+ * @description 判断给定的值是否为数字类型
+ * */
+function isNumber(value: unknown): boolean {
+  return Number.isNaN(Number(value)) === false;
 }
-
-// #Function 关闭弹窗回调
-function closeMenu() {
+/**
+ * **关闭弹窗**
+ * @description 关闭弹窗并触发相关事件
+ * */
+function closeMenu(): void {
   if (typeof window !== "undefined") {
     window.PancakeGlobalConfig.escapeMap = window.PancakeGlobalConfig.escapeMap || [];
-    window.PancakeGlobalConfig.escapeMap = window.PancakeGlobalConfig.escapeMap.filter(item => item != openId);
+    window.PancakeGlobalConfig.escapeMap = window.PancakeGlobalConfig.escapeMap.filter((item: string) => item != openId);
   }
   emits("update:modelValue", false);
   emits("closed", false);
 }
-
-// #添加ESC键监听
-function handleKeyDown(e) {
+/**
+ * **处理键盘按下事件**
+ * @param `e` `KeyboardEvent` 键盘事件对象
+ * @description 处理ESC键关闭弹窗
+ * */
+function handleKeyDown(e: KeyboardEvent): void {
   const escapeMap = (typeof window !== "undefined" && window.PancakeGlobalConfig.escapeMap) || [];
   if (e.key === "Escape" && state.visible && escapeMap[escapeMap.length - 1] === openId) {
     if (state.fullscreen && props.size != "full") {
@@ -252,31 +304,42 @@ function handleKeyDown(e) {
     closeMenu();
   }
 }
-
+/**
+ * **滚动子元素变化处理**
+ * @description 处理滚动内容变化时的逻辑
+ * */
+function scrollChildChange(): void {
+  if (!ScrollbarRef.value) return;
+  if (ScrollbarBodyRef.value && ScrollbarBodyRef.value.clientHeight < Number(String(setHeight.value)?.replace("px", ""))) return;
+  if (ScrollbarRef.value && ScrollbarBodyRef.value) {
+    ScrollbarRef.value.style.height = ScrollbarBodyRef.value.clientHeight + "px";
+  }
+}
+/**
+ * **组件挂载生命周期**
+ * @description 初始化组件
+ * */
 onMounted(() => {
   nextTick(() => {
     scrollChildChange();
   });
   props.closeOnPressEscape && document.addEventListener("keydown", handleKeyDown);
 });
-
+/**
+ * **组件卸载生命周期**
+ * @description 清理事件监听器
+ * */
 onUnmounted(() => {
   props.closeOnPressEscape && document.removeEventListener("keydown", handleKeyDown);
 });
-
-function scrollChildChange() {
-  if (!ScrollbarRef.value) return;
-  console.dir(ScrollbarBodyRef.value);
-  if (ScrollbarBodyRef.value.clientHeight < Number(String(setHeight.value)?.replace("px", ""))) return;
-  ScrollbarRef.value.style.height = ScrollbarBodyRef.value.clientHeight + "px";
-}
-
 defineExpose({ ScrollbarRef: ScrollbarRef });
-
-// #Watch modelValue
+/**
+ * **监听modelValue**
+ * @description 监听弹窗显示状态变化
+ * */
 watch(
   () => props.modelValue,
-  data => {
+  (data: boolean) => {
     state.visible = data;
     if (data) {
       scrollChildChange();
