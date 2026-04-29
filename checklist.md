@@ -89,7 +89,9 @@
 | 文档 | ComponentProps 类型一致 与 types.d.ts 中定义一致                                                                                                                                 |      |
 | 文档 | ComponentEmits 表格完整 事件名、描述、回调函数 三列                                                                                                                              |      |
 | 文档 | ComponentEmits 回调格式一致 与 types.d.ts 中 ComponentEmits 一致                                                                                                                 |      |
+| 文档 | types.d.ts 中所有类型都必须在文档中有表格展示 提取 types.d.ts 中所有 export type，每个类型都需对应一个表格                                                                                              |      |
 | 文档 | ComponentSlots 表格完整 插槽名称、作用 两列（如存在），插槽名用单引号包裹                                                                                                        |      |
+| 文档 | 其他类型表格完整 types.d.ts 中定义的其他类型（如 ScrollDataType、RenderEndData 等）也需在文档中有表格展示，根据类型结构确定表格列                                                    |      |
 | 文档 | 示例文件 base.vue 存在 必须存在                                                                                                                                                  |      |
 | 文档 | 示例文件可运行 无语法错误                                                                                                                                                        |      |
 | 文档 | 文档根据 ComponentProps 参数创建更多示例                                                                                                                                         |      |
