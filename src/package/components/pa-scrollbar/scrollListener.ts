@@ -1,3 +1,7 @@
+/**
+ * **模块导入**
+ * @description 导入 lodash 工具库
+ */
 import _ from "lodash";
 const { debounce, throttle } = _;
 
@@ -125,7 +129,6 @@ export class ScrollListener {
         });
       }
     });
-    console.log(`ScrollListener reinitialized: ${this.listeners.size} listeners retained`);
   }
   /**
    * 添加元素滚动监听器

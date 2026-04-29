@@ -46,23 +46,23 @@
 
 ## ComponentEmits
 
-| 字段                | 描述                                                                   | 参数类型                              |
-| ------------------- | ---------------------------------------------------------------------- | ------------------------------------- |
-| renderEnd           | 当滚动条渲染结束时触发                                                 | `data: RenderEndData`                 |
-| bodySizeXChange     | 当滚动条水平尺寸变化时触发                                             | -                                     |
-| bodySizeYChange     | 当滚动条垂直尺寸变化时触发                                             | -                                     |
-| scroll              | 当滚动条滚动时触发，`存在`节流延迟                                     | `data: ScrollDataType`                |
-| scrollEnd           | 当滚动条滚动结束时触发，`存在`节流延迟                                 | `value: boolean`                      |
-| scrollStart         | 当滚动条滚动开始时触发，`存在`节流延迟                                 | `value: boolean`                      |
-| scrollLeft          | 当滚动条滚动到左侧时触发，`存在`节流延迟                               | `value: boolean`                      |
-| scrollRight         | 当滚动条滚动到右侧时触发，`存在`节流延迟                               | `value: boolean`                      |
-| intersecting        | 当滚动条与元素相交时触发                                               | `el: Element`                         |
-| directlyScroll      | 当滚动条直接滚动时触发，`不存在`节流延迟                               | `data: DirectlyScrollData`            |
-| scrollChildChange   | 当滚动条子元素变化时触发                                               | `data: ScrollChildChangeData`         |
-| directlyScrollEnd   | 当滚动条直接滚动结束时触发，`不存在`节流延迟                           | `value: boolean`                      |
-| directlyScrollStart | 当滚动条直接滚动开始时触发，`不存在`节流延迟                           | `value: boolean`                      |
-| directlyScrollLeft  | 当滚动条直接滚动到左侧时触发，`不存在`节流延迟                         | `value: boolean`                      |
-| directlyScrollRight | 当滚动条直接滚动到右侧时触发，`不存在`节流延迟                         | `value: boolean`                      |
+| 字段                | 描述                                                 | 参数类型                      |
+| ------------------- | ---------------------------------------------------- | ----------------------------- |
+| renderEnd           | 当滚动条渲染结束时触发                               | `data: RenderEndData`         |
+| bodySizeXChange     | 当滚动条水平尺寸变化时触发                           | -                             |
+| bodySizeYChange     | 当滚动条垂直尺寸变化时触发                           | -                             |
+| scroll              | 当滚动条滚动时触发，`存在`节流延迟                   | `data: ScrollDataType`        |
+| scrollEnd           | 当滚动条滚动结束时触发，`存在`节流延迟               | `value: boolean`              |
+| scrollStart         | 当滚动条滚动开始时触发，`存在`节流延迟               | `value: boolean`              |
+| scrollLeft          | 当滚动条滚动到左侧时触发，`存在`节流延迟             | `value: boolean`              |
+| scrollRight         | 当滚动条滚动到右侧时触发，`存在`节流延迟             | `value: boolean`              |
+| intersecting        | 当滚动条与元素相交时触发                             | `el: Element`                 |
+| directlyScroll      | 当滚动条直接滚动时触发，`不存在`节流延迟             | `data: DirectlyScrollData`    |
+| scrollChildChange   | 当滚动条子元素变化时触发                             | `data: ScrollChildChangeData` |
+| directlyScrollEnd   | 当滚动条直接滚动结束时触发，`不存在`节流延迟         | `value: boolean`              |
+| directlyScrollStart | 当滚动条直接滚动开始时触发，`不存在`节流延迟         | `value: boolean`              |
+| directlyScrollLeft  | 当滚动条直接滚动到左侧时触发，`不存在`节流延迟       | `value: boolean`              |
+| directlyScrollRight | 当滚动条直接滚动到右侧时触发，`不存在`节流延迟       | `value: boolean`              |
 
 ## ComponentSlots
 
@@ -70,3 +70,35 @@
 | ----------- | ------------ |
 | `'default'` | 默认内容插槽 |
 | `'footer'`  | 底部插槽     |
+
+## ScrollDataType
+
+| 属性名     | 描述             | 类型     |
+| ---------- | ---------------- | -------- |
+| scrollTop  | 垂直滚动位置     | `number` |
+| scrollLeft | 水平滚动位置     | `number` |
+
+## RenderEndData
+
+| 属性名     | 描述         | 类型     |
+| ---------- | ------------ | -------- |
+| bodyWidth  | 内容宽度     | `number` |
+| bodyHeight | 内容高度     | `number` |
+
+## DirectlyScrollData
+
+| 属性名           | 描述             | 类型     |
+| ---------------- | ---------------- | -------- |
+| scrollTop        | 垂直滚动位置     | `number` |
+| scrollLeft       | 水平滚动位置     | `number` |
+| scrollDirectionY | 垂直滚动方向     | `number` |
+| scrollDirectionX | 水平滚动方向     | `number` |
+
+## ScrollChildChangeData
+
+| 属性名      | 描述             | 类型      |
+| ----------- | ---------------- | --------- |
+| bodyWidth   | 内容宽度         | `number`  |
+| bodyHeight  | 内容高度         | `number`  |
+| useScrollX  | 是否启用水平滚动 | `boolean` |
+| useScrollY  | 是否启用垂直滚动 | `boolean` |
