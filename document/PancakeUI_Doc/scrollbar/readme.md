@@ -25,7 +25,7 @@
 | 属性名                       | 描述                 | 类型                                                     | 默认值      |
 | ---------------------------- | -------------------- | -------------------------------------------------------- | ----------- |
 | id                           | 唯一标识             | `string`                                                 | -           |
-| class                        | 自定义类名           | `string`                                                 | -           |
+| class                        | 自定义类名           | `Array<string>` `string`                                 | -           |
 | style                        | 自定义样式           | `Record<string, string>`                                 | -           |
 | useShadow                    | 是否使用阴影         | `boolean`                                                | `true`      |
 | useBackTop                   | 是否显示回到顶部按钮 | `boolean`                                                | `true`      |

@@ -90,7 +90,7 @@ import { randChar } from "../tools/rand-char";
  * **模块导入**
  * @description 导入组件类型定义
  * */
-import { ComponentProps } from "./types";
+import { ComponentProps, ComponentEmits } from "./types";
 
 /**
  * **模块导入**
@@ -121,23 +121,7 @@ const { debounce } = _;
  * **组件事件定义**
  * @description 定义组件可触发的事件
  * */
-const emits = defineEmits([
-  "renderEnd",
-  "bodySizeXChange",
-  "bodySizeYChange",
-  "scroll",
-  "scrollEnd",
-  "scrollStart",
-  "scrollLeft",
-  "scrollRight",
-  "intersecting",
-  "directlyScroll",
-  "scrollChildChange",
-  "directlyScrollEnd",
-  "directlyScrollStart",
-  "directlyScrollLeft",
-  "directlyScrollRight"
-]);
+const emits = defineEmits<ComponentEmits>();
 
 /**
  * **滚动条主体引用**
