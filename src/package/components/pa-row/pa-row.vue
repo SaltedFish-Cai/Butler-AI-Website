@@ -11,21 +11,9 @@
  * @author Butler AI
  */
 import { computed, provide, ref, onMounted, onUnmounted } from "vue";
-import type { RowJustify, RowAlign } from "./types";
+import type { ComponentProps } from "./types";
 
-/**
- * PaRow 组件 Props
- */
-interface Props {
-  /** 栅格间隔 */
-  gutter?: number | string;
-  /** 垂直排列方式 */
-  justify?: RowJustify;
-  /** 水平排列方式 */
-  align?: RowAlign;
-}
-
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<ComponentProps>(), {
   justify: "start",
   align: "top"
 });

@@ -11,31 +11,9 @@
  * @author Butler AI
  */
 import { computed, inject, ref, Ref } from "vue";
-import type { BreakPoint, Responsive } from "./types";
+import type { BreakPoint, ComponentProps } from "./types";
 
-/**
- * PaCol 组件 Props
- */
-interface Props {
-  /** 栅格占据的列数（共24列） */
-  span?: number;
-  /** 栅格之间的间隔 */
-  gutter?: number | string;
-  /** 栅格左侧的间隔格数 */
-  offset?: number;
-  /** <576px 响应式配置 */
-  xs?: Responsive | number;
-  /** ≥576px 响应式配置 */
-  sm?: Responsive | number;
-  /** ≥768px 响应式配置 */
-  md?: Responsive | number;
-  /** ≥992px 响应式配置 */
-  lg?: Responsive | number;
-  /** ≥1200px 响应式配置 */
-  xl?: Responsive | number;
-}
-
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<ComponentProps>(), {
   offset: 0,
   xs: undefined,
   sm: undefined,
