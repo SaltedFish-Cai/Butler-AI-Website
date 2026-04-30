@@ -1,6 +1,6 @@
 # 排查清单
 
-> 版本：v1.1.0
+> 版本：v1.1.1
 
 执行时，逐条执行下方表格中的要求，并把结果填写在下方表格中，结果列的值为✅或❌，只有上一条执行完后才会执行下一条！！！
 
@@ -38,9 +38,9 @@
 | *.d.ts | 文件命名为 types.d.ts 非 type.d.ts                                                                                       |      |
 | *.d.ts | 类型名称为 ComponentProps ComponentEmits 其他类型名称为 Component+类型名称（如 ComponentItemProps、ComponentLabelProps） |      |
 | *.d.ts | 必须定义属性：id、class、style 三个都必须存在（可选属性，带?） id 类型：string; class Array<string> \| string; style Record<string, string>   |      |
-| *.d.ts | 所有 import 有 JSDoc 注释 包含 @description ...                                                                          |      |
-| *.d.ts | 所有 export type 有 JSDoc 注释 @type、@description                                                                       |      |
-| *.d.ts | 所有属性有完整 JSDoc 注释 @type、@default、@description                                                                  |      |
+| *.d.ts | 所有 import 有 JSDoc 注释 1.标题 2.@description ...                                                                          |      |
+| *.d.ts | 所有 export type 有 JSDoc 注释 1.标题 2.@type 3.@description                                                                       |      |
+| *.d.ts | 所有属性有完整 JSDoc 注释 1.标题 2.@type 3.@default 4.@description                                                                  |      |
 | *.d.ts | @type 格式规范 可选属性（有 ?）的 @type 必须包含 `undefined`                                                             |      |
 | *.d.ts | 数组类型使用 Array 非 type[]                                                                                             |      |
 | *.d.ts | ComponentEmits 函数重载格式 (e: "eventName", param): void;                                                               |      |
@@ -56,12 +56,12 @@
 | *.scss | class 之间有空行分隔 提高可读性                             |      |
 | *.scss | 样式属性使用 CSS 变量 如 --pa-color-primary、--pa-size-font |      |
 | *.scss | 无硬编码颜色值 使用 CSS 变量而非 #409eff 等                 |      |
-| *.ts | 所有 import 有 JSDoc 注释 注释 包含 @description ...                       |      |
-| *.ts | 所有 export 有 JSDoc 注释 类型/函数/常量                                   |      |
+| *.ts | 所有 import 有 JSDoc 注释 1.标题 2.@description ...                       |      |
+| *.ts | 所有 export 有 JSDoc 注释 1.标题 2. @type 3.@description                                    |      |
 | *.ts | 所有函数有完整 JSDoc 注释 @param、@returns、@description                   |      |
 | *.ts | 所有方法必须使用 function 定义 而非 const 定义 |      |
-| *.ts | 所有变量/常量有 JSDoc 注释                                                 |      |
-| *.ts | 无单行注释 改用 JSDoc 风格                                                 |      |
+| *.ts | 所有变量/常量有 JSDoc 注释 1.标题 2.@description ...                       |      |
+| *.ts | 无单行注释 改用 JSDoc 注释 1.标题 2.@description ...                                                |      |
 | *.ts | 数组类型使用 Array                                                         |      |
 | *.ts | 可选参数类型含 undefined                                                   |      |
 | *.ts | 代码顺序规范 import → const/let变量（vue相关）→ const/let其他变量 → function → vue的watch |      |
