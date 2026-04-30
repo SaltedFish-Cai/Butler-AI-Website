@@ -68,7 +68,7 @@ export type ComponentProps = {
   /**
    * **显示时间**
    * @type `number` | `undefined`
-   * @default `4500`
+   * @default `3000`
    * @description 显示时间，单位毫秒，设为 0 则不会自动关闭
    * */
   duration?: number;
