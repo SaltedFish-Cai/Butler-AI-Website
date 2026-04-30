@@ -83,15 +83,15 @@ import inBrowser from "../tools/inBrowser";
 import tabsItem from "./components/tabs-item.vue";
 import formItem from "./form-basics-element.vue";
 
-import { PaFormItemType, PaFormChildType, PaFormProps, ConfigContextType, FormDataType } from "./type";
-import { ExMultipleConfigType, MultipleConfigType } from "./type";
+import { PaFormItemType, PaFormChildType, ComponentProps, ConfigContextType, FormDataType } from "./types";
+import { ExMultipleConfigType, MultipleConfigType } from "./types";
 import { DatePickerShortcut } from "../pa-time/type";
 import { PancakeGlobalConfigType } from "../pa-manager/type";
 
 import _ from "lodash";
 const { cloneDeep, isEqual, debounce } = _;
 
-const props = withDefaults(defineProps<PaFormProps>(), {
+const props = withDefaults(defineProps<ComponentProps>(), {
   contrastData: () => ({}),
   useRequired: true,
   noLabel: false,

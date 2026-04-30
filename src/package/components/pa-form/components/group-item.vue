@@ -55,7 +55,7 @@ import { Ref, ref, inject, computed, onMounted } from "vue";
 // import formLabel from "../form-label.vue";
 import formItem from "../form-basics-element.vue";
 import { GroupItemPropsType } from "../item";
-import { ConfigContextType, PaFormChildType, PaFormItemType } from "../type";
+import { ConfigContextType, PaFormChildType, PaFormItemType } from "../types";
 import { PaOptionType } from "../../manager-type";
 import { findData } from "../../pa-select/find-data";
 
