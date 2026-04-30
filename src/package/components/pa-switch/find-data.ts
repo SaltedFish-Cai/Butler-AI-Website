@@ -12,7 +12,7 @@ import { LanguagePackageType, PaOptionType } from "../manager-type";
  * @returns `string` 显示文本
  * @description 根据开关值和选项配置查找对应的显示文本
  * */
-export function findData(data: boolean | number | string, options: PaOptionType.Switch, language: string): string {
+export function findData(data: boolean | number | string, options: PaOptionType.Switch, language: string = "zh-CN"): string {
   /**
    * **基础选项配置**
    * @type `{ activeText: string; inActiveText: string; activeValue: boolean | number | string; inActiveValue: boolean | number | string }`

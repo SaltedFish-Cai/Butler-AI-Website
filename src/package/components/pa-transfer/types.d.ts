@@ -30,7 +30,7 @@ export type ComponentProps = {
    * @default `undefined`
    * @description 当设置该值时，会添加到组件的样式中
    */
-  style?: Record<string, string | number>;
+  style?: Record<string, number | string>;
   /**
    * 双向绑定值
    * @type `Array<boolean | number | string>` | `undefined`
@@ -89,11 +89,11 @@ export type ComponentProps = {
   useSearch?: boolean;
   /**
    * 对比数据
-   * @type `Array<number | string>` | `number` | `string` | `undefined`
+   * @type `Array<boolean | number | string>` | `undefined`
    * @default `undefined`
    * @description 当设置该值时，会使用该值作为对比数据
    */
-  contrastData?: Array<number | string> | number | string;
+  contrastData?: Array<boolean | number | string>;
   /**
    * 是否显示对比数据
    * @type `boolean` | `undefined`

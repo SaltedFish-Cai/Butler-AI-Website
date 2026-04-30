@@ -79,12 +79,12 @@
  * **模块导入**
  * @description 导入 Vue 响应式 API
  * */
-import { ref, computed, watch, withDefaults, inject } from "vue";
+import { ref, computed, watch, inject } from "vue";
 /**
  * **模块导入**
  * @description 导入组件类型定义
  * */
-import { ComponentProps, ComponentEmits } from "./types.d.ts";
+import { ComponentProps, ComponentEmits } from "./types";
 /**
  * **组件属性**
  * @description 组件的 props 定义

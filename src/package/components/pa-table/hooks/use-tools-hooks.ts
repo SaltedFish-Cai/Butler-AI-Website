@@ -8,16 +8,16 @@ export const useToolsHooks = (props: any, { mScrollbarListRef }: any) => {
   /**
    * @description 设置滚动条顶部距离
    * @param value 目标距离值
-   * @param cellback 回调函数
+   * @param cellBack 回调函数
    */
-  function setScrollTop(value: number, cellback?: () => void) {
+  function setScrollTop(value: number, cellBack?: () => void) {
     const el = document.querySelector(`#${props.id} .pa-table_body_header`);
     let _elHeaderHeight = 0;
     if (el?.clientHeight) {
       _elHeaderHeight = el.clientHeight;
     }
     mScrollbarListRef.value?.setScrollTop?.(value - _elHeaderHeight);
-    cellback?.();
+    cellBack?.();
   }
   return { setScrollTop };
 };

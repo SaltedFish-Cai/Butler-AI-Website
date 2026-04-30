@@ -30,7 +30,7 @@ export type ComponentItemProps = {
    * @default `undefined`
    * @description 当设置该值时，会添加到组件的样式中
    */
-  style?: Record<string, string | number>;
+  style?: Record<string, number | string>;
   /**
    * 文件源对象
    * @type `object` | `undefined`
@@ -93,7 +93,7 @@ export type ComponentProps = {
    * @default `undefined`
    * @description 当设置该值时，会添加到组件的样式中
    */
-  style?: Record<string, string | number>;
+  style?: Record<string, number | string>;
   /**
    * 文件列表
    * @type `Array<ComponentItemProps>` | `undefined`

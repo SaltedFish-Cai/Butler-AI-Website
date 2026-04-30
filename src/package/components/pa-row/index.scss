@@ -1,12 +1,11 @@
-/** pa-row 组件样式 */
-$--pa-row-gutter: 24px !default;
-
 .pa-row {
   display: flex;
   flex-wrap: wrap;
   box-sizing: border-box;
-  margin-left: -$--pa-row-gutter / 2;
-  margin-right: -$--pa-row-gutter / 2;
+  > * {
+    margin-top: var(--row-gutter-value);
+    margin-bottom: var(--row-gutter-value);
+  }
 }
 
 /** 水平对齐方式 */
@@ -35,56 +34,10 @@ $--pa-row-gutter: 24px !default;
   align-items: flex-start;
 }
 
-.pa-row--align-middle {
+.pa-row--align-center {
   align-items: center;
 }
 
 .pa-row--align-bottom {
   align-items: flex-end;
-}
-
-/** 响应式断点 */
-$--pa-breakpoints: (
-  "xs": 0,
-  "sm": 384px,
-  "md": 768px,
-  "lg": 992px,
-  "xl": 1200px,
-  "xxl": 1920px
-);
-
-@each $bp, $width in $--pa-breakpoints {
-  @media (min-width: $width) {
-    .pa-row--#{$bp}-start {
-      justify-content: flex-start;
-    }
-
-    .pa-row--#{$bp}-end {
-      justify-content: flex-end;
-    }
-
-    .pa-row--#{$bp}-center {
-      justify-content: center;
-    }
-
-    .pa-row--#{$bp}-space-around {
-      justify-content: space-around;
-    }
-
-    .pa-row--#{$bp}-space-between {
-      justify-content: space-between;
-    }
-
-    .pa-row--#{$bp}-align-top {
-      align-items: flex-start;
-    }
-
-    .pa-row--#{$bp}-align-middle {
-      align-items: center;
-    }
-
-    .pa-row--#{$bp}-align-bottom {
-      align-items: flex-end;
-    }
-  }
 }

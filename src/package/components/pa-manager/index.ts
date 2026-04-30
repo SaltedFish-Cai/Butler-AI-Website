@@ -10,9 +10,7 @@ import PaManager from "./pa-manager.vue";
 function install(app: App): void {
   if (!app._context.components["PaManager"]) app.component("PaManager", PaManager);
 }
+/** @description 组件名称 */
+const name = "PaManager";
 /** @description 全局配置组件导出 */
-export default {
-  /** @description 组件名称 */
-  name: "PaManager",
-  install
-};
+export default { name, install };

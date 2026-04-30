@@ -10,9 +10,7 @@ import PaDevelopment from "./pa-development.vue";
 function install(app: App): void {
   if (!app._context.components["PaDevelopment"]) app.component("PaDevelopment", PaDevelopment);
 }
+/** @description 组件名称 */
+const name = "PaDevelopment";
 /** @description 开发工具组件导出 */
-export default {
-  /** @description 组件名称 */
-  name: "PaDevelopment",
-  install
-};
+export default { name, install };

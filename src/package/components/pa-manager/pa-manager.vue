@@ -61,7 +61,7 @@ setThemeColor(state.themeColor, state.isDark || false);
  * @returns void
  * @description 更新主题颜色和暗黑模式状态
  */
-function setPaAnagerThemeColor(themeColor: string | undefined, isDark: boolean | undefined): void {
+function setPaManagerThemeColor(themeColor: string | undefined, isDark: boolean | undefined): void {
   state.themeColor = !isNil(themeColor) ? themeColor : state.themeColor;
   state.isDark = !isNil(isDark) ? isDark : state.isDark;
   setThemeColor(state.themeColor, state.isDark || false);
@@ -72,7 +72,7 @@ function setPaAnagerThemeColor(themeColor: string | undefined, isDark: boolean |
  * @returns void
  * @description 更新组件尺寸并切换对应 CSS 类名
  */
-function setPaAnagerSize(size: "default" | "large" | "small"): void {
+function setPaManagerSize(size: "default" | "large" | "small"): void {
   if (typeof window !== "undefined") {
     const classList = (typeof window !== "undefined" && window.document?.documentElement.classList) || null;
     classList?.toggle("small", size == "small");
@@ -86,7 +86,7 @@ function setPaAnagerSize(size: "default" | "large" | "small"): void {
  * @returns void
  * @description 更新语言配置和对应的语言包
  */
-function setPaAnagerLanguage(language: "en-US" | "zh-CN"): void {
+function setPaManagerLanguage(language: "en-US" | "zh-CN"): void {
   state.language = {
     value: language,
     package: languageMap[language]
@@ -98,7 +98,7 @@ function setPaAnagerLanguage(language: "en-US" | "zh-CN"): void {
  * @returns void
  * @description 更新表格配置
  */
-function setPaAnagerTableInfiniteScroll(value: Record<string, any>): void {
+function setPaManagerTableInfiniteScroll(value: Record<string, any>): void {
   state.table_config = { ...state.table_config, ...value };
 }
 /**
@@ -108,20 +108,20 @@ function setPaAnagerTableInfiniteScroll(value: Record<string, any>): void {
  * @returns void
  * @description 根据类型调用对应的配置方法
  */
-function setPaAnagerConfig(type: keyof PancakeGlobalConfigType & {}, config: any): void {
-  if (type == "language") setPaAnagerLanguage(config);
-  else if (type == "themeColor" || type == "isDark") setPaAnagerThemeColor(config.themeColor, config.isDark);
-  else if (type == "size") setPaAnagerSize(config.size);
-  else if (type == "table_config") setPaAnagerTableInfiniteScroll(config);
+function setPaManagerConfig(type: keyof PancakeGlobalConfigType & {}, config: any): void {
+  if (type == "language") setPaManagerLanguage(config);
+  else if (type == "themeColor" || type == "isDark") setPaManagerThemeColor(config.themeColor, config.isDark);
+  else if (type == "size") setPaManagerSize(config.size);
+  else if (type == "table_config") setPaManagerTableInfiniteScroll(config);
 }
 /** @description 提供配置设置方法给子组件 */
-provide("setPaAnagerConfig", setPaAnagerConfig);
+provide("setPaManagerConfig", setPaManagerConfig);
 defineExpose({
-  setPaAnagerThemeColor,
-  setPaAnagerSize,
-  setPaAnagerLanguage,
-  setPaAnagerTableInfiniteScroll,
-  setPaAnagerConfig
+  setPaManagerThemeColor,
+  setPaManagerSize,
+  setPaManagerLanguage,
+  setPaManagerTableInfiniteScroll,
+  setPaManagerConfig
 });
 /** @description 组件挂载时初始化全局配置和日志 */
 onMounted(() => {

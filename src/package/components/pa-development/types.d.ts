@@ -28,5 +28,5 @@ export type ComponentProps = {
    * @default `undefined`
    * @description 当设置该值时，会添加到组件的样式中
    */
-  style?: Record<string, string | number>;
+  style?: Record<string, number | string>;
 };

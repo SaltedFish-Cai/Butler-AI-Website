@@ -25,7 +25,7 @@
             class="pa-transfer-option"
             @click="handleOptionClick(item, 'left', index, searchAllSelectList)"
           >
-            <pa-checkbox-item :disabled="props.disabled" :isChecked="awaitSelectList.includes(item.value)">{{
+            <pa-checkbox-item :disabled="props.disabled" :isChecked="item.value ? awaitSelectList.includes(item.value) : false">{{
               item.label
             }}</pa-checkbox-item>
           </div>
@@ -149,7 +149,7 @@ const languagePackage = computed(() => {
   return PancakeGlobalConfig.value?.language?.package?.["cell"] || {};
 });
 /** @description 旧值，用于 change 事件对比 */
-let oldValue = props.modelValue;
+let oldValue = props.modelValue || [];
 /** @description 左侧上次点击索引 */
 let leftOldIndex = -1;
 /** @description 右侧上次点击索引 */
@@ -191,7 +191,7 @@ function handleKeyUp(event: KeyboardEvent): void {
  * @returns void
  * @description 点击选项时切换选中状态，支持 Shift 多选
  */
-function handleOptionClick(item: PaOptionType.SelectItem, direction: string, index: number, list: PaOptionType.SelectList): void {
+function handleOptionClick(item: PaOptionType.Select, direction: string, index: number, list: PaOptionType.SelectList): void {
   if (props.disabled) {
     return;
   }

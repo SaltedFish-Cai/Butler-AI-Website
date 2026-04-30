@@ -531,11 +531,12 @@ export const useStateHooks = (
 
       const indexArr = typeof window !== "undefined" && window.document?.querySelectorAll(`#${props.id} .find_cell_index`);
       let maxIndexNumber = 20;
-      indexArr?.forEach(item => {
-        if (item.clientWidth > maxIndexNumber) {
-          maxIndexNumber = item?.clientWidth || 20;
-        }
-      });
+      if (indexArr)
+        indexArr?.forEach(item => {
+          if (item.clientWidth > maxIndexNumber) {
+            maxIndexNumber = item?.clientWidth || 20;
+          }
+        });
       _tableStructure?.forEach((item, index) => {
         if (exOut.indexOf(String(item.type)) > -1) return;
         if (item.type == "index") {

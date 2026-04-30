@@ -1,7 +1,7 @@
 /**
- * @description PaTableUseItemType 类型导入
+ * @description ComponentItemProps 类型导入
  */
-import { PaTableUseItemType } from "../types";
+import { ComponentItemProps } from "../types";
 /**
  * @description 判断是否为选择类型
  * @param row 行数据
@@ -105,6 +105,6 @@ export function isUseCellConfig(row: any) {
  * @param item 表格列配置
  * @returns 是否为索引列
  */
-export function isRowIndex(item: PaTableUseItemType) {
+export function isRowIndex(item: ComponentItemProps) {
   return item.type == "index" || item.type == "selection" || item.type == "radio";
 }

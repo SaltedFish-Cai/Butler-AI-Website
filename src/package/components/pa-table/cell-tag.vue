@@ -25,7 +25,7 @@
   <div v-else>--</div>
 </template>
 <script lang="ts" setup>
-import { PaOptionType } from "../manager-type";
+import { LanguagePackageType, PaOptionType } from "../manager-type";
 import isDarkColor from "../tools/isDarkColor";
 import { PaTableUseType } from "./types";
 
@@ -42,7 +42,7 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 function findText(row) {
-  let text = "--";
+  let text: LanguagePackageType | string = "--";
   if (props.exOptions) {
     props.exOptions.map(item => {
       if (item.value == row) {

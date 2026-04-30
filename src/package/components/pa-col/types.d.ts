@@ -37,7 +37,7 @@ export type ColProps = {
   /** 自定义类名 */
   class?: Array<string> | string;
   /** 自定义样式 */
-  style?: Record<string, string | number>;
+  style?: Record<string, number | string>;
   /** 元素 id */
   id?: string;
 };

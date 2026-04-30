@@ -11,7 +11,7 @@ export type RowJustify = "center" | "end" | "space-around" | "space-between" | "
 /**
  * 垂直排列方式
  */
-export type RowAlign = "bottom" | "middle" | "top";
+export type RowAlign = "bottom" | "center" | "top";
 
 /**
  * PaRow 组件 Props 类型定义
@@ -30,7 +30,7 @@ export type RowProps = {
   /** 自定义类名 */
   class?: Array<string> | string;
   /** 自定义样式 */
-  style?: Record<string, string | number>;
+  style?: Record<string, number | string>;
   /** 元素 id */
   id?: string;
 };

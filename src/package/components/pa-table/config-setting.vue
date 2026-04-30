@@ -101,7 +101,7 @@
 
 <script setup lang="ts" name="ColSetting">
 // # Import
-import { ref, computed, defineEmits, inject, nextTick, ComputedRef } from "vue";
+import { ref, computed, inject, nextTick, ComputedRef } from "vue";
 import { isSelectType, isTimeType, isTextType, isNumberType } from "./hooks/isType";
 
 import { ComponentUseItemProps, PaTableUseType } from "./types";

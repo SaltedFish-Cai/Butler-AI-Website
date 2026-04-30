@@ -12,7 +12,6 @@
  */
 import { computed, inject, ref, Ref } from "vue";
 import type { BreakPoint, Responsive } from "./types";
-import "./index.scss";
 
 /**
  * PaCol 组件 Props
@@ -20,6 +19,8 @@ import "./index.scss";
 interface Props {
   /** 栅格占据的列数（共24列） */
   span?: number;
+  /** 栅格之间的间隔 */
+  gutter?: number | string;
   /** 栅格左侧的间隔格数 */
   offset?: number;
   /** <576px 响应式配置 */
@@ -45,8 +46,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 /** 注入断点信息，如果没有则默认使用xl */
 const breakPoint = inject<Ref<BreakPoint>>("breakPoint", ref<BreakPoint>("xl"));
-const gutter = inject<Ref<string>>("gutter", ref<string>("0px"));
-
+const rowGutter = inject<Ref<number>>("rowGutter", ref<number>(0));
 /** 获取当前断点对应的span值 */
 const currentSpan = computed(() => {
   const responsive = props[breakPoint.value];
@@ -59,19 +59,25 @@ const currentSpan = computed(() => {
   return props.span;
 });
 
+const gutterValue = computed(() => {
+  return props.gutter
+    ? typeof props.gutter === "number"
+      ? props.gutter / 2
+      : Number(props.gutter.replace(/\D/g, "") || 0) / 2
+    : rowGutter.value;
+});
+
 /** 计算样式 */
 const style = computed(() => {
   const span = currentSpan.value || 0;
-
-  const marginValue = gutter.value ? `${gutter.value}` : "0";
   const data = {
-    flex: `0 0 ${(span / 24) * 100}%`,
-    maxWidth: `calc(${span / 24} * 100% - ${marginValue})`,
-    marginLeft: marginValue,
-    paddingRight: marginValue,
-    marginTop: marginValue,
-    marginBottom: marginValue,
-    boxSizing: "border-box" as const
+    "--col-span-value": span,
+    flex: `0 0 ${(100 / span).toFixed(2)}%`,
+    maxWidth: gutterValue.value
+      ? `calc(calc(100% - ${(span - 1) * gutterValue.value * 2}px) / var(--col-span-value))`
+      : `calc(calc(100% - ${span - 1} * var(--pa-size-padding)) / var(--col-span-value))`,
+    marginLeft: gutterValue.value ? `${gutterValue.value}px` : "calc(var(--pa-size-padding) / 2)",
+    marginRight: gutterValue.value ? `${gutterValue.value}px` : "calc(var(--pa-size-padding) / 2)"
   };
   return data;
 });
@@ -108,44 +114,5 @@ const classes = computed(() => {
 </script>
 
 <style lang="scss" scoped>
-.pa-col {
-  position: relative;
-  min-height: 1px;
-  box-sizing: border-box;
-  float: left;
-}
-
-@for $i from 1 through 24 {
-  .pa-col-#{$i} {
-    flex: 0 0 percentage($i / 24);
-    max-width: percentage($i / 24);
-  }
-
-  .pa-col-offset-#{$i} {
-    margin-left: percentage($i / 24);
-  }
-}
-
-$breakpoints: (
-  "xs": 0,
-  "sm": 384px,
-  "md": 768px,
-  "lg": 992px,
-  "xl": 1200px
-);
-
-@each $bp, $width in $breakpoints {
-  @media (min-width: $width) {
-    @for $i from 1 through 24 {
-      .pa-col-#{$bp}-#{$i} {
-        flex: 0 0 percentage($i / 24);
-        max-width: percentage($i / 24);
-      }
-
-      .pa-col-#{$bp}-offset-#{$i} {
-        margin-left: percentage($i / 24);
-      }
-    }
-  }
-}
+@use "./index.scss";
 </style>

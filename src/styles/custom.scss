@@ -216,7 +216,7 @@
     radial-gradient(circle at 70% 50%, rgba(2, 195, 150, 0.58) 0%, transparent 3.5%);
   animation: floatParticles 20s ease-in-out infinite;
   pointer-events: none;
-  z-index: 0;
+  z-index: -1;
 }
 
 @keyframes floatParticles {

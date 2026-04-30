@@ -24,11 +24,11 @@ export type ComponentProps = {
   class?: Array<string> | string;
   /**
    * 自定义样式
-   * @type `Record<string, string | number>` | `undefined`
+   * @type `Record<string, string>` | `undefined`
    * @default `undefined`
    * @description 当设置该值时，会添加到组件的样式中
    */
-  style?: Record<string, string | number>;
+  style?: Record<string, string>;
   /**
    * 样式模式
    * @type `"color"` | `"default"` | `undefined`

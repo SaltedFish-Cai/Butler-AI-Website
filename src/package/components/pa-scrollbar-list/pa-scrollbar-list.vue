@@ -169,7 +169,7 @@ async function getTableList(pageNum?: number): Promise<void> {
     }
   };
   state.tableQuery = _query;
-  const Data = await props.requestApi(_query);
+  const Data = await props?.requestApi?.(_query);
   const deepData = Data;
   const _data = props.showPagination ? deepData.List || deepData : deepData;
   if (_data.length) {
@@ -223,7 +223,10 @@ let lock = false;
  * @description 分页器页码变化时滚动到对应位置
  */
 function handleCurrentChange(value: number): void {
-  if (lock) return (lock = false);
+  if (lock) {
+    lock = false;
+    return;
+  }
   if (state.tableLoad) return;
   const mpreEl: any = document.querySelector(`#${id.value} #${id.value}-more-${value}`);
   if (mpreEl) setScrollTop(mpreEl);

@@ -12,28 +12,22 @@
  */
 import { computed, provide, ref, onMounted, onUnmounted } from "vue";
 import type { RowJustify, RowAlign } from "./types";
-import "./index.scss";
 
 /**
  * PaRow 组件 Props
  */
 interface Props {
   /** 栅格间隔 */
-  gutter?: string;
-  /** 边缘栅格间隔 */
-  edgeGutter?: string;
-  /** 水平排列方式 */
-  justify?: RowJustify;
+  gutter?: number | string;
   /** 垂直排列方式 */
+  justify?: RowJustify;
+  /** 水平排列方式 */
   align?: RowAlign;
-  /** 自定义元素标签 */
-  tag?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   justify: "start",
-  align: "top",
-  tag: "div"
+  align: "top"
 });
 
 /** 计算类名 */
@@ -46,16 +40,21 @@ const classes = computed(() => {
 
   return classList;
 });
+const gutterValue = computed(() => {
+  return props.gutter
+    ? typeof props.gutter === "number"
+      ? props.gutter / 2
+      : Number(props.gutter.replace(/\D/g, "") || 0) / 2
+    : 0;
+});
 
 /** 计算样式 */
 const style = computed(() => {
   const styles: Record<string, string> = {};
 
-  const _gutter = props.gutter || props.edgeGutter;
-  if (_gutter) {
-    styles.marginLeft = `calc(0px - ${_gutter})`;
-    styles.marginRight = `calc(0px - ${_gutter})`;
-  }
+  styles["--row-gutter-value"] = gutterValue.value ? `${gutterValue.value}px` : "calc(var(--pa-size-padding) / 2)";
+  styles.marginTop = gutterValue.value ? `calc(0px - ${gutterValue.value}px)` : "calc(0px - var(--pa-size-padding) / 2)";
+  styles.marginBottom = gutterValue.value ? `calc(0px - ${gutterValue.value}px)` : "calc(0px - var(--pa-size-padding) / 2)";
 
   return styles;
 });
@@ -94,52 +93,9 @@ onUnmounted(() => {
 
 /** 提供断点信息给子组件 */
 provide("breakPoint", breakPoint);
-provide(
-  "gutter",
-  computed(() => {
-    const gutter = props.gutter;
-    if (!gutter) return "0px";
-    return `${gutter}`;
-  })
-);
+provide("rowGutter", gutterValue);
 </script>
 
 <style lang="scss" scoped>
-.pa-row {
-  display: flex;
-  flex-wrap: wrap;
-  box-sizing: border-box;
-}
-
-.pa-row--start {
-  justify-content: flex-start;
-}
-
-.pa-row--end {
-  justify-content: flex-end;
-}
-
-.pa-row--center {
-  justify-content: center;
-}
-
-.pa-row--space-around {
-  justify-content: space-around;
-}
-
-.pa-row--space-between {
-  justify-content: space-between;
-}
-
-.pa-row--align-top {
-  align-items: flex-start;
-}
-
-.pa-row--align-middle {
-  align-items: center;
-}
-
-.pa-row--align-bottom {
-  align-items: flex-end;
-}
+@use "./index.scss";
 </style>

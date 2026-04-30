@@ -113,6 +113,8 @@ const onCopy = async e => {
   /* border: 1px solid var(--vp-c-divider); */
   border-radius: 5px;
   transition: 0.2s;
+  background: rgba(255, 255, 255, 0.15); /* 半透明底色 */
+  backdrop-filter: blur(12px); /* 核心：模糊背景 */
 }
 .demo-flex {
   display: flex;
