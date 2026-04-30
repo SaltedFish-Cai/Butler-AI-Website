@@ -13,7 +13,6 @@ const install = function (app: App): void {
   if (!app._context.components["PaCol"]) app.component("PaCol", PaCol);
 };
 
-/** PaCol 组件名称 */
 export default {
   name: "PaCol",
   install

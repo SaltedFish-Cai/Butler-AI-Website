@@ -10,9 +10,7 @@
  * @description 栅格列组件，需配合 PaRow 使用
  * @author Butler AI
  */
-/** @description Vue 核心库 */
 import { computed, inject, ref, Ref } from "vue";
-/** @description 类型定义 */
 import type { BreakPoint, Responsive } from "./types";
 
 /**
@@ -21,6 +19,8 @@ import type { BreakPoint, Responsive } from "./types";
 interface Props {
   /** 栅格占据的列数（共24列） */
   span?: number;
+  /** 栅格之间的间隔 */
+  gutter?: number | string;
   /** 栅格左侧的间隔格数 */
   offset?: number;
   /** <576px 响应式配置 */
@@ -44,14 +44,14 @@ const props = withDefaults(defineProps<Props>(), {
   xl: undefined
 });
 
-/** @description 注入断点信息，如果没有则默认使用xl */
+/** 注入断点信息，如果没有则默认使用xl */
 const breakPoint = inject<Ref<BreakPoint>>("breakPoint", ref<BreakPoint>("xl"));
-/** @description 注入行间隔 */
 const rowGutter = inject<Ref<number>>("rowGutter", ref<number>(0));
-/** @description 获取当前断点对应的span值 */
+/** 获取当前断点对应的span值 */
 const currentSpan = computed(() => {
   const responsive = props[breakPoint.value];
   if (props.span) return props.span;
+
   const span = typeof responsive === "number" ? responsive : responsive?.span;
   if (span !== undefined) {
     return span;
@@ -67,7 +67,7 @@ const gutterValue = computed(() => {
     : rowGutter.value;
 });
 
-/** @description 计算样式 */
+/** 计算样式 */
 const style = computed(() => {
   const span = currentSpan.value || 0;
   const data = {
@@ -82,20 +82,23 @@ const style = computed(() => {
   return data;
 });
 
-/** @description 计算类名 */
+/** 计算类名 */
 const classes = computed(() => {
   const classList = ["pa-col"];
+
   if (props.span !== 24) {
     classList.push(`pa-col-${props.span}`);
   }
   if (props.offset > 0) {
     classList.push(`pa-col-offset-${props.offset}`);
   }
+
   const breakPoints: BreakPoint[] = ["xs", "sm", "md", "lg", "xl"];
   breakPoints.forEach(bp => {
     const responsive = props[bp];
     if (responsive) {
       const span = typeof responsive === "number" ? responsive : responsive.span;
+
       if (span !== undefined) {
         classList.push(`pa-col-${bp}-${span}`);
       }
@@ -105,6 +108,7 @@ const classes = computed(() => {
       }
     }
   });
+
   return classList;
 });
 </script>
