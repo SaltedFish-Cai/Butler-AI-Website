@@ -2,13 +2,13 @@
   display: flex;
   flex-wrap: wrap;
   box-sizing: border-box;
+
   > * {
     margin-top: var(--row-gutter-value);
     margin-bottom: var(--row-gutter-value);
   }
 }
 
-/** 水平对齐方式 */
 .pa-row--start {
   justify-content: flex-start;
 }
@@ -29,7 +29,6 @@
   justify-content: space-between;
 }
 
-/** 垂直对齐方式 */
 .pa-row--align-top {
   align-items: flex-start;
 }
