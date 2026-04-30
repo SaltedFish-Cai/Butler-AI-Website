@@ -11,6 +11,7 @@
       }
     }
   }
+
   @for $i from 1 through 24 {
     &[style*="--col-span-value: #{$i}"] {
       &:nth-child(#{$i}n) {
@@ -19,39 +20,3 @@
     }
   }
 }
-
-// @for $i from 1 through 24 {
-//   .pa-col-#{$i} {
-//     flex: 0 0 percentage($i / 24);
-//     max-width: percentage($i / 24);
-//   }
-
-//   .pa-col-offset-#{$i} {
-//     margin-left: percentage($i / 24);
-//   }
-// }
-
-/** 响应式断点样式 */
-// $--pa-breakpoints: (
-//   "xs": 0,
-//   "sm": 384px,
-//   "md": 768px,
-//   "lg": 992px,
-//   "xl": 1200px,
-//   "xxl": 1920px
-// );
-
-// @each $bp, $width in $--pa-breakpoints {
-//   @media (min-width: $width) {
-//     @for $i from 1 through 24 {
-//       .pa-col-#{$bp}-#{$i} {
-//         flex: 0 0 percentage($i / 24);
-//         max-width: percentage($i / 24);
-//       }
-
-//       .pa-col-#{$bp}-offset-#{$i} {
-//         margin-left: percentage($i / 24);
-//       }
-//     }
-//   }
-// }
