@@ -18,18 +18,19 @@
 
 ## ComponentProps
 
-| 参数   | 说明                       | 类型                                    | 默认值 |
-| ------ | -------------------------- | --------------------------------------- | ------ |
-| span   | 栅格占据的列数（共 24 列） | `number`                                | -      |
-| offset | 栅格左侧的间隔格数         | `number`                                | `0`    |
-| xs     | `<576px` 响应式配置        | [`Responsive`](#responsive) \| `number` | -      |
-| sm     | `≥576px` 响应式配置        | [`Responsive`](#responsive) \| `number` | -      |
-| md     | `≥768px` 响应式配置        | [`Responsive`](#responsive) \| `number` | -      |
-| lg     | `≥992px` 响应式配置        | [`Responsive`](#responsive) \| `number` | -      |
-| xl     | `≥1200px` 响应式配置       | [`Responsive`](#responsive) \| `number` | -      |
-| class  | 自定义类名                 | `Array<string>` \| `string`             | -      |
-| style  | 自定义样式                 | `Record<string, string \| number>`      | -      |
-| id     | 元素 id                    | `string`                                | -      |
+| 参数   | 说明                         | 类型                                    | 默认值 |
+| ------ | ---------------------------- | --------------------------------------- | ------ |
+| span   | 栅格占据的列数（共 24 列）   | `number`                                | -      |
+| offset | 栅格左侧的间隔格数           | `number`                                | `0`    |
+| xs     | `<576px` 响应式配置          | [`Responsive`](#responsive) \| `number` | -      |
+| sm     | `≥576px` 响应式配置          | [`Responsive`](#responsive) \| `number` | -      |
+| md     | `≥768px` 响应式配置          | [`Responsive`](#responsive) \| `number` | -      |
+| lg     | `≥992px` 响应式配置          | [`Responsive`](#responsive) \| `number` | -      |
+| xl     | `≥1200px` 响应式配置         | [`Responsive`](#responsive) \| `number` | -      |
+| gutter | 栅格间隔，覆盖 Row 的 gutter | `number` \| `string`                    | -      |
+| class  | 自定义类名                   | `Array<string>` \| `string`             | -      |
+| style  | 自定义样式                   | `Record<string, string \| number>`      | -      |
+| id     | 元素 id                      | `string`                                | -      |
 
 ## ComponentEmits
 
