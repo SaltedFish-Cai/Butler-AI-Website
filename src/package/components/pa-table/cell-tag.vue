@@ -27,7 +27,7 @@
 <script lang="ts" setup>
 import { PaOptionType } from "../manager-type";
 import isDarkColor from "../tools/isDarkColor";
-import { PaTableUseType } from "./type";
+import { PaTableUseType } from "./types";
 
 type Props = {
   value: boolean | number | string;

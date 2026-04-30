@@ -1,14 +1,37 @@
+/**
+ * @description PaTable 组件类型定义文件
+ */
+/**
+ * @description PaOptionType 和 LanguagePackageType 类型导入
+ */
 import { PaOptionType, LanguagePackageType } from "../manager-type";
+/**
+ * @description PaCellItemType 类型导入
+ */
 import { PaCellItemType } from "../cell";
-import { DatePickerShortcut } from "../pa-time/type";
-import { PaFormChildType } from "../pa-form/type";
+/**
+ * @description DatePickerShortcut 类型导入
+ */
+import { DatePickerShortcut } from "../pa-time/types";
+/**
+ * @description PaFormChildType 类型导入
+ */
+import { PaFormChildType } from "../pa-form/types";
 
+/**
+ * @description 表格额外依赖类型
+ * @type {Object}
+ */
 export type PaTableExDependentType = {
   disabledRule?: { [x: string]: (value) => boolean };
   displayRule?: { [x: string]: (value) => boolean };
   exCellRules?: { [x: string]: Array<{ validator: (rule: any, value: any, callback: any) => void; trigger: string }> };
 };
 
+/**
+ * @description 单元格额外依赖类型
+ * @type {Object}
+ */
 export type PaTableCellExDependentType = {
   /**
    * **选择器请求Api**
@@ -57,7 +80,7 @@ export type PaTableCellExDependentType = {
   tag_disabled?: { [x: string]: (params: { value: boolean | number | string }) => boolean };
 };
 
-export interface PaTableType {
+export interface ComponentProps {
   /**
    * **多表时唯一ID**
    * @type `string`
@@ -96,7 +119,7 @@ export interface PaTableType {
    * <m-table :structure="structure" :requestApi="requestApi"></m-table>
    * ```
    * */
-  structure: Array<PaTableItemType>;
+  structure: Array<ComponentItemProps>;
 
   /**
    * **是否使用选择器**
@@ -538,9 +561,17 @@ export interface PaTableType {
   onTableCellChange?: ({ prop, value, oldValue, option }: { prop: string; value: any; oldValue: any; option: any }) => void;
 }
 
-export type TypeProps = "index" | "radio" | "row" | "selection";
+/**
+ * @description 表格列类型
+ * @type {string}
+ */
+export type ComponentTypeProps = "index" | "radio" | "row" | "selection";
 
-export type SearchType =
+/**
+ * @description 搜索类型
+ * @type {string}
+ */
+export type ComponentSearchType =
   | "cascader"
   | "date-picker"
   | "input-number"
@@ -553,11 +584,19 @@ export type SearchType =
   | "time-select"
   | "tree-select";
 
-export type CellConfigType = PaCellItemType & {
+/**
+ * @description 单元格配置类型
+ * @type {Object}
+ */
+export type ComponentCellConfigType = PaCellItemType & {
   required?: boolean;
 };
 
-export type PaTableItemType = {
+/**
+ * @description 表格列配置类型
+ * @type {Object}
+ */
+export type ComponentItemProps = {
   /**
    * **表单唯一Key**
    * @type `string`
@@ -685,7 +724,11 @@ export type PaTableItemType = {
   useSenior?: boolean;
 };
 
-export type PaTableUseItemType = PaTableItemType & {
+/**
+ * @description 表格列配置使用类型
+ * @type {Object}
+ */
+export type ComponentUseItemProps = ComponentItemProps & {
   label?: string;
   /**
    * **最小宽度（当元素为flex宽元素时使用）**

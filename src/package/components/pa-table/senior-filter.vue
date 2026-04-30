@@ -114,9 +114,9 @@
 <script lang="ts" setup>
 // # Import
 import { reactive, watch, nextTick, inject } from "vue";
-import { PaTableUseType } from "./type";
+import { PaTableUseType } from "./types";
 import { PaOptionType, PaRefType } from "../manager-type";
-import { PaFormItemType } from "../pa-form/type";
+import { PaFormItemType } from "../pa-form/types";
 import { M_MessageBox } from "../feedback";
 
 type SeniorFilterPropsType = {

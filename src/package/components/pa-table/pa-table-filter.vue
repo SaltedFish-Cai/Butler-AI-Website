@@ -123,16 +123,16 @@
 
 <script setup lang="ts" name="LightTableFilter">
 import { useTemplateRef, inject } from "vue";
-import { PaTableUseType, PaTableUseItemType, PaTableType } from "./type";
+import { PaTableUseType, ComponentUseItemProps, ComponentProps } from "./types";
 import SeniorFilter from "./senior-filter.vue";
 import ConfigSetting from "./config-setting.vue";
 import { useFilterHooks } from "./hooks/use-filter-hooks";
 import { useSeniorFilterHooks } from "./hooks/use-senior-filter-hooks";
 
 type LightTableFilterPropsType = {
-  tableStructure: Array<PaTableUseItemType>;
+  tableStructure: Array<ComponentUseItemProps>;
   tableQuery: PaTableUseType.TableQueryType;
-  extraProps: PaTableType;
+  extraProps: ComponentProps;
   state: PaTableUseType.TableStateType;
 };
 const props = defineProps<LightTableFilterPropsType>();
@@ -168,5 +168,5 @@ defineExpose({
 </script>
 
 <style lang="scss">
-@import "./query.scss";
+@use "./query.scss";
 </style>

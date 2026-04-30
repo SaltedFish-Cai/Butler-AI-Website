@@ -102,7 +102,7 @@
 import { ref, inject, reactive, watch, computed, ComputedRef } from "vue";
 import { isSelectType, isTimeType, isNumberType } from "./hooks/isType";
 import { randChar } from "../tools/rand-char";
-import { PaTableItemType, PaTableUseItemType, PaTableUseType } from "./type";
+import { ComponentItemProps, ComponentUseItemProps, PaTableUseType } from "./types";
 import { PaOptionType } from "../manager-type";
 import { M_Message } from "../feedback";
 
@@ -112,7 +112,7 @@ type TableColumnFilterType = {
    * @type `TableColumnFilterType`
    * @description 列筛选配置
    * */
-  item: PaTableItemType & PaTableUseItemType;
+  item: ComponentItemProps & ComponentUseItemProps;
   id: string;
   data: PaTableUseType.FilterType;
 };

@@ -14,7 +14,7 @@
 
 <script setup lang="ts" name="Pagination">
 // # Import
-import { PaTableUseType } from "./type";
+import { PaTableUseType } from "./types";
 
 interface PaginationPropsType {
   pageable: PaTableUseType.Pageable;

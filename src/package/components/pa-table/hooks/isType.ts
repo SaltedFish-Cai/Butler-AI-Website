@@ -1,7 +1,14 @@
-import { PaTableUseItemType } from "../type";
-
-// #Function 是否选择类型
-export function isSelectType(row, display) {
+/**
+ * @description PaTableUseItemType 类型导入
+ */
+import { PaTableUseItemType } from "../types";
+/**
+ * @description 判断是否为选择类型
+ * @param row 行数据
+ * @param display 是否显示
+ * @returns 是否为选择类型
+ */
+export function isSelectType(row: any, display: any) {
   const arr = [
     "tag",
     "select",
@@ -20,9 +27,13 @@ export function isSelectType(row, display) {
   if (type == "tag") isTrue = true;
   return isTrue;
 }
-
-// #Function 是否时间类型
-export function isTimeType(row, display) {
+/**
+ * @description 判断是否为时间类型
+ * @param row 行数据
+ * @param display 是否显示
+ * @returns 是否为时间类型
+ */
+export function isTimeType(row: any, display: any) {
   const arr = [
     "time",
     "date-picker-group",
@@ -41,41 +52,59 @@ export function isTimeType(row, display) {
   const isTrue = arr.indexOf(type) > -1 && _display == true;
   return isTrue;
 }
-
-// #Function 是否数字类型
-export function isNumberType(row, display) {
+/**
+ * @description 判断是否为数字类型
+ * @param row 行数据
+ * @param display 是否显示
+ * @returns 是否为数字类型
+ */
+export function isNumberType(row: any, display: any) {
   const arr = ["number"];
   const type = row.filterType || row.cellConfig?.type;
   const _display = row.cellConfig?.display || display || !!row.filterType;
   const isTrue = arr.indexOf(type) > -1 && _display == true;
   return isTrue;
 }
-
-// #Function 是否文本类型
-export function isTextType(row, display) {
+/**
+ * @description 判断是否为文本类型
+ * @param row 行数据
+ * @param display 是否显示
+ * @returns 是否为文本类型
+ */
+export function isTextType(row: any, display: any) {
   const arr = ["input", "textarea"];
   const type = row.filterType || row.cellConfig?.type;
   const _display = row.cellConfig?.display || display || !!row.filterType;
   const isTrue = arr.indexOf(type) > -1 && _display == true;
   return isTrue;
 }
-
-// #Function 是否输入类型
-export function isInputType(row, display) {
+/**
+ * @description 判断是否为输入类型
+ * @param row 行数据
+ * @param display 是否显示
+ * @returns 是否为输入类型
+ */
+export function isInputType(row: any, display: any) {
   const arr = ["input"];
   const type = row.filterType || row.cellConfig?.type;
   const _display = row.cellConfig?.display || display;
   const isTrue = arr.indexOf(type) > -1 && _display == true;
   return isTrue;
 }
-
-// #Function 是否文本类型(判断高级搜索)
-export function isUseCellConfig(row) {
+/**
+ * @description 判断是否使用单元格配置
+ * @param row 行数据
+ * @returns 是否使用单元格配置
+ */
+export function isUseCellConfig(row: any) {
   const isTrue = isTextType(row, true);
   return isTrue;
 }
-
-// #Function 是否索引列
+/**
+ * @description 判断是否为索引列
+ * @param item 表格列配置
+ * @returns 是否为索引列
+ */
 export function isRowIndex(item: PaTableUseItemType) {
   return item.type == "index" || item.type == "selection" || item.type == "radio";
 }

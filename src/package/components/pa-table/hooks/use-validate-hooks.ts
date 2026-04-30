@@ -1,46 +1,71 @@
+/**
+ * @description vue 响应式相关导入
+ */
 import { computed, reactive, ref, nextTick } from "vue";
-import { FormItemRule } from "../../pa-form/type";
-import { PaTableType } from "../type";
-
+/**
+ * @description FormItemRule 类型导入
+ */
+import { FormItemRule } from "../../pa-form/types";
+/**
+ * @description ComponentProps 类型导入
+ */
+import { ComponentProps } from "../types";
+/**
+ * @description lodash 工具库
+ */
 import _ from "lodash";
 const { cloneDeep } = _;
-
+/**
+ * @description useValidateHooks 校验钩子
+ * @param props 组件属性
+ * @param formRules 表单规则
+ * @param tableData 表格数据
+ * @param injectSetScrollToIntersect 滚动到错误位置方法
+ * @param mScrollbarListRef 滚动条引用
+ * @param getTableData 获取表格数据方法
+ * @returns 校验相关方法
+ */
 export const useValidateHooks = (
-  props: PaTableType,
+  props: ComponentProps,
   formRules: Record<string, FormItemRule | FormItemRule[]>,
   tableData: any[],
   injectSetScrollToIntersect: (el: Element, callback?: () => void, options?: { offsetY?: number; offsetX?: number }) => void,
   mScrollbarListRef: any,
   getTableData: any
 ) => {
+  /**
+   * @description 校验状态
+   */
   const validateStates = reactive<Record<string, { state: "" | "error" | "success" | "validating"; message: string }>>({});
+  /**
+   * @description 错误消息
+   */
   const errorsMessage = ref<Record<string, string>>({});
-
+  /**
+   * @description 规则键列表
+   */
   const rulesKeys = computed(() => Object.keys(formRules));
-
+  /**
+   * @description 获取提交表格数据
+   * @returns 提交数据
+   */
   async function getSubmitTableList() {
     let formResult = true;
     const { valid } = await validate();
     if (!valid) {
       formResult = false;
     }
-
     if (formResult) {
       const deepData = cloneDeep(tableData) || {};
       const FormData: any = deepData;
-
-      // if (isEqual(baseFormData, FormData)) return "no-change";
       const filterData = getTableData(FormData);
-
       return filterData.map((item: any) => {
         delete item.errorList;
         return item;
       });
     } else {
       nextTick(() => {
-        // window.MScrollbarToError();
         const errorItem = document.querySelector(`#${props.id} .pa-table-cell__error`);
-
         if (errorItem) {
           const fixedIndex = document.querySelectorAll(`#${props.id} > .pa-table_body_header_box .sticky-left`);
           const offsetX = Array.from(fixedIndex).reduce((prev, cur: any) => prev + cur.offsetWidth, 20);
@@ -55,15 +80,15 @@ export const useValidateHooks = (
       });
     }
   }
-
-  // 验证表单
+  /**
+   * @description 校验表单
+   * @returns 校验结果
+   */
   async function validate(): Promise<{ valid: boolean; errors?: Record<string, string> }> {
     const validations: Promise<void>[] = [];
     errorsMessage.value = {};
-    // 遍历所有规则进行验证
     for (let v = 0; v < tableData.length; v++) {
       const dataArray = tableData[v];
-      // validations.
       for (let i = 0; i < dataArray.length; i++) {
         const data = dataArray[i];
         errorsMessage.value = {};
@@ -78,37 +103,36 @@ export const useValidateHooks = (
         });
       }
     }
-
     await Promise.all(validations);
     const errorList = Object.values(errorsMessage.value).filter(msg => msg !== "");
     const valid = errorList.length === 0;
     if (!valid) {
       typeof window !== "undefined" && window.developLog.json(errorsMessage.value, "校验错误", "warning");
     }
-
     return { valid, errors: valid ? undefined : errorsMessage.value };
   }
-
-  // @ 验证指定字段
+  /**
+   * @description 校验指定字段
+   * @param prop 字段名
+   * @param value 字段值
+   * @param data 行数据
+   * @returns 校验结果
+   */
   async function validateField(prop: string, value: string, data: any): Promise<{ valid: boolean; error?: string }> {
     if (!formRules[prop]) return { valid: true };
     const rules = Array.isArray(formRules[prop]) ? formRules[prop] : [formRules[prop]];
-    // 更新验证状态为验证中
     validateStates[prop] = { state: "validating", message: "" };
     errorsMessage.value[prop] = "";
     try {
       for (const rule of rules) {
         await validateRule(rule, value, prop);
       }
-
-      // 验证成功
       validateStates[prop] = { state: "success", message: "" };
       errorsMessage.value[prop] = "";
       if (!data.errorList) data.errorList = {};
       data.errorList[prop] = "";
       return { valid: true };
     } catch (error) {
-      // 验证失败
       const errorMessage = error instanceof Error ? error.message : String(error);
       validateStates[prop] = { state: "error", message: errorMessage };
       errorsMessage.value[prop] = errorMessage;
@@ -117,11 +141,15 @@ export const useValidateHooks = (
       return { valid: false, error: errorMessage };
     }
   }
-
-  // @ 验证单个规则
+  /**
+   * @description 校验单个规则
+   * @param rule 规则
+   * @param value 值
+   * @param prop 属性名
+   * @returns 校验结果
+   */
   function validateRule(rule: FormItemRule, value: any, prop: string): Promise<void> {
     return new Promise((resolve, reject) => {
-      // 处理必填验证
       if (
         rule.required &&
         (value === undefined || value === null || value === "" || (Array.isArray(value) && value.length === 0))
@@ -129,53 +157,37 @@ export const useValidateHooks = (
         reject(rule.message || `${prop} is required`);
         return;
       }
-
-      // 如果值为空且不是必填，可以跳过其他验证
       if ((value === undefined || value === null || value === "") && !rule.required) {
         resolve();
         return;
       }
-
-      // 处理transform
       if (rule.transform) {
         value = rule.transform(value);
       }
-
-      // 处理类型验证
       if (rule.type && !validateType(rule.type, value)) {
         reject(rule.message || `${prop} type error`);
         return;
       }
-
-      // 处理长度验证
       if (rule.min !== undefined && getValueLength(value) < rule.min) {
         reject(rule.message || `${prop} length must be greater than or equal to ${rule.min}`);
         return;
       }
-
       if (rule.max !== undefined && getValueLength(value) > rule.max) {
         reject(rule.message || `${prop} length must be less than or equal to ${rule.max}`);
         return;
       }
-
       if (rule.len !== undefined && getValueLength(value) !== rule.len) {
         reject(rule.message || `${prop} length must be equal to ${rule.len}`);
         return;
       }
-
-      // 处理正则验证
       if (rule.pattern && rule.pattern instanceof RegExp && !rule.pattern.test(String(value))) {
         reject(rule.message || `${prop} format error`);
         return;
       }
-
-      // 处理枚举验证
       if (rule.enum && Array.isArray(rule.enum) && !rule.enum.includes(value)) {
         reject(rule.message || `${prop} value not in enum`);
         return;
       }
-
-      // 处理自定义验证器
       if (rule.validator) {
         const callback = (error?: string) => {
           if (error) {
@@ -184,7 +196,6 @@ export const useValidateHooks = (
             resolve();
           }
         };
-
         const result = rule.validator({ rule, value, callback });
         if (result instanceof Promise) {
           result.then(() => resolve()).catch(err => reject(err || rule.message));
@@ -194,8 +205,12 @@ export const useValidateHooks = (
       }
     });
   }
-
-  // 验证类型
+  /**
+   * @description 校验类型
+   * @param type 类型名称
+   * @param value 值
+   * @returns 是否匹配类型
+   */
   function validateType(type: string, value: any): boolean {
     switch (type) {
       case "string":
@@ -229,8 +244,11 @@ export const useValidateHooks = (
         return true;
     }
   }
-
-  // 获取值的长度
+  /**
+   * @description 获取值的长度
+   * @param value 值
+   * @returns 长度
+   */
   function getValueLength(value: any): number {
     if (value === undefined || value === null) {
       return 0;
@@ -243,10 +261,5 @@ export const useValidateHooks = (
     }
     return String(value).length;
   }
-
-  return {
-    // ...toRefs(state),
-    getSubmitTableList,
-    validateField
-  };
+  return { getSubmitTableList, validateField };
 };

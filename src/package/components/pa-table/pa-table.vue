@@ -367,7 +367,7 @@ import mLightTableCell from "./pa-table-cell.vue";
 import headerItem from "./header-item.vue";
 // import Taro from "@tarojs/taro";
 
-import { PaTableItemType, PaTableType, PaTableUseItemType, PaTableUseType } from "./type";
+import { ComponentItemProps, ComponentProps, ComponentUseItemProps, PaTableUseType } from "./types";
 import { isRowIndex } from "./hooks/isType";
 
 import Pagination from "./pagination.vue";
@@ -379,7 +379,7 @@ import { useScrollHooks } from "./hooks/use-scroll-hooks";
 import { useSelectHooks } from "./hooks/use-select-hooks";
 import { useDragHooks } from "./hooks/use-drag-hooks";
 import { useValidateHooks } from "./hooks/use-validate-hooks";
-import { PancakeGlobalConfigType } from "../pa-manager/type";
+import { PancakeGlobalConfigType } from "../pa-manager/types";
 import { splitArray } from "../utils/arraySplit";
 
 import _ from "lodash";
@@ -402,7 +402,7 @@ const footerRef = ref();
 
 // const isScrollEnd = ref(false);
 
-const props = withDefaults(defineProps<PaTableType>(), {
+const props = withDefaults(defineProps<ComponentProps>(), {
   rowKey: "id",
   structure: () => [],
   requestAuto: true,
@@ -659,13 +659,13 @@ function getTableData(data?) {
 
 /**
  * @description: 设置表格结构
- * @param {PaTableItemType[]} structure
+ * @param {ComponentItemProps[]} structure
  * @return {*}
  */
-function setStructure_All(structure: PaTableItemType[]) {
+function setStructure_All(structure: ComponentItemProps[]) {
   clearListen();
   tableStructure.value.length = 0;
-  setTableConfig(structure as Array<PaTableItemType & PaTableUseItemType>, () => {
+  setTableConfig(structure as Array<ComponentItemProps & ComponentUseItemProps>, () => {
     listenCellInView.create();
     listenCellChildChange.create();
   });
@@ -674,15 +674,15 @@ function setStructure_All(structure: PaTableItemType[]) {
 /**
  * @description: 设置表格单个结构
  * @param {string} prop
- * @param {PaTableItemType} item
+ * @param {ComponentItemProps} item
  * @return {*}
  */
-function setStructure_Item(prop: string, item: PaTableItemType) {
+function setStructure_Item(prop: string, item: ComponentItemProps) {
   if (!prop) return;
   clearListen();
   const index = tableStructure.value.findIndex(i => i.prop == prop);
   if (index != -1) {
-    tableStructure.value[index] = item as PaTableItemType & PaTableUseItemType;
+    tableStructure.value[index] = item as ComponentItemProps & ComponentUseItemProps;
     setTableConfig(tableStructure.value, () => {
       listenCellInView.create();
       listenCellChildChange.create();
@@ -896,14 +896,14 @@ defineExpose({
   setSelectedData,
   /**
    * @description: 设置表格所有结构
-   * @param {Array<PaTableItemType & PaTableUseItemType>} structure
+   * @param {Array<ComponentItemProps & ComponentUseItemProps>} structure
    * @return {*}
    */
   setStructure_All,
   /**
    * @description: 设置表格单个结构
    * @param {string} prop
-   * @param {PaTableItemType} item
+   * @param {ComponentItemProps} item
    * @return {*}
    */
   setStructure_Item,
@@ -951,5 +951,5 @@ watch(
 </script>
 
 <style lang="scss">
-@import "./index.scss";
+@use "./index.scss";
 </style>
