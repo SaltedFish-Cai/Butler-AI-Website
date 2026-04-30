@@ -154,7 +154,7 @@
 
 <script lang="tsx" setup>
 import { computed, ComputedRef, inject, ref, useTemplateRef, watch } from "vue";
-import { MStructureType, MStructureTypeItem } from "../type";
+import { MStructureType, MStructureTypeItem } from "../types";
 import { PaOptionType, PaStructureType } from "M_Types";
 import { M_Message, M_MessageBox } from "../../feedback";
 import { PancakeGlobalConfigType } from "../../pa-manager/type";

@@ -38,11 +38,7 @@
       ></template>
 
       <template #cellConfig="{ data }">
-        <pa-cascader
-          v-model="data.type"
-          :exOptions="cellMapConfig"
-          :title="{ 'zh-CN': '类型', 'en-US': 'Type' }"
-        ></pa-cascader>
+        <pa-cascader v-model="data.type" :exOptions="cellMapConfig" :title="{ 'zh-CN': '类型', 'en-US': 'Type' }"></pa-cascader>
 
         <pa-select
           class="mt-size"

@@ -10,13 +10,7 @@
     >
     </pa-table>
 
-    <pa-form
-      id="visibleForm"
-      v-if="visibleType === 'form'"
-      ref="visibleFormRef"
-      :structure="formConfig"
-      :exOptions="exOptions"
-    />
+    <pa-form id="visibleForm" v-if="visibleType === 'form'" ref="visibleFormRef" :structure="formConfig" :exOptions="exOptions" />
   </pa-dialog>
 </template>
 

@@ -1,20 +1,41 @@
+/**
+ * @description 导入类型定义
+ * */
 import { PaStructureType } from "M_Types";
+/**
+ * @description 导入 Vue 相关类型
+ * */
 import { Ref, ref } from "vue";
 
-export const useDragHooks = (tableConfig: Ref<PaStructureType.TableV2[]>, tableData: Ref<any[][]>) => {
-  // 拖拽相关变量
+/**
+ * @description 表格拖拽 Hooks 函数
+ * @param tableConfig 表格配置
+ * @param tableData 表格数据
+ * @returns 拖拽相关方法
+ * */
+export function useDragHooks(tableConfig: Ref<Array<PaStructureType.TableV2>>, tableData: Ref<Array<Array<any>>>) {
+  /** @type `ReturnType<typeof ref<number | null>>` 被拖拽的列索引 */
   const draggedColumn = ref<number | null>(null);
 
-  // 拖拽开始
-  function dragStart(event: DragEvent, index: number) {
+  /**
+   * @description 拖拽开始
+   * @param event 拖拽事件
+   * @param index 列索引
+   * @returns `void`
+   * */
+  function dragStart(event: DragEvent, index: number): void {
     event.stopPropagation();
     event.dataTransfer?.setData("text/plain", index.toString());
     (event.target as HTMLElement).style.opacity = "0.5";
     draggedColumn.value = index;
   }
 
-  // 拖拽结束
-  function dragEnd(event: DragEvent) {
+  /**
+   * @description 拖拽结束
+   * @param event 拖拽事件
+   * @returns `void`
+   * */
+  function dragEnd(event: DragEvent): void {
     event.stopPropagation();
     (event.target as HTMLElement).style.opacity = "1";
     const items = document.querySelectorAll(".table-header-cell");
@@ -22,8 +43,12 @@ export const useDragHooks = (tableConfig: Ref<PaStructureType.TableV2[]>, tableD
     draggedColumn.value = null;
   }
 
-  // 拖拽悬停
-  function dragOver(event: DragEvent) {
+  /**
+   * @description 拖拽悬停
+   * @param event 拖拽事件
+   * @returns `void`
+   * */
+  function dragOver(event: DragEvent): void {
     event.preventDefault();
     event.stopPropagation();
     const items = document.querySelectorAll(".table-header-cell");
@@ -33,34 +58,45 @@ export const useDragHooks = (tableConfig: Ref<PaStructureType.TableV2[]>, tableD
     }
   }
 
-  // 拖拽进入
-  function dragEnter(event: DragEvent) {
+  /**
+   * @description 拖拽进入
+   * @param event 拖拽事件
+   * @returns `void`
+   * */
+  function dragEnter(event: DragEvent): void {
     event.preventDefault();
     event.stopPropagation();
   }
 
-  // 拖拽离开
-  function dragLeave(event: DragEvent) {
+  /**
+   * @description 拖拽离开
+   * @param event 拖拽事件
+   * @returns `void`
+   * */
+  function dragLeave(event: DragEvent): void {
     event.stopPropagation();
     if (event.currentTarget) {
       (event.currentTarget as HTMLElement).classList.remove("dragover");
     }
   }
 
-  // 拖拽结束，处理排序
-  function drop(event: DragEvent, targetIndex: number) {
+  /**
+   * @description 拖拽结束，处理排序
+   * @param event 拖拽事件
+   * @param targetIndex 目标列索引
+   * @returns `void`
+   * */
+  function drop(event: DragEvent, targetIndex: number): void {
     event.preventDefault();
     event.stopPropagation();
 
     const oldIndex = parseInt(event.dataTransfer!.getData("text/plain"));
     if (oldIndex !== targetIndex) {
-      // 重新排列列名
       const newColumnNames = [...tableConfig.value];
       const [removed] = newColumnNames.splice(oldIndex, 1);
       newColumnNames.splice(targetIndex, 0, removed);
       tableConfig.value = newColumnNames;
 
-      // 重新排列表格数据
       tableData.value = tableData.value.map(row => {
         const newRow = [...row];
         const [removedValue] = newRow.splice(oldIndex, 1);
@@ -69,7 +105,6 @@ export const useDragHooks = (tableConfig: Ref<PaStructureType.TableV2[]>, tableD
       });
     }
 
-    // 重置拖拽状态
     (event.target as HTMLElement).style.opacity = "1";
     const items = document.querySelectorAll(".table-header-cell");
     items.forEach(item => item.classList.remove("dragover"));
@@ -83,4 +118,4 @@ export const useDragHooks = (tableConfig: Ref<PaStructureType.TableV2[]>, tableD
     dragLeave,
     drop
   };
-};
+}

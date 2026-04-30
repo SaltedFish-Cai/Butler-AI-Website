@@ -68,9 +68,9 @@ const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<Pan
 const language = PancakeGlobalConfig.value?.language?.value || "zh-CN";
 
 const formRef = useTemplateRef("formRef");
-const formData = ref<
-  PaStructureType.TableV2 & { cellType?: string; exOptions?: PaOptionType.SelectList | PaOptionType.Switch }
->({});
+const formData = ref<PaStructureType.TableV2 & { cellType?: string; exOptions?: PaOptionType.SelectList | PaOptionType.Switch }>(
+  {}
+);
 const editId = ref("");
 
 // @ options

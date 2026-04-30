@@ -148,11 +148,11 @@
 
 <script lang="tsx" setup>
 import { computed, inject, Ref, ref, watch } from "vue";
-import { MOptionsType, PaPlaygroundItem, MStructureType } from "../type";
+import { MOptionsType, PaPlaygroundItem, MStructureType } from "../types";
 import { PaOptionType, PaStructureType } from "M_Types";
-import { PaPlaygroundPageButtonType } from "./type";
+import { PaPlaygroundPageButtonType } from "./types";
 import { M_Message } from "../../feedback";
-// import { PaPlaygroundPageButtonType } from "./type";
+// import { PaPlaygroundPageButtonType } from "./types";
 import _ from "lodash";
 const { isNil, isArray } = _;
 

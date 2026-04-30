@@ -12,11 +12,7 @@
       </template>
 
       <template #operation="{ data }">
-        <pa-button
-          is="edit"
-          @click="handleEdit(data as MOptionsType)"
-          :text="{ 'zh-CN': '编辑选项', 'en-US': 'Edit Option' }"
-        />
+        <pa-button is="edit" @click="handleEdit(data as MOptionsType)" :text="{ 'zh-CN': '编辑选项', 'en-US': 'Edit Option' }" />
         <pa-button
           is="delete"
           @click="handleDelete(data as MOptionsType)"
@@ -177,7 +173,7 @@
 
 <script lang="tsx" setup>
 import { computed, ComputedRef, inject, ref, useTemplateRef, watch } from "vue";
-import { MOptionsType } from "../type";
+import { MOptionsType } from "../types";
 import { PaOptionType, PaStructureType } from "M_Types";
 import { M_Message, M_MessageBox } from "../../feedback";
 import { PancakeGlobalConfigType } from "../../pa-manager/type";
