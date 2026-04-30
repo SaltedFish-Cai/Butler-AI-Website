@@ -10,11 +10,11 @@
 
 ## ComponentProps
 
-| 属性名 | 描述         | 类型                               | 默认值 |
-| ------ | ------------ | ---------------------------------- | ------ |
-| id     | 组件唯一标识 | `string`                           | `""`   |
-| class  | 自定义类名   | `Array<string>` \| `string`        | -      |
-| style  | 自定义样式   | `Record<string, string \| number>` | -      |
+| 属性名 | 描述         | 类型                                              | 默认值 |
+| ------ | ------------ | ------------------------------------------------- | ------ |
+| id     | 组件唯一标识 | `string` \| `undefined`                           | `""`   |
+| class  | 自定义类名   | `Array<string>` \| `string` \| `undefined`        | -      |
+| style  | 自定义样式   | `Record<string, string \| number>` \| `undefined` | -      |
 
 ## ComponentEmits
 
@@ -28,8 +28,26 @@
 
 ## 使用示例
 
+### 基础用法
+
 ```vue
 <pa-development id="my-component">
+  <!-- 你的组件内容 -->
+</pa-development>
+```
+
+### 自定义类名
+
+```vue
+<pa-development id="my-component" class="custom-wrapper">
+  <!-- 你的组件内容 -->
+</pa-development>
+```
+
+### 自定义样式
+
+```vue
+<pa-development id="my-component" :style="{ padding: '10px' }">
   <!-- 你的组件内容 -->
 </pa-development>
 ```
