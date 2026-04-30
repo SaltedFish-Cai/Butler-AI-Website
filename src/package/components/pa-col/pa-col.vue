@@ -14,7 +14,6 @@
 import { computed, inject, ref, Ref } from "vue";
 /** @description 类型定义 */
 import type { BreakPoint, Responsive } from "./types";
-
 /**
  * PaCol 组件 Props
  */
@@ -34,7 +33,6 @@ interface Props {
   /** ≥1200px 响应式配置 */
   xl?: Responsive | number;
 }
-
 const props = withDefaults(defineProps<Props>(), {
   offset: 0,
   xs: undefined,
@@ -43,7 +41,6 @@ const props = withDefaults(defineProps<Props>(), {
   lg: undefined,
   xl: undefined
 });
-
 /** @description 注入断点信息，如果没有则默认使用xl */
 const breakPoint = inject<Ref<BreakPoint>>("breakPoint", ref<BreakPoint>("xl"));
 /** @description 注入行间隔 */
@@ -58,15 +55,10 @@ const currentSpan = computed(() => {
   }
   return props.span;
 });
-
+/** @description 计算栅格间隔值，优先使用注入的行间隔 */
 const gutterValue = computed(() => {
-  return props.gutter
-    ? typeof props.gutter === "number"
-      ? props.gutter / 2
-      : Number(props.gutter.replace(/\D/g, "") || 0) / 2
-    : rowGutter.value;
+  return rowGutter.value ? rowGutter.value / 2 : 0;
 });
-
 /** @description 计算样式 */
 const style = computed(() => {
   const span = currentSpan.value || 0;
@@ -81,7 +73,6 @@ const style = computed(() => {
   };
   return data;
 });
-
 /** @description 计算类名 */
 const classes = computed(() => {
   const classList = ["pa-col"];
