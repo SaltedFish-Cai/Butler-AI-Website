@@ -10,11 +10,11 @@
 
 ## ComponentProps
 
-| 属性名 | 描述         | 类型                                              | 默认值 |
-| ------ | ------------ | ------------------------------------------------- | ------ |
-| id     | 组件唯一标识 | `string` \| `undefined`                           | `""`   |
-| class  | 自定义类名   | `Array<string>` \| `string` \| `undefined`        | -      |
-| style  | 自定义样式   | `Record<string, string \| number>` \| `undefined` | -      |
+| 属性名 | 描述         | 类型                               | 默认值 |
+| ------ | ------------ | ---------------------------------- | ------ |
+| id     | 组件唯一标识 | `string`                           | `""`   |
+| class  | 自定义类名   | `Array<string>` \| `string`        | -      |
+| style  | 自定义样式   | `Record<string, string \| number>` | -      |
 
 ## ComponentEmits
 
