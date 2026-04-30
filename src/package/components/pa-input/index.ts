@@ -13,9 +13,9 @@ import PaInput from "./pa-input.vue";
  * @param `app` `App` Vue 应用实例
  * @description 将 PaInput 组件注册到 Vue 应用中
  * */
-function install(app: App) {
+const install = function (app: App) {
   if (!app._context.components["PaInput"]) app.component("PaInput", PaInput);
-}
+};
 /**
  * **组件名称**
  * @description 组件注册名称

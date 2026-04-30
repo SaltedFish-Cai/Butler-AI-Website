@@ -468,9 +468,7 @@ function actionRequest(ajaxFileList: Array<{ filename: string; file: File }>): v
     method: "post",
     action: fileConfigData.value.fileApi?.url,
     ajaxFileList: ajaxFileList,
-    onProgress: () => {
-      // Progress callback
-    },
+    onProgress: () => {},
     onError: () => {
       handleError();
     },

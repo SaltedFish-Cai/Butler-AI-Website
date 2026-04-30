@@ -20,7 +20,6 @@ export function findData(
   data: Array<boolean | number | string> | boolean | number | string,
   options: PaOptionType.SelectList
 ): string {
-  // SSR-safe: check if window exists
   const language: string = typeof window !== "undefined" ? window.PancakeGlobalConfig?.language || "zh-CN" : "zh-CN";
   let text: string = "";
   if (!options?.length) return "--";

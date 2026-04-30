@@ -42,9 +42,9 @@
 
 ## ComponentEmits
 
-| 事件名            | 描述             | 回调函数                                              |
-| ----------------- | ---------------- | ----------------------------------------------------- |
-| update:modelValue | 双向绑定值更新时 | `(value: number \| string) => void`                             |
+| 事件名            | 描述             | 回调函数                                                                  |
+| ----------------- | ---------------- | ------------------------------------------------------------------------- |
+| update:modelValue | 双向绑定值更新时 | `(value: number \| string) => void`                                       |
 | change            | 数据变更时触发   | `(data: { value: number \| string; oldValue: number \| string }) => void` |
-| blur              | 失去焦点时触发   | `() => void`                                          |
-| focus             | 获得焦点时触发   | `() => void`                                          |
+| blur              | 失去焦点时触发   | `() => void`                                                              |
+| focus             | 获得焦点时触发   | `() => void`                                                              |

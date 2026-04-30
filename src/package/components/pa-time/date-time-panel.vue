@@ -228,7 +228,10 @@ function getDayClass(day: dayjs.Dayjs | null, panel?: "end" | "start"): string[]
     return classes;
   }
 
-  // 当前月份
+  /**
+   * **当前月份**
+   * @description 判断当前日期是否在显示月份中
+   * */
   if (panel === "start") {
     if (day.isSame(startPanelDate.value, "month")) {
       classes.push("current-month");
@@ -241,12 +244,18 @@ function getDayClass(day: dayjs.Dayjs | null, panel?: "end" | "start"): string[]
     classes.push("current-month");
   }
 
-  // 今天
+  /**
+   * **今天**
+   * @description 判断是否为今天的日期
+   * */
   if (day.isSame(dayjs(), "day")) {
     classes.push("today");
   }
 
-  // 选中状态
+  /**
+   * **选中状态**
+   * @description 根据范围或单选模式添加选中状态类
+   * */
   if (isRange.value) {
     if (
       selectedRange.value[0] &&
@@ -271,12 +280,18 @@ function getDayClass(day: dayjs.Dayjs | null, panel?: "end" | "start"): string[]
     classes.push("selected");
   }
 
-  // 禁用日期
+  /**
+   * **禁用日期**
+   * @description 根据禁用日期函数添加禁用状态类
+   * */
   if (props.disabledDate && props.disabledDate(day.toDate())) {
     classes.push("disabled");
   }
 
-  // 自定义类名
+  /**
+   * **自定义类名**
+   * @description 添加用户自定义的单元格类名
+   * */
   if (props.cellClassName) {
     const customClass = props.cellClassName(day.toDate());
     if (customClass) {
@@ -339,7 +354,10 @@ function handleShortcutClick(shortcut: DatePickerShortcut) {
   confirmSelection();
 }
 
-// 确认选择
+/**
+ * **确认选择**
+ * @description 确认当前选中的日期并触发事件
+ * */
 function confirmSelection() {
   let value: any = null;
 
@@ -348,7 +366,10 @@ function confirmSelection() {
       let startDate = selectedRange.value[0];
       let endDate = selectedRange.value[1];
 
-      // 处理时间
+      /**
+       * **处理时间**
+       * @description 如果启用时间选择，处理时间部分
+       * */
       if (isTime.value) {
         if (startTime.value) {
           const [hours, minutes, seconds] = startTime.value.split(":");
@@ -372,7 +393,10 @@ function confirmSelection() {
     if (selectedDate.value) {
       let date = selectedDate.value;
 
-      // 处理时间
+      /**
+       * **处理时间**
+       * @description 如果启用时间选择，处理时间部分
+       * */
       if (isTime.value && selectedTime.value) {
         const [hours, minutes, seconds] = selectedTime.value.split(":");
         date = date
@@ -393,7 +417,10 @@ function handleCancel() {
   emit("change", isRange.value ? [] : "");
 }
 
-// 导航控制
+/**
+ * **导航控制**
+ * @description 上一年导航函数
+ * */
 function prevYear(panel?: "end" | "start") {
   if (panel === "start") {
     startPanelDate.value = startPanelDate.value.subtract(1, "year");
@@ -446,7 +473,10 @@ function nextMonth(panel?: "end" | "start") {
   }
 }
 
-// 处理表格滚轮事件 - 变更月份
+/**
+ * **处理表格滚轮事件**
+ * @description 滚动切换月份
+ * */
 let lastWheelTime = 0;
 let wheelDelta = 0;
 
@@ -456,33 +486,28 @@ function handleWheel(event: WheelEvent, panel?: "end" | "start") {
   const now = Date.now();
   wheelDelta += Math.abs(event.deltaY);
 
-  // 降低敏感度：只有当滚动量达到阈值时才触发月份切换
   if (wheelDelta < 50) {
-    // 滚动量阈值，可以根据需要调整
     return;
   }
 
-  // 防抖处理：避免快速连续滚动
   if (now - lastWheelTime < 100) {
-    // 200ms防抖时间
     return;
   }
 
-  // 重置滚动量和时间
   wheelDelta = 0;
   lastWheelTime = now;
 
-  // 根据滚轮方向决定是向前还是向后翻月
   if (event.deltaY < 0) {
-    // 向上滚动 - 向前翻月
     prevMonth(panel);
   } else {
-    // 向下滚动 - 向后翻月
     nextMonth(panel);
   }
 }
 
-// 初始化值
+/**
+ * **初始化值**
+ * @description 监听外部值变化并初始化内部状态
+ * */
 watch(
   () => props.modelValue,
   newValue => {
