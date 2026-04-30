@@ -6,15 +6,13 @@
 
 配合 `pa-row` 实现栅格布局，默认使用 `pa-row` 组件的 `gutter` 属性作为栅格间隔。
 
-<demo src="./base.vue">
-</demo>
+<demo src="./base.vue"></demo>
 
 ## 自适应布局
 
 使用 `xs`、`sm`、`md`、`lg`、`xl` 参数自定义栅格布局。
 
-<demo src="./auto.vue">
-</demo>
+<demo src="./auto.vue"></demo>
 
 ## ComponentProps
 
@@ -37,38 +35,23 @@
 
 ## ComponentSlots
 
-| 插槽名    | 说明   |
-| --------- | ------ |
-| 'default' | 列内容 |
+| 插槽名  | 说明   |
+| ------- | ------ |
+| default | 列内容 |
 
-## ColProps
+## 类型定义
 
-| 参数   | 说明                       | 类型                                                   | 默认值 |
-| ------ | -------------------------- | ------------------------------------------------------ | ------ |
-| span   | 栅格占据的列数（共 24 列） | `number` \| `undefined`                                | -      |
-| offset | 栅格左侧的间隔格数         | `number` \| `undefined`                                | `0`    |
-| xs     | `<576px` 响应式配置        | [`Responsive`](#responsive) \| `number` \| `undefined` | -      |
-| sm     | `≥576px` 响应式配置        | [`Responsive`](#responsive) \| `number` \| `undefined` | -      |
-| md     | `≥768px` 响应式配置        | [`Responsive`](#responsive) \| `number` \| `undefined` | -      |
-| lg     | `≥992px` 响应式配置        | [`Responsive`](#responsive) \| `number` \| `undefined` | -      |
-| xl     | `≥1200px` 响应式配置       | [`Responsive`](#responsive) \| `number` \| `undefined` | -      |
-| class  | 自定义类名                 | `Array<string>` \| `string` \| `undefined`             | -      |
-| style  | 自定义样式                 | `Record<string, string \| number>` \| `undefined`      | -      |
-| id     | 元素 id                    | `string` \| `undefined`                                | -      |
+### BreakPoint
 
-## BreakPoint
+```typescript
+type BreakPoint = "lg" | "md" | "sm" | "xl" | "xs";
+```
 
-| 类型值 | 说明             |
-| ------ | ---------------- |
-| `'lg'` | 大屏幕 ≥992px    |
-| `'md'` | 中等屏幕 ≥768px  |
-| `'sm'` | 小屏幕 ≥576px    |
-| `'xl'` | 超大屏幕 ≥1200px |
-| `'xs'` | 超小屏幕 <576px  |
+### Responsive
 
-## Responsive
-
-| 参数   | 说明               | 类型                    | 默认值 |
-| ------ | ------------------ | ----------------------- | ------ |
-| span   | 栅格占据的列数     | `number` \| `undefined` | -      |
-| offset | 栅格左侧的间隔格数 | `number` \| `undefined` | -      |
+```typescript
+type Responsive = {
+  span?: number;
+  offset?: number;
+};
+```
