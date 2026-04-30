@@ -4,7 +4,8 @@
 
 ## 基础使用
 
-<demo src="./base.vue"></demo>
+<demo src="./base.vue">
+</demo>
 
 ## ComponentProps
 
@@ -38,9 +39,10 @@
 | 'footer'     | 底部区域自定义内容                                 |
 | 'footerLeft' | 底部左侧区域内容                                   |
 
-## DefineExpose
+## ComponentExpose
 
-| 方法名称     | 描述         | 参数                      |
-| ------------ | ------------ | ------------------------- |
-| refresh      | 刷新列表     | -                         |
-| setScrollTop | 设置滚动位置 | `(value: number) => void` |
+| 方法名称     | 描述         | 类型                                     |
+| ------------ | ------------ | ---------------------------------------- |
+| refresh      | 刷新列表     | `() => void` \| `undefined`              |
+| setScrollTop | 设置滚动位置 | `(value: number) => void` \| `undefined` |
+| el           | 滚动条引用   | `any` \| `undefined`                     |

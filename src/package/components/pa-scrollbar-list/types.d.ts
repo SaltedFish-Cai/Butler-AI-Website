@@ -86,3 +86,31 @@ export type ComponentProps = {
    */
   paddingWidth?: number;
 };
+/**
+ * PaScrollbarList 组件 Expose
+ * @type {ComponentExpose}
+ * @description 滚动列表组件暴露的方法和属性
+ */
+export type ComponentExpose = {
+  /**
+   * 刷新列表
+   * @type `() => void`
+   * @default `undefined`
+   * @description 刷新列表数据，重置状态并重新获取数据
+   */
+  refresh?: () => void;
+  /**
+   * 设置滚动位置
+   * @type `(value: number) => void`
+   * @default `undefined`
+   * @description 设置滚动条的位置
+   */
+  setScrollTop?: (value: number) => void;
+  /**
+   * 滚动条组件引用
+   * @type `any`
+   * @default `undefined`
+   * @description 滚动条组件的引用
+   */
+  el?: any;
+};
