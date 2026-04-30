@@ -32,8 +32,6 @@ interface Props {
   lg?: Responsive | number;
   /** ≥1200px 响应式配置 */
   xl?: Responsive | number;
-  /** 栅格间隔，覆盖 Row 的 gutter */
-  gutter?: number | string;
 }
 const props = withDefaults(defineProps<Props>(), {
   offset: 0,
@@ -41,8 +39,7 @@ const props = withDefaults(defineProps<Props>(), {
   sm: undefined,
   md: undefined,
   lg: undefined,
-  xl: undefined,
-  gutter: undefined
+  xl: undefined
 });
 /** @description 注入断点信息，如果没有则默认使用xl */
 const breakPoint = inject<Ref<BreakPoint>>("breakPoint", ref<BreakPoint>("xl"));
@@ -58,13 +55,9 @@ const currentSpan = computed(() => {
   }
   return props.span;
 });
-/** @description 计算栅格间隔值，优先使用 props.gutter，否则使用注入的行间隔 */
+/** @description 计算栅格间隔值，优先使用注入的行间隔 */
 const gutterValue = computed(() => {
-  return props.gutter
-    ? typeof props.gutter === "number"
-      ? props.gutter / 2
-      : Number(props.gutter.replace(/\D/g, "") || 0) / 2
-    : rowGutter.value;
+  return rowGutter.value ? rowGutter.value / 2 : 0;
 });
 /** @description 计算样式 */
 const style = computed(() => {

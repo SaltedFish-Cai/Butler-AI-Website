@@ -85,13 +85,6 @@ export type ColProps = {
    */
   xl?: Responsive | number;
   /**
-   * 栅格间隔，覆盖 Row 的 gutter
-   * @type `number` | `string` | `undefined`
-   * @default undefined
-   * @description 栅格间隔，可覆盖 Row 组件传入的 gutter 值
-   */
-  gutter?: number | string;
-  /**
    * 自定义类名
    * @type `Array<string>` | `string` | `undefined`
    * @default undefined
