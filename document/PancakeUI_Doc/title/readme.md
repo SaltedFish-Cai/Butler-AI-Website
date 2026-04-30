@@ -32,14 +32,14 @@
 
 ## ComponentProps
 
-| 属性名  | 描述           | 类型                                                                 | 默认值  |
-| ------- | -------------- | -------------------------------------------------------------------- | ------- |
-| id      | 唯一标识       | `string`                                                             | -       |
-| class   | 自定义类名     | `Array<string>` `string`                                             | -       |
-| style   | 自定义样式     | `Record<string, string>`                                             | -       |
-| line    | 是否使用下划线 | `boolean`                                                            | `true`  |
-| tips    | 提示信息       | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) `string` | -       |
-| padding | 内边距方向     | `Array<'top'` `'left'` `'bottom'` `'right'` `'all'` `'null'>`        | -       |
+| 属性名  | 描述           | 类型                                                                                  | 默认值 |
+| ------- | -------------- | ------------------------------------------------------------------------------------- | ------ |
+| id      | 唯一标识       | `string`                                                                              | -      |
+| class   | 自定义类名     | `Array<string>` `string`                                                              | -      |
+| style   | 自定义样式     | `Record<string, string>`                                                              | -      |
+| line    | 是否使用下划线 | `boolean`                                                                             | `true` |
+| tips    | 提示信息       | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) `string` | -      |
+| padding | 内边距方向     | `Array<'top'` `'left'` `'bottom'` `'right'` `'all'` `'null'>`                         | -      |
 
 ## ComponentSlots
 

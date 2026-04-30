@@ -28,9 +28,9 @@
     margin: 0 auto;
     margin-top: 35px;
     margin-bottom: 27px;
-    background: #f9f8fd;
+    background: var(--pa-color-bg);
     border-radius: 50%;
-    color: #d8d8d8;
+    color: var(--pa-color-info-light-1);
     font-size: var(--pa-size-font, 13px);
   }
 }

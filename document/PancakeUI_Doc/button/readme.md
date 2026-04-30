@@ -52,36 +52,36 @@
 
 ## ComponentProps
 
-| 属性名 | 描述 | 类型 | 默认值 |
-| ------ | ---- | ---- | ------ |
-| id | 唯一标识 | `string` | - |
-| class | 自定义类名 | `Array<string>` `string` | - |
-| style | 自定义样式 | `Record<string, string>` | - |
-| text | 按钮文本 | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) `string` | - |
-| size | 按钮大小 | `'large'` `'medium'` `'small'` | `medium` |
-| is | 内置样式 | [`ButtonTypeV2Is`](#buttontypev2is) | - |
-| type | 按钮样式类型 | `'danger'` `'default'` `'info'` `'primary'` `'success'` `'warning'` | - |
-| disabled | 是否禁用状态 | `boolean` | - |
-| loading | 加载状态 | `boolean` | - |
-| loadingBy | 自动Loading来源 | `string` | - |
-| debounced | 是否开启防抖功能 | `boolean` | `true` |
-| debouncedTime | 防抖按钮时间 | `number` | `300` |
-| iconPosition | Icon位置 | `'left'` `'right'` | `left` |
-| iconName | 按钮ICON | `string` | - |
-| useFont | 是否使用Icon | `boolean` | `true` |
-| useLine | 是否使用下划线按钮 | `boolean` | - |
-| usePlain | 是否使用朴素按钮 | `boolean` | `true` |
-| confirmConfig | 确认弹窗配置 | `MessageBoxOptions` | - |
-| useStop | 是否阻止事件冒泡 | `boolean` | `true` |
+| 属性名        | 描述               | 类型                                                                                  | 默认值   |
+| ------------- | ------------------ | ------------------------------------------------------------------------------------- | -------- |
+| id            | 唯一标识           | `string`                                                                              | -        |
+| class         | 自定义类名         | `Array<string>` `string`                                                              | -        |
+| style         | 自定义样式         | `Record<string, string>`                                                              | -        |
+| text          | 按钮文本           | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) `string` | -        |
+| size          | 按钮大小           | `'large'` `'medium'` `'small'`                                                        | `medium` |
+| is            | 内置样式           | [`ButtonTypeV2Is`](#buttontypev2is)                                                   | -        |
+| type          | 按钮样式类型       | `'danger'` `'default'` `'info'` `'primary'` `'success'` `'warning'`                   | -        |
+| disabled      | 是否禁用状态       | `boolean`                                                                             | -        |
+| loading       | 加载状态           | `boolean`                                                                             | -        |
+| loadingBy     | 自动Loading来源    | `string`                                                                              | -        |
+| debounced     | 是否开启防抖功能   | `boolean`                                                                             | `true`   |
+| debouncedTime | 防抖按钮时间       | `number`                                                                              | `300`    |
+| iconPosition  | Icon位置           | `'left'` `'right'`                                                                    | `left`   |
+| iconName      | 按钮ICON           | `string`                                                                              | -        |
+| useFont       | 是否使用Icon       | `boolean`                                                                             | `true`   |
+| useLine       | 是否使用下划线按钮 | `boolean`                                                                             | -        |
+| usePlain      | 是否使用朴素按钮   | `boolean`                                                                             | `true`   |
+| confirmConfig | 确认弹窗配置       | `MessageBoxOptions`                                                                   | -        |
+| useStop       | 是否阻止事件冒泡   | `boolean`                                                                             | `true`   |
 
 ## ComponentEmits
 
-| 事件名 | 描述 | 回调函数 |
-| ------ | ---- | -------- |
-| click | 点击按钮事件 | `(event: MouseEvent) => void` |
-| confirmClick | 确认按钮点击事件 | `() => void` |
-| submitClick | 提交按钮点击事件 | `() => void` |
-| deleteClick | 删除按钮点击事件 | `() => void` |
+| 事件名       | 描述             | 回调函数                      |
+| ------------ | ---------------- | ----------------------------- |
+| click        | 点击按钮事件     | `(event: MouseEvent) => void` |
+| confirmClick | 确认按钮点击事件 | `() => void`                  |
+| submitClick  | 提交按钮点击事件 | `() => void`                  |
+| deleteClick  | 删除按钮点击事件 | `() => void`                  |
 
 ## ButtonTypeV2Is
 
