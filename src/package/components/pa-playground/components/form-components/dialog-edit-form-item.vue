@@ -53,7 +53,7 @@ import {
   checkboxConfig,
   switchConfig
 } from "../../configs/cell-config";
-import { PancakeGlobalConfigType } from "../../../pa-manager/type";
+import { PancakeGlobalConfigType } from "../../../pa-manager/types";
 import { MOptionsType } from "../../type";
 
 import _ from "lodash";

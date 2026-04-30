@@ -86,7 +86,7 @@ import formItem from "./form-basics-element.vue";
 import { PaFormItemType, PaFormChildType, ComponentProps, ConfigContextType, FormDataType } from "./types";
 import { ExMultipleConfigType, MultipleConfigType } from "./types";
 import { DatePickerShortcut } from "../pa-time/type";
-import { PancakeGlobalConfigType } from "../pa-manager/type";
+import { PancakeGlobalConfigType } from "../pa-manager/types";
 
 import _ from "lodash";
 const { cloneDeep, isEqual, debounce } = _;

@@ -75,7 +75,7 @@ import textView from "./text-view.vue";
 /** @description 模板引用 API */
 import { useTemplateRef } from "vue";
 /** @description 全局配置类型 */
-import { PancakeGlobalConfigType } from "../pa-manager/type";
+import { PancakeGlobalConfigType } from "../pa-manager/types";
 /** @description 消息反馈组件 */
 import { M_Message } from "../feedback";
 /** @description 媒体查看器子项组件样式 */

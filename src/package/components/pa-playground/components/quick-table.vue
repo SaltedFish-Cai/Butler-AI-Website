@@ -75,7 +75,7 @@
 <script lang="tsx" setup>
 import { ref, computed, ComputedRef, inject, onMounted, watch, nextTick } from "vue";
 import { PaOptionType, PaStructureType } from "M_Types";
-import { PancakeGlobalConfigType } from "../../pa-manager/type";
+import { PancakeGlobalConfigType } from "../../pa-manager/types";
 
 const id = ref("table_" + new Date().getTime().toString());
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;

@@ -22,7 +22,7 @@
  * */
 import { computed, ComputedRef, inject } from "vue";
 import { ComponentProps, ComponentEmits } from "./types";
-import { PancakeGlobalConfigType } from "../pa-manager/type";
+import { PancakeGlobalConfigType } from "../pa-manager/types";
 /**
  * **组件属性**
  * @type `ComponentProps`

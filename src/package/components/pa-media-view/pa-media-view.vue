@@ -105,7 +105,7 @@ import wordView from "./word-view.vue";
 /** @description 文本预览组件 */
 import textView from "./text-view.vue";
 /** @description 全局配置类型 */
-import { PancakeGlobalConfigType } from "../pa-manager/type";
+import { PancakeGlobalConfigType } from "../pa-manager/types";
 /** @description 媒体查看器组件样式 */
 import "./index.scss";
 /** @description 对话框是否可见 */

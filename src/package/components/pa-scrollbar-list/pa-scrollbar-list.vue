@@ -61,7 +61,7 @@ import { randChar } from "../tools/rand-char";
 /** @description 滚动列表组件 Props 类型 */
 import type { ComponentProps } from "./types";
 /** @description 全局配置类型 */
-import { PancakeGlobalConfigType } from "../pa-manager/type";
+import { PancakeGlobalConfigType } from "../pa-manager/types";
 /** @description 滚动列表组件样式 */
 import "./index.scss";
 /** @description 对象类型 */

@@ -138,7 +138,7 @@ import { M_Message, M_MessageBox } from "../feedback";
  * **模块导入**
  * @description 全局配置类型导入
  * */
-import { PancakeGlobalConfigType } from "../pa-manager/type";
+import { PancakeGlobalConfigType } from "../pa-manager/types";
 
 /**
  * **模块导入**

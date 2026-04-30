@@ -47,7 +47,7 @@ import { ComponentProps, ComponentEmits } from "./types";
 import inBrowser from "../tools/inBrowser";
 import { M_MessageBox } from "../feedback";
 
-import { PancakeGlobalConfigType } from "../pa-manager/type";
+import { PancakeGlobalConfigType } from "../pa-manager/types";
 
 import _ from "lodash";
 const { debounce } = _;
