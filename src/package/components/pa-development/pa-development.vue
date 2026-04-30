@@ -26,8 +26,6 @@ import type { ComponentProps } from "./types";
 import { PancakeGlobalConfigType } from "../pa-manager/types";
 /** @description 消息反馈组件 */
 import { M_Message } from "../feedback";
-/** @description 开发工具组件样式 */
-import "./index.scss";
 /** @description 组件 Props */
 const props = withDefaults(defineProps<ComponentProps>(), { id: "" });
 /** @description 全局配置注入 */
@@ -108,3 +106,7 @@ onUnmounted(() => {
   }
 });
 </script>
+
+<style scoped lang="scss">
+@use "./index.scss";
+</style>

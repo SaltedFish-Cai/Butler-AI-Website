@@ -103,8 +103,6 @@ import { PaOptionType } from "../manager-type";
 import { findData as findDataSelect } from "./find-data";
 /** @description 全局配置类型 */
 import { PancakeGlobalConfigType } from "../pa-manager/types";
-/** @description 穿梭框组件样式 */
-import "./index.scss";
 /** @description 深比较和空值判断工具 */
 import _ from "lodash";
 const { isEqual, isNil } = _;

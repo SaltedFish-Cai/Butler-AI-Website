@@ -78,8 +78,6 @@ import { useTemplateRef } from "vue";
 import { PancakeGlobalConfigType } from "../pa-manager/types";
 /** @description 消息反馈组件 */
 import { M_Message } from "../feedback";
-/** @description 媒体查看器子项组件样式 */
-import "./index.scss";
 /** @description 全局配置注入 */
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 /** @description 对话框是否可见 */
@@ -104,7 +102,8 @@ const languagePackage = computed(() => {
 function openFile(): void {
   const _fileName = props.fileName || props?.file?.OriginalName || props?.file?.FileName;
   if (isUnOpenFile(_fileName)) {
-    return M_Message.warning(languagePackage.value["errorText"]);
+    M_Message.warning(languagePackage.value["errorText"]);
+    return;
   }
   visible.value = true;
 }
@@ -168,3 +167,7 @@ watch(
   { immediate: true, deep: true }
 );
 </script>
+
+<style scoped lang="scss">
+@use "./index.scss";
+</style>

@@ -62,8 +62,6 @@ import { randChar } from "../tools/rand-char";
 import type { ComponentProps } from "./types";
 /** @description 全局配置类型 */
 import { PancakeGlobalConfigType } from "../pa-manager/types";
-/** @description 滚动列表组件样式 */
-import "./index.scss";
 /** @description 对象类型 */
 type objectType = Record<string, any>;
 /** @description 全局配置注入 */
@@ -245,3 +243,7 @@ function refresh(): void {
 }
 defineExpose({ refresh, setScrollTop, el: mScrollbarListRef });
 </script>
+
+<style scoped lang="scss">
+@use "./index.scss";
+</style>

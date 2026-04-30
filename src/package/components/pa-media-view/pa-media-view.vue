@@ -106,8 +106,6 @@ import wordView from "./word-view.vue";
 import textView from "./text-view.vue";
 /** @description 全局配置类型 */
 import { PancakeGlobalConfigType } from "../pa-manager/types";
-/** @description 媒体查看器组件样式 */
-import "./index.scss";
 /** @description 对话框是否可见 */
 const visible = ref(false);
 /** @description 当前查看的文件索引 */
@@ -241,3 +239,7 @@ function closeVisible(): void {
 }
 defineExpose({ openVisible, closeVisible });
 </script>
+
+<style scoped lang="scss">
+@use "./index.scss";
+</style>
