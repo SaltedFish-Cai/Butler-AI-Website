@@ -3,7 +3,6 @@
   align-items: center;
   color: var(--pa-color);
   font-size: var(--pa-size-font, 13px);
-
   .m-pagination-total {
     font-size: var(--pa-size-font, 13px);
     margin-right: calc(var(--pa-size-padding, 10px) / 2);
@@ -12,22 +11,18 @@
       font-weight: bold;
     }
   }
-
   .m-pagination-sizes {
     margin-right: calc(var(--pa-size-padding, 10px) / 2);
   }
-
   .m-pagination-select {
     padding: 5px 8px;
     border: 1px solid var(--pa-border-color);
     border-radius: var(--pa-size-radius);
     outline: none;
-
     &:focus {
       border-color: var(--pa-color-primary);
     }
   }
-
   .m-pagination-btn {
     min-width: calc(var(--pa-size-height, 30px) - 4px);
     height: calc(var(--pa-size-height, 30px) - 4px);
@@ -39,24 +34,21 @@
     cursor: pointer;
     transition: all 0.3s;
     font-size: var(--pa-size-font, 13px);
-
     &:disabled {
-      color: #c0c4cc;
+      color: var(--pa-color-disabled);
       cursor: not-allowed;
     }
-
     &.is-active {
       font-weight: 500;
       background-color: var(--pa-color-primary);
       border-color: var(--pa-color-primary);
-      color: #fff;
+      color: var(--pa-color-white);
     }
   }
   .m-pagination-btn.m-pagination-next,
   .m-pagination-btn.m-pagination-prev {
     font-size: calc(var(--pa-size-font, 13px) + 3px);
   }
-
   .m-pagination-more {
     display: inline-flex;
     align-items: center;
@@ -65,12 +57,10 @@
     height: 32px;
     cursor: pointer;
     color: var(--pa-color);
-
     &:hover {
       color: var(--pa-color-primary);
     }
   }
-
   .m-pagination-jumper {
     display: flex;
     align-items: center;

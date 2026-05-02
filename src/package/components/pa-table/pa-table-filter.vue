@@ -38,7 +38,7 @@
   <section v-if="Query.length" class="flex pa-table-query">
     <div class="table-title-label mr-size">{{ languagePackage["searchFilter"] }} :</div>
     <div class="mr-size query_item" v-for="(item, index) in Query" :key="item.label + item.value">
-      <span class="icon_highlight mr5">#{{ index + 1 }}</span>
+      <span class="icon_highlight mr5">#{{ Number(index) + 1 }}</span>
       <span>{{ item.label }} :</span>
 
       <template
@@ -72,7 +72,7 @@
   <section v-if="AdvancedQuery.length" class="flex mb-size pa-table-query">
     <div class="table-title-label mr-size">{{ languagePackage["Advanced"] }} :</div>
     <div class="mr-size query_item" v-for="(item, index) in AdvancedQuery" :key="item.label + item.value">
-      <span class="icon_highlight mr5">#{{ index + 1 }}</span>
+      <span class="icon_highlight mr5">#{{ Number(index) + 1 }}</span>
       <span>{{ item.label }} :</span>
 
       <template
@@ -86,12 +86,12 @@
               <span class="query_item_text_relationship_link_value">{{ groupItem.fieldValue }}</span>
             </span>
 
-            <span class="query_item_text_group_link" v-if="groupItemIndex < relationshipItem.group.length - 1">
+            <span class="query_item_text_group_link" v-if="Number(groupItemIndex) < Number(relationshipItem.group.length) - 1">
               &lt;{{ setRelationshipGroupLinkType(relationshipItem.groupLinkType) }}&gt;
             </span>
           </template>
         </span>
-        <span class="query_item_text_group_link" v-if="relationshipIndex < item.relationshipGroup.length - 1">
+        <span class="query_item_text_group_link" v-if="Number(relationshipIndex) < Number(item.relationshipGroup.length) - 1">
           &lt;{{ setRelationshipGroupLinkType(item.relationshipGroupLinkType) }}&gt;
         </span>
       </template>
@@ -123,16 +123,16 @@
 
 <script setup lang="ts" name="LightTableFilter">
 import { useTemplateRef, inject } from "vue";
-import { PaTableUseType, PaTableUseItemType, PaTableType } from "./type";
+import { PaTableUseType, ComponentUseItemProps, ComponentProps } from "./types";
 import SeniorFilter from "./senior-filter.vue";
 import ConfigSetting from "./config-setting.vue";
 import { useFilterHooks } from "./hooks/use-filter-hooks";
 import { useSeniorFilterHooks } from "./hooks/use-senior-filter-hooks";
 
 type LightTableFilterPropsType = {
-  tableStructure: Array<PaTableUseItemType>;
+  tableStructure: Array<ComponentUseItemProps>;
   tableQuery: PaTableUseType.TableQueryType;
-  extraProps: PaTableType;
+  extraProps: ComponentProps;
   state: PaTableUseType.TableStateType;
 };
 const props = defineProps<LightTableFilterPropsType>();
@@ -168,5 +168,5 @@ defineExpose({
 </script>
 
 <style lang="scss">
-@import "./query.scss";
+@use "./query.scss";
 </style>

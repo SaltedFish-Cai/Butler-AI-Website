@@ -303,18 +303,18 @@
 // >-------------> 依赖 <------------<
 import { inject, Ref, ComputedRef } from "vue";
 import Operation from "./operation.vue";
-import { PaTableUseItemType, PaTableUseType, PaTableCellExDependentType } from "./type";
+import { ComponentUseItemProps, PaTableUseType, PaTableCellExDependentType } from "./types";
 import { isRowIndex } from "./hooks/isType";
 import CellTag from "./cell-tag.vue";
 import { keepDecimalPlaces } from "../utils/handlePrecision";
 import { findData as findDataSwitch } from "../pa-switch/find-data";
 import { findData as findDataSelect } from "../pa-select/find-data";
 import { PaOptionType } from "../manager-type";
-import { PaFormChildType } from "../pa-form/type";
-import { PancakeGlobalConfigType } from "../pa-manager/type";
+import { PaFormChildType } from "../pa-form/types";
+import { PancakeGlobalConfigType } from "../pa-manager/types";
 
 type TableCellType = {
-  structure: Array<PaTableUseItemType>;
+  structure: Array<ComponentUseItemProps>;
   row: PaTableUseType.PaTableInDataType;
   renderIndex?: number;
   parentRowKey?: string;

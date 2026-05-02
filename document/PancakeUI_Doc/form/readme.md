@@ -4,9 +4,9 @@
 
 ## 基础使用
 
-最简单的使用方式，只需要配置 `config` 即表单的结构配置，即可完成表单的创建，如果表单数据中存根据 `选项（select）` 获取展示的值，还需配置 `ex-options` 来匹配选项的值，你还可以在配置中设置 `rules` 规则项，给单独一个字端设置校验规则。
+最简单的使用方式，只需要配置 `structure` 即表单的结构配置，即可完成表单的创建，如果表单数据中存根据 `选项（select）` 获取展示的值，还需配置 `exOptions` 来匹配选项的值，你还可以在配置中设置 `rules` 规则项，给单独一个字端设置校验规则。
 
-通过 `ref` 可以获取到表单实例，调用 `submitForm` 即可完成表单的校验。
+通过 `ref` 可以获取到表单实例，调用 `getSubmitForm` 即可完成表单的校验。
 
 <demo src="./base.vue"></demo>
 
@@ -18,12 +18,12 @@
 
 ## 归档
 
-如果你想为你的表单内容进行归档，只需在 `config` 中添加 `groupName` 类即可完成页面归档展示。
+如果你想为你的表单内容进行归档，只需在 `structure` 中添加 `unitName` 即可完成页面归档展示。
 
 ```typescript
-const formConfig: FormItemType[] = [
+const formConfig: ComponentItemProps[] = [
   {
-    unitName: "groupName#1", // [!code warning]
+    unitName: "groupName#1",
     ...
   }
 ];
@@ -39,17 +39,17 @@ const formConfig: FormItemType[] = [
 
 ## Tab Form
 
-高阶组件的展示和配置演示，在使用时需在 `config` 配置中添加字段 `tabsFormConfig` 其值为基础组件配置。
+高阶组件的展示和配置演示，在使用时需在 `structure` 配置中添加字段 `tabsFormConfig` 其值为基础组件配置。
 获取结果时，组件会对内容进行校验，当单个 Tab 页面出现 `错误`，组件会 `自动跳转` 至错误页，并提示错误内容.
 
 ```typescript
-const tabsFormConfig: MStructureV2Type.FormV2[] = [
-  { groupName: "Tab-groupName1", label: "Input1", prop: "Input1", type: "input" },
+const tabsFormConfig: ComponentItemProps[] = [
+  { unitName: "Tab-groupName1", label: "Input1", prop: "Input1", type: "input" },
   ...
 ];
 
-const formConfig: MStructureV2Type.FormV2[] = [
-  { groupName: "高阶组件——标签", label: "标签组件", prop: "Tab1", type: "tabs-form", tabsFormConfig }
+const formConfig: ComponentItemProps[] = [
+  { unitName: "高阶组件——标签", label: "标签组件", prop: "Tab1", type: "tabs-form", tabsFormConfig }
 ];
 ```
 
@@ -57,11 +57,11 @@ const formConfig: MStructureV2Type.FormV2[] = [
 
 ## Group Form
 
-高阶组件的展示和配置演示，在使用时需在 `config` 配置中添加字段 `groupFormConfig` 其值为基础组件配置。
+高阶组件的展示和配置演示，在使用时需在 `structure` 配置中添加字段 `groupFormConfig` 其值为基础组件配置。
 `groupFormConfig` 内的元素，当 `prop` `相同`，返回时只会产生一个数据。
 
 ```typescript
-const formConfig: MStructureV2Type.FormV2[] = [
+const formConfig: ComponentItemProps[] = [
   {
     label: "group组",
     prop: "groupProp",
@@ -88,7 +88,7 @@ const formConfig: MStructureV2Type.FormV2[] = [
 
 ## 展示模式（Display）
 
-使用 `Display` 模式时，将无法修改任何数据，数据只做展示使用，但是 `span` `labelWidth` 等配置依然生效。
+使用 `Display` 模式时，将无法修改任何数据，数据只做展示使用，但是 `exSpan` `labelWidth` 等配置依然生效。
 
 ```html
 <pa-form :labelWidth="100" display ... />
@@ -98,7 +98,7 @@ const formConfig: MStructureV2Type.FormV2[] = [
 
 ## 使用 `外置校验规则` 配置
 
-该场景使用 `ex-dependent.exCellRules` 给 `Form组件` 提供内部参数，支持延迟和异步方式赋值。
+该场景使用 `exDependent.exCellRules` 给 `Form组件` 提供内部参数，支持延迟和异步方式赋值。
 
 ```typescript
 const exRules = ref({
@@ -127,11 +127,11 @@ function ruleFunction({ value, callback }) {
 ```
 
 ```typescript
-const formConfig: MStructureV2Type.FormV2[] = [
+const formConfig: ComponentItemProps[] = [
   {
     label: "Slot1",
-    prop: "SlotKey", // [!code warning]
-    type: "slot" // [!code error]
+    prop: "SlotKey",
+    type: "slot"
   }
 ];
 ```
@@ -144,7 +144,7 @@ const formConfig: MStructureV2Type.FormV2[] = [
 
 ```html
 <pa-form id="case-slot-from-demo" ref="proForm" :structure="formConfig">
-  <template #option-Select="scope"> {{ scope }} </template> // [!code warning]
+  <template #option-Select="scope"> {{ scope }} </template>
 </pa-form>
 ```
 
@@ -155,140 +155,140 @@ const formConfig: MStructureV2Type.FormV2[] = [
 `Cell元素` 的两侧预留了插槽用于内容的展示与扩展，使用时插槽名称只需在 `key` 前面添加 `cell-` 即可。
 
 ```html
-<pa-form id="case-slot-from-demo" ref="proForm" :structure="formConfig" :span="2">
-  <template #cell-Select> <pa-button is="go">Cell 单元扩展</pa-button> </template> // [!code warning]
+<pa-form id="case-slot-from-demo" ref="proForm" :structure="formConfig" :exSpan="2">
+  <template #cell-Select> <pa-button is="go">Cell 单元扩展</pa-button> </template>
 </pa-form>
 ```
 
 <demo src="./case-slot-cell.vue"></demo>
 
-## `MStructureV2Type.FormV2`
+## ComponentProps
 
-```typescript
-const formConfig: MStructureV2Type.FormV2[] = [
-  { label: "输入框", prop: "Input1", type: "input" },
-  ...
-];
-```
+| 字段             | 描述                 | 类型                                                                                                                                                                         | 默认值  |
+| ---------------- | -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| id               | 唯一标识             | `string`                                                                                                                                                                     | `-`     |
+| class            | 自定义类名           | `Array<string>` \| `string`                                                                                                                                                  | `-`     |
+| style            | 自定义样式           | `Record<string, string \| number>`                                                                                                                                           | `-`     |
+| data             | 外置默认数据         | [`FormDataType`](#formdatatype)                                                                                                                                              | `-`     |
+| contrastData     | 外置对比数据         | `Record<string, any>`                                                                                                                                                        | `-`     |
+| alwaysContrast   | 是否一直展示对比数据 | `boolean`                                                                                                                                                                    | `false` |
+| exOptions        | 外置选项依赖         | [`PaOptionType.Default`](/document/PancakeUI_Doc/options#optiontypedefault)                                                                                                  | `-`     |
+| useRequired      | 是否使用校验         | `boolean`                                                                                                                                                                    | `true`  |
+| noLabel          | 是否隐藏 label       | `boolean`                                                                                                                                                                    | `false` |
+| labelWidth       | 标签宽度             | `number` \| `string`                                                                                                                                                         | `-`     |
+| labelPosition    | 标签位置             | `'left'` \| `'right'` \| `'top'`                                                                                                                                             | `'top'` |
+| structure        | 表单结构配置         | `Array<ComponentItemProps>`                                                                                                                                                  | `-`     |
+| disabled         | 是否禁用表单         | `boolean`                                                                                                                                                                    | `false` |
+| display          | 是否纯展示表单       | `boolean`                                                                                                                                                                    | `false` |
+| exDependent      | 表单额外依赖         | [`PaFormExDependentType`](#paformexdependenttype)                                                                                                                            | `-`     |
+| exCellDependent  | 单元格外置依赖       | [`PaFormCellExDependentType`](#paformcellexdependenttype)                                                                                                                    | `-`     |
+| maxSpan          | 单行最大分栏         | `1` \| `2` \| `3` \| `4`                                                                                                                                                     | `4`     |
+| exSpan           | 单行强制分栏         | `1` \| `2` \| `3` \| `4`                                                                                                                                                     | `1`     |
+| onFormCellChange | 单元素变化回调       | `(params: { prop: string; value: Array<number \| string> \| number \| string; oldValue: Array<number \| string> \| number \| string; option: PaOptionType.Select }) => void` | `-`     |
+| onFormDataChange | 表单数据变化回调     | `(data: Record<string, any>) => void`                                                                                                                                        | `-`     |
 
-## `BaseType`
+## ComponentEmits
 
-| 字段     | 描述                  | 类型                                                                                       | 类型    |
-| -------- | --------------------- | ------------------------------------------------------------------------------------------ | ------- |
-| prop     | 表头 prop 表 key 字段 | `string`                                                                                   | —       |
-| unitName | 单位名称              | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) `string`                                              | —       |
-| unitTip  | 单位提示              | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) `string`                                              | —       |
-| label    | 表头展示              | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) `string`                                              | —       |
-| tip      | 提示信息              | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) `string`                                              | —       |
-| disabled | 是否禁用              | `boolean`                                                                                  | `false` |
-| rules    | 外置校验规则          | `Array<{ required?: boolean; message?: Record<languageKey, string> \| string }>` `boolean` | `[]`    |
-| exSpan   | 单行分栏              | `1` `2` `3` `4`                                                                            | `4`     |
-| required | 是否必填              | `boolean`                                                                                  | `false` |
-| colSpan  | 列宽分栏              | `1` `2` `3` `4` `5` `6` `7` `8` `9` `10` `11` `12`                                         | —       |
+| 字段              | 描述               | 类型                                                                       |
+| ----------------- | ------------------ | -------------------------------------------------------------------------- |
+| formDataChange    | 表单数据变化时触发 | `(data: Record<string, any>) => void`                                      |
+| formCellChange    | 单元素变化时触发   | `(data: { prop: string; value: any; oldValue: any; option: any }) => void` |
+| onFormStateChange | 表单状态变化时触发 | `(data: string) => void`                                                   |
 
-## `CellItemType`
+## ComponentItemProps
 
-| 描述       | 单元格类型                                                     |
-| ---------- | -------------------------------------------------------------- |
-| 输入框     | [SaInputType](/document/PancakeUI_Doc/input/readme.html)       |
-| 数字输入框 | [SaNumberType](/document/PancakeUI_Doc/number/readme.html)     |
-| 选择器     | [SaSelectType](/document/PancakeUI_Doc/select/readme.html)     |
-| 联级选择器 | [SaCascaderType](/document/PancakeUI_Doc/cascader/readme.html) |
-| 多选       | [SaCheckboxType](/document/PancakeUI_Doc/checkbox/readme.html) |
-| 单选       | [SaRadioType](/document/PancakeUI_Doc/radio/readme.html)       |
-| 开关       | [SaSwitchType](/document/PancakeUI_Doc/switch/readme.html)     |
-| 时间选择器 | [SaTimeType](/document/PancakeUI_Doc/time/readme.html)         |
-| 文件选择器 | [SaFileType](/document/PancakeUI_Doc/file/readme.html)         |
+| 字段     | 描述             | 类型                                                                                                                                 | 默认值  |
+| -------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------ | ------- |
+| prop     | 表单单元唯一 Key | `string`                                                                                                                             | `-`     |
+| unitName | 自动划组名称     | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) \| `string`                                             | `-`     |
+| unitTip  | 自动划组提示     | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) \| `string`                                             | `-`     |
+| label    | 表单项标题       | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) \| `string`                                             | `-`     |
+| tip      | 表单项提示       | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) \| `string`                                             | `-`     |
+| disabled | 是否禁用         | `boolean`                                                                                                                            | `false` |
+| rules    | 外置校验规则     | `Array<{ required?: boolean; message?: LanguagePackageType \| string }>` \| `boolean`                                                | `-`     |
+| exSpan   | 单行分栏         | `1` \| `2` \| `3` \| `4`                                                                                                             | `1`     |
+| required | 是否必填         | `boolean`                                                                                                                            | `false` |
+| colSpan  | 跨栏数           | `1` \| `2` \| `3` \| `4` \| `5` \| `6` \| `7` \| `8` \| `9` \| `10` \| `11` \| `12`                                                  | `-`     |
+| exStyles | 额外样式         | `{ style?: Record<string, string>; message?: string; class?: string; messageClass?: string; messageStyle?: Record<string, string> }` | `-`     |
 
-## `SaFormProps`
+## CellItemType
 
-| 字段             | 描述                               | 类型                                                                                            | 默认值      |
-| ---------------- | ---------------------------------- | ----------------------------------------------------------------------------------------------- | ----------- |
-| id               | 唯一标识                           | `string`                                                                                        | - |
-| class            | 自定义类名                         | `string`                                                                                        | - |
-| style            | 自定义样式                         | `Record<string, string>`                                                                        | - |
-| data             | 外置默认数据(`非双向绑定数据`)     | `object`                                                                                        | —           |
-| contrastData     | 外置对比数据                       | `object`                                                                                        | —           |
-| alwaysContrast   | 是否一直展示对比数据               | `boolean`                                                                                       | `false`     |
-| exOptions        | 外置 `Option 参数` 依赖            | `object`                                                                                        | —           |
-| useRequired      | 强制不使用校验                     | `object`                                                                                        | `true`      |
-| noLabel          | 是否不展示 `label`                 | `boolean`                                                                                       | `false`     |
-| labelWidth       | `label` 宽度，不设置时使用弹性宽度 | `number`                                                                                        | —           |
-| labelPosition    | `labelWidth==true` 时 `label` 位置 | `'left'` `'top'`                                                                                | —           |
-| structure        | 表单配置                           | `Array<MStructureV2Type.FormV2>`                                                                | —           |
-| disabled         | 设置表单为纯展示                   | `boolean`                                                                                       | `false`     |
-| display          | 是否纯展示表单                     | `boolean`                                                                                       | `false`     |
-| exDependent      | 外置依赖                           | [SaFormExDependentType](/document/PancakeUI_Doc/form/readme.html#SaFormexdependenttype)         | —           |
-| exCellDependent  | 单元格外置依赖                     | [SaFormCellExDependentType](/document/PancakeUI_Doc/form/readme.html#SaFormcellexdependenttype) | —           |
-| maxSpan          | 最大分栏数                         | `1` `2` `3` `4`                                                                                 | `4`         |
-| exSpan           | 最大分栏数                         | `1` `2` `3` `4`                                                                                 | `4`         |
-| onFormDataChange | 表单数据变化回调                   | `(data: object) => void`                                                                        | - |
+| 描述       | 单元格类型                                                       |
+| ---------- | ---------------------------------------------------------------- |
+| 输入框     | [`ComponentProps`](/document/PancakeUI_Doc/input/readme.html)    |
+| 数字输入框 | [`ComponentProps`](/document/PancakeUI_Doc/number/readme.html)   |
+| 选择器     | [`ComponentProps`](/document/PancakeUI_Doc/select/readme.html)   |
+| 联级选择器 | [`ComponentProps`](/document/PancakeUI_Doc/cascader/readme.html) |
+| 多选       | [`ComponentProps`](/document/PancakeUI_Doc/checkbox/readme.html) |
+| 单选       | [`ComponentProps`](/document/PancakeUI_Doc/radio/readme.html)    |
+| 开关       | [`ComponentProps`](/document/PancakeUI_Doc/switch/readme.html)   |
+| 时间选择器 | [`ComponentProps`](/document/PancakeUI_Doc/time/readme.html)     |
+| 文件选择器 | [`ComponentProps`](/document/PancakeUI_Doc/file/readme.html)     |
 
-## `SaFormExDependentType`
+## PaFormExDependentType
 
-| 字段         | 描述               | 类型                                                                                                     |
-| ------------ | ------------------ | -------------------------------------------------------------------------------------------------------- |
-| disabledRule | 禁用规则           | `{ [x: string]: (value) => boolean }`                                                                    |
-| displayRule  | 显示规则           | `{ [x: string]: (value) => boolean }`                                                                    |
-| exCellRules  | 单元格外置依赖规则 | `{ [x: string]: Array<{ validator: (rule: any, value: any, callback: any) => void; trigger: string }> }` |
+| 字段         | 描述               | 类型                                                                                                                 |
+| ------------ | ------------------ | -------------------------------------------------------------------------------------------------------------------- |
+| disabledRule | 禁用规则           | `{ [x: string]: (value: any) => boolean }`                                                                           |
+| displayRule  | 显示规则           | `{ [x: string]: (value: any) => boolean }`                                                                           |
+| exCellRules  | 单元格外置依赖规则 | `{ [x: string]: Array<{ validator: (params: { rule: any; value: any; callback: any }) => void; trigger: string }> }` |
 
-## `SaFormCellExDependentType`
+## PaFormCellExDependentType
 
-| 字段                  | 描述                   | 类型                                                                        |
-| --------------------- | ---------------------- | --------------------------------------------------------------------------- |
-| select_RequestApi     | 选择器请求 Api         | `{ [x: string]: ({ query: string }) => Promise<MOptionV2Type.SelectList> }` |
-| time_disabledDateFn   | 时间选择器禁用日期函数 | `{ [x: string]: (date: any) => boolean }`                                   |
-| time_shortcuts        | 时间选择器快捷选项     | `{ [x: string]: DatePickerShortcut[] }`                                     |
-| file_attachedData     | 文件上传附带数据       | `{ [x: string]: Record<string, string> }`                                   |
-| file_downloadTemplate | 文件下载模板           | `{ [x: string]: () => void }`                                               |
+| 字段                  | 描述                   | 类型                                                                               |
+| --------------------- | ---------------------- | ---------------------------------------------------------------------------------- |
+| select_RequestApi     | 选择器请求 Api         | `{ [x: string]: (params: { query: string }) => Promise<PaOptionType.SelectList> }` |
+| time_disabledDateFn   | 时间选择器禁用日期函数 | `{ [x: string]: (date: any) => boolean }`                                          |
+| time_shortcuts        | 时间选择器快捷选项     | `{ [x: string]: Array<DatePickerShortcut> }`                                       |
+| file_attachedData     | 文件上传附带数据       | `{ [x: string]: Record<string, string> }`                                          |
+| file_downloadTemplate | 文件下载模板           | `{ [x: string]: () => void }`                                                      |
+| clickTagClick         | 点击标签回调函数       | `{ [x: string]: (prop: string, data: object) => void }`                            |
 
-## `SaFormEvents`
+## ComponentRef
 
-| 字段             | 描述                               | 类型                                        |
-| ---------------- | ---------------------------------- | ------------------------------------------- |
-| onFormDataChange | 当表单数据发生变化时调用的回调方法 | `(data: object) => void`                    |
-| onFormCellChange | 当`单元`发生变化时调用的回调方法   | `({prop, value, oldValue, option}) => void` |
+| 方法名称         | 描述                                       | 请求参数                                           |
+| ---------------- | ------------------------------------------ | -------------------------------------------------- |
+| getSubmitForm    | 获取提交表单数据（校验表单数据并获取数据） | `-`                                                |
+| clean_All        | 清除所有数据                               | `-`                                                |
+| setStructure_All | 设置所有结构                               | `(structure: Array<ComponentItemProps>) => void`   |
+| setStructureItem | 设置单个结构                               | `(prop: string, item: ComponentItemProps) => void` |
+| changeData_All   | 设置所有数据                               | `(data: object) => void`                           |
+| changeData_Item  | 设置单个数据                               | `(prop: string, value: any) => void`               |
 
-## `DefineExpose`
+## FormItemRule
 
-```typescript
-const proForm = ref();
-async function submitForm() {
-  const data = await proForm.value.getSubmitForm();
-  if (data) {
-    formData.value = data;
-  }
-}
-```
+| 字段      | 描述           | 类型                                                                                                                                                                                             | 默认值 |
+| --------- | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------ |
+| type      | 验证规则名称   | `'any'` \| `'array'` \| `'boolean'` \| `'date'` \| `'email'` \| `'enum'` \| `'float'` \| `'hex'` \| `'integer'` \| `'method'` \| `'number'` \| `'object'` \| `'regexp'` \| `'string'` \| `'url'` | `-`    |
+| required  | 是否必填       | `boolean`                                                                                                                                                                                        | `-`    |
+| message   | 验证错误信息   | `string`                                                                                                                                                                                         | `-`    |
+| trigger   | 验证触发方式   | `'blur'` \| `'change'` \| `'input'`                                                                                                                                                              | `-`    |
+| min       | 最小值         | `number`                                                                                                                                                                                         | `-`    |
+| max       | 最大值         | `number`                                                                                                                                                                                         | `-`    |
+| len       | 长度           | `number`                                                                                                                                                                                         | `-`    |
+| pattern   | 正则表达式     | `RegExp`                                                                                                                                                                                         | `-`    |
+| validator | 自定义验证函数 | `(params: { rule: FormItemRule; value: any; callback: (error?: string) => void }) => Promise<void> \| void`                                                                                      | `-`    |
+| enum      | 枚举值         | `Array<boolean \| number \| string \| null \| undefined>`                                                                                                                                        | `-`    |
+| transform | 转换值         | `(value: any) => any`                                                                                                                                                                            | `-`    |
 
-| 方法名称          | 描述                                       | 请求参数                                                |
-| ----------------- | ------------------------------------------ | ------------------------------------------------------- |
-| getSubmitForm     | 获取提交表单数据（校验表单数据并获取数据） | `null`                                                  |
-| clean_All         | 清除所有数据                               | `null`                                                  |
-| setStructure_All  | 设置表格所有结构                           | `(structure: Array<MStructureV2Type.FormV2>) => void`   |
-| setStructure_Item | 设置表格单个结构                           | `(prop: string, item: MStructureV2Type.FormV2) => void` |
-| changeData_All    | 设置表格所有数据                           | `(data: Array<object>) => void`                         |
-| changeData_Item   | 设置表格单个数据                           | `(prop: string, value: object) => void`                 |
-
-## `FormItemRule`
-
-| 字段      | 描述           | 类型                                                                            | 默认值 |
-| --------- | -------------- | ------------------------------------------------------------------------------- | ------ |
-| type      | 验证规则名称   | `"any"` `"array"` `"boolean"` `"date"` `"email"` `"enum"` `"float"` `"hex"` ... | —      |
-| required  | 是否必填       | `boolean`                                                                       | —      |
-| message   | 验证错误信息   | `string`                                                                        | —      |
-| trigger   | 验证触发方式   | `"blur"` `"change"` `"input"`                                                   | —      |
-| min       | 最小值         | `number`                                                                        | —      |
-| max       | 最大值         | `number`                                                                        | —      |
-| len       | 长度           | `number`                                                                        | —      |
-| pattern   | 正则表达式     | `RegExp`                                                                        | —      |
-| validator | 自定义验证函数 | `(params) => Promise<void> \| void`                                             | —      |
-| enum      | 枚举值         | `Array<boolean \| number \| string \| null \| undefined>`                       | —      |
-| transform | 转换值         | `(value) => any`                                                                | —      |
-
-## `FormDataType`
+## FormDataType
 
 | 字段    | 描述       | 类型      | 默认值 |
 | ------- | ---------- | --------- | ------ |
-| name    | 表单名称   | `string`  | —      |
-| isError | 是否有错误 | `boolean` | —      |
+| name    | 表单名称   | `string`  | `-`    |
+| isError | 是否有错误 | `boolean` | `-`    |
+
+## ExMultipleConfigType
+
+| 字段             | 描述         | 类型                        | 默认值 |
+| ---------------- | ------------ | --------------------------- | ------ |
+| inMultipleConfig | 多配置选项   | `Array<MultipleConfigType>` | `-`    |
+| tabsFormConfig   | Tab 表单配置 | `Array<PaFormChildType>`    | `-`    |
+
+## MultipleConfigType
+
+| 字段     | 描述         | 类型                        | 默认值 |
+| -------- | ------------ | --------------------------- | ------ |
+| unitName | 自动划组名称 | `string`                    | `-`    |
+| unitTip  | 自动划组提示 | `string`                    | `-`    |
+| configs  | 配置列表     | `Array<ComponentItemProps>` | `-`    |

@@ -4,56 +4,49 @@
   </div>
 </template>
 
-<script setup lang="ts" name="MRow">
+<script setup lang="ts" name="PaRow">
+/**
+ * @component PaRow
+ * @description 栅格行组件，需配合 PaCol 使用
+ * @author Butler AI
+ */
+/** @description Vue 核心库 */
 import { computed, provide, ref, onMounted, onUnmounted } from "vue";
-import type { BreakPoint } from "@/package/components/pa-col/type";
-
-interface Props {
-  gutter?: string;
-  edgeGutter?: string;
-  justify?: "center" | "end" | "space-around" | "space-between" | "start";
-  align?: "bottom" | "middle" | "top";
-  tag?: string;
-}
-
-const props = withDefaults(defineProps<Props>(), {
+/** @description PaRow 类型定义 */
+import type { ComponentProps } from "./types";
+const props = withDefaults(defineProps<ComponentProps>(), {
   justify: "start",
-  align: "top",
-  tag: "div"
+  align: "top"
 });
-
-// 计算类名
+/** @description 计算类名 */
 const classes = computed(() => {
-  const classList = ["m-row"];
-
-  // 添加justify类
-  classList.push(`m-row--${props.justify}`);
-
-  // 添加align类
-  classList.push(`m-row--align-${props.align}`);
-
+  const classList = ["pa-row"];
+  classList.push(`pa-row--${props.justify}`);
+  classList.push(`pa-row--align-${props.align}`);
   return classList;
 });
-
-// 计算样式
+/** @description 计算栅格间隔值 */
+const gutterValue = computed(() => {
+  return props.gutter
+    ? typeof props.gutter === "number"
+      ? props.gutter / 2
+      : Number(props.gutter.replace(/\D/g, "") || 0) / 2
+    : 0;
+});
+/** @description 计算样式 */
 const style = computed(() => {
   const styles: Record<string, string> = {};
-
-  // 设置gutter
-  const _gutter = props.gutter || props.edgeGutter;
-  if (_gutter) {
-    styles.marginLeft = `calc(0px - ${_gutter})`;
-    styles.marginRight = `calc(0px - ${_gutter})`;
-  }
-
+  styles["--row-gutter-value"] = gutterValue.value ? `${gutterValue.value}px` : "calc(var(--pa-size-padding) / 2)";
+  styles.marginTop = gutterValue.value ? `calc(0px - ${gutterValue.value}px)` : "calc(0px - var(--pa-size-padding) / 2)";
+  styles.marginBottom = gutterValue.value ? `calc(0px - ${gutterValue.value}px)` : "calc(0px - var(--pa-size-padding) / 2)";
   return styles;
 });
-
-// 使用ref存储当前断点
+/** @description 断点类型 */
+type BreakPoint = "lg" | "md" | "sm" | "xl" | "xs";
+/** @description 当前断点 */
 const breakPoint = ref<BreakPoint>("xl");
-
-// 计算当前断点
-const calculateBreakPoint = () => {
+/** @description 计算当前断点 */
+const calculateBreakPoint = (): BreakPoint => {
   const width = typeof window !== "undefined" ? window.innerWidth : 0;
   if (width < 384) return "xs";
   if (width < 768) return "sm";
@@ -61,73 +54,25 @@ const calculateBreakPoint = () => {
   if (width < 1200) return "lg";
   return "xl";
 };
-
-// 监听窗口大小变化
-const handleResize = () => {
+/** @description 监听窗口大小变化 */
+const handleResize = (): void => {
   breakPoint.value = calculateBreakPoint();
 };
-
-// 组件挂载时初始化断点并添加事件监听
+/** @description 组件挂载时初始化断点并添加事件监听 */
 onMounted(() => {
   breakPoint.value = calculateBreakPoint();
   if (typeof window !== "undefined") window.addEventListener("resize", handleResize);
 });
-
-// 组件卸载时移除事件监听
+/** @description 组件卸载时移除事件监听 */
 onUnmounted(() => {
   if (typeof window !== "undefined") window.removeEventListener("resize", handleResize);
 });
-
-// 提供断点信息给子组件
+/** @description 提供断点信息给子组件 */
 provide("breakPoint", breakPoint);
-provide(
-  "gutter",
-  computed(() => {
-    const gutter = props.gutter;
-    if (!gutter) return "0px";
-    return `${gutter}`;
-  })
-);
+/** @description 提供行间隔信息给子组件 */
+provide("rowGutter", gutterValue);
 </script>
 
 <style lang="scss" scoped>
-.m-row {
-  display: flex;
-  flex-wrap: wrap;
-  box-sizing: border-box;
-}
-
-// 水平对齐方式
-.m-row--start {
-  justify-content: flex-start;
-}
-
-.m-row--end {
-  justify-content: flex-end;
-}
-
-.m-row--center {
-  justify-content: center;
-}
-
-.m-row--space-around {
-  justify-content: space-around;
-}
-
-.m-row--space-between {
-  justify-content: space-between;
-}
-
-// 垂直对齐方式
-.m-row--align-top {
-  align-items: flex-start;
-}
-
-.m-row--align-middle {
-  align-items: center;
-}
-
-.m-row--align-bottom {
-  align-items: flex-end;
-}
+@use "./index.scss";
 </style>

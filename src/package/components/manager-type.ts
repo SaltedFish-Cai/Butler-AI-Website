@@ -1,6 +1,6 @@
-import { PaFormItemType, PaFormRef } from "./pa-form/type";
-import { PaTableItemType, PaTableType } from "./pa-table/type";
-import { PaManagerType } from "./pa-manager/type";
+import { PaFormItemType, PaFormRef } from "./pa-form/types";
+import { PaTableItemType, PaTableType } from "./pa-table/types";
+import { PaManagerType } from "./pa-manager/types";
 
 export type LanguageKey = "en-US" | "zh-CN";
 export type LanguagePackageType = Record<LanguageKey, string>;
@@ -17,7 +17,7 @@ export type PaSelectOptionsType = {
    * @type `boolean` | `number` | `string`
    * @description 数据值的类型为 `boolean` | `number` | `string`，可以是任意类型
    * */
-  value: boolean | number | string | undefined;
+  value: boolean | number | string;
 
   /**
    * **子数据**

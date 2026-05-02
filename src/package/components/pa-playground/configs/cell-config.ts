@@ -1,6 +1,13 @@
+/**
+ * @description 导入类型定义
+ * */
 import { PaStructureType, PaOptionType } from "M_Types";
 
-export const cellMapConfig: PaOptionType.Select[] = [
+/**
+ * @description 单元格类型映射配置
+ * @type `Array<PaOptionType.Select>`
+ * */
+export const cellMapConfig: Array<PaOptionType.Select> = [
   { label: { "en-US": "Text", "zh-CN": "文本" }, value: "text", children: [] },
   { label: { "en-US": "Input", "zh-CN": "输入框" }, value: "input", children: [] },
   { label: { "en-US": "Number", "zh-CN": "数字框" }, value: "number", children: [] },
@@ -11,8 +18,6 @@ export const cellMapConfig: PaOptionType.Select[] = [
     children: [
       { label: { "en-US": "Single Select", "zh-CN": "单择框" }, value: "select" },
       { label: { "en-US": "Multiple Select", "zh-CN": "多选框" }, value: "multiple-select" }
-      // { label: { "en-US": "Remote Select", "zh-CN": "远端单选框" }, value: "online-select" },
-      // { label: { "en-US": "Remote Multiple Select", "zh-CN": "远端多选框" }, value: "multiple-online-select" }
     ]
   },
   {
@@ -46,8 +51,11 @@ export const cellMapConfig: PaOptionType.Select[] = [
   { label: { "en-US": "File Selector", "zh-CN": "文件选择框" }, value: "file", children: [] }
 ];
 
-// # 输入框配置
-export const inputConfig: PaStructureType.FormV2[] = [
+/**
+ * @description 输入框配置
+ * @type `Array<PaStructureType.FormV2>`
+ * */
+export const inputConfig: Array<PaStructureType.FormV2> = [
   {
     unitName: { "en-US": "Input Config", "zh-CN": "输入框配置" },
     label: { "en-US": "Placeholder", "zh-CN": "占位符" },
@@ -63,8 +71,12 @@ export const inputConfig: PaStructureType.FormV2[] = [
     rules: [{ required: false }]
   }
 ];
-// # 数字框配置
-export const numberConfig: PaStructureType.FormV2[] = [
+
+/**
+ * @description 数字框配置
+ * @type `Array<PaStructureType.FormV2>`
+ * */
+export const numberConfig: Array<PaStructureType.FormV2> = [
   {
     unitName: { "en-US": "Number Config", "zh-CN": "数字框配置" },
     label: { "en-US": "Placeholder", "zh-CN": "占位符" },
@@ -101,8 +113,12 @@ export const numberConfig: PaStructureType.FormV2[] = [
     rules: [{ required: false }]
   }
 ];
-// # 选择框配置
-export const selectConfig: PaStructureType.FormV2[] = [
+
+/**
+ * @description 选择框配置
+ * @type `Array<PaStructureType.FormV2>`
+ * */
+export const selectConfig: Array<PaStructureType.FormV2> = [
   {
     unitName: { "en-US": "Select Config", "zh-CN": "选择框配置" },
     label: { "en-US": "Options", "zh-CN": "选项" },
@@ -117,8 +133,12 @@ export const selectConfig: PaStructureType.FormV2[] = [
     rules: [{ required: false }]
   }
 ];
-// # 级联选择框配置
-export const cascaderConfig: PaStructureType.FormV2[] = [
+
+/**
+ * @description 级联选择框配置
+ * @type `Array<PaStructureType.FormV2>`
+ * */
+export const cascaderConfig: Array<PaStructureType.FormV2> = [
   {
     unitName: { "en-US": "Cascader Config", "zh-CN": "级联选择框配置" },
     label: { "en-US": "Options", "zh-CN": "选项" },
@@ -133,8 +153,12 @@ export const cascaderConfig: PaStructureType.FormV2[] = [
     rules: [{ required: false }]
   }
 ];
-// # 单选框配置
-export const radioConfig: PaStructureType.FormV2[] = [
+
+/**
+ * @description 单选框配置
+ * @type `Array<PaStructureType.FormV2>`
+ * */
+export const radioConfig: Array<PaStructureType.FormV2> = [
   {
     unitName: { "en-US": "Radio Config", "zh-CN": "单选框配置" },
     label: { "en-US": "Options", "zh-CN": "选项" },
@@ -142,8 +166,12 @@ export const radioConfig: PaStructureType.FormV2[] = [
     type: "select"
   }
 ];
-// # 复选框配置
-export const checkboxConfig: PaStructureType.FormV2[] = [
+
+/**
+ * @description 复选框配置
+ * @type `Array<PaStructureType.FormV2>`
+ * */
+export const checkboxConfig: Array<PaStructureType.FormV2> = [
   {
     unitName: { "en-US": "Checkbox Config", "zh-CN": "复选框配置" },
     label: { "en-US": "Options", "zh-CN": "选项" },
@@ -152,8 +180,11 @@ export const checkboxConfig: PaStructureType.FormV2[] = [
   }
 ];
 
-// # 开关配置
-export const switchConfig: PaStructureType.FormV2[] = [
+/**
+ * @description 开关配置
+ * @type `Array<PaStructureType.FormV2>`
+ * */
+export const switchConfig: Array<PaStructureType.FormV2> = [
   {
     unitName: { "en-US": "Switch Config", "zh-CN": "开关配置" },
     label: { "en-US": "Options", "zh-CN": "选项" },

@@ -38,11 +38,7 @@
       ></template>
 
       <template #cellConfig="{ data }">
-        <pa-cascader
-          v-model="data.type"
-          :exOptions="cellMapConfig"
-          :title="{ 'zh-CN': '类型', 'en-US': 'Type' }"
-        ></pa-cascader>
+        <pa-cascader v-model="data.type" :exOptions="cellMapConfig" :title="{ 'zh-CN': '类型', 'en-US': 'Type' }"></pa-cascader>
 
         <pa-select
           class="mt-size"
@@ -79,7 +75,7 @@
 
 <script lang="tsx" setup>
 import { computed, ComputedRef, inject, ref } from "vue";
-import { PancakeGlobalConfigType } from "../../../pa-manager/type";
+import { PancakeGlobalConfigType } from "../../../pa-manager/types";
 import { PaStructureType } from "M_Types";
 import { cellMapConfig } from "../../configs/cell-config";
 import { MOptionsType } from "../../type";

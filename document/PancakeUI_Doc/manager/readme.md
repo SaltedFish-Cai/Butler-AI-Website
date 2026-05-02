@@ -6,40 +6,53 @@
 
 作为全局配置容器，需要在应用根节点使用，为所有 Pancake-UI 组件提供统一的配置。
 
-## Props
+## ComponentProps
 
-| 参数           | 说明           | 类型                                                                                                                      | 默认值      |
-| -------------- | -------------- | ------------------------------------------------------------------------------------------------------------------------- | ----------- |
-| env            | 环境标识       | `string`                                                                                                                  | -           |
-| baseHost       | API 基础 URL   | `string`                                                                                                                  | -           |
-| themeColor     | 主题颜色       | `string`                                                                                                                  | -           |
-| isDark         | 是否为暗黑模式 | `boolean`                                                                                                                 | `false`     |
-| size           | 组件尺寸       | `'small'` ` 'default'` `'large'`                                                                                          | `'default'` |
-| language       | 语言           | `'zh-CN'` `'en-US'`                                                                                                       | `'zh-CN'`   |
-| table_config   | 表格配置       | `TableConfig`                                                                                                             | -           |
-| address_config | 地址配置       | `AddressConfig`                                                                                                           | -           |
-| file_config    | 文件配置       | [`apiType`](/document/PancakeUI_Doc/manager/readme#apitype-api-配置类型) `& { downloadHose: string; compareKey: string }` | -           |
-| requestHeader  | 请求头         | `Record<string, string>`                                                                                                  | -           |
+| 属性名         | 描述           | 类型                                                                                | 默认值      |
+| -------------- | -------------- | ----------------------------------------------------------------------------------- | ----------- |
+| id             | 组件唯一标识   | `string`                                                                            | -           |
+| class          | 自定义类名     | `Array<string>` \| `string`                                                         | -           |
+| style          | 自定义样式     | `Record<string, string \| number>`                                                  | -           |
+| env            | 环境标识       | `string`                                                                            | -           |
+| baseHost       | API 基础 URL   | `string`                                                                            | -           |
+| themeColor     | 主题颜色       | `string`                                                                            | -           |
+| isDark         | 是否为暗黑模式 | `boolean`                                                                           | -           |
+| size           | 组件尺寸       | `"small"` \| `"default"` \| `"large"`                                               | `"default"` |
+| language       | 语言           | `"zh-CN"` \| `"en-US"`                                                              | `"zh-CN"`   |
+| table_config   | 表格配置       | [`TableConfig`](#tableconfig-表格配置)                                              | -           |
+| address_config | 地址配置       | [`ApiType`](#apitype-api-配置类型)                                                  | -           |
+| file_config    | 文件配置       | [`ApiType`](#apitype-api-配置类型) & `{ downloadHose: string; compareKey: string }` | -           |
+| requestHeader  | 请求头         | `Record<string, string>`                                                            | -           |
 
-## apiType API 配置类型
+## ComponentEmits
 
-| 参数 | 说明     | 类型     |
-| ---- | -------- | -------- |
-| url  | API URL  | `string` |
-| type | API 类型 | `string` |
+无
+
+## ComponentSlots
+
+| 插槽名称  | 作用                               |
+| --------- | ---------------------------------- |
+| 'default' | 应用根内容，通常放置 `router-view` |
+
+## ApiType API 配置类型
+
+| 属性名 | 描述     | 类型     |
+| ------ | -------- | -------- |
+| url    | API URL  | `string` |
+| type   | API 类型 | `string` |
 
 ## TableConfig 表格配置
 
-| 参数                  | 说明             | 类型                                                                                                                                                                                                    |
-| --------------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| groupAdvancedQueryApi | 高级查询分组 API | [`apiType`](/document/PancakeUI_Doc/manager/readme#apitype-api-配置类型) \| `{ FilterLinkNextType: Array<ConditionalType> }`                                                                            |
-| advancedQueryApi      | 高级查询 API     | [`apiType`](/document/PancakeUI_Doc/manager/readme#apitype-api-配置类型) \| `{ ConditionalType: Array<ConditionalType>; SqlJoinType: Array<ConditionalType>; LineConditional: Array<ConditionalType> }` |
-| useSeniorFilter       | 是否启用高级筛选 | `boolean`                                                                                                                                                                                               |
-| infiniteScroll        | 是否启用无限滚动 | `boolean`                                                                                                                                                                                               |
+| 属性名                | 描述             | 类型                                                                                                                                                              |
+| --------------------- | ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| groupAdvancedQueryApi | 高级查询分组 API | [`ApiType`](#apitype-api-配置类型) \| `{ FilterLinkNextType: Array<ConditionalType> }`                                                                            |
+| advancedQueryApi      | 高级查询 API     | [`ApiType`](#apitype-api-配置类型) \| `{ ConditionalType: Array<ConditionalType>; SqlJoinType: Array<ConditionalType>; LineConditional: Array<ConditionalType> }` |
+| useSeniorFilter       | 是否启用高级筛选 | `boolean`                                                                                                                                                         |
+| infiniteScroll        | 是否启用无限滚动 | `boolean`                                                                                                                                                         |
 
-### ConditionalType 条件类型
+## ConditionalType 条件类型
 
-| 参数                  | 说明     | 类型     |
+| 属性名                | 描述     | 类型     |
 | --------------------- | -------- | -------- |
 | Value                 | 值       | `string` |
 | Description           | 描述     | `string` |
@@ -74,6 +87,6 @@ const PancakeUIConfig = ref({
     downloadHose: Host + "/UploadFile/getfile?filepath=",
     compareKey: "FileId"
   }
-} as PancakeUIType);
+});
 </script>
 ```

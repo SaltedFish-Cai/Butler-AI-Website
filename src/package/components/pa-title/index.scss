@@ -8,7 +8,7 @@
 
   .pa-title_box {
     position: relative;
-    
+
     &::after {
       position: absolute;
       bottom: 0;
@@ -28,7 +28,7 @@
     width: max-content;
     position: relative;
     padding-bottom: calc(var(--pa-size-padding, 10px) * 0.8);
-    
+
     &::after {
       position: absolute;
       bottom: 0;
@@ -51,7 +51,7 @@
 .pa-title_no-line {
   padding-bottom: 0px !important;
   width: max-content;
-  
+
   &::after {
     display: none;
   }

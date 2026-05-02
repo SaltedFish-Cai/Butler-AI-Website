@@ -22,7 +22,7 @@ import { ComponentProps } from "./types";
  * **模块导入**
  * @description 导入全局配置类型定义
  * */
-import { PancakeGlobalConfigType } from "../pa-manager/type";
+import { PancakeGlobalConfigType } from "../pa-manager/types";
 /**
  * **组件属性**
  * @type `ComponentProps`

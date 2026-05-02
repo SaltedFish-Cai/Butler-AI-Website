@@ -17,7 +17,7 @@
 <script lang="ts" setup>
 // # Import
 import { ref } from "vue";
-import { PaFormItemType } from "./type";
+import { PaFormItemType } from "./types";
 
 export type labelPropsType = {
   tip?: string;

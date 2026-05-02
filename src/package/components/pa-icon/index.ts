@@ -21,5 +21,4 @@ const name = "PaIcon";
 const install = function (app: App) {
   if (!app._context.components["PaIcon"]) app.component("PaIcon", PaIcon);
 };
-
 export default { name, install };

@@ -222,7 +222,7 @@ import { random } from "../hooks/random";
 import formItem from "../form-basics-element.vue";
 import mFormV2Control from "../pa-form-control.vue";
 
-import { ConfigContextType, ExMultipleConfigType, FormItemRule } from "../type";
+import { ConfigContextType, ExMultipleConfigType, FormItemRule } from "../types";
 
 export type TabsItemPropType = {
   id: string;

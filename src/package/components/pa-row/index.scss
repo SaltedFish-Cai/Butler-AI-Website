@@ -1,90 +1,42 @@
-// m-row 组件样式
-$--pa-row-gutter: 24px !default;
-
-.m-row {
+.pa-row {
   display: flex;
   flex-wrap: wrap;
   box-sizing: border-box;
-  margin-left: -$--pa-row-gutter / 2;
-  margin-right: -$--pa-row-gutter / 2;
+
+  > * {
+    margin-top: var(--row-gutter-value);
+    margin-bottom: var(--row-gutter-value);
+  }
 }
 
-// 水平对齐方式
-.m-row--start {
+.pa-row--start {
   justify-content: flex-start;
 }
 
-.m-row--end {
+.pa-row--end {
   justify-content: flex-end;
 }
 
-.m-row--center {
+.pa-row--center {
   justify-content: center;
 }
 
-.m-row--space-around {
+.pa-row--space-around {
   justify-content: space-around;
 }
 
-.m-row--space-between {
+.pa-row--space-between {
   justify-content: space-between;
 }
 
-// 垂直对齐方式
-.m-row--align-top {
+.pa-row--align-top {
   align-items: flex-start;
 }
 
-.m-row--align-middle {
+.pa-row--align-center {
   align-items: center;
 }
 
-.m-row--align-bottom {
+.pa-row--align-bottom {
   align-items: flex-end;
-}
-
-// 响应式断点
-$--pa-breakpoints: (
-  "xs": 0,
-  "sm": 384px,
-  "md": 768px,
-  "lg": 992px,
-  "xl": 1200px,
-  "xxl": 1920px
-);
-
-@each $bp, $width in $--pa-breakpoints {
-  @media (min-width: $width) {
-    .m-row--#{bp}-start {
-      justify-content: flex-start;
-    }
-
-    .m-row--#{bp}-end {
-      justify-content: flex-end;
-    }
-
-    .m-row--#{bp}-center {
-      justify-content: center;
-    }
-
-    .m-row--#{bp}-space-around {
-      justify-content: space-around;
-    }
-
-    .m-row--#{bp}-space-between {
-      justify-content: space-between;
-    }
-
-    .m-row--#{bp}-align-top {
-      align-items: flex-start;
-    }
-
-    .m-row--#{bp}-align-middle {
-      align-items: center;
-    }
-
-    .m-row--#{bp}-align-bottom {
-      align-items: flex-end;
-    }
-  }
 }

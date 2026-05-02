@@ -1,11 +1,12 @@
+/**
+ * @description lodash 工具库
+ */
 import _ from "lodash";
 const { isNil } = _;
-
 /**
- * #Function 宽度转换
- * @description 宽度转换，将宽度转换为数字或字符串
- * @param {string | number} value - 宽度值
- * @returns {string | number} - 转换后的宽度值
+ * @description 宽度转换函数，将宽度转换为数字
+ * @param value 宽度值
+ * @returns 转换后的数字宽度值
  */
 function setWidthToNumber(value: number | string | undefined) {
   if (isNil(value)) {
@@ -16,12 +17,10 @@ function setWidthToNumber(value: number | string | undefined) {
   }
   return Number(value);
 }
-
 /**
- * #Function 宽度转换
- * @description 宽度转换，将宽度转换为字符串
- * @param {string | number} value - 宽度值
- * @returns {string} - 转换后的宽度值
+ * @description 宽度转换函数，将宽度转换为字符串
+ * @param value 宽度值
+ * @returns 转换后的字符串宽度值
  */
 function setWidthToString(value: number | string | undefined) {
   if (isNil(value)) {
@@ -32,5 +31,4 @@ function setWidthToString(value: number | string | undefined) {
   }
   return setWidthToNumber(value) ? setWidthToNumber(value) + "px" : value;
 }
-
 export { setWidthToNumber, setWidthToString };

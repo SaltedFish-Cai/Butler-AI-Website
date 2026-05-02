@@ -1,7 +1,15 @@
-// # Import
-
-export const useSortHooks = (state, getTableList) => {
-  // #Function 排序更改
+/**
+ * @description useSortHooks 排序钩子
+ * @param state 表格状态
+ * @param getTableList 获取表格数据方法
+ * @returns 排序相关方法
+ */
+export const useSortHooks = (state: any, getTableList: any) => {
+  /**
+   * @description 处理排序变化
+   * @param prop 排序字段
+   * @param order 排序方向
+   */
   function handleSortChange({ prop, order }: { prop: string; order: "ascending" | "descending" | null }) {
     state.useOrderPropName = prop;
     getTableList({
@@ -12,44 +20,29 @@ export const useSortHooks = (state, getTableList) => {
       Sort: order ? [{ SortKey: prop, SortValue: order }] : []
     });
   }
-
-  // #Function 保存 表格结构
-  function handleColSetting({ Filter, Col }) {
+  /**
+   * @description 保存表格结构
+   * @param Filter 筛选数据
+   * @param Col 列数据
+   */
+  function handleColSetting({ Filter, Col }: { Filter: any; Col?: any }) {
     if (Col) {
-      // handleCloseDrawer({ Col });
-      const _filters = Filter.filter(item => String(item.fieldValue)?.length);
+      const _filters = Filter.filter((item: any) => String(item.fieldValue)?.length);
       for (let index = 0; index < _filters.length; index++) {
         const element = _filters[index];
-        state.tableQuery.AdvancedFilter = state.tableQuery.AdvancedFilter.filter(item => {
+        state.tableQuery.AdvancedFilter = state.tableQuery.AdvancedFilter.filter((item: any) => {
           return item.fieldName != element.fieldName;
         });
       }
     } else {
       for (let index = 0; index < Filter.length; index++) {
         const element = Filter[index];
-
-        state.tableQuery.AdvancedFilter = state.tableQuery.AdvancedFilter.filter(item => item.fieldName != element.fieldName);
-
-        // const Col: any = settingColumns.value;
-        // const findIndex = Col.findIndex(item => item.prop == element.fieldName);
-        // if (findIndex > -1) {
-        //   if (isTimeType(Col[findIndex], true)) {
-        //     Col[findIndex].searchCriteria[element.conditionalType == 3 ? 0 : 1] = element.fieldValue.split(" ")[0];
-        //   } else {
-        //     Col[findIndex].searchCriteria = isSelectType(Col[findIndex], true)
-        //       ? element.fieldValue.split(",")
-        //       : element.fieldValue;
-        //   }
-        // }
+        state.tableQuery.AdvancedFilter = state.tableQuery.AdvancedFilter.filter(
+          (item: any) => item.fieldName != element.fieldName
+        );
       }
     }
-
     getTableList({ Filter });
   }
-
-  return {
-    // ...toRefs(state),
-    handleSortChange,
-    handleColSetting
-  };
+  return { handleSortChange, handleColSetting };
 };

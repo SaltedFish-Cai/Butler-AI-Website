@@ -4,7 +4,6 @@
   width: 100%;
   justify-content: space-between;
   align-items: center;
-
   .pa-transfer-select-box {
     flex: 1;
     width: 1px;
@@ -15,7 +14,6 @@
     height: 100%;
     display: flex;
     flex-direction: column;
-
     .pa-transfer-select-box_title {
       font-size: var(--pa-size-font, 13px);
       font-weight: bold;
@@ -25,13 +23,11 @@
       justify-content: flex-start;
       align-items: center;
       background-color: var(--pa-send-bg-color-lighter);
-
       .pa-checkbox-item {
         height: auto;
         margin-right: calc(var(--pa-size-padding, 10px) / 2);
       }
     }
-
     .pa-transfer-select-box_options {
       height: 1px;
       flex: 1;
@@ -62,7 +58,3 @@
     margin: 0 var(--pa-size-padding, 10px);
   }
 }
-
-// .pa-transfer.is-disabled {
-
-// }

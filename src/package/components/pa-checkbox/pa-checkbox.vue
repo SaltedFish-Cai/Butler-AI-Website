@@ -62,7 +62,7 @@ import { ComponentProps, ComponentEmits } from "./types";
  * **模块导入**
  * @description 导入全局配置类型
  * */
-import { PancakeGlobalConfigType } from "../pa-manager/type";
+import { PancakeGlobalConfigType } from "../pa-manager/types";
 /**
  * **模块导入**
  * @description 导入数据查找工具函数

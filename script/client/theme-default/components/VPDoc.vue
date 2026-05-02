@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useRoute } from "vitepress";
-import { computed, ref } from "vue";
+import { computed, ref, onMounted } from "vue";
 import { useData } from "../composables/data";
 import { useSidebar } from "../composables/sidebar";
 import VPDocAside from "./VPDocAside.vue";
@@ -37,6 +37,11 @@ const PancakeUIConfig = ref({
     compareKey: "FileId"
   }
 } as PancakeUIType);
+
+onMounted(() => {
+  const classList = (typeof window !== "undefined" && window.document?.documentElement.classList) || null;
+  classList?.toggle("butler-ai-doc", true);
+});
 </script>
 
 <template>

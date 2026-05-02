@@ -7,7 +7,7 @@
 
 <script lang="tsx" setup>
 import { ref, reactive, defineEmits, watch, computed, provide, inject, Ref } from "vue";
-import { ConfigContextType, FormItemRule } from "./type";
+import { ConfigContextType, FormItemRule } from "./types";
 
 import _ from "lodash";
 const { cloneDeep, isEqual } = _;

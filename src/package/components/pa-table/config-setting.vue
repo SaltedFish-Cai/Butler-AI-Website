@@ -101,23 +101,23 @@
 
 <script setup lang="ts" name="ColSetting">
 // # Import
-import { ref, computed, defineEmits, inject, nextTick, ComputedRef } from "vue";
+import { ref, computed, inject, nextTick, ComputedRef } from "vue";
 import { isSelectType, isTimeType, isTextType, isNumberType } from "./hooks/isType";
 
-import { PaTableUseItemType, PaTableUseType } from "./type";
+import { ComponentUseItemProps, PaTableUseType } from "./types";
 import { convertValue } from "../pa-time/utils";
 import { PaOptionType, PaStructureType } from "../manager-type";
 import { M_Message } from "../feedback";
 
 type SettingPropsType = {
   id: string;
-  tableStructure: Array<PaTableUseItemType>;
+  tableStructure: Array<ComponentUseItemProps>;
   display?: boolean;
   tableQuery: PaTableUseType.TableQueryType;
 };
 
 // # Var
-const injectSetTableConfig = inject("setTableConfig") as (config: Array<PaTableUseItemType>) => void;
+const injectSetTableConfig = inject("setTableConfig") as (config: Array<ComponentUseItemProps>) => void;
 const injectGetTableList = inject("getTableList") as (
   exQuery?: PaTableUseType.TableQueryType,
   _Observer?: {
@@ -257,7 +257,7 @@ async function FetchSaveAndFilter() {
 
   const Filter: { fieldLabel?: string; fieldName: string; conditionalType: 0 | 1 | 3 | 5 | 6; fieldValue: string }[] = [];
   for (let index = 0; index < array.length; index++) {
-    const element: PaTableUseItemType = array[index];
+    const element: ComponentUseItemProps = array[index];
     if (element.isShow && isTimeType(element, true) && element.prop && element.searchCriteria && !!element.searchCriteria[0]) {
       Filter.push({
         fieldLabel: element.label + `-${languagePackage.value?.["start"]}`,
@@ -306,7 +306,7 @@ async function FetchSaveAndFilter() {
     }
   }
 
-  const useOperation = props.tableStructure?.find?.(item => item.prop == "operation") as PaTableUseItemType;
+  const useOperation = props.tableStructure?.find?.(item => item.prop == "operation") as ComponentUseItemProps;
   if (useOperation) {
     delete useOperation?.cellConfig;
     delete useOperation?.filterType;

@@ -1,30 +1,61 @@
-// # Import
+/**
+ * @description vue 响应式相关导入
+ */
 import { computed, ref } from "vue";
-import { PaTableType, PaTableUseType } from "../type";
-
+/**
+ * @description ComponentProps 和 PaTableUseType 类型导入
+ */
+import { ComponentProps, PaTableUseType } from "../types";
+/**
+ * @description lodash 工具库
+ */
 import _ from "lodash";
 const { cloneDeep } = _;
-// type allType = Array<boolean | number | string> | boolean | number | string | null | undefined;
-
+/**
+ * @description 选择变化状态类型
+ */
 type selectChangeStateType = {
   row: PaTableUseType.PaTableInDataType;
   status?: boolean;
   parentRow?: PaTableUseType.PaTableInDataType;
 };
-
+/**
+ * @description useSelectHooks 选择钩子
+ * @param props 组件属性
+ * @param state 表格状态
+ * @param emits 事件发射器
+ * @param getTableList 获取表格数据方法
+ * @returns 选择相关方法和状态
+ */
 export const useSelectHooks = (
-  props: PaTableType,
+  props: ComponentProps,
   state: PaTableUseType.TableStateType,
   emits: any,
   getTableList: () => void
 ) => {
-  // #State
+  /**
+   * @description 是否全选状态
+   */
   const isTableSelectAll = ref<boolean>(false);
+  /**
+   * @description 上次选中索引
+   */
   const lastSelectedIndex = ref<number>(-1);
+  /**
+   * @description 上次选中索引状态
+   */
   const lastSelectedIndexStatus = ref<boolean>(true);
+  /**
+   * @description 上次选中是否子项
+   */
   const lastSelectIsChildren = ref<number>(-1);
+  /**
+   * @description Shift 键是否按下
+   */
   const isShiftPressed = ref<boolean>(false);
-
+  /**
+   * @description 选中行数计算属性
+   */
   const selectedRowsLength = computed(() => {
     let selectedArr;
     if (props.useChildren) {
@@ -34,77 +65,66 @@ export const useSelectHooks = (
     }
     return selectedArr;
   });
-
-  // 监听键盘事件
+  /**
+   * @description 键盘按下处理
+   * @param event 键盘事件
+   */
   const handleKeyDown = (event: KeyboardEvent) => {
     if (event.key === "Shift") {
       isShiftPressed.value = true;
     }
   };
-
+  /**
+   * @description 键盘释放处理
+   * @param event 键盘事件
+   */
   const handleKeyUp = (event: KeyboardEvent) => {
     if (event.key === "Shift") {
       isShiftPressed.value = false;
     }
   };
-
-  // 添加全局键盘事件监听
   if (typeof window !== "undefined" && props.useSelect) {
     typeof window !== "undefined" && window.developLog.log(`添加监听——键盘事件`, props.id, "success");
     if (typeof window !== "undefined") window.addEventListener("keydown", handleKeyDown);
     if (typeof window !== "undefined") window.addEventListener("keyup", handleKeyUp);
   }
-
-  // # Function 选择行
+  /**
+   * @description 选择行处理
+   * @param row 行数据
+   * @param parentRow 父行数据
+   */
   function handleSelectChange({ row, parentRow }: selectChangeStateType) {
     if (!props.rowKey) return;
-
     const rowIndex = Number(row.parentRenderIndex) || Number(row.renderIndex);
-
     if (isShiftPressed.value && lastSelectedIndex.value !== -1) {
-      // SHIFT多选逻辑
       const relStartIndex = lastSelectedIndex.value;
       const relEndIndex = rowIndex - 1;
-
       const start = Math.min(relStartIndex, relEndIndex);
       const end = Math.max(relStartIndex, relEndIndex);
-
-      // 获取当前页面的所有行数据
-      const flatTableData = state.tableData.flat().filter(item => item.type !== "more");
+      const flatTableData = state.tableData.flat().filter((item: any) => item.type !== "more");
       if (!parentRow) {
-        // 点击非子元素
-        // console.log("===========> 点击非子元素");
         if (start <= end) {
           const splitData = flatTableData.slice(start, end + 1);
-          splitData.forEach(item => {
+          splitData.forEach((item: any) => {
             handleSingeSelectChange({ row: item, status: lastSelectedIndexStatus.value });
           });
         }
       } else {
-        // 点击子元素
         if (start <= end || (lastSelectedIndex.value == rowIndex && lastSelectIsChildren.value <= row.renderIndex)) {
-          // 处理父数据
           if (end - start > 1) {
             const splitData = flatTableData.slice(start + 1, end);
-            splitData.forEach(item => {
+            splitData.forEach((item: any) => {
               handleSingeSelectChange({ row: item, status: lastSelectedIndexStatus.value });
             });
           }
-
-          // 处理子数据
           if (start != end) {
             const startTargetChildIndex = lastSelectIsChildren.value;
             const endTargetChildIndex = row.renderIndex;
-            // 父类不同，补全父类余下
-            // console.log("++++++++++> 父类不同，补全父类余下");
             const startEl = flatTableData[relStartIndex];
             const endEl = flatTableData[relEndIndex];
-
             const lastStatus = lastSelectedIndexStatus.value;
-
             if (startEl.children && endEl.children) {
               if (relStartIndex < relEndIndex) {
-                // console.log("===========> A<B");
                 for (let index = startTargetChildIndex; index < startEl.children.length; index++) {
                   const element = startEl.children[index];
                   handleSingeSelectChange({ row: element, parentRow: startEl, status: lastStatus });
@@ -114,7 +134,6 @@ export const useSelectHooks = (
                   handleSingeSelectChange({ row: element, parentRow: endEl, status: lastStatus });
                 }
               } else {
-                // console.log("===========> B<A");
                 for (let index = row.renderIndex; index < endEl.children.length; index++) {
                   const element = endEl.children[index];
                   handleSingeSelectChange({ row: element, parentRow: endEl, status: lastStatus });
@@ -126,8 +145,6 @@ export const useSelectHooks = (
               }
             }
           } else {
-            // 父类相同，补全当前行到renderIndex
-            // console.log("++++++++++> 父类相同，补全当前行到renderIndex");
             const _start = Math.min(lastSelectIsChildren.value, row.renderIndex);
             const _end = Math.max(lastSelectIsChildren.value, row.renderIndex);
             for (let index = _start; index <= _end; index++) {
@@ -142,21 +159,22 @@ export const useSelectHooks = (
       handleSingeSelectChange({ row, parentRow });
     }
   }
-
-  // # 处理单个选择变化
+  /**
+   * @description 处理单个选择变化
+   * @param row 行数据
+   * @param parentRow 父行数据
+   * @param status 选中状态
+   */
   function handleSingeSelectChange({ row, parentRow, status }: selectChangeStateType) {
     if (!props.rowKey) return;
     const rowIndex = row.parentRenderIndex || row.renderIndex;
-
     if (props.useRadio) {
-      state.tableData.map(arrItem => {
-        arrItem.map(item => {
+      state.tableData.map((arrItem: any) => {
+        arrItem.map((item: any) => {
           item.isSelected = false;
         });
       });
     }
-
-    // 传统点击
     if (typeof status === "boolean") {
       row.isSelected = status;
       row.isIndeterminate = false;
@@ -164,19 +182,15 @@ export const useSelectHooks = (
       row.isSelected = !row.isSelected;
       row.isIndeterminate = false;
     }
-
-    // 设置子元素选择状态
     if (!parentRow && row.children?.length) {
-      row.children.forEach(item => {
+      row.children.forEach((item: any) => {
         item.isSelected = row.isSelected;
       });
     } else if (parentRow) {
-      const selectChildren = parentRow.children?.filter(child => child.isSelected);
+      const selectChildren = parentRow.children?.filter((child: any) => child.isSelected);
       if (selectChildren?.length) parentRow.isIndeterminate = selectChildren?.length > 0;
       parentRow.isSelected = selectChildren?.length == parentRow.children?.length;
     }
-
-    // 更新最后选择的索引
     if (typeof status != "boolean") {
       lastSelectedIndex.value = rowIndex - 1 || 0;
       lastSelectIsChildren.value = row.renderIndex;
@@ -186,32 +200,30 @@ export const useSelectHooks = (
     if (props.useSelect) emits("selectRowBack", { row, isSelected: row.isSelected, parentRow });
     else if (props.useRadio) emits("radioRowBack", { row, isSelected: row.isSelected, parentRow });
   }
-
-  // # 处理选择状态映射
-  type handleSelectStatusMapType = {
-    row: PaTableUseType.PaTableInDataType;
-  };
-  function handleSelectStatusMap({ row }: handleSelectStatusMapType) {
+  /**
+   * @description 处理选择状态映射
+   * @param row 行数据
+   */
+  function handleSelectStatusMap({ row }: { row: PaTableUseType.PaTableInDataType }) {
     const _row = cloneDeep(row);
     if (props.useChildren) {
-      const isSelected = _row?.children?.some(child => child.isSelected);
-      const index = state.selectTableData.findIndex(item => item[String(props.rowKey)] === _row[String(props.rowKey)]);
-
+      const isSelected = _row?.children?.some((child: any) => child.isSelected);
+      const index = state.selectTableData.findIndex((item: any) => item[String(props.rowKey)] === _row[String(props.rowKey)]);
       if (isSelected) {
         if (index > -1) {
-          _row.children = _row.children?.filter(child => child.isSelected);
+          _row.children = _row.children?.filter((child: any) => child.isSelected);
           state.selectTableData.splice(index, 1, _row);
         } else {
           state.selectTableData.push({
             ..._row,
-            children: _row.children?.filter(child => child.isSelected)
+            children: _row.children?.filter((child: any) => child.isSelected)
           });
         }
       } else if (!isSelected && index >= 0) {
         state.selectTableData.splice(index, 1);
       }
     } else {
-      const index = state.selectTableData.findIndex(item => item[String(props.rowKey)] === _row[String(props.rowKey)]);
+      const index = state.selectTableData.findIndex((item: any) => item[String(props.rowKey)] === _row[String(props.rowKey)]);
       if (_row.isSelected && index < 0) {
         state.selectTableData.push(_row);
       } else if (!_row.isSelected && index >= 0) {
@@ -219,30 +231,37 @@ export const useSelectHooks = (
       }
     }
   }
-
-  // # 处理全选状态变化
+  /**
+   * @description 处理全选状态变化
+   */
   function handleSelectAllStatus() {
     isTableSelectAll.value = !isTableSelectAll.value;
     state.selectTableData.length = 0;
-    state.tableData.map(arrItem => {
-      arrItem.map(item => {
+    state.tableData.map((arrItem: any) => {
+      arrItem.map((item: any) => {
         if (item.renderIndex) handleSingeSelectChange({ row: item, status: false });
       });
     });
-
     emits("selectRowAllBack", { isSelected: isTableSelectAll.value });
   }
-
+  /**
+   * @description 设置选中数据
+   * @param dataKeys 数据键列表
+   */
   function setSelectedData(dataKeys: Record<string, any>[]) {
     state.awaitSelectData = dataKeys;
     getTableList();
   }
-
+  /**
+   * @description 获取选中数据
+   * @returns 选中的数据列表
+   */
   function getSelectedData() {
     return [...state.awaitSelectData, ...state.selectTableData];
   }
-
-  // 清理函数
+  /**
+   * @description 清理函数
+   */
   const cleanup = () => {
     typeof window !== "undefined" && window.developLog.log(`关闭监听——键盘事件`, props.id, "danger");
     if (typeof window !== "undefined") {
@@ -250,7 +269,6 @@ export const useSelectHooks = (
       if (typeof window !== "undefined") window.removeEventListener("keyup", handleKeyUp);
     }
   };
-
   return {
     isShiftPressed,
     selectedRowsLength,

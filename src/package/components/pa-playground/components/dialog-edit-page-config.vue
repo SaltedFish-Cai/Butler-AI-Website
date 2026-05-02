@@ -38,9 +38,9 @@
 
 <script lang="tsx" setup>
 import { computed, ComputedRef, inject, ref, useTemplateRef } from "vue";
-import { MInterfaceConfig, PaPlaygroundItem, MStructureType } from "../type";
+import { MInterfaceConfig, PaPlaygroundItem, MStructureType } from "../types";
 import { PaOptionType, PaStructureType } from "M_Types";
-import { PancakeGlobalConfigType } from "../../pa-manager/type";
+import { PancakeGlobalConfigType } from "../../pa-manager/types";
 
 const formRef = useTemplateRef("formRef");
 

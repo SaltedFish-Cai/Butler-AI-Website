@@ -1,17 +1,16 @@
 <template>
   <div class="pa-media-view-download-file">
-    <div @click="openFile" class="pa-media-view-download-file_name flex-center-start m-hand pr-size">
+    <div @click="openFile" class="pa-media-view-download-file_name flex-center-start pa-hand pr-size">
       <pa-icon :name="'attachment_line'" class="ml-size mr-size" />
       <slot>
         <div style="white-space: initial; width: 100%">{{ fileName || file?.OriginalName || file?.FileName }}</div>
       </slot>
     </div>
-    <div class="flex-center down-file m-hand" @click="downFile">
+    <div class="flex-center down-file pa-hand" @click="downFile">
       <pa-icon name="download_line" />
       {{ languagePackage["download"] }}
     </div>
   </div>
-
   <pa-dialog
     v-model="visible"
     :subTitle="file?.OriginalName || file?.FileName"
@@ -39,86 +38,97 @@
           <pa-icon class="mr5" name="reset_line"></pa-icon>
           <span style="font-size: 12px">{{ languagePackage["rotate"] }}</span>
         </div>
-        <pa-icon name="minus_circle_line" class="m-hand" @click="handleMouseWheel({ deltaY: 1 })"></pa-icon>
+        <pa-icon name="minus_circle_line" class="pa-hand" @click="handleMouseWheel({ deltaY: 1 })"></pa-icon>
         <div
           style="font-size: 14px; width: 42px; text-align: center"
-          class="pl5 ml5 mr5 m-hand-scroll"
+          class="pl5 ml5 mr5 pa-hand-scroll"
           @mousewheel="handleMouseWheel"
           :title="languagePackage['zoom']"
         >
           {{ (zoomIndex * 100).toFixed(0) }}%
         </div>
-        <pa-icon name="add_circle_line" class="m-hand" @click="handleMouseWheel({ deltaY: -1 })"></pa-icon>
+        <pa-icon name="add_circle_line" class="pa-hand" @click="handleMouseWheel({ deltaY: -1 })"></pa-icon>
       </div>
     </template>
   </pa-dialog>
 </template>
 
-<script lang="ts" setup>
+<script lang="ts" setup name="PaMediaViewItem">
+/** @description Vue 核心响应式 API */
 import { ref, computed, watch, inject, ComputedRef } from "vue";
-import { PaMediaViewItemType } from "./type";
+/** @description 媒体查看器子项组件 Props 类型 */
+import type { ComponentItemProps } from "./types";
+/** @description 文件类型判断工具 */
 import { isImageFile, isPdfFile, isTextFile, isWordFile, isExcelFile, isUnOpenFile } from "./is";
-
+/** @description 文件下载工具 */
 import { useDownload } from "./use-download";
+/** @description 图片预览组件 */
 import imageView from "./image-view.vue";
+/** @description PDF 预览组件 */
 import pdfView from "./pdf-view.vue";
+/** @description Excel 预览组件 */
 import excelView from "./excel-view.vue";
+/** @description Word 预览组件 */
 import wordView from "./word-view.vue";
+/** @description 文本预览组件 */
 import textView from "./text-view.vue";
+/** @description 模板引用 API */
 import { useTemplateRef } from "vue";
-import { PancakeGlobalConfigType } from "../pa-manager/type";
+/** @description 全局配置类型 */
+import { PancakeGlobalConfigType } from "../pa-manager/types";
+/** @description 消息反馈组件 */
 import { M_Message } from "../feedback";
-
+/** @description 全局配置注入 */
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
-
+/** @description 对话框是否可见 */
 const visible = ref(false);
+/** @description 缩放比例 */
 const zoomIndex = ref(1);
-// const startDistance = ref(0);
+/** @description 缩放因子 */
 let scaleFactor = 1;
-
+/** @description 预览组件引用 */
 const viewRef = useTemplateRef("viewRef");
-
-const props = withDefaults(defineProps<PaMediaViewItemType>(), {});
-
-// function getDistance(touches) {
-//   const dx = touches[0].clientX - touches[1].clientX;
-//   const dy = touches[0].clientY - touches[1].clientY;
-//   return Math.sqrt(dx * dx + dy * dy);
-// }
-
-// function handleTouchMove(event) {
-//   if (event.touches.length === 2) {
-//     const currentDistance = getDistance(event.touches);
-//     handleMouseWheel({ deltaY: startDistance.value - currentDistance });
-//   }
-// }
-
+/** @description 组件 Props */
+const props = withDefaults(defineProps<ComponentItemProps>(), {});
+/** @description 语言包 */
 const languagePackage = computed(() => {
   return PancakeGlobalConfig.value?.language?.package["cell"] || {};
 });
-
-function openFile() {
-  const fileName = props.fileName || props?.file?.OriginalName || props?.file?.FileName;
-  if (isUnOpenFile(fileName)) {
-    return M_Message.warning(languagePackage.value["errorText"]);
+/**
+ * 打开文件预览
+ * @returns void
+ * @description 判断文件类型后打开预览，不支持则提示
+ */
+function openFile(): void {
+  const _fileName = props.fileName || props?.file?.OriginalName || props?.file?.FileName;
+  if (isUnOpenFile(_fileName)) {
+    M_Message.warning(languagePackage.value["errorText"]);
+    return;
   }
   visible.value = true;
 }
-
-// #Function 滚轮缩放
-function handleMouseWheel(event) {
+/**
+ * 处理滚轮缩放
+ * @param event - 滚轮事件对象
+ * @returns void
+ * @description 根据滚轮方向调整缩放比例
+ */
+function handleMouseWheel(event: { deltaY: number }): void {
   let _zoomIndex = event.deltaY < 0 ? scaleFactor + 0.02 : scaleFactor - 0.02;
   if (_zoomIndex < 0.3) _zoomIndex = 0.3;
   if (_zoomIndex > 1.7) _zoomIndex = 1.7;
   zoomIndex.value = _zoomIndex;
   scaleFactor = _zoomIndex;
 }
-
-function reset90() {
+/**
+ * 重置旋转90度
+ * @returns void
+ * @description 调用预览组件的旋转方法
+ */
+function reset90(): void {
   viewRef.value?.leftAll90();
 }
-
-// # Var 文件类型
+/** @description 当前文件类型 */
 const fileType = computed(() => {
   if (isImageFile(props.filePath)) {
     return "image";
@@ -133,9 +143,12 @@ const fileType = computed(() => {
   }
   return "";
 });
-
-// #Function 现在文件
-function downFile() {
+/**
+ * 下载当前文件
+ * @returns void
+ * @description 下载当前文件
+ */
+function downFile(): void {
   const config = {
     requestHeader: PancakeGlobalConfig.value?.requestHeader,
     downloadHose: PancakeGlobalConfig.value?.file_config?.downloadHose || ""
@@ -143,7 +156,9 @@ function downFile() {
   if (props.filePath)
     useDownload(config, props.filePath, props.fileName || props?.file?.OriginalName || props?.file?.FileName || "文件");
 }
-
+/**
+ * @description 监听缩放比例变化，同步缩放因子
+ */
 watch(
   () => zoomIndex.value,
   data => {
@@ -153,53 +168,6 @@ watch(
 );
 </script>
 
-<style lang="scss">
-.pa-media-view-download-file {
-  display: flex;
-  width: max-content;
-  max-width: 100%;
-  border: 1px solid var(--pa-color-border);
-  border-radius: var(--pa-size-radius, 3px);
-  margin: 3px 3px 3px 0;
-  font-size: var(--pa-size-font);
-  background-color: var(--pa-color-bg);
-
-  > .pa-media-view-download-file_name {
-    flex: 1;
-    width: max-content;
-    padding: calc(var(--pa-size-padding) / 4) calc(var(--pa-size-padding) / 1.5) !important;
-    padding-left: 0 !important;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    line-height: 1.2em;
-    & > * {
-      word-break: break-all;
-    }
-  }
-  .down-file {
-    font-size: calc(var(--pa-size-font) - 2px);
-    transition: var(--pa-size-animation, 0.3s);
-    padding: 0 calc(var(--pa-size-padding) / 1.5);
-    border-left: 1px solid var(--pa-color-border);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .download-file_text {
-    word-break: break-all;
-    display: inline-block;
-    white-space: pre-line;
-  }
-
-  .remove-btn {
-    font-size: var(--pa-size-font);
-  }
-}
-
-.pa-media-page-body {
-  width: 100%;
-  height: 100%;
-  background: gray;
-}
+<style scoped lang="scss">
+@use "./index.scss";
 </style>

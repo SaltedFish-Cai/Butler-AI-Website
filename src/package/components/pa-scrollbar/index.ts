@@ -18,12 +18,9 @@ const name = "PaScrollBar";
  * @param `app` `App` Vue 应用实例
  * @description 将 PaScrollBar 组件注册到 Vue 应用中
  * */
-const install = function (app: App) {
+const install = function (app: App): void {
   if (!app._context.components["PaScrollBar"]) {
     app.component("PaScrollBar", PaScrollBar);
   }
 };
-export default {
-  name,
-  install
-};
+export default { name, install };

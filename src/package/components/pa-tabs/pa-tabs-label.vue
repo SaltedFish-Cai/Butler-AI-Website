@@ -12,7 +12,7 @@ import { computed, ComputedRef, inject, Ref } from "vue";
  * **模块导入**
  * @description 导入全局配置类型定义
  * */
-import { PancakeGlobalConfigType } from "../pa-manager/type";
+import { PancakeGlobalConfigType } from "../pa-manager/types";
 /**
  * **模块导入**
  * @description 导入标签页标题组件属性类型定义

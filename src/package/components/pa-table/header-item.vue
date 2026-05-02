@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="pa-table-cell_header flex-center-between"
-    :class="[item.width && !setCellWidthIng ? '' : `find_cell_${item.prop}`]"
-  >
+  <div class="pa-table-cell_header flex-center-between" :class="[item.width && !setCellWidthIng ? '' : `find_cell_${item.prop}`]">
     <span class="pa-table-cell_header-span">
       <slot :name="item.prop + 'Header'">
         <span class="cell_text drag-el" :style="{ cursor: !item.fixed ? 'move' : 'default' }">
@@ -84,11 +81,11 @@ import { ref, Ref, watch, inject } from "vue";
 import Filter from "./header-item-filter.vue";
 
 import { isSelectType, isUseCellConfig, isTimeType } from "./hooks/isType";
-import { PaTableItemType, PaTableUseItemType, PaTableUseType } from "./type";
+import { ComponentItemProps, ComponentUseItemProps, PaTableUseType } from "./types";
 
 type HeaderItemType = {
   id: string;
-  item: PaTableItemType & PaTableUseItemType;
+  item: ComponentItemProps & ComponentUseItemProps;
   useOrderPropName: string;
   listeners: any;
   setCellWidthIng?: boolean;
@@ -107,7 +104,7 @@ let filterData = [] as Array<PaTableUseType.FilterType>;
 const languagePackage = inject("languagePackage") as Record<string, string>;
 const useGlobalSeniorFilter = inject("useGlobalSeniorFilter") as Ref<boolean>;
 // #Function 点击表格排序
-function handleTableOrder(state: PaTableItemType & PaTableUseItemType) {
+function handleTableOrder(state: ComponentItemProps & ComponentUseItemProps) {
   switch (orderString.value) {
     case null:
       orderString.value = "ascending";
@@ -143,7 +140,7 @@ function setIconAction(prop) {
 // }
 
 // #Function 打开高级搜索
-function openSeniorFilter(item: PaTableItemType & PaTableUseItemType) {
+function openSeniorFilter(item: ComponentItemProps & ComponentUseItemProps) {
   columnFilter.value?.closePopover();
   emits("openSeniorFilter", item);
 }

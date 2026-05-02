@@ -44,44 +44,36 @@
       font-size: calc(var(--pa-size-font, 13px) + 4px) !important;
     }
   }
-
   &--success {
     color: var(--pa-color-success);
   }
-
   &--warning {
     color: var(--pa-color-warning);
   }
-
   &--danger {
     color: var(--pa-color-danger);
   }
-
   &--info {
     color: var(--pa-color-info);
   }
-
   &__title {
     font-size: calc(var(--pa-size-font, 13px) + 2px);
     font-weight: 500;
-    // color: var(--pa-color-font);
+    color: var(--pa-color-font);
     display: flex;
     align-items: center;
   }
-
   &__content {
     font-size: calc(var(--pa-size-font, 13px) + 1px);
     color: var(--pa-color-font);
     line-height: 1.4;
     margin: calc(var(--pa-size-padding, 10px) / 1.5) 0;
   }
-
   &__icon {
     font-size: calc(var(--pa-size-font, 13px) + 6px);
     margin-right: var(--pa-size-padding, 10px);
     flex-shrink: 0;
   }
-
   &__closeBtn {
     cursor: pointer;
     color: var(--pa-color-danger);

@@ -47,7 +47,7 @@ import { ComponentProps, ComponentEmits } from "./types";
 import inBrowser from "../tools/inBrowser";
 import { M_MessageBox } from "../feedback";
 
-import { PancakeGlobalConfigType } from "../pa-manager/type";
+import { PancakeGlobalConfigType } from "../pa-manager/types";
 
 import _ from "lodash";
 const { debounce } = _;
@@ -215,10 +215,13 @@ function realClick(event: MouseEvent) {
       state.isLoading = true;
 
       // 锁死保险
-      const safeLock = setTimeout(() => {
-        state.isLoading = false;
-        observer?.disconnect && observer?.disconnect();
-      }, 15 * 60 * 1000);
+      const safeLock = setTimeout(
+        () => {
+          state.isLoading = false;
+          observer?.disconnect && observer?.disconnect();
+        },
+        15 * 60 * 1000
+      );
 
       const config = { childList: true };
       const callback = () => {

@@ -23,6 +23,7 @@
     padding: 8px;
     background-color: var(--pa-color-send-bg);
     border-bottom: 1px solid var(--pa-color-border);
+
     button {
       padding: 6px 10px;
       border: 1px solid var(--pa-color-border);
@@ -36,45 +37,55 @@
       display: flex;
       align-items: center;
       justify-content: center;
+
       &:hover {
         color: var(--pa-color-primary);
         background-color: var(--pa-color-primary-light-8) !important;
         border-color: var(--pa-color-primary-light-5);
       }
+
       &.active {
         background-color: var(--pa-color-primary) !important;
         color: var(--pa-color-white);
         border-color: var(--pa-color-primary);
       }
+
       &:disabled {
         background-color: var(--pa-color-border) !important;
         color: var(--pa-color-send-font) !important;
         border-color: var(--pa-color-hover) !important;
         cursor: not-allowed;
+
         &:hover {
           cursor: not-allowed;
         }
       }
     }
+
     .file_upload-btn {
       position: relative;
       overflow: hidden;
+
       &:hover {
         cursor: pointer;
       }
+
       .file_upload-btn_inner {
         position: absolute;
         opacity: 0;
+
         &:hover {
           cursor: pointer;
         }
       }
     }
   }
+
   .editor-content {
     outline: none;
     line-height: 1.5;
     color: var(--pa-color-font);
+
     p {
       margin: 0 0 16px 0;
     }
@@ -95,41 +106,26 @@
       text-decoration: underline;
       font-weight: normal;
       font-style: italic;
-      color: #1e57d0;
+      color: var(--pa-color-link);
+
       &:hover {
         cursor: pointer;
       }
     }
+
     &::-webkit-scrollbar {
       display: none;
     }
-
-    // h1 {
-    //   font-size: 24px;
-    //   font-weight: bold;
-    //   margin: 0 0 20px 0;
-    // }
-
-    // h2 {
-    //   font-size: 20px;
-    //   font-weight: bold;
-    //   margin: 0 0 18px 0;
-    // }
-
-    // h3 {
-    //   font-size: 18px;
-    //   font-weight: bold;
-    //   margin: 0 0 16px 0;
-    // }
 
     &:focus {
       outline: none;
     }
   }
+
   .editor-content.popver-active {
     user-select: none;
   }
-  // 源码编辑器样式
+
   .source-code-container {
     position: relative;
     width: 100%;
@@ -147,6 +143,7 @@
       z-index: 5;
     }
   }
+
   .source-code-editor-container {
     position: relative;
     width: 100%;
@@ -155,24 +152,27 @@
     box-sizing: border-box;
     overflow: scroll;
     font-family: "PingFang SC", "Microsoft YaHei", "微软雅黑";
+
     &::-webkit-scrollbar {
       display: none;
     }
   }
+
   .line-numbers {
     position: absolute;
     left: 0;
     top: 0;
     width: 40px;
-    background-color: #f1f1f1;
-    border-right: 1px solid #e0e0e0;
+    background-color: var(--pa-color-line-numbers-bg);
+    border-right: 1px solid var(--pa-color-border);
     padding: 8px 4px;
     font-size: 14px;
     line-height: 1.5;
-    color: #9e9e9e;
+    color: var(--pa-color-line-numbers-text);
     user-select: none;
     box-sizing: border-box;
     z-index: 3;
+
     .line-number {
       text-align: right;
       padding-right: 8px;
@@ -193,7 +193,6 @@
     scrollbar-width: none;
     font-family: "PingFang SC", "Microsoft YaHei", "微软雅黑";
 
-    // 使用highlight.js的样式
     .hljs {
       background: transparent;
       padding: 0;
@@ -219,7 +218,6 @@
     z-index: 2;
     caret-color: var(--pa-color-font);
     display: block;
-    // 确保与覆盖层的滚动行为一致
     overflow: hidden;
     scrollbar-width: none;
 
@@ -231,35 +229,28 @@
     &:focus {
       outline: none;
     }
-
-    // 隐藏文本区域的滚动条，使用容器的滚动条
-    &::-webkit-scrollbar {
-      // display: none;
-    }
   }
 
-  // 暗色主题样式
   .source-code-container.dark-theme {
-    background-color: #292d3e;
-    border-color: #3c3c3c;
+    background-color: var(--pa-color-source-code-dark-bg);
+    border-color: var(--pa-color-source-code-dark-border);
   }
 
   .line-numbers.dark-theme {
-    background-color: #000000;
-    border-right-color: #3c3c3c;
-    color: #858585;
+    background-color: var(--pa-color-source-code-dark-line-bg);
+    border-right-color: var(--pa-color-source-code-dark-border);
+    color: var(--pa-color-source-code-dark-line-text);
   }
 
   .source-code-overlay.dark-theme {
-    background-color: #292d3e;
-    color: #d4d4d4;
+    background-color: var(--pa-color-source-code-dark-bg);
+    color: var(--pa-color-source-code-dark-text);
   }
 
   .source-code-editor.dark-theme {
-    caret-color: #d4d4d4;
+    caret-color: var(--pa-color-source-code-dark-text);
   }
 
-  // 编辑器页脚
   .editor-footer {
     padding: 8px 16px;
     background-color: var(--pa-color-send-bg);
@@ -269,6 +260,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+
     .word-count {
       font-size: var(--pa-size-font);
       color: var(--pa-color-send-font);
@@ -283,19 +275,21 @@
     gap: 4px;
     overflow: hidden;
 
-    // 确保highlight.js的样式能正确显示
     & > * {
       color: var(--pa-color-font) !important;
     }
+
     .text-block {
       font-size: 14px;
       line-height: 1.5;
       color: var(--pa-color-font);
     }
+
     .color-block {
       height: var(--pa-size-height);
     }
   }
+
   button {
     padding: 6px 10px;
     border: 1px solid var(--pa-color-border);
@@ -307,15 +301,17 @@
     display: flex;
     align-items: center;
     justify-content: center;
+
     &:hover {
       border-color: var(--pa-color-primary-light-5);
     }
+
     &.active {
-      // 激活状态样式
       background-color: var(--pa-color-primary) !important;
       color: var(--pa-color-white) !important;
       border-color: var(--pa-color-primary);
     }
+
     &:disabled {
       cursor: not-allowed;
       transition: transform 0.2s ease;
@@ -328,6 +324,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+
     input {
       padding: 2px calc(var(--pa-size-padding) / 2);
       font-size: 14px;
@@ -339,6 +336,7 @@
       border-top-left-radius: var(--pa-size-radius, 3px);
       border-bottom-left-radius: var(--pa-size-radius, 3px);
     }
+
     div {
       border: 1px solid var(--pa-color-border);
       padding: 2px calc(var(--pa-size-padding));
@@ -349,16 +347,19 @@
       min-width: var(--pa-size-height);
       border-top-right-radius: var(--pa-size-radius, 3px);
       border-bottom-right-radius: var(--pa-size-radius, 3px);
+
       &:hover {
         color: var(--pa-color-white);
         background-color: var(--pa-color-primary);
         border-color: var(--pa-color-primary);
       }
     }
+
     .pa-editor-toolbar_input-del {
       margin-left: 4px;
       border-radius: var(--pa-size-radius, 3px);
       color: var(--pa-color-danger);
+
       &:hover {
         color: var(--pa-color-white);
         background-color: var(--pa-color-danger);
@@ -368,40 +369,38 @@
   }
 }
 
-/* 右键菜单通用样式 */
 .image-context-menu,
 .table-context-menu {
   position: fixed;
-  background-color: white;
+  background-color: var(--pa-color-white);
   border: 1px solid var(--pa-color-border);
   border-radius: var(--pa-size-radius, 3px);
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.5);
   z-index: 1000;
+
   .menu-item {
     display: flex;
     align-items: center;
     padding: 6px 12px;
     cursor: pointer;
     font-size: 14px;
-    color: #606266;
+    color: var(--pa-color-context-menu-text);
     white-space: nowrap;
+
     &:hover {
       background-color: var(--pa-color-primary-light-8);
       color: var(--pa-color-primary);
     }
+
     .pa-icon {
       margin-right: 8px;
       font-size: 16px;
     }
   }
+
   .menu-divider {
     height: 1px;
     background-color: var(--pa-color-border);
     margin: 2px 0;
   }
-}
-
-/* 表格右键菜单样式 */
-.table-context-menu {
-  /* 可以添加表格右键菜单特有的样式 */
 }

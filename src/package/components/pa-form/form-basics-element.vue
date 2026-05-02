@@ -361,7 +361,7 @@ import formLabel from "./form-label.vue";
 import mFormV2Item from "./pa-form-item.vue"; // 添加这行
 import groupItem from "./components/group-item.vue";
 
-import { ConfigContextType, PaFormItemType } from "./type";
+import { ConfigContextType, PaFormItemType } from "./types";
 import { PaOptionType } from "../manager-type";
 import { GetSystemAddressMap } from "../api/form";
 

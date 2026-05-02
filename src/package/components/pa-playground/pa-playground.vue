@@ -357,9 +357,12 @@
 </template>
 
 <script lang="tsx" setup>
-// # Import
+/**
+ * @description 导入 Vue 相关模块
+ */
+import
 import { ref, watch, computed, provide, useTemplateRef, onMounted, inject, Ref } from "vue";
-import { PaPlaygroundProps, PaPlaygroundType, PaPlaygroundItem } from "./type";
+import { ComponentProps, PaPlaygroundType, PaPlaygroundItem } from "./types";
 import { useSvgHooks } from "./hooks/use-svg-hooks";
 import { useAutoSave } from "./hooks/use-auto-save";
 
@@ -387,12 +390,15 @@ import MSimulatedField from "./components/simulated-field.vue";
 import PaPlaygroundVisible from "./pa-playground-visible.vue";
 
 import { PaStructureType } from "M_Types";
-import { PaPlaygroundPageButtonType } from "./components/type";
+import { PaPlaygroundPageButtonType } from "./components/types";
 import { openDB } from "../indexDB/indexDB";
 import { TableUseOptions } from "./configs/options";
 
-// # Var
-const props = withDefaults(defineProps<PaPlaygroundProps>(), {
+/**
+ * @description 组件属性
+ */
+
+const props = withDefaults(defineProps<ComponentProps>(), {
   data: () => ({
     id: new Date().getTime().toString(),
     name: "",
@@ -781,7 +787,7 @@ watch(
 </script>
 
 <style lang="scss">
-// @use "./index.scss";
+@use "./index.scss";
 
 .pa-playground {
   --el-border-color-light: var(--pa-color-border);
@@ -844,15 +850,15 @@ watch(
   }
 
   .glass-container.table {
-    border: 1px solid #6244cf;
+    border: 1px solid var(--pa-color-purple);
   }
 
   .glass-container.form {
-    border: 1px solid #b344cf;
+    border: 1px solid var(--pa-color-pink);
   }
 
   .glass-container.tabs {
-    border: 1px solid #d76c09;
+    border: 1px solid var(--pa-color-orange);
   }
 
   .draggable-btn {

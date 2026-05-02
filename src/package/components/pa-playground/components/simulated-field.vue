@@ -47,12 +47,12 @@
 
 <script lang="tsx" setup>
 import { ComputedRef, inject, ref } from "vue";
-import { MInterfaceConfig, PaPlaygroundPagesType, MStructureType } from "../type";
+import { MInterfaceConfig, PaPlaygroundPagesType, MStructureType } from "../types";
 import { M_Message, M_MessageBox } from "../../feedback";
 
 import DataManagement from "./simulated-field-components/data-management.vue";
 import SimulatedInterface from "./simulated-field-components/simulated-interface.vue";
-import { PancakeGlobalConfigType } from "../../pa-manager/type";
+import { PancakeGlobalConfigType } from "../../pa-manager/types";
 import { clearAllData } from "../../indexDB/indexDB";
 
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;

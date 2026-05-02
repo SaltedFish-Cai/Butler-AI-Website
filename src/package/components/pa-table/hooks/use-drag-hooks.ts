@@ -1,19 +1,45 @@
-import { PaTableItemType, PaTableUseItemType } from "../type";
+/**
+ * @description ComponentItemProps 和 ComponentUseItemProps 类型导入
+ */
+import { ComponentItemProps, ComponentUseItemProps } from "../types";
+/**
+ * @description setWidthToNumber 函数导入
+ */
 import { setWidthToNumber } from "./string-number";
+/**
+ * @description vue 响应式相关导入
+ */
 import { Ref, ref } from "vue";
-
+/**
+ * @description lodash 工具库
+ */
 import _ from "lodash";
 const { cloneDeep } = _;
-
+/**
+ * @description 拖拽状态
+ */
 const positionWidthIndex = ref(-1);
 const dragIng = ref(false);
-export const useDragHooks = (tableStructure: Ref<Array<PaTableItemType & PaTableUseItemType>>) => {
+/**
+ * @description useDragHooks 拖拽钩子
+ * @param tableStructure 表格结构
+ * @returns 拖拽相关方法
+ */
+export const useDragHooks = (tableStructure: Ref<Array<ComponentItemProps & ComponentUseItemProps>>) => {
+  /**
+   * @description 拖拽开始处理
+   * @param e 拖拽事件
+   * @param index 索引
+   */
   const handleDragStart = (e: DragEvent, index: number) => {
     e.dataTransfer!.setData("text/plain", index.toString());
     (e.target as HTMLElement).style.opacity = "0.5";
     dragIng.value = true;
   };
-
+  /**
+   * @description 拖拽经过处理
+   * @param e 拖拽事件
+   */
   const handleDragOver = (e: DragEvent) => {
     e.preventDefault();
     const items = document.querySelectorAll(".pa-table_body_header_label");
@@ -22,7 +48,11 @@ export const useDragHooks = (tableStructure: Ref<Array<PaTableItemType & PaTable
       (e.currentTarget as HTMLElement).classList.add("dragover");
     }
   };
-
+  /**
+   * @description 拖拽放置处理
+   * @param e 拖拽事件
+   * @param newIndex 新索引
+   */
   const handleDrop = (e: DragEvent, newIndex: number) => {
     e.preventDefault();
     const oldIndex = parseInt(e.dataTransfer!.getData("text/plain"));
@@ -34,14 +64,21 @@ export const useDragHooks = (tableStructure: Ref<Array<PaTableItemType & PaTable
     }
     (e.target as HTMLElement).style.opacity = "1";
   };
-
+  /**
+   * @description 拖拽结束处理
+   * @param e 拖拽事件
+   */
   const handleDragEnd = (e: DragEvent) => {
     (e.target as HTMLElement).style.opacity = "1";
     const items = document.querySelectorAll(".pa-table_body_header_label");
     items.forEach(item => item.classList.remove("dragover"));
     dragIng.value = false;
   };
-
+  /**
+   * @description 拖拽宽度开始处理
+   * @param e 鼠标事件
+   * @param index 索引
+   */
   const handleDragWidthStart = (e: DragEvent, index: number) => {
     e.preventDefault();
     const basePositionX = e.clientX;
@@ -58,20 +95,16 @@ export const useDragHooks = (tableStructure: Ref<Array<PaTableItemType & PaTable
       tableStructure.value[basePositionIndex].baseWidth = width;
       tableStructure.value[basePositionIndex].width = width;
     };
-
     const handleDragWidthEnd = (e: MouseEvent) => {
       e.preventDefault();
       basePositionIndex = -1;
       positionWidthIndex.value = -1;
-
       if (typeof window !== "undefined") window.removeEventListener("mousemove", handleDragWidthOver);
       if (typeof window !== "undefined") window.removeEventListener("mouseup", handleDragWidthEnd);
     };
-
     if (typeof window !== "undefined") window.addEventListener("mousemove", handleDragWidthOver);
     if (typeof window !== "undefined") window.addEventListener("mouseup", handleDragWidthEnd);
   };
-
   return {
     handleDragStart,
     handleDragOver,

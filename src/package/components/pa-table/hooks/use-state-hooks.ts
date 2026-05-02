@@ -1,15 +1,17 @@
-// # Import
+/**
+ * @description useStateHooks 状态钩子
+ */
 import { Reactive, Ref, ref, reactive, nextTick } from "vue";
-import { PaTableType, PaTableItemType, PaTableUseItemType, PaTableUseType } from "../type";
+import { ComponentProps, ComponentItemProps, ComponentUseItemProps, PaTableUseType } from "../types";
 import { useObserverHooks } from "./use-observer-hooks";
 import { setWidthToNumber, setWidthToString } from "./string-number";
-import { PaFormChildType } from "../../pa-form/type";
+import { PaFormChildType } from "../../pa-form/types";
 
 import _ from "lodash";
 const { debounce, isNil, cloneDeep } = _;
 
 export const useStateHooks = (
-  props: PaTableType,
+  props: ComponentProps,
   emits,
   {
     isScrollHeaderIng,
@@ -35,7 +37,7 @@ export const useStateHooks = (
 
   const PAGE_NUM = 1;
   const PAGE_SIZE = 30;
-  const tableStructure: Ref<Array<PaTableItemType & PaTableUseItemType>> = ref([]);
+  const tableStructure: Ref<Array<ComponentItemProps & ComponentUseItemProps>> = ref([]);
   const state: Reactive<PaTableUseType.TableStateType> = reactive({
     tableLoadingSize: 100,
     tableData: [],
@@ -175,12 +177,12 @@ export const useStateHooks = (
   /**
    * # Function 设置表格配置
    * @description 设置表格配置，根据 props.useChildren 或 props.useExpand 来添加 row 类型的列
-   * @param {Array<PaTableItemType>} _config - 表格配置
+   * @param {Array<ComponentItemProps>} _config - 表格配置
    */
-  function setTableConfig(_config: Array<PaTableItemType & PaTableUseItemType>, callback?: () => void) {
+  function setTableConfig(_config: Array<ComponentItemProps & ComponentUseItemProps>, callback?: () => void) {
     const config = cloneDeep(_config);
     const stringRowIndexWidth = setWidthToString(rowIndexWidth);
-    const list: Array<PaTableItemType & PaTableUseItemType> = [
+    const list: Array<ComponentItemProps & ComponentUseItemProps> = [
       ...config.map(item => {
         if (item.cellConfig) {
           item.cellConfig.display = item?.cellConfig?.display || false;
@@ -190,7 +192,7 @@ export const useStateHooks = (
             display: true
           };
         }
-        const data: PaTableItemType & PaTableUseItemType = {
+        const data: ComponentItemProps & ComponentUseItemProps = {
           ...item,
           label: String(item.label?.[language.value || "zh-CN"] || item.label),
           filterType: item.filterType || undefined,
@@ -207,7 +209,7 @@ export const useStateHooks = (
     ];
 
     // @ 添加左侧固定列
-    const leftFixedItem: PaTableItemType & PaTableUseItemType = {
+    const leftFixedItem: ComponentItemProps & ComponentUseItemProps = {
       minWidth: stringRowIndexWidth,
       width: stringRowIndexWidth,
       baseWidth: stringRowIndexWidth,
@@ -232,7 +234,7 @@ export const useStateHooks = (
     tableStructure.value = _tableStructure;
     callback?.();
   }
-  setTableConfig(props.structure as Array<PaTableItemType & PaTableUseItemType>);
+  setTableConfig(props.structure as Array<ComponentItemProps & ComponentUseItemProps>);
 
   // # Function 获取合计值
   function getSummary() {
@@ -246,7 +248,7 @@ export const useStateHooks = (
     const data = tableData;
     const sums: string[] = [];
     const exText = "";
-    tableStructure.value.forEach((column: PaTableItemType, index) => {
+    tableStructure.value.forEach((column: ComponentItemProps, index) => {
       if (index === 0) {
         sums[index] = props?.summaryConfig?.sumText || "合计";
         return;
@@ -529,18 +531,20 @@ export const useStateHooks = (
 
       const indexArr = typeof window !== "undefined" && window.document?.querySelectorAll(`#${props.id} .find_cell_index`);
       let maxIndexNumber = 20;
-      indexArr?.forEach(item => {
-        if (item.clientWidth > maxIndexNumber) {
-          maxIndexNumber = item?.clientWidth || 20;
-        }
-      });
+      if (indexArr)
+        indexArr?.forEach(item => {
+          if (item.clientWidth > maxIndexNumber) {
+            maxIndexNumber = item?.clientWidth || 20;
+          }
+        });
       _tableStructure?.forEach((item, index) => {
         if (exOut.indexOf(String(item.type)) > -1) return;
         if (item.type == "index") {
           item.width = setWidthToString(maxIndexNumber);
           return;
         }
-        const operation_item = typeof window !== "undefined" && window.document?.querySelectorAll(`#${props.id} .find_cell_${item.prop}`);
+        const operation_item =
+          typeof window !== "undefined" && window.document?.querySelectorAll(`#${props.id} .find_cell_${item.prop}`);
         let useWidth = 0;
 
         if (operation_item && operation_item.length > 0) {

@@ -54,8 +54,8 @@
         position: relative;
         width: calc(var(--pa-size-font, 13px) * 1.5 + var(--pa-size-padding, 10px) * 2);
         height: -webkit-fill-available;
-        height: -moz-available; /* Firefox */
-        height: stretch; /* 其他浏览器 */
+        height: -moz-available;
+        height: stretch;
         background-color: var(--pa-color-danger-light-4);
         display: flex;
         justify-content: center;
@@ -76,29 +76,22 @@
         width: 100%;
         height: 100%;
         box-sizing: border-box;
-        // overflow: hidden;
       }
       .dialog__body.padding-top {
-        // height: calc(100% - calc(var(--pa-size-padding, 10px)));
         padding-top: calc(var(--pa-size-padding, 10px)) !important;
       }
       .dialog__body.padding-left {
-        // width: calc(100% - calc(var(--pa-size-padding, 10px)));
         padding-left: calc(var(--pa-size-padding, 10px)) !important;
       }
       .dialog__body.padding-bottom {
-        // height: calc(100% - calc(var(--pa-size-padding, 10px)));
         padding-bottom: calc(var(--pa-size-padding, 10px)) !important;
       }
       .dialog__body.padding-right {
-        // width: calc(100% - calc(var(--pa-size-padding, 10px)));
         padding-right: calc(var(--pa-size-padding, 10px)) !important;
       }
       .dialog__body.padding-top.padding-bottom {
-        // height: calc(100% - calc(var(--pa-size-padding, 10px)) * 2);
       }
       .dialog__body.padding-left.padding-right {
-        // width: calc(100% - calc(var(--pa-size-padding, 10px)) * 2);
       }
     }
   }

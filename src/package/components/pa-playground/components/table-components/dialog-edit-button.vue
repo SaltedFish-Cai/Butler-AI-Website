@@ -266,10 +266,10 @@
 
 <script lang="tsx" setup>
 import { computed, ComputedRef, inject, ref, useTemplateRef } from "vue";
-import { PaPlaygroundPageButtonType } from "../type";
+import { PaPlaygroundPageButtonType } from "../../types";
 import { MStructureType, PaPlaygroundPagesType, MInterfaceConfig, PaPlaygroundActionFunctionType } from "../../type";
 import MQuickTable from "../quick-table.vue";
-import { PancakeGlobalConfigType } from "../../../pa-manager/type";
+import { PancakeGlobalConfigType } from "../../../pa-manager/types";
 import { PaOptionType, PaStructureType } from "M_Types";
 import { ButtonTypeV2Is } from "../../../pa-button/type";
 import DialogEditButton from "./dialog-edit-button.vue";

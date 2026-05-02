@@ -1,10 +1,13 @@
+/**
+ * **模块导入**
+ * @description 导入 lodash 工具库
+ */
 import _ from "lodash";
 const { debounce, throttle } = _;
-
 /**
  * 滚动数据接口
  */
-export interface ScrollData {
+export interface ScrollInfoData {
   scrollTop: number;
   scrollLeft: number;
   isAtTop: boolean;
@@ -15,7 +18,6 @@ export interface ScrollData {
   scrollDirectionX: "left" | "none" | "right";
   element: HTMLElement;
 }
-
 /**
  * 滚动监听器配置
  */
@@ -26,7 +28,6 @@ export interface ScrollListenerOptions {
   defaultScrollHorizontalThumb: number;
   defaultScrollVerticalThumb: number;
 }
-
 export interface ScrollUserInfo {
   horizontalThumb: number;
   verticalThumb: number;
@@ -35,7 +36,6 @@ export interface ScrollUserInfo {
   useHorizontal: boolean;
   useVertical: boolean;
 }
-
 /**
  * 尺寸变化数据接口
  */
@@ -44,7 +44,6 @@ export interface ResizeData {
   height: number;
   element: HTMLElement;
 }
-
 /**
  * 滚动监听器类 - 用于监听指定元素的滚动状态
  */
@@ -52,8 +51,8 @@ export class ScrollListener {
   private listeners: Map<
     string,
     {
-      handler: (data: ScrollData) => void;
-      debouncedHandler: (data: ScrollData) => void;
+      handler: (data: ScrollInfoData) => void;
+      debouncedHandler: (data: ScrollInfoData) => void;
       element: HTMLElement;
       scrollHandler: (event: Event) => void;
     }
@@ -125,7 +124,6 @@ export class ScrollListener {
         });
       }
     });
-    console.log(`ScrollListener reinitialized: ${this.listeners.size} listeners retained`);
   }
   /**
    * 添加元素滚动监听器
@@ -137,8 +135,8 @@ export class ScrollListener {
   public addElementScrollListener(
     id: string,
     element: HTMLElement,
-    handler: (data: ScrollData) => void,
-    directlyHandler: (data: { scrollTop: number; scrollLeft: number; scrollData: ScrollData }) => void,
+    handler: (data: ScrollInfoData) => void,
+    directlyHandler: (data: { scrollTop: number; scrollLeft: number; scrollData: ScrollInfoData }) => void,
     options: Partial<ScrollListenerOptions> = {}
   ): void {
     // 检查元素是否有效
@@ -150,7 +148,7 @@ export class ScrollListener {
     const debounceTime = options.debounceTime || this.options.debounceTime;
     // 创建防抖处理函数
     const debouncedHandler = throttle(
-      (data: ScrollData) => {
+      (data: ScrollInfoData) => {
         handler(data);
       },
       debounceTime,
@@ -184,8 +182,8 @@ export class ScrollListener {
    */
   private createScrollHandler(
     element: HTMLElement,
-    debouncedHandler: (data: ScrollData) => void,
-    directlyHandler: (data: { scrollTop: number; scrollLeft: number; scrollData: ScrollData }) => void
+    debouncedHandler: (data: ScrollInfoData) => void,
+    directlyHandler: (data: { scrollTop: number; scrollLeft: number; scrollData: ScrollInfoData }) => void
   ): (event: Event) => void {
     return () => {
       const scrollData = this.getScrollData(element);
@@ -198,7 +196,7 @@ export class ScrollListener {
    * 获取元素滚动数据
    * @param element 要获取滚动数据的元素
    */
-  private getScrollData(element: HTMLElement): ScrollData {
+  private getScrollData(element: HTMLElement): ScrollInfoData {
     const scrollTop = element.scrollTop;
     const scrollLeft = element.scrollLeft;
     const clientHeight = element.clientHeight;
@@ -613,7 +611,6 @@ export class ScrollListener {
     }
   }
 }
-
 /**
  * 监听指定元素滚动的便捷函数
  * @param element 要监听的DOM元素
@@ -623,8 +620,8 @@ export class ScrollListener {
  */
 export function listenElementScroll(
   element: HTMLElement,
-  handler: (data: ScrollData) => void,
-  directlyHandler: (data: { scrollTop: number; scrollLeft: number; scrollData: ScrollData }) => void,
+  handler: (data: ScrollInfoData) => void,
+  directlyHandler: (data: { scrollTop: number; scrollLeft: number; scrollData: ScrollInfoData }) => void,
   options: ScrollListenerOptions = { defaultScrollHorizontalThumb: 0, defaultScrollVerticalThumb: 0 }
 ): {
   listener: ScrollListener;
@@ -654,7 +651,6 @@ export function listenElementScroll(
     }
   };
 }
-
 /**
  * 监听多个指定元素的滚动状态
  * @param elements 要监听的DOM元素数组
@@ -664,7 +660,7 @@ export function listenElementScroll(
  */
 export function listenMultipleElementsScroll(
   elements: HTMLElement[],
-  handler: (data: ScrollData) => void,
+  handler: (data: ScrollInfoData) => void,
   directlyHandler: (data: { scrollTop: number; scrollLeft: number }) => void,
   options: ScrollListenerOptions = { defaultScrollHorizontalThumb: 0, defaultScrollVerticalThumb: 0 }
 ): { remove: () => void } {
@@ -687,7 +683,6 @@ export function listenMultipleElementsScroll(
     }
   };
 }
-
 /**
  * 检查元素是否在视口中
  * @param element 要检查的元素
@@ -730,10 +725,8 @@ export function isElementInViewport(
     }
   };
 }
-
 // 创建全局滚动监听器实例
 export const scrollListener = new ScrollListener();
-
 /**
  * 手动设置指定元素的滚动位置的便捷函数
  * @param element 要设置滚动位置的DOM元素
@@ -762,7 +755,6 @@ export function setElementScrollPosition(
   const listener = new ScrollListener();
   listener.setElementScrollPosition(element, options);
 }
-
 /**
  * 开始拖拽滑块以变更滚动值的便捷函数
  * @param element 要拖拽的滑块元素
@@ -794,7 +786,6 @@ export function startDrag(
   const listener = new ScrollListener();
   return listener.startDrag(element, targetElement, direction, options);
 }
-
 /**
  * 监听元素尺寸变化的便捷函数
  * @param element 要观察的DOM元素
@@ -816,5 +807,4 @@ export function observeElementResize(element: HTMLElement, handler: (data: Resiz
   const id = `resize-observe-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
   return listener.observeElementResize(id, element, handler);
 }
-
 export default scrollListener;

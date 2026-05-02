@@ -1,33 +1,36 @@
-.m-playground-dialog-container {
+.pa-playground-dialog-container {
   width: 100%;
   overflow: auto;
-  .m-playground-dialog-content {
+
+  .pa-playground-dialog-content {
     width: 100%;
   }
-  .m-playground-dialog-content.scroll {
+
+  .pa-playground-dialog-content.scroll {
     width: max-content;
   }
-  .m-playground-dialog-header {
+
+  .pa-playground-dialog-header {
     margin-bottom: var(--pa-size-padding);
     display: flex;
     justify-content: flex-start;
   }
 }
 
-.m-playground-dialog-table {
+.pa-playground-dialog-table {
   width: 100%;
   border: 1px solid var(--pa-color-border);
   border-radius: 4px;
   overflow: hidden;
   box-sizing: border-box;
 
-  .m-playground-dialog-table-header {
+  .pa-playground-dialog-table-header {
     background-color: var(--pa-color-send-bg);
     border-bottom: 1px solid var(--pa-color-border);
     font-weight: bold;
   }
 
-  .m-playground-dialog-table-row {
+  .pa-playground-dialog-table-row {
     display: flex;
     width: 100%;
 
@@ -36,7 +39,7 @@
     }
   }
 
-  .m-playground-dialog-table-cell {
+  .pa-playground-dialog-table-cell {
     width: 1px;
     flex: 1;
     padding: 8px 12px;
@@ -49,11 +52,11 @@
     }
   }
 
-  .m-playground-dialog-table-cell.operation {
+  .pa-playground-dialog-table-cell.operation {
     flex: 0 0 0px;
   }
 
-  .m-playground-dialog-table-body .m-playground-dialog-table-row:hover {
+  .pa-playground-dialog-table-body .pa-playground-dialog-table-row:hover {
     background-color: var(--pa-color-primary-light-9);
   }
 }

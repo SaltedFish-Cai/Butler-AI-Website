@@ -116,7 +116,6 @@ import { computed, ref, watch } from "vue";
 import dayjs from "dayjs";
 import type { DatePickerShortcut, MDatePickerType } from "./type";
 
-// 类型转换函数
 function convertValue(type: string, date: dayjs.Dayjs): string {
   switch (type) {
     case "year":
@@ -163,31 +162,8 @@ const isMonth = computed(() => {
   return props.type.includes("month");
 });
 
-// 计算属性 - 当前显示的年份网格
-// const yearGrid = computed(() => {
-//   if (isRange.value) {
-//     return {
-//       start: generateYearGrid(getStartYear(startPanelDate.value)),
-//       end: generateYearGrid(getStartYear(endPanelDate.value))
-//     };
-//   } else {
-//     return generateYearGrid(getStartYear(currentDate.value));
-//   }
-// });
 
-// 计算属性 - 年份范围标签
-// const yearRangeLabel = computed(() => {
-//   if (isRange.value) {
-//     return {
-//       start: `${getStartYear(startPanelDate.value)} - ${getStartYear(startPanelDate.value) + 11}`,
-//       end: `${getStartYear(endPanelDate.value)} - ${getStartYear(endPanelDate.value) + 11}`
-//     };
-//   } else {
-//     return `${getStartYear(currentDate.value)} - ${getStartYear(currentDate.value) + 11}`;
-//   }
-// });
 
-// 月份数据
 const months = [
   { value: 1, text: "1月" },
   { value: 2, text: "2月" },
@@ -203,38 +179,19 @@ const months = [
   { value: 12, text: "12月" }
 ];
 
-// 生成年份网格
-// function generateYearGrid(startYear: number): number[][] {
-//   const grid: number[][] = [];
-//   // 每页显示12个年份，3行4列
-//   const yearsPerPage = 12;
 
-//   for (let i = 0; i < yearsPerPage; i += 4) {
-//     grid.push([startYear + i, startYear + i + 1, startYear + i + 2, startYear + i + 3]);
-//   }
 
-//   return grid;
-// }
 
-// # 获取年份显示范围的开始年份
-// function getStartYear(date: dayjs.Dayjs): number {
-//   // 以当前年份为中心，显示前后几年的范围
-//   const year = date.year();
-//   return Math.floor(year / 10) * 10;
-// }
 
-// 日期引用
 const currentDate = ref(dayjs());
 const startPanelDate = ref(dayjs());
 const endPanelDate = ref(dayjs().add(1, "year"));
 
-// 选中值
 const selectedYear = ref<number | null>(null);
 const selectedMonth = ref<number | null>(null);
 const selectedRangeYears = ref<[number | null, number | null]>([null, null]);
 const selectedRangeMonths = ref<[number | null, number | null]>([null, null]);
 
-// 计算属性：当前显示的年份范围（12个年份）
 const currentYears = computed(() => {
   const years: number[] = [];
   const startYear = Math.floor(currentDate.value.year() / 10) * 10;
@@ -266,7 +223,6 @@ const isSameYear = computed(() => {
   return endPanelDate.value.year() <= startPanelDate.value.year();
 });
 
-// # 获取年份范围标签
 function getYearRangeLabel(date: dayjs.Dayjs, position?: "end" | "start"): string {
   const year = date.year();
   const startYear = Math.floor(year / 10) * 10;
@@ -287,57 +243,47 @@ function getYearRangeLabel(date: dayjs.Dayjs, position?: "end" | "start"): strin
   return `${year}`;
 }
 
-// # 选择年份
 function selectYear(year: number, position?: "end" | "start") {
-  // 检查是否禁用
   const date = dayjs().year(year).month(0).date(1);
   if (props.disabledDate && props.disabledDate(date.toDate())) {
     return;
   }
 
   if (isRange.value && position) {
-    // 范围选择
     if (position === "start") {
       if (selectedRangeYears.value[1] && year > selectedRangeYears.value[1]) {
         selectedRangeYears.value[0] = year;
-        selectedRangeMonths.value[0] = null; // 重置月份选择
+        selectedRangeMonths.value[0] = null; 
         selectedRangeYears.value[1] = year;
-        selectedRangeMonths.value[1] = null; // 重置月份选择
+        selectedRangeMonths.value[1] = null; 
       } else {
         selectedRangeYears.value[0] = year;
-        selectedRangeMonths.value[0] = null; // 重置月份选择
+        selectedRangeMonths.value[0] = null; 
       }
 
-      // startPanelDate.value = startPanelDate.value.year(year);
     } else {
       if (selectedRangeYears.value[0] && year < selectedRangeYears.value[0]) {
         selectedRangeYears.value[0] = year;
-        selectedRangeMonths.value[0] = null; // 重置月份选择
+        selectedRangeMonths.value[0] = null; 
         selectedRangeYears.value[1] = year;
-        selectedRangeMonths.value[1] = null; // 重置月份选择
+        selectedRangeMonths.value[1] = null; 
       } else {
         selectedRangeYears.value[1] = year;
-        selectedRangeMonths.value[1] = null; // 重置月份选择
+        selectedRangeMonths.value[1] = null; 
       }
-      // endPanelDate.value = endPanelDate.value.year(year);
     }
   } else {
-    // 单个选择
     selectedYear.value = year;
-    selectedMonth.value = null; // 重置月份选择
+    selectedMonth.value = null; 
     currentDate.value = currentDate.value.year(year);
 
-    // 如果启用了月份选择器，则显示月份面板
     if (!isRange.value) {
-      // 如果不显示月份选择器，直接确认选择
       confirmSelection();
     }
   }
 }
 
-// # 选择月份
 function selectMonth(month: number, position?: "end" | "start") {
-  // 检查是否禁用
   const year =
     isRange.value && position
       ? position === "start"
@@ -356,7 +302,6 @@ function selectMonth(month: number, position?: "end" | "start") {
   }
 
   if (isRange.value && position) {
-    // 范围选择
     if (position === "start") {
       if (
         selectedRangeMonths.value[1] &&
@@ -389,22 +334,18 @@ function selectMonth(month: number, position?: "end" | "start") {
       }
     }
   } else {
-    // 单个选择
     selectedYear.value = currentDate.value.year();
     selectedMonth.value = month;
     currentDate.value = currentDate.value.month(month - 1);
 
-    // 确认选择
     confirmSelection();
   }
 }
 
-// # 获取年份单元格的类名
 function getYearClass(year: number, position?: "end" | "start"): string[] {
   const classes: string[] = ["year-cell"];
   const date = dayjs().year(year).month(0).date(1);
 
-  // 当前显示范围内的年份
   if (isRange.value && position) {
     const panelDate = position === "start" ? startPanelDate.value : endPanelDate.value;
     const startYear = Math.floor(panelDate.year() / 10) * 10;
@@ -418,12 +359,10 @@ function getYearClass(year: number, position?: "end" | "start"): string[] {
     }
   }
 
-  // 今年
   if (year === dayjs().year()) {
     classes.push("this-year");
   }
 
-  // 选中状态
   if (isRange.value && position) {
     if (
       selectedRangeYears.value[0] &&
@@ -448,7 +387,6 @@ function getYearClass(year: number, position?: "end" | "start"): string[] {
     classes.push("selected");
   }
 
-  // 禁用状态
   if (props.disabledDate && props.disabledDate(date.toDate())) {
     classes.push("disabled");
   }
@@ -456,7 +394,6 @@ function getYearClass(year: number, position?: "end" | "start"): string[] {
   return classes;
 }
 
-// # 获取月份单元格的类名
 function getMonthClass(month: number, position?: "end" | "start"): string[] {
   const classes: string[] = ["month-cell"];
 
@@ -477,7 +414,6 @@ function getMonthClass(month: number, position?: "end" | "start"): string[] {
   const _selectedMonths = selectedRangeMonths.value;
   const _startPanelYear = startPanelDate.value.year();
   const _endPanelYear = endPanelDate.value.year();
-  // 当前月
   if (
     (!isRange.value && currentDate.value.year() === dayjs().year() && month === dayjs().month() + 1) ||
     (position === "start" && _startPanelYear === dayjs().year() && month === dayjs().month() + 1) ||
@@ -486,7 +422,6 @@ function getMonthClass(month: number, position?: "end" | "start"): string[] {
     classes.push("this-month");
   }
 
-  // 选中状态
   if (isRange.value && position) {
     if (
       _selectedYears[0] == _selectedYears[1] &&
@@ -535,7 +470,6 @@ function getMonthClass(month: number, position?: "end" | "start"): string[] {
     classes.push("selected");
   }
 
-  // 禁用状态
   if (props.disabledDate && props.disabledDate(date.toDate())) {
     classes.push("disabled");
   }
@@ -553,7 +487,6 @@ function handleShortcutClick(shortcut: DatePickerShortcut) {
     value = [dayjs(shortcut.value[0]), dayjs(shortcut.value[1])];
   }
 
-  // 设置选中的值
   if (isRange.value) {
     selectedRangeYears.value = [value[0].year(), value[1].year()];
     selectedRangeMonths.value = [value[0].month() + 1, value[1].month() + 1];
@@ -565,18 +498,14 @@ function handleShortcutClick(shortcut: DatePickerShortcut) {
   confirmSelection();
 }
 
-// # 确认选择
 function confirmSelection() {
   let value: any = null;
 
   if (isRange.value) {
-    // 范围选择
     if (selectedRangeYears.value[0] !== null && selectedRangeYears.value[1] !== null) {
-      // 确保有月份值
       const startMonth = selectedRangeMonths.value[0] || 1;
       const endMonth = selectedRangeMonths.value[1] || 12;
 
-      // 创建开始和结束日期
       const startDate = dayjs()
         .year(selectedRangeYears.value[0]!)
         .month(startMonth - 1)
@@ -587,39 +516,28 @@ function confirmSelection() {
         .month(endMonth - 1)
         .endOf("month");
 
-      // 根据类型转换值
       if (isYear.value) {
-        // 年份选择器，只返回年份
         value = [startDate.year(), endDate.year()];
       } else if (isMonth.value) {
-        // 月份选择器，返回年月字符串
         value = [startDate.format("YYYY-MM"), endDate.format("YYYY-MM")];
       } else {
-        // 完整日期
         value = [convertValue(props.type, startDate), convertValue(props.type, endDate)];
       }
     }
   } else {
-    // 单个选择
     if (selectedYear.value !== null) {
-      // 确保有月份值
       const month = selectedMonth.value || 1;
 
-      // 创建日期
       const date = dayjs()
         .year(selectedYear.value)
         .month(month - 1)
         .startOf(isMonth.value ? "month" : "year");
 
-      // 根据类型转换值
       if (isYear.value) {
-        // 年份选择器，只返回年份
         value = date.year();
       } else if (isMonth.value) {
-        // 月份选择器，返回年月字符串
         value = date.format("YYYY-MM");
       } else {
-        // 完整日期
         value = convertValue(props.type, date);
       }
     }
@@ -630,7 +548,6 @@ function confirmSelection() {
 }
 
 function handleCancel() {
-  // 清空选中状态
   selectedYear.value = null;
   selectedMonth.value = null;
   selectedRangeYears.value = [null, null];
@@ -640,7 +557,6 @@ function handleCancel() {
   emit("change", isRange.value ? [] : "");
 }
 
-// # 导航控制 - 月份
 function prevMouth(panel?: "end" | "start") {
   if (isRange.value) {
     if (panel === "start") {
@@ -668,7 +584,6 @@ function nextMouth(panel?: "end" | "start") {
   }
 }
 
-// # 导航控制 - 十年
 function prevYear(panel?: "end" | "start") {
   if (isRange.value) {
     if (panel === "start") {
@@ -696,7 +611,6 @@ function nextYear(panel?: "end" | "start") {
   }
 }
 
-// # 处理滚轮事件
 let lastWheelTime = 0;
 let wheelDelta = 0;
 function handleWheel(event: WheelEvent, type: "month" | "year" = "year", panel?: "end" | "start") {
@@ -705,28 +619,23 @@ function handleWheel(event: WheelEvent, type: "month" | "year" = "year", panel?:
   const now = Date.now();
   wheelDelta += Math.abs(event.deltaY);
 
-  // 降低敏感度：只有当滚动量达到阈值时才触发切换
   if (wheelDelta < 50) {
     return;
   }
 
-  // 防抖处理：避免快速连续滚动
   if (now - lastWheelTime < 100) {
     return;
   }
 
-  // 重置滚动量和时间
   wheelDelta = 0;
   lastWheelTime = now;
   if (type === "year") {
-    // 年份视图：滚动切换十年
     if (event.deltaY < 0) {
       prevYear(panel);
     } else {
       nextYear(panel);
     }
   } else {
-    // 月份视图：滚动切换年份
     if (event.deltaY < 0) {
       prevMouth(panel);
     } else {
@@ -735,16 +644,13 @@ function handleWheel(event: WheelEvent, type: "month" | "year" = "year", panel?:
   }
 }
 
-// 初始化值
 watch(
   () => props.modelValue,
   newValue => {
     if (isRange.value && Array.isArray(newValue) && newValue.length) {
-      // 重置范围选择的值
       selectedRangeYears.value = [null, null];
       selectedRangeMonths.value = [null, null];
 
-      // 处理开始日期
       if (newValue[0]) {
         const date = dayjs(newValue[0]);
         selectedRangeYears.value[0] = date.year();
@@ -752,7 +658,6 @@ watch(
         startPanelDate.value = date;
       }
 
-      // 处理结束日期
       if (newValue[1]) {
         const date = dayjs(newValue[1]);
         selectedRangeYears.value[1] = date.year();
@@ -760,7 +665,6 @@ watch(
         endPanelDate.value = date;
       }
     } else if (!!newValue && !Array.isArray(newValue)) {
-      // 处理单个值
       const date = dayjs(newValue);
       selectedYear.value = date.year();
       selectedMonth.value = date.month() + 1;

@@ -33,7 +33,7 @@
 
 <script lang="ts" setup>
 import { computed, ref, Ref, inject, provide } from "vue";
-import { ConfigContextType } from "./type";
+import { ConfigContextType } from "./types";
 
 // 定义 Props
 type PaFormItemProps = {

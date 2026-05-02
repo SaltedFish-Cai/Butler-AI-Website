@@ -200,14 +200,14 @@ import {
   PaPlaygroundItem,
   MOptionsType,
   PaPlaygroundActionFunctionType
-} from "./type";
+} from "./types";
 import { M_Message, M_MessageBox } from "../feedback";
 import PaPlaygroundVisible from "./pa-playground-visible.vue";
 import useDictionariesAll from "../tools/dictionaries-all";
-import { PancakeGlobalConfigType } from "../pa-manager/type";
+import { PancakeGlobalConfigType } from "../pa-manager/types";
 import { PaOptionType, PaStructureType } from "M_Types";
 import { deleteDataByKey, getAllData, queryData, storeData, updateData } from "../indexDB/indexDB";
-import { PaPlaygroundPageButtonType } from "./components/type";
+import { PaPlaygroundPageButtonType } from "./components/types";
 import { dictType } from "../tools/type";
 
 import _ from "lodash";

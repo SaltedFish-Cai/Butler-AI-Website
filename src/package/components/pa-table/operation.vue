@@ -4,9 +4,9 @@
 
 <script lang="tsx" setup>
 import { inject, useSlots, h } from "vue";
-import { PaTableUseItemType, PaTableUseType } from "./type";
+import { ComponentUseItemProps, PaTableUseType } from "./types";
 
-type OperationPropsType = { column: PaTableUseItemType; row: PaTableUseType.PaTableInDataType };
+type OperationPropsType = { column: ComponentUseItemProps; row: PaTableUseType.PaTableInDataType };
 const languagePackage = inject("languagePackage") as Record<string, string>;
 const slots = useSlots();
 
@@ -83,7 +83,7 @@ function setOperations(arrData) {
 }
 
 // #Function 主方法
-function RenderTableColumn(item: PaTableUseItemType & { isTipTitle?: boolean }) {
+function RenderTableColumn(item: ComponentUseItemProps & { isTipTitle?: boolean }) {
   const operationArr = slots["operation"]!({ row: item });
 
   return <>{<div class="operation_item">{setOperations(operationArr)}</div>}</>;

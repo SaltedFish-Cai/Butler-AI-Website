@@ -16,7 +16,7 @@
 
 <script lang="tsx" setup>
 import { ref, useTemplateRef } from "vue";
-import { PaPlaygroundPagesType } from "../type";
+import { PaPlaygroundPagesType } from "../types";
 import { PaStructureType } from "M_Types";
 
 const props = withDefaults(

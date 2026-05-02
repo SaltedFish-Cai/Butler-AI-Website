@@ -35,21 +35,18 @@
                     </div>
                   </slot>
                 </div>
-
                 <div v-if="subTitle" class="sub_title_body" :style="{ fontWeight: subTitle ? 'bold' : 'normal' }">
                   <slot name="subTitle">
                     {{ typeof subTitle === "string" ? subTitle : subTitle[language] }}
                   </slot>
                 </div>
-
-                <div></div>
+                <div><div></div></div>
               </div>
             </slot>
             <div class="pa-drawer-content_header_close">
               <pa-icon name="close_line" class="flex-center" @click="closeMenu" />
             </div>
           </div>
-
           <div class="pa-drawer-content_body">
             <pa-scrollbar always v-if="scroll" :useScrollX="useScrollX">
               <div
@@ -64,7 +61,6 @@
                 <slot></slot>
               </div>
             </pa-scrollbar>
-
             <div
               v-else
               class="pa-drawer-content_body_content flex-col"
@@ -78,7 +74,6 @@
               <slot></slot>
             </div>
           </div>
-
           <div v-if="$slots['footer']" class="pa-drawer-content_footer">
             <slot name="footer" />
           </div>
@@ -89,13 +84,32 @@
 </template>
 
 <script lang="ts" setup>
-// # Import
+/**
+ * **模块导入**
+ * @description 导入 Vue 组合式 API
+ * */
 import { reactive, watch, onMounted, onUnmounted, computed, inject, ComputedRef } from "vue";
-import { PaDrawerType } from "./type";
-import { PancakeGlobalConfigType } from "../pa-manager/type";
-
-// # Var
-const props = withDefaults(defineProps<PaDrawerType>(), {
+/**
+ * **模块导入**
+ * @description 导入组件类型定义
+ * */
+import { ComponentProps, ComponentEmits } from "./types";
+/**
+ * **模块导入**
+ * @description 导入全局配置类型
+ * */
+import { PancakeGlobalConfigType } from "../pa-manager/types";
+/**
+ * **组件事件定义**
+ * @description 定义组件可触发的事件
+ * */
+const emits = defineEmits<ComponentEmits>();
+/**
+ * **组件属性**
+ * @type `ComponentProps`
+ * @description 组件的属性对象
+ * */
+const props = withDefaults(defineProps<ComponentProps>(), {
   id: "",
   title: "标题",
   scroll: true,
@@ -104,42 +118,66 @@ const props = withDefaults(defineProps<PaDrawerType>(), {
   closeOnPressEscape: true,
   position: "right"
 });
-
-const emits = defineEmits(["update:modelValue", "closed"]);
-
+/**
+ * **组件状态**
+ * @type `Ref<{ visible: boolean; fullscreen: boolean }>`
+ * @description 组件的响应式状态
+ * */
 const state = reactive({
   visible: false,
   fullscreen: false
 });
-
+/**
+ * **全局配置**
+ * @type `ComputedRef<PancakeGlobalConfigType>`
+ * @description 全局配置对象
+ * */
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
+/**
+ * **当前语言**
+ * @type `ComputedRef<string>`
+ * @description 当前使用的语言
+ * */
 const language = computed(() => PancakeGlobalConfig.value?.language?.value || "zh-CN");
-
-// #Function 关闭弹窗回调
-function closeMenu() {
+/**
+ * **关闭抽屉弹窗**
+ * @description 关闭抽屉弹窗并触发相关事件
+ * */
+function closeMenu(): void {
   emits("update:modelValue", false);
   emits("closed", false);
 }
-
-// #添加ESC键监听
-function handleKeyDown(e) {
+/**
+ * **处理键盘按下事件**
+ * @param `e` `KeyboardEvent` 键盘事件对象
+ * @description 处理ESC键关闭抽屉弹窗
+ * */
+function handleKeyDown(e: KeyboardEvent): void {
   if (e.key === "Escape" && state.visible) {
     closeMenu();
   }
 }
-
+/**
+ * **组件挂载生命周期**
+ * @description 初始化组件
+ * */
 onMounted(() => {
   props.closeOnPressEscape && document.addEventListener("keydown", handleKeyDown);
 });
-
+/**
+ * **组件卸载生命周期**
+ * @description 清理事件监听器
+ * */
 onUnmounted(() => {
   props.closeOnPressEscape && document.removeEventListener("keydown", handleKeyDown);
 });
-
-// #Watch modelValue
+/**
+ * **监听modelValue**
+ * @description 监听抽屉弹窗显示状态变化
+ * */
 watch(
   () => props.modelValue,
-  data => {
+  (data: boolean) => {
     state.visible = data;
   },
   { immediate: true }

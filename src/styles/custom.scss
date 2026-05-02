@@ -88,16 +88,22 @@
 }
 
 /* Color Theme */
-.VPSidebarItem > .item .link > .text {
-  padding: 10px 0 10px 15px;
-}
-.VPSidebarItem.level-1.is-active > .item .link > .text {
-  font-style: italic;
-  font-weight: bold;
-  color: #ffffff !important;
-  background-color: var(--pa-color-primary);
-  border-radius: 5px;
-}
+// .VPSidebarItem > .item .link {
+//   padding: 10px 0 10px 15px;
+//   border-radius: 5px;
+//   .text {
+//     background: none !important
+//   }
+// }
+// .VPSidebarItem.level-1.is-active > .item .link {
+//   font-style: italic;
+//   font-weight: bold;
+//   color: #ffffff !important;
+//   background-color: var(--pa-color-primary);
+//   .text{
+//     color: var(--pa-color-white) !important;
+//   }
+// }
 .VPNavBarTitle.has-sidebar .title {
   border-bottom: 0;
 }
@@ -210,7 +216,7 @@
     radial-gradient(circle at 70% 50%, rgba(2, 195, 150, 0.58) 0%, transparent 3.5%);
   animation: floatParticles 20s ease-in-out infinite;
   pointer-events: none;
-  z-index: 0;
+  z-index: -1;
 }
 
 @keyframes floatParticles {
