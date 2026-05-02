@@ -157,4 +157,4 @@
 | LanguagePackageType | 多语言包类型 | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) |
 | PaOptionType        | 选项类型     | [`PaOptionType`](/document/PancakeUI_Doc/options)                            |
 | PaStructureType     | 结构类型     | [`PaStructureType`](/document/PancakeUI_Doc/options)                         |
-| ButtonTypeV2Is      | 按钮内置类型 | [`ButtonTypeV2Is`](/document/PancakeUI_Doc/button)                           |
+| ButtonTypeV2Is      | 按钮内置类型 | [`ButtonTypeV2Is`](/document/PancakeUI_Doc/button/readme)                    |
