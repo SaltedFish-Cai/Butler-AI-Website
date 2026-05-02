@@ -360,7 +360,6 @@
 /**
  * @description 导入 Vue 相关模块
  */
-import
 import { ref, watch, computed, provide, useTemplateRef, onMounted, inject, Ref } from "vue";
 import { ComponentProps, PaPlaygroundType, PaPlaygroundItem } from "./types";
 import { useSvgHooks } from "./hooks/use-svg-hooks";
