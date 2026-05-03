@@ -19,21 +19,21 @@ import { LanguagePackageType } from "../manager-type";
 export type ComponentProps = {
   /**
    * 组件唯一标识
-   * @type string | `undefined`
+   * @type string | undefined
    * @default undefined
    * @description 当设置该值时，会作为组件的唯一标识
    */
   id?: string;
   /**
    * 自定义类名
-   * @type Array<string> | `string` | `undefined`
+   * @type Array<string> | string | undefined
    * @default undefined
    * @description 当设置该值时，会添加到组件的类名中
    */
   class?: Array<string> | string;
   /**
    * 自定义样式
-   * @type Record<string, string> | `undefined`
+   * @type Record<string, string> | undefined
    * @default undefined
    * @description 当设置该值时，会添加到组件的样式中
    */
@@ -46,28 +46,28 @@ export type ComponentProps = {
   modelValue: boolean;
   /**
    * 抽屉弹窗标题
-   * @type LanguagePackageType | `string` | `undefined`
+   * @type LanguagePackageType | string | undefined
    * @default '标题'
    * @description 设置抽屉弹窗的标题
    */
   title?: LanguagePackageType | string;
   /**
    * 抽屉弹窗副标题
-   * @type LanguagePackageType | `string` | `undefined`
+   * @type LanguagePackageType | string | undefined
    * @default undefined
    * @description 设置抽屉弹窗的副标题
    */
   subTitle?: LanguagePackageType | string;
   /**
    * 抽屉弹窗宽度
-   * @type string | `undefined`
+   * @type string | undefined
    * @default '500px'
    * @description 设置抽屉弹窗的宽度
    */
   width?: string;
   /**
    * 抽屉弹窗高度
-   * @type string | `undefined`
+   * @type string | undefined
    * @default '300px'
    * @description 设置抽屉弹窗的高度
    */
@@ -102,14 +102,14 @@ export type ComponentProps = {
   closeOnPressEscape?: boolean;
   /**
    * 内边距方向
-   * @type Array<'all' | 'bottom' | 'left' | 'right' | 'top'> | `undefined`
+   * @type Array<'all' | 'bottom' | 'left' | 'right' | 'top'> | undefined
    * @default undefined
    * @description 设置抽屉弹窗内容的内边距方向
    */
   padding?: Array<"all" | "bottom" | "left" | "right" | "top">;
   /**
    * 抽屉弹窗位置
-   * @type 'bottom' | `'left'` | `'right'` | `'top'`
+   * @type 'bottom' | 'left' | 'right' | 'top'
    * @default 'right'
    * @description 设置抽屉弹窗的显示位置
    */

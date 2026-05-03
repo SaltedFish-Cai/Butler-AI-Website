@@ -346,10 +346,10 @@ export interface ComponentProps {
   /**
    * 单元格额外依赖
    * @type PaTableCellExDependentType
-   * @type PaTableCellExDependentType.select_RequestApi 为 `(params: { query: string }) => Promise<PaOptionType.SelectList>`
-   * @type PaTableCellExDependentType.file_attachedData 为 `{ [x: string]: Record<string, string> }`
-   * @type PaTableCellExDependentType.time_disabledDateFn 为 `(date: any) => boolean`
-   * @type PaTableCellExDependentType.time_shortcuts 为 `DatePickerShortcut[]`
+   * @type PaTableCellExDependentType.select_RequestApi 为 (params: { query: string }) => Promise<PaOptionType.SelectList>
+   * @type PaTableCellExDependentType.file_attachedData 为 { [x: string]: Record<string, string> }
+   * @type PaTableCellExDependentType.time_disabledDateFn 为 (date: any) => boolean
+   * @type PaTableCellExDependentType.time_shortcuts 为 DatePickerShortcut[]
    * @description 当设置该值时，会使用该值作为单元格额外依赖
    * @example
    * ```ts
@@ -361,11 +361,11 @@ export interface ComponentProps {
   /**
    * 外置分页配置
    * @type exPaginationType
-   * @type exPaginationType.PageNum 为 `number`
-   * @type exPaginationType.PageSize 为 `number`
-   * @type exPaginationType.pageSizes 为 `number[]`
-   * @type exPaginationType.layout 为 `string`
-   * @type exPaginationType.pagerCount 为 `number`
+   * @type exPaginationType.PageNum 为 number
+   * @type exPaginationType.PageSize 为 number
+   * @type exPaginationType.pageSizes 为 number[]
+   * @type exPaginationType.layout 为 string
+   * @type exPaginationType.pagerCount 为 number
    * @description 当设置该值时，会使用该值作为外置分页配置
    * @example
    * ```ts
@@ -422,8 +422,8 @@ export interface ComponentProps {
   /**
    * 合计参数
    * @type summaryConfigType
-   * @type summaryConfigType.sumText 为 `string`
-   * @type summaryConfigType.unitText 为 `string`
+   * @type summaryConfigType.sumText 为 string
+   * @type summaryConfigType.unitText 为 string
    * @description 当设置该值时，会使用该值作为合计参数
    * @example
    * ```ts

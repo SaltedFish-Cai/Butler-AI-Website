@@ -112,21 +112,21 @@ type StrictUnion<T> = StrictUnionHelper<T, T>;
 export type OtherType = {
   /**
    * 类型标识
-   * @type "address" | `"clickTag"` | `"null"` | `"slot"` | `"tag"` | `undefined`
+   * @type "address" | "clickTag" | "null" | "slot" | "tag" | undefined
    * @default undefined
    * @description 组件类型
    */
   type?: "address" | "clickTag" | "null" | "slot" | "tag";
   /**
    * 是否禁用
-   * @type boolean | `undefined`
+   * @type boolean | undefined
    * @default undefined
    * @description 禁用状态
    */
   disabled?: boolean;
   /**
    * 是否展示
-   * @type boolean | `undefined`
+   * @type boolean | undefined
    * @default undefined
    * @description 展示状态
    */
@@ -139,20 +139,20 @@ export type OtherType = {
 type GroupFromConfigType = PaFormChildType & {
   /**
    * 多语言表单项标题
-   * @type LanguagePackageType | `string` | `undefined`
+   * @type LanguagePackageType | string | undefined
    * @default undefined
    * @description 当设置该值为时，会使用该值作为表单项标题
    */
   label?: LanguagePackageType | string;
   /**
    * 值
-   * @type boolean | `number` | `string`
+   * @type boolean | number | string
    * @description 默认值
    */
   value: boolean | number | string;
   /**
    * 子标签
-   * @type string | `undefined`
+   * @type string | undefined
    * @default undefined
    * @description 子标签文本
    */
@@ -165,28 +165,28 @@ type GroupFromConfigType = PaFormChildType & {
 export type GroupType = {
   /**
    * 类型标识
-   * @type "group" | `undefined`
+   * @type "group" | undefined
    * @default undefined
    * @description 组件类型
    */
   type?: "group";
   /**
    * 组表单配置
-   * @type Array<GroupFromConfigType> | `undefined`
+   * @type Array<GroupFromConfigType> | undefined
    * @default undefined
    * @description 组内表单配置列表
    */
   groupFormConfig?: Array<GroupFromConfigType>;
   /**
    * 是否禁用
-   * @type boolean | `undefined`
+   * @type boolean | undefined
    * @default undefined
    * @description 禁用状态
    */
   disabled?: boolean;
   /**
    * 是否展示
-   * @type boolean | `undefined`
+   * @type boolean | undefined
    * @default undefined
    * @description 展示状态
    */
@@ -199,49 +199,49 @@ export type GroupType = {
 export type TabsType = {
   /**
    * 类型标识
-   * @type "tabs-form" | `undefined`
+   * @type "tabs-form" | undefined
    * @default undefined
    * @description 组件类型
    */
   type?: "tabs-form";
   /**
    * 标题键名
-   * @type string | `undefined`
+   * @type string | undefined
    * @default undefined
    * @description 分栏tab标题使用字段
    */
   titleKey?: string;
   /**
    * 标题标签
-   * @type LanguagePackageType | `string` | `undefined`
+   * @type LanguagePackageType | string | undefined
    * @default undefined
    * @description 多语言tab标题使用字段
    */
   titleLabel?: LanguagePackageType | string;
   /**
    * 标签页表单配置
-   * @type Array<PaFormChildType> | `undefined`
+   * @type Array<PaFormChildType> | undefined
    * @default undefined
    * @description 标签页内表单配置列表
    */
   tabsFormConfig?: Array<PaFormChildType>;
   /**
    * 是否禁用
-   * @type boolean | `undefined`
+   * @type boolean | undefined
    * @default undefined
    * @description 禁用状态
    */
   disabled?: boolean;
   /**
    * 对比键名
-   * @type string | `undefined`
+   * @type string | undefined
    * @default undefined
    * @description 对比使用的键名
    */
   contrastKey?: string;
   /**
    * 对比使用字段
-   * @type string | `undefined`
+   * @type string | undefined
    * @default undefined
    * @description 对比使用的字段
    */

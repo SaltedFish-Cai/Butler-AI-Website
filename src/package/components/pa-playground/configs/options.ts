@@ -1,12 +1,12 @@
 /**
  * @description 导入类型定义
- * */
+ */
 import { MOptionsType } from "../types";
 
 /**
  * @description 是/否选项
- * @type `Array<object>`
- * */
+ * @type Array<object>
+ */
 export const yesNoOptions = [
   { label: { "zh-CN": "是", "en-US": "Yes" }, value: 1 },
   { label: { "zh-CN": "否", "en-US": "No" }, value: 0 }
@@ -14,8 +14,8 @@ export const yesNoOptions = [
 
 /**
  * @description 筛选类型选项
- * @type `Array<object>`
- * */
+ * @type Array<object>
+ */
 export const filterTypeOptions = [
   { label: { "zh-CN": "文本类型", "en-US": "Text Type" }, value: "input" },
   { label: { "zh-CN": "数字类型", "en-US": "Number Type" }, value: "number" },
@@ -26,8 +26,8 @@ export const filterTypeOptions = [
 
 /**
  * @description 固定选项
- * @type `Array<object>`
- * */
+ * @type Array<object>
+ */
 export const fixedOptions = [
   { label: { "en-US": "No Fixed", "zh-CN": "无固定" }, value: "default" },
   { label: { "en-US": "Left Fixed", "zh-CN": "左固定" }, value: "left" },
@@ -36,8 +36,8 @@ export const fixedOptions = [
 
 /**
  * @description 内边距选项
- * @type `Array<object>`
- * */
+ * @type Array<object>
+ */
 export const paddingOptions = [
   { label: { "zh-CN": "上", "en-US": "Top" }, value: "top" },
   { label: { "zh-CN": "下", "en-US": "Bottom" }, value: "bottom" },
@@ -48,8 +48,8 @@ export const paddingOptions = [
 
 /**
  * @description 表格使用选项
- * @type `Array<MOptionsType>`
- * */
+ * @type Array<MOptionsType>
+ */
 export const TableUseOptions: Array<MOptionsType> = [
   { id: "use-yes-no", description: "是否选项", OptionsType: "select", config: yesNoOptions },
   { id: "use-padding", description: "选项", OptionsType: "select", config: paddingOptions },

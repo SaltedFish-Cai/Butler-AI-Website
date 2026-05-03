@@ -51,7 +51,7 @@ const languageValue = computed(() => {
 /**
  * 设置标签
  * @param label - | `Record<string, string>` 标签文本或语言对象
- * @returns string | `undefined` 返回对应语言的值
+ * @returns string | undefined 返回对应语言的值
  * @description 根据当前语言设置返回标签文本，支持字符串和语言对象两种格式
  */
 function setLabel(label: Record<string, string> | string): string | undefined {

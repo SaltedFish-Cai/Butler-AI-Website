@@ -61,14 +61,14 @@ export type SlotItemsPropsType = {
   item: PaFormItemType;
   /**
    * 数据
-   * @type Record<string, string> | `undefined`
+   * @type Record<string, string> | undefined
    * @default undefined
    * @description 表单数据
    */
   data?: Record<string, string>;
   /**
    * 标签宽度
-   * @type number | `undefined`
+   * @type number | undefined
    * @default undefined
    * @description 标签宽度
    */

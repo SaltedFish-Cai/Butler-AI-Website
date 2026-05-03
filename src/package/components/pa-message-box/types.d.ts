@@ -29,119 +29,119 @@ export type MessageBoxType = "danger" | "info" | "primary" | "success" | "warnin
 export type ComponentProps = {
   /**
    * 组件唯一标识
-   * @type string | `undefined`
+   * @type string | undefined
    * @default undefined
    * @description 当设置该值时，会作为组件的唯一标识
    */
   id?: string;
   /**
    * 自定义类名
-   * @type Array<string> | `string` | `undefined`
+   * @type Array<string> | string | undefined
    * @default undefined
    * @description 当设置该值时，会添加到组件的类名中
    */
   class?: Array<string> | string;
   /**
    * 自定义样式
-   * @type Record<string, string> | `undefined`
+   * @type Record<string, string> | undefined
    * @default undefined
    * @description 当设置该值时，会添加到组件的样式中
    */
   style?: Record<string, string>;
   /**
    * 消息框标题
-   * @type LanguagePackageType | `string` | `undefined`
+   * @type LanguagePackageType | string | undefined
    * @default undefined
    * @description 消息框标题，支持多语言
    */
   title?: LanguagePackageType | string;
   /**
    * 消息框内容
-   * @type LanguagePackageType | `string` | `undefined`
+   * @type LanguagePackageType | string | undefined
    * @default undefined
    * @description 消息框内容，支持多语言
    */
   message?: LanguagePackageType | string;
   /**
    * 弹窗类型
-   * @type 'confirm' | `undefined`
+   * @type 'confirm' | undefined
    * @default undefined
    * @description 是否为确认弹窗
    */
   isType?: "confirm" | undefined;
   /**
    * 消息类型
-   * @type MessageBoxType | `undefined`
+   * @type MessageBoxType | undefined
    * @default undefined
    * @description 消息类型，影响样式
    */
   type?: MessageBoxType;
   /**
    * 自定义类名
-   * @type string | `undefined`
+   * @type string | undefined
    * @default undefined
    * @description 自定义消息框容器的类名
    */
   customClass?: string;
   /**
    * 确认回调
-   * @type (() => void) | `undefined`
+   * @type (() => void) | undefined
    * @default undefined
    * @description 点击确认按钮时的回调函数
    */
   onConfirm?: () => void;
   /**
    * 关闭回调
-   * @type (() => void) | `undefined`
+   * @type (() => void) | undefined
    * @default undefined
    * @description 关闭消息框时的回调函数
    */
   onClose?: () => void;
   /**
    * 是否使用HTML字符串
-   * @type boolean | `undefined`
+   * @type boolean | undefined
    * @default false
    * @description 是否使用 HTML 字符串渲染消息
    */
   dangerouslyUseHTMLString?: boolean;
   /**
    * 确认按钮文本
-   * @type LanguagePackageType | `string` | `undefined`
+   * @type LanguagePackageType | string | undefined
    * @default undefined
    * @description 确认按钮的文本，支持多语言
    */
   confirmButtonText?: LanguagePackageType | string;
   /**
    * 取消按钮文本
-   * @type LanguagePackageType | `string` | `undefined`
+   * @type LanguagePackageType | string | undefined
    * @default undefined
    * @description 取消按钮的文本，支持多语言
    */
   cancelButtonText?: LanguagePackageType | string;
   /**
    * 取消按钮图标
-   * @type string | `undefined`
+   * @type string | undefined
    * @default undefined
    * @description 取消按钮的图标名称
    */
   cancelButtonIcon?: string;
   /**
    * 确认按钮图标
-   * @type string | `undefined`
+   * @type string | undefined
    * @default undefined
    * @description 确认按钮的图标名称
    */
   confirmButtonIcon?: string;
   /**
    * 层级
-   * @type number | `undefined`
+   * @type number | undefined
    * @default 2050
    * @description 消息框的 z-index 值
    */
   zIndex?: number;
   /**
    * ESC键关闭
-   * @type boolean | `undefined`
+   * @type boolean | undefined
    * @default true
    * @description 是否在按下 ESC 键时关闭消息框
    */

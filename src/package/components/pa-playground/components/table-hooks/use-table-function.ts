@@ -1,25 +1,25 @@
 /**
  * @description 导入类型定义
- * */
+ */
 import { PaOptionType, PaStructureType } from "../../../manager-type";
 /**
  * @description 导入 Vue 相关类型
- * */
+ */
 import { computed, nextTick, Ref } from "vue";
 /**
  * @description 导入按钮类型
- * */
+ */
 import { PaPlaygroundPageButtonType } from "../types";
 /**
  * @description 导入消息框组件
- * */
+ */
 import { M_MessageBox } from "../../../feedback";
 /**
  * @description 导入 Playground 类型
- * */
+ */
 import { PaPlaygroundItem, MStructureType } from "../../types";
 
-/** @type `number` 表格最小宽度 */
+/** @type number 表格最小宽度 */
 const MIN_WIDTH = 520;
 
 /**
@@ -38,7 +38,7 @@ const MIN_WIDTH = 520;
  * @param selectedColumnIndex 选中的列索引
  * @param closeContextMenu 关闭右键菜单函数
  * @returns 表格功能相关方法
- * */
+ */
 export function useFunctionHooks(
   emit: any,
   baseConfig: Ref<PaPlaygroundItem | undefined>,
@@ -54,21 +54,21 @@ export function useFunctionHooks(
   selectedColumnIndex: Ref<number>,
   closeContextMenu: () => void
 ) {
-  /** @type `ComputedRef<number>` 列数量 */
+  /** @type ComputedRef<number> 列数量 */
   const columnCount = computed(() => tableConfigExOperation.value.length);
 
   /**
    * @description 创建表格
-   * @returns `void`
-   * */
+   * @returns void
+   */
   function createTable(): void {
     setMockTableData();
   }
 
   /**
    * @description 设置模拟表格数据
-   * @returns `void`
-   * */
+   * @returns void
+   */
   function setMockTableData(): void {
     tableData.value = [];
     for (let i = 0; i < 5; i++) {
@@ -83,8 +83,8 @@ export function useFunctionHooks(
 
   /**
    * @description 设置表格宽度
-   * @returns `void`
-   * */
+   * @returns void
+   */
   function setTableWidth(): void {
     nextTick(() => {
       let width = tableConfigExOperation.value.reduce((total, col) => {
@@ -106,8 +106,8 @@ export function useFunctionHooks(
    * @description 更新列
    * @param col 列配置
    * @param options 扩展选项
-   * @returns `void`
-   * */
+   * @returns void
+   */
   function updateCol(col: PaStructureType.TableV2 & { cellType: any }, options: Record<string, string>): void {
     tableConfig.value[selectedColumnIndex.value] = { ...col, cellConfig: { ...col.cellConfig, type: col.cellType } };
     tableExOptions.value = options;
@@ -118,8 +118,8 @@ export function useFunctionHooks(
    * @description 更新所有列
    * @param cols 列配置数组
    * @param options 扩展选项
-   * @returns `void`
-   * */
+   * @returns void
+   */
   function updateColAll(cols: Array<PaStructureType.TableV2>, options?: Record<string, string>): void {
     tableConfig.value = cols;
     if (options) tableExOptions.value = options;
@@ -130,8 +130,8 @@ export function useFunctionHooks(
   /**
    * @description 处理删除列
    * @param columnIndex 列索引
-   * @returns `void`
-   * */
+   * @returns void
+   */
   function handleDeleteColumn(columnIndex: number): void {
     closeContextMenu();
 
@@ -152,8 +152,8 @@ export function useFunctionHooks(
 
   /**
    * @description 导出表格配置
-   * @returns `object` 包含 config、exOptions、actionButtons 的对象
-   * */
+   * @returns object 包含 config、exOptions、actionButtons 的对象
+   */
   function exportTableConfig() {
     const _tableConfig: Array<PaStructureType.TableV2> = [];
     const exOptions: PaOptionType.Default = {};
@@ -181,8 +181,8 @@ export function useFunctionHooks(
 
   /**
    * @description 刷新表格数据
-   * @returns `void`
-   * */
+   * @returns void
+   */
   function handleRefresh(): void {
     const _baseConfig = baseConfig.value;
     if (!_baseConfig) return;

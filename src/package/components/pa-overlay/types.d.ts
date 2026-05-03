@@ -14,21 +14,21 @@
 export type ComponentProps = {
   /**
    * 组件唯一标识
-   * @type string | `undefined`
+   * @type string | undefined
    * @default undefined
    * @description 当设置该值时，会作为组件的唯一标识
    */
   id?: string;
   /**
    * 自定义类名
-   * @type Array<string> | `string` | `undefined`
+   * @type Array<string> | string | undefined
    * @default undefined
    * @description 当设置该值时，会添加到组件的类名中
    */
   class?: Array<string> | string;
   /**
    * 自定义样式
-   * @type Record<string, string> | `undefined`
+   * @type Record<string, string> | undefined
    * @default undefined
    * @description 当设置该值时，会添加到组件的样式中
    */
@@ -49,7 +49,7 @@ export type ComponentProps = {
   useBlock?: boolean;
   /**
    * 目标挂载元素
-   * @type HTMLElement | `undefined`
+   * @type HTMLElement | undefined
    * @default undefined
    * @description 指定遮罩层挂载的目标元素
    */

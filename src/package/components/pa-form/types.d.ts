@@ -35,35 +35,35 @@ import { PaTransferType } from "../pa-transfer/types";
 export type ComponentProps = {
   /**
    * 多表时唯一ID
-   * @type string | `undefined`
+   * @type string | undefined
    * @default undefined
    * @description 当设置该值时，会使用该值作为唯一ID
    */
   id?: string;
   /**
    * 自定义类名
-   * @type Array<string> | `string` | `undefined`
+   * @type Array<string> | string | undefined
    * @default undefined
    * @description 当设置该值时，会添加到组件的类名中
    */
   class?: Array<string> | string;
   /**
    * 自定义样式
-   * @type Record<string, string | number> | `undefined`
+   * @type Record<string, string | number> | undefined
    * @default undefined
    * @description 当设置该值时，会添加到组件的样式中
    */
   style?: Record<string, number | string>;
   /**
    * 双向绑定外置默认数据
-   * @type FormDataType | `undefined`
+   * @type FormDataType | undefined
    * @default undefined
    * @description 当设置该值时，会使用该值作为默认数据
    */
   data?: FormDataType;
   /**
    * 对比数据
-   * @type Record<string, any> | `undefined`
+   * @type Record<string, any> | undefined
    * @default undefined
    * @description 当设置该值时，会使用该值作为对比数据
    */
@@ -77,7 +77,7 @@ export type ComponentProps = {
   alwaysContrast?: boolean;
   /**
    * 外置选择框选项
-   * @type PaOptionType.Default | `undefined`
+   * @type PaOptionType.Default | undefined
    * @default undefined
    * @description 当设置该值时，会使用该值作为外置选择框选项
    */
@@ -98,14 +98,14 @@ export type ComponentProps = {
   noLabel?: boolean;
   /**
    * 标题宽度
-   * @type number | `string` | `undefined`
+   * @type number | string | undefined
    * @default undefined
    * @description 当设置该值为 `number` 时，会使用该值作为标题宽度(像素)
    */
   labelWidth?: number | string;
   /**
    * Label显示位置
-   * @type "left" | `"right"` | `"top"`
+   * @type "left" | "right" | "top"
    * @default "top"
    * @description 当设置该值为 `"left"` 时，标签居左
    */
@@ -132,28 +132,28 @@ export type ComponentProps = {
   display?: boolean;
   /**
    * 表单额外依赖
-   * @type PaFormExDependentType | `undefined`
+   * @type PaFormExDependentType | undefined
    * @default undefined
    * @description 当设置该值时，会使用该值作为表单额外依赖
    */
   exDependent?: PaFormExDependentType;
   /**
    * 单元格额外依赖
-   * @type PaFormCellExDependentType | `undefined`
+   * @type PaFormCellExDependentType | undefined
    * @default undefined
    * @description 当设置该值时，会使用该值作为单元格额外依赖
    */
   exCellDependent?: PaFormCellExDependentType;
   /**
    * 单行最大分栏
-   * @type 1 | `2` | `3` | `4`
+   * @type 1 | 2 | 3 | 4
    * @default 4
    * @description 当设置该值为 `1` 时，一行最多显示1栏
    */
   maxSpan?: 1 | 2 | 3 | 4;
   /**
    * 单行强制分栏
-   * @type 1 | `2` | `3` | `4`
+   * @type 1 | 2 | 3 | 4
    * @default 1
    * @description 当设置该值为 `1` 时，一行强制显示1栏
    */
@@ -230,35 +230,35 @@ export type ComponentRef = {
 export type ComponentItemProps = {
   /**
    * 表单单元唯一Key
-   * @type string | `undefined`
+   * @type string | undefined
    * @default undefined
    * @description 当设置该值时，会使用该值作为表单单元唯一Key
    */
   prop?: string;
   /**
    * 自动划组时使用名
-   * @type LanguagePackageType | `string` | `undefined`
+   * @type LanguagePackageType | string | undefined
    * @default undefined
    * @description 当设置该值时，会使用该值作为自动划组时使用名
    */
   unitName?: LanguagePackageType | string;
   /**
    * 自动划组时提示
-   * @type LanguagePackageType | `string` | `undefined`
+   * @type LanguagePackageType | string | undefined
    * @default undefined
    * @description 当设置该值时，会使用该值作为自动划组时提示
    */
   unitTip?: LanguagePackageType | string;
   /**
    * 表单项标题
-   * @type LanguagePackageType | `string` | `undefined`
+   * @type LanguagePackageType | string | undefined
    * @default undefined
    * @description 当设置该值时，会使用该值作为表单项标题
    */
   label?: LanguagePackageType | string;
   /**
    * 表单项提示
-   * @type LanguagePackageType | `string` | `undefined`
+   * @type LanguagePackageType | string | undefined
    * @default undefined
    * @description 当设置该值时，会使用该值作为表单项提示
    */
@@ -272,7 +272,7 @@ export type ComponentItemProps = {
   disabled?: boolean;
   /**
    * 外置校验规则
-   * @type Array<FormItemRule> | `boolean`
+   * @type Array<FormItemRule> | boolean
    * @default undefined
    * @description 当设置该值时，会使用该值作为外置校验规则
    */
@@ -284,7 +284,7 @@ export type ComponentItemProps = {
     | boolean;
   /**
    * 单行分栏
-   * @type 1 | `2` | `3` | `4`
+   * @type 1 | 2 | 3 | 4
    * @default 1
    * @description 当设置该值为 `1` 时，会显示占行1/4栏
    */
@@ -298,7 +298,7 @@ export type ComponentItemProps = {
   required?: boolean;
   /**
    * 额外样式
-   * @type { style?: Record<string, string>; message?: string; class?: string; messageClass?: string; messageStyle?: Record<string, string> } | `undefined`
+   * @type { style?: Record<string, string>; message?: string; class?: string; messageClass?: string; messageStyle?: Record<string, string> } | undefined
    * @default undefined
    * @description 设置表单项的额外样式配置
    */
@@ -319,14 +319,14 @@ export type PaFormItemType = ComponentItemProps &
 export type ExMultipleConfigType = PaFormItemType & {
   /**
    * 多配置选项
-   * @type Array<MultipleConfigType> | `undefined`
+   * @type Array<MultipleConfigType> | undefined
    * @default undefined
    * @description 多配置选项列表
    */
   inMultipleConfig?: Array<MultipleConfigType>;
   /**
    * Tab表单配置
-   * @type Array<PaFormChildType> | `undefined`
+   * @type Array<PaFormChildType> | undefined
    * @default undefined
    * @description Tab表单配置列表
    */
@@ -335,14 +335,14 @@ export type ExMultipleConfigType = PaFormItemType & {
 export type MultipleConfigType = {
   /**
    * 自动划组时使用名
-   * @type string | `undefined`
+   * @type string | undefined
    * @default undefined
    * @description 自动划组时使用名称
    */
   unitName?: string;
   /**
    * 自动划组时提示
-   * @type string | `undefined`
+   * @type string | undefined
    * @default undefined
    * @description 自动划组时提示信息
    */
@@ -357,21 +357,21 @@ export type MultipleConfigType = {
 export type PaFormExDependentType = {
   /**
    * 禁用规则
-   * @type { [x: string]: (value: any) => boolean } | `undefined`
+   * @type { [x: string]: (value: any) => boolean } | undefined
    * @default undefined
    * @description 设置字段禁用规则
    */
   disabledRule?: { [x: string]: (value: any) => boolean };
   /**
    * 显示规则
-   * @type { [x: string]: (value: any) => boolean } | `undefined`
+   * @type { [x: string]: (value: any) => boolean } | undefined
    * @default undefined
    * @description 设置字段显示规则
    */
   displayRule?: { [x: string]: (value: any) => boolean };
   /**
    * 外置表单校验规则
-   * @type { [x: string]: Array<{ validator: (params: { rule: any; value: any; callback: any }) => void; trigger: string }> } | `undefined`
+   * @type { [x: string]: Array<{ validator: (params: { rule: any; value: any; callback: any }) => void; trigger: string }> } | undefined
    * @default undefined
    * @description 设置表单校验规则
    */
@@ -382,42 +382,42 @@ export type PaFormExDependentType = {
 export type PaFormCellExDependentType = {
   /**
    * 选择器请求Api
-   * @type { [x: string]: (params: { query: string }) => Promise<PaOptionType.SelectList> } | `undefined`
+   * @type { [x: string]: (params: { query: string }) => Promise<PaOptionType.SelectList> } | undefined
    * @default undefined
    * @description 选择器数据请求接口
    */
   select_RequestApi?: { [x: string]: (params: { query: string }) => Promise<PaOptionType.SelectList> };
   /**
    * 文件上传请求Api
-   * @type { [x: string]: Record<string, string> } | `undefined`
+   * @type { [x: string]: Record<string, string> } | undefined
    * @default undefined
    * @description 文件上传附加数据
    */
   file_attachedData?: { [x: string]: Record<string, string> };
   /**
    * 文件下载模板
-   * @type { [x: string]: () => void } | `undefined`
+   * @type { [x: string]: () => void } | undefined
    * @default undefined
    * @description 文件下载模板函数
    */
   file_downloadTemplate?: { [x: string]: () => void };
   /**
    * 时间选择器禁用日期函数
-   * @type { [x: string]: (date: any) => boolean } | `undefined`
+   * @type { [x: string]: (date: any) => boolean } | undefined
    * @default undefined
    * @description 时间选择器禁用日期函数
    */
   time_disabledDateFn?: { [x: string]: (date: any) => boolean };
   /**
    * 时间选择器快捷选项
-   * @type { [x: string]: Array<DatePickerShortcut> } | `undefined`
+   * @type { [x: string]: Array<DatePickerShortcut> } | undefined
    * @default undefined
    * @description 时间选择器快捷选项
    */
   time_shortcuts?: { [x: string]: Array<DatePickerShortcut> };
   /**
    * 点击查看内容函数
-   * @type { [x: string]: (prop: string, data: object) => void } | `undefined`
+   * @type { [x: string]: (prop: string, data: object) => void } | undefined
    * @default undefined
    * @description 点击标签回调函数
    */
@@ -426,14 +426,14 @@ export type PaFormCellExDependentType = {
 export type ConfigContextType = {
   /**
    * 表单标签宽度
-   * @type number | `string` | `undefined`
+   * @type number | string | undefined
    * @default undefined
    * @description 表单标签宽度
    */
   labelWidth?: number | string;
   /**
    * 表单标签位置
-   * @type "left" | `"right"` | `"top"` | `undefined`
+   * @type "left" | "right" | "top" | undefined
    * @default undefined
    * @description 表单标签位置
    */
@@ -520,7 +520,7 @@ export type ConfigContextType = {
 export interface FormItemRule {
   /**
    * 验证规则名称
-   * @type "any" | `"array"` | `"boolean"` | `"date"` | `"email"` | `"enum"` | `"float"` | `"hex"` | `"integer"` | `"method"` | `"number"` | `"object"` | `"regexp"` | `"string"` | `"url"` | `undefined`
+   * @type "any" | "array" | "boolean" | "date" | "email" | "enum" | "float" | "hex" | "integer" | "method" | "number" | "object" | "regexp" | "string" | "url" | undefined
    * @default undefined
    * @description 验证规则类型
    */
@@ -542,49 +542,49 @@ export interface FormItemRule {
     | "url";
   /**
    * 是否必填
-   * @type boolean | `undefined`
+   * @type boolean | undefined
    * @default undefined
    * @description 是否必填
    */
   required?: boolean;
   /**
    * 验证错误信息
-   * @type string | `undefined`
+   * @type string | undefined
    * @default undefined
    * @description 验证失败时的错误信息
    */
   message?: string;
   /**
    * 验证触发方式
-   * @type "blur" | `"change"` | `"input"` | `undefined`
+   * @type "blur" | "change" | "input" | undefined
    * @default undefined
    * @description 验证触发方式
    */
   trigger?: "blur" | "change" | "input";
   /**
    * 最小值
-   * @type number | `undefined`
+   * @type number | undefined
    * @default undefined
    * @description 最小值
    */
   min?: number;
   /**
    * 最大值
-   * @type number | `undefined`
+   * @type number | undefined
    * @default undefined
    * @description 最大值
    */
   max?: number;
   /**
    * 长度
-   * @type number | `undefined`
+   * @type number | undefined
    * @default undefined
    * @description 长度
    */
   len?: number;
   /**
    * 正则表达式
-   * @type RegExp | `undefined`
+   * @type RegExp | undefined
    * @default undefined
    * @description 正则表达式验证
    */
@@ -598,14 +598,14 @@ export interface FormItemRule {
   validator?: (params: { rule: FormItemRule; value: any; callback: (error?: string) => void }) => Promise<void> | void;
   /**
    * 枚举值
-   * @type Array<boolean | number | string | null | undefined> | `undefined`
+   * @type Array<boolean | number | string | null | undefined> | undefined
    * @default undefined
    * @description 枚举值列表
    */
   enum?: Array<boolean | number | string | null | undefined>;
   /**
    * 转换值
-   * @type (value: any) => any | `undefined`
+   * @type (value: any) => any | undefined
    * @default undefined
    * @description 转换值函数
    */
@@ -614,14 +614,14 @@ export interface FormItemRule {
 export type FormDataType = Record<string, any> & {
   /**
    * 表单名称
-   * @type string | `undefined`
+   * @type string | undefined
    * @default undefined
    * @description 表单名称
    */
   name?: string;
   /**
    * 是否有错误
-   * @type boolean | `undefined`
+   * @type boolean | undefined
    * @default undefined
    * @description 是否有错误
    */
@@ -670,14 +670,14 @@ export type SlotItemsPropsType = {
   item: PaFormItemType;
   /**
    * 数据
-   * @type Record<string, string> | `undefined`
+   * @type Record<string, string> | undefined
    * @default undefined
    * @description 表单数据
    */
   data?: Record<string, string>;
   /**
    * 标签宽度
-   * @type number | `undefined`
+   * @type number | undefined
    * @default undefined
    * @description 标签宽度
    */

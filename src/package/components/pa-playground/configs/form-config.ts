@@ -1,16 +1,16 @@
 /**
  * @description 导入类型定义
- * */
+ */
 import { PaStructureType } from "M_Types";
 /**
  * @description 导入单元格配置
- * */
+ */
 import { cellMapConfig } from "./cell-config";
 
 /**
  * @description 编辑表单列配置
- * @type `Array<PaStructureType.FormV2>`
- * */
+ * @type Array<PaStructureType.FormV2>
+ */
 export const editFormColConfig: Array<PaStructureType.FormV2> = [
   {
     unitName: { "en-US": "Basic Config", "zh-CN": "基础配置" },
@@ -35,8 +35,8 @@ export const editFormColConfig: Array<PaStructureType.FormV2> = [
 
 /**
  * @description 额外配置_表单
- * @type `Array<PaStructureType.FormV2>`
- * */
+ * @type Array<PaStructureType.FormV2>
+ */
 export const editOtherFormItemConfig: Array<PaStructureType.FormV2> = [
   {
     unitName: { "en-US": "Extra Config", "zh-CN": "额外配置" },

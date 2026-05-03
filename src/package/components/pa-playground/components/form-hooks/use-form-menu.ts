@@ -1,29 +1,29 @@
 /**
  * @description 导入 Vue 相关类型
- * */
+ */
 import { ComputedRef, ref } from "vue";
 
 /**
  * @description 表单菜单 Hooks 函数
  * @param position 位置信息
  * @returns 菜单相关状态和方法
- * */
+ */
 export function useMenuHooks(position: ComputedRef<{ x: number; y: number }>) {
-  /** @type `ReturnType<typeof ref<boolean>>` 右键菜单是否可见 */
+  /** @type ReturnType<typeof ref<boolean>> 右键菜单是否可见 */
   const contextMenuVisible = ref(false);
-  /** @type `ReturnType<typeof ref<number>>` 右键菜单 X 坐标 */
+  /** @type ReturnType<typeof ref<number>> 右键菜单 X 坐标 */
   const contextMenuX = ref(0);
-  /** @type `ReturnType<typeof ref<number>>` 右键菜单 Y 坐标 */
+  /** @type ReturnType<typeof ref<number>> 右键菜单 Y 坐标 */
   const contextMenuY = ref(0);
-  /** @type `ReturnType<typeof ref<number>>` 选中的表单项索引 */
+  /** @type ReturnType<typeof ref<number>> 选中的表单项索引 */
   const selectedFormItemIndex = ref(-1);
 
   /**
    * @description 显示右键菜单
    * @param event 鼠标事件
    * @param columnIndex 列索引
-   * @returns `void`
-   * */
+   * @returns void
+   */
   function showContextMenu(event: MouseEvent, columnIndex: number): void {
     event.stopPropagation();
     selectedFormItemIndex.value = columnIndex;
@@ -59,8 +59,8 @@ export function useMenuHooks(position: ComputedRef<{ x: number; y: number }>) {
 
   /**
    * @description 关闭右键菜单
-   * @returns `void`
-   * */
+   * @returns void
+   */
   function closeContextMenu(): void {
     contextMenuVisible.value = false;
     document.removeEventListener("click", closeContextMenu);

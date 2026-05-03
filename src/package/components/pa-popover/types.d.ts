@@ -19,35 +19,35 @@ import { LanguagePackageType } from "../manager-type";
 export type ComponentProps = {
   /**
    * 弹窗标识
-   * @type string | `undefined`
-   * @default ``
+   * @type string | undefined
+   * @default
    * @description 弹窗标识
    */
   id?: string;
   /**
    * 自定义类名
-   * @type Array<string> | `string` | `undefined`
+   * @type Array<string> | string | undefined
    * @default undefined
    * @description 当设置该值时，会添加到组件的类名中
    */
   class?: Array<string> | string;
   /**
    * 弹窗类名
-   * @type string | `undefined`
+   * @type string | undefined
    * @default undefined
    * @description 当设置该值时，会添加到弹窗的类名中
    */
   popoverClass?: string;
   /**
    * 自定义样式
-   * @type Record<string, string> | `undefined`
+   * @type Record<string, string> | undefined
    * @default undefined
    * @description 当设置该值时，会添加到组件的样式中
    */
   style?: Record<string, string>;
   /**
    * 自定义参考元素样式
-   * @type Record<string, string> | `undefined`
+   * @type Record<string, string> | undefined
    * @default undefined
    * @description 当设置该值时，会添加到参考元素的样式中
    */
@@ -61,7 +61,7 @@ export type ComponentProps = {
   disabled?: boolean;
   /**
    * 弹窗挂载位置
-   * @type string | `undefined`
+   * @type string | undefined
    * @default body
    * @description 弹窗挂载位置
    */
@@ -69,28 +69,28 @@ export type ComponentProps = {
   teleportTo?: string;
   /**
    * 弹窗位置
-   * @type "bottom" | "top" | `undefined`
+   * @type "bottom" | "top" | undefined
    * @default top
    * @description 弹窗位置
    */
   placement?: "bottom" | "top";
   /**
    * 触发方式
-   * @type "click" | "hover" | `undefined`
+   * @type "click" | "hover" | undefined
    * @default click
    * @description 触发方式
    */
   trigger?: "click" | "hover";
   /**
    * 内容类名
-   * @type string | `undefined`
-   * @default ``
+   * @type string | undefined
+   * @default
    * @description 内容类名
    */
   contentClassName?: string;
   /**
    * 弹出层宽度
-   * @type number | `undefined`
+   * @type number | undefined
    * @default 200
    * @description 弹出层宽度
    */
@@ -118,7 +118,7 @@ export type ComponentProps = {
   targetClose?: boolean;
   /**
    * 是否粘性
-   * @type "left" | "right" | `undefined`
+   * @type "left" | "right" | undefined
    * @default undefined
    * @description 是否粘性
    */
@@ -132,7 +132,7 @@ export type ComponentProps = {
   closeByScroll?: boolean;
   /**
    * 弹窗关闭前触发
-   * @type () => boolean | `undefined`
+   * @type () => boolean | undefined
    * @default undefined
    * @description 弹窗关闭前触发
    */

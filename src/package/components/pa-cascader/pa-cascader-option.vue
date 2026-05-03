@@ -92,13 +92,13 @@ const props = withDefaults(
     isCheck: boolean;
     / 是否多选** @type boolean */
     isMultiple: boolean;
-    / 是否筛选** @type boolean | `undefined` */
+    / 是否筛选** @type boolean | undefined */
     isFilter?: boolean;
-    / 当前选中值** @type Array<number | string> | `number` | `string` | `undefined` */
+    / 当前选中值** @type Array<number | string> | number | string | undefined */
     inValue?: Array<number | string> | number | string;
-    / 选项区域高度** @type string | `undefined` */
+    / 选项区域高度** @type string | undefined */
     optionsHeight?: string;
-    / 选项列表** @type Array<PaOptionType.Select> | `undefined` */
+    / 选项列表** @type Array<PaOptionType.Select> | undefined */
     exOptions?: Array<PaOptionType.Select>;
   }>(),
   {}

@@ -1,18 +1,18 @@
 /**
  * @description 导入 Vue 相关类型和生命周期
- * */
+ */
 import { ref, watch, Ref, onUnmounted } from "vue";
 
 /**
  * @description 自动保存选项接口
- * @type `object`
- * */
+ * @type object
+ */
 interface UseAutoSaveOptions {
-  /** @type `number` @default `800` 自动保存延迟时间（毫秒） */
+  /** @type number @default 800 自动保存延迟时间（毫秒） */
   delay?: number;
-  /** @type `boolean` @default `false` 是否立即执行一次保存 */
+  /** @type boolean @default false 是否立即执行一次保存 */
   immediate?: boolean;
-  /** @type `string` @default `undefined` sessionStorage 存储键名 */
+  /** @type string @default undefined sessionStorage 存储键名 */
   sessionKey?: string;
 }
 
@@ -22,7 +22,7 @@ interface UseAutoSaveOptions {
  * @param saveFn 保存函数（可选，如果提供了sessionKey则自动保存到sessionStorage）
  * @param options 配置选项
  * @returns 自动保存相关状态和方法
- * */
+ */
 export function useAutoSave(
   data: Ref<Record<string, any>>,
   saveFn: string | ((data: Record<string, any>) => Promise<void> | void),
@@ -30,19 +30,19 @@ export function useAutoSave(
 ) {
   const { delay = 800, immediate = false, sessionKey } = options;
 
-  /** @type `ReturnType<typeof ref<boolean>>` 是否正在保存 */
+  /** @type ReturnType<typeof ref<boolean>> 是否正在保存 */
   const isSaving = ref(false);
-  /** @type `ReturnType<typeof ref<number | null>>` 上次保存时间 */
+  /** @type ReturnType<typeof ref<number | null>> 上次保存时间 */
   const lastSaveTime = ref<number | null>(null);
-  /** @type `ReturnType<typeof ref<string | null>>` 保存错误信息 */
+  /** @type ReturnType<typeof ref<string | null>> 保存错误信息 */
   const saveError = ref<string | null>(null);
 
-  /** @type `number | null` 保存定时器 ID */
+  /** @type number | null 保存定时器 ID */
   let saveTimer: number | null = null;
-  /** @type `boolean` 是否激活 */
+  /** @type boolean 是否激活 */
   let isActive = true;
 
-  /** @type `(data: Record<string, any>) => Promise<void> | void` 最终的保存函数 */
+  /** @type (data: Record<string, any>) => Promise<void> | void 最终的保存函数 */
   let finalSaveFn: (data: Record<string, any>) => Promise<void> | void;
 
   if (typeof saveFn === "string") {
@@ -71,8 +71,8 @@ export function useAutoSave(
 
   /**
    * @description 保存函数
-   * @returns `Promise<void>`
-   * */
+   * @returns Promise<void>
+   */
   async function save(): Promise<void> {
     if (!isActive || isSaving.value) return;
 
@@ -95,8 +95,8 @@ export function useAutoSave(
 
   /**
    * @description 防抖保存
-   * @returns `void`
-   * */
+   * @returns void
+   */
   function debouncedSave(): void {
     if (saveTimer) {
       clearTimeout(saveTimer);
@@ -107,8 +107,8 @@ export function useAutoSave(
 
   /**
    * @description 开始自动保存
-   * @returns `void`
-   * */
+   * @returns void
+   */
   function start(): void {
     isActive = true;
     save();
@@ -117,8 +117,8 @@ export function useAutoSave(
 
   /**
    * @description 停止自动保存
-   * @returns `void`
-   * */
+   * @returns void
+   */
   function stop(): void {
     isActive = false;
     if (saveTimer) {
@@ -135,8 +135,8 @@ export function useAutoSave(
 
   /**
    * @description 手动保存
-   * @returns `void`
-   * */
+   * @returns void
+   */
   function saveManually(): void {
     if (saveTimer) {
       clearTimeout(saveTimer);
@@ -167,8 +167,8 @@ export function useAutoSave(
 
   /**
    * @description 获取保存的值
-   * @returns `Record<string, any> | null`
-   * */
+   * @returns Record<string, any> | null
+   */
   function getSavedValue(): Record<string, any> | null {
     try {
       const key = typeof saveFn === "string" ? saveFn : sessionKey;

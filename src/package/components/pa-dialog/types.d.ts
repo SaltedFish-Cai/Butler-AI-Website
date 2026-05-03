@@ -19,21 +19,21 @@ import { LanguagePackageType } from "../manager-type";
 export type ComponentProps = {
   /**
    * 组件唯一标识
-   * @type string | `undefined`
+   * @type string | undefined
    * @default undefined
    * @description 当设置该值时，会作为组件的唯一标识
    */
   id?: string;
   /**
    * 自定义类名
-   * @type Array<string> | `string` | `undefined`
+   * @type Array<string> | string | undefined
    * @default undefined
    * @description 当设置该值时，会添加到组件的类名中
    */
   class?: Array<string> | string;
   /**
    * 自定义样式
-   * @type Record<string, string> | `undefined`
+   * @type Record<string, string> | undefined
    * @default undefined
    * @description 当设置该值时，会添加到组件的样式中
    */
@@ -46,35 +46,35 @@ export type ComponentProps = {
   modelValue: boolean;
   /**
    * 弹窗尺寸
-   * @type 'full' | `'l'` | `'m'` | `'max'` | `'s'`
+   * @type 'full' | 'l' | 'm' | 'max' | 's'
    * @default 'm'
    * @description 设置弹窗的尺寸大小
    */
   size?: "full" | "l" | "m" | "max" | "s";
   /**
    * 弹窗高度
-   * @type number | `string` | `'auto'` | `'default'` | `undefined`
+   * @type number | string | 'auto' | 'default' | undefined
    * @default 'auto'
    * @description 设置弹窗的高度
    */
   height?: number | string | "auto" | "default";
   /**
    * 弹窗宽度
-   * @type number | `string` | `undefined`
+   * @type number | string | undefined
    * @default undefined
    * @description 设置弹窗的宽度
    */
   width?: number | string;
   /**
    * X轴偏移量
-   * @type number | `string` | `undefined`
+   * @type number | string | undefined
    * @default 0
    * @description 设置弹窗的X轴偏移量
    */
   offsetX?: number | string;
   /**
    * Y轴偏移量
-   * @type number | `string` | `undefined`
+   * @type number | string | undefined
    * @default 0
    * @description 设置弹窗的Y轴偏移量
    */
@@ -88,14 +88,14 @@ export type ComponentProps = {
   keepAlive?: boolean;
   /**
    * 弹窗标题
-   * @type LanguagePackageType | `string` | `undefined`
+   * @type LanguagePackageType | string | undefined
    * @default '标题'
    * @description 设置弹窗的标题
    */
   title?: LanguagePackageType | string;
   /**
    * 弹窗副标题
-   * @type LanguagePackageType | `string` | `undefined`
+   * @type LanguagePackageType | string | undefined
    * @default undefined
    * @description 设置弹窗的副标题
    */
@@ -123,7 +123,7 @@ export type ComponentProps = {
   useScrollX?: boolean;
   /**
    * 标题对齐方式
-   * @type 'center' | `'left'` | `'right'`
+   * @type 'center' | 'left' | 'right'
    * @default 'left'
    * @description 设置标题的对齐方式
    */
@@ -144,7 +144,7 @@ export type ComponentProps = {
   closeOnPressEscape?: boolean;
   /**
    * 内边距方向
-   * @type Array<'all' | 'bottom' | 'left' | 'right' | 'top'> | `undefined`
+   * @type Array<'all' | 'bottom' | 'left' | 'right' | 'top'> | undefined
    * @default undefined
    * @description 设置弹窗内容的内边距方向
    */

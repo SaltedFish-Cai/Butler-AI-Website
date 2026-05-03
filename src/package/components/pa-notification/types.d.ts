@@ -34,105 +34,105 @@ export type NotificationPosition = "bottom-left" | "bottom-right" | "top-left" |
 export type ComponentProps = {
   /**
    * 组件唯一标识
-   * @type string | `undefined`
+   * @type string | undefined
    * @default undefined
    * @description 当设置该值时，会作为组件的唯一标识
    */
   id?: string;
   /**
    * 自定义类名
-   * @type Array<string> | `string` | `undefined`
+   * @type Array<string> | string | undefined
    * @default undefined
    * @description 当设置该值时，会添加到组件的类名中
    */
   class?: Array<string> | string;
   /**
    * 自定义样式
-   * @type Record<string, string> | `undefined`
+   * @type Record<string, string> | undefined
    * @default undefined
    * @description 当设置该值时，会添加到组件的样式中
    */
   style?: Record<string, string>;
   /**
    * 通知标题
-   * @type LanguagePackageType | `string` | `undefined`
+   * @type LanguagePackageType | string | undefined
    * @default undefined
    * @description 通知标题，支持多语言
    */
   title?: LanguagePackageType | string;
   /**
    * 通知内容
-   * @type LanguagePackageType | `string` | `undefined`
+   * @type LanguagePackageType | string | undefined
    * @default undefined
    * @description 通知内容，支持多语言
    */
   message?: LanguagePackageType | string;
   /**
    * 通知类型
-   * @type NotificationType | `undefined`
+   * @type NotificationType | undefined
    * @default 'primary'
    * @description 通知类型，影响通知样式
    */
   type?: NotificationType;
   /**
    * 显示时间
-   * @type number | `undefined`
+   * @type number | undefined
    * @default 3000
    * @description 显示时间，单位毫秒，设为 0 则不会自动关闭
    */
   duration?: number;
   /**
    * 自定义类名
-   * @type string | `undefined`
+   * @type string | undefined
    * @default undefined
    * @description 自定义通知容器的类名
    */
   customClass?: string;
   /**
    * 点击回调
-   * @type (() => void) | `undefined`
+   * @type (() => void) | undefined
    * @default undefined
    * @description 点击通知时的回调函数
    */
   onClick?: () => void;
   /**
    * 关闭回调
-   * @type (() => void) | `undefined`
+   * @type (() => void) | undefined
    * @default undefined
    * @description 关闭通知时的回调函数
    */
   onClose?: () => void;
   /**
    * 偏移量
-   * @type number | `undefined`
+   * @type number | undefined
    * @default 20
    * @description 通知距离边缘的偏移量
    */
   offset?: number;
   /**
    * 显示位置
-   * @type NotificationPosition | `undefined`
+   * @type NotificationPosition | undefined
    * @default 'top-right'
    * @description 通知显示的位置
    */
   position?: NotificationPosition;
   /**
    * 是否使用HTML字符串
-   * @type boolean | `undefined`
+   * @type boolean | undefined
    * @default false
    * @description 是否使用 HTML 字符串渲染消息
    */
   dangerouslyUseHTMLString?: boolean;
   /**
    * 自定义图标
-   * @type VNode | `undefined`
+   * @type VNode | undefined
    * @default undefined
    * @description 自定义图标组件
    */
   icon?: VNode;
   /**
    * 层级
-   * @type number | `undefined`
+   * @type number | undefined
    * @default 2050
    * @description 通知的 z-index 值
    */
