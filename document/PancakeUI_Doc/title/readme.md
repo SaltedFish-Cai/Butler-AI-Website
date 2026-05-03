@@ -39,11 +39,11 @@
 | style   | 自定义样式     | `Record<string, string>`                                                              | -      |
 | line    | 是否使用下划线 | `boolean`                                                                             | `true` |
 | tips    | 提示信息       | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) `string` | -      |
-| padding | 内边距方向     | `Array<'top'` `'left'` `'bottom'` `'right'` `'all'` `'null'>`                         | -      |
+| padding | 内边距方向     | `Array<'all'` `'bottom'` `'left'` `'null'` `'right'` `'top'>`                         | -      |
 
 ## ComponentSlots
 
-| 插槽名称 | 描述               |
-| -------- | ------------------ |
-| default  | 标题内容           |
-| tips     | 自定义提示信息内容 |
+| 插槽名称  | 描述               |
+| --------- | ------------------ |
+| 'default' | 标题内容           |
+| 'tips'    | 自定义提示信息内容 |
