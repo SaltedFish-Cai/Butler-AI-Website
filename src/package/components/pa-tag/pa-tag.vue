@@ -34,92 +34,92 @@
 
 <script lang="ts" setup>
 /**
- * **模块导入**
+ * 模块导入
  * @description 导入 Vue 组合式 API
- * */
+ */
 import { onMounted, ref, Ref, watch, nextTick, inject, ComputedRef } from "vue";
 /**
- * **模块导入**
+ * 模块导入
  * @description 导入组件类型定义
- * */
+ */
 import { ComponentProps, ComponentEmits, TagType } from "./types";
 /**
- * **模块导入**
+ * 模块导入
  * @description 导入元素位置计算工具函数
- * */
+ */
 import { getElementPosition } from "../utils/getElementPosition";
 /**
- * **模块导入**
+ * 模块导入
  * @description 导入全局配置类型定义
- * */
+ */
 import { PancakeGlobalConfigType } from "../pa-manager/types";
 /**
- * **全局配置注入**
- * @type `ComputedRef<PancakeGlobalConfigType>`
+ * 全局配置注入
+ * @type ComputedRef<PancakeGlobalConfigType>
  * @description 从父组件注入的全局配置对象，包含语言设置等
- * */
+ */
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 /**
- * **当前语言**
- * @type `string`
+ * 当前语言
+ * @type string
  * @description 当前语言标识
- * */
+ */
 const language = PancakeGlobalConfig.value?.language?.value || "zh-CN";
 /**
- * **组件属性**
- * @type `ComponentProps`
+ * 组件属性
+ * @type ComponentProps
  * @description 组件的属性对象
- * */
+ */
 const props = withDefaults(defineProps<ComponentProps>(), { useCollapse: true });
 /**
- * **组件事件定义**
+ * 组件事件定义
  * @description 定义组件可触发的事件
- * */
+ */
 const emits = defineEmits<ComponentEmits>();
 /**
- * **弹窗组件引用**
- * @type `Ref`
+ * 弹窗组件引用
+ * @type Ref
  * @description 弹窗组件的引用
- * */
+ */
 const popoverRef = ref();
 /**
- * **显示的标签列表**
- * @type `Ref<Array<TagType>>`
+ * 显示的标签列表
+ * @type Ref<Array<TagType>>
  * @description 当前显示的标签列表
- * */
+ */
 const inValue = ref<Array<TagType>>(props.tagList || []);
 /**
- * **标签容器引用**
- * @type `Ref<HTMLDivElement>`
+ * 标签容器引用
+ * @type Ref<HTMLDivElement>
  * @description 标签容器的 DOM 引用
- * */
+ */
 const tagRef = ref<HTMLDivElement>();
 /**
- * **隐藏的标签列表**
- * @type `Ref<Array<TagType>>`
+ * 隐藏的标签列表
+ * @type Ref<Array<TagType>>
  * @description 被折叠隐藏的标签列表
- * */
+ */
 const hideValue: Ref<Array<TagType>> = ref([]);
 /**
- * **透明度状态**
- * @type `Ref<number>`
+ * 透明度状态
+ * @type Ref<number>
  * @description 用于动画效果的透明度值
- * */
+ */
 const isOpacity = ref(0);
 /**
- * **移除标签**
- * @param `e` `Event` 点击事件
- * @param `data` `{ label: string; value: boolean | number | string }` 标签数据
+ * 移除标签
+ * @param e - 点击事件
+ * @param data - 标签数据
  * @description 触发 removeTag 事件
- * */
+ */
 function removeTag(e: Event, data: TagType) {
   e.stopPropagation();
   emits("removeTag", data);
 }
 /**
- * **初始化弹窗显示**
+ * 初始化弹窗显示
  * @description 计算标签溢出，设置折叠显示
- * */
+ */
 function initPopover() {
   if (!props.useCollapse) {
     isOpacity.value = 1;
@@ -143,16 +143,16 @@ function initPopover() {
   }
 }
 /**
- * **组件挂载生命周期**
+ * 组件挂载生命周期
  * @description 初始化弹窗显示
- * */
+ */
 onMounted(() => {
   initPopover();
 });
 /**
- * **监听 tagList 变化**
+ * 监听 tagList 变化
  * @description 标签列表变化时重新计算显示
- * */
+ */
 watch(
   () => props.tagList,
   data => {

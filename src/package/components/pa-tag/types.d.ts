@@ -1,79 +1,97 @@
 /**
- * **模块导入**
- * @description 导入多语言类型定义
- * */
-import { LanguagePackageType } from "../manager-type";
-
+ * @module pa-tag
+ * @description 标签组件类型定义
+ */
 /**
- * **标签类型**
+ * 多语言类型
+ * @description 导入多语言类型定义
+ */
+import { LanguagePackageType } from "../manager-type";
+/**
+ * 标签类型
+ * @type {TagType}
  * @description 标签数据结构
- * */
+ */
 export type TagType = {
+  /**
+   * 标签显示文本
+   * @type `LanguagePackageType` | `string`
+   * @description 标签显示文本
+   */
   label: LanguagePackageType | string;
+  /**
+   * 标签值
+   * @type `boolean` | `number` | `string` | `undefined`
+   * @description 标签值
+   */
   value: boolean | number | string | undefined;
 };
-
+/**
+ * 组件属性
+ * @type {ComponentProps}
+ * @description 标签组件的属性类型
+ */
 export type ComponentProps = {
   /**
-   * **组件唯一标识**
+   * 组件唯一标识
    * @type `string` | `undefined`
    * @default `undefined`
    * @description 当设置该值时，会作为组件的唯一标识
-   * */
+   */
   id?: string;
   /**
-   * **自定义类名**
+   * 自定义类名
    * @type `Array<string>` | `string` | `undefined`
    * @default `undefined`
    * @description 当设置该值时，会添加到组件的类名中
-   * */
+   */
   class?: Array<string> | string;
   /**
-   * **自定义样式**
+   * 自定义样式
    * @type `Record<string, string>` | `undefined`
    * @default `undefined`
    * @description 当设置该值时，会添加到组件的样式中
-   * */
+   */
   style?: Record<string, string>;
   /**
-   * **标签值**
+   * 标签列表
    * @type `Array<TagType>` | `undefined`
    * @default `undefined`
    * @description 标签列表
-   * */
+   */
   tagList?: Array<TagType>;
   /**
-   * **是否折叠**
+   * 是否折叠
    * @type `boolean` | `undefined`
    * @default `true`
    * @description 是否折叠标签
-   * */
+   */
   useCollapse?: boolean;
   /**
-   * **弹出层宽度**
+   * 弹出层宽度
    * @type `number` | `undefined`
    * @default `undefined`
    * @description 弹出层宽度
-   * */
+   */
   popoverWidth?: number;
   /**
-   * **是否禁用**
+   * 是否禁用
    * @type `boolean` | `undefined`
    * @default `undefined`
    * @description 是否禁用标签删除功能
-   * */
+   */
   disabled?: boolean;
 };
-
 /**
- * **组件事件定义**
+ * 组件事件定义
+ * @type {ComponentEmits}
  * @description 定义组件可触发的事件
- * */
+ */
 export type ComponentEmits = {
   /**
-   * **删除标签事件**
-   * @param `data` `{ label: string; value: boolean | number | string }` 标签数据
-   * @returns `void`
-   * */
+   * 删除标签事件
+   * @param data - 标签数据
+   * @returns void
+   */
   (e: "removeTag", data: TagType): void;
 };
