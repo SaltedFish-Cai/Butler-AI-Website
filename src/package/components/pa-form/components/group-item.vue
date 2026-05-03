@@ -50,30 +50,60 @@
   </template>
 </template>
 <script lang="tsx" setup>
-/** @description Vue 核心响应式 API */
+/**
+ *
+ * @description Vue 核心响应式 API
+ */
 import { Ref, ref, inject, computed, onMounted } from "vue";
-/** @description 基础表单项组件 */
+/**
+ *
+ * @description 基础表单项组件
+ */
 import formItem from "../form-basics-element.vue";
-/** @description 分组项类型定义 */
+/**
+ *
+ * @description 分组项类型定义
+ */
 import { GroupItemPropsType } from "../item";
-/** @description 表单类型定义 */
+/**
+ *
+ * @description 表单类型定义
+ */
 import { ConfigContextType, PaFormChildType, PaFormItemType } from "../types";
-/** @description 选项类型定义 */
+/**
+ *
+ * @description 选项类型定义
+ */
 import { PaOptionType } from "../../manager-type";
-/** @description 数据查找工具 */
+/**
+ *
+ * @description 数据查找工具
+ */
 import { findData } from "../../pa-select/find-data";
-/** @description 工具函数库 */
+/**
+ *
+ * @description 工具函数库
+ */
 import _ from "lodash";
 const { isNil, isEqual } = _;
-/** @description 组件属性 */
+/**
+ *
+ * @description 组件属性
+ */
 const props = withDefaults(defineProps<GroupItemPropsType>(), {});
 
-/** @description 计算展示状态 */
+/**
+ *
+ * @description 计算展示状态
+ */
 const useDisplay = computed(() => {
   return !isNil(props.item.display) ? props.item.display : injectConfigContext.value.display || false;
 });
 
-/** @description 配置上下文注入 */
+/**
+ *
+ * @description 配置上下文注入
+ */
 const injectConfigContext = inject<Ref<ConfigContextType>>(
   "configContext",
   ref({
@@ -92,12 +122,18 @@ const injectConfigContext = inject<Ref<ConfigContextType>>(
     noLabel: false
   })
 );
-/** @description 设置校验规则注入 */
+/**
+ *
+ * @description 设置校验规则注入
+ */
 const injectSetRule = inject<
   (item: PaFormChildType | PaFormItemType, type?: string, options?: { titleKey?: string; removeList?: string[] }) => void
 >("setRule", () => {});
 
-/** @description 单选选项列表 */
+/**
+ *
+ * @description 单选选项列表
+ */
 const radioOptions = computed(() => {
   const val = injectConfigContext.value.data[String(props.item.prop)];
   let opts = (injectConfigContext.value.exOptions[String(props.item.prop)] ||
@@ -140,7 +176,10 @@ function radioChange({ value }) {
   }
 }
 
-/** @description 组件挂载时初始化单选状态 */
+/**
+ *
+ * @description 组件挂载时初始化单选状态
+ */
 onMounted(() => {
   radioChange({ value: injectConfigContext.value.data[String(props.item.prop)] });
 });

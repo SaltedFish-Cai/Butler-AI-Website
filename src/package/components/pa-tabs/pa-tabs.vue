@@ -590,7 +590,7 @@ const handleWheel = (event: WheelEvent) => {
 };
 /**
  * 监听 modelValue 变化
- * @param data - | `undefined` 当前 modelValue 值
+ * @param data - | undefined 当前 modelValue 值
  * @description 同步激活标签页状态
  */
 watch(

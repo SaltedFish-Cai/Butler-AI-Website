@@ -215,7 +215,7 @@ export type ComponentEmits = {
   (e: "change", payload: { value: Array<FileDataType>; oldValue: Array<FileDataType> }): void;
   /**
    * 状态变更事件
-   * @param state - | `"Pending"` 当前状态
+   * @param state - | "Pending" 当前状态
    * @returns void
    */
   (e: "changeState", state: "Pending" | "Working"): void;

@@ -9,13 +9,25 @@ import { ComputedRef, ref } from "vue";
  * @returns 菜单相关状态和方法
  */
 export function useMenuHooks(position: ComputedRef<{ x: number; y: number }>) {
-  /** @type ReturnType<typeof ref<boolean>> 右键菜单是否可见 */
+  /**
+   * @type ReturnType<typeof ref<boolean>> 右键菜单是否可见
+   * @description @type ReturnType<typeof ref<boolean>> 右键菜单是否可见
+   */
   const contextMenuVisible = ref(false);
-  /** @type ReturnType<typeof ref<number>> 右键菜单 X 坐标 */
+  /**
+   * @type ReturnType<typeof ref<number>> 右键菜单 X 坐标
+   * @description @type ReturnType<typeof ref<number>> 右键菜单 X 坐标
+   */
   const contextMenuX = ref(0);
-  /** @type ReturnType<typeof ref<number>> 右键菜单 Y 坐标 */
+  /**
+   * @type ReturnType<typeof ref<number>> 右键菜单 Y 坐标
+   * @description @type ReturnType<typeof ref<number>> 右键菜单 Y 坐标
+   */
   const contextMenuY = ref(0);
-  /** @type ReturnType<typeof ref<number>> 选中的表单项索引 */
+  /**
+   * @type ReturnType<typeof ref<number>> 选中的表单项索引
+   * @description @type ReturnType<typeof ref<number>> 选中的表单项索引
+   */
   const selectedFormItemIndex = ref(-1);
 
   /**

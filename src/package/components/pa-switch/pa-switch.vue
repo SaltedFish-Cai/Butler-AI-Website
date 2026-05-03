@@ -148,8 +148,8 @@ function changeEvent(): void {
 
 /**
  * 查找显示数据
- * @param `data` 要查找的数据
- * @param `opts` 配置选项
+ * @param data 要查找的数据
+ * @param opts 配置选项
  * @returns string 显示的文本
  * @description 根据值查找对应的显示文本
  */
@@ -162,8 +162,8 @@ function findData(data: boolean | number | string | undefined, opts: any): strin
 
 /**
  * 转换选项类型
- * @param `type` 值的类型
- * @param `opts` 配置选项
+ * @param type 值的类型
+ * @param opts 配置选项
  * @returns object 转换后的选项
  * @description 根据值的类型转换 activeValue 和 inActiveValue
  */

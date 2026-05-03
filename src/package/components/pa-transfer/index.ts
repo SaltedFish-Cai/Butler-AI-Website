@@ -12,7 +12,10 @@ import PaTransfer from "./pa-transfer.vue";
  * 模块导入
  * @description 注册 PaTransfer 组件
  */
-/** @param app - Vue 应用实例 */
+/**
+ * @param app - Vue 应用实例
+ * @description @param app - Vue 应用实例
+ */
 /**
  * 模块导入
  * @description 注册 PaTransfer 组件到 Vue 应用

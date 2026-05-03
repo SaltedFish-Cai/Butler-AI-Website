@@ -19,7 +19,10 @@ import { M_MessageBox } from "../../../feedback";
  */
 import { PaPlaygroundItem, MStructureType } from "../../types";
 
-/** @type number 表格最小宽度 */
+/**
+ * @type number 表格最小宽度
+ * @description @type number 表格最小宽度
+ */
 const MIN_WIDTH = 520;
 
 /**
@@ -54,7 +57,10 @@ export function useFunctionHooks(
   selectedColumnIndex: Ref<number>,
   closeContextMenu: () => void
 ) {
-  /** @type ComputedRef<number> 列数量 */
+  /**
+   * @type ComputedRef<number> 列数量
+   * @description @type ComputedRef<number> 列数量
+   */
   const columnCount = computed(() => tableConfigExOperation.value.length);
 
   /**

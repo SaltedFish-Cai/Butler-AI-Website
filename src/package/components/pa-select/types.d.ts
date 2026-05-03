@@ -162,7 +162,7 @@ export type ComponentProps = {
 export type ComponentEmits = {
   /**
    * 双向绑定更新事件
-   * @param value - | `number` | `string` 选择值
+   * @param value - | number | string 选择值
    * @returns void
    */
   (e: "update:modelValue", value: Array<number | string> | number | string): void;

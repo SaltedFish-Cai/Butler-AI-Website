@@ -16,31 +16,70 @@ import { M_MessageBox } from "../../feedback";
  * @type object
  */
 interface UseSvgHooksReturn {
-  /** @type ReturnType<typeof ref<number>> 缩放比例 */
+  /**
+   * @type ReturnType<typeof ref<number>> 缩放比例
+   * @description @type ReturnType<typeof ref<number>> 缩放比例
+   */
   scale: ReturnType<typeof ref<number>>;
-  /** @type ReturnType<typeof ref<number>> X 轴平移量 */
+  /**
+   * @type ReturnType<typeof ref<number>> X 轴平移量
+   * @description @type ReturnType<typeof ref<number>> X 轴平移量
+   */
   translateX: ReturnType<typeof ref<number>>;
-  /** @type ReturnType<typeof ref<number>> Y 轴平移量 */
+  /**
+   * @type ReturnType<typeof ref<number>> Y 轴平移量
+   * @description @type ReturnType<typeof ref<number>> Y 轴平移量
+   */
   translateY: ReturnType<typeof ref<number>>;
-  /** @type ReturnType<typeof ref<boolean>> 是否正在拖拽 */
+  /**
+   * @type ReturnType<typeof ref<boolean>> 是否正在拖拽
+   * @description @type ReturnType<typeof ref<boolean>> 是否正在拖拽
+   */
   isDragging: ReturnType<typeof ref<boolean>>;
-  /** @type Ref<string> 变换矩阵 */
+  /**
+   * @type Ref<string> 变换矩阵
+   * @description @type Ref<string> 变换矩阵
+   */
   transform: Ref<string>;
-  /** @type Ref<Record<string, string>> 背景样式 */
+  /**
+   * @type Ref<Record<string, string>> 背景样式
+   * @description @type Ref<Record<string, string>> 背景样式
+   */
   backgroundStyle: Ref<Record<string, string>>;
-  /** @type (event: WheelEvent) => void 处理鼠标滚轮缩放 */
+  /**
+   * @type (event: WheelEvent) => void 处理鼠标滚轮缩放
+   * @description @type (event: WheelEvent) => void 处理鼠标滚轮缩放
+   */
   handleWheel: (event: WheelEvent) => void;
-  /** @type (event: MouseEvent) => void 处理鼠标按下 */
+  /**
+   * @type (event: MouseEvent) => void 处理鼠标按下
+   * @description @type (event: MouseEvent) => void 处理鼠标按下
+   */
   handleMouseDown: (event: MouseEvent) => void;
-  /** @type (index: number) => void 处理删除页面 */
+  /**
+   * @type (index: number) => void 处理删除页面
+   * @description @type (index: number) => void 处理删除页面
+   */
   handleDeletePage: (index: number) => void;
-  /** @type (event: MouseEvent) => void 处理鼠标移动 */
+  /**
+   * @type (event: MouseEvent) => void 处理鼠标移动
+   * @description @type (event: MouseEvent) => void 处理鼠标移动
+   */
   handleMouseMove: (event: MouseEvent) => void;
-  /** @type () => void 处理鼠标释放 */
+  /**
+   * @type () => void 处理鼠标释放
+   * @description @type () => void 处理鼠标释放
+   */
   handleMouseUp: () => void;
-  /** @type () => { adminX: number; adminY: number; adminScale: number } 获取 SVG 变换矩阵 */
+  /**
+   * @type () => { adminX: number; adminY: number; adminScale: number } 获取 SVG 变换矩阵
+   * @description @type () => { adminX: number; adminY: number; adminScale: number } 获取 SVG 变换矩阵
+   */
   getSvgTransform: () => { adminX: number; adminY: number; adminScale: number };
-  /** @type () => void 更新管理配置 */
+  /**
+   * @type () => void 更新管理配置
+   * @description @type () => void 更新管理配置
+   */
   updateAdminConfig: () => void;
 }
 
@@ -51,25 +90,49 @@ interface UseSvgHooksReturn {
  * @returns SVG Hooks 返回对象
  */
 export function useSvgHooks(lockScroll: Ref<boolean>, adminConfig: Ref<PaPlaygroundType>): UseSvgHooksReturn {
-  /** @type ReturnType<typeof ref<number>> 缩放比例 */
+  /**
+   * @type ReturnType<typeof ref<number>> 缩放比例
+   * @description @type ReturnType<typeof ref<number>> 缩放比例
+   */
   const scale = ref(adminConfig.value.adminScale || 1);
-  /** @type ReturnType<typeof ref<number>> X 轴平移量 */
+  /**
+   * @type ReturnType<typeof ref<number>> X 轴平移量
+   * @description @type ReturnType<typeof ref<number>> X 轴平移量
+   */
   const translateX = ref(adminConfig.value.adminX || 0);
-  /** @type ReturnType<typeof ref<number>> Y 轴平移量 */
+  /**
+   * @type ReturnType<typeof ref<number>> Y 轴平移量
+   * @description @type ReturnType<typeof ref<number>> Y 轴平移量
+   */
   const translateY = ref(adminConfig.value.adminY || 0);
-  /** @type ReturnType<typeof ref<boolean>> 是否正在拖拽 */
+  /**
+   * @type ReturnType<typeof ref<boolean>> 是否正在拖拽
+   * @description @type ReturnType<typeof ref<boolean>> 是否正在拖拽
+   */
   const isDragging = ref(false);
-  /** @type ReturnType<typeof ref<number>> 上一次鼠标 X 坐标 */
+  /**
+   * @type ReturnType<typeof ref<number>> 上一次鼠标 X 坐标
+   * @description @type ReturnType<typeof ref<number>> 上一次鼠标 X 坐标
+   */
   const lastMouseX = ref(0);
-  /** @type ReturnType<typeof ref<number>> 上一次鼠标 Y 坐标 */
+  /**
+   * @type ReturnType<typeof ref<number>> 上一次鼠标 Y 坐标
+   * @description @type ReturnType<typeof ref<number>> 上一次鼠标 Y 坐标
+   */
   const lastMouseY = ref(0);
 
-  /** @type Ref<string> 变换矩阵 */
+  /**
+   * @type Ref<string> 变换矩阵
+   * @description @type Ref<string> 变换矩阵
+   */
   const transform: Ref<string> = computed(() => {
     return `translate(${translateX.value}, ${translateY.value}) scale(${scale.value})`;
   });
 
-  /** @type Ref<Record<string, string>> 背景样式 */
+  /**
+   * @type Ref<Record<string, string>> 背景样式
+   * @description @type Ref<Record<string, string>> 背景样式
+   */
   const backgroundStyle = computed(() => {
     const baseSize = 10.68;
     const baseDotSize = 1;

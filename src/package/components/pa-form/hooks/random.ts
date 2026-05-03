@@ -1,5 +1,5 @@
 /**
- * **生成随机字符串**
+ * 生成随机字符串
  * @description 生成指定长度的随机字符串，可选添加前缀
  * @param prefix 随机字符串前缀，默认为空
  * @param randomLength 随机字符串长度，默认为8
@@ -51,7 +51,7 @@ function random(prefix = "", randomLength = 8) {
   return name;
 }
 /**
- * **导出随机函数**
+ * 导出随机函数
  * @description 导出随机字符串生成函数
  */
 export { random };

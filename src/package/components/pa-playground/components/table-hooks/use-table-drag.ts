@@ -14,7 +14,10 @@ import { Ref, ref } from "vue";
  * @returns 拖拽相关方法
  */
 export function useDragHooks(tableConfig: Ref<Array<PaStructureType.TableV2>>, tableData: Ref<Array<Array<any>>>) {
-  /** @type ReturnType<typeof ref<number | null>> 被拖拽的列索引 */
+  /**
+   * @type ReturnType<typeof ref<number | null>> 被拖拽的列索引
+   * @description @type ReturnType<typeof ref<number | null>> 被拖拽的列索引
+   */
   const draggedColumn = ref<number | null>(null);
 
   /**

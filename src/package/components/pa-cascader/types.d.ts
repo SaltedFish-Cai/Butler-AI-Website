@@ -151,7 +151,7 @@ export type ComponentProps = {
 export type ComponentEmits = {
   /**
    * 更新绑定值事件
-   * @param value - | `number` | `string` 新的绑定值
+   * @param value - | number | string 新的绑定值
    * @returns void
    */
   (e: "update:modelValue", value: Array<number | string> | number | string): void;

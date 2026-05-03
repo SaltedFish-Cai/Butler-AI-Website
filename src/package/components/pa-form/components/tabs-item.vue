@@ -215,15 +215,30 @@
 </template>
 
 <script lang="ts" setup>
-/** @description Vue 核心响应式 API */
+/**
+ *
+ * @description Vue 核心响应式 API
+ */
 import { ref, Ref, watch, nextTick, computed, inject } from "vue";
-/** @description 随机字符串生成工具 */
+/**
+ *
+ * @description 随机字符串生成工具
+ */
 import { random } from "../hooks/random";
-/** @description 基础表单项组件 */
+/**
+ *
+ * @description 基础表单项组件
+ */
 import formItem from "../form-basics-element.vue";
-/** @description 表单控制器组件 */
+/**
+ *
+ * @description 表单控制器组件
+ */
 import mFormV2Control from "../pa-form-control.vue";
-/** @description 表单类型定义 */
+/**
+ *
+ * @description 表单类型定义
+ */
 import { ConfigContextType, ExMultipleConfigType, FormItemRule } from "../types";
 
 export type TabsItemPropType = {
@@ -232,10 +247,16 @@ export type TabsItemPropType = {
   rules?: Record<string, Record<string, FormItemRule | FormItemRule[]>>;
 };
 
-/** @description 组件属性 */
+/**
+ *
+ * @description 组件属性
+ */
 const props = defineProps<TabsItemPropType>();
 
-/** @description 配置上下文注入 */
+/**
+ *
+ * @description 配置上下文注入
+ */
 const injectConfigContext = inject<Ref<ConfigContextType>>(
   "configContext",
   ref({
@@ -255,19 +276,37 @@ const injectConfigContext = inject<Ref<ConfigContextType>>(
   })
 );
 
-/** @description 组件事件 */
+/**
+ *
+ * @description 组件事件
+ */
 const emit = defineEmits<{ (e: "setRef", data: any): void }>();
 
-/** @description Tab表单引用 */
+/**
+ *
+ * @description Tab表单引用
+ */
 const tabsFormRef = ref();
-/** @description 当前步骤索引 */
+/**
+ *
+ * @description 当前步骤索引
+ */
 const stepsIndex = ref("0");
-/** @description 编辑中的标题索引 */
+/**
+ *
+ * @description 编辑中的标题索引
+ */
 const editTitleIndex = ref("");
-/** @description 基础标题键名 */
+/**
+ *
+ * @description 基础标题键名
+ */
 const baseTitleKey = random();
 
-/** @description 标题数组 */
+/**
+ *
+ * @description 标题数组
+ */
 const titleArr = computed(() => {
   const data = injectConfigContext.value.data[String(props.item.prop)]?.map((item: Record<string, any>) => {
     return props.item.titleKey
@@ -278,7 +317,10 @@ const titleArr = computed(() => {
   return data || [];
 });
 
-/** @description 对比中被删除的Tab */
+/**
+ *
+ * @description 对比中被删除的Tab
+ */
 const contrastDeletedTab = computed(() => {
   const { item } = props;
   const { data, contrastData } = injectConfigContext.value;
@@ -297,10 +339,16 @@ const contrastDeletedTab = computed(() => {
   return list;
 });
 
-/** @description 锁定状态 */
+/**
+ *
+ * @description 锁定状态
+ */
 let lock = false;
 
-/** @description Tab表单校验引用映射 */
+/**
+ *
+ * @description Tab表单校验引用映射
+ */
 const ruleTabsFormRef: Record<string, { ref: any; prop: Record<string, boolean | string> }> = {};
 /**
  * 设置Tab表单校验引用
@@ -448,7 +496,10 @@ defineExpose({ submitTabsForm });
 
 emit("setRef", { submitTabsForm });
 
-/** @description 监听Tab表单数据变化并初始化 */
+/**
+ *
+ * @description 监听Tab表单数据变化并初始化
+ */
 watch(
   () => injectConfigContext.value.data[String(props.item.prop)],
   data => {

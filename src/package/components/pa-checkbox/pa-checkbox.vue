@@ -119,8 +119,8 @@ const emits = defineEmits<ComponentEmits>();
 let oldValue: Array<boolean | number | string> = props.modelValue || [];
 /**
  * 处理变更事件
- * @param `value` 选中的值
- * @param `option` 选中的选项
+ * @param value 选中的值
+ * @param option 选中的选项
  * @returns void
  * @description 处理复选框选中状态变更
  */
@@ -137,7 +137,7 @@ function changeEvent({ value, option }: { value: boolean | number | string; opti
 }
 /**
  * 查找显示数据
- * @param `data` 要查找的数据
+ * @param data 要查找的数据
  * @returns string 显示的文本
  * @description 根据值查找对应的显示文本
  */

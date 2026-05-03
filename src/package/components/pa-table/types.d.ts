@@ -180,8 +180,8 @@ export interface ComponentProps {
   /**
    * 请求表格数据的Api
    * @type (params: any, id?: string) => Promise<any> | any
-   * @param `params` 请求参数
-   * @param `id` 表格的唯一ID
+   * @param params 请求参数
+   * @param id 表格的唯一ID
    * @returns Promise<any> | any
    * @description 当设置该值时，会使用该值作为请求表格数据的Api
    * @example
@@ -383,7 +383,7 @@ export interface ComponentProps {
   /**
    * 下载按钮请求接口
    * @type (params: any) => Promise<any> | any
-   * @param `params` 请求参数
+   * @param params 请求参数
    * @returns Promise<any> | any
    * @description 当设置该值时，会使用该值作为下载按钮请求接口
    * @example
@@ -396,7 +396,7 @@ export interface ComponentProps {
   /**
    * 过滤 `选择表状态下` 可选择数据
    * @type (params: any) => Promise<any> | any
-   * @param `params` 请求参数
+   * @param params 请求参数
    * @returns Promise<any> | any
    * @description 当设置该值时，会使用该值作为过滤 `选择表状态下` 可选择数据
    * @example
@@ -438,7 +438,7 @@ export interface ComponentProps {
   /**
    * 自定义合计方法
    * @type (params: any) => any
-   * @param `params` 请求参数
+   * @param params 请求参数
    * @returns string[]
    * @description 当设置该值时，会使用该值作为自定义合计方法
    * @example
@@ -464,8 +464,8 @@ export interface ComponentProps {
   /**
    * 选择表格行回调
    * @type (selected: Record<string, string>[], row: Record<string, string>) => void
-   * @param `selected` 已选择的行数据
-   * @param `row` 为当前行数据
+   * @param selected 已选择的行数据
+   * @param row 为当前行数据
    * @returns void
    * @description 当选择表格行时，会触发该回调
    * @example
@@ -478,10 +478,10 @@ export interface ComponentProps {
   /**
    * 选择表格全选按钮回调
    * @type (value: boolean, selection: Record<string, string>[], allValue: boolean, allSelection: Record<string, string>[]) => void
-   * @param `value` 当前页是否被全选
-   * @param `selection` 当前页被全选数据
-   * @param `allValue` 全部页是否被全选
-   * @param `allSelection` 全部页被全选数据
+   * @param value 当前页是否被全选
+   * @param selection 当前页被全选数据
+   * @param allValue 全部页是否被全选
+   * @param allSelection 全部页被全选数据
    * @returns void
    * @description 当选择表格全选按钮时，会触发该回调
    * @example
@@ -494,8 +494,8 @@ export interface ComponentProps {
   /**
    * 选择表格行回调
    * @type (selected: Record<string, string>[], row: Record<string, string>) => void
-   * @param `selected` 已选择的行数据
-   * @param `row` 为当前行数据
+   * @param selected 已选择的行数据
+   * @param row 为当前行数据
    * @returns void
    * @description 当选择表格行时，会触发该回调
    * @example
@@ -508,9 +508,9 @@ export interface ComponentProps {
   /**
    * 打开/关闭表格行子数据回调
    * @type (index: number, row: Record<string, string>, state: boolean) => void
-   * @param `index` 为当前行索引
-   * @param `row` 为当前行数据
-   * @param `state` 为当前行打开状态
+   * @param index 为当前行索引
+   * @param row 为当前行数据
+   * @param state 为当前行打开状态
    * @returns void
    * @description 当打开/关闭表格行子数据时，会触发该回调
    * @example
@@ -523,7 +523,7 @@ export interface ComponentProps {
   /**
    * 打开/关闭全部表格行子数据按钮回调
    * @type (state: boolean) => void
-   * @param `state` 是否打开全部表格行子数据
+   * @param state 是否打开全部表格行子数据
    * @returns void
    * @description 当打开/关闭全部表格行子数据按钮时，会触发该回调
    * @example
@@ -536,7 +536,7 @@ export interface ComponentProps {
   /**
    * 首次渲染完成后回调
    * @type (getTableList: (params?: paramsType) => Promise<any>) => void
-   * @param `getTableList` 为获取表格数据方法
+   * @param getTableList 为获取表格数据方法
    * @returns void
    * @description 当首次渲染完成后回调时，会触发该回调
    * @example
@@ -551,10 +551,10 @@ export interface ComponentProps {
   /**
    * 单元格变化回调
    * @type ({prop, value, oldValue, option}) => void
-   * @param `prop` 为当前单元格属性
-   * @param `value` 为当前单元格值
-   * @param `oldValue` 为当前单元格旧值
-   * @param `option` 为当前单元格选项
+   * @param prop 为当前单元格属性
+   * @param value 为当前单元格值
+   * @param oldValue 为当前单元格旧值
+   * @param option 为当前单元格选项
    * @returns void
    * @description 当单元格变化时，会触发该回调
    * @example

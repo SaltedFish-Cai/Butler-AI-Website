@@ -1,5 +1,5 @@
 /**
- * **省市区字典数据**
+ * 省市区字典数据
  * @description 全国省市区三级联动数据
  */
 export const GetAllProvinceCityInfo = {

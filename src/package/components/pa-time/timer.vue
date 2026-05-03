@@ -178,7 +178,7 @@ function formatTimeUnit(value: number): string {
 /**
  * 验证时间输入
  * @param value - 输入值
- * @param type - | `"minute"` | `"second"` 时间类型
+ * @param type - | "minute" | "second" 时间类型
  * @returns boolean 是否有效
  * @description 验证输入值是否在有效范围内
  */
@@ -202,7 +202,7 @@ function validateTimeInput(value: string, type: "hour" | "minute" | "second"): b
 /**
  * 处理时间输入
  * @param event - 输入事件
- * @param type - | `"minute"` | `"second"` 时间类型
+ * @param type - | "minute" | "second" 时间类型
  * @description 处理时间输入框的输入事件
  */
 function handleTimeInput(event: Event, type: "hour" | "minute" | "second") {
@@ -249,7 +249,7 @@ function handlePopoverChange(data) {
 /**
  * 处理键盘事件
  * @param event - 键盘事件
- * @param type - | `"minute"` | `"second"` 时间类型
+ * @param type - | "minute" | "second" 时间类型
  * @description 处理时间输入框的键盘事件
  */
 function handleTimeKeyDown(event: KeyboardEvent, type: "hour" | "minute" | "second") {
@@ -288,7 +288,7 @@ function handleTimeKeyDown(event: KeyboardEvent, type: "hour" | "minute" | "seco
 
 /**
  * 调整时间值
- * @param type - | `"minute"` | `"second"` 时间类型
+ * @param type - | "minute" | "second" 时间类型
  * @param delta - 增量
  * @description 根据增量调整时间值
  */
@@ -434,7 +434,7 @@ onUnmounted(() => {
 
 /**
  * 处理焦点事件
- * @param type - | `"minute"` | `"second"` 焦点类型
+ * @param type - | "minute" | "second" 焦点类型
  * @description 处理输入框获得焦点
  */
 function handleFocus(type: "hour" | "minute" | "second") {

@@ -15,13 +15,13 @@ import { LanguagePackageType } from "../manager-type";
 export type TagType = {
   /**
    * 标签显示文本
-   * @type `LanguagePackageType` | `string`
+   * @type LanguagePackageType | string
    * @description 标签显示文本
    */
   label: LanguagePackageType | string;
   /**
    * 标签值
-   * @type `boolean` | `number` | `string` | `undefined`
+   * @type boolean | number | string | undefined
    * @description 标签值
    */
   value: boolean | number | string | undefined;
@@ -34,50 +34,50 @@ export type TagType = {
 export type ComponentProps = {
   /**
    * 组件唯一标识
-   * @type `string` | `undefined`
-   * @default `undefined`
+   * @type string | undefined
+   * @default undefined
    * @description 当设置该值时，会作为组件的唯一标识
    */
   id?: string;
   /**
    * 自定义类名
-   * @type `Array<string>` | `string` | `undefined`
-   * @default `undefined`
+   * @type Array<string> | string | undefined
+   * @default undefined
    * @description 当设置该值时，会添加到组件的类名中
    */
   class?: Array<string> | string;
   /**
    * 自定义样式
-   * @type `Record<string, string>` | `undefined`
-   * @default `undefined`
+   * @type Record<string, string> | undefined
+   * @default undefined
    * @description 当设置该值时，会添加到组件的样式中
    */
   style?: Record<string, string>;
   /**
    * 标签列表
-   * @type `Array<TagType>` | `undefined`
-   * @default `undefined`
+   * @type Array<TagType> | undefined
+   * @default undefined
    * @description 标签列表
    */
   tagList?: Array<TagType>;
   /**
    * 是否折叠
-   * @type `boolean` | `undefined`
-   * @default `true`
+   * @type boolean | undefined
+   * @default true
    * @description 是否折叠标签
    */
   useCollapse?: boolean;
   /**
    * 弹出层宽度
-   * @type `number` | `undefined`
-   * @default `undefined`
+   * @type number | undefined
+   * @default undefined
    * @description 弹出层宽度
    */
   popoverWidth?: number;
   /**
    * 是否禁用
-   * @type `boolean` | `undefined`
-   * @default `undefined`
+   * @type boolean | undefined
+   * @default undefined
    * @description 是否禁用标签删除功能
    */
   disabled?: boolean;

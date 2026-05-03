@@ -278,8 +278,8 @@ let oldValue: Array<string> | string = props.modelValue || "";
 
 /**
  * 处理输入事件
- * @param `event` 输入事件对象
- * @param `panel` 面板类型（start/end）
+ * @param event 输入事件对象
+ * @param panel 面板类型（start/end）
  * @returns void
  * @description 处理输入框输入事件
  */
@@ -315,7 +315,7 @@ function handleFocus(): void {
 
 /**
  * 处理面板变更
- * @param `data` 选中的数据
+ * @param data 选中的数据
  * @returns void
  * @description 处理日期时间面板选择变更
  */
@@ -330,7 +330,7 @@ function handlePanelChange(data: Array<string> | string): void {
 
 /**
  * 处理弹出层变更
- * @param `data` 弹出层状态
+ * @param data 弹出层状态
  * @returns void
  * @description 处理弹出层显示/隐藏变更
  */
@@ -344,7 +344,7 @@ function handlePopoverChange(data: boolean): void {
 
 /**
  * 查找显示数据
- * @param `data` 要查找的数据
+ * @param data 要查找的数据
  * @returns string 显示的文本
  * @description 根据值查找对应的显示文本
  */
