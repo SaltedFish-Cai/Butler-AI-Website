@@ -25,7 +25,9 @@
     <div class="pa-button_text">
       <template v-if="state.slotsLength || text">
         <slot>
-          <template v-if="text"> {{ typeof text == "string" ? text : text[languageValue] }} </template>
+          <template v-if="text">
+            {{ typeof text == "string" ? text : text[languageValue] }}
+          </template>
         </slot>
       </template>
     </div>
@@ -41,7 +43,7 @@
 /**
  * **模块导入**
  * @description 导入 Vue 组合式 API、类型定义、工具函数等依赖
- * */
+ */
 import { reactive, onBeforeMount, useSlots, nextTick, watch, inject, ComputedRef, computed, getCurrentInstance } from "vue";
 import { ComponentProps, ComponentEmits } from "./types";
 import inBrowser from "../tools/inBrowser";
@@ -55,7 +57,7 @@ const { debounce } = _;
  * **组件属性**
  * @type `ComponentProps`
  * @description 组件的属性对象，包含 text、size、type 等
- * */
+ */
 const props = withDefaults(defineProps<ComponentProps>(), {
   size: "medium",
   debounced: true,
@@ -68,19 +70,19 @@ const props = withDefaults(defineProps<ComponentProps>(), {
 /**
  * **组件事件定义**
  * @description 定义组件可触发的事件列表
- * */
+ */
 const emit = defineEmits<ComponentEmits>();
 /**
  * **实例对象注入**
  * @type `Instance`
  * @description 组件的实例对象，包含所有自定义属性和事件
- * */
+ */
 const instance = getCurrentInstance();
 /**
  * **检查是否有外部监听**
  * @description 检查是否有外部监听 onConfirmClick 事件
  * @returns `boolean` 是否有外部监听
- * */
+ */
 const hasConfirmClick = computed(() => {
   const props = instance?.vnode.props || {};
   return !!(props.onConfirmClick || props["onConfirm-click"]);
@@ -89,7 +91,7 @@ const hasConfirmClick = computed(() => {
  * **检查是否有外部监听**
  * @description 检查是否有外部监听 onDeleteClick 事件
  * @returns `boolean` 是否有外部监听
- * */
+ */
 const hasDeleteClick = computed(() => {
   const props = instance?.vnode.props || {};
   return !!(props.onDeleteClick || props["onDelete-click"]);
@@ -98,7 +100,7 @@ const hasDeleteClick = computed(() => {
  * **检查是否有外部监听**
  * @description 检查是否有外部监听 onSubmitClick 事件
  * @returns `boolean` 是否有外部监听
- * */
+ */
 const hasSubmitClick = computed(() => {
   const props = instance?.vnode.props || {};
   return !!(props.onSubmitClick || props["onSubmit-click"]);
@@ -107,17 +109,17 @@ const hasSubmitClick = computed(() => {
  * **全局配置注入**
  * @type `ComputedRef<PancakeGlobalConfigType>`
  * @description 从父组件注入的全局配置对象，包含语言设置等
- * */
+ */
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 /**
  * **获取当前语言值**
  * @returns `string` 返回当前语言标识，如 'zh-CN' 或 'en-US'
- * */
+ */
 const languageValue = computed(() => PancakeGlobalConfig.value?.language?.value || "zh-CN");
 /**
  * **组件状态**
  * @description 存储按钮的内部状态，包括 id、加载状态、按钮配置等
- * */
+ */
 const state = reactive({
   id: new Date().getTime() + Math.random(),
   maskVisible: false,
@@ -134,20 +136,20 @@ const state = reactive({
  * **防抖锁**
  * @type `boolean`
  * @description 用于防止按钮重复点击的锁标志
- * */
+ */
 let lock = false;
 /**
  * **防抖函数实例**
  * @type `Function`
  * @description lodash 防抖函数实例，用于处理按钮点击防抖
- * */
+ */
 const _debounce = debounce(realClick, props.debouncedTime, { trailing: true });
 /**
  * **按钮点击事件处理**
  * @param `event` `MouseEvent` 鼠标点击事件对象
  * @returns `void`
  * @description 处理按钮点击事件，包括确认弹窗、防抖、loading 状态等
- * */
+ */
 function btnClick(event: MouseEvent) {
   if (props.useStop) event.stopPropagation();
 
@@ -203,7 +205,7 @@ function btnClick(event: MouseEvent) {
  * **实际点击处理**
  * @returns `void`
  * @description 触发 click 事件并处理 loading 状态
- * */
+ */
 function realClick(event: MouseEvent) {
   if (lock) return;
   emit("click", event);
@@ -214,7 +216,6 @@ function realClick(event: MouseEvent) {
     if (EL && inBrowser) {
       state.isLoading = true;
 
-      // 锁死保险
       const safeLock = setTimeout(
         () => {
           state.isLoading = false;
@@ -247,7 +248,7 @@ function realClick(event: MouseEvent) {
 /**
  * **组件挂载前生命周期**
  * @description 初始化插槽信息、图标名称、类型和尺寸配置
- * */
+ */
 onBeforeMount(() => {
   const slots = useSlots();
   state.slotsLength = slots.default ? 1 : 0;
@@ -258,7 +259,7 @@ onBeforeMount(() => {
 /**
  * **监听 is 属性变化**
  * @description 根据内置样式类型设置按钮的图标、类型等配置
- * */
+ */
 watch(
   () => props.is,
   text => {
@@ -369,7 +370,7 @@ watch(
 /**
  * **监听 iconName 属性变化**
  * @description 同步更新按钮图标名称
- * */
+ */
 watch(
   () => props.iconName,
   text => {
@@ -380,7 +381,7 @@ watch(
 /**
  * **监听 type 属性变化**
  * @description 同步更新按钮样式类型
- * */
+ */
 watch(
   () => props.type,
   text => {
