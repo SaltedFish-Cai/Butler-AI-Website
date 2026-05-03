@@ -1,8 +1,8 @@
+/** @description Vue 应用实例类型 */
 import type { App } from "vue";
 /**
  * **PaForm 表单组件**
  * @description 用于快速搭建带有校验、组合、拆分等功能的表单
- * @description 支持外部配置结构、外置数据绑定、事件回调等功能
  */
 import PaForm from "./pa-form.vue";
 /**
@@ -17,21 +17,17 @@ import PaFormControl from "./pa-form-control.vue";
 import PaFormItem from "./pa-form-item.vue";
 /**
  * **安装 PaForm 组件**
- * @param app Vue 应用实例
+ * @param app - Vue 应用实例
  * @description 注册 PaForm、PaFormControl、PaFormItem 三个组件
  */
-const install = function (app: App) {
+function install(app: App): void {
   if (!app._context.components["PaForm"]) {
     app.component("PaForm", PaForm);
     app.component("PaFormControl", PaFormControl);
     app.component("PaFormItem", PaFormItem);
   }
-};
-/**
- * **组件名称**
- * @description PaForm 表单组件
- */
-export default {
-  name: "PaForm",
-  install
-};
+}
+/** @description 组件名称 */
+const name = "PaForm";
+/** @description PaForm 表单组件导出 */
+export default { name, install };

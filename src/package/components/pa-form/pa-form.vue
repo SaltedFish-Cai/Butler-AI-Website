@@ -61,22 +61,29 @@
 </template>
 
 <script lang="tsx" setup>
+/** @description Vue 核心响应式 API */
 import { ref, Ref, reactive, watch, nextTick, computed, provide, onMounted, onUnmounted, ComputedRef, inject } from "vue";
+/** @description 表单控制器组件 */
 import mFormV2Control from "./pa-form-control.vue";
-
+/** @description 浏览器环境检测工具 */
 import inBrowser from "../tools/inBrowser";
-
+/** @description Tab表单项组件 */
 import tabsItem from "./components/tabs-item.vue";
+/** @description 基础表单项组件 */
 import formItem from "./form-basics-element.vue";
-
+/** @description 表单类型定义 */
 import { PaFormItemType, PaFormChildType, ComponentProps, ComponentEmits, ConfigContextType, FormDataType } from "./types";
+/** @description 多配置类型定义 */
 import { ExMultipleConfigType, MultipleConfigType } from "./types";
+/** @description 日期选择器快捷选项类型 */
 import { DatePickerShortcut } from "../pa-time/type";
+/** @description 全局配置类型 */
 import { PancakeGlobalConfigType } from "../pa-manager/types";
-
+/** @description 工具函数库 */
 import _ from "lodash";
 const { cloneDeep, isEqual, debounce } = _;
 
+/** @description 组件属性 */
 const props = withDefaults(defineProps<ComponentProps>(), {
   contrastData: () => ({}),
   useRequired: true,
@@ -99,6 +106,7 @@ const props = withDefaults(defineProps<ComponentProps>(), {
   titlePosition: ""
 });
 
+/** @description 组件事件 */
 const emit = defineEmits<ComponentEmits>();
 
 /**
@@ -108,29 +116,45 @@ const emit = defineEmits<ComponentEmits>();
  * 0 未初始化
  * 1 已初始化
  */
+/** @description 初始化状态：-1加载中 -2配置错误 0未初始化 1已初始化 */
 const initialization: Ref<-1 | -2 | 0 | 1> = ref(0);
+/** @description 是否启用校验 */
 const useRequired = ref(true);
+/** @description 表单控制器引用 */
 const FormControlRef = ref();
+/** @description 内部校验规则 */
 const inRules: Ref<Record<string, any>> = ref({});
+/** @description 基础校验规则映射 */
 const baseRulesMap: Ref<Record<string, any>> = ref({});
 
+/** @description 分组标题容器引用 */
 const RefUnitContainer = ref();
 
+/** @description 基础分栏大小 */
 const baseSpanSize = ref(6);
+/** @description 分项分栏大小映射 */
 const itemSpanSize = ref({} as Record<string, number>);
+/** @description 基础分项分栏大小 */
 const baseItemSpanSize = {} as Record<string, number>;
 
+/** @description 表单数据 */
 const formData: Ref<FormDataType> = ref(cloneDeep(props.data) || {});
+/** @description 配置项映射 */
+/** @description 内部表单结构配置 */
 const inConfigObj: Record<string, any> = {};
 
+/** @description Tab表单校验引用 */
 const ruleTabsFormRef: Record<string, { submitTabsForm: () => Promise<boolean | undefined> }> = {};
+/** @description 全局配置注入 */
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
+/** @description 滚动到可视区域方法注入 */
 const injectSetScrollToIntersect = inject("setScrollToIntersect") as (
   el: Element,
   callback?: () => void,
   options?: { offsetY?: number }
 ) => void;
 
+/** @description 配置上下文 */
 const configContext: Ref<ConfigContextType> = ref({
   labelWidth: computed(() => props.labelWidth),
   labelPosition: computed(() => props.labelPosition),
@@ -150,26 +174,44 @@ const configContext: Ref<ConfigContextType> = ref({
 });
 provide("configContext", configContext);
 
+/**
+ * 设置Tab表单校验引用
+ * @param el - Tab表单组件实例
+ * @param key - Tab表单标识
+ * @returns void
+ * @description 将Tab表单组件实例存储到校验引用映射中
+ */
 function setRuleTabsFormRef(el: { submitTabsForm: () => Promise<boolean | undefined> }, key: string) {
   if (el) {
     ruleTabsFormRef[key] = el;
   }
 }
 
+/** @description 基础多配置分组键列表 */
 const baseInMultipleConfigKeys: string[] = [];
+/** @description 内部多配置分组键列表 */
 const inMultipleConfigKeys: string[] = [];
+/** @description 内部多配置数据 */
 let inMultipleConfig = reactive([] as MultipleConfigType[]);
 
+/** @description 单元格外置配置 */
 const exCellConfig = ref({});
 
+/** @description 表单状态 */
 const formState = ref("Pending");
 provide("changeFormState", (data: string) => (formState.value = data));
 
 provide("formCellChange", (data: FormDataType) => emit("formCellChange", data));
 
+/** @description 基础表单数据（用于对比） */
 const baseFormData: Record<string, Array<string> | string> = {};
 const inConfig: Ref<PaFormItemType[]> = ref(cloneDeep(props.structure || []));
 
+/**
+ * 初始化单行列数
+ * @returns void
+ * @description 根据外部配置或容器宽度设置单行分栏数
+ */
 function createSpanStyle() {
   if (inBrowser) {
     if (props.exSpan) {
@@ -218,6 +260,14 @@ function createSpanStyle() {
   }
 }
 
+/**
+ * 设置校验规则
+ * @param item - 表单项配置
+ * @param prop - 属性名
+ * @param options - 额外选项
+ * @returns void
+ * @description 根据表单项配置生成校验规则并存储到规则映射中
+ */
 function setRule(
   item: PaFormChildType | PaFormItemType,
   type = "default",
@@ -286,6 +336,13 @@ function setRule(
 }
 provide("setRule", setRule);
 
+/**
+ * 设置多配置分组
+ * @param configItem - 多配置项
+ * @param baseIndex - 基础索引
+ * @returns void
+ * @description 将配置项分配到对应的多配置分组中
+ */
 function setMultipleConfig(configItem: ExMultipleConfigType, baseIndex: number) {
   const _groupName = configItem.unitName as string;
   const _index = inMultipleConfigKeys.indexOf(_groupName);
@@ -365,6 +422,11 @@ function setMultipleConfig(configItem: ExMultipleConfigType, baseIndex: number) 
   }
 }
 
+/**
+ * 初始化表单配置
+ * @returns void
+ * @description 处理表单结构配置，生成校验规则和分组配置
+ */
 function initConfig() {
   nextTick(() => {
     inRules.value = {};
@@ -434,9 +496,12 @@ function initConfig() {
     });
   });
 }
+/** @description 防抖初始化配置函数 */
 const debounceInitConfig = debounce(initConfig, 50);
 
+/** @description 初始化加载计时器 */
 let initLoadingTime: any;
+/** @description 组件挂载时初始化表单配置 */
 onMounted(() => {
   if (inConfig.value?.length > 0) {
     debounceInitConfig();
@@ -456,6 +521,11 @@ onMounted(() => {
  * @type `() => object | false | null`
  * @description
  * 校验并获取表格数据，校验失败返回 false，校验成功返回表格数据，若没有变更则返回 null
+ */
+/**
+ * 校验并获取表格数据
+ * @returns 表格数据、false或"no-change"
+ * @description 校验表单并获取数据，校验失败返回false，无变更返回"no-change"
  */
 async function getSubmitForm() {
   if (initialization.value == -1) {
@@ -502,12 +572,23 @@ async function getSubmitForm() {
   }
 }
 
+/**
+ * 清空表单内容
+ * @returns void
+ * @description 清除所有表单数据和校验状态
+ */
 async function clean_All() {
   formData.value = {};
   FormControlRef.value?.resetFields();
   FormControlRef.value.clearValidate();
 }
 
+/**
+ * 重置全部结构配置
+ * @param newConfig - 新的表单结构配置
+ * @returns void
+ * @description 替换整个表单的结构配置并重新初始化
+ */
 function setStructure_All(newConfig: Array<PaFormItemType>) {
   typeof window !== "undefined" && window.developLog.json(newConfig, "setStructure_All", "success");
   inConfig.value = cloneDeep(newConfig);
@@ -545,10 +626,23 @@ function setStructure_Item(prop: string, item: PaFormItemType) {
   debounceInitConfig();
 }
 
+/**
+ * 重置全部表单数据
+ * @param data - 新的表单数据
+ * @returns void
+ * @description 替换整个表单的数据
+ */
 function changeData_All(data: FormDataType) {
   formData.value = cloneDeep(data);
 }
 
+/**
+ * 重置单个表单数据
+ * @param prop - 属性名
+ * @param data - 新的属性值
+ * @returns void
+ * @description 替换指定属性的数据
+ */
 function changeData_Item(prop: string, data: any) {
   formData.value[prop] = typeof data == "object" ? Object.assign(formData.value[prop], data) : data;
 }
@@ -651,6 +745,7 @@ defineExpose({
   changeData_Item
 });
 
+/** @description 监听结构配置变化并重新初始化 */
 watch(
   () => props.structure,
   newConfig => {
@@ -668,6 +763,7 @@ watch(
   }
 );
 
+/** @description 监听外置数据变化 */
 watch(
   () => props.data,
   () => {
@@ -681,16 +777,20 @@ watch(
   { deep: true }
 );
 
+/** @description 监听表单数据变化并触发事件 */
 watch(
   () => formData.value,
   value => emit("formDataChange", value),
   { deep: true }
 );
 
+/** @description 监听展示模式变化 */
 watch(() => props.display, debounceInitConfig);
 
+/** @description 监听禁用状态变化 */
 watch(() => props.disabled, debounceInitConfig);
 
+/** @description 监听表单状态变化并触发事件 */
 watch(
   () => formState.value,
   data => {

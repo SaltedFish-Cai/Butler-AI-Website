@@ -376,7 +376,9 @@ type BasicsItemPropsType = {
   exData?: any;
   enforcementDisplay?: boolean;
 };
+/** @description 组件属性 */
 const props = withDefaults(defineProps<BasicsItemPropsType>(), {});
+/** @description 配置上下文注入 */
 const injectConfigContext = inject<Ref<ConfigContextType>>(
   "configContext",
   ref({
@@ -397,9 +399,12 @@ const injectConfigContext = inject<Ref<ConfigContextType>>(
     noLabel: false
   })
 );
+/** @description 表单上下文注入 */
 const injectFormContext = inject<any>("formContext", {});
+/** @description 地址数据 */
 const addressMap = ref<PaOptionType.SelectList>([]);
 
+/** @description 计算属性值 */
 const computedValue = computed({
   get: () => {
     const data = !isNil(props.exData)
@@ -418,22 +423,26 @@ const computedValue = computed({
   }
 });
 
+/** @description 计算标签文本 */
 const computedLabel: ComputedRef<string | undefined> = computed(() => {
   return typeof props.item.label == "object"
     ? props.item.label?.[injectConfigContext.value.language || "zh-CN"]
     : (props.item.label as string);
 });
 
+/** @description 计算提示文本 */
 const computedTip: ComputedRef<string | undefined> = computed(() => {
   return typeof props.item.tip == "object"
     ? props.item.tip?.[injectConfigContext.value.language || "zh-CN"]
     : (props.item.tip as string);
 });
 
+/** @description 计算外置选项 */
 const useExOptions = computed(() => {
   return injectConfigContext.value.exOptions[String(props.item.prop)] || props.item.exOptions;
 });
 
+/** @description 组件挂载时初始化地址数据 */
 onMounted(async () => {
   if (props.item.type == "address") {
     props.item.type = "cascader" as any;
@@ -457,6 +466,13 @@ onMounted(async () => {
   }
 });
 
+/**
+ * 设置单行列数
+ * @param span - 分栏数
+ * @param baseSpanSize - 基础分栏大小
+ * @returns 列数
+ * @description 根据分栏数和基础大小计算实际列数
+ */
 function setSpanStyle(span?: 1 | 2 | 3 | 4, baseSpanSize = 4) {
   const maxSpanList = {
     4: [4, 3, 2, 1],
@@ -480,6 +496,7 @@ function setSpanStyle(span?: 1 | 2 | 3 | 4, baseSpanSize = 4) {
   return data;
 }
 
+/** @description 列大小 */
 const colSize = computed(() => {
   const _injectConfigContext = injectConfigContext.value;
   const _prop = Array.isArray(props.item.prop) ? props.item.prop.join("-") : String(props.item.prop);
@@ -493,6 +510,7 @@ const colSize = computed(() => {
   return data;
 });
 
+/** @description 计算占位文本 */
 const usePlaceholder = computed(() => {
   let placeholder = props.item?.placeholder;
   if (!placeholder) {
@@ -529,19 +547,33 @@ const usePlaceholder = computed(() => {
   return placeholder;
 });
 
+/** @description 计算展示状态 */
 const useDisplay = computed(() => {
   return (
     props.enforcementDisplay || (!isNil(props.item.display) ? props.item.display : injectConfigContext.value.display || false)
   );
 });
 
+/** @description 表单单元格变更回调注入 */
 const formCellChange: any = inject("formCellChange");
 
+/**
+ * 值变更处理
+ * @param data - 变更数据
+ * @returns void
+ * @description 处理表单项值变更事件
+ */
 function valueChange(data) {
   formCellChange({ prop: props.item.prop, ...data });
   injectFormContext.validateField(props.item.prop, data.value);
 }
 
+/**
+ * 执行外部disabled方法
+ * @param data - 表单数据
+ * @returns 是否禁用
+ * @description 根据外置禁用规则判断是否禁用
+ */
 function disabledFn(data) {
   if (!props.item.prop || !injectConfigContext.value.exDependent?.disabledRule) return false;
 
@@ -551,6 +583,7 @@ function disabledFn(data) {
   return disabledRule[prop] && disabledRule[prop](data);
 }
 
+/** @description 监听item类型变化 */
 watch(
   () => props.item.type,
   newVal => {

@@ -6,12 +6,15 @@
 </template>
 
 <script lang="tsx" setup>
+/** @description Vue 核心响应式 API */
 import { ref, reactive, defineEmits, watch, computed, provide, inject, Ref } from "vue";
+/** @description 表单类型定义 */
 import { ConfigContextType, FormItemRule } from "./types";
-
+/** @description 工具函数库 */
 import _ from "lodash";
 const { cloneDeep, isEqual } = _;
 
+/** @description 组件属性 */
 const props = withDefaults(
   defineProps<{
     /**
@@ -78,6 +81,7 @@ const props = withDefaults(
   }
 );
 
+/** @description 组件事件 */
 const emit = defineEmits<{
   (e: "validate", valid: boolean, errors?: any): void;
   (e: "submit", value: Record<string, any>): void;
@@ -88,6 +92,7 @@ const emit = defineEmits<{
 
 emit("setRef", { validate });
 
+/** @description 计算类名 */
 const className = computed(() => {
   const classes = ["pa-form-control"];
   if (props.class) {
@@ -96,6 +101,7 @@ const className = computed(() => {
   return classes;
 });
 
+/** @description 计算样式 */
 const styles = computed(() => {
   const styleObj = { ...props.style };
   if (
@@ -110,12 +116,17 @@ const styles = computed(() => {
   return styleObj;
 });
 
+/** @description 表单数据存储 */
 const formData = reactive<Record<string, any>>({});
+/** @description 错误信息存储 */
 const errorsMessage = ref<Record<string, string>>({});
 
+/** @description 验证规则存储 */
 const formRules = ref<Record<string, FormItemRule | FormItemRule[]>>(props.rules || {});
+/** @description 验证状态存储 */
 const validateStates = reactive<Record<string, { state: "" | "error" | "success" | "validating"; message: string }>>({});
 
+/** @description 表单上下文 */
 const formContext = reactive({
   rules: formRules,
   rulesKeys: computed(() => Object.keys(formRules.value)),
@@ -127,6 +138,7 @@ const formContext = reactive({
   }
 });
 
+/** @description 配置上下文注入 */
 const injectConfigContext = inject<Ref<ConfigContextType>>(
   "configContext",
   ref({
@@ -149,6 +161,11 @@ const injectConfigContext = inject<Ref<ConfigContextType>>(
 );
 provide("formContext", formContext);
 
+/**
+ * 初始化表单数据
+ * @returns void
+ * @description 根据props.model初始化表单数据
+ */
 function initFormData() {
   if (props.model) {
     Object.keys(formData).forEach(key => {
@@ -158,6 +175,11 @@ function initFormData() {
   }
 }
 
+/**
+ * 验证表单
+ * @returns 验证结果对象
+ * @description 验证所有字段并返回验证结果
+ */
 async function validate(): Promise<{ valid: boolean; errors?: Record<string, string> }> {
   const validations: Promise<void>[] = [];
   errorsMessage.value = {};
@@ -181,6 +203,13 @@ async function validate(): Promise<{ valid: boolean; errors?: Record<string, str
   return { valid, errors: valid ? undefined : errorsMessage.value };
 }
 
+/**
+ * 验证指定字段
+ * @param prop - 字段名
+ * @param value - 字段值
+ * @returns 验证结果
+ * @description 验证指定字段的值
+ */
 async function validateField(prop: string, value: string): Promise<{ valid: boolean; error?: string }> {
   if (!formRules.value[prop]) return { valid: true };
   const rules = Array.isArray(formRules.value[prop]) ? formRules.value[prop] : [formRules.value[prop]];
@@ -203,6 +232,13 @@ async function validateField(prop: string, value: string): Promise<{ valid: bool
     return { valid: false, error: errorMessage };
   }
 }
+/**
+ * 在Tab表单中验证字段
+ * @param prop - 字段名
+ * @param value - 字段值
+ * @returns 验证结果
+ * @description 在Tab表单中验证指定字段并更新校验状态
+ */
 async function validateFieldInTabsForm(prop: string, value: string): Promise<{ valid: boolean; error?: string }> {
   const result = await validateField(prop, value);
 
@@ -213,6 +249,14 @@ async function validateFieldInTabsForm(prop: string, value: string): Promise<{ v
   return result;
 }
 
+/**
+ * 验证单个规则
+ * @param rule - 验证规则
+ * @param value - 字段值
+ * @param prop - 字段名
+ * @returns Promise<void>
+ * @description 验证单个规则是否通过
+ */
 function validateRule(rule: FormItemRule, value: any, prop: string): Promise<void> {
   return new Promise((resolve, reject) => {
     if (
@@ -281,6 +325,13 @@ function validateRule(rule: FormItemRule, value: any, prop: string): Promise<voi
   });
 }
 
+/**
+ * 验证类型
+ * @param type - 类型名称
+ * @param value - 待验证值
+ * @returns 是否匹配类型
+ * @description 验证值是否匹配指定类型
+ */
 function validateType(type: string, value: any): boolean {
   switch (type) {
     case "string":
@@ -315,6 +366,12 @@ function validateType(type: string, value: any): boolean {
   }
 }
 
+/**
+ * 获取值的长度
+ * @param value - 待计算值
+ * @returns 值的长度
+ * @description 获取字符串、数组或对象的长度
+ */
 function getValueLength(value: any): number {
   if (value === undefined || value === null) {
     return 0;
@@ -328,6 +385,12 @@ function getValueLength(value: any): number {
   return String(value).length;
 }
 
+/**
+ * 清除指定字段验证
+ * @param props - 字段名或字段名数组
+ * @returns void
+ * @description 清除指定字段的验证状态
+ */
 function clearValidateField(props?: string[] | string) {
   if (!props) {
     Object.keys(validateStates).forEach(key => {
@@ -342,12 +405,22 @@ function clearValidateField(props?: string[] | string) {
   }
 }
 
+/**
+ * 重置表单
+ * @returns void
+ * @description 清除所有验证状态并重置表单数据
+ */
 function resetForm() {
   clearValidateField();
 
   initFormData();
 }
 
+/**
+ * 提交表单
+ * @returns 表单数据或false
+ * @description 验证表单并提交数据
+ */
 async function submitForm(): Promise<Record<string, any> | false> {
   const validation = await validate();
 
@@ -360,15 +433,27 @@ async function submitForm(): Promise<Record<string, any> | false> {
   return false;
 }
 
+/**
+ * 设置表单数据
+ * @param data - 表单数据
+ * @returns void
+ * @description 设置表单的数据
+ */
 function setFormData(data: Record<string, any>) {
   console.log("++++++++++> data:", data);
   Object.assign(formData, cloneDeep(data));
 }
 
+/**
+ * 获取表单数据
+ * @returns 表单数据的深拷贝
+ * @description 获取表单数据的深拷贝
+ */
 function getFormData(): Record<string, any> {
   return cloneDeep(formData);
 }
 
+/** @description 监听model变化并初始化表单数据 */
 watch(
   () => props.model,
   newVal => {
@@ -379,6 +464,7 @@ watch(
   { deep: true, immediate: true }
 );
 
+/** @description 监听rules变化并更新验证规则 */
 watch(
   () => props.rules,
   newRules => {

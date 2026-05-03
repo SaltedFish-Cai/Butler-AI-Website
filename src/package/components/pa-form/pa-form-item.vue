@@ -32,7 +32,9 @@
 </template>
 
 <script lang="ts" setup>
+/** @description Vue 核心响应式 API */
 import { computed, ref, Ref, inject, provide } from "vue";
+/** @description 表单类型定义 */
 import { ConfigContextType } from "./types";
 
 type PaFormItemProps = {
@@ -82,9 +84,12 @@ type PaFormItemProps = {
   help?: string;
 };
 
+/** @description 组件属性 */
 const props = withDefaults(defineProps<PaFormItemProps>(), {});
 
+/** @description 表单上下文注入 */
 const injectFormContext = inject<any>("formContext", {});
+/** @description 配置上下文注入 */
 const injectConfigContext = inject<Ref<ConfigContextType>>(
   "configContext",
   ref({
@@ -105,6 +110,7 @@ const injectConfigContext = inject<Ref<ConfigContextType>>(
     noLabel: false
   })
 );
+/** @description 标签样式 */
 const labelStyle = computed(() => {
   const style: Record<string, string> = {};
   if (injectConfigContext.value.labelWidth !== "" && injectConfigContext.value.labelPosition !== "top") {
@@ -113,13 +119,16 @@ const labelStyle = computed(() => {
   return style;
 });
 
+/** @description 标签位置 */
 const useLabelPosition = computed(() => injectConfigContext.value.labelPosition || "top");
 
+/** @description 内容样式 */
 const contentStyle = computed(() => {
   const style: Record<string, string> = {};
   return style;
 });
 
+/** @description 是否必填项 */
 const isRequired = computed(() => {
   if (injectFormContext.rulesKeys.length) {
     return injectFormContext.rulesKeys.includes(props.prop || "");
