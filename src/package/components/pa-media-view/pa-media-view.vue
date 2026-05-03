@@ -86,47 +86,107 @@
 </template>
 
 <script lang="ts" setup name="PaMediaView">
-/** @description Vue 核心响应式 API */
+/**
+ * Vue 核心响应式 API
+ * @description Vue 核心响应式 API
+ */
 import { ref, computed, nextTick, useTemplateRef, ComputedRef, inject } from "vue";
-/** @description 媒体查看器组件 Props 类型 */
+/**
+ * 媒体查看器组件 Props 类型
+ * @description 媒体查看器组件 Props 类型
+ */
 import type { ComponentProps } from "./types";
-/** @description 文件类型判断工具 */
+/**
+ * 文件类型判断工具
+ * @description 文件类型判断工具
+ */
 import { isImageFile, isPdfFile, isTextFile, isWordFile, isExcelFile } from "./is";
-/** @description 文件下载工具 */
+/**
+ * 文件下载工具
+ * @description 文件下载工具
+ */
 import { useDownload } from "./use-download";
-/** @description 图片预览组件 */
+/**
+ * 图片预览组件
+ * @description 图片预览组件
+ */
 import imageView from "./image-view.vue";
-/** @description PDF 预览组件 */
+/**
+ * PDF 预览组件
+ * @description PDF 预览组件
+ */
 import pdfView from "./pdf-view.vue";
-/** @description Excel 预览组件 */
+/**
+ * Excel 预览组件
+ * @description Excel 预览组件
+ */
 import excelView from "./excel-view.vue";
-/** @description Word 预览组件 */
+/**
+ * Word 预览组件
+ * @description Word 预览组件
+ */
 import wordView from "./word-view.vue";
-/** @description 文本预览组件 */
+/**
+ * 文本预览组件
+ * @description 文本预览组件
+ */
 import textView from "./text-view.vue";
-/** @description 全局配置类型 */
+/**
+ * 全局配置类型
+ * @description 全局配置类型
+ */
 import { PancakeGlobalConfigType } from "../pa-manager/types";
-/** @description 对话框是否可见 */
+/**
+ * 对话框是否可见
+ * @description 对话框是否可见
+ */
 const visible = ref(false);
-/** @description 当前查看的文件索引 */
+/**
+ * 当前查看的文件索引
+ * @description 当前查看的文件索引
+ */
 const viewIndex = ref(0);
-/** @description 缩放比例 */
+/**
+ * 缩放比例
+ * @description 缩放比例
+ */
 const zoomIndex = ref(1);
-/** @description 是否显示内容区域 */
+/**
+ * 是否显示内容区域
+ * @description 是否显示内容区域
+ */
 const show = ref(true);
-/** @description 缩放因子 */
+/**
+ * 缩放因子
+ * @description 缩放因子
+ */
 let scaleFactor = 1;
-/** @description 文件目录面板是否可见 */
+/**
+ * 文件目录面板是否可见
+ * @description 文件目录面板是否可见
+ */
 const processVisible = ref(true);
-/** @description PDF 预览组件引用 */
+/**
+ * PDF 预览组件引用
+ * @description PDF 预览组件引用
+ */
 const pdfViewRef = useTemplateRef("pdfViewRef");
-/** @description 组件 Props */
+/**
+ * 组件 Props
+ * @description 组件 Props
+ */
 const props = withDefaults(defineProps<ComponentProps>(), {
   hideBtn: false
 });
-/** @description 全局配置注入 */
+/**
+ * 全局配置注入
+ * @description 全局配置注入
+ */
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
-/** @description 语言包 */
+/**
+ * 语言包
+ * @description 语言包
+ */
 const languagePackage = computed(() => {
   return PancakeGlobalConfig.value?.language?.package["media"] || {};
 });
@@ -174,7 +234,10 @@ function handleMouseWheel(event: { deltaY: number }): void {
 function reset90(): void {
   pdfViewRef.value?.leftAll90();
 }
-/** @description 当前文件类型 */
+/**
+ * 当前文件类型
+ * @description 当前文件类型
+ */
 const fileType = computed(() => {
   const _viewIndex = viewIndex.value;
   if (isImageFile(props.fileList[_viewIndex]?.filePath)) {

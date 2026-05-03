@@ -96,50 +96,50 @@
 
 <script lang="ts" setup>
 /**
- * **模块导入**
+ * 模块导入
  * @description 导入 Vue 组合式 API
- * */
+ */
 import { ref, onMounted, onUnmounted, useSlots, watch, nextTick, provide, computed } from "vue";
 /**
- * **模块导入**
+ * 模块导入
  * @description 导入随机字符生成工具
- * */
+ */
 import { randChar } from "../tools/rand-char";
 /**
- * **模块导入**
+ * 模块导入
  * @description 导入标签页标题子组件
- * */
+ */
 import titleItem from "./pa-tabs-label.vue";
 /**
- * **模块导入**
+ * 模块导入
  * @description 导入组件属性和事件类型定义
- * */
+ */
 import { ComponentProps, ComponentEmits } from "./types";
 /**
- * **模块导入**
+ * 模块导入
  * @description 导入浏览器环境判断工具
- * */
+ */
 import inBrowser from "../tools/inBrowser";
 /**
- * **模块导入**
+ * 模块导入
  * @description 导入元素位置计算工具
- * */
+ */
 import { getElementPosition } from "../utils/getElementPosition";
 /**
- * **模块导入**
+ * 模块导入
  * @description 导入 lodash 工具库
- * */
+ */
 import _ from "lodash";
 /**
- * **解构赋值**
+ * 解构赋值
  * @description 从 lodash 中解构出 debounce 函数
- * */
+ */
 const { debounce } = _;
 /**
- * **组件属性**
- * @type `ComponentProps`
+ * 组件属性
+ * @type ComponentProps
  * @description 组件的属性对象
- * */
+ */
 const props = withDefaults(defineProps<ComponentProps>(), {
   visibleMode: "visible",
   mode: "default",
@@ -148,115 +148,115 @@ const props = withDefaults(defineProps<ComponentProps>(), {
   useShadow: true
 });
 /**
- * **随机 ID**
+ * 随机 ID
  * @type {string}
  * @description 生成组件唯一标识
- * */
+ */
 const randId = String(randChar());
 /**
- * **标签页容器引用**
+ * 标签页容器引用
  * @type {Ref<HTMLElement | undefined>}
  * @description 标签页容器的 DOM 引用
- * */
+ */
 const tabsRef = ref<HTMLElement>();
 /**
- * **标签页标题容器引用**
+ * 标签页标题容器引用
  * @type {Ref<HTMLElement | undefined>}
  * @description 标签页标题区域的 DOM 引用
- * */
+ */
 const tabsTitleRef = ref<HTMLElement>();
 /**
- * **插槽数据**
+ * 插槽数据
  * @type {Ref<any>}
  * @description 存储子组件插槽信息
- * */
+ */
 const slots = ref<any>({});
 /**
- * **溢出固定宽度**
+ * 溢出固定宽度
  * @type {Ref<number>}
  * @description 标签页标题溢出时的固定宽度
- * */
+ */
 const overFixWidth = ref(0);
 /**
- * **默认插槽**
+ * 默认插槽
  * @type {ReturnType<typeof useSlots>['default']}
  * @description 获取默认插槽内容
- * */
+ */
 const defaultSlot = useSlots().default;
 /**
- * **标题插槽列表**
+ * 标题插槽列表
  * @type {Ref<Array<Record<string, Record<string, string>>>>}
  * @description 存储所有标签页标题的插槽数据
- * */
+ */
 const slotsTitle = ref([] as Array<Record<string, Record<string, string>>>);
 /**
- * **当前插槽索引**
+ * 当前插槽索引
  * @type {Ref<number>}
  * @description 当前激活的标签页索引
- * */
+ */
 const slotIndex = ref(0);
 /**
- * **标签页 ID**
+ * 标签页 ID
  * @type {Ref<string>}
  * @description 组件实例的唯一标识
- * */
+ */
 const tabsId = ref(randId);
 /**
- * **水平滚动位置**
+ * 水平滚动位置
  * @type {Ref<number>}
  * @description 标签页水平滚动距离
- * */
+ */
 const useScrollX = ref(0);
 /**
- * **垂直滚动位置**
+ * 垂直滚动位置
  * @type {Ref<number>}
  * @description 标签页垂直滚动距离
- * */
+ */
 const useScrollY = ref(0);
 /**
- * **标题滚动位置**
+ * 标题滚动位置
  * @type {Ref<number>}
  * @description 标题区域的滚动偏移量
- * */
+ */
 const headerScroll = ref(0);
 /**
- * **标题滚动结束标志**
+ * 标题滚动结束标志
  * @type {Ref<boolean>}
  * @description 标题区域是否滚动到末尾
- * */
+ */
 const headerScrollEnd = ref(false);
 /**
- * **当前激活标签名**
+ * 当前激活标签名
  * @type {Ref<string>}
  * @description 当前选中标签页的标识
- * */
+ */
 const activeName = ref("");
 /**
- * **标签左侧位置**
+ * 标签左侧位置
  * @type {Ref<number>}
  * @description 激活标签的左侧位置
- * */
+ */
 const useLabelLeft = ref(0);
 /**
- * **标签宽度**
+ * 标签宽度
  * @type {Ref<number>}
  * @description 激活标签的宽度
- * */
+ */
 const useLabelWidth = ref(0);
 /**
- * **组件事件定义**
+ * 组件事件定义
  * @description 定义组件可触发的事件
- * */
+ */
 const emit = defineEmits<ComponentEmits>();
 /**
- * **防抖函数**
+ * 防抖函数
  * @description 防抖处理标签页尺寸计算
- * */
+ */
 const _debounce = debounce(setTabsBoxSize, 10, { trailing: true });
 /**
- * **标题防抖函数**
+ * 标题防抖函数
  * @description 防抖处理标题数据更新
- * */
+ */
 const _debounceTitle = debounce(
   () => {
     createSlotData(true);
@@ -265,16 +265,16 @@ const _debounceTitle = debounce(
   { trailing: true }
 );
 /**
- * **DOM 观察器**
+ * DOM 观察器
  * @type {MutationObserver | undefined}
  * @description 监听 DOM 变化的观察器实例
- * */
+ */
 let observer: MutationObserver | undefined;
 /**
- * **标题容器尺寸**
+ * 标题容器尺寸
  * @type {{ scrollWidth: number; clientWidth: number; scrollHeight: number; clientHeight: number }}
  * @description 标题区域的滚动尺寸信息
- * */
+ */
 let tabsTitle: {
   scrollWidth: number;
   clientWidth: number;
@@ -287,22 +287,22 @@ let tabsTitle: {
   clientHeight: 0
 };
 /**
- * **滚轮事件时间戳**
+ * 滚轮事件时间戳
  * @type {number}
  * @description 上一次滚轮事件的时间戳
- * */
+ */
 let lastWheelTime = 0;
 /**
- * **滚轮事件累积滚动量**
+ * 滚轮事件累积滚动量
  * @type {number}
  * @description 滚轮事件累积的滚动量，用于判断是否触发标签切换
- * */
+ */
 let wheelDelta = 0;
 /**
- * **滚动容器引用**
+ * 滚动容器引用
  * @type {Ref<any>}
  * @description 滚动容器的 DOM 引用
- * */
+ */
 const mScrollRef = ref<any>();
 provide(
   "TabsContext",
@@ -316,9 +316,9 @@ provide("initTitle", () => {
   _debounceTitle();
 });
 /**
- * **组件挂载生命周期**
+ * 组件挂载生命周期
  * @description 初始化组件状态
- * */
+ */
 onMounted(() => {
   createSlotData();
   const defaultValue = props.modelValue;
@@ -331,9 +331,9 @@ onMounted(() => {
   });
 });
 /**
- * **组件卸载生命周期**
+ * 组件卸载生命周期
  * @description 清理观察器和事件监听
- * */
+ */
 onUnmounted(() => {
   observer?.disconnect && observer?.disconnect();
   const tabsTitleElement = tabsTitleRef.value;
@@ -342,13 +342,13 @@ onUnmounted(() => {
   }
 });
 /**
- * **变更 Tab**
- * @param `name` `string` 标签页标识
- * @param `index` `number` 标签页索引
- * @param `scrollToIntersect` `boolean` 是否滚动到可见区域
- * @returns `void`
+ * 变更 Tab
+ * @param name - 标签页标识
+ * @param index - 标签页索引
+ * @param scrollToIntersect - 是否滚动到可见区域
+ * @returns void
  * @description 切换当前激活的标签页
- * */
+ */
 function changeTabs(name: string, index: number, scrollToIntersect = true) {
   slotIndex.value = index;
   activeName.value = name;
@@ -361,10 +361,10 @@ function changeTabs(name: string, index: number, scrollToIntersect = true) {
   setTabItemPosition();
 }
 /**
- * **更新 Tab 按钮位置**
- * @returns `void`
+ * 更新 Tab 按钮位置
+ * @returns void
  * @description 计算并更新当前激活标签的位置
- * */
+ */
 function setTabItemPosition() {
   nextTick(() => {
     const targetEl = document.querySelector(`#${tabsId.value} .pa-tabs-title_action_${tabsId.value}`);
@@ -384,11 +384,11 @@ function setTabItemPosition() {
   });
 }
 /**
- * **初始化 Slot 数据**
- * @param `Mandatory` `boolean` 是否强制更新
- * @returns `void`
+ * 初始化 Slot 数据
+ * @param Mandatory - 是否强制更新
+ * @returns void
  * @description 解析插槽内容生成标签页数据
- * */
+ */
 function createSlotData(Mandatory = false) {
   if (tabsRef.value) {
     if (defaultSlot) {
@@ -396,11 +396,11 @@ function createSlotData(Mandatory = false) {
     }
     const arr: any = [];
     /**
-     * **设置子组件数据**
-     * @param `arrayData` `any[]` 子组件数组数据
-     * @returns `void`
+     * 设置子组件数据
+     * @param arrayData - 子组件数组数据
+     * @returns void
      * @description 递归解析插槽中的子组件
-     * */
+     */
     function setChild(arrayData: any[]) {
       for (let index = 0; index < arrayData.length; index++) {
         const element = arrayData[index];
@@ -437,10 +437,10 @@ function createSlotData(Mandatory = false) {
   }
 }
 /**
- * **监听元素节点**
- * @returns `void`
+ * 监听元素节点
+ * @returns void
  * @description 使用 MutationObserver 监听 DOM 变化
- * */
+ */
 function watchDom() {
   if (tabsRef.value) {
     const config = { childList: true, subtree: true };
@@ -449,10 +449,10 @@ function watchDom() {
   }
 }
 /**
- * **设置 Tabs 标题宽度**
- * @returns `void`
+ * 设置 Tabs 标题宽度
+ * @returns void
  * @description 计算并更新标签标题区域的滚动信息
- * */
+ */
 function setTabsBoxSize() {
   if (!inBrowser) return;
   nextTick(() => {
@@ -472,11 +472,11 @@ function setTabsBoxSize() {
   });
 }
 /**
- * **处理滚动到可见区域**
- * @param `el` `HTMLElement` 可见区域元素
- * @returns `void`
+ * 处理滚动到可见区域
+ * @param el - 可见区域元素
+ * @returns void
  * @description 当标签页滚动到可见区域时切换标签
- * */
+ */
 function handleIntersecting(el: HTMLElement) {
   const name = el?.dataset?.name;
   if (name) {
@@ -488,20 +488,20 @@ function handleIntersecting(el: HTMLElement) {
   }
 }
 /**
- * **超出标题（左/上）**
- * @returns `void`
+ * 超出标题（左/上）
+ * @returns void
  * @description 标题区域向左或向上滚动
- * */
+ */
 function minusScroll() {
   const chr = headerScroll.value - 50;
   headerScroll.value = chr <= 0 ? 0 : chr;
   headerScrollEnd.value = false;
 }
 /**
- * **超出标题（右/下）**
- * @returns `void`
+ * 超出标题（右/下）
+ * @returns void
  * @description 标题区域向右或向下滚动
- * */
+ */
 function addScroll() {
   if (props.mode == "portrait" || props.mode == "slider") {
     const { scrollHeight, clientHeight } = tabsTitle;
@@ -526,10 +526,10 @@ function addScroll() {
   }
 }
 /**
- * **处理鼠标悬停事件**
- * @returns `void`
+ * 处理鼠标悬停事件
+ * @returns void
  * @description 添加滚轮事件监听
- * */
+ */
 function handleMouseEnter() {
   const tabsTitleElement = tabsTitleRef.value;
   if (tabsTitleElement) {
@@ -537,10 +537,10 @@ function handleMouseEnter() {
   }
 }
 /**
- * **处理鼠标离开事件**
- * @returns `void`
+ * 处理鼠标离开事件
+ * @returns void
  * @description 移除滚轮事件监听
- * */
+ */
 function handleMouseLeave() {
   const tabsTitleElement = tabsTitleRef.value;
   if (tabsTitleElement) {
@@ -548,10 +548,10 @@ function handleMouseLeave() {
   }
 }
 /**
- * **设置标签位置**
- * @returns `void`
+ * 设置标签位置
+ * @returns void
  * @description 计算并设置激活标签的左侧位置和宽度
- * */
+ */
 function setLabelPosition() {
   if (props.styleMode != "border-card") return;
   setTimeout(() => {
@@ -565,11 +565,11 @@ function setLabelPosition() {
   }, 90);
 }
 /**
- * **处理滚轮事件**
- * @param `event` `WheelEvent` 滚轮事件对象
- * @returns `void`
+ * 处理滚轮事件
+ * @param event - 滚轮事件对象
+ * @returns void
  * @description 监听鼠标滚轮事件，控制标签页滚动切换
- * */
+ */
 const handleWheel = (event: WheelEvent) => {
   event.preventDefault();
   const now = Date.now();
@@ -589,10 +589,10 @@ const handleWheel = (event: WheelEvent) => {
   }
 };
 /**
- * **监听 modelValue 变化**
- * @param `data` `string` | `undefined` 当前 modelValue 值
+ * 监听 modelValue 变化
+ * @param data - | `undefined` 当前 modelValue 值
  * @description 同步激活标签页状态
- * */
+ */
 watch(
   () => props.modelValue,
   (data: string | undefined) => {
@@ -608,9 +608,9 @@ watch(
   { immediate: true }
 );
 /**
- * **监听 activeName 变化**
+ * 监听 activeName 变化
  * @description 更新标签位置
- * */
+ */
 watch(
   () => activeName.value,
   () => setLabelPosition()

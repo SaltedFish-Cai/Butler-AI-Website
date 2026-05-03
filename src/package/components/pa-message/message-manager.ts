@@ -1,39 +1,39 @@
 /**
- * **模块导入**
+ * 模块导入
  * @description 导入 Vue 创建应用和渲染函数
- * */
+ */
 import { createApp, h } from "vue";
 /**
- * **模块导入**
+ * 模块导入
  * @description 导入消息组件
- * */
+ */
 import MMessage from "./pa-message.vue";
 /**
- * **模块导入**
+ * 模块导入
  * @description 导入消息相关类型
- * */
+ */
 import type { MessageOptions, MessageInstance, MessageManagerType } from "./types.d.ts";
 /**
- * **消息管理器实现类**
+ * 消息管理器实现类
  * @description 消息管理器的具体实现
- * */
+ */
 class MessageManagerTypeImpl implements MessageManagerType {
   /**
-   * **消息列表**
+   * 消息列表
    * @description 当前显示的所有消息实例
-   * */
+   */
   Messages: Array<MessageInstance> = [];
   /**
-   * **基础层级**
+   * 基础层级
    * @description 消息的基础 z-index 值
-   * */
+   */
   zIndex = 2050;
   /**
-   * **添加消息**
-   * @param `options` `MessageOptions` 消息配置
-   * @returns `MessageInstance` 消息实例
+   * 添加消息
+   * @param options - 消息配置
+   * @returns MessageInstance 消息实例
    * @description 创建并显示一条新消息
-   * */
+   */
   add(options: MessageOptions): MessageInstance {
     const id = `Message_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
     const languageKey = (typeof window !== "undefined" && window.PancakeGlobalConfig?.language) || "zh-CN";
@@ -77,11 +77,11 @@ class MessageManagerTypeImpl implements MessageManagerType {
     return instance;
   }
   /**
-   * **关闭消息**
-   * @param `id` `string` 消息ID
-   * @param `forceClose` `boolean` 是否强制关闭
+   * 关闭消息
+   * @param id - 消息ID
+   * @param forceClose - 是否强制关闭
    * @description 关闭指定ID的消息
-   * */
+   */
   close(id: string, forceClose: boolean = false): void {
     const index = this.Messages.findIndex(Message => Message.id === id);
     if (index !== -1) {
@@ -98,20 +98,20 @@ class MessageManagerTypeImpl implements MessageManagerType {
     }
   }
   /**
-   * **关闭所有消息**
+   * 关闭所有消息
    * @description 关闭所有当前显示的消息
-   * */
+   */
   closeAll(): void {
     this.Messages.forEach(instance => {
       instance.vm.$el.__vnode.ctx.exposed.close();
     });
   }
   /**
-   * **获取偏移量**
-   * @param `_position` `string` 位置参数（未使用）
-   * @returns `number` 计算得出的偏移量
+   * 获取偏移量
+   * @param _position - 位置参数（未使用）
+   * @returns number 计算得出的偏移量
    * @description 计算新消息的偏移量
-   * */
+   */
   getOffset(_position: string): number {
     const baseOffset = 20;
     const gap = 16;
@@ -129,11 +129,11 @@ class MessageManagerTypeImpl implements MessageManagerType {
     return lastOffset + lastHeight + gap;
   }
   /**
-   * **设置偏移量**
-   * @param `id` `string` 消息ID
-   * @param `offset` `number` 偏移量
+   * 设置偏移量
+   * @param id - 消息ID
+   * @param offset - 偏移量
    * @description 设置指定消息的偏移量
-   * */
+   */
   setOffset(id: string, offset: number): void {
     const instance = this.Messages.find(Message => Message.id === id);
     if (instance && instance.vm.$el) {
@@ -141,9 +141,9 @@ class MessageManagerTypeImpl implements MessageManagerType {
     }
   }
   /**
-   * **重新定位消息**
+   * 重新定位消息
    * @description 重新计算所有消息的位置
-   * */
+   */
   private repositionMessages(): void {
     const MessagesByPosition: Record<string, Array<MessageInstance>> = {};
     this.Messages.forEach(Message => {
@@ -167,7 +167,7 @@ class MessageManagerTypeImpl implements MessageManagerType {
   }
 }
 /**
- * **消息管理器实例**
+ * 消息管理器实例
  * @description 导出的消息管理器单例
- * */
+ */
 export const MessageManager = new MessageManagerTypeImpl();

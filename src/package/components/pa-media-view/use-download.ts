@@ -12,7 +12,7 @@ import { M_MessageBox, M_Notification } from "../feedback";
  * @param {Boolean} isNotify 是否有导出消息提示 (默认为 true) (必传)
  * @param {Boolean} relPath 是否真实路径 (false时，使用前置getFiler) (必传)
  * @param {String} exFileName 外置下载文件名称
- * */
+ */
 
 export const useGetBlob = async (config = { downloadHose: "", requestHeader: {} }, path: string) => {
   try {

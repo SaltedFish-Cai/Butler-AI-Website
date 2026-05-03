@@ -85,30 +85,30 @@
 
 <script lang="ts" setup>
 /**
- * **模块导入**
+ * 模块导入
  * @description 导入 Vue 组合式 API
- * */
+ */
 import { reactive, watch, onMounted, onUnmounted, computed, inject, ComputedRef } from "vue";
 /**
- * **模块导入**
+ * 模块导入
  * @description 导入组件类型定义
- * */
+ */
 import { ComponentProps, ComponentEmits } from "./types";
 /**
- * **模块导入**
+ * 模块导入
  * @description 导入全局配置类型
- * */
+ */
 import { PancakeGlobalConfigType } from "../pa-manager/types";
 /**
- * **组件事件定义**
+ * 组件事件定义
  * @description 定义组件可触发的事件
- * */
+ */
 const emits = defineEmits<ComponentEmits>();
 /**
- * **组件属性**
- * @type `ComponentProps`
+ * 组件属性
+ * @type ComponentProps
  * @description 组件的属性对象
- * */
+ */
 const props = withDefaults(defineProps<ComponentProps>(), {
   id: "",
   title: "标题",
@@ -119,62 +119,62 @@ const props = withDefaults(defineProps<ComponentProps>(), {
   position: "right"
 });
 /**
- * **组件状态**
- * @type `Ref<{ visible: boolean; fullscreen: boolean }>`
+ * 组件状态
+ * @type Ref<{ visible: boolean; fullscreen: boolean }>
  * @description 组件的响应式状态
- * */
+ */
 const state = reactive({
   visible: false,
   fullscreen: false
 });
 /**
- * **全局配置**
- * @type `ComputedRef<PancakeGlobalConfigType>`
+ * 全局配置
+ * @type ComputedRef<PancakeGlobalConfigType>
  * @description 全局配置对象
- * */
+ */
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 /**
- * **当前语言**
- * @type `ComputedRef<string>`
+ * 当前语言
+ * @type ComputedRef<string>
  * @description 当前使用的语言
- * */
+ */
 const language = computed(() => PancakeGlobalConfig.value?.language?.value || "zh-CN");
 /**
- * **关闭抽屉弹窗**
+ * 关闭抽屉弹窗
  * @description 关闭抽屉弹窗并触发相关事件
- * */
+ */
 function closeMenu(): void {
   emits("update:modelValue", false);
   emits("closed", false);
 }
 /**
- * **处理键盘按下事件**
- * @param `e` `KeyboardEvent` 键盘事件对象
+ * 处理键盘按下事件
+ * @param e - 键盘事件对象
  * @description 处理ESC键关闭抽屉弹窗
- * */
+ */
 function handleKeyDown(e: KeyboardEvent): void {
   if (e.key === "Escape" && state.visible) {
     closeMenu();
   }
 }
 /**
- * **组件挂载生命周期**
+ * 组件挂载生命周期
  * @description 初始化组件
- * */
+ */
 onMounted(() => {
   props.closeOnPressEscape && document.addEventListener("keydown", handleKeyDown);
 });
 /**
- * **组件卸载生命周期**
+ * 组件卸载生命周期
  * @description 清理事件监听器
- * */
+ */
 onUnmounted(() => {
   props.closeOnPressEscape && document.removeEventListener("keydown", handleKeyDown);
 });
 /**
- * **监听modelValue**
+ * 监听modelValue
  * @description 监听抽屉弹窗显示状态变化
- * */
+ */
 watch(
   () => props.modelValue,
   (data: boolean) => {

@@ -61,29 +61,62 @@
 </template>
 
 <script lang="tsx" setup>
-/** @description Vue 核心响应式 API */
+/**
+ * Vue 核心响应式 API
+ * @description Vue 核心响应式 API
+ */
 import { ref, Ref, reactive, watch, nextTick, computed, provide, onMounted, onUnmounted, ComputedRef, inject } from "vue";
-/** @description 表单控制器组件 */
+/**
+ * 表单控制器组件
+ * @description 表单控制器组件
+ */
 import mFormV2Control from "./pa-form-control.vue";
-/** @description 浏览器环境检测工具 */
+/**
+ * 浏览器环境检测工具
+ * @description 浏览器环境检测工具
+ */
 import inBrowser from "../tools/inBrowser";
-/** @description Tab表单项组件 */
+/**
+ * Tab表单项组件
+ * @description Tab表单项组件
+ */
 import tabsItem from "./components/tabs-item.vue";
-/** @description 基础表单项组件 */
+/**
+ * 基础表单项组件
+ * @description 基础表单项组件
+ */
 import formItem from "./form-basics-element.vue";
-/** @description 表单类型定义 */
+/**
+ * 表单类型定义
+ * @description 表单类型定义
+ */
 import { PaFormItemType, PaFormChildType, ComponentProps, ComponentEmits, ConfigContextType, FormDataType } from "./types";
-/** @description 多配置类型定义 */
+/**
+ * 多配置类型定义
+ * @description 多配置类型定义
+ */
 import { ExMultipleConfigType, MultipleConfigType } from "./types";
-/** @description 日期选择器快捷选项类型 */
+/**
+ * 日期选择器快捷选项类型
+ * @description 日期选择器快捷选项类型
+ */
 import { DatePickerShortcut } from "../pa-time/type";
-/** @description 全局配置类型 */
+/**
+ * 全局配置类型
+ * @description 全局配置类型
+ */
 import { PancakeGlobalConfigType } from "../pa-manager/types";
-/** @description 工具函数库 */
+/**
+ * 工具函数库
+ * @description 工具函数库
+ */
 import _ from "lodash";
 const { cloneDeep, isEqual, debounce } = _;
 
-/** @description 组件属性 */
+/**
+ * 组件属性
+ * @description 组件属性
+ */
 const props = withDefaults(defineProps<ComponentProps>(), {
   contrastData: () => ({}),
   useRequired: true,
@@ -106,7 +139,10 @@ const props = withDefaults(defineProps<ComponentProps>(), {
   titlePosition: ""
 });
 
-/** @description 组件事件 */
+/**
+ * 组件事件
+ * @description 组件事件
+ */
 const emit = defineEmits<ComponentEmits>();
 
 /**
@@ -116,45 +152,93 @@ const emit = defineEmits<ComponentEmits>();
  * 0 未初始化
  * 1 已初始化
  */
-/** @description 初始化状态：-1加载中 -2配置错误 0未初始化 1已初始化 */
+/**
+ * 初始化状态：-1加载中 -2配置错误 0未初始化 1已初始化
+ * @description 初始化状态：-1加载中 -2配置错误 0未初始化 1已初始化
+ */
 const initialization: Ref<-1 | -2 | 0 | 1> = ref(0);
-/** @description 是否启用校验 */
+/**
+ * 是否启用校验
+ * @description 是否启用校验
+ */
 const useRequired = ref(true);
-/** @description 表单控制器引用 */
+/**
+ * 表单控制器引用
+ * @description 表单控制器引用
+ */
 const FormControlRef = ref();
-/** @description 内部校验规则 */
+/**
+ * 内部校验规则
+ * @description 内部校验规则
+ */
 const inRules: Ref<Record<string, any>> = ref({});
-/** @description 基础校验规则映射 */
+/**
+ * 基础校验规则映射
+ * @description 基础校验规则映射
+ */
 const baseRulesMap: Ref<Record<string, any>> = ref({});
 
-/** @description 分组标题容器引用 */
+/**
+ * 分组标题容器引用
+ * @description 分组标题容器引用
+ */
 const RefUnitContainer = ref();
 
-/** @description 基础分栏大小 */
+/**
+ * 基础分栏大小
+ * @description 基础分栏大小
+ */
 const baseSpanSize = ref(6);
-/** @description 分项分栏大小映射 */
+/**
+ * 分项分栏大小映射
+ * @description 分项分栏大小映射
+ */
 const itemSpanSize = ref({} as Record<string, number>);
-/** @description 基础分项分栏大小 */
+/**
+ * 基础分项分栏大小
+ * @description 基础分项分栏大小
+ */
 const baseItemSpanSize = {} as Record<string, number>;
 
-/** @description 表单数据 */
+/**
+ * 表单数据
+ * @description 表单数据
+ */
 const formData: Ref<FormDataType> = ref(cloneDeep(props.data) || {});
-/** @description 配置项映射 */
-/** @description 内部表单结构配置 */
+/**
+ * 配置项映射
+ * @description 配置项映射
+ */
+/**
+ * 内部表单结构配置
+ * @description 内部表单结构配置
+ */
 const inConfigObj: Record<string, any> = {};
 
-/** @description Tab表单校验引用 */
+/**
+ * Tab表单校验引用
+ * @description Tab表单校验引用
+ */
 const ruleTabsFormRef: Record<string, { submitTabsForm: () => Promise<boolean | undefined> }> = {};
-/** @description 全局配置注入 */
+/**
+ * 全局配置注入
+ * @description 全局配置注入
+ */
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
-/** @description 滚动到可视区域方法注入 */
+/**
+ * 滚动到可视区域方法注入
+ * @description 滚动到可视区域方法注入
+ */
 const injectSetScrollToIntersect = inject("setScrollToIntersect") as (
   el: Element,
   callback?: () => void,
   options?: { offsetY?: number }
 ) => void;
 
-/** @description 配置上下文 */
+/**
+ * 配置上下文
+ * @description 配置上下文
+ */
 const configContext: Ref<ConfigContextType> = ref({
   labelWidth: computed(() => props.labelWidth),
   labelPosition: computed(() => props.labelPosition),
@@ -187,23 +271,41 @@ function setRuleTabsFormRef(el: { submitTabsForm: () => Promise<boolean | undefi
   }
 }
 
-/** @description 基础多配置分组键列表 */
+/**
+ * 基础多配置分组键列表
+ * @description 基础多配置分组键列表
+ */
 const baseInMultipleConfigKeys: string[] = [];
-/** @description 内部多配置分组键列表 */
+/**
+ * 内部多配置分组键列表
+ * @description 内部多配置分组键列表
+ */
 const inMultipleConfigKeys: string[] = [];
-/** @description 内部多配置数据 */
+/**
+ * 内部多配置数据
+ * @description 内部多配置数据
+ */
 let inMultipleConfig = reactive([] as MultipleConfigType[]);
 
-/** @description 单元格外置配置 */
+/**
+ * 单元格外置配置
+ * @description 单元格外置配置
+ */
 const exCellConfig = ref({});
 
-/** @description 表单状态 */
+/**
+ * 表单状态
+ * @description 表单状态
+ */
 const formState = ref("Pending");
 provide("changeFormState", (data: string) => (formState.value = data));
 
 provide("formCellChange", (data: FormDataType) => emit("formCellChange", data));
 
-/** @description 基础表单数据（用于对比） */
+/**
+ * 基础表单数据（用于对比）
+ * @description 基础表单数据（用于对比）
+ */
 const baseFormData: Record<string, Array<string> | string> = {};
 const inConfig: Ref<PaFormItemType[]> = ref(cloneDeep(props.structure || []));
 
@@ -496,12 +598,21 @@ function initConfig() {
     });
   });
 }
-/** @description 防抖初始化配置函数 */
+/**
+ * 防抖初始化配置函数
+ * @description 防抖初始化配置函数
+ */
 const debounceInitConfig = debounce(initConfig, 50);
 
-/** @description 初始化加载计时器 */
+/**
+ * 初始化加载计时器
+ * @description 初始化加载计时器
+ */
 let initLoadingTime: any;
-/** @description 组件挂载时初始化表单配置 */
+/**
+ * 组件挂载时初始化表单配置
+ * @description 组件挂载时初始化表单配置
+ */
 onMounted(() => {
   if (inConfig.value?.length > 0) {
     debounceInitConfig();
@@ -517,8 +628,8 @@ onMounted(() => {
 });
 
 /**
- * **校验并获取表格数据**
- * @type `() => object | false | null`
+ * 校验并获取表格数据
+ * @type () => object | false | null
  * @description
  * 校验并获取表格数据，校验失败返回 false，校验成功返回表格数据，若没有变更则返回 null
  */
@@ -606,8 +717,8 @@ function setStructure_All(newConfig: Array<PaFormItemType>) {
 }
 
 /**
- * **重置单个结构配置**
- * @type `(prop: string, item: PaFormItemType) => void`
+ * 重置单个结构配置
+ * @type (prop: string, item: PaFormItemType) => void
  * @description 该方法用于重置单个结构配置，支持重置整个结构配置。
  * @param prop 结构配置的属性名
  * @param item 结构配置的属性值
@@ -619,7 +730,7 @@ function setStructure_All(newConfig: Array<PaFormItemType>) {
  * ```tsx
  * formRef.value.setStructure_Item("Text", { label: "新标签", prop: "Text", type: "input" })
  * ```
- * */
+ */
 function setStructure_Item(prop: string, item: PaFormItemType) {
   if (!prop) return;
   exCellConfig.value[prop] = item;
@@ -649,8 +760,8 @@ function changeData_Item(prop: string, data: any) {
 
 defineExpose({
   /**
-   * **校验并获取表格数据**
-   * @type `(step?: "check") => void`
+   * 校验并获取表格数据
+   * @type (step?: "check") => void
    * @description
    * - 该方法为 `submitForm` 的优化版本，用于兼容
    * - 当设置执行参数值为 `check` 时，会执行数据对比，如果对数据无变化，则会返回 `null`
@@ -661,12 +772,12 @@ defineExpose({
    * <MoForm ref={formRef} />
    * formRef.value.getSubmitForm()
    * ```
-   * */
+   */
   getSubmitForm,
 
   /**
-   * **清除表单所有数据**
-   * @type `() => void`
+   * 清除表单所有数据
+   * @type () => void
    * @description 该方法用于清除表单所有数据，包括表单校验状态。
    * @example
    * ```tsx
@@ -675,12 +786,12 @@ defineExpose({
    * ```tsx
    * formRef.value.clean_All()
    * ```
-   * */
+   */
   clean_All,
 
   /**
-   * **替换表单结构**
-   * @type `(newConfig: MStructureType.FormV2[]) => void`
+   * 替换表单结构
+   * @type (newConfig: MStructureType.FormV2[]) => void
    * @description 该方法用于替换表单结构，支持替换整个表单结构。
    * @param newConfig 替换后的表单结构
    * @returns 无返回值
@@ -691,12 +802,12 @@ defineExpose({
    * ```tsx
    * formRef.value.setStructure_All([])
    * ```
-   * */
+   */
   setStructure_All,
 
   /**
-   * **替换单个表单结构**
-   * @type `(prop: string, item: MStructureType.FormV2) => void`
+   * 替换单个表单结构
+   * @type (prop: string, item: MStructureType.FormV2) => void
    * @description 该方法用于替换表单结构，支持替换整个表单结构。
    * @param prop 替换后的表单结构
    * @param item 替换后的表单结构
@@ -708,12 +819,12 @@ defineExpose({
    * ```tsx
    * formRef.value.resetStructureItem("prop", {})
    * ```
-   * */
+   */
   setStructure_Item,
 
   /**
-   * **重置表单数据**
-   * @type `(data: object) => void`
+   * 重置表单数据
+   * @type (data: object) => void
    * @description 该方法用于重置表单数据，支持重置整个表单数据。
    * @param data 重置后的表单数据
    * @returns 无返回值
@@ -724,12 +835,12 @@ defineExpose({
    * ```tsx
    * formRef.value.changeData_All({ Text: "新值" })
    * ```
-   * */
+   */
   changeData_All,
 
   /**
-   * **重置表单数据**
-   * @type `(prop: string, data: object) => void`
+   * 重置表单数据
+   * @type (prop: string, data: object) => void
    * @description 该方法用于重置表单数据，支持重置整个表单数据。
    * @param prop 重置后的表单数据属性名
    * @param data 重置后的表单数据属性值
@@ -741,11 +852,14 @@ defineExpose({
    * ```tsx
    * formRef.value.changeData_Item("Text", "新值")
    * ```
-   * */
+   */
   changeData_Item
 });
 
-/** @description 监听结构配置变化并重新初始化 */
+/**
+ * 监听结构配置变化并重新初始化
+ * @description 监听结构配置变化并重新初始化
+ */
 watch(
   () => props.structure,
   newConfig => {
@@ -763,7 +877,10 @@ watch(
   }
 );
 
-/** @description 监听外置数据变化 */
+/**
+ * 监听外置数据变化
+ * @description 监听外置数据变化
+ */
 watch(
   () => props.data,
   () => {
@@ -777,20 +894,32 @@ watch(
   { deep: true }
 );
 
-/** @description 监听表单数据变化并触发事件 */
+/**
+ * 监听表单数据变化并触发事件
+ * @description 监听表单数据变化并触发事件
+ */
 watch(
   () => formData.value,
   value => emit("formDataChange", value),
   { deep: true }
 );
 
-/** @description 监听展示模式变化 */
+/**
+ * 监听展示模式变化
+ * @description 监听展示模式变化
+ */
 watch(() => props.display, debounceInitConfig);
 
-/** @description 监听禁用状态变化 */
+/**
+ * 监听禁用状态变化
+ * @description 监听禁用状态变化
+ */
 watch(() => props.disabled, debounceInitConfig);
 
-/** @description 监听表单状态变化并触发事件 */
+/**
+ * 监听表单状态变化并触发事件
+ * @description 监听表单状态变化并触发事件
+ */
 watch(
   () => formState.value,
   data => {

@@ -1,31 +1,31 @@
 /**
- * **模块导入**
+ * 模块导入
  * @description 导入日期处理库
- * */
+ */
 import dayjs from "dayjs";
 
 /**
- * **模块导入**
+ * 模块导入
  * @description 导入日期选择器类型定义
- * */
+ */
 import { MDatePickerType } from "./types";
 
 /**
- * **判断日期格式是否合法**
- * @param `dateString` `string` 日期字符串
- * @returns `boolean` 是否合法
+ * 判断日期格式是否合法
+ * @param dateString - 日期字符串
+ * @returns boolean 是否合法
  * @description 判断给定的日期字符串是否符合常见的日期格式
- * */
+ */
 export function isValidDate(dateString: string): boolean {
   if (!dateString || typeof dateString !== "string") {
     return false;
   }
 
   /**
-   * **常见日期格式正则表达式列表**
-   * @type `Array<RegExp>`
+   * 常见日期格式正则表达式列表
+   * @type Array<RegExp>
    * @description 支持的日期格式模式
-   * */
+   */
   const datePatterns: Array<RegExp> = [
     /^\d{4}-\d{2}-\d{2}$/,
     /^\d{4}\/\d{2}\/\d{2}$/,
@@ -74,12 +74,12 @@ export function isValidDate(dateString: string): boolean {
 }
 
 /**
- * **转换日期格式**
- * @param `type` `MDatePickerType` 日期选择器类型
- * @param `date` `dayjs.Dayjs | string` 日期值
- * @returns `string` 转换后的日期字符串
+ * 转换日期格式
+ * @param type - 日期选择器类型
+ * @param date - 日期值
+ * @returns string 转换后的日期字符串
  * @description 根据日期选择器类型转换日期格式
- * */
+ */
 export function convertValue(type: MDatePickerType, date: dayjs.Dayjs | string): string {
   if (type.includes("year") && (typeof date === "string" || typeof date === "number")) {
     const _data: Array<string> = date.toString().split("-");
@@ -104,10 +104,10 @@ export function convertValue(type: MDatePickerType, date: dayjs.Dayjs | string):
   date = dayjs(date);
 
   /**
-   * **格式映射表**
-   * @type `Record<MDatePickerType, string>`
+   * 格式映射表
+   * @type Record<MDatePickerType, string>
    * @description 日期类型与格式字符串的映射
-   * */
+   */
   const formatMap: Record<MDatePickerType, string> = {
     "time-picker": "HH:mm:ss",
     "time-picker-group": "HH:mm:ss",

@@ -101,52 +101,52 @@
 
 <script lang="ts" setup>
 /**
- * **模块导入**
+ * 模块导入
  * @description 导入 Vue 组合式 API
- * */
+ */
 import { ref, Ref, computed, watch, inject, ComputedRef } from "vue";
 
 /**
- * **模块导入**
+ * 模块导入
  * @description 导入组件类型定义
- * */
+ */
 import { ComponentProps, ComponentEmits } from "./types";
 
 /**
- * **模块导入**
+ * 模块导入
  * @description 导入日期时间面板组件
- * */
+ */
 import MDateTimePanel from "./date-time-panel.vue";
 
 /**
- * **模块导入**
+ * 模块导入
  * @description 导入年份面板组件
- * */
+ */
 import MYearPanel from "./year-panel.vue";
 
 /**
- * **模块导入**
+ * 模块导入
  * @description 导入工具函数
- * */
+ */
 import { convertValue, isValidDate } from "./utils";
 
 /**
- * **模块导入**
+ * 模块导入
  * @description 导入全局配置类型
- * */
+ */
 import { PancakeGlobalConfigType } from "../pa-manager/types";
 
 /**
- * **模块导入**
+ * 模块导入
  * @description 导入 lodash 工具函数
- * */
+ */
 import _ from "lodash";
 const { isEqual, isNil, cloneDeep } = _;
 
 /**
- * **日期时间类型映射**
+ * 日期时间类型映射
  * @description 用于判断是否为日期时间类型
- * */
+ */
 const DateTimeMap: Record<string, number> = {
   "date-picker-group": 1,
   "date-picker": 1,
@@ -157,9 +157,9 @@ const DateTimeMap: Record<string, number> = {
 };
 
 /**
- * **年份类型映射**
+ * 年份类型映射
  * @description 用于判断是否为年份类型
- * */
+ */
 const YearMap: Record<string, number> = {
   "year-picker-group": 1,
   "year-picker": 1,
@@ -168,85 +168,85 @@ const YearMap: Record<string, number> = {
 };
 
 /**
- * **组件属性**
- * @type `ComponentProps`
+ * 组件属性
+ * @type ComponentProps
  * @description 组件的属性对象
- * */
+ */
 const props = withDefaults(defineProps<ComponentProps>(), {
   type: "date-picker"
 });
 
 /**
- * **组件事件定义**
+ * 组件事件定义
  * @description 定义组件可触发的事件
- * */
+ */
 const emits = defineEmits<ComponentEmits>();
 
 /**
- * **是否为范围选择**
- * @type `ComputedRef<boolean>`
+ * 是否为范围选择
+ * @type ComputedRef<boolean>
  * @description 判断当前类型是否为范围选择模式
- * */
+ */
 const isRange = computed(() => {
   return props.type.endsWith("-group");
 });
 
 /**
- * **弹出层引用**
- * @type `Ref<any>`
+ * 弹出层引用
+ * @type Ref<any>
  * @description 弹出层组件的引用
- * */
+ */
 const popoverRef = ref();
 
 /**
- * **选择器容器引用**
- * @type `Ref<HTMLElement | undefined>`
+ * 选择器容器引用
+ * @type Ref<HTMLElement | undefined>
  * @description 选择器容器元素的引用
- * */
+ */
 const selectRef = ref();
 
 /**
- * **是否聚焦**
- * @type `Ref<boolean>`
+ * 是否聚焦
+ * @type Ref<boolean>
  * @description 输入框是否处于聚焦状态
- * */
+ */
 const isFocus = ref(false);
 
 /**
- * **输入框引用**
- * @type `Ref<HTMLInputElement | undefined>`
+ * 输入框引用
+ * @type Ref<HTMLInputElement | undefined>
  * @description 输入框元素的引用
- * */
+ */
 const inputRef = ref();
 
 /**
- * **内部值**
- * @type `Ref<Array<string> | string | null>`
+ * 内部值
+ * @type Ref<Array<string> | string | null>
  * @description 组件内部的绑定值
- * */
+ */
 const internalValue: Ref<Array<string> | string | null> = ref(isRange.value ? [] : null);
 
 /**
- * **全局配置注入**
- * @type `ComputedRef<PancakeGlobalConfigType>`
+ * 全局配置注入
+ * @type ComputedRef<PancakeGlobalConfigType>
  * @description 注入全局配置对象
- * */
+ */
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 
 /**
- * **当前语言值**
- * @type `ComputedRef<string>`
+ * 当前语言值
+ * @type ComputedRef<string>
  * @description 当前选中的语言
- * */
+ */
 const languageValue = computed(() => {
   return PancakeGlobalConfig.value?.language?.value || "zh-CN";
 });
 
 /**
- * **输入框占位符**
- * @type `ComputedRef<string>`
+ * 输入框占位符
+ * @type ComputedRef<string>
  * @description 输入框的占位符文本
- * */
+ */
 const inputPlaceholder = computed(() => {
   return typeof props.placeholder === "object"
     ? props.placeholder[languageValue.value] || languagePackage.value[`selectPlaceholder`]
@@ -254,35 +254,35 @@ const inputPlaceholder = computed(() => {
 });
 
 /**
- * **语言包**
- * @type `ComputedRef<Record<string, string>>`
+ * 语言包
+ * @type ComputedRef<Record<string, string>>
  * @description 当前语言的文本配置
- * */
+ */
 const languagePackage = computed(() => {
   return PancakeGlobalConfig.value?.language?.package?.["cell"] || {};
 });
 
 /**
- * **显示值**
- * @type `Ref<Array<string> | string>`
+ * 显示值
+ * @type Ref<Array<string> | string>
  * @description 输入框显示的值
- * */
+ */
 const inValue = ref<Array<string> | string>(props.modelValue || []);
 
 /**
- * **旧值存储**
- * @type `Array<string> | string`
+ * 旧值存储
+ * @type Array<string> | string
  * @description 存储上一次的值，用于对比
- * */
+ */
 let oldValue: Array<string> | string = props.modelValue || "";
 
 /**
- * **处理输入事件**
+ * 处理输入事件
  * @param `event` 输入事件对象
  * @param `panel` 面板类型（start/end）
- * @returns `void`
+ * @returns void
  * @description 处理输入框输入事件
- * */
+ */
 function handleInput({ target }, panel?: "end" | "start"): void {
   const value = target.value;
 
@@ -305,20 +305,20 @@ function handleInput({ target }, panel?: "end" | "start"): void {
 }
 
 /**
- * **处理聚焦事件**
- * @returns `void`
+ * 处理聚焦事件
+ * @returns void
  * @description 处理输入框聚焦事件
- * */
+ */
 function handleFocus(): void {
   isFocus.value = true;
 }
 
 /**
- * **处理面板变更**
+ * 处理面板变更
  * @param `data` 选中的数据
- * @returns `void`
+ * @returns void
  * @description 处理日期时间面板选择变更
- * */
+ */
 function handlePanelChange(data: Array<string> | string): void {
   internalValue.value = data;
   inValue.value = data;
@@ -329,11 +329,11 @@ function handlePanelChange(data: Array<string> | string): void {
 }
 
 /**
- * **处理弹出层变更**
+ * 处理弹出层变更
  * @param `data` 弹出层状态
- * @returns `void`
+ * @returns void
  * @description 处理弹出层显示/隐藏变更
- * */
+ */
 function handlePopoverChange(data: boolean): void {
   if (!data) {
     isFocus.value = false;
@@ -343,11 +343,11 @@ function handlePopoverChange(data: boolean): void {
 }
 
 /**
- * **查找显示数据**
+ * 查找显示数据
  * @param `data` 要查找的数据
- * @returns `string` 显示的文本
+ * @returns string 显示的文本
  * @description 根据值查找对应的显示文本
- * */
+ */
 function findData(data: Array<string> | string | undefined): string {
   if (Array.isArray(data) && data.length) {
     const filterData = data?.filter?.(item => !!item);
@@ -358,9 +358,9 @@ function findData(data: Array<string> | string | undefined): string {
 }
 
 /**
- * **监听 modelValue 变化**
+ * 监听 modelValue 变化
  * @description 同步外部传入的值到内部状态
- * */
+ */
 watch(
   () => props.modelValue,
   data => {

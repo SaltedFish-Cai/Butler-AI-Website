@@ -1,21 +1,21 @@
 /**
- * **模块导入**
+ * 模块导入
  * @description 导入选项类型定义
- * */
+ */
 import { PaOptionType } from "M_Types";
 /**
- * **模块导入**
+ * 模块导入
  * @description 导入工具函数
- * */
+ */
 import _ from "lodash";
 const { isNil } = _;
 /**
- * **查找显示数据函数**
- * @param `data` `Array<boolean | number | string>` | `boolean` | `number` | `string` 要查找的数据
- * @param `options` `PaOptionType.SelectList` 选项列表
- * @returns `string` 显示文本
+ * 查找显示数据函数
+ * @param data - | `boolean` | `number` | `string` 要查找的数据
+ * @param options - 选项列表
+ * @returns string 显示文本
  * @description 根据值从选项列表中查找对应的显示文本
- * */
+ */
 export function findData(
   data: Array<boolean | number | string> | boolean | number | string,
   options: PaOptionType.SelectList

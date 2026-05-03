@@ -123,9 +123,9 @@ import { randChar } from "../tools/rand-char";
 import { ComponentProps } from "./types";
 
 /**
- * **组件引用**
+ * 组件引用
  * @description DOM 元素引用
- * */
+ */
 const popoverRef = ref();
 const hourInputRef = ref();
 const minuteInputRef = ref();
@@ -144,9 +144,9 @@ const props = withDefaults(defineProps<ComponentProps>(), {
 const timerRef = ref();
 
 /**
- * **时间值**
+ * 时间值
  * @description 时分秒输入值
- * */
+ */
 const hours = ref("");
 const minutes = ref("");
 const seconds = ref("");
@@ -154,10 +154,10 @@ const seconds = ref("");
 const emits = defineEmits(["update:modelValue", "change", "blur", "focus"]);
 
 /**
- * **计算完整的时间字符串**
- * @returns `string` 格式化的时间字符串
+ * 计算完整的时间字符串
+ * @returns string 格式化的时间字符串
  * @description 组合时分秒为完整时间字符串
- * */
+ */
 const timeValue = computed(() => {
   if (!hours.value && !minutes.value && !seconds.value) {
     return "";
@@ -166,22 +166,22 @@ const timeValue = computed(() => {
 });
 
 /**
- * **格式化时间单位（补零）**
- * @param `value` `number` 数值
- * @returns `string` 补零后的字符串
+ * 格式化时间单位（补零）
+ * @param value - 数值
+ * @returns string 补零后的字符串
  * @description 将数字格式化为两位字符串
- * */
+ */
 function formatTimeUnit(value: number): string {
   return value.toString().padStart(2, "0");
 }
 
 /**
- * **验证时间输入**
- * @param `value` `string` 输入值
- * @param `type` `"hour"` | `"minute"` | `"second"` 时间类型
- * @returns `boolean` 是否有效
+ * 验证时间输入
+ * @param value - 输入值
+ * @param type - | `"minute"` | `"second"` 时间类型
+ * @returns boolean 是否有效
  * @description 验证输入值是否在有效范围内
- * */
+ */
 function validateTimeInput(value: string, type: "hour" | "minute" | "second"): boolean {
   if (!value) return true;
 
@@ -200,11 +200,11 @@ function validateTimeInput(value: string, type: "hour" | "minute" | "second"): b
 }
 
 /**
- * **处理时间输入**
- * @param `event` `Event` 输入事件
- * @param `type` `"hour"` | `"minute"` | `"second"` 时间类型
+ * 处理时间输入
+ * @param event - 输入事件
+ * @param type - | `"minute"` | `"second"` 时间类型
  * @description 处理时间输入框的输入事件
- * */
+ */
 function handleTimeInput(event: Event, type: "hour" | "minute" | "second") {
   const input = event.target as HTMLInputElement;
   let value = input.value.replace(/[^0-9]/g, "");
@@ -247,11 +247,11 @@ function handlePopoverChange(data) {
 }
 
 /**
- * **处理键盘事件**
- * @param `event` `KeyboardEvent` 键盘事件
- * @param `type` `"hour"` | `"minute"` | `"second"` 时间类型
+ * 处理键盘事件
+ * @param event - 键盘事件
+ * @param type - | `"minute"` | `"second"` 时间类型
  * @description 处理时间输入框的键盘事件
- * */
+ */
 function handleTimeKeyDown(event: KeyboardEvent, type: "hour" | "minute" | "second") {
   if (!/[0-9]|Backspace|Delete|Tab|ArrowLeft|ArrowRight|ArrowUp|ArrowDown/.test(event.key)) {
     event.preventDefault();
@@ -287,11 +287,11 @@ function handleTimeKeyDown(event: KeyboardEvent, type: "hour" | "minute" | "seco
 }
 
 /**
- * **调整时间值**
- * @param `type` `"hour"` | `"minute"` | `"second"` 时间类型
- * @param `delta` `number` 增量
+ * 调整时间值
+ * @param type - | `"minute"` | `"second"` 时间类型
+ * @param delta - 增量
  * @description 根据增量调整时间值
- * */
+ */
 function adjustTimeValue(type: "hour" | "minute" | "second", delta: number) {
   let currentValue = 0;
   let maxValue = 59;
@@ -335,18 +335,18 @@ function adjustTimeValue(type: "hour" | "minute" | "second", delta: number) {
 }
 
 /**
- * **更新时间值并触发事件**
+ * 更新时间值并触发事件
  * @description 更新绑定值并触发 change 事件
- * */
+ */
 function updateTimeValue() {
   emits("update:modelValue", timeValue.value);
   emits("change", { value: timeValue.value, oldValue: props.modelValue });
 }
 
 /**
- * **验证完整时间**
+ * 验证完整时间
  * @description 验证所有时间部分是否有效
- * */
+ */
 function validateTime() {
   if (hours.value && !validateTimeInput(hours.value, "hour")) {
     hours.value = "";
@@ -401,10 +401,10 @@ function setCurrentTime(type: "current" | "end" | "start") {
 }
 
 /**
- * **监听外部点击关闭面板**
- * @param `event` `MouseEvent` 点击事件
+ * 监听外部点击关闭面板
+ * @param event - 点击事件
  * @description 处理面板外部点击
- * */
+ */
 function handleClickOutside(event: MouseEvent) {
   const panel = document.querySelector(".m-time-panel");
   const inputs = [hourInputRef.value, minuteInputRef.value, secondInputRef.value];
@@ -414,9 +414,9 @@ function handleClickOutside(event: MouseEvent) {
 }
 
 /**
- * **初始化监听**
+ * 初始化监听
  * @description 组件挂载时初始化事件监听
- * */
+ */
 onMounted(() => {
   document.addEventListener("click", handleClickOutside);
 
@@ -433,10 +433,10 @@ onUnmounted(() => {
 });
 
 /**
- * **处理焦点事件**
- * @param `type` `"hour"` | `"minute"` | `"second"` 焦点类型
+ * 处理焦点事件
+ * @param type - | `"minute"` | `"second"` 焦点类型
  * @description 处理输入框获得焦点
- * */
+ */
 function handleFocus(type: "hour" | "minute" | "second") {
   currentFocus.value = type;
   const inputElement = {
@@ -463,9 +463,9 @@ function handleBlur() {
 }
 
 /**
- * **处理滚轮事件**
+ * 处理滚轮事件
  * @description 滚动调整时间值
- * */
+ */
 let lastWheelTime = 0;
 let wheelDelta = 0;
 
@@ -488,9 +488,9 @@ function handleWheel(event: WheelEvent, type: "hour" | "minute" | "second") {
 }
 
 /**
- * **组件卸载时清理**
+ * 组件卸载时清理
  * @description 移除所有事件监听
- * */
+ */
 onUnmounted(() => {
   const inputElements = [hourInputRef.value, minuteInputRef.value, secondInputRef.value];
   inputElements.forEach(inputElement => {

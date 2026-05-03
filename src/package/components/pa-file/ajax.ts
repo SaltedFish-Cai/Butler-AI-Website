@@ -1,70 +1,70 @@
 /**
- * **模块导入**
+ * 模块导入
  * @description 导入 lodash 工具库
- * */
+ */
 import _ from "lodash";
 
 /**
- * **模块导入**
+ * 模块导入
  * @description 导入文件数据类型定义
- * */
+ */
 import { FileDataType } from "./types";
 
 /**
- * **模块导入**
+ * 模块导入
  * @description 从 lodash 中解构 isNil 函数
- * */
+ */
 const { isNil } = _;
 
 /**
- * **上传作用域常量**
- * @type `string`
+ * 上传作用域常量
+ * @type string
  * @description 用于日志标识的上传模块名称
- * */
+ */
 const SCOPE = "PaFile";
 
 /**
- * **上传请求错误类**
+ * 上传请求错误类
  * @description 封装 XMLHttpRequest 上传过程中的错误信息
  * @extends Error
- * */
+ */
 export class UploadAjaxError extends Error {
   /**
-   * **错误名称**
-   * @type `string`
+   * 错误名称
+   * @type string
    * @description 固定为 "UploadAjaxError"
-   * */
+   */
   name = "UploadAjaxError";
 
   /**
-   * **HTTP 状态码**
-   * @type `number`
+   * HTTP 状态码
+   * @type number
    * @description 服务器返回的 HTTP 状态码
-   * */
+   */
   status: number;
 
   /**
-   * **请求方法**
-   * @type `string`
+   * 请求方法
+   * @type string
    * @description 使用的 HTTP 请求方法（如 GET、POST）
-   * */
+   */
   method: string;
 
   /**
-   * **请求 URL**
-   * @type `string`
+   * 请求 URL
+   * @type string
    * @description 发起请求的目标地址
-   * */
+   */
   url: string;
 
   /**
-   * **构造函数**
-   * @param `message` `string` 错误消息
-   * @param `status` `number` HTTP 状态码
-   * @param `method` `string` 请求方法
-   * @param `url` `string` 请求 URL
+   * 构造函数
+   * @param message - 错误消息
+   * @param status - HTTP 状态码
+   * @param method - 请求方法
+   * @param url - 请求 URL
    * @description 初始化上传错误实例
-   * */
+   */
   constructor(message: string, status: number, method: string, url: string) {
     super(message);
     this.status = status;
@@ -74,13 +74,13 @@ export class UploadAjaxError extends Error {
 }
 
 /**
- * **获取上传错误对象**
- * @param `action` `string` 请求地址
- * @param `option` `{ method: string }` 请求配置
- * @param `xhr` `XMLHttpRequest` XMLHttpRequest 实例
- * @returns `UploadAjaxError` 上传错误实例
+ * 获取上传错误对象
+ * @param action - 请求地址
+ * @param option - 请求配置
+ * @param xhr - XMLHttpRequest 实例
+ * @returns UploadAjaxError 上传错误实例
  * @description 根据 XMLHttpRequest 响应信息构建错误对象
- * */
+ */
 function getError(action: string, option: { method: string }, xhr: XMLHttpRequest): UploadAjaxError {
   let msg: string;
   if (xhr.response) {
@@ -95,11 +95,11 @@ function getError(action: string, option: { method: string }, xhr: XMLHttpReques
 }
 
 /**
- * **获取响应体**
- * @param `xhr` `XMLHttpRequest` XMLHttpRequest 实例
- * @returns `XMLHttpRequestResponseType` 解析后的响应体
+ * 获取响应体
+ * @param xhr - XMLHttpRequest 实例
+ * @returns XMLHttpRequestResponseType 解析后的响应体
  * @description 尝试解析响应体为 JSON，失败则返回原始文本
- * */
+ */
 function getBody(xhr: XMLHttpRequest): XMLHttpRequestResponseType {
   const text = xhr.responseText || xhr.response;
   if (!text) {
@@ -114,11 +114,11 @@ function getBody(xhr: XMLHttpRequest): XMLHttpRequestResponseType {
 }
 
 /**
- * **Ajax 文件上传函数**
- * @param `option` `AjaxUploadOptions` 上传配置选项
- * @returns `XMLHttpRequest | undefined` XMLHttpRequest 实例
+ * Ajax 文件上传函数
+ * @param option - 上传配置选项
+ * @returns XMLHttpRequest | undefined XMLHttpRequest 实例
  * @description 使用 XMLHttpRequest 执行文件上传，支持进度回调
- * */
+ */
 interface AjaxUploadOptions {
   ajaxFileList?: Array<{ file: File }>;
   action?: string;

@@ -10,7 +10,7 @@ import type { App } from "vue";
  * @description PaTable 组件安装函数
  * @param app Vue 应用实例
  */
-const install = function (app: App) {
+const install = function (app: App): void {
   if (!app._context.components["PaTable"]) app.component("PaTable", PaTable);
 };
 /**

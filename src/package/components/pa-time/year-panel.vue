@@ -162,8 +162,6 @@ const isMonth = computed(() => {
   return props.type.includes("month");
 });
 
-
-
 const months = [
   { value: 1, text: "1月" },
   { value: 2, text: "2月" },
@@ -178,10 +176,6 @@ const months = [
   { value: 11, text: "11月" },
   { value: 12, text: "12月" }
 ];
-
-
-
-
 
 const currentDate = ref(dayjs());
 const startPanelDate = ref(dayjs());
@@ -253,28 +247,27 @@ function selectYear(year: number, position?: "end" | "start") {
     if (position === "start") {
       if (selectedRangeYears.value[1] && year > selectedRangeYears.value[1]) {
         selectedRangeYears.value[0] = year;
-        selectedRangeMonths.value[0] = null; 
+        selectedRangeMonths.value[0] = null;
         selectedRangeYears.value[1] = year;
-        selectedRangeMonths.value[1] = null; 
+        selectedRangeMonths.value[1] = null;
       } else {
         selectedRangeYears.value[0] = year;
-        selectedRangeMonths.value[0] = null; 
+        selectedRangeMonths.value[0] = null;
       }
-
     } else {
       if (selectedRangeYears.value[0] && year < selectedRangeYears.value[0]) {
         selectedRangeYears.value[0] = year;
-        selectedRangeMonths.value[0] = null; 
+        selectedRangeMonths.value[0] = null;
         selectedRangeYears.value[1] = year;
-        selectedRangeMonths.value[1] = null; 
+        selectedRangeMonths.value[1] = null;
       } else {
         selectedRangeYears.value[1] = year;
-        selectedRangeMonths.value[1] = null; 
+        selectedRangeMonths.value[1] = null;
       }
     }
   } else {
     selectedYear.value = year;
-    selectedMonth.value = null; 
+    selectedMonth.value = null;
     currentDate.value = currentDate.value.year(year);
 
     if (!isRange.value) {

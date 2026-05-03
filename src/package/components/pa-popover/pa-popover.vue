@@ -33,31 +33,31 @@
 
 <script lang="ts" setup>
 /**
- * **模块导入**
+ * 模块导入
  * @description 导入 Vue 组合式 API
- * */
+ */
 import { nextTick, onMounted, onUnmounted, useSlots, ref, Ref, inject, watch } from "vue";
 /**
- * **模块导入**
+ * 模块导入
  * @description 导入组件类型定义
- * */
+ */
 import { ComponentProps, ComponentEmits } from "./types";
 /**
- * **模块导入**
+ * 模块导入
  * @description 导入元素位置计算工具
- * */
+ */
 import { getElementPosition } from "../utils/getElementPosition";
 /**
- * **模块导入**
+ * 模块导入
  * @description 导入 lodash 工具函数
- * */
+ */
 import _ from "lodash";
 const { cloneDeep, throttle } = _;
 /**
- * **组件属性**
- * @type `ComponentProps`
+ * 组件属性
+ * @type ComponentProps
  * @description 组件的属性对象
- * */
+ */
 const props = withDefaults(defineProps<ComponentProps>(), {
   trigger: "click",
   contentClassName: "",
@@ -68,57 +68,57 @@ const props = withDefaults(defineProps<ComponentProps>(), {
   closeByScroll: true
 });
 /**
- * **组件事件定义**
+ * 组件事件定义
  * @description 定义组件可触发的事件
- * */
+ */
 const emits = defineEmits<ComponentEmits>();
 /**
- * **弹窗唯一标识**
- * @type `Ref<string>`
+ * 弹窗唯一标识
+ * @type Ref<string>
  * @description 弹窗的唯一标识符
- * */
+ */
 const id = ref(`popover-${Date.now()}`);
 /**
- * **渲染结束标识**
- * @type `Ref<boolean>`
+ * 渲染结束标识
+ * @type Ref<boolean>
  * @description 标识组件是否已完成渲染
- * */
+ */
 const inRenderEnd = ref(false);
 /**
- * **获取全局ZIndex方法**
- * @type `() => number`
+ * 获取全局ZIndex方法
+ * @type () => number
  * @description 获取全局 ZIndex 的方法
- * */
+ */
 const getPaAnagerGlobalZIndex = inject("getPaAnagerGlobalZIndex") as () => number;
 /**
- * **弹窗ZIndex**
- * @type `Ref<number>`
+ * 弹窗ZIndex
+ * @type Ref<number>
  * @description 弹窗的 ZIndex 值
- * */
+ */
 const zIndex = ref(getPaAnagerGlobalZIndex());
 /**
- * **动画帧ID**
- * @type `Ref<number | null>`
+ * 动画帧ID
+ * @type Ref<number | null>
  * @description requestAnimationFrame 返回的 ID
- * */
+ */
 const animationFrameId = ref<number | null>(null);
 /**
- * **参考元素引用**
- * @type `Ref<HTMLElement | undefined>`
+ * 参考元素引用
+ * @type Ref<HTMLElement | undefined>
  * @description 参考元素的 DOM 引用
- * */
+ */
 const popoverReferenceRef = ref<HTMLElement>();
 /**
- * **弹窗元素引用**
- * @type `Ref<HTMLElement | undefined>`
+ * 弹窗元素引用
+ * @type Ref<HTMLElement | undefined>
  * @description 弹窗的 DOM 引用
- * */
+ */
 const popoverRef = ref<HTMLElement>();
 /**
- * **弹窗样式**
- * @type `Ref<Record<string, string>>`
+ * 弹窗样式
+ * @type Ref<Record<string, string>>
  * @description 弹窗的样式对象
- * */
+ */
 const popoverStyle: Ref<Record<string, string>> = ref({
   top: "auto",
   bottom: "auto",
@@ -126,40 +126,40 @@ const popoverStyle: Ref<Record<string, string>> = ref({
   right: "auto"
 });
 /**
- * **弹窗内容样式**
- * @type `Ref<Record<string, string>>`
+ * 弹窗内容样式
+ * @type Ref<Record<string, string>>
  * @description 弹窗内容的样式对象
- * */
+ */
 const popoverContentStyle = ref({});
 /**
- * **弹窗箭头样式**
- * @type `Ref<Record<string, string>>`
+ * 弹窗箭头样式
+ * @type Ref<Record<string, string>>
  * @description 弹窗箭头的样式对象
- * */
+ */
 const popoverArrowStyle = ref({});
 /**
- * **弹窗可见状态**
- * @type `Ref<boolean>`
+ * 弹窗可见状态
+ * @type Ref<boolean>
  * @description 弹窗是否可见
- * */
+ */
 const visible = ref(false);
 /**
- * **悬停计时器**
- * @type `Ref<any>`
+ * 悬停计时器
+ * @type Ref<any>
  * @description 悬停延迟的计时器
- * */
+ */
 const hoverTimer = ref<any>(null);
 /**
- * **插槽对象**
- * @type `Slots`
+ * 插槽对象
+ * @type Slots
  * @description 组件插槽
- * */
+ */
 const slots = useSlots();
 /**
- * **处理点击事件**
- * @param `e` `MouseEvent` 点击事件对象
+ * 处理点击事件
+ * @param e - 点击事件对象
  * @description 处理点击参考元素的事件
- * */
+ */
 function handleClick(e: MouseEvent) {
   if (props.stopPropagation) e.stopPropagation();
   if (props.disabled) return;
@@ -182,9 +182,9 @@ function handleClick(e: MouseEvent) {
   showPopover();
 }
 /**
- * **处理鼠标进入事件**
+ * 处理鼠标进入事件
  * @description 处理鼠标进入参考元素的事件
- * */
+ */
 function handleMouseEnter() {
   if (props.disabled) return;
   if (props.trigger !== "hover") return;
@@ -199,9 +199,9 @@ function handleMouseEnter() {
   }, 150);
 }
 /**
- * **处理鼠标离开事件**
+ * 处理鼠标离开事件
  * @description 处理鼠标离开参考元素的事件
- * */
+ */
 function handleMouseLeave() {
   if (props.disabled) return;
   if (props.trigger !== "hover") return;
@@ -216,9 +216,9 @@ function handleMouseLeave() {
   }, 300);
 }
 /**
- * **处理弹窗鼠标进入事件**
+ * 处理弹窗鼠标进入事件
  * @description 处理鼠标进入弹窗的事件
- * */
+ */
 function handlePopoverEnter() {
   if (props.trigger !== "hover") return;
   if (hoverTimer.value) {
@@ -227,9 +227,9 @@ function handlePopoverEnter() {
   }
 }
 /**
- * **处理弹窗鼠标离开事件**
+ * 处理弹窗鼠标离开事件
  * @description 处理鼠标离开弹窗的事件
- * */
+ */
 function handlePopoverLeave() {
   if (props.trigger !== "hover") return;
   hoverTimer.value = setTimeout(() => {
@@ -239,9 +239,9 @@ function handlePopoverLeave() {
   }, 300);
 }
 /**
- * **重新计算弹窗位置**
+ * 重新计算弹窗位置
  * @description 重新计算弹窗的显示位置
- * */
+ */
 function recalculatePosition() {
   if (!visible.value || !popoverReferenceRef.value) return;
   const ReferencePosition = getElementPosition(popoverReferenceRef.value);
@@ -277,9 +277,9 @@ function recalculatePosition() {
   }
 }
 /**
- * **检查弹窗是否超出视口**
+ * 检查弹窗是否超出视口
  * @description 检查弹窗是否超出浏览器视口边界
- * */
+ */
 function checkPositionOverOut() {
   const ReferencePosition = getElementPosition(popoverReferenceRef.value);
   const popoverRefPosition = getElementPosition(popoverRef.value);
@@ -337,9 +337,9 @@ function checkPositionOverOut() {
   });
 }
 /**
- * **开始观察目标元素**
+ * 开始观察目标元素
  * @description 开始观察目标元素位置和尺寸变化
- * */
+ */
 function startObserving() {
   if (!popoverReferenceRef.value || animationFrameId.value || !popoverRef.value) return;
   let lastPosition = getElementPosition(popoverReferenceRef.value);
@@ -381,9 +381,9 @@ function startObserving() {
   animationFrameId.value = requestAnimationFrame(throttleCheckPosition);
 }
 /**
- * **停止观察目标元素**
+ * 停止观察目标元素
  * @description 停止观察目标元素位置和尺寸变化
- * */
+ */
 function stopObserving() {
   if (animationFrameId.value) {
     cancelAnimationFrame(animationFrameId.value);
@@ -391,9 +391,9 @@ function stopObserving() {
   }
 }
 /**
- * **显示弹窗**
+ * 显示弹窗
  * @description 显示弹出框
- * */
+ */
 function showPopover() {
   popoverStyle.value = { top: "auto", bottom: "auto", left: "auto", right: "auto" };
   popoverContentStyle.value = {};
@@ -418,9 +418,9 @@ function showPopover() {
   }
 }
 /**
- * **隐藏弹窗**
+ * 隐藏弹窗
  * @description 隐藏弹出框
- * */
+ */
 function hidePopover() {
   visible.value = false;
   emits("change", false);
@@ -431,10 +431,10 @@ function hidePopover() {
   }
 }
 /**
- * **全局点击事件处理**
- * @param `event` `MouseEvent` 点击事件对象
+ * 全局点击事件处理
+ * @param event - 点击事件对象
  * @description 处理全局点击事件
- * */
+ */
 function handleGlobalClick(event: MouseEvent) {
   if (!visible.value) return;
   const isClickOnReference =
@@ -448,30 +448,30 @@ function handleGlobalClick(event: MouseEvent) {
   hidePopover();
 }
 /**
- * **添加全局点击事件监听**
+ * 添加全局点击事件监听
  * @description 添加全局点击事件监听器
- * */
+ */
 function addGlobalClickListener() {
   document.addEventListener("click", handleGlobalClick);
 }
 /**
- * **移除全局点击事件监听**
+ * 移除全局点击事件监听
  * @description 移除全局点击事件监听器
- * */
+ */
 function removeGlobalClickListener() {
   document.removeEventListener("click", handleGlobalClick);
 }
 /**
- * **组件挂载生命周期**
+ * 组件挂载生命周期
  * @description 组件挂载时的初始化操作
- * */
+ */
 onMounted(() => {
   inRenderEnd.value = true;
 });
 /**
- * **组件卸载生命周期**
+ * 组件卸载生命周期
  * @description 组件卸载时的清理操作
- * */
+ */
 onUnmounted(() => {
   removeGlobalClickListener();
   if (hoverTimer.value) {
@@ -483,9 +483,9 @@ onUnmounted(() => {
 });
 defineExpose({ showPopover, hidePopover });
 /**
- * **监听 autoWidth 属性变化**
+ * 监听 autoWidth 属性变化
  * @description 监听 autoWidth 属性变化并更新样式
- * */
+ */
 watch(
   () => props.autoWidth,
   newVal => {

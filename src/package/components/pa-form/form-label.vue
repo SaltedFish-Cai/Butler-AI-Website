@@ -15,9 +15,15 @@
   </div>
 </template>
 <script lang="ts" setup>
-/** @description Vue 响应式 API */
+/**
+ * Vue 响应式 API
+ * @description Vue 响应式 API
+ */
 import { ref } from "vue";
-/** @description 表单项类型定义 */
+/**
+ * 表单项类型定义
+ * @description 表单项类型定义
+ */
 import { PaFormItemType } from "./types";
 
 export type labelPropsType = {
