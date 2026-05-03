@@ -1,7 +1,7 @@
 <template>
   <template v-if="item.prop">
     <!-- other-item -->
-    <pa-col :xs="colSize" :sm="colSize" :md="colSize" :lg="colSize" :xl="colSize" :span="item.colSpan">
+    <pa-col :xs="colSize" :sm="colSize" :md="colSize" :lg="colSize" :xl="colSize" :span="item.exSpan">
       <pa-form-item
         :prop="Array.isArray(item.prop) ? item.prop.join('-') : item.prop"
         :class="[item.exStyles?.class || '']"
@@ -462,10 +462,10 @@ onMounted(async () => {
 // # Function 设置单行列数
 function setSpanStyle(span?: 1 | 2 | 3 | 4, baseSpanSize = 4) {
   const maxSpanList = {
-    4: [6, 12, 18, 24],
-    3: [8, 16, 24, 24],
-    2: [12, 24, 24, 24],
-    1: [24, 24, 24, 24]
+    4: [4, 3, 2, 1],
+    3: [3, 2, 1, 1],
+    2: [2, 1, 1, 1],
+    1: [1, 1, 1, 1]
   };
 
   let data = 24 / baseSpanSize;
@@ -480,7 +480,6 @@ function setSpanStyle(span?: 1 | 2 | 3 | 4, baseSpanSize = 4) {
       data = maxSpanList[data][3];
     }
   }
-
   return data;
 }
 
@@ -489,7 +488,7 @@ const colSize = computed(() => {
   const _injectConfigContext = injectConfigContext.value;
   const _prop = Array.isArray(props.item.prop) ? props.item.prop.join("-") : String(props.item.prop);
   // 无Label时，spanSize为24
-  if (props.noLabel) return 24;
+  if (props.noLabel) return 1;
 
   const data =
     _prop && props.item.exSpan

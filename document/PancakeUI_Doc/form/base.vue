@@ -28,7 +28,7 @@ const formData = ref({});
 const formConfig: Ref<MStructureV2Type.FormV2[]> = ref([]);
 setTimeout(() => {
   formConfig.value = [
-    { label: "Input1", tip: "Tip Message", prop: "Input1", type: "textarea", maxLength: 100, exSpan: 4 },
+    { label: "Input1", tip: "Tip Message", prop: "Input1", type: "textarea", maxLength: 100, exSpan: 1 },
     { label: "Input2", prop: "Input2", type: "input", rules: [{ required: false }] },
     { label: "Select1", prop: "Select1", type: "select", clearable: false },
     { label: "协议有效期", prop: "AgreementPeriod", type: "date-picker-group" }

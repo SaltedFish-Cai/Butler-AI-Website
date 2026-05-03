@@ -44,7 +44,7 @@ export type ComponentProps = {
    * @default `undefined`
    * @description 当设置该值时，会添加到组件的样式中
    */
-  style?: Record<string, string | number>;
+  style?: Record<string, number | string>;
   /**
    * **双向绑定外置默认数据**
    * @type `FormDataType` | `undefined`
@@ -287,13 +287,6 @@ export type ComponentItemProps = {
    * @description 当设置该值为 `true` 时，会必填该表单项
    */
   required?: boolean;
-  /**
-   * **跨栏数**
-   * @type `1` | `2` | `3` | `4` | `5` | `6` | `7` | `8` | `9` | `10` | `11` | `12`
-   * @default `undefined`
-   * @description 设置表单项跨越的栏数
-   */
-  colSpan?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
   /**
    * **额外样式**
    * @type `{ style?: Record<string, string>; message?: string; class?: string; messageClass?: string; messageStyle?: Record<string, string> }` | `undefined`
@@ -657,7 +650,7 @@ export type TabsItemPropType = {
    * @type `Record<string, FormItemRule | Array<FormItemRule>>`
    * @description 校验规则
    */
-  rules: Record<string, FormItemRule | Array<FormItemRule>>;
+  rules: Record<string, Array<FormItemRule> | FormItemRule>;
 };
 export type SlotItemsPropsType = {
   /**

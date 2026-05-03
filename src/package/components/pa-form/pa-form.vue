@@ -24,10 +24,10 @@
             </template>
 
             <!-- body -->
-            <pa-row :gutter="'calc(var(--pa-size-padding, 10px) / 4)'">
+            <pa-row>
               <template v-for="item in itemConfigs.configs" :key="String(item.prop)">
                 <!-- tabs 表 -->
-                <pa-col v-if="item.type == 'tabs-form'" :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+                <pa-col v-if="item.type == 'tabs-form'" :xs="1" :sm="1" :md="1" :lg="1" :xl="1">
                   <tabsItem
                     :id="id"
                     @set-ref="refBody => setRuleTabsFormRef(refBody, item.prop as string)"
@@ -62,20 +62,7 @@
 
 <script lang="tsx" setup>
 // # Import
-import {
-  ref,
-  Ref,
-  reactive,
-  defineEmits,
-  watch,
-  nextTick,
-  computed,
-  provide,
-  onMounted,
-  onUnmounted,
-  ComputedRef,
-  inject
-} from "vue";
+import { ref, Ref, reactive, watch, nextTick, computed, provide, onMounted, onUnmounted, ComputedRef, inject } from "vue";
 import mFormV2Control from "./pa-form-control.vue";
 
 import inBrowser from "../tools/inBrowser";
@@ -194,22 +181,22 @@ function createSpanStyle() {
   if (inBrowser) {
     if (props.exSpan) {
       if (props.exSpan == 1) {
-        baseSpanSize.value = 24;
+        baseSpanSize.value = 1;
       } else if (props.exSpan == 2) {
-        baseSpanSize.value = 12;
+        baseSpanSize.value = 2;
       } else if (props.exSpan == 3) {
-        baseSpanSize.value = 8;
+        baseSpanSize.value = 3;
       } else if (props.exSpan == 4) {
-        baseSpanSize.value = 6;
+        baseSpanSize.value = 4;
       }
     } else {
       const boxWidth = typeof window !== "undefined" && window.document?.getElementById(props.id || "default");
       if (!boxWidth) return;
       const maxSpanList = {
-        4: [6, 8, 12, 24],
-        3: [8, 8, 12, 24],
-        2: [12, 12, 12, 24],
-        1: [24, 24, 24, 24]
+        4: [4, 2, 2, 1],
+        3: [3, 3, 2, 1],
+        2: [2, 2, 2, 1],
+        1: [1, 1, 1, 1]
       };
       const observer = new ResizeObserver(entries => {
         for (const entry of entries) {
@@ -456,7 +443,7 @@ function initConfig() {
         const item: PaFormItemType = {
           ...value,
           ...exCellConfig.value[String(value.prop)],
-          exSpan: value.type == "transfer" || value.type == "group" ? value.exSpan || 4 : value.exSpan
+          exSpan: value.type == "transfer" || value.type == "group" ? value.exSpan || 1 : value.exSpan
         };
         const _prop = Array.isArray(item.prop) ? item.prop.join("-") : item.prop;
         if (_prop) inConfigObj[_prop] = item;
@@ -768,7 +755,12 @@ watch(
 watch(
   () => props.data,
   () => {
-    typeof window !== "undefined" && window.developLog.log("注意", "组件内使用数据隔离方案，请使用 changeData_All 或 changeData_Item 方法变更内部数据", "danger");
+    typeof window !== "undefined" &&
+      window.developLog.log(
+        "注意",
+        "组件内使用数据隔离方案，请使用 changeData_All 或 changeData_Item 方法变更内部数据",
+        "danger"
+      );
     // if (value && Object.keys(value).length > 0) {
     //   const cloneData = props.deepData ? cloneDeep(value) : value;
     //   formData.value = cloneData;
