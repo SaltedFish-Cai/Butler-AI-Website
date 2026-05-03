@@ -100,7 +100,7 @@ export type ComponentProps = {
    * @default `"top"`
    * @description 当设置该值为 `"left"` 时，标签居左
    */
-  labelPosition?: "left" | "right" | "top";
+  labelPosition?: "left" | "right" | "top" | undefined;
   /**
    * **表单结构**
    * @type `Array<PaFormItemType>`
@@ -428,7 +428,7 @@ export type ConfigContextType = {
    * @default `undefined`
    * @description 表单标签位置
    */
-  labelPosition?: "left" | "right" | "top";
+  labelPosition?: "left" | "right" | "top" | undefined;
   /**
    * **基础分栏大小**
    * @type `number`

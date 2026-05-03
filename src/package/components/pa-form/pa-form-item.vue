@@ -35,7 +35,6 @@
 import { computed, ref, Ref, inject, provide } from "vue";
 import { ConfigContextType } from "./types";
 
-// 定义 Props
 type PaFormItemProps = {
   /**
    * **表单字段名**
@@ -83,10 +82,8 @@ type PaFormItemProps = {
   help?: string;
 };
 
-// # Var
 const props = withDefaults(defineProps<PaFormItemProps>(), {});
 
-// 从父组件注入表单上下文
 const injectFormContext = inject<any>("formContext", {});
 const injectConfigContext = inject<Ref<ConfigContextType>>(
   "configContext",
@@ -108,7 +105,6 @@ const injectConfigContext = inject<Ref<ConfigContextType>>(
     noLabel: false
   })
 );
-// 计算标签样式
 const labelStyle = computed(() => {
   const style: Record<string, string> = {};
   if (injectConfigContext.value.labelWidth !== "" && injectConfigContext.value.labelPosition !== "top") {
@@ -119,17 +115,11 @@ const labelStyle = computed(() => {
 
 const useLabelPosition = computed(() => injectConfigContext.value.labelPosition || "top");
 
-// 计算内容样式
 const contentStyle = computed(() => {
   const style: Record<string, string> = {};
-  // const _labelPosition = injectConfigContext.value.labelPosition || "top";
-  // if (injectConfigContext.value.labelWidth !== "" && _labelPosition !== "top") {
-  //   style.marginLeft = `${injectConfigContext.value.labelWidth}px`;
-  // }
   return style;
 });
 
-// 计算是否为必填项
 const isRequired = computed(() => {
   if (injectFormContext.rulesKeys.length) {
     return injectFormContext.rulesKeys.includes(props.prop || "");
@@ -138,7 +128,6 @@ const isRequired = computed(() => {
   return false;
 });
 
-// 提供给子组件的上下文
 provide("elFormItem", {
   ...props,
   isRequired

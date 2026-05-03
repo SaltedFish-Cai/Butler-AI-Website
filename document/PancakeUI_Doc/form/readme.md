@@ -208,7 +208,6 @@ const formConfig: ComponentItemProps[] = [
 | rules    | 外置校验规则     | `Array<{ required?: boolean; message?: LanguagePackageType \| string }>` \| `boolean`                                                | `-`     |
 | exSpan   | 单行分栏         | `1` \| `2` \| `3` \| `4`                                                                                                             | `1`     |
 | required | 是否必填         | `boolean`                                                                                                                            | `false` |
-| colSpan  | 跨栏数           | `1` \| `2` \| `3` \| `4` \| `5` \| `6` \| `7` \| `8` \| `9` \| `10` \| `11` \| `12`                                                  | `-`     |
 | exStyles | 额外样式         | `{ style?: Record<string, string>; message?: string; class?: string; messageClass?: string; messageStyle?: Record<string, string> }` | `-`     |
 
 ## CellItemType

@@ -215,10 +215,8 @@
 </template>
 
 <script lang="ts" setup>
-// # Import
 import { ref, Ref, watch, nextTick, computed, inject } from "vue";
 import { random } from "../hooks/random";
-// import formLabel from "../form-label.vue";
 import formItem from "../form-basics-element.vue";
 import mFormV2Control from "../pa-form-control.vue";
 
@@ -258,18 +256,6 @@ const stepsIndex = ref("0");
 const editTitleIndex = ref("");
 const baseTitleKey = random();
 
-// const computedLabel = computed(() => {
-//   return typeof props.item.label == "object"
-//     ? props.item.label?.[injectConfigContext.value.language || "zh-CN"] || props.item.label
-//     : props.item.label;
-// });
-
-// const computedTip = computed(() => {
-//   return typeof props.item.tip == "object"
-//     ? props.item.tip?.[injectConfigContext.value.language || "zh-CN"] || props.item.tip
-//     : props.item.tip;
-// });
-
 const titleArr = computed(() => {
   const data = injectConfigContext.value.data[String(props.item.prop)]?.map((item: Record<string, any>) => {
     return props.item.titleKey
@@ -279,19 +265,6 @@ const titleArr = computed(() => {
 
   return data || [];
 });
-
-// const contrastDataArr = computed(() => {
-//   const { contrastData } = injectConfigContext.value;
-//   const { item } = props;
-//   const arr: Record<string, string> = {};
-//   if (item && item.contrastUse && contrastData && contrastData[String(item.prop)]) {
-//     for (let index = 0; index < contrastData[String(item.prop)].length; index++) {
-//       const element = contrastData[String(item.prop)][index];
-//       arr[element[item.contrastUse]] = element;
-//     }
-//   }
-//   return arr;
-// });
 
 const contrastDeletedTab = computed(() => {
   const { item } = props;
@@ -313,7 +286,6 @@ const contrastDeletedTab = computed(() => {
 
 let lock = false;
 
-// #Function 设置 Tabs Form Ref
 const ruleTabsFormRef: Record<string, { ref: any; prop: Record<string, boolean | string> }> = {};
 function setRuleTabsFormRef(el: any, prop: Record<string, boolean | string>) {
   const key = prop.name;
@@ -322,8 +294,6 @@ function setRuleTabsFormRef(el: any, prop: Record<string, boolean | string>) {
   }
 }
 
-// # function 处理输入框失去焦点事件
-// #param {string} value 输入框的值
 function inputBlur(value: string, callback: (value: string) => void) {
   editTitleIndex.value = "";
   if (value == "") {
@@ -331,7 +301,6 @@ function inputBlur(value: string, callback: (value: string) => void) {
   }
 }
 
-// # Function 获取 Tabs Form Ref
 function getRuleTabsFormRef(name: string) {
   if (ruleTabsFormRef[name]) {
     return ruleTabsFormRef[name].ref;
@@ -339,7 +308,6 @@ function getRuleTabsFormRef(name: string) {
   return {};
 }
 
-// # Function 点击Tabs
 function clickToChange({ name }: { name: string }) {
   if (editTitleIndex.value != name) {
     editTitleIndex.value = "";
@@ -347,7 +315,6 @@ function clickToChange({ name }: { name: string }) {
   stepsIndex.value = name || "0";
 }
 
-// # Function 新增Tabs
 function addTabs() {
   const newData: Record<string, any> = { name: random() || Date.now() };
   const key = props?.item?.titleKey || baseTitleKey;
@@ -363,7 +330,6 @@ function addTabs() {
     ].name;
 }
 
-// # Function 删除Tabs
 function removeTab(row: Record<string, string>) {
   const data = injectConfigContext.value.data[String(props.item.prop)];
   const index = data.findIndex((item: Record<string, any>) => item.name == row.name);
@@ -376,7 +342,6 @@ function removeTab(row: Record<string, string>) {
   }, 10);
 }
 
-// # Expose 暴露表单校验方法
 const submitTabsForm = async () => {
   if (!Object.keys(ruleTabsFormRef).length) return undefined;
 
@@ -420,7 +385,6 @@ defineExpose({ submitTabsForm });
 
 emit("setRef", { submitTabsForm });
 
-// #Watch data
 watch(
   () => injectConfigContext.value.data[String(props.item.prop)],
   data => {

@@ -50,9 +50,7 @@
   </template>
 </template>
 <script lang="tsx" setup>
-// # Import
 import { Ref, ref, inject, computed, onMounted } from "vue";
-// import formLabel from "../form-label.vue";
 import formItem from "../form-basics-element.vue";
 import { GroupItemPropsType } from "../item";
 import { ConfigContextType, PaFormChildType, PaFormItemType } from "../types";
@@ -61,10 +59,8 @@ import { findData } from "../../pa-select/find-data";
 
 import _ from "lodash";
 const { isNil, isEqual } = _;
-// # Var
 const props = withDefaults(defineProps<GroupItemPropsType>(), {});
 
-// # 处理Display状态
 const useDisplay = computed(() => {
   return !isNil(props.item.display) ? props.item.display : injectConfigContext.value.display || false;
 });
@@ -89,19 +85,7 @@ const injectConfigContext = inject<Ref<ConfigContextType>>(
 );
 const injectSetRule = inject<
   (item: PaFormChildType | PaFormItemType, type?: string, options?: { titleKey?: string; removeList?: string[] }) => void
->("setRule", () => {
-  //
-});
-
-// const computedLabel = computed(() => {
-//   return typeof props.item.label == "object"
-//     ? props.item.label?.[injectConfigContext.value.language || "zh-CN"]
-//     : props.item.label;
-// });
-
-// const computedTip = computed(() => {
-//   return typeof props.item.tip == "object" ? props.item.tip?.[injectConfigContext.value.language || "zh-CN"] : props.item.tip;
-// });
+>("setRule", () => {});
 
 const radioOptions = computed(() => {
   const val = injectConfigContext.value.data[String(props.item.prop)];
@@ -124,7 +108,6 @@ const radioOptions = computed(() => {
     });
   }
   if (isNil(injectConfigContext.value?.data?.[String(props.item.prop)])) {
-    // eslint-disable-next-line vue/no-side-effects-in-computed-properties
     injectConfigContext.value.data[String(props.item.prop)] = opts[0].value;
   }
   return opts;
@@ -143,23 +126,6 @@ function radioChange({ value }) {
 onMounted(() => {
   radioChange({ value: injectConfigContext.value.data[String(props.item.prop)] });
 });
-
-// function findData2(data) {
-//   const prop = props.item.prop;
-//   if (!prop) {
-//     return;
-//   }
-//   let text = "";
-//   const options = radioOptions.value;
-//   for (let index = 0; index < options.length; index++) {
-//     const option = options[index];
-//     if (option.value == data) {
-//       if (text == "") text += props.item.label + ":";
-//       text += option.label;
-//     }
-//   }
-//   return text || "--";
-// }
 </script>
 <style lang="scss" scoped>
 .flex-col {

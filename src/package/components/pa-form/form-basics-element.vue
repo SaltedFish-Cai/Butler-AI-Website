@@ -355,7 +355,6 @@
 </template>
 
 <script lang="ts" setup>
-// # Import
 import { ref, computed, onMounted, inject, Ref, watch, ComputedRef } from "vue";
 import formLabel from "./form-label.vue";
 import mFormV2Item from "./pa-form-item.vue"; // 添加这行
@@ -368,7 +367,6 @@ import { GetSystemAddressMap } from "../api/form";
 import _ from "lodash";
 const { isNil } = _;
 
-// # Var
 type BasicsItemPropsType = {
   id: string;
   item: PaFormItemType;
@@ -459,7 +457,6 @@ onMounted(async () => {
   }
 });
 
-// # Function 设置单行列数
 function setSpanStyle(span?: 1 | 2 | 3 | 4, baseSpanSize = 4) {
   const maxSpanList = {
     4: [4, 3, 2, 1],
@@ -483,11 +480,9 @@ function setSpanStyle(span?: 1 | 2 | 3 | 4, baseSpanSize = 4) {
   return data;
 }
 
-// # 间隔大小
 const colSize = computed(() => {
   const _injectConfigContext = injectConfigContext.value;
   const _prop = Array.isArray(props.item.prop) ? props.item.prop.join("-") : String(props.item.prop);
-  // 无Label时，spanSize为24
   if (props.noLabel) return 1;
 
   const data =
@@ -498,7 +493,6 @@ const colSize = computed(() => {
   return data;
 });
 
-// # 处理Placeholder
 const usePlaceholder = computed(() => {
   let placeholder = props.item?.placeholder;
   if (!placeholder) {
@@ -535,14 +529,12 @@ const usePlaceholder = computed(() => {
   return placeholder;
 });
 
-// # 处理Display状态
 const useDisplay = computed(() => {
   return (
     props.enforcementDisplay || (!isNil(props.item.display) ? props.item.display : injectConfigContext.value.display || false)
   );
 });
 
-// const changeFormState: any = inject("changeFormState");
 const formCellChange: any = inject("formCellChange");
 
 function valueChange(data) {
@@ -550,7 +542,6 @@ function valueChange(data) {
   injectFormContext.validateField(props.item.prop, data.value);
 }
 
-// #Function 执行外部disabled方法
 function disabledFn(data) {
   if (!props.item.prop || !injectConfigContext.value.exDependent?.disabledRule) return false;
 
@@ -559,11 +550,6 @@ function disabledFn(data) {
 
   return disabledRule[prop] && disabledRule[prop](data);
 }
-
-// #Function 变更formState状态
-// function changeState(data: "Pending" | "Working") {
-//   changeFormState(data);
-// }
 
 watch(
   () => props.item.type,
@@ -594,15 +580,4 @@ watch(
 }
 </style>
 
-<style lang="scss">
-// .span_item_all-center {
-//   width: 100%;
-//   .pa-form-item {
-//     margin-bottom: 18px !important;
-//     &__content {
-//       display: flex;
-//       justify-content: center;
-//     }
-//   }
-// }
-</style>
+<style lang="scss"></style>

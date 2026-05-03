@@ -61,7 +61,6 @@
 </template>
 
 <script lang="tsx" setup>
-// # Import
 import { ref, Ref, reactive, watch, nextTick, computed, provide, onMounted, onUnmounted, ComputedRef, inject } from "vue";
 import mFormV2Control from "./pa-form-control.vue";
 
@@ -70,7 +69,7 @@ import inBrowser from "../tools/inBrowser";
 import tabsItem from "./components/tabs-item.vue";
 import formItem from "./form-basics-element.vue";
 
-import { PaFormItemType, PaFormChildType, ComponentProps, ConfigContextType, FormDataType } from "./types";
+import { PaFormItemType, PaFormChildType, ComponentProps, ComponentEmits, ConfigContextType, FormDataType } from "./types";
 import { ExMultipleConfigType, MultipleConfigType } from "./types";
 import { DatePickerShortcut } from "../pa-time/type";
 import { PancakeGlobalConfigType } from "../pa-manager/types";
@@ -100,7 +99,7 @@ const props = withDefaults(defineProps<ComponentProps>(), {
   titlePosition: ""
 });
 
-const emit = defineEmits(["formDataChange", "formCellChange", "onFormStateChange"]);
+const emit = defineEmits<ComponentEmits>();
 
 /**
  * 初始化状态
@@ -125,7 +124,6 @@ const formData: Ref<FormDataType> = ref(cloneDeep(props.data) || {});
 const inConfigObj: Record<string, any> = {};
 
 const ruleTabsFormRef: Record<string, { submitTabsForm: () => Promise<boolean | undefined> }> = {};
-// const setRuleTabsFormRefDebounce = debounce(setRuleTabsFormRef, 200, { trailing: true });
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 const injectSetScrollToIntersect = inject("setScrollToIntersect") as (
   el: Element,
@@ -150,7 +148,6 @@ const configContext: Ref<ConfigContextType> = ref({
   useRequired: computed(() => props.useRequired),
   noLabel: computed(() => props.noLabel)
 });
-// 提供给子组件的数据和方法
 provide("configContext", configContext);
 
 function setRuleTabsFormRef(el: { submitTabsForm: () => Promise<boolean | undefined> }, key: string) {
@@ -170,13 +167,9 @@ provide("changeFormState", (data: string) => (formState.value = data));
 
 provide("formCellChange", (data: FormDataType) => emit("formCellChange", data));
 
-// const _debounce = debounce(structure => setConfigData(structure), 200, { trailing: true });
-
-// const structure: PaFormItemType[] = [];
 const baseFormData: Record<string, Array<string> | string> = {};
 const inConfig: Ref<PaFormItemType[]> = ref(cloneDeep(props.structure || []));
 
-// # Function 初始化单行列数
 function createSpanStyle() {
   if (inBrowser) {
     if (props.exSpan) {
@@ -225,7 +218,6 @@ function createSpanStyle() {
   }
 }
 
-// # Function  解析·校验规则
 function setRule(
   item: PaFormChildType | PaFormItemType,
   type = "default",
@@ -246,10 +238,6 @@ function setRule(
     item.display || item.disabled
       ? []
       : [{ required: true, message: configContext.value.languagePackage["requiredMessage"], trigger: "blur" }];
-  // if (item.type == "select" || item.type == "multiple-select" || item.type == "number") {
-  //   baseRules = [{ required: true, message: "此项为必填项", trigger: "change" }];
-  // }
-  // const _rules = item?.isText == true ? [] : item.rules ? item.rules : [{ required: true, message: "此项为必填项", trigger: "blur" }];
   let _rules = baseRules;
   if (item.rules && Array.isArray(item.rules)) {
     let isRequired = true;
@@ -279,7 +267,6 @@ function setRule(
     item.rules = false;
   }
 
-  // >-------------> 强制不使用校验 <------------<
   const _prop = item.prop as string;
   if (!props.useRequired || !useRequired.value) {
     inRules.value[type][_prop] = item.display || item.disabled ? [] : item.rules || [];
@@ -299,17 +286,11 @@ function setRule(
 }
 provide("setRule", setRule);
 
-// # Function  解析·多form情况
 function setMultipleConfig(configItem: ExMultipleConfigType, baseIndex: number) {
   const _groupName = configItem.unitName as string;
   const _index = inMultipleConfigKeys.indexOf(_groupName);
 
-  // >-------------> 处理 表格 的 group 组 <------------<
   if (configItem.tabsFormConfig?.length) {
-    // const inMultipleTabsConfigKeys: string[] = [];
-    // configItem.inMultipleConfig = [];
-    // const { exClassName } = getFormBoxInfo();
-
     let _prop = "";
     if (configItem.prop) {
       _prop = Array.isArray(configItem.prop) ? configItem.prop.join("-") : configItem.prop;
@@ -319,16 +300,8 @@ function setMultipleConfig(configItem: ExMultipleConfigType, baseIndex: number) 
     configItem.tabsFormConfig.map((value: PaFormChildType, configIndex: number) => {
       const item: PaFormItemType = { ...value };
 
-      // // placeholder
-      // item.placeholder = item.languagePlaceholder
-      //   ? item.languagePlaceholder[PancakeGlobalConfig.value?.language?.value || "zh-CN"]
-      //   : typeof item.placeholder == "string"
-      //   ? item.placeholder
-      //   : item?.placeholder?.[PancakeGlobalConfig.value?.language?.value || "zh-CN"] || item?.placeholder;
-
       item.display = item.display != undefined ? item.display : props.display;
       item.disabled = item.disabled == undefined ? configItem.disabled : item.disabled;
-      // item.placeholder = item.disabled ? "" : item.placeholder;
 
       setRule(item, _prop, { titleKey: configItem.titleKey });
 
@@ -336,17 +309,6 @@ function setMultipleConfig(configItem: ExMultipleConfigType, baseIndex: number) 
         typeof item?.unitName == "object"
           ? item?.unitName?.[PancakeGlobalConfig.value?.language?.value || "zh-CN"]
           : item.unitName || "default";
-
-      // if (Array.isArray(configItem.inMultipleConfig)) {
-      // for (let index = 0; index < inMultipleConfig.length; index++) {
-      //   const element = inMultipleConfig[index];
-      //   element.configs = configItem.inMultipleConfig[_tabsIndex]?.configs?.filter?.(item => {
-      //     return propsArr.includes(item.prop);
-      //   });
-      // }
-      // configItem.inMultipleConfig[_tabsIndex].configs = configItem.inMultipleConfig[_tabsIndex]?.configs?.filter?.(item => {
-      //   return propsArr.includes(item.prop);
-      // });
 
       for (let index = 0; index < inMultipleConfig.length; index++) {
         const element = inMultipleConfig[index];
@@ -378,7 +340,6 @@ function setMultipleConfig(configItem: ExMultipleConfigType, baseIndex: number) 
           configs: [item]
         });
       }
-      // }
     });
   }
 
@@ -404,13 +365,11 @@ function setMultipleConfig(configItem: ExMultipleConfigType, baseIndex: number) 
   }
 }
 
-// #Function 开始结构处理
 function initConfig() {
   nextTick(() => {
     inRules.value = {};
     baseInMultipleConfigKeys.length = 0;
     createSpanStyle();
-    // const { exClassName } = getFormBoxInfo();
     const propsArr = inConfig.value.map(item => {
       const _groupName =
         typeof item.unitName == "object"
@@ -451,9 +410,6 @@ function initConfig() {
         if (props.disabled) {
           item.disabled = true;
         }
-        // if (item.disabled) {
-        //   item.placeholder = " ";
-        // }
         item.display = item.display != undefined ? item.display : props.display;
 
         if (props.display) {
@@ -462,11 +418,8 @@ function initConfig() {
           useRequired.value = true;
         }
 
-        // setExRoles(item);
         if (item.type == "group" && item?.groupFormConfig?.length) {
           for (let index = 0; index < item.groupFormConfig.length; index++) {
-            // const el = item.groupFormConfig[index];
-
             item.groupFormConfig[index] = {
               ...item.groupFormConfig[index],
               disabled: item.disabled,
@@ -498,36 +451,6 @@ onMounted(() => {
   }
 });
 
-// #Function 外置数据
-// function setConfigData(config: MStructureType.FormV2[]) {
-//   const _config = config.map(item => ({
-//     ...item
-//   }));
-
-//   if (!Array.isArray(_config)) {
-//     return (initialization.value = -2);
-//   }
-//   if (_config?.length > 0) {
-//     inConfig.value = cloneDeep(_config);
-//     debounceInitConfig();
-//     initialization.value = 1;
-//     // const baseStore = useBaseStore();
-//     // if (baseStore.getToken) {
-//     //   initialization.value = 1;
-//     //   nextTick(() => {
-//     //     debounceInitConfig();
-//     //   });
-//     // } else {
-//     //   initialization.value = -1;
-//     // }
-//   }
-//   if (!inConfig.value.length) {
-//     initialization.value = -1;
-//   }
-//   // structure.length = 0;
-// }
-
-// # Expose 提交表单
 /**
  * **校验并获取表格数据**
  * @type `() => object | false | null`
@@ -571,7 +494,6 @@ async function getSubmitForm() {
     if (isEqual(baseFormData, FormData)) return "no-change";
     return FormData;
   } else {
-    // window.MScrollbarToError();
     const errorItem = document.querySelector(`#${props.id} .pa-form-item.is-error`);
     if (errorItem && injectSetScrollToIntersect) {
       injectSetScrollToIntersect(errorItem, undefined, { offsetY: 30 });
@@ -580,14 +502,12 @@ async function getSubmitForm() {
   }
 }
 
-// # Expose 清空表单内容
 async function clean_All() {
   formData.value = {};
   FormControlRef.value?.resetFields();
   FormControlRef.value.clearValidate();
 }
 
-// # Expose 重置结构配置
 function setStructure_All(newConfig: Array<PaFormItemType>) {
   typeof window !== "undefined" && window.developLog.json(newConfig, "setStructure_All", "success");
   inConfig.value = cloneDeep(newConfig);
@@ -625,12 +545,10 @@ function setStructure_Item(prop: string, item: PaFormItemType) {
   debounceInitConfig();
 }
 
-// @ 重置表单数据
 function changeData_All(data: FormDataType) {
   formData.value = cloneDeep(data);
 }
 
-// @ 重置单个表单数据
 function changeData_Item(prop: string, data: any) {
   formData.value[prop] = typeof data == "object" ? Object.assign(formData.value[prop], data) : data;
 }
@@ -733,7 +651,6 @@ defineExpose({
   changeData_Item
 });
 
-// @ watch 结构配置
 watch(
   () => props.structure,
   newConfig => {
@@ -751,7 +668,6 @@ watch(
   }
 );
 
-// @ watch 外置数据
 watch(
   () => props.data,
   () => {
@@ -761,31 +677,20 @@ watch(
         "组件内使用数据隔离方案，请使用 changeData_All 或 changeData_Item 方法变更内部数据",
         "danger"
       );
-    // if (value && Object.keys(value).length > 0) {
-    //   const cloneData = props.deepData ? cloneDeep(value) : value;
-    //   formData.value = cloneData;
-
-    //   const _cloneData = cloneDeep(formData.value);
-    //   baseFormData = _cloneData;
-    // }
   },
   { deep: true }
 );
 
-// @ watch formData回调数据
 watch(
   () => formData.value,
   value => emit("formDataChange", value),
   { deep: true }
 );
 
-// @ watch display模式
 watch(() => props.display, debounceInitConfig);
 
-// @ watch disabled
 watch(() => props.disabled, debounceInitConfig);
 
-// @ watch formState
 watch(
   () => formState.value,
   data => {
