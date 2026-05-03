@@ -18,25 +18,25 @@
 </template>
 
 <script lang="ts" setup name="PaDevelopment">
-/** @description Vue 核心响应式 API */
+/** Vue 核心响应式 API @description Vue 核心响应式 API */
 import { reactive, inject, ComputedRef, onMounted, nextTick, onUnmounted } from "vue";
-/** @description 开发工具组件 Props 类型 */
+/** 开发工具组件 Props 类型 @description 开发工具组件 Props 类型 */
 import type { ComponentProps } from "./types";
-/** @description 全局配置类型 */
+/** 全局配置类型 @description 全局配置类型 */
 import { PancakeGlobalConfigType } from "../pa-manager/types";
-/** @description 消息反馈组件 */
+/** 消息反馈组件 @description 消息反馈组件 */
 import { M_Message } from "../feedback";
-/** @description 组件 Props */
+/** 组件 Props @description 组件 Props */
 const props = withDefaults(defineProps<ComponentProps>(), { id: "" });
-/** @description 全局配置注入 */
+/** 全局配置注入 @description 全局配置注入 */
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
-/** @description 右键菜单状态 */
+/** 右键菜单状态 @description 右键菜单状态 */
 const menu = reactive({
-  /** @description 是否可见 */
+  /** 是否可见 @description 是否可见 */
   visible: false,
-  /** @description 顶部位置 */
+  /** 顶部位置 @description 顶部位置 */
   top: "-100%",
-  /** @description 左侧位置 */
+  /** 左侧位置 @description 左侧位置 */
   left: "-100%"
 });
 /**
@@ -85,7 +85,7 @@ function onContextMenu(e: MouseEvent): void {
   menu.left = `${e.clientX}px`;
   menu.visible = !menu.visible;
 }
-/** @description 开发环境下组件挂载时绑定右键菜单事件 */
+/** 组件挂载 @description 开发环境下组件挂载时绑定右键菜单事件 */
 onMounted(() => {
   if (PancakeGlobalConfig.value.env == "development") {
     nextTick(() => {
@@ -96,7 +96,7 @@ onMounted(() => {
     });
   }
 });
-/** @description 开发环境下组件卸载时移除右键菜单事件 */
+/** 组件卸载 @description 开发环境下组件卸载时移除右键菜单事件 */
 onUnmounted(() => {
   if (PancakeGlobalConfig.value.env == "development") {
     const element = typeof window !== "undefined" && window.document.getElementById(props.id);

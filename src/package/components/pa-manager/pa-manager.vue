@@ -3,32 +3,32 @@
 </template>
 
 <script lang="ts" setup name="PaManager">
-/** @description Vue 核心响应式 API */
+/** Vue 核心响应式 API @description Vue 核心响应式 API */
 import { provide, reactive, computed, watch, onMounted } from "vue";
-/** @description 主题颜色设置工具 */
+/** 主题颜色设置工具 @description 主题颜色设置工具 */
 import { setThemeColor } from "../tools/color";
-/** @description 全局配置组件 Props 和运行时类型 */
+/** 全局配置组件 Props 和运行时类型 @description 全局配置组件 Props 和运行时类型 */
 import type { ComponentProps, PancakeGlobalConfigType } from "./types";
-/** @description 语言包映射 */
+/** 语言包映射 @description 语言包映射 */
 import languageMap from "../language.json";
-/** @description 开发日志工具 */
+/** 开发日志工具 @description 开发日志工具 */
 import { createLog } from "../utils/develop-log";
-/** @description ZIndex 管理工具 */
+/** ZIndex 管理工具 @description ZIndex 管理工具 */
 import { useZIndex } from "element-plus";
-/** @description 深度工具函数 */
+/** 深度工具函数 @description 深度工具函数 */
 import _ from "lodash";
 const { isNil } = _;
-/** @description SSR 安全的全局 Z 索引 */
+/** SSR 安全的全局 Z 索引 @description SSR 安全的全局 Z 索引 */
 let globalZIndex = 1000;
-/** @description ZIndex 管理器 */
+/** ZIndex 管理器 @description ZIndex 管理器 */
 const { nextZIndex } = useZIndex();
-/** @description 提供全局 Z 索引获取方法 */
+/** 全局 Z 索引获取方法 @description 提供全局 Z 索引获取方法给子组件 */
 provide("getPaAnagerGlobalZIndex", () => {
   return nextZIndex() || globalZIndex++;
 });
-/** @description 组件 Props */
+/** 组件 Props @description 组件 Props */
 const props = withDefaults(defineProps<ComponentProps>(), {});
-/** @description 全局配置状态 */
+/** 全局配置状态 @description 全局配置状态 */
 const state = reactive({
   baseHost: props.baseHost,
   themeColor: props.themeColor,
@@ -43,7 +43,7 @@ const state = reactive({
   file_config: props.file_config,
   requestHeader: props.requestHeader
 } as PancakeGlobalConfigType);
-/** @description 提供全局配置给子组件 */
+/** 全局配置注入 @description 提供全局配置给子组件 */
 provide(
   "PancakeGlobalConfig",
   computed(() => {
@@ -114,7 +114,7 @@ function setPaManagerConfig(type: keyof PancakeGlobalConfigType & {}, config: an
   else if (type == "size") setPaManagerSize(config.size);
   else if (type == "table_config") setPaManagerTableInfiniteScroll(config);
 }
-/** @description 提供配置设置方法给子组件 */
+/** 配置设置方法注入 @description 提供配置设置方法给子组件 */
 provide("setPaManagerConfig", setPaManagerConfig);
 defineExpose({
   setPaManagerThemeColor,
@@ -123,7 +123,7 @@ defineExpose({
   setPaManagerTableInfiniteScroll,
   setPaManagerConfig
 });
-/** @description 组件挂载时初始化全局配置和日志 */
+/** 组件挂载 @description 组件挂载时初始化全局配置和日志 */
 onMounted(() => {
   if (typeof window !== "undefined") {
     window.globalZIndex = window.globalZIndex || 1000;
@@ -132,6 +132,7 @@ onMounted(() => {
   }
 });
 /**
+ * Props 同步监听
  * @description 监听 props 变化，同步更新全局配置状态
  */
 watch(

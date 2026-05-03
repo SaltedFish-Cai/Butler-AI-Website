@@ -1,6 +1,6 @@
-/** @description 开发工具组件 */
+/** Vue 应用类型 @description Vue 应用类型 */
 import type { App } from "vue";
-/** @description 开发工具组件 */
+/** 开发工具组件 @description 开发工具组件 */
 import PaDevelopment from "./pa-development.vue";
 /**
  * 注册 PaDevelopment 组件
@@ -10,7 +10,7 @@ import PaDevelopment from "./pa-development.vue";
 function install(app: App): void {
   if (!app._context.components["PaDevelopment"]) app.component("PaDevelopment", PaDevelopment);
 }
-/** @description 组件名称 */
+/** 组件名称 @description 组件名称 */
 const name = "PaDevelopment";
-/** @description 开发工具组件导出 */
+/** 开发工具组件导出 @description 开发工具组件导出 */
 export default { name, install };
