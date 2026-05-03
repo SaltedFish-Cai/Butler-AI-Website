@@ -18,14 +18,14 @@
 
 ## ComponentProps
 
-| 参数    | 说明         | 类型                               | 默认值    |
-| ------- | ------------ | ---------------------------------- | --------- |
-| id      | 元素 id      | `string`                           | -         |
-| class   | 自定义类名   | `Array<string>` \| `string`        | -         |
-| style   | 自定义样式   | `Record<string, string \| number>` | -         |
-| gutter  | 栅格间隔     | `number` \| `string`               | -         |
-| justify | 水平排列方式 | [`RowJustify`](#rowjustify)        | `'start'` |
-| align   | 垂直排列方式 | [`RowAlign`](#rowalign)            | `'top'`   |
+| 属性名  | 描述         | 类型                              | 默认值    |
+| ------- | ------------ | --------------------------------- | --------- |
+| id      | 唯一标识     | `string`                          | -         |
+| class   | 自定义类名   | `Array<string>` `string`          | -         |
+| style   | 自定义样式   | `Record<string, number` `string>` | -         |
+| gutter  | 栅格间隔     | `number` `string`                 | -         |
+| justify | 水平排列方式 | [`RowJustify`](#rowjustify)       | `'start'` |
+| align   | 垂直排列方式 | [`RowAlign`](#rowalign)           | `'top'`   |
 
 ## ComponentEmits
 
@@ -33,7 +33,7 @@
 
 ## ComponentSlots
 
-| 插槽名    | 说明                         |
+| 插槽名称  | 描述                         |
 | --------- | ---------------------------- |
 | 'default' | 行内容，通常放置 pa-col 组件 |
 
