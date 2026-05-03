@@ -2,7 +2,10 @@
  * @module pa-manager
  * @description 全局配置组件类型定义
  */
-/** 语言键类型 @description 语言键类型 */
+/**
+ * 语言键类型
+ * @description 语言键类型
+ */
 import type { LanguageKey } from "../manager-type";
 /**
  * API 配置类型
@@ -10,9 +13,17 @@ import type { LanguageKey } from "../manager-type";
  * @description API 请求的配置结构
  */
 export type ApiType = {
-  /** API URL @type `string` @description API URL */
+  /**
+   * API URL
+   * @type `string`
+   * @description API URL
+   */
   url: string;
-  /** API 类型 @type `string` @description API 类型 */
+  /**
+   * API 类型
+   * @type `string`
+   * @description API 类型
+   */
   type: string;
 };
 /**
@@ -21,13 +32,29 @@ export type ApiType = {
  * @description 高级查询中的条件选项
  */
 export type ConditionalType = {
-  /** 值 @type `string` @description 值 */
+  /**
+   * 值
+   * @type `string`
+   * @description 值
+   */
   Value: string;
-  /** 描述 @type `string` @description 描述 */
+  /**
+   * 描述
+   * @type `string`
+   * @description 描述
+   */
   Description: string;
-  /** 字典解释 @type `string` @description 字典解释 */
+  /**
+   * 字典解释
+   * @type `string`
+   * @description 字典解释
+   */
   DictionaryExplanation: string;
-  /** 描述英文 @type `string` @description 描述英文 */
+  /**
+   * 描述英文
+   * @type `string`
+   * @description 描述英文
+   */
   DescriptionEn: string;
 };
 /**
