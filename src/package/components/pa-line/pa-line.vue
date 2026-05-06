@@ -24,10 +24,18 @@
 <script lang="ts" setup>
 /**
  * 模块导入
- * @description 导入组件类型定义
+ * @description 导入 lodash 工具库
  */
 import _ from "lodash";
+/**
+ * 模块导入
+ * @description 导入组件类型定义
+ */
 import { ComponentProps } from "./types";
+/**
+ * 解构工具方法
+ * @description 从 lodash 中解构 isNaN 方法
+ */
 const { isNaN } = _;
 /**
  * 组件属性

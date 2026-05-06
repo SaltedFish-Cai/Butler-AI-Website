@@ -53,15 +53,14 @@ export type ComponentProps = {
   /**
    * 颜色
    * @type string | undefined
-   * @default undefined
+   * @default 'var(--pa-color-primary-light-6)'
    * @description 当设置该值时，会在标题下方添加一个颜色为该值的线
    */
   borderColor?: string;
-
   /**
    * 边框样式
    * @type "dashed" | "dotted" | "double" | "groove" | "inset" | "outset" | "ridge" | "solid" | undefined
-   * @default undefined
+   * @default 'solid'
    * @description 当设置该值时，会在组件下方添加一个边框样式为该值的线
    */
   borderStyle?: "dashed" | "dotted" | "double" | "groove" | "inset" | "outset" | "ridge" | "solid";
