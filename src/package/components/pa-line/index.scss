@@ -1,0 +1,14 @@
+.pa-line {
+  width: 100%;
+  display: flex;
+  height: var(--pa-line-height);
+  line-height: var(--pa-line-height);
+  &::before,
+  &::after {
+    content: "";
+    display: block;
+    width: 1px;
+    flex: 1;
+    border-top: var(--pa-line-height) solid var(--pa-line-border-color);
+  }
+}

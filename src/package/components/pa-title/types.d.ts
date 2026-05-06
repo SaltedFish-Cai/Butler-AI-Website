@@ -7,6 +7,8 @@
  * @description 导入多语言类型定义
  */
 import { LanguagePackageType } from "../manager-type";
+import { ComponentProps as LineComponentProps } from "../pa-line/types";
+
 /**
  * 组件属性
  * @type object
@@ -35,13 +37,6 @@ export type ComponentProps = {
    */
   style?: Record<string, string>;
   /**
-   * 是否使用下划线
-   * @type boolean | undefined
-   * @default true
-   * @description 当设置该值为 true 时，会使用下划线装饰
-   */
-  line?: boolean;
-  /**
    * 提示信息
    * @type LanguagePackageType | string | undefined
    * @default undefined
@@ -49,10 +44,25 @@ export type ComponentProps = {
    */
   tips?: LanguagePackageType | string;
   /**
+   * 提示位置
+   * @type "bottom" | "right" | undefined
+   * @default "bottom"
+   */
+  tipsPosition?: "bottom" | "right";
+  /**
    * 内边距方向
    * @type Array<'all' | 'bottom' | 'left' | 'null' | 'right' | 'top'> | undefined
    * @default undefined
    * @description 当设置该值时，会在标题的对应方向添加内边距
    */
   padding?: Array<"all" | "bottom" | "left" | "null" | "right" | "top">;
+  /**
+   * 样式模式
+   * @type "default" | "vertical" | "underline" | undefined
+   * @default "default"
+   * @description 当设置该值时，会根据不同的样式模式应用不同的样式
+   */
+  styleMode?: "default" | "underline" | "vertical";
+
+  lineConfig?: LineComponentProps | boolean;
 };

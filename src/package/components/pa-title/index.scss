@@ -7,20 +7,7 @@
   width: calc(100% - var(--pa-scroll-padding));
 
   .pa-title_box {
-    position: relative;
-
-    &::after {
-      position: absolute;
-      bottom: 0;
-      content: "";
-      display: block;
-      height: calc(var(--pa-size-padding, 10px) * 0.3);
-      border-radius: 0 8px;
-      left: 3px;
-      z-index: 1;
-      width: calc(100% - 3px);
-      background-color: var(--pa-color-primary-light-7);
-    }
+    width: 100%;
   }
 
   .pa-title_text {
@@ -45,31 +32,6 @@
 
   .pa-title_tip {
     font-size: 14px;
-  }
-}
-
-.pa-title_no-line {
-  padding-bottom: 0px !important;
-  width: max-content;
-
-  &::after {
-    display: none;
-  }
-  .pa-title_text {
-    padding-bottom: 5px;
-
-    &::after {
-      position: absolute;
-      bottom: 0;
-      content: "";
-      display: block;
-      height: 5px;
-      border-radius: 0 5px;
-      z-index: 2;
-      left: 0px;
-      width: 100%;
-      background-color: var(--pa-color-primary);
-    }
   }
 }
 

@@ -3,7 +3,7 @@
     class="pa-title"
     :class="[
       props.class,
-      !!props.line ? '' : 'pa-title_no-line',
+      props.styleMode,
       padding?.includes('top') ? 'padding-top' : '',
       padding?.includes('left') ? 'padding-left' : '',
       padding?.includes('bottom') ? 'padding-bottom' : '',
@@ -11,10 +11,24 @@
     ]"
     :style="{ ...props.style }"
   >
-    <div class="pa-title_box" :class="[!!props.line ? '' : 'pa-title_no-line']">
-      <div class="pa-title_text"><slot /></div>
+    <div class="pa-title_box">
+      <div class="pa-title_text">
+        <slot />
+        <div class="pa-title_tip" v-if="tipsPosition == 'right'">
+          <div class="ml-size">
+            (<slot name="tips"> {{ tips }} </slot>)
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="pa-title_tip">
+    <pa-line
+      v-if="lineConfig"
+      v-bind="
+        lineConfig == true ? { padding: [0, 0, 0, 5], height: '3px' } : { padding: [0, 0, 0, 5], height: '3px', ...lineConfig }
+      "
+    />
+
+    <div class="pa-title_tip" v-if="tipsPosition == 'bottom'">
       <slot name="tips">{{ tips }}</slot>
     </div>
   </div>
@@ -31,7 +45,11 @@ import { ComponentProps } from "./types";
  * @type ComponentProps
  * @description 组件的属性对象
  */
-const props = withDefaults(defineProps<ComponentProps>(), { line: true });
+const props = withDefaults(defineProps<ComponentProps>(), {
+  styleMode: "default",
+  tipsPosition: "bottom",
+  lineConfig: () => ({ padding: [0, 0, 0, 5], height: "3px" })
+});
 </script>
 
 <style lang="scss" scoped>
