@@ -4,11 +4,15 @@
     :class="[props.class]"
     :style="{
       ...props.style,
-      margin: padding.join('px ') + 'px',
+      '--pa-line-margin-top': !isNaN(+padding[0]) ? padding[0] + 'px' : padding[0],
+      '--pa-line-margin-right': !isNaN(+padding[1]) ? padding[1] + 'px' : padding[1],
+      '--pa-line-margin-bottom': !isNaN(+padding[2]) ? padding[2] + 'px' : padding[2],
+      '--pa-line-margin-left': !isNaN(+padding[3]) ? padding[3] + 'px' : padding[3],
       '--pa-line-height': height,
       marginTop: `calc(0px - ${height})`,
-      width: width,
-      '--pa-line-border-color': borderColor || 'transparent'
+      '--pa-line-width': width,
+      '--pa-line-border-color': borderColor || 'transparent',
+      '--pa-line-border-style': borderStyle || 'solid'
     }"
   >
     <div v-if="$slots['default']" class="ml-size mr-size">
@@ -22,7 +26,9 @@
  * 模块导入
  * @description 导入组件类型定义
  */
+import _ from "lodash";
 import { ComponentProps } from "./types";
+const { isNaN } = _;
 /**
  * 组件属性
  * @type ComponentProps
@@ -32,7 +38,8 @@ const props = withDefaults(defineProps<ComponentProps>(), {
   padding: () => [0, 0, 0, 0],
   height: "2px",
   width: "100%",
-  borderColor: "var(--pa-color-primary-light-6)"
+  borderColor: "var(--pa-color-primary-light-6)",
+  borderStyle: "solid"
 });
 </script>
 

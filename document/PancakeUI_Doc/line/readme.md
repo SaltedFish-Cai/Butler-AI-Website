@@ -4,7 +4,7 @@
 
 ## 基础使用
 
-默认分割线样式，占满容器宽度。
+默认分割线样式，占满容器宽度，可在标签内添加内容。
 
 <demo src="./base.vue">
 </demo>
@@ -21,6 +21,13 @@
 使用 `padding` 属性控制分割线的内边距，数组格式依次为 `[上, 右, 下, 左]`。
 
 <demo src="./padding.vue">
+</demo>
+
+## 边框样式
+
+通过 `border-style` 属性自定义分割线的边框样式。
+
+<demo src="./style.vue">
 </demo>
 
 ## ComponentProps

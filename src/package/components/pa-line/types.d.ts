@@ -31,11 +31,11 @@ export type ComponentProps = {
   style?: Record<string, string>;
   /**
    * 内边距
-   * @type Array<number> | undefined
+   * @type Array<number | string> | undefined
    * @default undefined
    * @description 当设置该值时，会在标题的对应方向添加内边距
    */
-  padding?: Array<number>;
+  padding?: Array<number | string>;
   /**
    * 宽度
    * @type string | undefined
@@ -57,4 +57,12 @@ export type ComponentProps = {
    * @description 当设置该值时，会在标题下方添加一个颜色为该值的线
    */
   borderColor?: string;
+
+  /**
+   * 边框样式
+   * @type "dashed" | "dotted" | "double" | "groove" | "inset" | "outset" | "ridge" | "solid" | undefined
+   * @default undefined
+   * @description 当设置该值时，会在组件下方添加一个边框样式为该值的线
+   */
+  borderStyle?: "dashed" | "dotted" | "double" | "groove" | "inset" | "outset" | "ridge" | "solid";
 };
