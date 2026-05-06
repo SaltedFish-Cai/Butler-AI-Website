@@ -2,6 +2,9 @@
 
 `pa-line` 用于在内容区域添加装饰性分割线，支持宽度、高度、颜色和内边距自定义。
 
+<DocSplit>
+  <template #demo>
+
 ## 基础使用
 
 默认分割线样式，占满容器宽度，可在标签内添加内容。
@@ -30,6 +33,9 @@
 <demo src="./style.vue">
 </demo>
 
+  </template>
+  <template #api>
+
 ## ComponentProps
 
 | 属性名       | 描述       | 类型                                                                                                      | 默认值                              |
@@ -48,3 +54,6 @@
 | 插槽名称  | 描述     |
 | --------- | -------- |
 | 'default' | 线条内容 |
+
+  </template>
+</DocSplit>
