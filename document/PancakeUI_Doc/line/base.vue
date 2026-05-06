@@ -1,0 +1,3 @@
+<template>
+  <pa-line />
+</template>

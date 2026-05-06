@@ -21,5 +21,4 @@ const name = "PaLine";
 const install = function (app: App): void {
   if (!app._context.components["PaLine"]) app.component("PaLine", PaLine);
 };
-
 export default { name, install };

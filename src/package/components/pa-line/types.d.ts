@@ -1,4 +1,8 @@
 /**
+ * @module pa-line/types
+ * @description PaLine 线条组件类型定义
+ */
+/**
  * 组件属性
  * @type object
  * @description PaLine 线条组件的属性类型定义
@@ -42,7 +46,7 @@ export type ComponentProps = {
   /**
    * 高度
    * @type string | undefined
-   * @default '3px'
+   * @default '2px'
    * @description 当设置该值时，会在标题下方添加一个高度为该值的线
    */
   height?: string;

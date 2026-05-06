@@ -7,8 +7,11 @@
  * @description 导入多语言类型定义
  */
 import { LanguagePackageType } from "../manager-type";
+/**
+ * 模块导入
+ * @description 导入 PaLine 组件属性类型
+ */
 import { ComponentProps as LineComponentProps } from "../pa-line/types";
-
 /**
  * 组件属性
  * @type object
@@ -47,6 +50,7 @@ export type ComponentProps = {
    * 提示位置
    * @type "bottom" | "right" | undefined
    * @default "bottom"
+   * @description 当设置该值时，会控制提示信息的显示位置
    */
   tipsPosition?: "bottom" | "right";
   /**
@@ -63,6 +67,11 @@ export type ComponentProps = {
    * @description 当设置该值时，会根据不同的样式模式应用不同的样式
    */
   styleMode?: "default" | "underline" | "vertical";
-
+  /**
+   * 分割线配置
+   * @type LineComponentProps | boolean | undefined
+   * @default undefined
+   * @description 当设置该值时，会在标题下方添加分割线，支持布尔值或 PaLine 组件属性配置
+   */
   lineConfig?: LineComponentProps | boolean;
 };

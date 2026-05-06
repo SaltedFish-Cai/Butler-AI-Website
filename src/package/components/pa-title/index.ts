@@ -21,5 +21,4 @@ const name = "PaTitle";
 const install = function (app: App): void {
   if (!app._context.components["PaTitle"]) app.component("PaTitle", PaTitle);
 };
-
 export default { name, install };
