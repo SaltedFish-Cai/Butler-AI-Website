@@ -108,10 +108,10 @@ import { M_Message } from "../feedback";
 
 type TableColumnFilterType = {
   /**
-   * **列筛选配置**
-   * @type `TableColumnFilterType`
+   * 列筛选配置
+   * @type TableColumnFilterType
    * @description 列筛选配置
-   * */
+   */
   item: ComponentItemProps & ComponentUseItemProps;
   id: string;
   data: PaTableUseType.FilterType;

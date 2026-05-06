@@ -54,57 +54,129 @@
 </template>
 
 <script lang="ts" setup name="PaScrollBarList">
-/** @description Vue 核心响应式 API */
+/**
+ * Vue 核心响应式 API
+ * @description Vue 核心响应式 API
+ */
 import { ref, reactive, onMounted, onBeforeUnmount, nextTick, computed, inject, ComputedRef } from "vue";
-/** @description 随机字符生成工具 */
+/**
+ * 随机字符生成工具
+ * @description 随机字符生成工具
+ */
 import { randChar } from "../tools/rand-char";
-/** @description 滚动列表组件 Props 类型 */
+/**
+ * 滚动列表组件 Props 类型
+ * @description 滚动列表组件 Props 类型
+ */
 import type { ComponentProps } from "./types";
-/** @description 全局配置类型 */
+/**
+ * 全局配置类型
+ * @description 全局配置类型
+ */
 import { PancakeGlobalConfigType } from "../pa-manager/types";
-/** @description 对象类型 */
+/**
+ * 对象类型
+ * @description 对象类型
+ */
 type objectType = Record<string, any>;
-/** @description 全局配置注入 */
+/**
+ * 全局配置注入
+ * @description 全局配置注入
+ */
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
-/** @description 语言包 */
+/**
+ * 语言包
+ * @description 语言包
+ */
 const languagePackage = computed(() => PancakeGlobalConfig.value?.language?.package?.["cell"] || {});
-/** @description 根元素引用 */
+/**
+ * 根元素引用
+ * @description 根元素引用
+ */
 const scrollBarList = ref();
-/** @description 组件 Props */
+/**
+ * 组件 Props
+ * @description 组件 Props
+ */
 const props = withDefaults(defineProps<ComponentProps>(), {
   showPagination: true,
   styleMode: "default"
 });
-/** @description 组件唯一标识 */
+/**
+ * 组件唯一标识
+ * @description 组件唯一标识
+ */
 const id = ref(randChar());
-/** @description 滚动条组件引用 */
+/**
+ * 滚动条组件引用
+ * @description 滚动条组件引用
+ */
 const mScrollbarListRef = ref();
-/** @description IntersectionObserver 实例 */
+/**
+ * IntersectionObserver 实例
+ * @description IntersectionObserver 实例
+ */
 let observer: IntersectionObserver | undefined;
-/** @description 表格状态 */
+/**
+ * 表格状态
+ * @description 表格状态
+ */
 const state = reactive({
-  /** @description 表格数据 */
+  /**
+   * 表格数据
+   * @description 表格数据
+   */
   tableData: [] as objectType[][],
-  /** @description 扁平化表格数据 */
+  /**
+   * 扁平化表格数据
+   * @description 扁平化表格数据
+   */
   flatTableData: [] as objectType[],
-  /** @description 当前页码 */
+  /**
+   * 当前页码
+   * @description 当前页码
+   */
   pageNum: 1,
-  /** @description 分页数据 */
+  /**
+   * 分页数据
+   * @description 分页数据
+   */
   pageable: {
-    /** @description 当前页数 */
+    /**
+     * 当前页数
+     * @description 当前页数
+     */
     pageNum: 1,
-    /** @description 每页显示条数 */
+    /**
+     * 每页显示条数
+     * @description 每页显示条数
+     */
     pageSize: 50,
-    /** @description 每页选择页数列表 */
+    /**
+     * 每页选择页数列表
+     * @description 每页选择页数列表
+     */
     pageSizes: [50, 100, 150] as number[],
-    /** @description 总条数 */
+    /**
+     * 总条数
+     * @description 总条数
+     */
     total: 0
   },
-  /** @description 查询参数 */
+  /**
+   * 查询参数
+   * @description 查询参数
+   */
   searchParam: {} as Record<string, any>,
-  /** @description 初始化默认的查询参数 */
+  /**
+   * 初始化默认的查询参数
+   * @description 初始化默认的查询参数
+   */
   searchInitParam: {} as Record<string, any>,
-  /** @description 总参数 */
+  /**
+   * 总参数
+   * @description 总参数
+   */
   tableQuery: {
     Filter: [] as any[],
     AdvancedFilter: [] as any[],
@@ -112,15 +184,30 @@ const state = reactive({
     Params: {} as Record<string, any>,
     Sort: [] as any[]
   },
-  /** @description 是否正在加载 */
+  /**
+   * 是否正在加载
+   * @description 是否正在加载
+   */
   tableLoad: false,
-  /** @description 是否加载完毕 */
+  /**
+   * 是否加载完毕
+   * @description 是否加载完毕
+   */
   tableLoadEnd: false,
-  /** @description 是否使用选择表格 */
+  /**
+   * 是否使用选择表格
+   * @description 是否使用选择表格
+   */
   useSelectionTable: false,
-  /** @description 排序属性 */
+  /**
+   * 排序属性
+   * @description 排序属性
+   */
   orderProp: "",
-  /** @description 是否初始显示 */
+  /**
+   * 是否初始显示
+   * @description 是否初始显示
+   */
   initShow: false
 });
 /**
@@ -195,11 +282,17 @@ async function getTableList(pageNum?: number): Promise<void> {
 function updatePageable(resPageable: { pageNum?: number; pageSize?: number; pageSizes?: number[]; total: number }): void {
   Object.assign(state.pageable, resPageable);
 }
-/** @description 组件挂载时获取表格数据 */
+/**
+ * 组件挂载时获取表格数据
+ * @description 组件挂载时获取表格数据
+ */
 onMounted(() => {
   getTableList();
 });
-/** @description 组件卸载前断开观察器 */
+/**
+ * 组件卸载前断开观察器
+ * @description 组件卸载前断开观察器
+ */
 onBeforeUnmount(() => {
   if (observer?.disconnect) observer?.disconnect();
 });
@@ -212,7 +305,10 @@ onBeforeUnmount(() => {
 function setScrollTop(value: number): void {
   mScrollbarListRef?.value?.setScrollToIntersect(value);
 }
-/** @description 分页锁 */
+/**
+ * 分页锁
+ * @description 分页锁
+ */
 let lock = false;
 /**
  * 处理当前页码变化

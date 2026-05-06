@@ -18,11 +18,11 @@
 | themeColor     | 主题颜色       | `string`                                                                            | -           |
 | isDark         | 是否为暗黑模式 | `boolean`                                                                           | -           |
 | size           | 组件尺寸       | `"small"` \| `"default"` \| `"large"`                                               | `"default"` |
-| language       | 语言           | `"zh-CN"` \| `"en-US"`                                                              | `"zh-CN"`   |
-| table_config   | 表格配置       | [`TableConfig`](#tableconfig-表格配置)                                              | -           |
+| language       | 语言           | [`LanguageKey`](/document/PancakeUI_Doc/options#languagepackagetype)                | -           |
+| table_config   | 表格配置       | [`PancakeGlobalTableConfig`](#pancakeglobaltableconfig-表格配置)                    | -           |
 | address_config | 地址配置       | [`ApiType`](#apitype-api-配置类型)                                                  | -           |
 | file_config    | 文件配置       | [`ApiType`](#apitype-api-配置类型) & `{ downloadHose: string; compareKey: string }` | -           |
-| requestHeader  | 请求头         | `Record<string, string>`                                                            | -           |
+| requestHeader  | 请求头         | `any`                                                                               | -           |
 
 ## ComponentEmits
 
@@ -41,15 +41,6 @@
 | url    | API URL  | `string` |
 | type   | API 类型 | `string` |
 
-## TableConfig 表格配置
-
-| 属性名                | 描述             | 类型                                                                                                                                                              |
-| --------------------- | ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| groupAdvancedQueryApi | 高级查询分组 API | [`ApiType`](#apitype-api-配置类型) \| `{ FilterLinkNextType: Array<ConditionalType> }`                                                                            |
-| advancedQueryApi      | 高级查询 API     | [`ApiType`](#apitype-api-配置类型) \| `{ ConditionalType: Array<ConditionalType>; SqlJoinType: Array<ConditionalType>; LineConditional: Array<ConditionalType> }` |
-| useSeniorFilter       | 是否启用高级筛选 | `boolean`                                                                                                                                                         |
-| infiniteScroll        | 是否启用无限滚动 | `boolean`                                                                                                                                                         |
-
 ## ConditionalType 条件类型
 
 | 属性名                | 描述     | 类型     |
@@ -58,6 +49,44 @@
 | Description           | 描述     | `string` |
 | DictionaryExplanation | 字典解释 | `string` |
 | DescriptionEn         | 描述英文 | `string` |
+
+## PancakeGlobal 全局配置基础类型
+
+| 属性名         | 描述         | 类型                                                                                | 默认值 |
+| -------------- | ------------ | ----------------------------------------------------------------------------------- | ------ |
+| env            | 环境标识     | `string`                                                                            | -      |
+| baseHost       | API 基础 URL | `string`                                                                            | -      |
+| themeColor     | 主题颜色     | `string`                                                                            | -      |
+| isDark         | 是否暗黑模式 | `boolean`                                                                           | -      |
+| size           | 组件尺寸     | `"default"` \| `"large"` \| `"small"`                                               | -      |
+| table_config   | 表格配置     | [`PancakeGlobalTableConfig`](#pancakeglobaltableconfig-表格配置)                    | -      |
+| address_config | 地址配置     | [`ApiType`](#apitype-api-配置类型)                                                  | -      |
+| file_config    | 文件配置     | [`ApiType`](#apitype-api-配置类型) & `{ downloadHose: string; compareKey: string }` | -      |
+| requestHeader  | 请求头       | `any`                                                                               | -      |
+
+## PancakeGlobalTableConfig 表格配置
+
+| 属性名                | 描述             | 类型                                                                                                                                                              |
+| --------------------- | ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| groupAdvancedQueryApi | 高级查询分组 API | [`ApiType`](#apitype-api-配置类型) \| `{ FilterLinkNextType: Array<ConditionalType> }`                                                                            |
+| advancedQueryApi      | 高级查询 API     | [`ApiType`](#apitype-api-配置类型) \| `{ ConditionalType: Array<ConditionalType>; SqlJoinType: Array<ConditionalType>; LineConditional: Array<ConditionalType> }` |
+| useSeniorFilter       | 是否启用高级筛选 | `boolean`                                                                                                                                                         |
+| infiniteScroll        | 是否启用无限滚动 | `boolean`                                                                                                                                                         |
+
+## PancakeGlobalConfigType 全局配置运行时类型
+
+| 属性名         | 描述         | 类型                                                                                | 默认值 |
+| -------------- | ------------ | ----------------------------------------------------------------------------------- | ------ |
+| env            | 环境标识     | `string`                                                                            | -      |
+| baseHost       | API 基础 URL | `string`                                                                            | -      |
+| themeColor     | 主题颜色     | `string`                                                                            | -      |
+| isDark         | 是否暗黑模式 | `boolean`                                                                           | -      |
+| size           | 组件尺寸     | `"default"` \| `"large"` \| `"small"`                                               | -      |
+| table_config   | 表格配置     | [`PancakeGlobalTableConfig`](#pancakeglobaltableconfig-表格配置)                    | -      |
+| address_config | 地址配置     | [`ApiType`](#apitype-api-配置类型)                                                  | -      |
+| file_config    | 文件配置     | [`ApiType`](#apitype-api-配置类型) & `{ downloadHose: string; compareKey: string }` | -      |
+| requestHeader  | 请求头       | `any`                                                                               | -      |
+| language       | 语言配置     | `{ value: LanguageKey; package: Record<string, Record<string, string>> }`           | -      |
 
 ## 使用示例
 

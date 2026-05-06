@@ -1,10 +1,22 @@
-/** @description 媒体查看器子项组件 */
+/**
+ * 模块导入
+ * @description 媒体查看器子项组件
+ */
 import PaMediaViewItem from "./pa-media-view-item.vue";
-/** @description 媒体查看器组件 */
+/**
+ * 模块导入
+ * @description 媒体查看器组件
+ */
 import PaMediaView from "./pa-media-view.vue";
-/** @description 浏览器环境判断工具 */
+/**
+ * 模块导入
+ * @description 浏览器环境判断工具
+ */
 import inBrowser from "../tools/inBrowser";
-/** @description 动态加载 PDF 相关脚本和样式 */
+/**
+ * 模块导入
+ * @description 动态加载 PDF 相关脚本和样式
+ */
 function loadPdfScripts(): void {
   if (!inBrowser) return;
   const script1 = (typeof window !== "undefined" && window.document?.createElement("script")) || {};
@@ -26,7 +38,10 @@ function loadPdfScripts(): void {
   link.href = "/DocumentToDms/library/pdfh5.min.css";
   typeof window !== "undefined" && window.document?.head?.appendChild(link);
 }
-/** @description 动态加载 Word 相关脚本和样式 */
+/**
+ * 模块导入
+ * @description 动态加载 Word 相关脚本和样式
+ */
 function loadWordScripts(): void {
   if (!inBrowser) return;
   const docxScript = (typeof window !== "undefined" && window.document?.createElement("script")) || {};
@@ -37,7 +52,10 @@ function loadWordScripts(): void {
   docxCss.href = "/DocumentToDms/library/docx@1.6.4.css";
   typeof window !== "undefined" && window.document?.head?.appendChild(docxCss);
 }
-/** @description 动态加载 Excel 相关脚本和样式 */
+/**
+ * 模块导入
+ * @description 动态加载 Excel 相关脚本和样式
+ */
 function loadExcelScripts(): void {
   if (!inBrowser) return;
   const excelScript = (typeof window !== "undefined" && window.document?.createElement("script")) || {};
@@ -62,9 +80,15 @@ function install(app: import("vue").App): void {
     app.component("PaMediaView", PaMediaView);
   }
 }
-/** @description 媒体查看器组件导出 */
+/**
+ * 模块导入
+ * @description 媒体查看器组件导出
+ */
 export default {
-  /** @description 组件名称 */
+  /**
+   * 模块导入
+   * @description 组件名称
+   */
   name: "PaMediaView",
   install
 };

@@ -53,119 +53,127 @@
 </template>
 
 <script setup lang="ts">
+/**
+ * Vue 核心响应式 API
+ * @description 导入 Vue 组合式 API
+ */
 import { ref, computed, watch, onMounted, onUnmounted } from "vue";
+/**
+ * 组件类型定义
+ * @description 导入组件 Props 和 Emits 类型
+ */
 import { ComponentProps, ComponentEmits } from "./types";
 
 /**
- * **组件属性**
- * @type `ComponentProps`
+ * 组件属性
+ * @type ComponentProps
  * @description 组件的属性对象
- * */
+ */
 const props = withDefaults(defineProps<ComponentProps>(), { useAlpha: true, useInput: true });
 
 /**
- * **组件事件定义**
+ * 组件事件定义
  * @description 定义组件可触发的事件
- * */
+ */
 const emit = defineEmits<ComponentEmits>();
 
 /**
- * **当前颜色值**
- * @type `string`
+ * 当前颜色值
+ * @type string
  * @description 当前选中的颜色值
- * */
+ */
 const currentColor = ref(props.modelValue);
 
 /**
- * **色相值**
- * @type `number`
+ * 色相值
+ * @type number
  * @description HSV 色彩空间中的色相值 (0-360)
- * */
+ */
 const hue = ref(0);
 
 /**
- * **饱和度值**
- * @type `number`
+ * 饱和度值
+ * @type number
  * @description HSV 色彩空间中的饱和度值 (0-100)
- * */
+ */
 const saturation = ref(0);
 
 /**
- * **明度值**
- * @type `number`
+ * 明度值
+ * @type number
  * @description HSV 色彩空间中的明度值 (0-100)
- * */
+ */
 const value = ref(0);
 
 /**
- * **透明度值**
- * @type `number`
+ * 透明度值
+ * @type number
  * @description 颜色的透明度值 (0-1)
- * */
+ */
 const alpha = ref(1);
 
 /**
- * **十六进制输入值**
- * @type `string`
+ * 十六进制输入值
+ * @type string
  * @description 十六进制颜色输入框的值
- * */
+ */
 const hexInput = ref("");
 
 /**
- * **透明度输入值**
- * @type `number`
+ * 透明度输入值
+ * @type number
  * @description 透明度输入框的值
- * */
+ */
 const alphaInput = ref(1);
 
 /**
- * **色相颜色**
- * @returns `string` HSL 颜色字符串
- * */
+ * 色相颜色
+ * @returns string HSL 颜色字符串
+ */
 const hueColor = computed(() => `hsl(${hue.value}, 100%, 50%)`);
 
 /**
- * **不含透明度的当前颜色**
- * @returns `string` RGB 颜色字符串
- * */
+ * 不含透明度的当前颜色
+ * @returns string RGB 颜色字符串
+ */
 const currentColorWithoutAlpha = computed(() => {
   const color = hexToRgb(String(currentColor.value));
   return color ? `rgb(${color.r}, ${color.g}, ${color.b})` : currentColor.value;
 });
 
 /**
- * **判断是否为十六进制颜色**
- * @param `color` `string` 颜色字符串
- * @returns `boolean` 是否为有效的十六进制颜色
- * */
+ * 判断是否为十六进制颜色
+ * @param color - 颜色字符串
+ * @returns boolean 是否为有效的十六进制颜色
+ */
 const isHexColor = (color: string): boolean => /^#([0-9A-Fa-f]{3}){1,2}$/.test(color);
 
 /**
- * **十六进制转 RGB**
- * @param `hex` `string` 十六进制颜色值
- * @returns `{ r: number; g: number; b: number } | null` RGB 对象或 null
- * */
+ * 十六进制转 RGB
+ * @param hex - 十六进制颜色值
+ * @returns { r: number; g: number; b: number } | null RGB 对象或 null
+ */
 const hexToRgb = (hex: string): { r: number; g: number; b: number } | null => {
   const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
   return result ? { r: parseInt(result[1], 16), g: parseInt(result[2], 16), b: parseInt(result[3], 16) } : null;
 };
 
 /**
- * **RGB 转十六进制**
- * @param `r` `number` 红色值
- * @param `g` `number` 绿色值
- * @param `b` `number` 蓝色值
- * @returns `string` 十六进制颜色值
- * */
+ * RGB 转十六进制
+ * @param r - 红色值
+ * @param g - 绿色值
+ * @param b - 蓝色值
+ * @returns string 十六进制颜色值
+ */
 const rgbToHex = (r: number, g: number, b: number): string => `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`;
 
 /**
- * **HSV 转 RGB**
- * @param `h` `number` 色相值
- * @param `s` `number` 饱和度值
- * @param `v` `number` 明度值
- * @returns `{ r: number; g: number; b: number }` RGB 对象
- * */
+ * HSV 转 RGB
+ * @param h - 色相值
+ * @param s - 饱和度值
+ * @param v - 明度值
+ * @returns { r: number; g: number; b: number } RGB 对象
+ */
 const hsvToRgb = (h: number, s: number, v: number): { r: number; g: number; b: number } => {
   h = h / 360;
   s = s / 100;
@@ -178,34 +186,34 @@ const hsvToRgb = (h: number, s: number, v: number): { r: number; g: number; b: n
   const t = v * (1 - (1 - f) * s);
   switch (i % 6) {
     case 0:
-      ((r = v), (g = t), (b = p));
+      (r = v), (g = t), (b = p);
       break;
     case 1:
-      ((r = q), (g = v), (b = p));
+      (r = q), (g = v), (b = p);
       break;
     case 2:
-      ((r = p), (g = v), (b = t));
+      (r = p), (g = v), (b = t);
       break;
     case 3:
-      ((r = p), (g = q), (b = v));
+      (r = p), (g = q), (b = v);
       break;
     case 4:
-      ((r = t), (g = p), (b = v));
+      (r = t), (g = p), (b = v);
       break;
     case 5:
-      ((r = v), (g = p), (b = q));
+      (r = v), (g = p), (b = q);
       break;
   }
   return { r: Math.round(r! * 255), g: Math.round(g! * 255), b: Math.round(b! * 255) };
 };
 
 /**
- * **RGB 转 HSV**
- * @param `r` `number` 红色值
- * @param `g` `number` 绿色值
- * @param `b` `number` 蓝色值
- * @returns `{ h: number; s: number; v: number }` HSV 对象
- * */
+ * RGB 转 HSV
+ * @param r - 红色值
+ * @param g - 绿色值
+ * @param b - 蓝色值
+ * @returns { h: number; s: number; v: number } HSV 对象
+ */
 const rgbToHsv = (r: number, g: number, b: number): { h: number; s: number; v: number } => {
   r /= 255;
   g /= 255;
@@ -236,9 +244,9 @@ const rgbToHsv = (r: number, g: number, b: number): { h: number; s: number; v: n
 };
 
 /**
- * **从 HSV 更新颜色值**
+ * 从 HSV 更新颜色值
  * @description 根据 HSV 值更新当前颜色并触发事件
- * */
+ */
 const updateColorFromHsv = () => {
   const rgb = hsvToRgb(hue.value, saturation.value, value.value);
   let color = rgbToHex(rgb.r, rgb.g, rgb.b);
@@ -251,10 +259,10 @@ const updateColorFromHsv = () => {
 };
 
 /**
- * **解析颜色字符串**
- * @param `color` `string` 颜色字符串
- * @returns `boolean` 是否解析成功
- * */
+ * 解析颜色字符串
+ * @param color - 颜色字符串
+ * @returns boolean 是否解析成功
+ */
 const parseColor = (color: string): boolean => {
   if (color.startsWith("rgba")) {
     const match = color.match(/rgba\((\d+),\s*(\d+),\s*(\d+),\s*([\d.]+)\)/);
@@ -295,17 +303,26 @@ const parseColor = (color: string): boolean => {
   return false;
 };
 
-/** @description 颜色区域 DOM 引用 */
+/**
+ * 颜色区域 DOM 引用
+ * @description 颜色区域 DOM 引用
+ */
 const colorAreaRef = ref<HTMLElement | null>(null);
-/** @description 色相区域 DOM 引用 */
+/**
+ * 色相区域 DOM 引用
+ * @description 色相区域 DOM 引用
+ */
 const hueAreaRef = ref<HTMLElement | null>(null);
-/** @description 透明度区域 DOM 引用 */
+/**
+ * 透明度区域 DOM 引用
+ * @description 透明度区域 DOM 引用
+ */
 const alphaAreaRef = ref<HTMLElement | null>(null);
 
 /**
- * **颜色区域鼠标按下处理**
- * @param `e` `MouseEvent` 鼠标事件
- * */
+ * 颜色区域鼠标按下处理
+ * @param e - 鼠标事件
+ */
 const onColorAreaMouseDown = (e: MouseEvent) => {
   colorAreaRef.value = e.currentTarget as HTMLElement;
   handleColorAreaMouseMove(e);
@@ -314,9 +331,9 @@ const onColorAreaMouseDown = (e: MouseEvent) => {
 };
 
 /**
- * **颜色区域鼠标移动处理**
- * @param `e` `MouseEvent` 鼠标事件
- * */
+ * 颜色区域鼠标移动处理
+ * @param e - 鼠标事件
+ */
 const handleColorAreaMouseMove = (e: MouseEvent) => {
   if (!colorAreaRef.value) return;
   const target = colorAreaRef.value;
@@ -329,8 +346,8 @@ const handleColorAreaMouseMove = (e: MouseEvent) => {
 };
 
 /**
- * **颜色区域鼠标抬起处理**
- * */
+ * 颜色区域鼠标抬起处理
+ */
 const handleColorAreaMouseUp = () => {
   colorAreaRef.value = null;
   document.removeEventListener("mousemove", handleColorAreaMouseMove);
@@ -338,9 +355,9 @@ const handleColorAreaMouseUp = () => {
 };
 
 /**
- * **色相区域鼠标按下处理**
- * @param `e` `MouseEvent` 鼠标事件
- * */
+ * 色相区域鼠标按下处理
+ * @param e - 鼠标事件
+ */
 const onHueAreaMouseDown = (e: MouseEvent) => {
   hueAreaRef.value = e.currentTarget as HTMLElement;
   handleHueAreaMouseMove(e);
@@ -349,9 +366,9 @@ const onHueAreaMouseDown = (e: MouseEvent) => {
 };
 
 /**
- * **色相区域鼠标移动处理**
- * @param `e` `MouseEvent` 鼠标事件
- * */
+ * 色相区域鼠标移动处理
+ * @param e - 鼠标事件
+ */
 const handleHueAreaMouseMove = (e: MouseEvent) => {
   if (!hueAreaRef.value) return;
   const target = hueAreaRef.value;
@@ -362,8 +379,8 @@ const handleHueAreaMouseMove = (e: MouseEvent) => {
 };
 
 /**
- * **色相区域鼠标抬起处理**
- * */
+ * 色相区域鼠标抬起处理
+ */
 const handleHueAreaMouseUp = () => {
   hueAreaRef.value = null;
   document.removeEventListener("mousemove", handleHueAreaMouseMove);
@@ -371,9 +388,9 @@ const handleHueAreaMouseUp = () => {
 };
 
 /**
- * **透明度区域鼠标按下处理**
- * @param `e` `MouseEvent` 鼠标事件
- * */
+ * 透明度区域鼠标按下处理
+ * @param e - 鼠标事件
+ */
 const onAlphaAreaMouseDown = (e: MouseEvent) => {
   alphaAreaRef.value = e.currentTarget as HTMLElement;
   handleAlphaAreaMouseMove(e);
@@ -382,9 +399,9 @@ const onAlphaAreaMouseDown = (e: MouseEvent) => {
 };
 
 /**
- * **透明度区域鼠标移动处理**
- * @param `e` `MouseEvent` 鼠标事件
- * */
+ * 透明度区域鼠标移动处理
+ * @param e - 鼠标事件
+ */
 const handleAlphaAreaMouseMove = (e: MouseEvent) => {
   if (!alphaAreaRef.value) return;
   const target = alphaAreaRef.value;
@@ -396,8 +413,8 @@ const handleAlphaAreaMouseMove = (e: MouseEvent) => {
 };
 
 /**
- * **透明度区域鼠标抬起处理**
- * */
+ * 透明度区域鼠标抬起处理
+ */
 const handleAlphaAreaMouseUp = () => {
   alphaAreaRef.value = null;
   document.removeEventListener("mousemove", handleAlphaAreaMouseMove);
@@ -405,16 +422,16 @@ const handleAlphaAreaMouseUp = () => {
 };
 
 /**
- * **十六进制输入变化处理**
- * */
+ * 十六进制输入变化处理
+ */
 const onHexInputChange = () => {
   if (parseColor(hexInput.value)) updateColorFromHsv();
 };
 
 /**
- * **选择预设颜色**
- * @param `color` `string` 预设颜色值
- * */
+ * 选择预设颜色
+ * @param color - 预设颜色值
+ */
 const selectPresetColor = (color: string) => {
   currentColor.value = color;
   hexInput.value = color;
@@ -424,9 +441,9 @@ const selectPresetColor = (color: string) => {
 };
 
 /**
- * **组件挂载生命周期**
+ * 组件挂载生命周期
  * @description 初始化颜色值
- * */
+ */
 onMounted(() => {
   currentColor.value = props.modelValue;
   hexInput.value = String(props.modelValue);
@@ -434,9 +451,9 @@ onMounted(() => {
 });
 
 /**
- * **组件卸载生命周期**
+ * 组件卸载生命周期
  * @description 移除事件监听器
- * */
+ */
 onUnmounted(() => {
   document.removeEventListener("mousemove", handleColorAreaMouseMove);
   document.removeEventListener("mouseup", handleColorAreaMouseUp);
@@ -447,8 +464,8 @@ onUnmounted(() => {
 });
 
 /**
- * **监听 modelValue 变化**
- * */
+ * 监听 modelValue 变化
+ */
 watch(
   () => props.modelValue,
   newValue => {

@@ -6,14 +6,20 @@
 
 <script setup lang="ts" name="PaCol">
 /**
- * @component PaCol
- * @description 栅格列组件，需配合 PaRow 使用
- * @author Butler AI
+ * 模块导入
+ * @description 导入 Vue 核心库
  */
-/** @description Vue 核心库 */
 import { computed, inject, ref, Ref } from "vue";
-/** @description PaCol 类型定义 */
+/**
+ * 模块导入
+ * @description 导入 PaCol 类型定义
+ */
 import type { BreakPoint, ComponentProps } from "./types";
+/**
+ * 组件属性
+ * @type ComponentProps
+ * @description 组件的属性对象
+ */
 const props = withDefaults(defineProps<ComponentProps>(), {
   offset: 0,
   xs: undefined,
@@ -22,11 +28,20 @@ const props = withDefaults(defineProps<ComponentProps>(), {
   lg: undefined,
   xl: undefined
 });
-/** @description 注入断点信息，如果没有则默认使用xl */
+/**
+ * 注入断点信息
+ * @description 注入断点信息，如果没有则默认使用xl
+ */
 const breakPoint = inject<Ref<BreakPoint>>("breakPoint", ref<BreakPoint>("xl"));
-/** @description 注入行间隔 */
+/**
+ * 注入行间隔
+ * @description 注入行间隔值
+ */
 const rowGutter = inject<Ref<number>>("rowGutter", ref<number>(0));
-/** @description 获取当前断点对应的span值 */
+/**
+ * 获取当前断点对应的span值
+ * @description 根据当前断点获取对应的span值
+ */
 const currentSpan = computed(() => {
   const responsive = props[breakPoint.value];
   if (props.span) return props.span;
@@ -36,7 +51,10 @@ const currentSpan = computed(() => {
   }
   return props.span;
 });
-/** @description 计算栅格间隔值，优先使用 props.gutter，否则使用注入的行间隔 */
+/**
+ * 计算栅格间隔值
+ * @description 优先使用 props.gutter，否则使用注入的行间隔
+ */
 const gutterValue = computed(() => {
   return props.gutter
     ? typeof props.gutter === "number"
@@ -44,7 +62,10 @@ const gutterValue = computed(() => {
       : Number(props.gutter.replace(/\D/g, "") || 0) / 2
     : rowGutter.value;
 });
-/** @description 计算样式 */
+/**
+ * 计算样式
+ * @description 根据span和间隔计算列样式
+ */
 const style = computed(() => {
   const span = currentSpan.value || 0;
   const data = {
@@ -58,7 +79,10 @@ const style = computed(() => {
   };
   return data;
 });
-/** @description 计算类名 */
+/**
+ * 计算类名
+ * @description 根据属性计算组件类名
+ */
 const classes = computed(() => {
   const classList = ["pa-col"];
   if (props.span !== 24) {

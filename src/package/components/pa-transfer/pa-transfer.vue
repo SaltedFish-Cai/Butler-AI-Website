@@ -91,72 +91,150 @@
 </template>
 
 <script lang="ts" setup>
-/** @description Vue 核心响应式 API */
+/**
+ * Vue 核心响应式 API
+ * @description Vue 核心响应式 API
+ */
 import { ref, Ref, computed, watch, onMounted, onUnmounted, inject, ComputedRef } from "vue";
-/** @description 穿梭框组件 Props 和 Emits 类型 */
+/**
+ * 穿梭框组件 Props 和 Emits 类型
+ * @description 穿梭框组件 Props 和 Emits 类型
+ */
 import type { ComponentProps, ComponentEmits } from "./types";
-/** @description 随机字符生成工具 */
+/**
+ * 随机字符生成工具
+ * @description 随机字符生成工具
+ */
 import { randChar } from "../tools/rand-char";
-/** @description 选项类型 */
+/**
+ * 选项类型
+ * @description 选项类型
+ */
 import { PaOptionType } from "../manager-type";
-/** @description 数据查找工具 */
+/**
+ * 数据查找工具
+ * @description 数据查找工具
+ */
 import { findData as findDataSelect } from "./find-data";
-/** @description 全局配置类型 */
+/**
+ * 全局配置类型
+ * @description 全局配置类型
+ */
 import { PancakeGlobalConfigType } from "../pa-manager/types";
-/** @description 深比较和空值判断工具 */
+/**
+ * 深比较和空值判断工具
+ * @description 深比较和空值判断工具
+ */
 import _ from "lodash";
 const { isEqual, isNil } = _;
-/** @description 组件 Props */
+/**
+ * 组件 Props
+ * @description 组件 Props
+ */
 const props = withDefaults(defineProps<ComponentProps>(), {
   id: randChar()
 });
-/** @description 组件 Emits */
+/**
+ * 组件 Emits
+ * @description 组件 Emits
+ */
 const emits = defineEmits<ComponentEmits>();
-/** @description 外置数据选项列表 */
+/**
+ * 外置数据选项列表
+ * @description 外置数据选项列表
+ */
 const exOptionsList = ref(props?.exOptions || []);
-/** @description 左侧搜索关键词 */
+/**
+ * 左侧搜索关键词
+ * @description 左侧搜索关键词
+ */
 const searchAll = ref("");
-/** @description 右侧搜索关键词 */
+/**
+ * 右侧搜索关键词
+ * @description 右侧搜索关键词
+ */
 const searchSelected = ref("");
-/** @description 已选中列表 */
+/**
+ * 已选中列表
+ * @description 已选中列表
+ */
 const selectedList: Ref<PaOptionType.SelectList> = ref([]);
-/** @description 左侧待选中列表 */
+/**
+ * 左侧待选中列表
+ * @description 左侧待选中列表
+ */
 const awaitSelectList: Ref<Array<boolean | number | string>> = ref([]);
-/** @description 右侧待取消选中列表 */
+/**
+ * 右侧待取消选中列表
+ * @description 右侧待取消选中列表
+ */
 const awaitSelectedList: Ref<Array<boolean | number | string>> = ref([]);
-/** @description 左侧搜索过滤后的未选中列表 */
+/**
+ * 左侧搜索过滤后的未选中列表
+ * @description 左侧搜索过滤后的未选中列表
+ */
 const searchAllSelectList = computed(() => {
   const _selectedList = selectedList.value.map(item => item.value);
   const filterList = exOptionsList.value.filter(item => !_selectedList.includes(item.value));
   if (searchAll.value) return filterList.filter(item => item.label.includes(searchAll.value));
   return filterList;
 });
-/** @description 右侧搜索过滤后的已选中列表 */
+/**
+ * 右侧搜索过滤后的已选中列表
+ * @description 右侧搜索过滤后的已选中列表
+ */
 const filterSelectedList = computed(() => {
   if (searchSelected.value) {
     return selectedList.value.filter(item => item.label.includes(searchSelected.value));
   }
   return selectedList.value;
 });
-/** @description 组件根元素引用 */
+/**
+ * 组件根元素引用
+ * @description 组件根元素引用
+ */
 const selectRef = ref();
-/** @description 全局配置注入 */
+/**
+ * 全局配置注入
+ * @description 全局配置注入
+ */
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
-/** @description 语言包 */
+/**
+ * 语言包
+ * @description 语言包
+ */
 const languagePackage = computed(() => {
   return PancakeGlobalConfig.value?.language?.package?.["cell"] || {};
 });
-/** @description 旧值，用于 change 事件对比 */
+/**
+ * 旧值，用于 change 事件对比
+ * @description 旧值，用于 change 事件对比
+ */
 let oldValue = props.modelValue || [];
-/** @description 左侧上次点击索引 */
+/**
+ * 左侧上次点击索引
+ * @description 左侧上次点击索引
+ */
 let leftOldIndex = -1;
-/** @description 右侧上次点击索引 */
+/**
+ * 右侧上次点击索引
+ * @description 右侧上次点击索引
+ */
 let rightOldIndex = -1;
-/** @description 左侧添加或删除标记 */
+/**
+ * 左侧添加或删除标记
+ * @description 左侧添加或删除标记
+ */
 let leftAddOrDel = 1;
-/** @description 右侧添加或删除标记 */
+/**
+ * 右侧添加或删除标记
+ * @description 右侧添加或删除标记
+ */
 let rightAddOrDel = 1;
-/** @description Shift 键是否按下 */
+/**
+ * Shift 键是否按下
+ * @description Shift 键是否按下
+ */
 const isShiftPressed = ref(false);
 /**
  * 处理键盘按下事件
@@ -288,12 +366,18 @@ function findData(data: Array<boolean | number | string>): string {
   }
   return findDataSelect(data, exOptionsList.value);
 }
-/** @description 组件挂载时初始化断点并添加键盘事件监听 */
+/**
+ * 组件挂载时初始化断点并添加键盘事件监听
+ * @description 组件挂载时初始化断点并添加键盘事件监听
+ */
 onMounted(() => {
   if (typeof window !== "undefined") window.addEventListener("keydown", handleKeyDown);
   if (typeof window !== "undefined") window.addEventListener("keyup", handleKeyUp);
 });
-/** @description 组件卸载时移除键盘事件监听 */
+/**
+ * 组件卸载时移除键盘事件监听
+ * @description 组件卸载时移除键盘事件监听
+ */
 onUnmounted(() => {
   if (typeof window !== "undefined") window.removeEventListener("keydown", handleKeyDown);
   if (typeof window !== "undefined") window.removeEventListener("keyup", handleKeyUp);

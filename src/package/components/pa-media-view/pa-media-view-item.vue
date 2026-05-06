@@ -54,43 +54,100 @@
 </template>
 
 <script lang="ts" setup name="PaMediaViewItem">
-/** @description Vue 核心响应式 API */
+/**
+ * Vue 核心响应式 API
+ * @description Vue 核心响应式 API
+ */
 import { ref, computed, watch, inject, ComputedRef } from "vue";
-/** @description 媒体查看器子项组件 Props 类型 */
+/**
+ * 媒体查看器子项组件 Props 类型
+ * @description 媒体查看器子项组件 Props 类型
+ */
 import type { ComponentItemProps } from "./types";
-/** @description 文件类型判断工具 */
+/**
+ * 文件类型判断工具
+ * @description 文件类型判断工具
+ */
 import { isImageFile, isPdfFile, isTextFile, isWordFile, isExcelFile, isUnOpenFile } from "./is";
-/** @description 文件下载工具 */
+/**
+ * 文件下载工具
+ * @description 文件下载工具
+ */
 import { useDownload } from "./use-download";
-/** @description 图片预览组件 */
+/**
+ * 图片预览组件
+ * @description 图片预览组件
+ */
 import imageView from "./image-view.vue";
-/** @description PDF 预览组件 */
+/**
+ * PDF 预览组件
+ * @description PDF 预览组件
+ */
 import pdfView from "./pdf-view.vue";
-/** @description Excel 预览组件 */
+/**
+ * Excel 预览组件
+ * @description Excel 预览组件
+ */
 import excelView from "./excel-view.vue";
-/** @description Word 预览组件 */
+/**
+ * Word 预览组件
+ * @description Word 预览组件
+ */
 import wordView from "./word-view.vue";
-/** @description 文本预览组件 */
+/**
+ * 文本预览组件
+ * @description 文本预览组件
+ */
 import textView from "./text-view.vue";
-/** @description 模板引用 API */
+/**
+ * 模板引用 API
+ * @description 模板引用 API
+ */
 import { useTemplateRef } from "vue";
-/** @description 全局配置类型 */
+/**
+ * 全局配置类型
+ * @description 全局配置类型
+ */
 import { PancakeGlobalConfigType } from "../pa-manager/types";
-/** @description 消息反馈组件 */
+/**
+ * 消息反馈组件
+ * @description 消息反馈组件
+ */
 import { M_Message } from "../feedback";
-/** @description 全局配置注入 */
+/**
+ * 全局配置注入
+ * @description 全局配置注入
+ */
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
-/** @description 对话框是否可见 */
+/**
+ * 对话框是否可见
+ * @description 对话框是否可见
+ */
 const visible = ref(false);
-/** @description 缩放比例 */
+/**
+ * 缩放比例
+ * @description 缩放比例
+ */
 const zoomIndex = ref(1);
-/** @description 缩放因子 */
+/**
+ * 缩放因子
+ * @description 缩放因子
+ */
 let scaleFactor = 1;
-/** @description 预览组件引用 */
+/**
+ * 预览组件引用
+ * @description 预览组件引用
+ */
 const viewRef = useTemplateRef("viewRef");
-/** @description 组件 Props */
+/**
+ * 组件 Props
+ * @description 组件 Props
+ */
 const props = withDefaults(defineProps<ComponentItemProps>(), {});
-/** @description 语言包 */
+/**
+ * 语言包
+ * @description 语言包
+ */
 const languagePackage = computed(() => {
   return PancakeGlobalConfig.value?.language?.package["cell"] || {};
 });
@@ -128,7 +185,10 @@ function handleMouseWheel(event: { deltaY: number }): void {
 function reset90(): void {
   viewRef.value?.leftAll90();
 }
-/** @description 当前文件类型 */
+/**
+ * 当前文件类型
+ * @description 当前文件类型
+ */
 const fileType = computed(() => {
   if (isImageFile(props.filePath)) {
     return "image";

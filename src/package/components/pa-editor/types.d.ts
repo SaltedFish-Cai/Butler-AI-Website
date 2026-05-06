@@ -1,10 +1,19 @@
 /**
+ * @module pa-editor/types
+ * @description PaEditor 类型定义
+ */
+/**
  * @description 导入 PaFileType 文件上传类型
  */
 import type { PaFileType } from "../pa-file/type";
 
 /**
  * @description PaEditor 组件属性
+ */
+/**
+ * 组件属性
+ * @type object
+ * @description PaEditor 组件的属性类型定义
  */
 export type ComponentProps = {
   /**

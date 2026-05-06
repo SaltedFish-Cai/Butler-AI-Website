@@ -16,6 +16,7 @@ export const PancakeUISidebar = [
       { text: "Tag 标签", link: "/document/PancakeUI_Doc/tag/readme", iconName: "tag" },
       { text: "Badge 徽章", link: "/document/PancakeUI_Doc/badge/readme", iconName: "app_badge" },
       { text: "Title 标题", link: "/document/PancakeUI_Doc/title/readme", iconName: "title" },
+      { text: "Line 分隔线", link: "/document/PancakeUI_Doc/line/readme", iconName: "divider" },
       { text: "Empty 空状态", link: "/document/PancakeUI_Doc/empty/readme", iconName: "a-resumelibrary" }
     ]
   },

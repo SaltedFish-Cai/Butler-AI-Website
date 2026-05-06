@@ -50,25 +50,60 @@
   </template>
 </template>
 <script lang="tsx" setup>
-// # Import
+/**
+ *
+ * @description Vue 核心响应式 API
+ */
 import { Ref, ref, inject, computed, onMounted } from "vue";
-// import formLabel from "../form-label.vue";
+/**
+ *
+ * @description 基础表单项组件
+ */
 import formItem from "../form-basics-element.vue";
+/**
+ *
+ * @description 分组项类型定义
+ */
 import { GroupItemPropsType } from "../item";
+/**
+ *
+ * @description 表单类型定义
+ */
 import { ConfigContextType, PaFormChildType, PaFormItemType } from "../types";
+/**
+ *
+ * @description 选项类型定义
+ */
 import { PaOptionType } from "../../manager-type";
+/**
+ *
+ * @description 数据查找工具
+ */
 import { findData } from "../../pa-select/find-data";
-
+/**
+ *
+ * @description 工具函数库
+ */
 import _ from "lodash";
 const { isNil, isEqual } = _;
-// # Var
+/**
+ *
+ * @description 组件属性
+ */
 const props = withDefaults(defineProps<GroupItemPropsType>(), {});
 
-// # 处理Display状态
+/**
+ *
+ * @description 计算展示状态
+ */
 const useDisplay = computed(() => {
   return !isNil(props.item.display) ? props.item.display : injectConfigContext.value.display || false;
 });
 
+/**
+ *
+ * @description 配置上下文注入
+ */
 const injectConfigContext = inject<Ref<ConfigContextType>>(
   "configContext",
   ref({
@@ -87,22 +122,18 @@ const injectConfigContext = inject<Ref<ConfigContextType>>(
     noLabel: false
   })
 );
+/**
+ *
+ * @description 设置校验规则注入
+ */
 const injectSetRule = inject<
   (item: PaFormChildType | PaFormItemType, type?: string, options?: { titleKey?: string; removeList?: string[] }) => void
->("setRule", () => {
-  //
-});
+>("setRule", () => {});
 
-// const computedLabel = computed(() => {
-//   return typeof props.item.label == "object"
-//     ? props.item.label?.[injectConfigContext.value.language || "zh-CN"]
-//     : props.item.label;
-// });
-
-// const computedTip = computed(() => {
-//   return typeof props.item.tip == "object" ? props.item.tip?.[injectConfigContext.value.language || "zh-CN"] : props.item.tip;
-// });
-
+/**
+ *
+ * @description 单选选项列表
+ */
 const radioOptions = computed(() => {
   const val = injectConfigContext.value.data[String(props.item.prop)];
   let opts = (injectConfigContext.value.exOptions[String(props.item.prop)] ||
@@ -124,12 +155,17 @@ const radioOptions = computed(() => {
     });
   }
   if (isNil(injectConfigContext.value?.data?.[String(props.item.prop)])) {
-    // eslint-disable-next-line vue/no-side-effects-in-computed-properties
     injectConfigContext.value.data[String(props.item.prop)] = opts[0].value;
   }
   return opts;
 });
 
+/**
+ * 单选变更处理
+ * @param value - 选中的值
+ * @returns void
+ * @description 处理分组单选变更事件
+ */
 function radioChange({ value }) {
   if (props.item.groupFormConfig) {
     const item = props.item.groupFormConfig.find(item => item.value == value);
@@ -140,26 +176,13 @@ function radioChange({ value }) {
   }
 }
 
+/**
+ *
+ * @description 组件挂载时初始化单选状态
+ */
 onMounted(() => {
   radioChange({ value: injectConfigContext.value.data[String(props.item.prop)] });
 });
-
-// function findData2(data) {
-//   const prop = props.item.prop;
-//   if (!prop) {
-//     return;
-//   }
-//   let text = "";
-//   const options = radioOptions.value;
-//   for (let index = 0; index < options.length; index++) {
-//     const option = options[index];
-//     if (option.value == data) {
-//       if (text == "") text += props.item.label + ":";
-//       text += option.label;
-//     }
-//   }
-//   return text || "--";
-// }
 </script>
 <style lang="scss" scoped>
 .flex-col {

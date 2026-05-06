@@ -1,18 +1,16 @@
 <template>
-  
-  <div class="demo-title">
-    
-    <pa-title :line="true">带下划线的标题</pa-title>
-    
-    <pa-title :line="false">无下划线的标题</pa-title>
-  
-  </div>
+  <pa-title line-config>默认下划线样式</pa-title>
+  <div class="block"></div>
+  <pa-title :line-config="lineConfig">自定义分割线样式</pa-title>
 </template>
 
+<script lang="ts" setup>
+import { ref } from "vue";
+const lineConfig = ref({ borderColor: "#bce2db" });
+</script>
+
 <style scoped>
-.demo-title {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+.block {
+  height: 30px;
 }
 </style>

@@ -95,25 +95,25 @@
 
 <script lang="ts" setup>
 /**
- * **模块导入**
+ * 模块导入
  * @description 导入 Vue 组合式 API
- * */
+ */
 import { ref, Ref, reactive, watch, computed, onMounted, onUnmounted, nextTick } from "vue";
 /**
- * **模块导入**
+ * 模块导入
  * @description 导入组件类型定义
- * */
+ */
 import { ComponentProps, ComponentEmits } from "./types";
 /**
- * **组件事件定义**
+ * 组件事件定义
  * @description 定义组件可触发的事件
- * */
+ */
 const emits = defineEmits<ComponentEmits>();
 /**
- * **组件属性**
- * @type `ComponentProps`
+ * 组件属性
+ * @type ComponentProps
  * @description 组件的属性对象
- * */
+ */
 const props = withDefaults(defineProps<ComponentProps>(), {
   size: "m",
   height: "auto",
@@ -128,44 +128,44 @@ const props = withDefaults(defineProps<ComponentProps>(), {
   scroll: true
 });
 /**
- * **打开标识**
- * @type `string`
+ * 打开标识
+ * @type string
  * @description 弹窗打开时的唯一标识
- * */
+ */
 let openId: string = "";
 /**
- * **滚动条引用**
- * @type `Ref<HTMLElement | undefined>`
+ * 滚动条引用
+ * @type Ref<HTMLElement | undefined>
  * @description 滚动条容器 DOM 引用
- * */
+ */
 const ScrollbarRef: Ref<HTMLElement | undefined> = ref();
 /**
- * **滚动条内容引用**
- * @type `Ref<HTMLElement | undefined>`
+ * 滚动条内容引用
+ * @type Ref<HTMLElement | undefined>
  * @description 滚动条内容 DOM 引用
- * */
+ */
 const ScrollbarBodyRef: Ref<HTMLElement | undefined> = ref();
 /**
- * **组件状态**
- * @type `Ref<{ visible: boolean; fullscreen: boolean }>`
+ * 组件状态
+ * @type Ref<{ visible: boolean; fullscreen: boolean }>
  * @description 组件的响应式状态
- * */
+ */
 const state = reactive({
   visible: false,
   fullscreen: false
 });
 /**
- * **当前语言**
- * @type `string`
+ * 当前语言
+ * @type string
  * @description 当前使用的语言
- * */
+ */
 const language: string =
   (typeof window !== "undefined" && typeof window !== "undefined" && window.PancakeGlobalConfig?.language) || "zh-CN" || "zh-CN";
 /**
- * **计算宽度**
- * @type `ComputedRef<number | string>`
+ * 计算宽度
+ * @type ComputedRef<number | string>
  * @description 计算弹窗的宽度
- * */
+ */
 const setSize = computed(() => {
   let size: number | string = 500;
   switch (props.size) {
@@ -187,10 +187,10 @@ const setSize = computed(() => {
   return props.width || size;
 });
 /**
- * **计算偏移**
- * @type `ComputedRef<number | string>`
+ * 计算偏移
+ * @type ComputedRef<number | string>
  * @description 计算弹窗的偏移量
- * */
+ */
 const transform = computed(() => {
   let size: number | string = 0;
   switch (props.size) {
@@ -212,10 +212,10 @@ const transform = computed(() => {
   return props.offsetX || size;
 });
 /**
- * **计算X轴偏移量**
- * @type `ComputedRef<number | string>`
+ * 计算X轴偏移量
+ * @type ComputedRef<number | string>
  * @description 计算弹窗的X轴偏移量
- * */
+ */
 const setOffsetX = computed(() => {
   let data = transform.value;
   if (props.offsetX) {
@@ -227,10 +227,10 @@ const setOffsetX = computed(() => {
   return data;
 });
 /**
- * **计算Y轴偏移量**
- * @type `ComputedRef<number | string>`
+ * 计算Y轴偏移量
+ * @type ComputedRef<number | string>
  * @description 计算弹窗的Y轴偏移量
- * */
+ */
 const setOffsetY = computed(() => {
   let data: number | string = 0;
   if (props.offsetY) {
@@ -242,10 +242,10 @@ const setOffsetY = computed(() => {
   return data;
 });
 /**
- * **计算高度**
- * @type `ComputedRef<number | string>`
+ * 计算高度
+ * @type ComputedRef<number | string>
  * @description 计算弹窗的高度
- * */
+ */
 const setHeight = computed(() => {
   let data: number | string = 500;
   if (props.size == "max") {
@@ -269,18 +269,18 @@ const setHeight = computed(() => {
   return data;
 });
 /**
- * **判断是否为数字**
- * @param `value` `unknown` 要判断的值
- * @returns `boolean` 是否为数字
+ * 判断是否为数字
+ * @param value - 要判断的值
+ * @returns boolean 是否为数字
  * @description 判断给定的值是否为数字类型
- * */
+ */
 function isNumber(value: unknown): boolean {
   return Number.isNaN(Number(value)) === false;
 }
 /**
- * **关闭弹窗**
+ * 关闭弹窗
  * @description 关闭弹窗并触发相关事件
- * */
+ */
 function closeMenu(): void {
   if (typeof window !== "undefined") {
     window.PancakeGlobalConfig.escapeMap = window.PancakeGlobalConfig.escapeMap || [];
@@ -290,10 +290,10 @@ function closeMenu(): void {
   emits("closed", false);
 }
 /**
- * **处理键盘按下事件**
- * @param `e` `KeyboardEvent` 键盘事件对象
+ * 处理键盘按下事件
+ * @param e - 键盘事件对象
  * @description 处理ESC键关闭弹窗
- * */
+ */
 function handleKeyDown(e: KeyboardEvent): void {
   const escapeMap = (typeof window !== "undefined" && window.PancakeGlobalConfig.escapeMap) || [];
   if (e.key === "Escape" && state.visible && escapeMap[escapeMap.length - 1] === openId) {
@@ -305,9 +305,9 @@ function handleKeyDown(e: KeyboardEvent): void {
   }
 }
 /**
- * **滚动子元素变化处理**
+ * 滚动子元素变化处理
  * @description 处理滚动内容变化时的逻辑
- * */
+ */
 function scrollChildChange(): void {
   if (!ScrollbarRef.value) return;
   if (ScrollbarBodyRef.value && ScrollbarBodyRef.value.clientHeight < Number(String(setHeight.value)?.replace("px", ""))) return;
@@ -316,9 +316,9 @@ function scrollChildChange(): void {
   }
 }
 /**
- * **组件挂载生命周期**
+ * 组件挂载生命周期
  * @description 初始化组件
- * */
+ */
 onMounted(() => {
   nextTick(() => {
     scrollChildChange();
@@ -326,17 +326,17 @@ onMounted(() => {
   props.closeOnPressEscape && document.addEventListener("keydown", handleKeyDown);
 });
 /**
- * **组件卸载生命周期**
+ * 组件卸载生命周期
  * @description 清理事件监听器
- * */
+ */
 onUnmounted(() => {
   props.closeOnPressEscape && document.removeEventListener("keydown", handleKeyDown);
 });
 defineExpose({ ScrollbarRef: ScrollbarRef });
 /**
- * **监听modelValue**
+ * 监听modelValue
  * @description 监听弹窗显示状态变化
- * */
+ */
 watch(
   () => props.modelValue,
   (data: boolean) => {

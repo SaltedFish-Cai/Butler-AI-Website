@@ -1,7 +1,7 @@
 <template>
   <template v-if="item.prop">
     <!-- other-item -->
-    <pa-col :xs="colSize" :sm="colSize" :md="colSize" :lg="colSize" :xl="colSize" :span="item.colSpan">
+    <pa-col :xs="colSize" :sm="colSize" :md="colSize" :lg="colSize" :xl="colSize" :span="item.exSpan">
       <pa-form-item
         :prop="Array.isArray(item.prop) ? item.prop.join('-') : item.prop"
         :class="[item.exStyles?.class || '']"
@@ -355,7 +355,6 @@
 </template>
 
 <script lang="ts" setup>
-// # Import
 import { ref, computed, onMounted, inject, Ref, watch, ComputedRef } from "vue";
 import formLabel from "./form-label.vue";
 import mFormV2Item from "./pa-form-item.vue"; // 添加这行
@@ -368,7 +367,6 @@ import { GetSystemAddressMap } from "../api/form";
 import _ from "lodash";
 const { isNil } = _;
 
-// # Var
 type BasicsItemPropsType = {
   id: string;
   item: PaFormItemType;
@@ -378,7 +376,15 @@ type BasicsItemPropsType = {
   exData?: any;
   enforcementDisplay?: boolean;
 };
+/**
+ * 组件属性
+ * @description 组件属性
+ */
 const props = withDefaults(defineProps<BasicsItemPropsType>(), {});
+/**
+ * 配置上下文注入
+ * @description 配置上下文注入
+ */
 const injectConfigContext = inject<Ref<ConfigContextType>>(
   "configContext",
   ref({
@@ -399,9 +405,21 @@ const injectConfigContext = inject<Ref<ConfigContextType>>(
     noLabel: false
   })
 );
+/**
+ * 表单上下文注入
+ * @description 表单上下文注入
+ */
 const injectFormContext = inject<any>("formContext", {});
+/**
+ * 地址数据
+ * @description 地址数据
+ */
 const addressMap = ref<PaOptionType.SelectList>([]);
 
+/**
+ * 计算属性值
+ * @description 计算属性值
+ */
 const computedValue = computed({
   get: () => {
     const data = !isNil(props.exData)
@@ -420,22 +438,38 @@ const computedValue = computed({
   }
 });
 
+/**
+ * 计算标签文本
+ * @description 计算标签文本
+ */
 const computedLabel: ComputedRef<string | undefined> = computed(() => {
   return typeof props.item.label == "object"
     ? props.item.label?.[injectConfigContext.value.language || "zh-CN"]
     : (props.item.label as string);
 });
 
+/**
+ * 计算提示文本
+ * @description 计算提示文本
+ */
 const computedTip: ComputedRef<string | undefined> = computed(() => {
   return typeof props.item.tip == "object"
     ? props.item.tip?.[injectConfigContext.value.language || "zh-CN"]
     : (props.item.tip as string);
 });
 
+/**
+ * 计算外置选项
+ * @description 计算外置选项
+ */
 const useExOptions = computed(() => {
   return injectConfigContext.value.exOptions[String(props.item.prop)] || props.item.exOptions;
 });
 
+/**
+ * 组件挂载时初始化地址数据
+ * @description 组件挂载时初始化地址数据
+ */
 onMounted(async () => {
   if (props.item.type == "address") {
     props.item.type = "cascader" as any;
@@ -459,13 +493,19 @@ onMounted(async () => {
   }
 });
 
-// # Function 设置单行列数
+/**
+ * 设置单行列数
+ * @param span - 分栏数
+ * @param baseSpanSize - 基础分栏大小
+ * @returns 列数
+ * @description 根据分栏数和基础大小计算实际列数
+ */
 function setSpanStyle(span?: 1 | 2 | 3 | 4, baseSpanSize = 4) {
   const maxSpanList = {
-    4: [6, 12, 18, 24],
-    3: [8, 16, 24, 24],
-    2: [12, 24, 24, 24],
-    1: [24, 24, 24, 24]
+    4: [4, 3, 2, 1],
+    3: [3, 2, 1, 1],
+    2: [2, 1, 1, 1],
+    1: [1, 1, 1, 1]
   };
 
   let data = 24 / baseSpanSize;
@@ -480,16 +520,17 @@ function setSpanStyle(span?: 1 | 2 | 3 | 4, baseSpanSize = 4) {
       data = maxSpanList[data][3];
     }
   }
-
   return data;
 }
 
-// # 间隔大小
+/**
+ * 列大小
+ * @description 列大小
+ */
 const colSize = computed(() => {
   const _injectConfigContext = injectConfigContext.value;
   const _prop = Array.isArray(props.item.prop) ? props.item.prop.join("-") : String(props.item.prop);
-  // 无Label时，spanSize为24
-  if (props.noLabel) return 24;
+  if (props.noLabel) return 1;
 
   const data =
     _prop && props.item.exSpan
@@ -499,7 +540,10 @@ const colSize = computed(() => {
   return data;
 });
 
-// # 处理Placeholder
+/**
+ * 计算占位文本
+ * @description 计算占位文本
+ */
 const usePlaceholder = computed(() => {
   let placeholder = props.item?.placeholder;
   if (!placeholder) {
@@ -536,22 +580,39 @@ const usePlaceholder = computed(() => {
   return placeholder;
 });
 
-// # 处理Display状态
+/**
+ * 计算展示状态
+ * @description 计算展示状态
+ */
 const useDisplay = computed(() => {
   return (
     props.enforcementDisplay || (!isNil(props.item.display) ? props.item.display : injectConfigContext.value.display || false)
   );
 });
 
-// const changeFormState: any = inject("changeFormState");
+/**
+ * 表单单元格变更回调注入
+ * @description 表单单元格变更回调注入
+ */
 const formCellChange: any = inject("formCellChange");
 
+/**
+ * 值变更处理
+ * @param data - 变更数据
+ * @returns void
+ * @description 处理表单项值变更事件
+ */
 function valueChange(data) {
   formCellChange({ prop: props.item.prop, ...data });
   injectFormContext.validateField(props.item.prop, data.value);
 }
 
-// #Function 执行外部disabled方法
+/**
+ * 执行外部disabled方法
+ * @param data - 表单数据
+ * @returns 是否禁用
+ * @description 根据外置禁用规则判断是否禁用
+ */
 function disabledFn(data) {
   if (!props.item.prop || !injectConfigContext.value.exDependent?.disabledRule) return false;
 
@@ -561,11 +622,10 @@ function disabledFn(data) {
   return disabledRule[prop] && disabledRule[prop](data);
 }
 
-// #Function 变更formState状态
-// function changeState(data: "Pending" | "Working") {
-//   changeFormState(data);
-// }
-
+/**
+ * 监听item类型变化
+ * @description 监听item类型变化
+ */
 watch(
   () => props.item.type,
   newVal => {
@@ -595,15 +655,4 @@ watch(
 }
 </style>
 
-<style lang="scss">
-// .span_item_all-center {
-//   width: 100%;
-//   .pa-form-item {
-//     margin-bottom: 18px !important;
-//     &__content {
-//       display: flex;
-//       justify-content: center;
-//     }
-//   }
-// }
-</style>
+<style lang="scss"></style>

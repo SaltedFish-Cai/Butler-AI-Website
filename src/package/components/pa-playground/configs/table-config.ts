@@ -1,16 +1,16 @@
 /**
  * @description 导入类型定义
- * */
+ */
 import { PaStructureType } from "M_Types";
 /**
  * @description 导入单元格配置
- * */
+ */
 import { cellMapConfig } from "./cell-config";
 
 /**
  * @description 编辑表格列配置
- * @type `Array<PaStructureType.FormV2>`
- * */
+ * @type Array<PaStructureType.FormV2>
+ */
 export const editTableColConfig: Array<PaStructureType.FormV2> = [
   {
     unitName: { "en-US": "Basic Config", "zh-CN": "基础配置" },
@@ -36,8 +36,8 @@ export const editTableColConfig: Array<PaStructureType.FormV2> = [
 
 /**
  * @description 额外配置_表格
- * @type `Array<PaStructureType.FormV2>`
- * */
+ * @type Array<PaStructureType.FormV2>
+ */
 export const editOtherTableColConfig: Array<PaStructureType.FormV2> = [
   {
     unitName: { "en-US": "Extra Config", "zh-CN": "额外配置" },
@@ -65,8 +65,8 @@ export const editOtherTableColConfig: Array<PaStructureType.FormV2> = [
 
 /**
  * @description 筛选类型表单项
- * @type `PaStructureType.FormV2`
- * */
+ * @type PaStructureType.FormV2
+ */
 export const filterType: PaStructureType.FormV2 = {
   unitName: { "en-US": "Extra Config", "zh-CN": "额外配置" },
   label: { "en-US": "Filter Type", "zh-CN": "筛选类型" },
@@ -77,8 +77,8 @@ export const filterType: PaStructureType.FormV2 = {
 
 /**
  * @description 选项来源表单项
- * @type `PaStructureType.FormV2`
- * */
+ * @type PaStructureType.FormV2
+ */
 export const exOptionsById: PaStructureType.FormV2 = {
   unitName: { "en-US": "Extra Config", "zh-CN": "额外配置" },
   label: { "en-US": "Ex Options By Id", "zh-CN": "选项来源" },

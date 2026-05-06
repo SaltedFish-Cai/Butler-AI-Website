@@ -69,105 +69,105 @@
 
 <script lang="ts" setup>
 /**
- * **模块导入**
+ * 模块导入
  * @description 全局配置类型导入
- * */
+ */
 import { PancakeGlobalConfigType } from "../pa-manager/types";
 
 /**
- * **模块导入**
+ * 模块导入
  * @description Vue 响应式 API 导入
- * */
+ */
 import { computed, ComputedRef, inject, ref, useTemplateRef } from "vue";
 
 /**
- * **模块导入**
+ * 模块导入
  * @description 文件组件类型定义导入
- * */
+ */
 import { ComponentProps, FileDataType, ComponentEmits } from "./types";
 
 /**
- * **模块导入**
+ * 模块导入
  * @description 消息提示组件导入
- * */
+ */
 import { M_Message } from "../feedback";
 
 /**
- * **模块导入**
+ * 模块导入
  * @description Ajax 上传函数导入
- * */
+ */
 import { ajaxUpload } from "./ajax";
 
 /**
- * **组件属性定义**
- * @type `ComponentProps`
+ * 组件属性定义
+ * @type ComponentProps
  * @description 定义 PaFileCustom 组件的接收属性
- * */
+ */
 const props = withDefaults(defineProps<ComponentProps>(), {});
 
 /**
- * **组件事件定义**
- * @type `ComponentEmits`
+ * 组件事件定义
+ * @type ComponentEmits
  * @description 定义 PaFileCustom 组件可触发的事件
- * */
+ */
 const emits = defineEmits<ComponentEmits>();
 
 /**
- * **文件输入框引用**
- * @type `Ref<HTMLInputElement | null>`
+ * 文件输入框引用
+ * @type Ref<HTMLInputElement | null>
  * @description 引用隐藏的文件输入框元素
- * */
+ */
 const fileInput = useTemplateRef<HTMLInputElement>("fileInput");
 
 /**
- * **拖拽状态标记**
- * @type `Ref<boolean>`
+ * 拖拽状态标记
+ * @type Ref<boolean>
  * @description 标记当前是否处于拖拽文件状态
- * */
+ */
 const isDragging = ref<boolean>(false);
 
 /**
- * **全局配置注入**
- * @type `ComputedRef<PancakeGlobalConfigType>`
+ * 全局配置注入
+ * @type ComputedRef<PancakeGlobalConfigType>
  * @description 从父组件注入的全局配置信息
- * */
+ */
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 
 /**
- * **语言包计算属性**
- * @type `ComputedRef<Record<string, string>>`
+ * 语言包计算属性
+ * @type ComputedRef<Record<string, string>>
  * @description 根据当前语言设置返回对应的文件模块语言包
- * */
+ */
 const languagePackage = computed(() => {
   return PancakeGlobalConfig.value?.language?.package?.["file"] || {};
 });
 
 /**
- * **组件内部值**
- * @type `Ref<Array<FileDataType> | undefined>`
+ * 组件内部值
+ * @type Ref<Array<FileDataType> | undefined>
  * @description 组件内部维护的文件列表数据
- * */
+ */
 const inValue = ref<Array<FileDataType> | undefined>(props.modelValue);
 
 /**
- * **旧值备份**
- * @type `Array<FileDataType> | undefined`
+ * 旧值备份
+ * @type Array<FileDataType> | undefined
  * @description 用于记录上一次的绑定值，支持变更事件回传
- * */
+ */
 const oldValue: Array<FileDataType> | undefined = props.modelValue;
 
 /**
- * **上传加载状态**
- * @type `Ref<boolean>`
+ * 上传加载状态
+ * @type Ref<boolean>
  * @description 标记当前是否正在上传文件
- * */
+ */
 const loading = ref<boolean>(false);
 
 /**
- * **待上传文件列表项类型**
- * @type `UploadFileItem`
+ * 待上传文件列表项类型
+ * @type UploadFileItem
  * @description 定义待上传文件列表中每个文件项的类型结构
- * */
+ */
 interface UploadFileItem {
   name: string;
   size: number;
@@ -177,15 +177,15 @@ interface UploadFileItem {
 }
 
 /**
- * **待上传文件列表**
- * @type `Ref<Array<UploadFileItem>>`
+ * 待上传文件列表
+ * @type Ref<Array<UploadFileItem>>
  * @description 缓存待上传的文件信息及状态
- * */
+ */
 const uploadFilesList = ref<Array<UploadFileItem>>([]);
 
 /**
- * **请求头配置**
- * @type `ComputedRef<Record<string, unknown>>`
+ * 请求头配置
+ * @type ComputedRef<Record<string, unknown>>
  * @description 返回 HTTP 请求头配置
  */
 const requestHeader = computed(() => {
@@ -199,8 +199,8 @@ const requestHeader = computed(() => {
 });
 
 /**
- * **上传配置数据**
- * @type `ComputedRef<{ headerData: Record<string, unknown>; fileApi: unknown; apiBaseUrl: string }>`
+ * 上传配置数据
+ * @type ComputedRef<{ headerData: Record<string, unknown>; fileApi: unknown; apiBaseUrl: string }>
  * @description 从全局配置中提取文件上传相关的配置信息
  */
 const fileConfigData = computed(() => {
@@ -211,8 +211,8 @@ const fileConfigData = computed(() => {
 });
 
 /**
- * **文件上传数量限制**
- * @type `ComputedRef<number | undefined>`
+ * 文件上传数量限制
+ * @type ComputedRef<number | undefined>
  * @description 返回允许的最大文件上传数量
  */
 const fileMultiple = computed(() => {
@@ -223,8 +223,8 @@ const fileMultiple = computed(() => {
 });
 
 /**
- * **允许的文件类型**
- * @type `ComputedRef<string>`
+ * 允许的文件类型
+ * @type ComputedRef<string>
  * @description 返回允许上传的文件类型（逗号分隔的小写字符串）
  */
 const accept = computed(() => {
@@ -235,8 +235,8 @@ const accept = computed(() => {
 });
 
 /**
- * **允许的文件类型文本**
- * @type `ComputedRef<Array<string>>`
+ * 允许的文件类型文本
+ * @type ComputedRef<Array<string>>
  * @description 返回允许上传的文件类型的显示文本
  */
 const acceptText = computed(() => {
@@ -247,8 +247,8 @@ const acceptText = computed(() => {
 });
 
 /**
- * **排除的文件类型**
- * @type `ComputedRef<string>`
+ * 排除的文件类型
+ * @type ComputedRef<string>
  * @description 返回不允许上传的文件类型（逗号分隔的小写字符串）
  */
 const excludeType = computed(() => {
@@ -259,8 +259,8 @@ const excludeType = computed(() => {
 });
 
 /**
- * **排除的文件类型文本**
- * @type `ComputedRef<string>`
+ * 排除的文件类型文本
+ * @type ComputedRef<string>
  * @description 返回不允许上传的文件类型的显示文本
  */
 const excludeText = computed(() => {
@@ -271,11 +271,11 @@ const excludeText = computed(() => {
 });
 
 /**
- * **格式化文件大小**
- * @param `bytes` `number` 文件大小（字节）
- * @returns `string` 格式化后的文件大小字符串
+ * 格式化文件大小
+ * @param bytes - 文件大小（字节）
+ * @returns string 格式化后的文件大小字符串
  * @description 将字节数转换为人类可读的文件大小格式
- * */
+ */
 const formatSize = (bytes: number): string => {
   if (bytes === 0) return "0 B";
   const k = 1024;
@@ -285,9 +285,9 @@ const formatSize = (bytes: number): string => {
 };
 
 /**
- * **处理点击上传区域**
+ * 处理点击上传区域
  * @description 触发隐藏的文件输入框点击事件
- * */
+ */
 const handleClick = (): void => {
   if (isDragging.value) return;
   if (fileInput.value) {
@@ -296,11 +296,11 @@ const handleClick = (): void => {
 };
 
 /**
- * **处理拖拽或选择文件**
- * @param `type` `string` 事件类型（'drop' 或 'change'）
- * @param `event` `DragEvent | Event` 拖拽或变更事件
+ * 处理拖拽或选择文件
+ * @param type - 事件类型（'drop' 或 'change'）
+ * @param event - 拖拽或变更事件
  * @description 处理文件拖拽放下或文件选择事件，添加文件到上传列表
- * */
+ */
 const handleDrop = (type: string, event: DragEvent | Event): void => {
   isDragging.value = false;
   const files: Array<File> = Array.from(
@@ -333,27 +333,27 @@ const handleDrop = (type: string, event: DragEvent | Event): void => {
 };
 
 /**
- * **处理拖拽进入**
+ * 处理拖拽进入
  * @description 设置拖拽状态为进入
- * */
+ */
 const handleDragOver = (): void => {
   isDragging.value = true;
 };
 
 /**
- * **处理拖拽离开**
+ * 处理拖拽离开
  * @description 设置拖拽状态为离开
- * */
+ */
 const handleDragLeave = (): void => {
   isDragging.value = false;
 };
 
 /**
- * **上传前校验函数**
- * @param `fileList` `Array<{ name: string; size: number; type: string }>` 待校验的文件列表
- * @returns `boolean` 校验是否通过
+ * 上传前校验函数
+ * @param fileList - 待校验的文件列表
+ * @returns boolean 校验是否通过
  * @description 在上传前进行文件类型、大小、数量等校验
- * */
+ */
 const beforeUpload = (fileList: Array<{ name: string; size: number; type: string }>): boolean => {
   loading.value = true;
   if (!fileConfigData.value.fileApi) {
@@ -409,9 +409,9 @@ const beforeUpload = (fileList: Array<{ name: string; size: number; type: string
 };
 
 /**
- * **执行文件上传**
+ * 执行文件上传
  * @description 筛选待上传文件并发起上传请求
- * */
+ */
 const uploadFiles = (): void => {
   const list = uploadFilesList.value.filter(item => item.status === "wait");
   if (!list.length) return;
@@ -424,10 +424,10 @@ const uploadFiles = (): void => {
 };
 
 /**
- * **发起 Ajax 上传请求**
- * @param `ajaxFileList` `Array<UploadFileItem>` 待上传文件列表
+ * 发起 Ajax 上传请求
+ * @param ajaxFileList - 待上传文件列表
  * @description 构建上传参数并调用 ajaxUpload 执行上传
- * */
+ */
 function actionRequest(ajaxFileList: Array<UploadFileItem>): void {
   const ajaxOptions = {
     headers: requestHeader.value,
@@ -450,19 +450,19 @@ function actionRequest(ajaxFileList: Array<UploadFileItem>): void {
 }
 
 /**
- * **删除指定文件**
- * @param `index` `number` 要删除的文件索引
+ * 删除指定文件
+ * @param index - 要删除的文件索引
  * @description 从上传列表中移除指定位置的文件
- * */
+ */
 const handleRemove = (index: number): void => {
   uploadFilesList.value.splice(index, 1);
 };
 
 /**
- * **上传成功处理函数**
- * @param `response` `{ Code: Number; Data: FileDataType | Array<FileDataType>; Message?: string }` 服务器响应数据
+ * 上传成功处理函数
+ * @param response - 服务器响应数据
  * @description 处理文件上传成功后的响应，更新组件内部值
- * */
+ */
 const handleSuccess = (response: string | { Code: number; Data: Array<FileDataType> | FileDataType; Message?: string }): void => {
   if (!response) return;
   if (typeof response === "string") return;
@@ -499,10 +499,10 @@ const handleSuccess = (response: string | { Code: number; Data: Array<FileDataTy
 };
 
 /**
- * **触发值变更事件**
- * @param `value` `Array<FileDataType> | undefined` 新的绑定值
+ * 触发值变更事件
+ * @param value - 新的绑定值
  * @description 更新文件上传列表状态，并触发 change 和 update:modelValue 事件
- * */
+ */
 function changeEvent(value: Array<FileDataType> | undefined): void {
   const names = value?.map(item => item.OriginalName);
   uploadFilesList.value = uploadFilesList.value.map(item => ({
@@ -514,9 +514,9 @@ function changeEvent(value: Array<FileDataType> | undefined): void {
 }
 
 /**
- * **上传失败处理函数**
+ * 上传失败处理函数
  * @description 处理文件上传失败的情况，清空文件列表并显示错误信息
- * */
+ */
 const handleError = (): void => {
   uploadFilesList.value.length = 0;
   M_Message.danger({ message: `${languagePackage.value["upFail"]}(02)` });

@@ -18,19 +18,19 @@
 
 ## ComponentProps
 
-| 参数   | 说明                         | 类型                                    | 默认值 |
-| ------ | ---------------------------- | --------------------------------------- | ------ |
-| id     | 元素 id                      | `string`                                | -      |
-| class  | 自定义类名                   | `Array<string>` \| `string`             | -      |
-| style  | 自定义样式                   | `Record<string, string \| number>`      | -      |
-| gutter | 栅格间隔，覆盖 Row 的 gutter | `number` \| `string`                    | -      |
-| span   | 栅格占据的列数（共 24 列）   | `number`                                | -      |
-| offset | 栅格左侧的间隔格数           | `number`                                | `0`    |
-| xs     | `<576px` 响应式配置          | [`Responsive`](#responsive) \| `number` | -      |
-| sm     | `≥576px` 响应式配置          | [`Responsive`](#responsive) \| `number` | -      |
-| md     | `≥768px` 响应式配置          | [`Responsive`](#responsive) \| `number` | -      |
-| lg     | `≥992px` 响应式配置          | [`Responsive`](#responsive) \| `number` | -      |
-| xl     | `≥1200px` 响应式配置         | [`Responsive`](#responsive) \| `number` | -      |
+| 属性名 | 描述                         | 类型                                 | 默认值 |
+| ------ | ---------------------------- | ------------------------------------ | ------ |
+| id     | 唯一标识                     | `string`                             | -      |
+| class  | 自定义类名                   | `Array<string>` `string`             | -      |
+| style  | 自定义样式                   | `Record<string, number` `string>`    | -      |
+| gutter | 栅格间隔，覆盖 Row 的 gutter | `number` `string`                    | -      |
+| span   | 栅格占据的列数               | `number`                             | -      |
+| offset | 栅格左侧的间隔格数           | `number`                             | `0`    |
+| xs     | <576px 响应式配置            | [`Responsive`](#responsive) `number` | -      |
+| sm     | ≥576px 响应式配置            | [`Responsive`](#responsive) `number` | -      |
+| md     | ≥768px 响应式配置            | [`Responsive`](#responsive) `number` | -      |
+| lg     | ≥992px 响应式配置            | [`Responsive`](#responsive) `number` | -      |
+| xl     | ≥1200px 响应式配置           | [`Responsive`](#responsive) `number` | -      |
 
 ## ComponentEmits
 
@@ -38,7 +38,7 @@
 
 ## ComponentSlots
 
-| 插槽名    | 说明   |
+| 插槽名称  | 描述   |
 | --------- | ------ |
 | 'default' | 列内容 |
 
@@ -54,7 +54,7 @@
 
 ## Responsive
 
-| 参数   | 说明               | 类型                    | 默认值 |
-| ------ | ------------------ | ----------------------- | ------ |
-| span   | 栅格占据的列数     | `number` \| `undefined` | -      |
-| offset | 栅格左侧的间隔格数 | `number` \| `undefined` | -      |
+| 属性名 | 描述               | 类型     | 默认值 |
+| ------ | ------------------ | -------- | ------ |
+| span   | 栅格占据的列数     | `number` | -      |
+| offset | 栅格左侧的间隔格数 | `number` | -      |

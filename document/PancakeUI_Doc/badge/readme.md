@@ -33,3 +33,9 @@
 | maxValue | 最大值         | `number` `string`        | -      |
 | useShow  | 是否显示       | `boolean`                | -      |
 | useDot   | 是否显示小红点 | `boolean`                | -      |
+
+## ComponentSlots
+
+| 插槽名称  | 描述           |
+| --------- | -------------- |
+| 'default' | 徽标包裹的内容 |

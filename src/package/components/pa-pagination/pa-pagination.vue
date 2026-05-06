@@ -76,19 +76,19 @@
 
 <script lang="ts" setup>
 /**
- * **模块导入**
+ * 模块导入
  * @description 导入 Vue 响应式 API
- * */
+ */
 import { ref, computed, watch, inject } from "vue";
 /**
- * **模块导入**
+ * 模块导入
  * @description 导入组件类型定义
- * */
+ */
 import { ComponentProps, ComponentEmits } from "./types";
 /**
- * **组件属性**
+ * 组件属性
  * @description 组件的 props 定义
- * */
+ */
 const props = withDefaults(defineProps<ComponentProps>(), {
   currentPage: 1,
   pageSize: 10,
@@ -99,29 +99,29 @@ const props = withDefaults(defineProps<ComponentProps>(), {
   disabled: false
 });
 /**
- * **组件事件**
+ * 组件事件
  * @description 组件的 emits 定义
- * */
+ */
 const emit = defineEmits<ComponentEmits>();
 /**
- * **语言包**
+ * 语言包
  * @description 注入的语言包
- * */
+ */
 const languagePackage = inject("languagePackage") as Record<string, string>;
 /**
- * **内部当前页码**
+ * 内部当前页码
  * @description 内部维护的当前页码状态
- * */
+ */
 const internalCurrentPage = ref(props.currentPage);
 /**
- * **内部每页数量**
+ * 内部每页数量
  * @description 内部维护的每页数量状态
- * */
+ */
 const internalPageSize = ref(props.pageSize);
 /**
- * **每页数量选项**
+ * 每页数量选项
  * @description 计算每页数量选择器的选项
- * */
+ */
 const exOptions = computed(() => {
   return props.pageSizes.map(size => ({
     label: ` ${size}${languagePackage.value["records2"]}`,
@@ -129,45 +129,45 @@ const exOptions = computed(() => {
   }));
 });
 /**
- * **总页数**
+ * 总页数
  * @description 计算总页数
- * */
+ */
 const pageCount = computed(() => {
   const data = Math.max(1, Math.ceil(props.total / internalPageSize.value));
   emit("change-max-page", data);
   return data;
 });
 /**
- * **布局配置**
+ * 布局配置
  * @description 解析 layout 配置
- * */
+ */
 const layoutParts = computed(() => {
   return props.layout.split(",").map(part => part.trim());
 });
 /**
- * **是否显示总数**
+ * 是否显示总数
  * @description 是否显示总数
- * */
+ */
 const showTotal = computed(() => layoutParts.value.includes("total"));
 /**
- * **是否显示每页数量选择器**
+ * 是否显示每页数量选择器
  * @description 是否显示每页数量选择器
- * */
+ */
 const showSizes = computed(() => layoutParts.value.includes("sizes"));
 /**
- * **是否显示页码**
+ * 是否显示页码
  * @description 是否显示页码
- * */
+ */
 const showPager = computed(() => layoutParts.value.includes("pager"));
 /**
- * **是否显示跳转器**
+ * 是否显示跳转器
  * @description 是否显示跳转器
- * */
+ */
 const showJumper = computed(() => layoutParts.value.includes("jumper"));
 /**
- * **页码列表**
+ * 页码列表
  * @description 计算显示的页码列表
- * */
+ */
 const pagerPages = computed(() => {
   const halfPagerCount = (props.pagerCount - 1) / 2;
   let start = Math.max(1, internalCurrentPage.value - halfPagerCount);
@@ -182,37 +182,37 @@ const pagerPages = computed(() => {
   return pages;
 });
 /**
- * **是否显示第一页**
+ * 是否显示第一页
  * @description 是否显示第一页按钮
- * */
+ */
 const showFirstPage = computed(() => {
   return pagerPages.value[0] > 1;
 });
 /**
- * **是否显示最后一页**
+ * 是否显示最后一页
  * @description 是否显示最后一页按钮
- * */
+ */
 const showLastPage = computed(() => {
   return pagerPages.value[pagerPages.value.length - 1] < pageCount.value;
 });
 /**
- * **是否显示左侧更多**
+ * 是否显示左侧更多
  * @description 是否显示左侧更多按钮
- * */
+ */
 const showPrevMore = computed(() => {
   return pagerPages.value[0] > 2;
 });
 /**
- * **是否显示右侧更多**
+ * 是否显示右侧更多
  * @description 是否显示右侧更多按钮
- * */
+ */
 const showNextMore = computed(() => {
   return pagerPages.value[pagerPages.value.length - 1] < pageCount.value - 1;
 });
 /**
- * **监听当前页码变化**
+ * 监听当前页码变化
  * @description 同步 props.currentPage 到内部状态
- * */
+ */
 watch(
   () => props.currentPage,
   newVal => {
@@ -220,9 +220,9 @@ watch(
   }
 );
 /**
- * **监听每页数量变化**
+ * 监听每页数量变化
  * @description 同步 props.pageSize 到内部状态
- * */
+ */
 watch(
   () => props.pageSize,
   newVal => {
@@ -230,10 +230,10 @@ watch(
   }
 );
 /**
- * **跳转到指定页**
- * @param `page` `number` 目标页码
+ * 跳转到指定页
+ * @param page - 目标页码
  * @description 跳转到指定的页码
- * */
+ */
 const goToPage = (page: number): void => {
   if (props.disabled) return;
   const validPage = Math.max(1, Math.min(page, pageCount.value));
@@ -249,10 +249,10 @@ const goToPage = (page: number): void => {
   }
 };
 /**
- * **处理每页数量变化**
- * @param `data` `{ value: number }` 选择的数据
+ * 处理每页数量变化
+ * @param data - 选择的数据
  * @description 每页数量变化时的处理
- * */
+ */
 const handleSizeChange = (data: { value: number }): void => {
   if (props.disabled) return;
   internalPageSize.value = data.value;
@@ -264,9 +264,9 @@ const handleSizeChange = (data: { value: number }): void => {
   }
 };
 /**
- * **处理跳转器输入**
+ * 处理跳转器输入
  * @description 跳转器输入确认时的处理
- * */
+ */
 const handleJumperEnter = (): void => {
   if (props.disabled) return;
   const page = internalCurrentPage.value;
@@ -276,17 +276,17 @@ const handleJumperEnter = (): void => {
   internalCurrentPage.value = page;
 };
 /**
- * **跳转到左侧更多页**
+ * 跳转到左侧更多页
  * @description 点击左侧更多按钮
- * */
+ */
 const jumpPrevMore = (): void => {
   if (props.disabled) return;
   goToPage(Math.max(1, internalCurrentPage.value - props.pagerCount));
 };
 /**
- * **跳转到右侧更多页**
+ * 跳转到右侧更多页
  * @description 点击右侧更多按钮
- * */
+ */
 const jumpNextMore = (): void => {
   if (props.disabled) return;
   goToPage(Math.min(pageCount.value, internalCurrentPage.value + props.pagerCount));

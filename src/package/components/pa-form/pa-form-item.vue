@@ -32,62 +32,79 @@
 </template>
 
 <script lang="ts" setup>
+/**
+ * Vue 核心响应式 API
+ * @description Vue 核心响应式 API
+ */
 import { computed, ref, Ref, inject, provide } from "vue";
+/**
+ * 表单类型定义
+ * @description 表单类型定义
+ */
 import { ConfigContextType } from "./types";
 
-// 定义 Props
 type PaFormItemProps = {
   /**
-   * **表单字段名**
-   * @type `string`
-   * @default `undefined`
+   * 表单字段名
+   * @type string
+   * @default undefined
    * @description 当设置该值时，会添加到组件的 `prop` 属性中
    * @description 该值的类型为 `string`，可以是任意类型
-   * */
+   */
   prop: string;
 
   /**
-   * **标签文本**
-   * @type `string`
-   * @default `undefined`
+   * 标签文本
+   * @type string
+   * @default undefined
    * @description 当设置该值时，会添加到组件的 `label` 属性中
    * @description 该值的类型为 `string`，可以是任意类型
-   * */
+   */
   label?: string;
 
   /**
-   * **自定义类名**
-   * @type `string`
-   * @default `undefined`
+   * 自定义类名
+   * @type string
+   * @default undefined
    * @description 当设置该值时，会添加到组件的 `class` 属性中
    * @description 该值的类型为 `string`，可以是任意类型
-   * */
+   */
   class?: string[];
 
   /**
-   * **自定义样式**
-   * @type `Record<string, string>`
-   * @default `undefined`
+   * 自定义样式
+   * @type Record<string, string>
+   * @default undefined
    * @description 当设置该值时，会添加到组件的 `style` 属性中
    * @description 该值的类型为 `Record<string, string>`，可以是任意类型
-   * */
+   */
   style?: Record<string, string>;
 
   /**
-   * **帮助信息**
-   * @type `string`
-   * @default `undefined`
+   * 帮助信息
+   * @type string
+   * @default undefined
    * @description 当设置该值时，会添加到组件的 `help` 属性中
    * @description 该值的类型为 `string`，可以是任意类型
-   * */
+   */
   help?: string;
 };
 
-// # Var
+/**
+ * 组件属性
+ * @description 组件属性
+ */
 const props = withDefaults(defineProps<PaFormItemProps>(), {});
 
-// 从父组件注入表单上下文
+/**
+ * 表单上下文注入
+ * @description 表单上下文注入
+ */
 const injectFormContext = inject<any>("formContext", {});
+/**
+ * 配置上下文注入
+ * @description 配置上下文注入
+ */
 const injectConfigContext = inject<Ref<ConfigContextType>>(
   "configContext",
   ref({
@@ -108,7 +125,10 @@ const injectConfigContext = inject<Ref<ConfigContextType>>(
     noLabel: false
   })
 );
-// 计算标签样式
+/**
+ * 标签样式
+ * @description 标签样式
+ */
 const labelStyle = computed(() => {
   const style: Record<string, string> = {};
   if (injectConfigContext.value.labelWidth !== "" && injectConfigContext.value.labelPosition !== "top") {
@@ -117,19 +137,25 @@ const labelStyle = computed(() => {
   return style;
 });
 
+/**
+ * 标签位置
+ * @description 标签位置
+ */
 const useLabelPosition = computed(() => injectConfigContext.value.labelPosition || "top");
 
-// 计算内容样式
+/**
+ * 内容样式
+ * @description 内容样式
+ */
 const contentStyle = computed(() => {
   const style: Record<string, string> = {};
-  // const _labelPosition = injectConfigContext.value.labelPosition || "top";
-  // if (injectConfigContext.value.labelWidth !== "" && _labelPosition !== "top") {
-  //   style.marginLeft = `${injectConfigContext.value.labelWidth}px`;
-  // }
   return style;
 });
 
-// 计算是否为必填项
+/**
+ * 是否必填项
+ * @description 是否必填项
+ */
 const isRequired = computed(() => {
   if (injectFormContext.rulesKeys.length) {
     return injectFormContext.rulesKeys.includes(props.prop || "");
@@ -138,7 +164,6 @@ const isRequired = computed(() => {
   return false;
 });
 
-// 提供给子组件的上下文
 provide("elFormItem", {
   ...props,
   isRequired

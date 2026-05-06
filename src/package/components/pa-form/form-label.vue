@@ -15,8 +15,15 @@
   </div>
 </template>
 <script lang="ts" setup>
-// # Import
+/**
+ * Vue 响应式 API
+ * @description Vue 响应式 API
+ */
 import { ref } from "vue";
+/**
+ * 表单项类型定义
+ * @description 表单项类型定义
+ */
 import { PaFormItemType } from "./types";
 
 export type labelPropsType = {
@@ -25,16 +32,12 @@ export type labelPropsType = {
   item: PaFormItemType;
   data: Record<string, string>;
 };
-// # Var
 defineProps<labelPropsType>();
 const RefLabelContainer = ref();
 </script>
 
 <style lang="scss" scoped>
 .form_label_text {
-  // display: flex;
-  // align-items: center;
-  // justify-content: flex-start;
   font-size: calc(var(--pa-size-font, 16px) + 1px);
   font-weight: bold;
   color: var(--pa-title-color);
@@ -42,11 +45,9 @@ const RefLabelContainer = ref();
 }
 .pa-form_label {
   display: flex;
-  // overflow: hidden;
   justify-content: flex-start;
   color: var(--dms-page-text-color);
   align-items: center;
-  // white-space: nowrap;
   &_text {
     overflow: hidden;
     text-overflow: ellipsis;
