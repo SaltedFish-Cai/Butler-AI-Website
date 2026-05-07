@@ -27,7 +27,7 @@
   top: 50%;
   transform: translate(-50%, -50%);
   background-color: var(--pa-color-bg);
-  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  box-shadow: var(--pa-shadow-color);
   transition: all var(--pa-animation-time, 0.2s) ease;
   padding: calc(var(--pa-size-padding, 10px));
   display: flex;

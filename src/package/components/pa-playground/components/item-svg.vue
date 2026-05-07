@@ -417,7 +417,7 @@ defineExpose({
   background-color: var(--pa-color-bg);
   border: 1px solid var(--pa-color-border);
   border-radius: var(--pa-size-radius, 3px);
-  box-shadow: 0 0 0 2px var(--pa-color-primary-light-8);
+  box-shadow: var(--pa-shadow-color);
   overflow: hidden;
   z-index: 1000;
 }

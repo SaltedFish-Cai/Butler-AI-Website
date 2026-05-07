@@ -173,7 +173,7 @@ defineExpose({ openEditDialog });
     cursor: pointer;
     color: var(--pa-color-primary);
     border-color: var(--pa-color-primary);
-    box-shadow: 0 0 0 2px var(--pa-color-primary-light-8);
+    box-shadow: var(--pa-shadow-color);
   }
 }
 </style>
