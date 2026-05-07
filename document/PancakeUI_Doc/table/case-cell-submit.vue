@@ -25,14 +25,14 @@
 </template>
 
 <script lang="ts" setup>
-import { MStructureV2Type } from "M_Types";
+import { PaStructureType } from "PancakeType";
 import { ref } from "vue";
 
 const proTable = ref();
 const params = ref({});
 const tableFormData = ref({});
 
-const tableConfig: MStructureV2Type.TableV2[] = [
+const tableConfig: PaStructureType.TableV2[] = [
   { label: "Cell-Input", prop: "Input", cellConfig: { type: "input" } },
   { label: "Cell-Input1", prop: "Input1", cellConfig: { type: "input" } },
   { label: "Cell-Input2", prop: "Input2", cellConfig: { type: "input" } },

@@ -62,11 +62,11 @@ export type ComponentProps = {
   padding?: Array<"all" | "bottom" | "left" | "null" | "right" | "top">;
   /**
    * 样式模式
-   * @type "default" | "vertical" | "underline" | undefined
+   * @type "default" | "vertical" | "horizontal" | undefined
    * @default "default"
    * @description 当设置该值时，会根据不同的样式模式应用不同的样式
    */
-  styleMode?: "default" | "underline" | "vertical";
+  styleMode?: "default" | "horizontal" | "vertical";
   /**
    * 分割线配置
    * @type LineComponentProps | boolean | undefined

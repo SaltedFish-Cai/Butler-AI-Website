@@ -388,7 +388,7 @@ import DialogOptionManagement from "./components/dialog-option-management.vue";
 import MSimulatedField from "./components/simulated-field.vue";
 import PaPlaygroundVisible from "./pa-playground-visible.vue";
 
-import { PaStructureType } from "M_Types";
+import { PaStructureType } from "PancakeType";
 import { PaPlaygroundPageButtonType } from "./components/types";
 import { openDB } from "../indexDB/indexDB";
 import { TableUseOptions } from "./configs/options";
@@ -442,9 +442,9 @@ const editTableColQuickDialogRef = useTemplateRef("editTableColQuickDialogRef");
 const simulatedFieldRef = useTemplateRef("simulatedFieldRef");
 const simulatedFieldVisibleRef = useTemplateRef("simulatedFieldVisibleRef");
 
-const editTableColData = ref<PaStructureType.TableV2 | undefined>();
+const editTableColData = ref<PaStructureType.Table | undefined>();
 
-const editFormItemData = ref<PaStructureType.FormV2 | undefined>();
+const editFormItemData = ref<PaStructureType.Form | undefined>();
 
 const inValue = ref<PaPlaygroundType>(props.data);
 const useMock = ref(true);
@@ -481,14 +481,14 @@ provide(
 provide("openEditItemBaseDialog", (config: PaPlaygroundItem) => {
   editItemBaseDialogRef.value?.open(config);
 });
-provide("openEditTableColQuickDialog", (tableId: string, config: PaStructureType.TableV2[], options: Record<string, string>) => {
+provide("openEditTableColQuickDialog", (tableId: string, config: PaStructureType.Table[], options: Record<string, string>) => {
   editTableColQuickDialogRef.value?.openEditDialog(
     tableId,
     config.map(item => ({ ...item, cellConfig: item.cellConfig || {} })),
     options
   );
 });
-provide("openEditFormItemQuickDialog", (formId: string, config: PaStructureType.FormV2[], options: Record<string, string>) => {
+provide("openEditFormItemQuickDialog", (formId: string, config: PaStructureType.Form[], options: Record<string, string>) => {
   editFormItemQuickDialogRef.value?.openEditDialog(
     formId,
     config.map(item => ({ ...item })),
@@ -499,7 +499,7 @@ provide(
   "openEditTabsItemQuickDialog",
   (
     tableId: string,
-    config: Array<PaStructureType.FormV2 & { scroll: number; padding: string[] }>,
+    config: Array<PaStructureType.Form & { scroll: number; padding: string[] }>,
     options: Record<string, string>
   ) => {
     editTabsItemQuickDialogRef.value?.openEditDialog(
@@ -527,23 +527,23 @@ const {
 } = useSvgHooks(lockScroll, inValue);
 
 // 处理编辑表格列提交
-const handleEditTableColSubmit = (tableId: string, data: PaStructureType.TableV2, options: Record<string, string>) =>
+const handleEditTableColSubmit = (tableId: string, data: PaStructureType.Table, options: Record<string, string>) =>
   tableRefs.value[tableId].updateCol(data, options);
 
 // 处理编辑表单项提交
-const handleEditFormItemSubmit = (formId: string, data: PaStructureType.FormV2, options: Record<string, string>) =>
+const handleEditFormItemSubmit = (formId: string, data: PaStructureType.Form, options: Record<string, string>) =>
   formRefs.value[formId].updateItem(data, options);
 
 // 处理编辑表格列快速提交
-const handleEditTableColQuickSubmit = (tableId: string, data: PaStructureType.TableV2[], options: Record<string, string>) =>
+const handleEditTableColQuickSubmit = (tableId: string, data: PaStructureType.Table[], options: Record<string, string>) =>
   tableRefs.value[tableId].updateItemAll(data, options);
 
 // 处理编辑表单项快速提交
-const handleEditFormItemQuickSubmit = (formId: string, data: PaStructureType.FormV2[], options: Record<string, string>) =>
+const handleEditFormItemQuickSubmit = (formId: string, data: PaStructureType.Form[], options: Record<string, string>) =>
   formRefs.value[formId].updateItemAll(data, options);
 
 // 处理编辑选项卡项快速提交
-const handleEditTabsItemQuickSubmit = (tableId: string, data: PaStructureType.FormV2[]) =>
+const handleEditTabsItemQuickSubmit = (tableId: string, data: PaStructureType.Form[]) =>
   tabsItemRefs.value[tableId].updateItemAll(data);
 
 // # 保存基础配置

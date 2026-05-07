@@ -274,6 +274,7 @@ export default {
       alias: {
         public: resolve(__dirname, "../public"),
         "@": resolve(__dirname, "../src"),
+        PancakeUI: resolve(__dirname, "../src/package/components/feedback"),
         "@m": resolve(__dirname, "../src/package"),
         MTools: resolve(__dirname, "../src/package/tools/"),
         "vue-i18n": "vue-i18n/dist/vue-i18n.cjs.js"

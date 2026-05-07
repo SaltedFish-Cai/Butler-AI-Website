@@ -18,7 +18,7 @@
 | data                  | 配置数据       | `PaPlaygroundType`                                            | `{}`   |
 | requestFunction       | 请求函数       | `any`                                                         | -      |
 | actionFunction        | 操作函数数组   | `Array<PaOptionType.Select & PaPlaygroundActionFunctionType>` | -      |
-| authorizationFunction | 授权函数数组   | `Array<PaStructureType.TableV2>`                              | -      |
+| authorizationFunction | 授权函数数组   | `Array<PaStructureType.Table>`                              | -      |
 | visibleBefore         | 可见性判断函数 | `(data: any) => boolean`                                      | -      |
 | actionBefore          | 操作前判断函数 | `(data: any) => boolean`                                      | -      |
 
@@ -72,7 +72,7 @@
 | width         | 宽度          | `number`                                                          | -      |
 | height        | 高度          | `number`                                                          | -      |
 | type          | 项目类型      | `"form" \| "table" \| "tabs"`                                     | -      |
-| structure     | 结构配置      | `Array<PaStructureType.FormV2> \| Array<PaStructureType.TableV2>` | -      |
+| structure     | 结构配置      | `Array<PaStructureType.Form> \| Array<PaStructureType.Table>` | -      |
 | actionButtons | 操作按钮列表  | `Array<PaPlaygroundPageButtonType>`                               | -      |
 | exOptions     | 扩展选项映射  | `Record<string, string>`                                          | -      |
 | sourceTable   | 源数据表名    | `string`                                                          | -      |

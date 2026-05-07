@@ -41,7 +41,7 @@
 
 <script lang="tsx" setup>
 import { computed, ComputedRef, inject, ref, useTemplateRef } from "vue";
-import { PaStructureType, PaOptionType } from "M_Types";
+import { PaStructureType, PaOptionType } from "PancakeType";
 
 import { editTableColConfig, editOtherTableColConfig, filterType, exOptionsById } from "../../configs/table-config";
 import {
@@ -61,14 +61,14 @@ const { cloneDeep } = _;
 
 const props = defineProps<{
   exOptionsMaps: MOptionsType[];
-  editCol?: PaStructureType.TableV2;
+  editCol?: PaStructureType.Table;
 }>();
 
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 const language = PancakeGlobalConfig.value?.language?.value || "zh-CN";
 
 const formRef = useTemplateRef("formRef");
-const formData = ref<PaStructureType.TableV2 & { cellType?: string; exOptions?: PaOptionType.SelectList | PaOptionType.Switch }>(
+const formData = ref<PaStructureType.Table & { cellType?: string; exOptions?: PaOptionType.SelectList | PaOptionType.Switch }>(
   {}
 );
 const editId = ref("");
@@ -119,7 +119,7 @@ const config = computed(() => {
 });
 
 // # 打开编辑表格列弹窗
-const openEditTableColDialog = (tableId: string, editCol: PaStructureType.TableV2, options: PaOptionType.Default) => {
+const openEditTableColDialog = (tableId: string, editCol: PaStructureType.Table, options: PaOptionType.Default) => {
   visible.value = true;
   editId.value = tableId;
   const _editCol = { ...editCol, cellType: editCol.cellConfig?.type || "text" };
@@ -131,7 +131,7 @@ const openEditTableColDialog = (tableId: string, editCol: PaStructureType.TableV
 
 const emit = defineEmits<{
   "update:modelValue": [value: boolean];
-  handleEditTableColSubmit: [tableId: string, data: PaStructureType.TableV2, options: Record<string, string>];
+  handleEditTableColSubmit: [tableId: string, data: PaStructureType.Table, options: Record<string, string>];
 }>();
 
 // 提交表单
@@ -139,7 +139,7 @@ async function handleSubmit() {
   const formData = await formRef.value?.getSubmitForm();
   if (formData && formData != "no-change") {
     exOptions.value[formData.prop] = formData["exOptionsById"];
-    emit("handleEditTableColSubmit", editId.value, formData as PaStructureType.TableV2, exOptions.value);
+    emit("handleEditTableColSubmit", editId.value, formData as PaStructureType.Table, exOptions.value);
     visible.value = false;
   }
 }

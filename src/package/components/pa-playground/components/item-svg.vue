@@ -94,7 +94,7 @@
           style="width: 100%"
           is="edit"
           iconName="version_line"
-          @click="openEditFormItemQuickDialog(itemId, formData as PaStructureType.FormV2[], formExOptions)"
+          @click="openEditFormItemQuickDialog(itemId, formData as PaStructureType.Form[], formExOptions)"
           :text="{ 'zh-CN': '表单 快捷设置', 'en-US': 'Form Quick Settings' }"
         />
 
@@ -105,7 +105,7 @@
               is="edit"
               iconName="version_line"
               style="width: 50%"
-              @click="openEditTableColQuickDialog(itemId, formData as PaStructureType.TableV2[], formExOptions)"
+              @click="openEditTableColQuickDialog(itemId, formData as PaStructureType.Table[], formExOptions)"
               :text="{ 'zh-CN': '表格 快捷设置', 'en-US': 'Table Quick Settings' }"
             />
             <pa-button
@@ -128,7 +128,7 @@
           style="width: 100%"
           is="edit"
           iconName="version_line"
-          @click="openEditTabsItemQuickDialog(itemId, formData as PaStructureType.FormV2[], formExOptions)"
+          @click="openEditTabsItemQuickDialog(itemId, formData as PaStructureType.Form[], formExOptions)"
           :text="{ 'zh-CN': '选项卡 快捷设置', 'en-US': 'Tabs Quick Settings' }"
         />
       </div>
@@ -149,7 +149,7 @@
 <script lang="tsx" setup>
 import { computed, inject, Ref, ref, watch } from "vue";
 import { MOptionsType, PaPlaygroundItem, MStructureType } from "../types";
-import { PaOptionType, PaStructureType } from "M_Types";
+import { PaOptionType, PaStructureType } from "PancakeType";
 import { PaPlaygroundPageButtonType } from "./types";
 import { M_Message } from "../../feedback";
 // import { PaPlaygroundPageButtonType } from "./types";
@@ -191,26 +191,26 @@ const emit = defineEmits([
 
 const baseConfig = ref<PaPlaygroundItem>();
 
-const formData = ref<(PaStructureType.FormV2 & { value?: any })[]>([]);
+const formData = ref<(PaStructureType.Form & { value?: any })[]>([]);
 const formExOptions = ref<Record<string, string>>({});
 const actionButtons = ref<PaPlaygroundPageButtonType[]>([]);
 const dataStructures = computed(() => props.dataStructures);
 
 // 注入方法
 // const openVisibleDialog = inject("openVisibleDialog") as Ref<
-//   (type: "form" | "table", config: PaStructureType.FormV2[] | PaStructureType.TableV2[]) => void
+//   (type: "form" | "table", config: PaStructureType.Form[] | PaStructureType.Table[]) => void
 // >;
 
 const openEditItemBaseDialog = inject("openEditItemBaseDialog") as Ref<(baseConfig: PaPlaygroundItem) => void>;
 
 const openEditFormItemQuickDialog = inject("openEditFormItemQuickDialog") as Ref<
-  (tableId: string, config: PaStructureType.FormV2[], options: Record<string, string>) => void
+  (tableId: string, config: PaStructureType.Form[], options: Record<string, string>) => void
 >;
 const openEditTabsItemQuickDialog = inject("openEditTabsItemQuickDialog") as Ref<
-  (tableId: string, config: PaStructureType.FormV2[], options: Record<string, string>) => void
+  (tableId: string, config: PaStructureType.Form[], options: Record<string, string>) => void
 >;
 const openEditTableColQuickDialog = inject("openEditTableColQuickDialog") as Ref<
-  (tableId: string, tableConfig: PaStructureType.TableV2[], exOptions: Record<string, string>) => void
+  (tableId: string, tableConfig: PaStructureType.Table[], exOptions: Record<string, string>) => void
 >;
 const openEditOperationDialog = inject("openEditOperationDialog") as Ref<(tableId: string, editOperation: any) => void>;
 
@@ -232,7 +232,7 @@ function handleEditHeadersSubmit() {
 // 导出表单配置
 function exportFormConfig() {
   const exOptions: PaOptionType.Default = {};
-  const config: PaStructureType.FormV2[] = formData.value.map(item => {
+  const config: PaStructureType.Form[] = formData.value.map(item => {
     const outData = {
       ...item,
       rules: item.required ? [{ required: item.required }] : undefined
@@ -267,7 +267,7 @@ function handleRefresh() {
   const oldConfig = formData.value;
   const findConfig = dataStructures.value.find(config => config.id === _baseConfig.sourceTable);
   if (oldConfig && findConfig?.config) {
-    const outData: Array<{ authorization?: string } & (PaStructureType.FormV2 | PaStructureType.TableV2)> = [];
+    const outData: Array<{ authorization?: string } & (PaStructureType.Form | PaStructureType.Table)> = [];
     for (const col of findConfig.config) {
       const oldCol = oldConfig.find(oldCol => oldCol.prop === col.prop) as any;
       if (oldCol && false) {
@@ -282,7 +282,7 @@ function handleRefresh() {
             if (isNil(oldCol[key]) || (isArray(oldCol[key]) && oldCol[key].length == 0)) delete oldCol[key];
           }
           if (_baseConfig.type == "form") {
-            (outData as Array<PaStructureType.FormV2 & { authorization?: string }>).push({
+            (outData as Array<PaStructureType.Form & { authorization?: string }>).push({
               ...newCol,
               ...oldCol,
 
@@ -290,7 +290,7 @@ function handleRefresh() {
               type: oldCol?.type || "input"
             });
           } else if (_baseConfig.type == "table") {
-            (outData as Array<PaStructureType.TableV2 & { authorization?: string }>).push({
+            (outData as Array<PaStructureType.Table & { authorization?: string }>).push({
               ...newCol,
               ...oldCol,
 
@@ -330,7 +330,7 @@ watch(
   data => {
     baseConfig.value = data.find(item => item.itemId === props.itemId) as PaPlaygroundItem;
     if (!baseConfig.value) return;
-    formData.value = baseConfig.value.structure as PaStructureType.FormV2[];
+    formData.value = baseConfig.value.structure as PaStructureType.Form[];
     actionButtons.value = baseConfig.value.actionButtons || [];
 
     updateOperation(actionButtons.value);

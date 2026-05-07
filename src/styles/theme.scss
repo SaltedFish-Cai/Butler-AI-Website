@@ -46,10 +46,11 @@
       transition: transform var(--pa-transition-duration, 0.3s) ease-in-out;
       &:hover {
         transform: scale(1.2);
-        --vp-c-brand-1: var(--pa-color-white) !important;
+        color: var(--vp-c-text-1);
+        // --vp-c-brand-1: var(--pa-color-white) !important;
       }
       &.active {
-        --vp-c-brand-1: var(--pa-color-white) !important;
+        color: var(--vp-c-text-1);
       }
     }
 
@@ -71,7 +72,7 @@
   }
 
   @media (min-width: 960px) {
-    .VPNavBar:not(.has-sidebar):not(.home.top) {
+    .VPNavBar:not(.top) {
       --vp-c-text-1: var(--pa-color-font) !important;
       background: rgba(255, 255, 255, 0.15);
       backdrop-filter: blur(12px);

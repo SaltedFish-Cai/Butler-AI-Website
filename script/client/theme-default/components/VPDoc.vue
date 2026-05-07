@@ -5,7 +5,7 @@ import { useData } from "../composables/data";
 import { useSidebar } from "../composables/sidebar";
 import VPDocAside from "./VPDocAside.vue";
 import VPDocFooter from "./VPDocFooter.vue";
-import { PancakeUIType } from "M_Types";
+import { PancakeUIType } from "PancakeType";
 import { advancedQueryApi, groupAdvancedQueryApi } from "public/file/mock-api";
 const { theme } = useData();
 

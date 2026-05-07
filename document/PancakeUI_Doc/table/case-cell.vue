@@ -18,12 +18,12 @@
 </template>
 
 <script lang="ts" setup>
-import { MOptionV2Type, MStructureV2Type } from "M_Types";
+import { PaOptionType, PaStructureType } from "PancakeType";
 import { ref } from "vue";
 import { randNum } from "@/package/components/tools/rand-char";
 
 const proTable = ref();
-const tableConfig: MStructureV2Type.TableV2[] = [
+const tableConfig: PaStructureType.TableV2[] = [
   { label: "Cell-Text", prop: "Text" },
   { label: "Cell-Input", prop: "Input", cellConfig: { type: "input" } },
   { label: "Cell-Number", prop: "Number", cellConfig: { type: "number", min: -10, display: true, precision: 2 } },
@@ -68,7 +68,7 @@ function InputRole(data) {
 
 async function requestSelect() {
   // const List = await Api();
-  const opt: MOptionV2Type.SelectList = [
+  const opt: PaOptionType.SelectList = [
     { label: "online-选项1", value: "request-value-1" },
     { label: "online-选项2", value: "request-value-2" }
   ];
@@ -77,7 +77,7 @@ async function requestSelect() {
 
 async function onlineSelect() {
   // const List = await Api();
-  const opt: MOptionV2Type.SelectList = [
+  const opt: PaOptionType.SelectList = [
     { label: "online-选项33", value: "online-value-1" },
     { label: "online-选项44", value: "online-value-2" }
   ];

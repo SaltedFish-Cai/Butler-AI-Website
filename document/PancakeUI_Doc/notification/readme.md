@@ -9,7 +9,7 @@
 ## 快捷方法
 
 ```ts
-import { M_Notification } from "@/package/components/feedback";
+import { M_Notification } from "PancakeUI";
 
 // 成功通知
 M_Notification.success({

@@ -74,7 +74,7 @@
 <script lang="tsx" setup>
 import { computed, ComputedRef, inject, ref, useTemplateRef, nextTick } from "vue";
 import { PancakeGlobalConfigType } from "../../../pa-manager/types";
-import { PaStructureType } from "M_Types";
+import { PaStructureType } from "PancakeType";
 import { MOptionsType, PaPlaygroundPagesType } from "../../type";
 import MQuickTable from "../quick-table.vue";
 
@@ -84,7 +84,7 @@ const { cloneDeep } = _;
 const props = defineProps<{
   playgroundItems: PaPlaygroundPagesType[];
   exOptionsMaps: MOptionsType[];
-  authorizationFunction?: Array<PaStructureType.TableV2>;
+  authorizationFunction?: Array<PaStructureType.Table>;
 }>();
 
 const useOptions = { scroll: "use-yes-no", padding: "use-padding" };
@@ -103,7 +103,7 @@ const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<Pan
 const language = PancakeGlobalConfig.value?.language?.value || "zh-CN";
 const visibleTableRef = useTemplateRef("visibleTableRef");
 
-const tableConfig = ref<PaStructureType.TableV2[]>([
+const tableConfig = ref<PaStructureType.Table[]>([
   { prop: "label", label: { "en-US": "Tabs Item Name", "zh-CN": "选项卡项名称" } },
   { prop: "prop", label: { "en-US": "Tabs Item Key", "zh-CN": "选项卡项Key" }, width: "180px" },
   { prop: "page", label: { "en-US": "Tabs Page", "zh-CN": "选项卡页面" }, width: "180px" },
@@ -118,7 +118,7 @@ const exOptions = ref<Record<string, string>>({});
 // const props = defineProps<{}>();
 // # Var
 const editId = ref("");
-const formData = ref<Array<PaStructureType.FormV2 & { scroll: number; padding: string[] }>>([]);
+const formData = ref<Array<PaStructureType.Form & { scroll: number; padding: string[] }>>([]);
 
 const OperationVisible = ref(false);
 
@@ -149,7 +149,7 @@ const handleOperationSubmit = () => {
 
 function openEditDialog(
   formId: string,
-  config: Array<PaStructureType.FormV2 & { scroll: number; padding: string[] }>,
+  config: Array<PaStructureType.Form & { scroll: number; padding: string[] }>,
   options: Record<string, string>
 ) {
   editId.value = formId;
@@ -159,7 +159,7 @@ function openEditDialog(
 }
 
 const emit = defineEmits<{
-  handleEditTabsItemQuickSubmit: [formId: string, data: PaStructureType.FormV2[]];
+  handleEditTabsItemQuickSubmit: [formId: string, data: PaStructureType.Form[]];
 }>();
 
 defineExpose({ openEditDialog });

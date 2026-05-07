@@ -76,7 +76,7 @@
 <script lang="tsx" setup>
 import { computed, ComputedRef, inject, ref } from "vue";
 import { PancakeGlobalConfigType } from "../../../pa-manager/types";
-import { PaStructureType } from "M_Types";
+import { PaStructureType } from "PancakeType";
 import { cellMapConfig } from "../../configs/cell-config";
 import { MOptionsType } from "../../type";
 import MQuickTable from "../quick-table.vue";
@@ -86,13 +86,13 @@ const { cloneDeep } = _;
 
 const props = defineProps<{
   exOptionsMaps: MOptionsType[];
-  authorizationFunction?: Array<PaStructureType.TableV2>;
+  authorizationFunction?: Array<PaStructureType.Table>;
 }>();
 
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 const language = PancakeGlobalConfig.value?.language?.value || "zh-CN";
 
-const tableConfig = ref<PaStructureType.TableV2[]>([
+const tableConfig = ref<PaStructureType.Table[]>([
   { prop: "label", label: { "en-US": "Column Name", "zh-CN": "列名" }, width: "300px" },
   { prop: "prop", label: { "en-US": "Column Key", "zh-CN": "列Key" }, width: "180px" },
   { prop: "cellConfig", label: { "en-US": "Cell Type", "zh-CN": "单元格类型" } },
@@ -115,7 +115,7 @@ const exOptionsComputed = computed(() => {
 // const props = defineProps<{}>();
 // # Var
 const editId = ref("");
-const formData = ref<PaStructureType.FormV2[]>([]);
+const formData = ref<PaStructureType.Form[]>([]);
 
 const OperationVisible = ref(false);
 
@@ -135,7 +135,7 @@ const handleOperationSubmit = () => {
   OperationVisible.value = false;
 };
 
-function openEditDialog(formId: string, config: PaStructureType.FormV2[], options: Record<string, string>) {
+function openEditDialog(formId: string, config: PaStructureType.Form[], options: Record<string, string>) {
   editId.value = formId;
   formData.value = cloneDeep(config);
   exOptions.value = { ...exOptions.value, ...cloneDeep(options) };
@@ -143,7 +143,7 @@ function openEditDialog(formId: string, config: PaStructureType.FormV2[], option
 }
 
 const emit = defineEmits<{
-  handleEditFormItemQuickSubmit: [formId: string, data: PaStructureType.FormV2[], options: Record<string, string>];
+  handleEditFormItemQuickSubmit: [formId: string, data: PaStructureType.Form[], options: Record<string, string>];
 }>();
 
 defineExpose({ openEditDialog });

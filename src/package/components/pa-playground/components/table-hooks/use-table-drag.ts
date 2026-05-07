@@ -1,7 +1,7 @@
 /**
  * @description 导入类型定义
  */
-import { PaStructureType } from "M_Types";
+import { PaStructureType } from "PancakeType";
 /**
  * @description 导入 Vue 相关类型
  */
@@ -13,7 +13,7 @@ import { Ref, ref } from "vue";
  * @param tableData 表格数据
  * @returns 拖拽相关方法
  */
-export function useDragHooks(tableConfig: Ref<Array<PaStructureType.TableV2>>, tableData: Ref<Array<Array<any>>>) {
+export function useDragHooks(tableConfig: Ref<Array<PaStructureType.Table>>, tableData: Ref<Array<Array<any>>>) {
   /**
    * @type ReturnType<typeof ref<number | null>> 被拖拽的列索引
    * @description @type ReturnType<typeof ref<number | null>> 被拖拽的列索引

@@ -42,7 +42,7 @@
 
 <script lang="tsx" setup>
 import { ComputedRef, inject, ref, useTemplateRef, computed, onMounted, nextTick } from "vue";
-import { PaOptionType, PaStructureType } from "M_Types";
+import { PaOptionType, PaStructureType } from "PancakeType";
 import { PancakeGlobalConfigType } from "../../../pa-manager/types";
 import { MInterfaceConfig, PaPlaygroundPagesType, MStructureType } from "../../type";
 import { deleteData, getAllData, getDataById, storeData, updateData } from "../../../indexDB/indexDB";
@@ -68,14 +68,14 @@ const editId = ref("");
 const DB_NAME = "DB_" + props.id;
 const STORE_NAME = "DB_" + props.id + "_Api";
 
-const tableConfig = ref<PaStructureType.TableV2[]>([
+const tableConfig = ref<PaStructureType.Table[]>([
   { prop: "apiUrlId", label: { "en-US": "API URL", "zh-CN": "API地址" }, filterType: "select" },
   { prop: "apiFunction", label: { "en-US": "API Function", "zh-CN": "API功能" }, filterType: "select" },
   { prop: "apiActionKey", label: { "en-US": "API Action Key", "zh-CN": "API操作键值" } },
   { prop: "operation", label: { "en-US": "Operation", "zh-CN": "操作" }, width: "170px" }
 ]);
 
-const formConfig = computed<PaStructureType.FormV2[]>(() => {
+const formConfig = computed<PaStructureType.Form[]>(() => {
   return [
     {
       prop: "apiUrlId",

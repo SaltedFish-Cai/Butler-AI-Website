@@ -306,8 +306,8 @@
               <pa-button
                 :disabled="selectedRowsLength <= 0 && !state.showSelectList"
                 @click="changeSelectListVisible"
-                font="transfer_horizontal_line"
-                style="--pa-size-padding: 5px; --pa-size-font: 12px; --pa-size-height: 24px"
+                iconName="transfer_horizontal_line"
+                style="--pa-size-padding: 8px; --pa-size-font: 14px; --pa-size-height: 28px"
               >
                 {{ state.showSelectList ? languagePackage["switchSelect"] : languagePackage["switchInvert"] }}
               </pa-button>

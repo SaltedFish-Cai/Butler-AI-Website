@@ -33,8 +33,8 @@
       </div>
     </div>
     <div class="pa-transfer-transfer">
-      <pa-button font="left_line" :disabled="props.disabled" @click="handleTransferClick('left')"></pa-button>
-      <pa-button font="right_line" :disabled="props.disabled" @click="handleTransferClick('right')"></pa-button>
+      <pa-button icon-name="left_line" :disabled="props.disabled" @click="handleTransferClick('left')"></pa-button>
+      <pa-button icon-name="right_line" :disabled="props.disabled" @click="handleTransferClick('right')"></pa-button>
     </div>
     <div class="pa-transfer-select-box">
       <div class="pa-transfer-select-box_title">

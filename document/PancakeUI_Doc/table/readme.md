@@ -97,7 +97,7 @@
 只需在配置中设置 `cellConfig` 即可使用 `Cell元素` 作为表格内容展示。通过 `getSubmitTableList` 获取表格内填写的内容。
 
 ```typescript
-const tableConfig: MStructureV2Type.TableV2[] = [
+const tableConfig: PaStructureType.TableV2[] = [
   { label: "Cell-Input", prop: "Input", cellConfig: { type: "input" } },
   { label: "Cell-Select", prop: "Select", cellConfig: { type: "select" } },
   ...
@@ -221,13 +221,13 @@ nextTick(async () => {
 <demo src="./case-slots.vue"></demo>
 
 ```typescript
-const tableConfig: MStructureV2Type.TableV2[] = [
+const tableConfig: PaStructureType.TableV2[] = [
   { label: "Label-Text", prop: "Text" },
   ...
 ];
 ```
 
-## `MStructureV2Type.TableV2`
+## `PaStructureType.TableV2`
 
 | 字段       | 描述                     | 类型                                                                   | 类型    |
 | ---------- | ------------------------ | ---------------------------------------------------------------------- | ------- |
@@ -266,7 +266,7 @@ const tableConfig: MStructureV2Type.TableV2[] = [
 | id                 | 多表时唯一 ID                                                                                  | `string`                                                                                           | - |
 | class              | 自定义类名                                                                                     | `string`                                                                                           | - |
 | style              | 自定义样式                                                                                     | `Record<string, string>`                                                                           | - |
-| structure          | [MStructureV2Type.TableV2](/document/PancakeUI_Doc/table/readme.html#mstructurev2type-tablev2) | —                                                                                                  | —           |
+| structure          | [PaStructureType.TableV2](/document/PancakeUI_Doc/table/readme.html#mstructurev2type-tablev2) | —                                                                                                  | —           |
 | useSelect          | 是否使用选择器                                                                                 | `boolean`                                                                                          | `false`     |
 | useRadio           | 是否使用单选器                                                                                 | `boolean`                                                                                          | `false`     |
 | useChildren        | 是否使用子项选择器                                                                             | `boolean`                                                                                          | `false`     |
@@ -283,7 +283,7 @@ const tableConfig: MStructureV2Type.TableV2[] = [
 | useTableIndex      | 是否显示表格序号                                                                               | `boolean`                                                                                          | `true`      |
 | useOverflowTooltip | 是否使用文字超出后 Tooltip 提示完整内容                                                        | `boolean`                                                                                          | `true`      |
 | embeddedToolButton | 是否显示表格功能按钮嵌入式样式                                                                 | `boolean`                                                                                          | `false`     |
-| exOptions          | 外置筛选依赖                                                                                   | `MOptionV2Type.Default`                                                                            | —           |
+| exOptions          | 外置筛选依赖                                                                                   | `PaOptionType.Default`                                                                            | —           |
 | exDependent        | 外置依赖                                                                                       | [SaTableExDependentType](/document/PancakeUI_Doc/table/readme.html#SaTableexdependenttype)         | —           |
 | exCellDependent    | 单元格外置依赖                                                                                 | [SaTableCellExDependentType](/document/PancakeUI_Doc/table/readme.html#SaTablecellexdependenttype) | —           |
 | exPagination       | 外置依赖                                                                                       | [ExPaginationType](/document/PancakeUI_Doc/table/readme.html#expaginationtype-外置页码配置)        | —           |
@@ -310,7 +310,7 @@ const tableConfig: MStructureV2Type.TableV2[] = [
 
 | 字段                  | 描述                   | 类型                                                                           |
 | --------------------- | ---------------------- | ------------------------------------------------------------------------------ |
-| select_RequestApi     | 选择器请求 Api         | `{ [x: string]: ({ query: string }) => Promise<MOptionV2Type.SelectList> }`    |
+| select_RequestApi     | 选择器请求 Api         | `{ [x: string]: ({ query: string }) => Promise<PaOptionType.SelectList> }`    |
 | time_disabledDateFn   | 时间选择器禁用日期函数 | `{ [x: string]: (date: any) => boolean }`                                      |
 | time_shortcuts        | 时间选择器快捷选项     | `{ [x: string]: DatePickerShortcut[] }`                                        |
 | file_attachedData     | 文件上传附带数据       | `{ [x: string]: Record<string, string> }`                                      |

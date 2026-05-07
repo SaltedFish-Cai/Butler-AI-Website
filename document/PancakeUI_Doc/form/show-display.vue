@@ -27,7 +27,7 @@
 
 <script lang="ts" setup>
 import { ref, reactive } from "vue";
-import { MStructureV2Type, MOptionV2Type } from "M_Types";
+import { PaStructureType, PaOptionType } from "PancakeType";
 
 const proForm = ref();
 const formData = ref({});
@@ -60,7 +60,7 @@ const baseFormData = ref({
   Transfer: [1]
 });
 
-const formConfig: MStructureV2Type.FormV2[] = [
+const formConfig: PaStructureType.Form[] = [
   {
     label: "group组",
     prop: "groupProp",
@@ -127,7 +127,7 @@ const exDependent = {
   }
 };
 
-const exOptions: MOptionV2Type.Default = {
+const exOptions: PaOptionType.Default = {
   Switch2: {
     activeValue: "1",
     inActiveValue: "2",

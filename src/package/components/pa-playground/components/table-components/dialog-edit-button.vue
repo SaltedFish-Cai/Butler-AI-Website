@@ -270,7 +270,7 @@ import { PaPlaygroundPageButtonType } from "../../types";
 import { MStructureType, PaPlaygroundPagesType, MInterfaceConfig, PaPlaygroundActionFunctionType } from "../../type";
 import MQuickTable from "../quick-table.vue";
 import { PancakeGlobalConfigType } from "../../../pa-manager/types";
-import { PaOptionType, PaStructureType } from "M_Types";
+import { PaOptionType, PaStructureType } from "PancakeType";
 import { ButtonTypeV2Is } from "../../../pa-button/type";
 import DialogEditButton from "./dialog-edit-button.vue";
 import { M_MessageBox } from "../../../feedback";
@@ -289,7 +289,7 @@ type EditButtonType = {
   interfaceConfigs: MInterfaceConfig[];
   positionOptions?: PaOptionType.SelectList;
   actionFunction?: Array<PaOptionType.Select & PaPlaygroundActionFunctionType>;
-  authorizationFunction?: Array<PaStructureType.TableV2>;
+  authorizationFunction?: Array<PaStructureType.Table>;
 };
 const props = withDefaults(defineProps<EditButtonType>(), {
   actionFunction: () => [],
@@ -309,7 +309,7 @@ const actionApiOptions = computed(() => {
   });
 });
 
-const tableConfig = ref<PaStructureType.TableV2[]>([
+const tableConfig = ref<PaStructureType.Table[]>([
   { prop: "Index", label: { "en-US": "#", "zh-CN": "#" }, width: "50px" },
   { prop: "buttonVisible", label: { "en-US": "Button Display", "zh-CN": "按钮展示" }, width: "130px" },
   { prop: "useType", label: { "en-US": "Button Position", "zh-CN": "按钮位置" }, width: "120px" },

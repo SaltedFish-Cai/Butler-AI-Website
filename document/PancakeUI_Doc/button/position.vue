@@ -6,7 +6,7 @@
 </template>
 
 <script lang="ts" setup>
-import { M_Message } from "@/package/components/feedback";
+import { M_Message } from "PancakeUI";
 
 function debouncedClick() {
   M_Message.success("点击触发");

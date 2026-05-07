@@ -9,7 +9,7 @@
 ## 快捷方法
 
 ```ts
-import { M_Message } from "@/package/components/feedback";
+import { M_Message } from "PancakeUI";
 
 // 成功消息
 M_Message.success("操作成功");

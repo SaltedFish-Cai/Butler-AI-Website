@@ -15,8 +15,14 @@
     width: max-content;
     position: relative;
     padding-bottom: calc(var(--pa-size-padding, 10px) * 0.8);
+  }
 
-    &::after {
+  .pa-title_tip {
+    font-size: 14px;
+  }
+
+  &.default {
+    .pa-title_text::after {
       position: absolute;
       bottom: 0;
       content: "";
@@ -30,8 +36,43 @@
     }
   }
 
-  .pa-title_tip {
-    font-size: 14px;
+  &.horizontal {
+    .pa-title_text {
+      padding-left: calc(var(--pa-size-padding) * 4);
+      padding-bottom: 0;
+      margin-bottom: calc(var(--pa-size-padding, 10px) * 0.8);
+      &::after {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        left: 0;
+        height: 6px;
+        width: calc(var(--pa-size-padding) * 3);
+        content: "";
+        display: block;
+        border-radius: 8px;
+        z-index: 2;
+        background-color: var(--pa-color-primary);
+      }
+    }
+  }
+
+  &.vertical {
+    .pa-title_text {
+      padding-left: var(--pa-size-padding);
+      &::after {
+        position: absolute;
+        left: 0;
+        height: calc(100% - var(--pa-size-padding, 10px) * 0.8);
+        width: 5px;
+        content: "";
+        display: block;
+        border-radius: 8px;
+        z-index: 2;
+        background-color: var(--pa-color-primary);
+        transform: scaleY(0.8);
+      }
+    }
   }
 }
 

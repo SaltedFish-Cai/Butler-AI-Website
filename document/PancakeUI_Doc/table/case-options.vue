@@ -30,7 +30,7 @@
 </template>
 
 <script lang="ts" setup>
-import { MStructureV2Type } from "M_Types";
+import { PaStructureType } from "PancakeType";
 import { ref, reactive } from "vue";
 
 const proTable = ref();
@@ -42,7 +42,7 @@ const state = reactive({
   embeddedToolButton: true
 });
 
-const tableConfig: MStructureV2Type.TableV2[] = [
+const tableConfig: PaStructureType.TableV2[] = [
   { label: "Label-Text", prop: "Text" },
   { label: "Label-Input", prop: "Input", width: 200 },
   { label: "Label-Select", prop: "Select" },

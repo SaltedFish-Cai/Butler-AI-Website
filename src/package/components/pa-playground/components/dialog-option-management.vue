@@ -174,7 +174,7 @@
 <script lang="tsx" setup>
 import { computed, ComputedRef, inject, ref, useTemplateRef, watch } from "vue";
 import { MOptionsType } from "../types";
-import { PaOptionType, PaStructureType } from "M_Types";
+import { PaOptionType, PaStructureType } from "PancakeType";
 import { M_Message, M_MessageBox } from "../../feedback";
 import { PancakeGlobalConfigType } from "../../pa-manager/types";
 import MQuickTable from "./quick-table.vue";
@@ -203,21 +203,21 @@ const selectType = ref("");
 const dictionaryType = ref("");
 
 const formConfig = computed(() => {
-  const dictionaryTypeTable: PaStructureType.FormV2[] = [
+  const dictionaryTypeTable: PaStructureType.Form[] = [
     { label: { "zh-CN": "表格名", "en-US": "Table Name" }, prop: "tableName", type: "input" },
     { label: { "zh-CN": "列名", "en-US": "Column Name" }, prop: "columnName", type: "input" }
   ];
 
-  const dictionaryTypeSystem: PaStructureType.FormV2[] = [
+  const dictionaryTypeSystem: PaStructureType.Form[] = [
     { label: { "zh-CN": "字典Key", "en-US": "Dictionary Key" }, prop: "dictionaryKey", type: "input" }
   ];
 
-  const interfaceConfig: PaStructureType.FormV2[] = [
+  const interfaceConfig: PaStructureType.Form[] = [
     { label: { "zh-CN": "字典类型", "en-US": "Dictionary Type" }, prop: "dictionaryType", type: "select" },
     ...(dictionaryType.value == "table" ? dictionaryTypeTable : dictionaryTypeSystem)
   ];
 
-  const baseConfig: PaStructureType.FormV2[] = [
+  const baseConfig: PaStructureType.Form[] = [
     { label: { "zh-CN": "扩展选项描述", "en-US": "Extension Option Description" }, prop: "description", type: "input" },
     {
       label: { "zh-CN": "扩展选项类型", "en-US": "Extension Option Type" },
@@ -231,14 +231,14 @@ const formConfig = computed(() => {
   return [...baseConfig];
 });
 
-const tableConfig = ref<PaStructureType.TableV2[]>([
+const tableConfig = ref<PaStructureType.Table[]>([
   { label: { "zh-CN": "扩展选项ID", "en-US": "Extension Option ID" }, prop: "id" },
   { label: { "zh-CN": "扩展选项描述", "en-US": "Extension Option Description" }, prop: "description" },
   { label: { "zh-CN": "扩展选项类型", "en-US": "Extension Option Type" }, prop: "OptionsType", filterType: "select" },
   { label: { "zh-CN": "操作", "en-US": "Operation" }, prop: "operation", width: "200px" }
 ]);
 
-const editTableConfig = ref<(PaStructureType.TableV2 & { class?: string })[]>([
+const editTableConfig = ref<(PaStructureType.Table & { class?: string })[]>([
   { label: { "zh-CN": "选项名", "en-US": "Option Label" }, prop: "label" },
   { label: { "zh-CN": "选项值", "en-US": "Option Value" }, prop: "value" },
   { label: { "zh-CN": "操作", "en-US": "Operation" }, prop: "operation", width: "120px" }

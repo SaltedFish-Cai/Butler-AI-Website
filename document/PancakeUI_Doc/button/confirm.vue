@@ -7,7 +7,7 @@
 
 <script lang="ts" setup>
 import { ref } from "vue";
-import { M_Message } from "@/package/components/feedback";
+import { M_Message } from "PancakeUI";
 
 const confirmConfig = ref({
   title: "自定义弹窗",

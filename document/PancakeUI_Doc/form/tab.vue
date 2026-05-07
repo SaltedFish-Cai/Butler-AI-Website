@@ -21,12 +21,12 @@
 
 <script lang="ts" setup>
 import { ref } from "vue";
-import { MStructureV2Type } from "M_Types";
+import { PaStructureType } from "PancakeType";
 
 const proForm = ref();
 const formData = ref({});
 
-const formConfig: MStructureV2Type.FormV2[] = [
+const formConfig: PaStructureType.Form[] = [
   {
     unitName: "Tab Form 组件",
     label: "标签组件",

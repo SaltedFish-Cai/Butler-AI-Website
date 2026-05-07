@@ -6,11 +6,11 @@
 
 <script lang="ts" setup>
 import { ref } from "vue";
-import { MStructureV2Type } from "M_Types";
+import { PaStructureType } from "PancakeType";
 
 const proForm = ref();
 
-const formConfig: MStructureV2Type.FormV2[] = [
+const formConfig: PaStructureType.Form[] = [
   {
     label: "Select1",
     prop: "Select",

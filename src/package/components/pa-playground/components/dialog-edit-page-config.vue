@@ -39,7 +39,7 @@
 <script lang="tsx" setup>
 import { computed, ComputedRef, inject, ref, useTemplateRef } from "vue";
 import { MInterfaceConfig, PaPlaygroundItem, MStructureType } from "../types";
-import { PaOptionType, PaStructureType } from "M_Types";
+import { PaOptionType, PaStructureType } from "PancakeType";
 import { PancakeGlobalConfigType } from "../../pa-manager/types";
 
 const formRef = useTemplateRef("formRef");
@@ -66,8 +66,8 @@ const exOptions = ref<PaOptionType.Default>({
 });
 
 // # 基础配置
-const itemBaseConfig = computed<PaStructureType.FormV2[]>(() => {
-  const baseConfig: PaStructureType.FormV2[] =
+const itemBaseConfig = computed<PaStructureType.Form[]>(() => {
+  const baseConfig: PaStructureType.Form[] =
     editItemData.value.type == "tabs"
       ? []
       : [
@@ -75,7 +75,7 @@ const itemBaseConfig = computed<PaStructureType.FormV2[]>(() => {
           { label: { "en-US": "Action Api", "zh-CN": "数据接口" }, prop: "actionApi", type: "select" }
         ];
 
-  const formConfig: PaStructureType.FormV2[] =
+  const formConfig: PaStructureType.Form[] =
     editItemData.value.type == "form"
       ? [
           {
@@ -92,7 +92,7 @@ const itemBaseConfig = computed<PaStructureType.FormV2[]>(() => {
           }
         ]
       : [];
-  const tableConfig: PaStructureType.FormV2[] = editItemData.value.type == "table" ? [] : [];
+  const tableConfig: PaStructureType.Form[] = editItemData.value.type == "table" ? [] : [];
   return [
     ...baseConfig,
     { label: { "en-US": "Title", "zh-CN": "标题" }, prop: "title", type: "slot", rules: [{ required: false }] },

@@ -12,14 +12,14 @@
 
 <script lang="ts" setup>
 import { ref } from "vue";
-import { MStructureV2Type } from "M_Types";
+import { PaStructureType } from "PancakeType";
 
 const proForm = ref();
 const formData = ref({
   groupProp: 1
 });
 
-const formConfig: MStructureV2Type.FormV2[] = [
+const formConfig: PaStructureType.Form[] = [
   { label: "Input1", tip: "Tip Message", prop: "Input1", type: "textarea", maxLength: 100 },
   { label: "Input2", prop: "Input2", type: "input", rules: [{ required: false }] },
   {

@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts" setup>
-import { M_Notification, M_Message } from "@/package/components/feedback";
+import { M_Notification, M_Message } from "PancakeUI";
 
 function debouncedClick1() {
   M_Notification.success("操作成功");

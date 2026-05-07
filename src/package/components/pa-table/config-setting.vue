@@ -174,7 +174,7 @@ const settingColumnsData = computed(() => {
   return arr;
 });
 
-const tableConfig: PaStructureType.TableV2[] = [
+const tableConfig: PaStructureType.Table[] = [
   { label: "列名", prop: "label", useFilter: false, useSort: false },
   { label: "筛选", prop: "searchCriteria", width: 210, useFilter: false, useSort: false },
   { label: "固定", prop: "fixed", width: 100, useFilter: false, useSort: false },

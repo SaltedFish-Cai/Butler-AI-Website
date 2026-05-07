@@ -155,7 +155,7 @@
 <script lang="tsx" setup>
 import { computed, ComputedRef, inject, ref, useTemplateRef, watch } from "vue";
 import { MStructureType, MStructureTypeItem } from "../types";
-import { PaOptionType, PaStructureType } from "M_Types";
+import { PaOptionType, PaStructureType } from "PancakeType";
 import { M_Message, M_MessageBox } from "../../feedback";
 import { PancakeGlobalConfigType } from "../../pa-manager/types";
 import MQuickTable from "./quick-table.vue";
@@ -171,7 +171,7 @@ const languageValue = computed(() => {
 const props = withDefaults(
   defineProps<{
     editBaseData: MStructureType[];
-    authorizationFunction?: Array<PaStructureType.TableV2>;
+    authorizationFunction?: Array<PaStructureType.Table>;
   }>(),
   {}
 );
@@ -179,17 +179,17 @@ const props = withDefaults(
 const inEditData = ref<MStructureType[]>([]);
 const inEditDataItem = ref<MStructureType>({} as MStructureType);
 
-const formConfig = ref<PaStructureType.FormV2[]>([
+const formConfig = ref<PaStructureType.Form[]>([
   { label: { "zh-CN": "表描述", "en-US": "Table Description" }, prop: "description", type: "input" }
 ]);
 
-const tableConfig = ref<PaStructureType.TableV2[]>([
+const tableConfig = ref<PaStructureType.Table[]>([
   { label: { "zh-CN": "数据结构ID", "en-US": "Data Structure ID" }, prop: "id" },
   { label: { "zh-CN": "数据结构描述", "en-US": "Data Structure Description" }, prop: "description" },
   { label: { "zh-CN": "操作", "en-US": "Operation" }, prop: "operation", width: "200px" }
 ]);
 
-const editTableConfig = ref<(PaStructureType.TableV2 & { class?: string })[]>([
+const editTableConfig = ref<(PaStructureType.Table & { class?: string })[]>([
   { label: { "zh-CN": "下标", "en-US": "Index" }, prop: "indexKey", width: "60px", class: "flex-center" },
   { label: { "zh-CN": "属性Key", "en-US": "Property Key" }, prop: "prop" },
   { label: { "zh-CN": "属性描述", "en-US": "Property Description" }, prop: "description" },

@@ -40,17 +40,17 @@
 
 <script lang="ts" setup>
 import { ref, Ref } from "vue";
-import { MStructureV2Type, MOptionV2Type } from "M_Types";
+import { PaStructureType, PaOptionType } from "PancakeType";
 
 const proTable = ref();
 const params = ref("");
 
-const tableConfig: MStructureV2Type.TableV2[] = [
+const tableConfig: PaStructureType.TableV2[] = [
   { label: "Label-Text", prop: "Text" },
   { label: "Label-Select", prop: "Select", filterType: "select" }
 ];
 
-const exOptions: Ref<MOptionV2Type.Default> = ref({
+const exOptions: Ref<PaOptionType.Default> = ref({
   Select: [
     { label: "选项1", value: 1 },
     { label: "选项2", value: 2 }
