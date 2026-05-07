@@ -5,7 +5,7 @@
     </span>
     <div v-if="showSizes" class="m-pagination-sizes">
       <pa-select
-        style="width: 80px; --pa-size-padding: 5px; --pa-size-font: 12px; --pa-size-height: 24px"
+        style="width: 100px; --pa-size-padding: 8px; --pa-size-font: 14px; --pa-size-height: 28px"
         v-model="internalPageSize"
         @change="handleSizeChange"
         :clearable="false"
@@ -61,7 +61,7 @@
         :min="1"
         :max="pageCount"
         class="m-pagination-jumper-input"
-        style="width: 40px; --pa-size-padding: 5px; --pa-size-font: 12px; --pa-size-height: 24px"
+        style="width: 40px; --pa-size-padding: 8px; --pa-size-font: 14px; --pa-size-height: 28px"
         v-model="internalCurrentPage"
         placeholder=" "
         :controls="false"

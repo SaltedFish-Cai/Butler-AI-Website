@@ -89,9 +89,9 @@ watchPostEffect(() => {
     background-color: transparent;
   }
 
-  .VPNavBar:not(.has-sidebar):not(.home.top) {
+  /* .VPNavBar:not(.has-sidebar):not(.home.top) {
     background-color: var(--vp-nav-bg-color);
-  }
+  } */
 }
 
 .wrapper {

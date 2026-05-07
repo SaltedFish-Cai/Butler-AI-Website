@@ -4,7 +4,8 @@
   color: var(--pa-color);
   font-size: var(--pa-size-font, 13px);
   .m-pagination-total {
-    font-size: var(--pa-size-font, 13px);
+    font-size: calc(var(--pa-size-font, 13px) - 1px);
+    margin-left: calc(var(--pa-size-padding, 10px) / 2);
     margin-right: calc(var(--pa-size-padding, 10px) / 2);
     > span {
       color: var(--pa-color-primary);
@@ -66,5 +67,6 @@
     align-items: center;
     gap: 4px;
     margin-left: calc(var(--pa-size-padding, 10px) / 2);
+    font-size: calc(var(--pa-size-font, 13px) - 1px);
   }
 }
