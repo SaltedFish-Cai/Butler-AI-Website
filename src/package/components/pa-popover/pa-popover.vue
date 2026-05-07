@@ -63,8 +63,12 @@ const { throttle } = _;
  * @description 组件的属性对象
  */
 const props = withDefaults(defineProps<ComponentProps>(), {
+  disabled: false,
+  teleportTo: "body",
   trigger: "click",
   contentClassName: "",
+  popoverWidth: 200,
+  stopPropagation: false,
   autoWidth: false,
   placement: "bottom",
   targetClose: true,
@@ -162,6 +166,7 @@ const slots = useSlots();
 /**
  * 处理点击事件
  * @param e - 点击事件对象
+ * @returns void
  * @description 处理点击参考元素的事件
  */
 function handleClick(e: MouseEvent) {
@@ -278,7 +283,6 @@ function checkPositionOverOut() {
   const popH = popoverRefPosition.height;
   const popW = popoverRefPosition.width;
 
-  // 定义空间检查工具函数
   const canFit = (p: string) => {
     if (p === "bottom") return ReferencePosition.bottom + popH + OFFSET <= winH;
     if (p === "top") return ReferencePosition.top - popH - OFFSET >= 0;
@@ -287,7 +291,6 @@ function checkPositionOverOut() {
     return false;
   };
 
-  // 1. 优先尝试 props 指定的方向 2. 否则按 下->上->左->右 自动查找 3. 兜底用 bottom
   let placement = props.placement;
   if (!canFit(placement)) {
     if (canFit("bottom")) placement = "bottom";
@@ -300,12 +303,18 @@ function checkPositionOverOut() {
   const style: Record<string, string> = { top: "unset", bottom: "unset", left: "unset", right: "unset" };
   const arrowStyle: Record<string, string> = { top: "unset", bottom: "unset", left: "unset", right: "unset" };
 
-  /** 参考元素的中心点坐标 */
+  /**
+   * 参考元素的中心点坐标
+   * @description 参考元素的中心点坐标
+   */
   const refCenterX = ReferencePosition.left + ReferencePosition.width / 2;
   const refCenterY = ReferencePosition.top + ReferencePosition.height / 2;
 
   if (placement === "bottom" || placement === "top") {
-    /** 计算 Popover 的水平位置 (带有视口边界保护) */
+    /**
+     * 计算 Popover 的水平位置
+     * @description 带有视口边界保护的弹窗水平位置计算
+     */
     let leftPos = refCenterX - popW / 2;
     if (props.sticky === "left") leftPos = ReferencePosition.left;
     else if (props.sticky === "right") leftPos = ReferencePosition.left + ReferencePosition.width - popW;
@@ -314,35 +323,44 @@ function checkPositionOverOut() {
 
     if (placement === "bottom") {
       style.top = ReferencePosition.bottom + OFFSET + "px";
-      arrowStyle.top = "0px"; // 定位在 Popover 顶边线
+      arrowStyle.top = "0px";
       arrowStyle.bottom = "unset";
     } else {
       style.bottom = winH - ReferencePosition.top + OFFSET + "px";
-      arrowStyle.top = "100%"; // 定位在 Popover 底边线
+      arrowStyle.top = "100%";
       arrowStyle.bottom = "unset";
     }
     style.left = leftPos + "px";
 
-    /** 计算箭头相对于 Popover 的水平位置，箭头位置 = 参考元素中心 - Popover左侧距离 */
+    /**
+     * 计算箭头水平位置
+     * @description 箭头位置 = 参考元素中心 - Popover左侧距离
+     */
     const arrowRelativeLeft = refCenterX - leftPos;
     arrowStyle.left = arrowRelativeLeft + "px";
   } else if (placement === "left" || placement === "right") {
-    /** 计算 Popover 的垂直位置 (带有视口边界保护) */
+    /**
+     * 计算 Popover 的垂直位置
+     * @description 带有视口边界保护的弹窗垂直位置计算
+     */
     let topPos = refCenterY - popH / 2;
     topPos = Math.max(SAFE_DISTANCE, Math.min(topPos, winH - popH - SAFE_DISTANCE));
 
     if (placement === "left") {
       style.right = winW - ReferencePosition.left + OFFSET + "px";
-      arrowStyle.left = "100%"; // 定位在 Popover 右边线
+      arrowStyle.left = "100%";
       arrowStyle.right = "unset";
     } else {
       style.left = ReferencePosition.right + OFFSET + "px";
-      arrowStyle.left = "0px"; // 定位在 Popover 左边线
+      arrowStyle.left = "0px";
       arrowStyle.right = "unset";
     }
     style.top = topPos + "px";
 
-    /** 计算箭头相对于 Popover 的垂直位置，箭头位置 = 参考元素中心 - Popover顶部距离 */
+    /**
+     * 计算箭头垂直位置
+     * @description 箭头位置 = 参考元素中心 - Popover顶部距离
+     */
     const arrowRelativeTop = refCenterY - topPos;
     arrowStyle.top = arrowRelativeTop + "px";
   }
@@ -447,6 +465,7 @@ function hidePopover() {
 /**
  * 全局点击事件处理
  * @param event - 点击事件对象
+ * @returns void
  * @description 处理全局点击事件
  */
 function handleGlobalClick(event: MouseEvent) {
@@ -503,7 +522,6 @@ watch(
   () => props.autoWidth,
   newVal => {
     const ReferencePosition = getElementPosition(popoverReferenceRef.value);
-    defineExpose({ showPopover, hidePopover });
     if (ReferencePosition) {
       let popoverContentStyleValue = {};
       if (props.popoverWidth) {
@@ -516,6 +534,11 @@ watch(
     }
   }
 );
+/**
+ * 组件暴露方法
+ * @description 暴露组件方法供外部调用
+ */
+defineExpose({ showPopover, hidePopover });
 </script>
 
 <style lang="scss">
