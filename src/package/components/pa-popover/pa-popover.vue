@@ -52,7 +52,7 @@ import { getElementPosition } from "../utils/getElementPosition";
  * @description 导入 lodash 工具函数
  */
 import _ from "lodash";
-const { cloneDeep, throttle } = _;
+const { throttle } = _;
 /**
  * 组件属性
  * @type ComponentProps
