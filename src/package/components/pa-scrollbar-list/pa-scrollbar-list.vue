@@ -1,5 +1,5 @@
 <template>
-  <section :id="id" class="flex-col" style="width: 100%; height: 100%; box-sizing: border-box" ref="scrollBarList">
+  <section :id="id" class="pa-scrollbar-list flex-col" ref="scrollBarList">
     <pa-scrollbar
       ref="mScrollbarListRef"
       v-bind="props"
@@ -70,7 +70,7 @@ import { randChar } from "../tools/rand-char";
  * 滚动列表组件 Props 类型
  * @description 滚动列表组件 Props 类型
  */
-import type { ComponentProps } from "./types";
+import type { ComponentProps, ComponentEmits } from "./types";
 /**
  * 全局配置类型
  * @description 全局配置类型
@@ -108,6 +108,11 @@ const props = withDefaults(defineProps<ComponentProps>(), {
   styleMode: "default",
   padding: () => ["left", "right"]
 });
+/**
+ * 组件事件
+ * @description 组件事件类型定义
+ */
+const emit = defineEmits<ComponentEmits>();
 /**
  * 组件唯一标识
  * @description 组件唯一标识
@@ -291,6 +296,26 @@ function updatePageable(resPageable: { pageNum?: number; pageSize?: number; page
   Object.assign(state.pageable, resPageable);
 }
 /**
+ * 分页锁
+ * @description 分页锁
+ */
+let lock = false;
+/**
+ * 处理当前页码变化
+ * @param value - 新页码
+ * @returns void
+ * @description 分页器页码变化时滚动到对应位置
+ */
+function handleCurrentChange(value: number): void {
+  if (lock) {
+    lock = false;
+    return;
+  }
+  if (state.tableLoad) return;
+  const mpreEl: any = document.querySelector(`#${id.value} #${id.value}-more-${value}`);
+  if (mpreEl) setScrollTop(mpreEl);
+}
+/**
  * 组件挂载时获取表格数据
  * @description 组件挂载时获取表格数据
  */
@@ -312,26 +337,6 @@ onBeforeUnmount(() => {
  */
 function setScrollTop(value: number): void {
   mScrollbarListRef?.value?.setScrollToIntersect(value);
-}
-/**
- * 分页锁
- * @description 分页锁
- */
-let lock = false;
-/**
- * 处理当前页码变化
- * @param value - 新页码
- * @returns void
- * @description 分页器页码变化时滚动到对应位置
- */
-function handleCurrentChange(value: number): void {
-  if (lock) {
-    lock = false;
-    return;
-  }
-  if (state.tableLoad) return;
-  const mpreEl: any = document.querySelector(`#${id.value} #${id.value}-more-${value}`);
-  if (mpreEl) setScrollTop(mpreEl);
 }
 /**
  * 刷新列表

@@ -25,5 +25,4 @@ const name = "PaScrollBarList";
 const install = function (app: App): void {
   if (!app._context.components["PaScrollBarList"]) app.component("PaScrollBarList", PaScrollBarList);
 };
-
 export default { name, install };

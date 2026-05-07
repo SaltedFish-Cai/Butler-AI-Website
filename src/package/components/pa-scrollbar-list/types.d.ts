@@ -74,7 +74,7 @@ export type ComponentProps = {
   /**
    * 内边距方向
    * @type Array<"all" | "bottom" | "left" | "right" | "top"> | undefined
-   * @default undefined
+   * @default '['left', 'right']'
    * @description 当设置该值时，会使用该值作为内边距方向
    */
   padding?: Array<"all" | "bottom" | "left" | "right" | "top">;
@@ -85,6 +85,25 @@ export type ComponentProps = {
    * @description 当设置该值时，会使用该值作为内边距宽度
    */
   paddingWidth?: number;
+};
+/**
+ * 组件事件类型
+ * @type object
+ * @description PaScrollBarList 滚动列表组件的事件类型定义
+ */
+export type ComponentEmits = {
+  /**
+   * 元素进入可见区域
+   * @param el - 进入可见区域的元素
+   * @description 当滚动列表中的元素进入可见区域时触发
+   */
+  (e: "intersecting", el: HTMLElement): void;
+  /**
+   * 滚动到底部
+   * @param data - 滚动到底部的数据
+   * @description 当滚动列表滚动到底部时触发
+   */
+  (e: "directly-scroll-end", data: any): void;
 };
 /**
  * 组件暴露方法
