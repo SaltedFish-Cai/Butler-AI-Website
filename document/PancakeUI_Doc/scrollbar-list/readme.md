@@ -4,6 +4,8 @@
 
 ## 基础使用
 
+使用 `pa-scrollbar-list` 组件，实现虚拟滚动和分页功能，使用 `slot` 插槽自定义列表项的渲染。
+
 <demo src="./base.vue">
 </demo>
 

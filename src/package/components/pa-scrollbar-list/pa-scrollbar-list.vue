@@ -4,8 +4,9 @@
       ref="mScrollbarListRef"
       v-bind="props"
       :styleMode="styleMode"
+      useShadow
       :padding="padding"
-      :paddingWidth="paddingWidth"
+      :use-scroll-x="false"
       :intersectClassName="`#${id} .pa-scrollbar-more`"
       @intersecting="handleIntersecting"
       @directly-scroll-end="handleScrollEnd"
@@ -26,7 +27,9 @@
       <div v-if="state.tableLoad" class="pa-loading">
         <pa-icon class="loading_font" name="loading_line"></pa-icon>
       </div>
-      <div v-if="state.tableLoadEnd && state.tableData.length > 0" class="no-more">{{ languagePackage.noMore }}</div>
+      <div v-if="state.tableLoadEnd && state.tableData.length > 0" class="no-more">
+        {{ languageValue == "zh-CN" ? "没有更多了" : "No more" }}
+      </div>
     </pa-scrollbar>
     <slot name="footer">
       <div
@@ -42,7 +45,6 @@
         <pa-pagination
           v-model:current-page="state.pageNum"
           :total="state.pageable.total"
-          background
           :page-size="state.pageable.pageSize"
           :page-sizes="state.pageable.pageSizes"
           layout="prev, pager, next"
@@ -85,10 +87,13 @@ type objectType = Record<string, any>;
  */
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 /**
- * 语言包
- * @description 语言包
+ * 语言值
+ * @returns string 语言代码
+ * @description 获取当前语言设置
  */
-const languagePackage = computed(() => PancakeGlobalConfig.value?.language?.package?.["cell"] || {});
+const languageValue = computed(() => {
+  return PancakeGlobalConfig.value?.language?.value || "zh-CN";
+});
 /**
  * 根元素引用
  * @description 根元素引用
@@ -100,7 +105,8 @@ const scrollBarList = ref();
  */
 const props = withDefaults(defineProps<ComponentProps>(), {
   showPagination: true,
-  styleMode: "default"
+  styleMode: "default",
+  padding: () => ["left", "right"]
 });
 /**
  * 组件唯一标识
@@ -254,7 +260,7 @@ async function getTableList(pageNum?: number): Promise<void> {
     }
   };
   state.tableQuery = _query;
-  const Data = await props?.requestApi?.(_query);
+  const { Data } = await props?.requestApi?.(_query);
   const deepData = Data;
   const _data = props.showPagination ? deepData.List || deepData : deepData;
   if (_data.length) {
@@ -270,7 +276,9 @@ async function getTableList(pageNum?: number): Promise<void> {
   if (state.flatTableData.length >= deepData.TotalCount) {
     state.tableLoadEnd = true;
   } else {
-    getTableList(++state.pageable.pageNum);
+    setTimeout(() => {
+      getTableList(++state.pageable.pageNum);
+    }, 300);
   }
 }
 /**

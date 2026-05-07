@@ -94,19 +94,16 @@ export class ScrollListener {
     const horizontalThumb = _h < MAX_THUMB_SIZE ? MAX_THUMB_SIZE : _h;
     const verticalThumb = _v < MAX_THUMB_SIZE ? MAX_THUMB_SIZE : _v;
 
+    const useHorizontal = scrollWidth - _clientWidth > 2;
+    const useVertical = scrollHeight - _clientHeight > 2;
+
     return {
       horizontalThumb,
       verticalThumb,
-      horizontalThumbScale:
-        _h < MAX_THUMB_SIZE
-          ? (clientWidth - (MAX_THUMB_SIZE * clientWidth) / scrollWidth) / scrollWidth
-          : clientWidth / scrollWidth,
-      verticalThumbScale:
-        _v < MAX_THUMB_SIZE
-          ? (clientHeight - (MAX_THUMB_SIZE * clientHeight) / scrollWidth) / scrollHeight
-          : clientHeight / scrollHeight,
-      useHorizontal: scrollWidth - _clientWidth > 2,
-      useVertical: scrollHeight - _clientHeight > 2
+      horizontalThumbScale: useHorizontal ? (clientWidth - horizontalThumb) / (scrollWidth - _clientWidth) : 0,
+      verticalThumbScale: useVertical ? (clientHeight - verticalThumb) / (scrollHeight - _clientHeight) : 0,
+      useHorizontal,
+      useVertical
     };
   }
   public reinitialize(): void {
