@@ -1,8 +1,8 @@
 <template>
-  <div style="display: flex; gap: 20px">
+  <div style="display: flex; gap: 10px">
     <pa-popover trigger="click">
       <template #reference>
-        <pa-button>点击触发</pa-button>
+        <pa-button :useStop="false">点击触发</pa-button>
       </template>
       <div>点击外部区域关闭</div>
     </pa-popover>

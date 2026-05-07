@@ -4,9 +4,13 @@
 
 ## 基础使用
 
+使用 `placement` 属性配置弹出框的位置。
+
 <demo src="./base.vue"></demo>
 
 ## 触发方式
+
+使用 `trigger` 属性配置触发方式，默认值为 `click`。
 
 <demo src="./trigger.vue"></demo>
 

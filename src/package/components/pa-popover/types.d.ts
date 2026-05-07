@@ -3,11 +3,6 @@
  * @description PaPopover 类型定义
  */
 /**
- * 模块导入
- * @description 导入语言包类型
- */
-import { LanguagePackageType } from "../manager-type";
-/**
  * 组件属性定义
  * @description 弹出框组件的属性类型
  */
@@ -68,11 +63,11 @@ export type ComponentProps = {
   teleportTo?: string;
   /**
    * 弹窗位置
-   * @type "bottom" | "top" | undefined
+   * @type "bottom" | "left" | "right" | "top" | undefined
    * @default bottom
    * @description 弹窗位置
    */
-  placement?: "bottom" | "top";
+  placement?: "bottom" | "left" | "right" | "top";
   /**
    * 触发方式
    * @type "click" | "hover" | undefined

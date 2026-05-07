@@ -278,21 +278,24 @@ function checkPositionOverOut() {
   const popH = popoverRefPosition.height;
   const popW = popoverRefPosition.width;
 
-  /** 优先级逻辑: 下 -> 上 -> 左 -> 右 -> 强制下方 */
-  let placement = "bottom";
-  if (ReferencePosition.bottom + popH + OFFSET <= winH) {
-    placement = "bottom";
-  } else if (ReferencePosition.top - popH - OFFSET >= 0) {
-    placement = "top";
-  } else if (ReferencePosition.left - popW - OFFSET >= 0) {
-    placement = "left";
-  } else if (ReferencePosition.right + popW + OFFSET <= winW) {
-    placement = "right";
-  } else {
-    placement = "bottom"; // Forced fallback
-  }
+  // 定义空间检查工具函数
+  const canFit = (p: string) => {
+    if (p === "bottom") return ReferencePosition.bottom + popH + OFFSET <= winH;
+    if (p === "top") return ReferencePosition.top - popH - OFFSET >= 0;
+    if (p === "left") return ReferencePosition.left - popW - OFFSET >= 0;
+    if (p === "right") return ReferencePosition.right + popW + OFFSET <= winW;
+    return false;
+  };
 
-  if (props.placement === "top" && ReferencePosition.top - popH - OFFSET >= 0) placement = "top";
+  // 1. 优先尝试 props 指定的方向 2. 否则按 下->上->左->右 自动查找 3. 兜底用 bottom
+  let placement = props.placement;
+  if (!canFit(placement)) {
+    if (canFit("bottom")) placement = "bottom";
+    else if (canFit("top")) placement = "top";
+    else if (canFit("left")) placement = "left";
+    else if (canFit("right")) placement = "right";
+    else placement = "bottom";
+  }
 
   const style: Record<string, string> = { top: "unset", bottom: "unset", left: "unset", right: "unset" };
   const arrowStyle: Record<string, string> = { top: "unset", bottom: "unset", left: "unset", right: "unset" };
