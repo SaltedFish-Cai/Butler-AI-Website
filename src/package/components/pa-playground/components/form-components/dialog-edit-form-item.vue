@@ -41,7 +41,7 @@
 
 <script lang="tsx" setup>
 import { computed, ComputedRef, inject, ref, useTemplateRef } from "vue";
-import { PaStructureType } from "M_Types";
+import { PaStructureType } from "PancakeType";
 
 import { editFormColConfig, editOtherFormItemConfig } from "../../configs/form-config";
 import {
@@ -61,7 +61,7 @@ const { cloneDeep } = _;
 
 const props = defineProps<{
   exOptionsMaps: MOptionsType[];
-  editItem?: PaStructureType.FormV2;
+  editItem?: PaStructureType.Form;
 }>();
 
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
@@ -77,7 +77,7 @@ const exOptionsComputed = computed(() => {
 });
 
 const formRef = useTemplateRef("formRef");
-const formData = ref<PaStructureType.FormV2>({});
+const formData = ref<PaStructureType.Form>({});
 const editId = ref("");
 const visible = ref(false);
 
@@ -107,11 +107,11 @@ const config = computed(() => {
 
 const emit = defineEmits<{
   "update:modelValue": [value: boolean];
-  handleEditFormItemSubmit: [tableId: string, data: PaStructureType.FormV2, options: Record<string, string>];
+  handleEditFormItemSubmit: [tableId: string, data: PaStructureType.Form, options: Record<string, string>];
 }>();
 
 // # 打开编辑表格列弹窗
-const openEditFormItemDialog = (tableId: string, editItem: PaStructureType.FormV2, options: Record<string, string>) => {
+const openEditFormItemDialog = (tableId: string, editItem: PaStructureType.Form, options: Record<string, string>) => {
   visible.value = true;
   editId.value = tableId;
   exOptions.value = { ...exOptions.value, ...cloneDeep(options) };
@@ -125,7 +125,7 @@ async function handleSubmit() {
   const formData = await formRef.value?.getSubmitForm();
   if (formData && formData != "no-change") {
     exOptions.value[formData.prop] = formData["exOptionsById"];
-    emit("handleEditFormItemSubmit", editId.value, formData as PaStructureType.FormV2, exOptions.value);
+    emit("handleEditFormItemSubmit", editId.value, formData as PaStructureType.Form, exOptions.value);
     visible.value = false;
   }
 }

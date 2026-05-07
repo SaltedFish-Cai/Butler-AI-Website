@@ -17,13 +17,13 @@
 </template>
 
 <script lang="ts" setup>
-import { MStructureV2Type } from "M_Types";
+import { PaStructureType } from "PancakeType";
 import { ref } from "vue";
 import { randNum } from "@/package/components/tools/rand-char";
 
 const proTable = ref();
 
-const tableConfig: MStructureV2Type.TableV2[] = [
+const tableConfig: PaStructureType.TableV2[] = [
   { label: "Label-Text", prop: "Text" },
   { label: "Label-Select", prop: "Select", filterType: "select" },
   { label: "操作", prop: "operation" }

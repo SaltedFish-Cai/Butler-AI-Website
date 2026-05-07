@@ -21,7 +21,7 @@
 
 <script lang="ts" setup>
 import { ref } from "vue";
-import { MStructureV2Type, MOptionV2Type } from "M_Types";
+import { PaStructureType, PaOptionType } from "PancakeType";
 
 const proForm = ref();
 const baseFormData = ref({
@@ -84,7 +84,7 @@ const contrastData = ref({
 
 const formData = ref({});
 
-const formConfig: MStructureV2Type.FormV2[] = [
+const formConfig: PaStructureType.Form[] = [
   { label: "输入框", prop: "Input1", type: "input", maxLength: 2000 },
   { label: "文本域", prop: "Textarea", type: "textarea", maxLength: 2000 },
   { label: "数字输入框", prop: "Number1", type: "number", precision: 2 },
@@ -125,18 +125,18 @@ const exCellDependent = {
   }
 };
 
-async function remoteMethodFn({ query }): Promise<MOptionV2Type.SelectList> {
+async function remoteMethodFn({ query }): Promise<PaOptionType.SelectList> {
   return new Promise(resolve => {
     setTimeout(() => {
       resolve([
         { label: `选项${query}-1`, value: 3 },
         { label: `选项${query}-2`, value: 4 }
-      ] as MOptionV2Type.SelectList);
+      ] as PaOptionType.SelectList);
     }, 1000);
   });
 }
 
-const exOptions: MOptionV2Type.Default = {
+const exOptions: PaOptionType.Default = {
   Switch2: {
     activeValue: "1",
     inActiveValue: "2",

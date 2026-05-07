@@ -27,7 +27,8 @@
     "baseUrl": "./",
     "paths": {
       "MTypes": ["src/package/components/global"],
-      "M_Types": ["src/package/components/manager-type"],
+      "PancakeType": ["src/package/components/manager-type"],
+      "PancakeUI": ["src/package/components/feedback"],
       "public": ["public"],
       "public/*": ["public/*"],
       "@": ["src"],

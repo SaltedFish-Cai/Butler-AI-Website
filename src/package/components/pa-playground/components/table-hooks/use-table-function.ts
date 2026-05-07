@@ -46,8 +46,8 @@ export function useFunctionHooks(
   emit: any,
   baseConfig: Ref<PaPlaygroundItem | undefined>,
   dataStructures: Ref<Array<MStructureType>>,
-  tableConfig: Ref<Array<PaStructureType.TableV2>>,
-  tableConfigExOperation: Ref<Array<PaStructureType.TableV2>>,
+  tableConfig: Ref<Array<PaStructureType.Table>>,
+  tableConfigExOperation: Ref<Array<PaStructureType.Table>>,
   tableExOptions: Ref<Record<string, string>>,
   tableData: Ref<Array<Array<any>>>,
   tableWidth: Ref<number>,
@@ -114,7 +114,7 @@ export function useFunctionHooks(
    * @param options 扩展选项
    * @returns void
    */
-  function updateCol(col: PaStructureType.TableV2 & { cellType: any }, options: Record<string, string>): void {
+  function updateCol(col: PaStructureType.Table & { cellType: any }, options: Record<string, string>): void {
     tableConfig.value[selectedColumnIndex.value] = { ...col, cellConfig: { ...col.cellConfig, type: col.cellType } };
     tableExOptions.value = options;
     setTableWidth();
@@ -126,7 +126,7 @@ export function useFunctionHooks(
    * @param options 扩展选项
    * @returns void
    */
-  function updateColAll(cols: Array<PaStructureType.TableV2>, options?: Record<string, string>): void {
+  function updateColAll(cols: Array<PaStructureType.Table>, options?: Record<string, string>): void {
     tableConfig.value = cols;
     if (options) tableExOptions.value = options;
     setTableWidth();
@@ -161,7 +161,7 @@ export function useFunctionHooks(
    * @returns object 包含 config、exOptions、actionButtons 的对象
    */
   function exportTableConfig() {
-    const _tableConfig: Array<PaStructureType.TableV2> = [];
+    const _tableConfig: Array<PaStructureType.Table> = [];
     const exOptions: PaOptionType.Default = {};
 
     for (const item of tableConfig.value) {
@@ -195,7 +195,7 @@ export function useFunctionHooks(
     const oldConfig = tableConfig.value;
     const findConfig = dataStructures.value.find(config => config.id === _baseConfig.sourceTable);
     if (oldConfig && findConfig?.config) {
-      const outData: Array<PaStructureType.TableV2> = [];
+      const outData: Array<PaStructureType.Table> = [];
       for (const col of findConfig.config) {
         const oldCol = oldConfig.find(oldCol => oldCol.prop === col.prop);
         if (oldCol) {

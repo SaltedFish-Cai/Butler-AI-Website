@@ -30,7 +30,7 @@
 
 <script lang="tsx" setup>
 import { ComputedRef, inject, ref, useTemplateRef, onMounted, nextTick } from "vue";
-import { PaOptionType, PaStructureType } from "M_Types";
+import { PaOptionType, PaStructureType } from "PancakeType";
 import { PancakeGlobalConfigType } from "../../../pa-manager/types";
 import { MInterfaceConfig, PaPlaygroundPagesType, MStructureType } from "../../type";
 import { getAllData, storeData, updateData } from "../../../indexDB/indexDB";
@@ -66,13 +66,13 @@ const exOptionsTable2 = ref<PaOptionType.Default>({
     { label: { "en-US": "Date", "zh-CN": "日期" }, value: "date" }
   ]
 });
-const tableConfig = ref<PaStructureType.TableV2[]>([
+const tableConfig = ref<PaStructureType.Table[]>([
   { prop: "description", label: { "en-US": "Data Table Name", "zh-CN": "数据表名" } },
   { prop: "status", label: { "en-US": "Status", "zh-CN": "状态" }, filterType: "select" },
   { prop: "operation", label: { "en-US": "Operation", "zh-CN": "操作" }, width: "120px" }
 ]);
 
-const tableConfig2 = ref<PaStructureType.TableV2[]>([]);
+const tableConfig2 = ref<PaStructureType.Table[]>([]);
 
 const exOption = {
   status: [
@@ -93,7 +93,7 @@ async function handleView(data: MStructureType) {
       tableConfig2.value = data.config.map(item => ({
         label: item.description,
         prop: item.prop
-      })) as PaStructureType.TableV2[];
+      })) as PaStructureType.Table[];
       const dataList = await getAllData(DB_NAME, NAME);
       optionsVisible.value = true;
       tableData2.value = dataList;

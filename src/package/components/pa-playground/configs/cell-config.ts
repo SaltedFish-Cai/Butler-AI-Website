@@ -1,7 +1,7 @@
 /**
  * @description 导入类型定义
  */
-import { PaStructureType, PaOptionType } from "M_Types";
+import { PaStructureType, PaOptionType } from "PancakeType";
 
 /**
  * @description 单元格类型映射配置
@@ -53,9 +53,9 @@ export const cellMapConfig: Array<PaOptionType.Select> = [
 
 /**
  * @description 输入框配置
- * @type Array<PaStructureType.FormV2>
+ * @type Array<PaStructureType.Form>
  */
-export const inputConfig: Array<PaStructureType.FormV2> = [
+export const inputConfig: Array<PaStructureType.Form> = [
   {
     unitName: { "en-US": "Input Config", "zh-CN": "输入框配置" },
     label: { "en-US": "Placeholder", "zh-CN": "占位符" },
@@ -74,9 +74,9 @@ export const inputConfig: Array<PaStructureType.FormV2> = [
 
 /**
  * @description 数字框配置
- * @type Array<PaStructureType.FormV2>
+ * @type Array<PaStructureType.Form>
  */
-export const numberConfig: Array<PaStructureType.FormV2> = [
+export const numberConfig: Array<PaStructureType.Form> = [
   {
     unitName: { "en-US": "Number Config", "zh-CN": "数字框配置" },
     label: { "en-US": "Placeholder", "zh-CN": "占位符" },
@@ -116,9 +116,9 @@ export const numberConfig: Array<PaStructureType.FormV2> = [
 
 /**
  * @description 选择框配置
- * @type Array<PaStructureType.FormV2>
+ * @type Array<PaStructureType.Form>
  */
-export const selectConfig: Array<PaStructureType.FormV2> = [
+export const selectConfig: Array<PaStructureType.Form> = [
   {
     unitName: { "en-US": "Select Config", "zh-CN": "选择框配置" },
     label: { "en-US": "Options", "zh-CN": "选项" },
@@ -136,9 +136,9 @@ export const selectConfig: Array<PaStructureType.FormV2> = [
 
 /**
  * @description 级联选择框配置
- * @type Array<PaStructureType.FormV2>
+ * @type Array<PaStructureType.Form>
  */
-export const cascaderConfig: Array<PaStructureType.FormV2> = [
+export const cascaderConfig: Array<PaStructureType.Form> = [
   {
     unitName: { "en-US": "Cascader Config", "zh-CN": "级联选择框配置" },
     label: { "en-US": "Options", "zh-CN": "选项" },
@@ -156,9 +156,9 @@ export const cascaderConfig: Array<PaStructureType.FormV2> = [
 
 /**
  * @description 单选框配置
- * @type Array<PaStructureType.FormV2>
+ * @type Array<PaStructureType.Form>
  */
-export const radioConfig: Array<PaStructureType.FormV2> = [
+export const radioConfig: Array<PaStructureType.Form> = [
   {
     unitName: { "en-US": "Radio Config", "zh-CN": "单选框配置" },
     label: { "en-US": "Options", "zh-CN": "选项" },
@@ -169,9 +169,9 @@ export const radioConfig: Array<PaStructureType.FormV2> = [
 
 /**
  * @description 复选框配置
- * @type Array<PaStructureType.FormV2>
+ * @type Array<PaStructureType.Form>
  */
-export const checkboxConfig: Array<PaStructureType.FormV2> = [
+export const checkboxConfig: Array<PaStructureType.Form> = [
   {
     unitName: { "en-US": "Checkbox Config", "zh-CN": "复选框配置" },
     label: { "en-US": "Options", "zh-CN": "选项" },
@@ -182,9 +182,9 @@ export const checkboxConfig: Array<PaStructureType.FormV2> = [
 
 /**
  * @description 开关配置
- * @type Array<PaStructureType.FormV2>
+ * @type Array<PaStructureType.Form>
  */
-export const switchConfig: Array<PaStructureType.FormV2> = [
+export const switchConfig: Array<PaStructureType.Form> = [
   {
     unitName: { "en-US": "Switch Config", "zh-CN": "开关配置" },
     label: { "en-US": "Options", "zh-CN": "选项" },

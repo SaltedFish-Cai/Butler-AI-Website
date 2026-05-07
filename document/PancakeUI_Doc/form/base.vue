@@ -18,14 +18,14 @@
 </template>
 
 <script lang="ts" setup>
-import { MStructureV2Type } from "M_Types";
 import { ref, Ref, useTemplateRef } from "vue";
-import { M_Notification } from "@/package/components/feedback";
+import { PaStructureType } from "PancakeType";
+import { M_Notification } from "PancakeUI";
 
 const proForm = useTemplateRef("proForm");
 const formData = ref({});
 
-const formConfig: Ref<MStructureV2Type.FormV2[]> = ref([]);
+const formConfig: Ref<PaStructureType.Form[]> = ref([]);
 setTimeout(() => {
   formConfig.value = [
     { label: "Input1", tip: "Tip Message", prop: "Input1", type: "textarea", maxLength: 100, exSpan: 1 },

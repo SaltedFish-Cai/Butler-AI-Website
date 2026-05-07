@@ -159,7 +159,7 @@ const props = withDefaults(defineProps<ComponentProps>(), {
  * @type string
  * @description 输入框的内部绑定值
  */
-const inValue = ref(String(props.modelValue));
+const inValue = ref(props.modelValue ? String(props.modelValue) : "");
 /**
  * 组件事件定义
  * @description 定义组件可触发的事件
@@ -254,7 +254,7 @@ function limitLength(value: string) {
  * @description 初始化组件状态，设置自动聚焦
  */
 onMounted(() => {
-  oldValue = String(props.modelValue) || "";
+  oldValue = props.modelValue ? String(props.modelValue) : "";
   if (props.autofocus) {
     setTimeout(() => {
       if (props.type === "textarea" && textareaRef.value) {

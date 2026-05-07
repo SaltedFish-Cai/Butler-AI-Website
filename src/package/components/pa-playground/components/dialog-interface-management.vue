@@ -54,7 +54,7 @@
 <script lang="tsx" setup>
 import { computed, ComputedRef, inject, ref, useTemplateRef, watch } from "vue";
 import { MInterfaceConfig, MStructureType } from "../types";
-import { PaOptionType, PaStructureType } from "M_Types";
+import { PaOptionType, PaStructureType } from "PancakeType";
 import { M_Message, M_MessageBox } from "../../feedback";
 import { PancakeGlobalConfigType } from "../../pa-manager/types";
 import MQuickTable from "./quick-table.vue";
@@ -77,7 +77,7 @@ const props = withDefaults(
 const inEditData = ref<MInterfaceConfig[]>([]);
 const inEditDataItem = ref<MInterfaceConfig>({} as MInterfaceConfig);
 
-const formConfig = ref<PaStructureType.FormV2[]>([
+const formConfig = ref<PaStructureType.Form[]>([
   { label: { "zh-CN": "接口名称", "en-US": "Interface Name" }, prop: "name", type: "input" },
   { label: { "zh-CN": "API 类型", "en-US": "API Type" }, prop: "apiType", type: "select" },
   { label: { "zh-CN": "API URL", "en-US": "API URL" }, prop: "apiUrl", type: "input" },
@@ -90,7 +90,7 @@ const formConfig = ref<PaStructureType.FormV2[]>([
   }
 ]);
 
-const tableConfig = ref<PaStructureType.TableV2[]>([
+const tableConfig = ref<PaStructureType.Table[]>([
   { label: { "zh-CN": "接口名称", "en-US": "Interface Name" }, prop: "name", width: "200px" },
   { label: { "zh-CN": "API 类型", "en-US": "API Type" }, prop: "apiType", width: "150px" },
   { label: { "zh-CN": "API URL", "en-US": "API URL" }, prop: "apiUrl" },

@@ -5,7 +5,7 @@
 /**
  * @description 导入类型定义
  */
-import { PaStructureType, PaOptionType } from "M_Types";
+import { PaStructureType, PaOptionType } from "PancakeType";
 import { PaPlaygroundPageButtonType } from "./components/types";
 import { LanguagePackageType } from "../manager-type";
 
@@ -178,10 +178,10 @@ export type PaPlaygroundItem = {
    */
   type: "form" | "table" | "tabs";
   /**
-   * @type Array<PaStructureType.FormV2> | Array<PaStructureType.TableV2> @default undefined
+   * @type Array<PaStructureType.Form> | Array<PaStructureType.Table> @default undefined
    * @description 结构配置
    */
-  structure: Array<PaStructureType.FormV2 & { [x: string]: any }> | Array<PaStructureType.TableV2 & { [x: string]: any }>;
+  structure: Array<PaStructureType.Form & { [x: string]: any }> | Array<PaStructureType.Table & { [x: string]: any }>;
   /**
    * @type Array<PaPlaygroundPageButtonType> @default undefined
    * @description 操作按钮列表
@@ -392,10 +392,10 @@ export type ComponentProps = {
    */
   actionFunction?: Array<PaOptionType.Select & PaPlaygroundActionFunctionType>;
   /**
-   * @type Array<PaStructureType.TableV2> @default undefined
+   * @type Array<PaStructureType.Table> @default undefined
    * @description 授权函数数组
    */
-  authorizationFunction?: Array<PaStructureType.TableV2>;
+  authorizationFunction?: Array<PaStructureType.Table>;
   /**
    * @type (data: any) => boolean @default undefined
    * @description 可见性判断函数

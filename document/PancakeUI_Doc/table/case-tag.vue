@@ -17,14 +17,14 @@
 </template>
 
 <script lang="ts" setup>
-import { MOptionV2Type, MStructureV2Type } from "M_Types";
+import { PaOptionType, PaStructureType } from "PancakeType";
 import { ref, nextTick } from "vue";
-import { M_Notification } from "@/package/components/feedback";
+import { M_Notification } from "PancakeUI";
 
 const proTable = ref();
 const params = ref({});
 
-const tableConfig: MStructureV2Type.TableV2[] = [
+const tableConfig: PaStructureType.TableV2[] = [
   { label: "Cell-Text", prop: "Text" },
   { label: "Cell-Input", prop: "Select", cellConfig: { type: "tag" } },
   { label: "操作", prop: "operation" }
@@ -45,7 +45,7 @@ function targetTags(data) {
 }
 
 nextTick(async () => {
-  const Select: MOptionV2Type.SelectList = [
+  const Select: PaOptionType.SelectList = [
     { label: "选项1", value: 1 },
     { label: "选项2", value: 2 },
     { label: "选项3", value: 3 }

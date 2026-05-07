@@ -2,7 +2,7 @@
  * 模块导入
  * @description 导入选项类型定义
  */
-import { PaOptionType } from "M_Types";
+import { PaOptionType } from "PancakeType";
 /**
  * 模块导入
  * @description 导入工具函数

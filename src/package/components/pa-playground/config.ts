@@ -1,13 +1,13 @@
 /**
  * @description 导入类型定义
  */
-import { PaStructureType } from "M_Types";
+import { PaStructureType } from "PancakeType";
 
 /**
  * @description 基础配置
- * @type Array<PaStructureType.FormV2>
+ * @type Array<PaStructureType.Form>
  */
-export const baseConfig: Array<PaStructureType.FormV2> = [
+export const baseConfig: Array<PaStructureType.Form> = [
   { label: { "en-US": "Project Name", "zh-CN": "项目名称" }, prop: "projectName", type: "input" },
   { label: { "en-US": "Project Description", "zh-CN": "项目描述" }, prop: "projectDescription", type: "input" },
   { label: { "en-US": "Submit API", "zh-CN": "提交接口" }, prop: "submitApi", type: "input" }
@@ -15,18 +15,18 @@ export const baseConfig: Array<PaStructureType.FormV2> = [
 
 /**
  * @description 选项配置
- * @type Array<PaStructureType.FormV2>
+ * @type Array<PaStructureType.Form>
  */
-export const optionsConfig: Array<PaStructureType.FormV2> = [
+export const optionsConfig: Array<PaStructureType.Form> = [
   { label: { "en-US": "label", "zh-CN": "选项标签" }, prop: "label", type: "input" },
   { label: { "en-US": "Value", "zh-CN": "选项值" }, prop: "value", type: "input" }
 ];
 
 /**
  * @description 表单配置
- * @type Array<PaStructureType.FormV2>
+ * @type Array<PaStructureType.Form>
  */
-export const formConfig: Array<PaStructureType.FormV2> = [
+export const formConfig: Array<PaStructureType.Form> = [
   {
     label: { "en-US": "Label", "zh-CN": "标签" },
     prop: "label",
@@ -97,9 +97,9 @@ export const formConfig: Array<PaStructureType.FormV2> = [
 
 /**
  * @description 输入框配置
- * @type Array<PaStructureType.FormV2>
+ * @type Array<PaStructureType.Form>
  */
-export const inputConfig: Array<PaStructureType.FormV2> = [
+export const inputConfig: Array<PaStructureType.Form> = [
   {
     label: { "en-US": "Placeholder", "zh-CN": "占位符" },
     prop: "placeholder",
@@ -116,9 +116,9 @@ export const inputConfig: Array<PaStructureType.FormV2> = [
 
 /**
  * @description 数字框配置
- * @type Array<PaStructureType.FormV2>
+ * @type Array<PaStructureType.Form>
  */
-export const numberConfig: Array<PaStructureType.FormV2> = [
+export const numberConfig: Array<PaStructureType.Form> = [
   {
     label: { "en-US": "Placeholder", "zh-CN": "占位符" },
     prop: "placeholder",
@@ -153,9 +153,9 @@ export const numberConfig: Array<PaStructureType.FormV2> = [
 
 /**
  * @description 选择框配置
- * @type Array<PaStructureType.FormV2>
+ * @type Array<PaStructureType.Form>
  */
-export const selectConfig: Array<PaStructureType.FormV2> = [
+export const selectConfig: Array<PaStructureType.Form> = [
   {
     label: { "en-US": "Options", "zh-CN": "选项" },
     prop: "options"
@@ -170,9 +170,9 @@ export const selectConfig: Array<PaStructureType.FormV2> = [
 
 /**
  * @description 级联选择框配置
- * @type Array<PaStructureType.FormV2>
+ * @type Array<PaStructureType.Form>
  */
-export const cascaderConfig: Array<PaStructureType.FormV2> = [
+export const cascaderConfig: Array<PaStructureType.Form> = [
   {
     label: { "en-US": "Options", "zh-CN": "选项" },
     prop: "options"
@@ -187,9 +187,9 @@ export const cascaderConfig: Array<PaStructureType.FormV2> = [
 
 /**
  * @description 单选框配置
- * @type Array<PaStructureType.FormV2>
+ * @type Array<PaStructureType.Form>
  */
-export const radioConfig: Array<PaStructureType.FormV2> = [
+export const radioConfig: Array<PaStructureType.Form> = [
   {
     label: { "en-US": "Options", "zh-CN": "选项" },
     prop: "options"
@@ -198,9 +198,9 @@ export const radioConfig: Array<PaStructureType.FormV2> = [
 
 /**
  * @description 复选框配置
- * @type Array<PaStructureType.FormV2>
+ * @type Array<PaStructureType.Form>
  */
-export const checkboxConfig: Array<PaStructureType.FormV2> = [
+export const checkboxConfig: Array<PaStructureType.Form> = [
   {
     label: { "en-US": "Options", "zh-CN": "选项" },
     prop: "options"
@@ -209,9 +209,9 @@ export const checkboxConfig: Array<PaStructureType.FormV2> = [
 
 /**
  * @description 其他配置
- * @type Array<PaStructureType.FormV2>
+ * @type Array<PaStructureType.Form>
  */
-export const otherConfig: Array<PaStructureType.FormV2> = [
+export const otherConfig: Array<PaStructureType.Form> = [
   {
     label: { "en-US": "required", "zh-CN": "必选项" },
     prop: "required",

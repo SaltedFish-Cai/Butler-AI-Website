@@ -17,7 +17,7 @@
 
 <script lang="ts" setup>
 import { ref, useTemplateRef } from "vue";
-import { MStructureV2Type } from "M_Types";
+import { PaStructureType } from "PancakeType";
 
 const proForm = useTemplateRef("proForm");
 const baseFormData = ref({
@@ -26,7 +26,7 @@ const baseFormData = ref({
 });
 const formData = ref({});
 
-const formConfig: MStructureV2Type.FormV2[] = [
+const formConfig: PaStructureType.Form[] = [
   { label: "Input1", tip: "Tip Message", prop: "Input1", type: "input" },
   { label: "Input2", prop: "Input2", type: "input", rules: [{ required: false }] },
   { label: "Select1", prop: "Select1", type: "select" }

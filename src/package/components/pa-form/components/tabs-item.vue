@@ -25,7 +25,7 @@
         <template v-if="!injectConfigContext.display" #HeaderLeft>
           <pa-button
             is="add"
-            style="width: 80px; --pa-size-padding: 5px; --pa-size-font: 12px; --pa-size-height: 24px"
+            style="width: 100px; --pa-size-padding: 8px; --pa-size-font: 14px; --pa-size-height: 28px"
             :disabled="item.disabled"
             @click="addTabs"
             :debounced="false"

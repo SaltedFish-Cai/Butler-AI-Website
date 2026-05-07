@@ -74,7 +74,7 @@
 
 <script lang="tsx" setup>
 import { ref, computed, ComputedRef, inject, onMounted, watch, nextTick } from "vue";
-import { PaOptionType, PaStructureType } from "M_Types";
+import { PaOptionType, PaStructureType } from "PancakeType";
 import { PancakeGlobalConfigType } from "../../pa-manager/types";
 
 const id = ref("table_" + new Date().getTime().toString());
@@ -96,7 +96,7 @@ const props = withDefaults(
     class?: string;
     useScroll?: boolean;
     tableData: Array<Record<string, any>>;
-    tableConfig: (PaStructureType.TableV2 & { class?: string })[];
+    tableConfig: (PaStructureType.Table & { class?: string })[];
     exOptions: PaOptionType.Default;
   }>(),
   {}

@@ -26,7 +26,7 @@
 </template>
 <script lang="ts" setup>
 import { ref, watch, computed } from "vue";
-import { M_Message } from "@/package/components/feedback";
+import { M_Message } from "PancakeUI";
 
 import all from "./config/all.json";
 import iconJson from "./config/icon.json";

@@ -7,7 +7,7 @@
 </template>
 
 <script lang="ts" setup>
-import { M_MessageBox, M_Message } from "@/package/components/feedback";
+import { M_MessageBox, M_Message } from "PancakeUI";
 
 function debouncedClick1() {
   M_MessageBox.confirm("是否继续", () => {

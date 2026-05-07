@@ -154,7 +154,7 @@
 <script lang="tsx" setup>
 import { computed, ComputedRef, inject, ref, useTemplateRef } from "vue";
 import { PancakeGlobalConfigType } from "../../../pa-manager/types";
-import { PaStructureType } from "M_Types";
+import { PaStructureType } from "PancakeType";
 import { cellMapConfig } from "../../configs/cell-config";
 import { MOptionsType } from "../../type";
 import MQuickTable from "../quick-table.vue";
@@ -175,7 +175,7 @@ const { cloneDeep } = _;
 
 const props = defineProps<{
   exOptionsMaps: MOptionsType[];
-  authorizationFunction?: Array<PaStructureType.TableV2>;
+  authorizationFunction?: Array<PaStructureType.Table>;
 }>();
 
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
@@ -183,8 +183,8 @@ const language = PancakeGlobalConfig.value?.language?.value || "zh-CN";
 
 // # Var
 const editId = ref("");
-const tableData = ref<PaStructureType.TableV2[]>([]);
-const formData = ref<PaStructureType.TableV2 & { cellType?: string }>({});
+const tableData = ref<PaStructureType.Table[]>([]);
+const formData = ref<PaStructureType.Table & { cellType?: string }>({});
 const formRef = useTemplateRef("formRef");
 
 // @ options
@@ -206,7 +206,7 @@ const OperationVisible = ref(false);
 const OperationMoreVisible = ref(false);
 const OperationMoreIndex = ref(-1);
 
-const tableConfig = ref<PaStructureType.TableV2[]>([
+const tableConfig = ref<PaStructureType.Table[]>([
   { prop: "label", label: { "en-US": "Column Name", "zh-CN": "列名" }, width: "280px" },
   { prop: "prop", label: { "en-US": "Column Key", "zh-CN": "列Key" }, width: "150px" },
   { prop: "cellConfig", label: { "en-US": "Cell Type", "zh-CN": "单元格类型" }, width: "180px" },
@@ -271,7 +271,7 @@ const handleMoreOperationSubmit = async () => {
   }
 };
 
-function openEditDialog(tableId: string, config: PaStructureType.TableV2[], options: Record<string, string>) {
+function openEditDialog(tableId: string, config: PaStructureType.Table[], options: Record<string, string>) {
   editId.value = tableId;
   tableData.value = cloneDeep(config);
   exOptions.value = { ...exOptions.value, ...cloneDeep(options) };
@@ -289,7 +289,7 @@ const handleMoreOperation = (row, index) => {
 };
 
 const emit = defineEmits<{
-  handleEditTableColQuickSubmit: [tableId: string, data: PaStructureType.TableV2[], exOptions: Record<string, string>];
+  handleEditTableColQuickSubmit: [tableId: string, data: PaStructureType.Table[], exOptions: Record<string, string>];
 }>();
 
 defineExpose({ openEditDialog });

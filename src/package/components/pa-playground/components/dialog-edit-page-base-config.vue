@@ -17,7 +17,7 @@
 <script lang="tsx" setup>
 import { ref, useTemplateRef } from "vue";
 import { PaPlaygroundPagesType } from "../types";
-import { PaStructureType } from "M_Types";
+import { PaStructureType } from "PancakeType";
 
 const props = withDefaults(
   defineProps<{
@@ -38,7 +38,7 @@ const emits = defineEmits(["submit"]);
 const editIndex = ref(-1);
 const visible = ref(false);
 
-const config = ref<PaStructureType.FormV2[]>([
+const config = ref<PaStructureType.Form[]>([
   { label: { "en-US": "Project Name", "zh-CN": "页面名称" }, prop: "name", type: "input" }
 ]);
 

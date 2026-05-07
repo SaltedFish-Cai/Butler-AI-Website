@@ -30,6 +30,13 @@
 <demo src="./padding.vue">
 </demo>
 
+## 样式展示
+
+使用 `styleMode` 属性设置不同类型样式展示。
+
+<demo src="./style.vue">
+</demo>
+
 ## ComponentProps
 
 | 属性名        | 描述       | 类型                                                                                  | 默认值      |
@@ -40,7 +47,7 @@
 | tips          | 提示信息   | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) `string` | -           |
 | tips-position | 提示位置   | `'bottom'` \| `'right'`                                                               | `'bottom'`  |
 | padding       | 内边距方向 | `Array<'all'` \| `'bottom'` \| `'left'` \| `'null'` \| `'right'` \| `'top'>`          | -           |
-| style-mode    | 样式模式   | `'default'` \| `'underline'` \| `'vertical'`                                          | `'default'` |
+| style-mode    | 样式模式   | `'default'` \| `'horizontal'` \| `'vertical'`                                          | `'default'` |
 | line-config   | 分割线配置 | [`ComponentProps`](/document/PancakeUI_Doc/line#componentprops) `boolean`             | -           |
 
 ## ComponentSlots

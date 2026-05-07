@@ -4,11 +4,11 @@
 
 <script lang="ts" setup>
 import { ref } from "vue";
-import { MStructureV2Type } from "M_Types";
+import { PaStructureType } from "PancakeType";
 
 const proForm = ref();
 
-const formConfig: MStructureV2Type.FormV2[] = [{ label: "Input1", prop: "Input1", type: "input" }];
+const formConfig: PaStructureType.Form[] = [{ label: "Input1", prop: "Input1", type: "input" }];
 
 const exRules = ref({
   exCellRules: {

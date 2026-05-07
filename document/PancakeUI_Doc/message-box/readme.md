@@ -11,7 +11,7 @@
 ### 删除确认（推荐）
 
 ```ts
-import { M_MessageBox } from "@/package/components/feedback";
+import { M_MessageBox } from "PancakeUI";
 
 // 删除确认 - 内置合适的默认值
 M_MessageBox.delete({

@@ -7,7 +7,7 @@
         id="visibleForm"
         v-if="page.type === 'form'"
         :ref="el => setRef(el, page)"
-        :structure="(setStructure(page.structure)  as PaStructureType.FormV2[])"
+        :structure="(setStructure(page.structure)  as PaStructureType.Form[])"
         :exOptions="exOptionsComputed"
         :ex-span="page.otherProps?.exSpan"
         :display="page.otherProps?.display"
@@ -17,7 +17,7 @@
         id="visibleTable"
         v-if="page.type === 'table'"
         :ref="el => setRef(el, page)"
-        :structure="(setStructure(page.structure) as PaStructureType.TableV2[])"
+        :structure="(setStructure(page.structure) as PaStructureType.Table[])"
         :request-api="query => getTableList((page.actionApi as string), query)"
         :exOptions="exOptionsComputed"
         class="flex1"
@@ -97,7 +97,7 @@
         id="visibleForm"
         v-if="page.type === 'form'"
         :ref="el => setRef(el, page)"
-        :structure="(setStructure(page.structure)  as PaStructureType.FormV2[])"
+        :structure="(setStructure(page.structure)  as PaStructureType.Form[])"
         :exOptions="exOptionsComputed"
         :ex-span="page.otherProps?.exSpan"
         :display="page.otherProps?.display"
@@ -107,7 +107,7 @@
         id="visibleTable"
         v-if="page.type === 'table'"
         :ref="el => setRef(el, page)"
-        :structure="(setStructure(page.structure) as PaStructureType.TableV2[])"
+        :structure="(setStructure(page.structure) as PaStructureType.Table[])"
         :request-api="query => getTableList((page.actionApi as string), query)"
         :exOptions="exOptionsComputed"
         class="flex1"
@@ -205,7 +205,7 @@ import { M_Message, M_MessageBox } from "../feedback";
 import PaPlaygroundVisible from "./pa-playground-visible.vue";
 import useDictionariesAll from "../tools/dictionaries-all";
 import { PancakeGlobalConfigType } from "../pa-manager/types";
-import { PaOptionType, PaStructureType } from "M_Types";
+import { PaOptionType, PaStructureType } from "PancakeType";
 import { deleteDataByKey, getAllData, queryData, storeData, updateData } from "../indexDB/indexDB";
 import { PaPlaygroundPageButtonType } from "./components/types";
 import { dictType } from "../tools/type";
@@ -229,7 +229,7 @@ const props = withDefaults(
     useMock: boolean;
     requestFunction?: any;
     actionFunction?: Array<PaOptionType.Select & PaPlaygroundActionFunctionType>;
-    authorizationFunction?: Array<PaStructureType.TableV2>;
+    authorizationFunction?: Array<PaStructureType.Table>;
     actionBefore?: (data: any) => boolean;
     visibleBefore?: (data: any) => boolean;
     useToPage?: boolean;
@@ -246,11 +246,11 @@ const exOptionsComputed = ref<PaOptionType.Default>({});
 const emits = defineEmits(["closed", "action-before", "visible-before"]);
 
 const setStructure = (
-  structure: PaStructureType.FormV2[] | PaStructureType.TableV2[]
-): PaStructureType.FormV2[] | PaStructureType.TableV2[] => {
+  structure: PaStructureType.Form[] | PaStructureType.Table[]
+): PaStructureType.Form[] | PaStructureType.Table[] => {
   return structure.filter(item => (props.visibleBefore ? props.visibleBefore?.(item) : item)) as
-    | PaStructureType.FormV2[]
-    | PaStructureType.TableV2[];
+    | PaStructureType.Form[]
+    | PaStructureType.Table[];
 };
 
 const visible = ref(false);

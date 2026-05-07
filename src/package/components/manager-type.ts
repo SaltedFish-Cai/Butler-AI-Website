@@ -1,6 +1,6 @@
-import { PaFormItemType, PaFormRef } from "./pa-form/types";
-import { PaTableItemType, PaTableType } from "./pa-table/types";
-import { PaManagerType } from "./pa-manager/types";
+import { PaFormItemType, ComponentRef as PaFormRef } from "./pa-form/types";
+import { ComponentItemProps as PaTableItemType, ComponentProps as PaTableType } from "./pa-table/types";
+import { ComponentProps as PaManagerType } from "./pa-manager/types";
 
 export type LanguageKey = "en-US" | "zh-CN";
 export type LanguagePackageType = Record<LanguageKey, string>;
@@ -105,13 +105,13 @@ export namespace PaOptionType {
 }
 
 export namespace PaStructureType {
-  export type FormV2 = PaFormItemType;
-  export type TableV2 = PaTableItemType;
+  export type Form = PaFormItemType;
+  export type Table = PaTableItemType;
 }
 
 export namespace PaRefType {
-  export type FormV2 = PaFormRef;
-  export type TableV2 = PaTableType;
+  export type Form = PaFormRef;
+  export type Table = PaTableType;
 }
 
 export type PancakeUIType = PaManagerType;

@@ -16,26 +16,26 @@
 
 <script lang="tsx" setup>
 import { nextTick, ref, useTemplateRef } from "vue";
-import { PaOptionType, PaStructureType } from "M_Types";
+import { PaOptionType, PaStructureType } from "PancakeType";
 
 const visible = ref(false);
 const visibleType = ref<"form" | "table">("table");
 const visibleTableRef = useTemplateRef("visibleTableRef");
 const visibleFormRef = useTemplateRef("visibleFormRef");
-const tableConfig = ref<PaStructureType.TableV2[]>([]);
-const formConfig = ref<PaStructureType.FormV2[]>([]);
+const tableConfig = ref<PaStructureType.Table[]>([]);
+const formConfig = ref<PaStructureType.Form[]>([]);
 const exOptions = ref<PaOptionType.Default>();
 
 function openVisibleDialog(
   type: "form" | "table",
-  config: PaStructureType.FormV2[] | PaStructureType.TableV2[],
+  config: PaStructureType.Form[] | PaStructureType.Table[],
   options?: PaOptionType.Default
 ) {
   visibleType.value = type;
   if (type === "table") {
-    tableConfig.value = config as PaStructureType.TableV2[];
+    tableConfig.value = config as PaStructureType.Table[];
   } else {
-    formConfig.value = config as PaStructureType.FormV2[];
+    formConfig.value = config as PaStructureType.Form[];
   }
   exOptions.value = options;
   visible.value = true;
