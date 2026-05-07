@@ -2,7 +2,7 @@
  * 模块导入
  * @description 导入 Vue 应用类型
  */
-import { App } from "vue";
+import type { App } from "vue";
 /**
  * 模块导入
  * @description 导入 PaSwitch 组件
@@ -21,5 +21,4 @@ const name = "PaSwitch";
 const install = function (app: App): void {
   if (!app._context.components["PaSwitch"]) app.component("PaSwitch", PaSwitch);
 };
-
 export default { name, install };

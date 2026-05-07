@@ -86,6 +86,10 @@ import { PancakeGlobalConfigType } from "../pa-manager/types";
  * @description 导入 lodash 工具函数
  */
 import _ from "lodash";
+/**
+ * lodash 解构
+ * @description 从 lodash 中解构 isEqual 和 isNil 方法
+ */
 const { isEqual, isNil } = _;
 
 /**
@@ -116,17 +120,17 @@ const props = withDefaults(defineProps<ComponentProps>(), {
 });
 
 /**
+ * 组件事件定义
+ * @description 定义组件可触发的事件
+ */
+const emits = defineEmits<ComponentEmits>();
+
+/**
  * 当前值
  * @type Ref<boolean | number | string | undefined>
  * @description 当前开关的绑定值
  */
 const inValue: Ref<boolean | number | string | undefined> = ref(props.modelValue);
-
-/**
- * 组件事件定义
- * @description 定义组件可触发的事件
- */
-const emits = defineEmits<ComponentEmits>();
 
 /**
  * 旧值存储
