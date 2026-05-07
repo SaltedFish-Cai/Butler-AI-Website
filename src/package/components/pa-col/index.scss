@@ -4,7 +4,7 @@
   box-sizing: border-box;
   float: left;
 
-  @for $i from 2 through 24 {
+  @for $i from 1 through 24 {
     &:nth-child(#{$i}n + 1 of [style*="--col-span-value: #{$i}"]) {
       margin-left: 0 !important;
     }
