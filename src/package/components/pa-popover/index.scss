@@ -39,7 +39,7 @@
   z-index: 210;
   border: 1px solid var(--pa-color-border);
   border-radius: var(--pa-size-radius, 3px);
-  box-shadow: 0px 0 5px 0px rgba(0, 0, 0, 0.15);
+  box-shadow: 0px 0 5px 0px var(--pa-shadow-color, rgba(0, 0, 0, 0.15));
 
   .pa-popover-arrow {
     position: absolute;

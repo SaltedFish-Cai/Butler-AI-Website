@@ -1,3 +1,7 @@
+/**
+ * 模块导入
+ * @description 导入 Vue 应用类型
+ */
 import type { App } from "vue";
 /**
  * 模块导入

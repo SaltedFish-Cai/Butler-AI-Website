@@ -52,6 +52,10 @@ import { getElementPosition } from "../utils/getElementPosition";
  * @description 导入 lodash 工具函数
  */
 import _ from "lodash";
+/**
+ * 解构工具方法
+ * @description 从 lodash 中解构 throttle 方法
+ */
 const { throttle } = _;
 /**
  * 组件属性
@@ -274,7 +278,7 @@ function checkPositionOverOut() {
   const popH = popoverRefPosition.height;
   const popW = popoverRefPosition.width;
 
-  // 优先级逻辑: 下 -> 上 -> 左 -> 右 -> 强制下方
+  /** 优先级逻辑: 下 -> 上 -> 左 -> 右 -> 强制下方 */
   let placement = "bottom";
   if (ReferencePosition.bottom + popH + OFFSET <= winH) {
     placement = "bottom";
@@ -293,12 +297,12 @@ function checkPositionOverOut() {
   const style: Record<string, string> = { top: "unset", bottom: "unset", left: "unset", right: "unset" };
   const arrowStyle: Record<string, string> = { top: "unset", bottom: "unset", left: "unset", right: "unset" };
 
-  // 参考元素的中心点坐标
+  /** 参考元素的中心点坐标 */
   const refCenterX = ReferencePosition.left + ReferencePosition.width / 2;
   const refCenterY = ReferencePosition.top + ReferencePosition.height / 2;
 
   if (placement === "bottom" || placement === "top") {
-    // 1. 计算 Popover 的水平位置 (带有视口边界保护)
+    /** 计算 Popover 的水平位置 (带有视口边界保护) */
     let leftPos = refCenterX - popW / 2;
     if (props.sticky === "left") leftPos = ReferencePosition.left;
     else if (props.sticky === "right") leftPos = ReferencePosition.left + ReferencePosition.width - popW;
@@ -316,12 +320,11 @@ function checkPositionOverOut() {
     }
     style.left = leftPos + "px";
 
-    // 2. 计算箭头相对于 Popover 的水平位置
-    // 箭头位置 = 参考元素中心 - Popover左侧距离
+    /** 计算箭头相对于 Popover 的水平位置，箭头位置 = 参考元素中心 - Popover左侧距离 */
     const arrowRelativeLeft = refCenterX - leftPos;
     arrowStyle.left = arrowRelativeLeft + "px";
   } else if (placement === "left" || placement === "right") {
-    // 1. 计算 Popover 的垂直位置 (带有视口边界保护)
+    /** 计算 Popover 的垂直位置 (带有视口边界保护) */
     let topPos = refCenterY - popH / 2;
     topPos = Math.max(SAFE_DISTANCE, Math.min(topPos, winH - popH - SAFE_DISTANCE));
 
@@ -336,8 +339,7 @@ function checkPositionOverOut() {
     }
     style.top = topPos + "px";
 
-    // 2. 计算箭头相对于 Popover 的垂直位置
-    // 箭头位置 = 参考元素中心 - Popover顶部距离
+    /** 计算箭头相对于 Popover 的垂直位置，箭头位置 = 参考元素中心 - Popover顶部距离 */
     const arrowRelativeTop = refCenterY - topPos;
     arrowStyle.top = arrowRelativeTop + "px";
   }
@@ -490,7 +492,6 @@ onUnmounted(() => {
   stopObserving();
   hidePopover();
 });
-defineExpose({ showPopover, hidePopover });
 /**
  * 监听 autoWidth 属性变化
  * @description 监听 autoWidth 属性变化并更新样式
@@ -499,6 +500,7 @@ watch(
   () => props.autoWidth,
   newVal => {
     const ReferencePosition = getElementPosition(popoverReferenceRef.value);
+    defineExpose({ showPopover, hidePopover });
     if (ReferencePosition) {
       let popoverContentStyleValue = {};
       if (props.popoverWidth) {
