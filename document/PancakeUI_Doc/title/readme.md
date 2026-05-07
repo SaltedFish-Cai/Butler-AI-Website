@@ -48,7 +48,7 @@
 | tips-position | 提示位置   | `'bottom'` \| `'right'`                                                               | `'bottom'`  |
 | padding       | 内边距方向 | `Array<'all'` \| `'bottom'` \| `'left'` \| `'null'` \| `'right'` \| `'top'>`          | -           |
 | style-mode    | 样式模式   | `'default'` \| `'horizontal'` \| `'vertical'`                                          | `'default'` |
-| line-config   | 分割线配置 | [`ComponentProps`](/document/PancakeUI_Doc/line#componentprops) `boolean`             | -           |
+| line-config   | 分割线配置 | [`ComponentProps`](/document/PancakeUI_Doc/line/readme#componentprops) `boolean`             | -           |
 
 ## ComponentSlots
 
