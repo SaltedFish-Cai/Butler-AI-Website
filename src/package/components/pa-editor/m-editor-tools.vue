@@ -210,7 +210,7 @@ const popoverReferenceRef = ref({});
 /**
  * @description 预设颜色数组
  */
-const presetColors = ["#64605b", "#67c23a", "#e6a23c", "#f56c6c", "#909399", "#bdbdc0", "#f9f8fd", "#ffffff"];
+const presetColors = ["#2a3e48", "#67c23a", "#e6a23c", "#f56c6c", "#909399", "#bdbdc0", "#f9f8fd", "#ffffff"];
 
 /**
  * @description 编辑器引用注入
