@@ -91,7 +91,7 @@
         resize: vertical;
         font-size: var(--pa-size-font, 16px);
         color: var(--pa-color-font);
-        line-height: 1.5;
+        line-height: calc(var(--pa-size-height, 24px) - var(--pa-size-height, 24px) / 4);
         resize: none;
         background: none;
 

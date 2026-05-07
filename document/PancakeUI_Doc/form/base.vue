@@ -1,5 +1,5 @@
 <template>
-  <pa-title :padding="['bottom']">FormData结果值：</pa-title>
+  <pa-title style-mode="horizontal" :line-config="false">FormData结果值：</pa-title>
 
   <code-view v-model:html="formData"> </code-view>
 
@@ -12,7 +12,7 @@
     @form-cell-change="handleCellChange"
   />
 
-  <div class="flex-center">
+  <div class="flex-center mt-size">
     <pa-button is="submit" @click="submitForm">提交Form</pa-button>
   </div>
 </template>
@@ -28,10 +28,10 @@ const formData = ref({});
 const formConfig: Ref<PaStructureType.Form[]> = ref([]);
 setTimeout(() => {
   formConfig.value = [
-    { label: "Input1", tip: "Tip Message", prop: "Input1", type: "textarea", maxLength: 100, exSpan: 1 },
+    { label: "Input1", tip: "Tip Message", prop: "Input1", type: "input", maxLength: 100, exSpan: 1 },
     { label: "Input2", prop: "Input2", type: "input", rules: [{ required: false }] },
     { label: "Select1", prop: "Select1", type: "select", clearable: false },
-    { label: "协议有效期", prop: "AgreementPeriod", type: "date-picker-group" }
+    { label: "Time", prop: "Time", type: "date-picker-group" }
   ];
 }, 1000);
 
