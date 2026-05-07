@@ -1,6 +1,3 @@
-@use "./github-dark.scss";
-@use "./github.scss";
-
 .pa-editor {
   display: flex;
   flex-direction: column;
@@ -164,7 +161,7 @@
     top: 0;
     width: 40px;
     background-color: var(--pa-color-line-numbers-bg);
-    border-right: 1px solid var(--pa-color-border);
+    border-right: 1px solid var(--pa-color-line-numbers-border);
     padding: 8px 4px;
     font-size: 14px;
     line-height: 1.5;
@@ -372,8 +369,8 @@
 .image-context-menu,
 .table-context-menu {
   position: fixed;
-  background-color: var(--pa-color-white);
-  border: 1px solid var(--pa-color-border);
+  background-color: var(--pa-color-source-code-dark-bg);
+  border: 1px solid var(--pa-color-line-numbers-border);
   border-radius: var(--pa-size-radius, 3px);
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.5);
   z-index: 1000;

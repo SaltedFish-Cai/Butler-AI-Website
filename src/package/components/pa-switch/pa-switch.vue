@@ -110,7 +110,9 @@ const languageValue = computed(() => {
  * @description 组件的属性对象
  */
 const props = withDefaults(defineProps<ComponentProps>(), {
-  contrastData: undefined
+  contrastData: undefined,
+  activeValue: 1,
+  inActiveValue: 0
 });
 
 /**
@@ -140,7 +142,7 @@ let oldValue: boolean | number | string = props.modelValue || "";
  */
 function changeEvent(): void {
   if (props.disabled || props.display) return;
-  const value = inValue.value == options.value.activeValue ? options.value.inActiveValue || "" : options.value.activeValue || "";
+  const value = inValue.value == options.value.activeValue ? options.value.inActiveValue || 0 : options.value.activeValue || 1;
   emits("update:modelValue", value);
   emits("change", { value, oldValue });
   oldValue = value;
@@ -206,8 +208,8 @@ function changeType(type: string, opts: any): PaOptionType.Switch {
 const options = computed(() => {
   const typeIs = typeof inValue.value;
   const {
-    activeValue = true,
-    inActiveValue = false,
+    activeValue = 1,
+    inActiveValue = 0,
     activeText = languageValue.value == "zh-CN" ? "是" : "Yes",
     inActiveText = languageValue.value == "zh-CN" ? "否" : "No"
   } = props.exOptions || props;

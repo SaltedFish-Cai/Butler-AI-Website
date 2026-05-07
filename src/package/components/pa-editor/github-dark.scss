@@ -2,6 +2,16 @@
   color: #24292e;
   font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
 
+  --pa-color-line-numbers-bg: #292d3e;
+  --pa-color-line-numbers-text: #9e9e9e;
+  --pa-color-line-numbers-border: #e0e0e0;
+  --pa-color-source-code-dark-bg: #292d3e;
+  --pa-color-source-code-dark-border: #3c3c3c;
+  --pa-color-source-code-dark-line-bg: #000000;
+  --pa-color-source-code-dark-line-text: #858585;
+  --pa-color-source-code-dark-text: #d4d4d4;
+  --pa-color-context-menu-text: #606266;
+
   pre code.hljs {
     display: block;
     overflow-x: auto;
