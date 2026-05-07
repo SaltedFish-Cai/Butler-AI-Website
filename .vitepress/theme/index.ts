@@ -16,7 +16,6 @@ import NavLinks from "../../src/components/box-nav/NavLinks.vue";
 
 // 首页装饰组件
 import HomeDecorations from "./components/HomeDecorations.vue";
-import DocSplit from "./components/DocSplit.vue";
 
 import directives from "../../src/directives/index";
 
@@ -106,10 +105,9 @@ export default {
     app.component("demo", demo);
 
     app.component("NavLinks", NavLinks);
-
+    
     // 注册首页装饰组件
     app.component("HomeDecorations", HomeDecorations);
-    app.component("DocSplit", DocSplit);
 
     app.provide("DEV", process.env.NODE_ENV === "development");
     const _window: any = typeof window == "undefined" ? global : window;
