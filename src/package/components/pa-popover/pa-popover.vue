@@ -245,10 +245,8 @@ function handlePopoverLeave() {
 function recalculatePosition() {
   if (!visible.value || !popoverReferenceRef.value) return;
   const ReferencePosition = getElementPosition(popoverReferenceRef.value);
-  let popoverContentStyleValue = {};
-  let popoverStyleValue = {};
-  let popoverArrowStyleValue = {};
   if (ReferencePosition) {
+    let popoverContentStyleValue = {};
     if (props.popoverWidth) {
       popoverContentStyleValue = { ...popoverContentStyleValue, width: props.popoverWidth + "px" };
     } else if (props.autoWidth) {
@@ -256,24 +254,7 @@ function recalculatePosition() {
       popoverContentStyleValue = { ...popoverContentStyleValue, width: width + "px" };
     }
     popoverContentStyle.value = popoverContentStyleValue;
-    popoverStyleValue = { ...popoverStyleValue, bottom: "unset", top: ReferencePosition.bottom + 9 + "px" };
-    popoverStyle.value = popoverStyleValue;
-    let anchorLeftPosition: Record<string, string> = { left: ReferencePosition.left + ReferencePosition.width / 2 + "px" };
-    if (props.sticky === "left") {
-      anchorLeftPosition = { left: ReferencePosition.windowLeft + 30 + "px" };
-    } else if (props.sticky === "right") {
-      anchorLeftPosition = { right: ReferencePosition.windowRight + 30 + "px" };
-    }
-    popoverArrowStyleValue = {
-      ...popoverArrowStyleValue,
-      bottom: "unset",
-      top: ReferencePosition.bottom + 5 + "px",
-      ...anchorLeftPosition
-    };
-    popoverArrowStyle.value = popoverArrowStyleValue;
-    nextTick(() => {
-      checkPositionOverOut();
-    });
+    nextTick(checkPositionOverOut);
   }
 }
 /**
@@ -284,57 +265,85 @@ function checkPositionOverOut() {
   const ReferencePosition = getElementPosition(popoverReferenceRef.value);
   const popoverRefPosition = getElementPosition(popoverRef.value);
   if (!ReferencePosition || !popoverRefPosition) return;
-  let popoverStyleValue = cloneDeep(popoverStyle.value);
-  const popoverArrowStyleValue = cloneDeep(popoverArrowStyle.value);
-  if (props.sticky === "left") {
-    popoverStyleValue = { ...popoverStyleValue, right: "unset", left: ReferencePosition.windowLeft + "px" };
-  } else if (props.sticky === "right") {
-    popoverStyleValue = { ...popoverStyleValue, left: "unset", right: ReferencePosition.windowRight + "px" };
+
+  const OFFSET = 9;
+  const SAFE_DISTANCE = 10;
+  const winH = window.innerHeight;
+  const winW = window.innerWidth;
+
+  const popH = popoverRefPosition.height;
+  const popW = popoverRefPosition.width;
+
+  // 优先级逻辑: 下 -> 上 -> 左 -> 右 -> 强制下方
+  let placement = "bottom";
+  if (ReferencePosition.bottom + popH + OFFSET <= winH) {
+    placement = "bottom";
+  } else if (ReferencePosition.top - popH - OFFSET >= 0) {
+    placement = "top";
+  } else if (ReferencePosition.left - popW - OFFSET >= 0) {
+    placement = "left";
+  } else if (ReferencePosition.right + popW + OFFSET <= winW) {
+    placement = "right";
   } else {
-    popoverStyleValue = {
-      ...popoverStyleValue,
-      right: "unset",
-      left: ReferencePosition.left + ReferencePosition.width / 2 - popoverRefPosition.width / 2 + "px"
-    };
+    placement = "bottom"; // Forced fallback
   }
-  popoverArrowStyle.value = popoverArrowStyleValue;
-  popoverStyle.value = popoverStyleValue;
-  nextTick(() => {
-    const ReferencePosition = getElementPosition(popoverReferenceRef.value);
-    const popoverRefPosition = getElementPosition(popoverRef.value);
-    if (!ReferencePosition || !popoverRefPosition) return;
-    const SAFE_DISTANCE = 10;
-    let popoverStyleValue = cloneDeep(popoverStyle.value);
-    let popoverArrowStyleValue = cloneDeep(popoverArrowStyle.value);
-    if (popoverRefPosition.outLeft) {
-      popoverStyleValue = {
-        ...popoverStyleValue,
-        right: "unset",
-        left: SAFE_DISTANCE + "px"
-      };
+
+  if (props.placement === "top" && ReferencePosition.top - popH - OFFSET >= 0) placement = "top";
+
+  const style: Record<string, string> = { top: "unset", bottom: "unset", left: "unset", right: "unset" };
+  const arrowStyle: Record<string, string> = { top: "unset", bottom: "unset", left: "unset", right: "unset" };
+
+  // 参考元素的中心点坐标
+  const refCenterX = ReferencePosition.left + ReferencePosition.width / 2;
+  const refCenterY = ReferencePosition.top + ReferencePosition.height / 2;
+
+  if (placement === "bottom" || placement === "top") {
+    // 1. 计算 Popover 的水平位置 (带有视口边界保护)
+    let leftPos = refCenterX - popW / 2;
+    if (props.sticky === "left") leftPos = ReferencePosition.left;
+    else if (props.sticky === "right") leftPos = ReferencePosition.left + ReferencePosition.width - popW;
+
+    leftPos = Math.max(SAFE_DISTANCE, Math.min(leftPos, winW - popW - SAFE_DISTANCE));
+
+    if (placement === "bottom") {
+      style.top = ReferencePosition.bottom + OFFSET + "px";
+      arrowStyle.top = "0px"; // 定位在 Popover 顶边线
+      arrowStyle.bottom = "unset";
+    } else {
+      style.bottom = winH - ReferencePosition.top + OFFSET + "px";
+      arrowStyle.top = "100%"; // 定位在 Popover 底边线
+      arrowStyle.bottom = "unset";
     }
-    if (popoverRefPosition.outRight) {
-      popoverStyleValue = {
-        ...popoverStyleValue,
-        left: "unset",
-        right: SAFE_DISTANCE + "px"
-      };
+    style.left = leftPos + "px";
+
+    // 2. 计算箭头相对于 Popover 的水平位置
+    // 箭头位置 = 参考元素中心 - Popover左侧距离
+    const arrowRelativeLeft = refCenterX - leftPos;
+    arrowStyle.left = arrowRelativeLeft + "px";
+  } else if (placement === "left" || placement === "right") {
+    // 1. 计算 Popover 的垂直位置 (带有视口边界保护)
+    let topPos = refCenterY - popH / 2;
+    topPos = Math.max(SAFE_DISTANCE, Math.min(topPos, winH - popH - SAFE_DISTANCE));
+
+    if (placement === "left") {
+      style.right = winW - ReferencePosition.left + OFFSET + "px";
+      arrowStyle.left = "100%"; // 定位在 Popover 右边线
+      arrowStyle.right = "unset";
+    } else {
+      style.left = ReferencePosition.right + OFFSET + "px";
+      arrowStyle.left = "0px"; // 定位在 Popover 左边线
+      arrowStyle.right = "unset";
     }
-    if (popoverRefPosition.outBottom || props.placement === "top") {
-      popoverStyleValue = {
-        ...popoverStyleValue,
-        top: "unset",
-        bottom: ReferencePosition.windowBottom + ReferencePosition.height + 9 + "px"
-      };
-      popoverArrowStyleValue = {
-        ...popoverArrowStyleValue,
-        top: "unset",
-        bottom: ReferencePosition.windowBottom + ReferencePosition.height + 5 + "px"
-      };
-    }
-    popoverArrowStyle.value = popoverArrowStyleValue;
-    popoverStyle.value = popoverStyleValue;
-  });
+    style.top = topPos + "px";
+
+    // 2. 计算箭头相对于 Popover 的垂直位置
+    // 箭头位置 = 参考元素中心 - Popover顶部距离
+    const arrowRelativeTop = refCenterY - topPos;
+    arrowStyle.top = arrowRelativeTop + "px";
+  }
+
+  popoverStyle.value = style;
+  popoverArrowStyle.value = arrowStyle;
 }
 /**
  * 开始观察目标元素
