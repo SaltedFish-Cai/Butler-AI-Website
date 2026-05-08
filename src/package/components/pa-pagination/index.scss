@@ -68,5 +68,10 @@
     gap: 4px;
     margin-left: calc(var(--pa-size-padding, 10px) / 2);
     font-size: calc(var(--pa-size-font, 13px) - 1px);
+    .m-pagination-jumper-input {
+      .pa-number-input-inner {
+        text-align: center;
+      }
+    }
   }
 }

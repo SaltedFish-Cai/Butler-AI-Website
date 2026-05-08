@@ -293,14 +293,6 @@ const jumpNextMore = (): void => {
 };
 </script>
 
-<style lang="scss" scoped>
-@use "./index.scss";
-</style>
-
 <style lang="scss">
-.m-pagination-jumper-input {
-  .pa-number-input-inner {
-    text-align: center;
-  }
-}
+@use "./index.scss";
 </style>
