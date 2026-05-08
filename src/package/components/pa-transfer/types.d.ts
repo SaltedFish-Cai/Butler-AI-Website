@@ -3,13 +3,13 @@
  * @description 穿梭框组件类型定义
  */
 /**
- * 选项类型
- * @description 选项类型
+ * 模块导入
+ * @description 导入选项类型定义
  */
 import type { PaOptionType } from "../manager-type";
 /**
  * PaTransfer 组件 Props
- * @type {ComponentProps}
+ * @type object
  * @description 穿梭框组件的属性类型
  */
 export type ComponentProps = {
@@ -107,7 +107,7 @@ export type ComponentProps = {
 };
 /**
  * PaTransfer 组件 Emits
- * @type {ComponentEmits}
+ * @type object
  * @description 穿梭框组件的事件类型
  */
 export type ComponentEmits = {

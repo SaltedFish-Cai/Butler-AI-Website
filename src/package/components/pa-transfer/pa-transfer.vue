@@ -92,85 +92,111 @@
 
 <script lang="ts" setup>
 /**
- * Vue 核心响应式 API
- * @description Vue 核心响应式 API
+ * 模块导入
+ * @description 导入 Vue 核心响应式 API
  */
 import { ref, Ref, computed, watch, onMounted, onUnmounted, inject, ComputedRef } from "vue";
 /**
- * 穿梭框组件 Props 和 Emits 类型
- * @description 穿梭框组件 Props 和 Emits 类型
+ * 模块导入
+ * @description 导入组件类型定义
  */
 import type { ComponentProps, ComponentEmits } from "./types";
 /**
- * 随机字符生成工具
- * @description 随机字符生成工具
+ * 模块导入
+ * @description 导入随机字符生成工具
  */
 import { randChar } from "../tools/rand-char";
 /**
- * 选项类型
- * @description 选项类型
+ * 模块导入
+ * @description 导入选项类型定义
  */
 import { PaOptionType } from "../manager-type";
 /**
- * 数据查找工具
- * @description 数据查找工具
+ * 模块导入
+ * @description 导入数据查找工具函数
  */
 import { findData as findDataSelect } from "./find-data";
 /**
- * 全局配置类型
- * @description 全局配置类型
+ * 模块导入
+ * @description 导入全局配置类型定义
  */
 import { PancakeGlobalConfigType } from "../pa-manager/types";
 /**
- * 深比较和空值判断工具
- * @description 深比较和空值判断工具
+ * 模块导入
+ * @description 导入 lodash 工具函数
  */
 import _ from "lodash";
+/**
+ * lodash 解构
+ * @description 从 lodash 中解构 isEqual 和 isNil 方法
+ */
 const { isEqual, isNil } = _;
 /**
- * 组件 Props
- * @description 组件 Props
+ * 组件属性
+ * @type ComponentProps
+ * @description 组件的属性对象
  */
 const props = withDefaults(defineProps<ComponentProps>(), {
   id: randChar()
 });
 /**
- * 组件 Emits
- * @description 组件 Emits
+ * 组件事件
+ * @description 组件的 emits 定义
  */
 const emits = defineEmits<ComponentEmits>();
 /**
+ * 全局配置注入
+ * @type ComputedRef<PancakeGlobalConfigType>
+ * @description 注入全局配置对象
+ */
+const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
+/**
+ * 语言包
+ * @type ComputedRef<Record<string, string>>
+ * @description 根据当前语言获取对应的语言包
+ */
+const languagePackage = computed(() => {
+  return PancakeGlobalConfig.value?.language?.package?.["cell"] || {};
+});
+/**
  * 外置数据选项列表
+ * @type Ref<PaOptionType.SelectList>
  * @description 外置数据选项列表
  */
 const exOptionsList = ref(props?.exOptions || []);
 /**
  * 左侧搜索关键词
+ * @type Ref<string>
  * @description 左侧搜索关键词
  */
 const searchAll = ref("");
 /**
  * 右侧搜索关键词
+ * @type Ref<string>
  * @description 右侧搜索关键词
  */
 const searchSelected = ref("");
 /**
  * 已选中列表
+ * @type Ref<PaOptionType.SelectList>
  * @description 已选中列表
  */
 const selectedList: Ref<PaOptionType.SelectList> = ref([]);
 /**
  * 左侧待选中列表
+ * @type Ref<Array<boolean | number | string>>
  * @description 左侧待选中列表
  */
 const awaitSelectList: Ref<Array<boolean | number | string>> = ref([]);
 /**
  * 右侧待取消选中列表
+ * @type Ref<Array<boolean | number | string>>
  * @description 右侧待取消选中列表
  */
 const awaitSelectedList: Ref<Array<boolean | number | string>> = ref([]);
 /**
  * 左侧搜索过滤后的未选中列表
+ * @type ComputedRef<PaOptionType.SelectList>
  * @description 左侧搜索过滤后的未选中列表
  */
 const searchAllSelectList = computed(() => {
@@ -181,6 +207,7 @@ const searchAllSelectList = computed(() => {
 });
 /**
  * 右侧搜索过滤后的已选中列表
+ * @type ComputedRef<PaOptionType.SelectList>
  * @description 右侧搜索过滤后的已选中列表
  */
 const filterSelectedList = computed(() => {
@@ -191,48 +218,43 @@ const filterSelectedList = computed(() => {
 });
 /**
  * 组件根元素引用
+ * @type Ref<HTMLElement | undefined>
  * @description 组件根元素引用
  */
 const selectRef = ref();
 /**
- * 全局配置注入
- * @description 全局配置注入
- */
-const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
-/**
- * 语言包
- * @description 语言包
- */
-const languagePackage = computed(() => {
-  return PancakeGlobalConfig.value?.language?.package?.["cell"] || {};
-});
-/**
- * 旧值，用于 change 事件对比
+ * 旧值
+ * @type Array<boolean | number | string>
  * @description 旧值，用于 change 事件对比
  */
 let oldValue = props.modelValue || [];
 /**
  * 左侧上次点击索引
+ * @type number
  * @description 左侧上次点击索引
  */
 let leftOldIndex = -1;
 /**
  * 右侧上次点击索引
+ * @type number
  * @description 右侧上次点击索引
  */
 let rightOldIndex = -1;
 /**
  * 左侧添加或删除标记
+ * @type number
  * @description 左侧添加或删除标记
  */
 let leftAddOrDel = 1;
 /**
  * 右侧添加或删除标记
+ * @type number
  * @description 右侧添加或删除标记
  */
 let rightAddOrDel = 1;
 /**
  * Shift 键是否按下
+ * @type Ref<boolean>
  * @description Shift 键是否按下
  */
 const isShiftPressed = ref(false);
@@ -367,15 +389,15 @@ function findData(data: Array<boolean | number | string>): string {
   return findDataSelect(data, exOptionsList.value);
 }
 /**
- * 组件挂载时初始化断点并添加键盘事件监听
- * @description 组件挂载时初始化断点并添加键盘事件监听
+ * 组件挂载
+ * @description 组件挂载时添加键盘事件监听
  */
 onMounted(() => {
   if (typeof window !== "undefined") window.addEventListener("keydown", handleKeyDown);
   if (typeof window !== "undefined") window.addEventListener("keyup", handleKeyUp);
 });
 /**
- * 组件卸载时移除键盘事件监听
+ * 组件卸载
  * @description 组件卸载时移除键盘事件监听
  */
 onUnmounted(() => {
@@ -383,6 +405,7 @@ onUnmounted(() => {
   if (typeof window !== "undefined") window.removeEventListener("keyup", handleKeyUp);
 });
 /**
+ * modelValue 同步监听
  * @description 监听 modelValue 变化，同步更新已选中列表
  */
 watch(
@@ -396,6 +419,7 @@ watch(
   { immediate: true }
 );
 /**
+ * exOptions 同步监听
  * @description 监听 exOptions 变化，同步更新外置选项列表
  */
 watch(

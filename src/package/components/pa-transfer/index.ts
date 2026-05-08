@@ -1,37 +1,24 @@
 /**
  * 模块导入
- * @description 穿梭框组件
+ * @description 导入 Vue 应用类型
  */
 import type { App } from "vue";
 /**
  * 模块导入
- * @description 穿梭框组件
+ * @description 导入 PaTransfer 组件
  */
 import PaTransfer from "./pa-transfer.vue";
 /**
- * 模块导入
- * @description 注册 PaTransfer 组件
+ * 组件名称
+ * @description 组件注册名称
  */
+const name = "PaTransfer";
 /**
+ * 组件注册函数
  * @param app - Vue 应用实例
- * @description @param app - Vue 应用实例
+ * @description 将 PaTransfer 组件注册到 Vue 应用中
  */
-/**
- * 模块导入
- * @description 注册 PaTransfer 组件到 Vue 应用
- */
-function install(app: App): void {
+const install = function (app: App): void {
   if (!app._context.components["PaTransfer"]) app.component("PaTransfer", PaTransfer);
-}
-/**
- * 模块导入
- * @description 穿梭框组件导出
- */
-export default {
-  /**
-   * 模块导入
-   * @description 组件名称
-   */
-  name: "PaTransfer",
-  install
 };
+export default { name, install };

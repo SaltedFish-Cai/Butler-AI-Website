@@ -25,7 +25,7 @@
 | disabled       | 是否禁用         | `boolean`                                                                           | `false`    |
 | display        | 纯展示模式       | `boolean`                                                                           | `false`    |
 | useSearch      | 是否使用搜索     | `boolean`                                                                           | `false`    |
-| contrastData   | 对比数据         | `Array<number \| string>` \| `number` \| `string`                                   | -          |
+| contrastData   | 对比数据         | `Array<boolean \| number \| string>`                                                | -          |
 | alwaysContrast | 是否显示对比数据 | `boolean`                                                                           | `false`    |
 
 ## ComponentEmits
