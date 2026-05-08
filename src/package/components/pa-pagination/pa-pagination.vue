@@ -1,7 +1,7 @@
 <template>
-  <div class="pa-pagination" :class="[props.class]" :style="{ ...props.style }">
+  <div class="pa-pagination" :class="[props.class, { 'is-disabled': props.disabled }]" :style="{ ...props.style }">
     <span v-if="showTotal" class="m-pagination-total">
-      {{ languagePackage["total"] }} <span>{{ total }}</span> {{ languagePackage["records"] }}
+      {{ languagePackage?.["total"] }} <span>{{ total }}</span> {{ languagePackage?.["records2"] }}
     </span>
     <div v-if="showSizes" class="m-pagination-sizes">
       <pa-select
@@ -10,6 +10,7 @@
         @change="handleSizeChange"
         :clearable="false"
         :exOptions="exOptions"
+        :disabled="props.disabled"
       ></pa-select>
     </div>
     <button
@@ -56,7 +57,7 @@
       <pa-icon name="right_line"></pa-icon>
     </button>
     <div v-if="showJumper" class="m-pagination-jumper">
-      <span>{{ languagePackage["jumpTo"] }}</span>
+      <span>{{ languagePackage?.["jumpTo"] }}</span>
       <pa-number
         :min="1"
         :max="pageCount"
@@ -68,8 +69,9 @@
         :clearable="false"
         :precision="0"
         @change="handleJumperEnter"
+        :disabled="props.disabled"
       ></pa-number>
-      <span>{{ languagePackage["records3"] }}</span>
+      <span>{{ languagePackage?.["records3"] || "" }}</span>
     </div>
   </div>
 </template>
@@ -79,12 +81,13 @@
  * 模块导入
  * @description 导入 Vue 响应式 API
  */
-import { ref, computed, watch, inject } from "vue";
+import { ref, computed, watch, inject, ComputedRef } from "vue";
 /**
  * 模块导入
  * @description 导入组件类型定义
  */
 import { ComponentProps, ComponentEmits } from "./types";
+import { PancakeGlobalConfigType } from "../pa-manager/types";
 /**
  * 组件属性
  * @description 组件的 props 定义
@@ -95,19 +98,52 @@ const props = withDefaults(defineProps<ComponentProps>(), {
   pageSizes: () => [10, 20, 30, 40, 50, 100],
   pagerCount: 3,
   background: false,
-  layout: "total, sizes, prev, pager, next, jumper",
+  layout: "total,sizes,prev,pager,next,jumper",
   disabled: false
 });
+/**
+ * 全局配置注入
+ * @type ComputedRef<PancakeGlobalConfigType>
+ * @description 注入全局配置对象
+ */
+const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
+/**
 /**
  * 组件事件
  * @description 组件的 emits 定义
  */
 const emit = defineEmits<ComponentEmits>();
 /**
- * 语言包
- * @description 注入的语言包
+ * 语言值
+ * @returns string 语言代码
+ * @description 获取当前语言设置
  */
-const languagePackage = inject("languagePackage") as Record<string, string>;
+const languageValue = computed(() => {
+  return PancakeGlobalConfig.value?.language?.value || "zh-CN";
+});
+const languagePackage = computed(() => {
+  const data = {
+    "en-US": {
+      total: "Total",
+      records: "records/page",
+      records2: "records",
+      jumpTo: "Jump to",
+      records3: "page"
+    },
+    "zh-CN": {
+      total: "共",
+      records2: "条",
+      records: "条/页",
+      records3: "页",
+      jumpTo: "跳转"
+    }
+  };
+  return data[languageValue.value];
+});
+/**
+  }
+});
+/**
 /**
  * 内部当前页码
  * @description 内部维护的当前页码状态
@@ -186,7 +222,7 @@ const jumpNextMore = (): void => {
  */
 const exOptions = computed(() => {
   return props.pageSizes.map(size => ({
-    label: ` ${size}${languagePackage.value["records2"]}`,
+    label: ` ${size}${languagePackage.value?.["records"] || ""}`,
     value: size
   }));
 });
@@ -204,6 +240,7 @@ const pageCount = computed(() => {
  * @description 解析 layout 配置
  */
 const layoutParts = computed(() => {
+  console.log("++++++++++> props.layout:", props.layout);
   return props.layout.split(",").map(part => part.trim());
 });
 /**

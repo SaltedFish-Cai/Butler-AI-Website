@@ -13,6 +13,7 @@
     }
   }
   .m-pagination-sizes {
+    margin-left: calc(var(--pa-size-padding, 10px) / 2);
     margin-right: calc(var(--pa-size-padding, 10px) / 2);
   }
   .m-pagination-select {
@@ -72,6 +73,15 @@
       .pa-number-input-inner {
         text-align: center;
       }
+    }
+  }
+  &.is-disabled {
+    .m-pagination-btn,
+    .m-pagination-more {
+      cursor: not-allowed;
+    }
+    .m-pagination-btn.is-active {
+      background-color: var(--pa-color-info);
     }
   }
 }

@@ -4,9 +4,13 @@
 
 ## 基础使用
 
+默认布局为 `total, sizes, prev, pager, next, jumper`。
+
 <demo src="./base.vue"></demo>
 
-## 带总数显示
+## 自定义显示布局
+
+使用 `layout` 属性自定义分页器的显示布局。
 
 <demo src="./with-total.vue"></demo>
 
