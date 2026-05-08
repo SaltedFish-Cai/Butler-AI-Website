@@ -48,7 +48,7 @@ import { reactive, onBeforeMount, useSlots, nextTick, watch, inject, ComputedRef
 import { ComponentProps, ComponentEmits } from "./types";
 import inBrowser from "../tools/inBrowser";
 import { M_MessageBox } from "../feedback";
-
+import paIcon from "../pa-icon/pa-icon.vue";
 import { PancakeGlobalConfigType } from "../pa-manager/types";
 
 import _ from "lodash";
