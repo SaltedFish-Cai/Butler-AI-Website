@@ -94,10 +94,17 @@ export type PancakeGlobal = {
   /**
    * 组件尺寸
    * @type "default" | "large" | "small" | undefined
-   * @default undefined
+   * @default 'default'
    * @description 当设置该值时，会自定义组件尺寸
    */
   size?: "default" | "large" | "small";
+  /**
+   * 标题样式
+   * @type "default" | "horizontal" | "vertical" | undefined
+   * @default 'default'
+   * @description 当设置该值时，会自定义标题样式
+   */
+  titleStyle?: "default" | "horizontal" | "vertical";
   /**
    * 表格配置
    * @type object | undefined

@@ -1,5 +1,5 @@
 <template>
-  <pa-title style-mode="horizontal" :line-config="false">FormData结果值：</pa-title>
+  <pa-title :line-config="false">FormData结果值：</pa-title>
 
   <code-view v-model:html="formData"> </code-view>
 

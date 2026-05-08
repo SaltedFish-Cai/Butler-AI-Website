@@ -3,7 +3,7 @@
     class="pa-title"
     :class="[
       props.class,
-      props.styleMode,
+      styleMode.model,
       padding?.includes('top') ? 'padding-top' : '',
       padding?.includes('left') ? 'padding-left' : '',
       padding?.includes('bottom') ? 'padding-bottom' : '',
@@ -21,12 +21,7 @@
         </div>
       </div>
     </div>
-    <pa-line
-      v-if="lineConfig"
-      v-bind="
-        lineConfig == true ? { padding: [0, 0, 0, 5], height: '3px' } : { padding: [0, 0, 0, 5], height: '3px', ...lineConfig }
-      "
-    />
+    <pa-line v-if="styleMode.lineConfig" v-bind="styleMode.lineConfig" />
 
     <div class="pa-title_tip" v-if="tipsPosition == 'bottom'">
       <slot name="tips">{{ tips }}</slot>
@@ -39,16 +34,33 @@
  * 模块导入
  * @description 导入组件类型定义
  */
+import { computed, ComputedRef, inject } from "vue";
 import { ComponentProps } from "./types";
+import { PancakeGlobalConfigType } from "../pa-manager/types";
+/**
+ * 全局配置注入
+ * @type ComputedRef<PancakeGlobalConfigType>
+ * @description 从父组件注入的全局配置信息
+ */
+const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
+
 /**
  * 组件属性
  * @type ComponentProps
  * @description 组件的属性对象
  */
 const props = withDefaults(defineProps<ComponentProps>(), {
-  styleMode: "default",
-  tipsPosition: "bottom",
-  lineConfig: () => ({ padding: [0, 0, 0, 5], height: "3px" })
+  tipsPosition: "bottom"
+});
+
+const styleMode = computed(() => {
+  const model = props.styleMode || PancakeGlobalConfig.value?.titleStyle || "default";
+  const padding = props.padding || [];
+  let lineConfig = (props.lineConfig == true ? { padding: [0, 0, 0, 5], height: "3px" } : props.lineConfig) || false;
+  if (!lineConfig && model == "default") {
+    lineConfig = { padding: [0, 0, 0, 5], height: "3px" };
+  }
+  return { model, padding, lineConfig };
 });
 </script>
 

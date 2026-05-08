@@ -4,7 +4,7 @@
 
 ## 基础使用
 
-基础样式展示，自带分割线样式。
+基础样式展示，自带分割线样式。在全局配置（[pa-manager](/document/PancakeUI_Doc/manager/readme) ）中可通过 `titleStyle` 可改变默认样式。
 
 <demo src="./base.vue">
 </demo>
@@ -47,8 +47,8 @@
 | tips          | 提示信息   | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) `string` | -           |
 | tips-position | 提示位置   | `'bottom'` \| `'right'`                                                               | `'bottom'`  |
 | padding       | 内边距方向 | `Array<'all'` \| `'bottom'` \| `'left'` \| `'null'` \| `'right'` \| `'top'>`          | -           |
-| style-mode    | 样式模式   | `'default'` \| `'horizontal'` \| `'vertical'`                                          | `'default'` |
-| line-config   | 分割线配置 | [`ComponentProps`](/document/PancakeUI_Doc/line/readme#componentprops) `boolean`             | -           |
+| style-mode    | 样式模式   | `'default'` \| `'horizontal'` \| `'vertical'`                                         | `'default'` |
+| line-config   | 分割线配置 | [`ComponentProps`](/document/PancakeUI_Doc/line/readme#componentprops) `boolean`      | -           |
 
 ## ComponentSlots
 
