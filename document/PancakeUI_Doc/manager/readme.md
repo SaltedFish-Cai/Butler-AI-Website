@@ -2,6 +2,11 @@
 
 `pa-manager` 用于配置 Pancake-UI 的全局设置，包括 API 地址、主题、语言等。
 
+## 基础使用
+
+<demo src="./base.vue">
+</demo>
+
 ## 功能说明
 
 作为全局配置容器，需要在应用根节点使用，为所有 Pancake-UI 组件提供统一的配置。
@@ -17,6 +22,7 @@
 | baseHost       | API 基础 URL   | `string`                                                                            | -           |
 | themeColor     | 主题颜色       | `string`                                                                            | -           |
 | isDark         | 是否为暗黑模式 | `boolean`                                                                           | -           |
+| titleStyle     | 标题样式       | `"default"` \| `"horizontal"` \| `"vertical"`                                       | `"default"` |
 | size           | 组件尺寸       | `"small"` \| `"default"` \| `"large"`                                               | `"default"` |
 | language       | 语言           | [`LanguageKey`](/document/PancakeUI_Doc/options#languagepackagetype)                | -           |
 | table_config   | 表格配置       | [`PancakeGlobalTableConfig`](#pancakeglobaltableconfig-表格配置)                    | -           |
@@ -52,17 +58,18 @@
 
 ## PancakeGlobal 全局配置基础类型
 
-| 属性名         | 描述         | 类型                                                                                | 默认值 |
-| -------------- | ------------ | ----------------------------------------------------------------------------------- | ------ |
-| env            | 环境标识     | `string`                                                                            | -      |
-| baseHost       | API 基础 URL | `string`                                                                            | -      |
-| themeColor     | 主题颜色     | `string`                                                                            | -      |
-| isDark         | 是否暗黑模式 | `boolean`                                                                           | -      |
-| size           | 组件尺寸     | `"default"` \| `"large"` \| `"small"`                                               | -      |
-| table_config   | 表格配置     | [`PancakeGlobalTableConfig`](#pancakeglobaltableconfig-表格配置)                    | -      |
-| address_config | 地址配置     | [`ApiType`](#apitype-api-配置类型)                                                  | -      |
-| file_config    | 文件配置     | [`ApiType`](#apitype-api-配置类型) & `{ downloadHose: string; compareKey: string }` | -      |
-| requestHeader  | 请求头       | `any`                                                                               | -      |
+| 属性名         | 描述         | 类型                                                                                | 默认值      |
+| -------------- | ------------ | ----------------------------------------------------------------------------------- | ----------- |
+| env            | 环境标识     | `string`                                                                            | -           |
+| baseHost       | API 基础 URL | `string`                                                                            | -           |
+| themeColor     | 主题颜色     | `string`                                                                            | -           |
+| isDark         | 是否暗黑模式 | `boolean`                                                                           | -           |
+| titleStyle     | 标题样式     | `"default"` \| `"horizontal"` \| `"vertical"`                                       | `"default"` |
+| size           | 组件尺寸     | `"default"` \| `"large"` \| `"small"`                                               | -           |
+| table_config   | 表格配置     | [`PancakeGlobalTableConfig`](#pancakeglobaltableconfig-表格配置)                    | -           |
+| address_config | 地址配置     | [`ApiType`](#apitype-api-配置类型)                                                  | -           |
+| file_config    | 文件配置     | [`ApiType`](#apitype-api-配置类型) & `{ downloadHose: string; compareKey: string }` | -           |
+| requestHeader  | 请求头       | `any`                                                                               | -           |
 
 ## PancakeGlobalTableConfig 表格配置
 
@@ -75,18 +82,19 @@
 
 ## PancakeGlobalConfigType 全局配置运行时类型
 
-| 属性名         | 描述         | 类型                                                                                | 默认值 |
-| -------------- | ------------ | ----------------------------------------------------------------------------------- | ------ |
-| env            | 环境标识     | `string`                                                                            | -      |
-| baseHost       | API 基础 URL | `string`                                                                            | -      |
-| themeColor     | 主题颜色     | `string`                                                                            | -      |
-| isDark         | 是否暗黑模式 | `boolean`                                                                           | -      |
-| size           | 组件尺寸     | `"default"` \| `"large"` \| `"small"`                                               | -      |
-| table_config   | 表格配置     | [`PancakeGlobalTableConfig`](#pancakeglobaltableconfig-表格配置)                    | -      |
-| address_config | 地址配置     | [`ApiType`](#apitype-api-配置类型)                                                  | -      |
-| file_config    | 文件配置     | [`ApiType`](#apitype-api-配置类型) & `{ downloadHose: string; compareKey: string }` | -      |
-| requestHeader  | 请求头       | `any`                                                                               | -      |
-| language       | 语言配置     | `{ value: LanguageKey; package: Record<string, Record<string, string>> }`           | -      |
+| 属性名         | 描述         | 类型                                                                                | 默认值      |
+| -------------- | ------------ | ----------------------------------------------------------------------------------- | ----------- |
+| env            | 环境标识     | `string`                                                                            | -           |
+| baseHost       | API 基础 URL | `string`                                                                            | -           |
+| themeColor     | 主题颜色     | `string`                                                                            | -           |
+| isDark         | 是否暗黑模式 | `boolean`                                                                           | -           |
+| titleStyle     | 标题样式     | `"default"` \| `"horizontal"` \| `"vertical"`                                       | `"default"` |
+| size           | 组件尺寸     | `"default"` \| `"large"` \| `"small"`                                               | -           |
+| table_config   | 表格配置     | [`PancakeGlobalTableConfig`](#pancakeglobaltableconfig-表格配置)                    | -           |
+| address_config | 地址配置     | [`ApiType`](#apitype-api-配置类型)                                                  | -           |
+| file_config    | 文件配置     | [`ApiType`](#apitype-api-配置类型) & `{ downloadHose: string; compareKey: string }` | -           |
+| requestHeader  | 请求头       | `any`                                                                               | -           |
+| language       | 语言配置     | `{ value: LanguageKey; package: Record<string, Record<string, string>> }`           | -           |
 
 ## 使用示例
 

@@ -32,10 +32,18 @@
 <script lang="ts" setup>
 /**
  * 模块导入
- * @description 导入组件类型定义
+ * @description 导入 Vue 组合式 API
  */
 import { computed, ComputedRef, inject } from "vue";
+/**
+ * 模块导入
+ * @description 导入组件类型定义
+ */
 import { ComponentProps } from "./types";
+/**
+ * 模块导入
+ * @description 导入全局配置类型
+ */
 import { PancakeGlobalConfigType } from "../pa-manager/types";
 /**
  * 全局配置注入
@@ -52,7 +60,11 @@ const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<Pan
 const props = withDefaults(defineProps<ComponentProps>(), {
   tipsPosition: "bottom"
 });
-
+/**
+ * 样式模式计算
+ * @type ComputedRef<object>
+ * @description 根据属性计算标题的样式模式、内边距和分割线配置
+ */
 const styleMode = computed(() => {
   const model = props.styleMode || PancakeGlobalConfig.value?.titleStyle || "default";
   const padding = props.padding || [];
@@ -64,6 +76,6 @@ const styleMode = computed(() => {
 });
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @use "./index.scss";
 </style>

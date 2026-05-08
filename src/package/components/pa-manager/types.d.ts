@@ -3,13 +3,13 @@
  * @description 全局配置组件类型定义
  */
 /**
- * 语言键类型
- * @description 语言键类型
+ * 模块导入
+ * @description 导入语言键类型定义
  */
 import type { LanguageKey } from "../manager-type";
 /**
  * API 配置类型
- * @type {ApiType}
+ * @type object
  * @description API 请求的配置结构
  */
 export type ApiType = {
@@ -28,7 +28,7 @@ export type ApiType = {
 };
 /**
  * 条件类型
- * @type {ConditionalType}
+ * @type object
  * @description 高级查询中的条件选项
  */
 export type ConditionalType = {
@@ -59,7 +59,7 @@ export type ConditionalType = {
 };
 /**
  * 全局配置基础类型
- * @type {PancakeGlobal}
+ * @type object
  * @description 全局配置的基础属性
  */
 export type PancakeGlobal = {
@@ -143,7 +143,7 @@ export type PancakeGlobal = {
 };
 /**
  * PaManager 组件 Props
- * @type {ComponentProps}
+ * @type object
  * @description 全局配置组件的属性类型
  */
 export type ComponentProps = PancakeGlobal & {
@@ -178,7 +178,7 @@ export type ComponentProps = PancakeGlobal & {
 };
 /**
  * 全局配置运行时类型
- * @type {PancakeGlobalConfigType}
+ * @type object
  * @description 全局配置运行时的状态类型
  */
 export type PancakeGlobalConfigType = PancakeGlobal & {
