@@ -60,6 +60,14 @@
 }
 
 .pa-switch.is-disabled {
+  color: var(--pa-color-info-light-1);
+  .pa-switch-text {
+    color: var(--pa-color-info-light-1) !important;
+  }
+  .pa-switch-inner {
+    background-color: var(--pa-color-info-light-1) !important;
+    border-color: var(--pa-color-info-light-1) !important;
+  }
   &:hover {
     cursor: not-allowed;
     .pa-switch-inner {

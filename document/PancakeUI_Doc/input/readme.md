@@ -10,6 +10,10 @@
 
 <demo src="./base.vue" ></demo>
 
+## Disabled 禁用状态
+
+<demo src="./disabled.vue" ></demo>
+
 ## Display 纯展示模式
 
 展示单层纯展示模式，使用 `display` 属性开启纯展示模式。
