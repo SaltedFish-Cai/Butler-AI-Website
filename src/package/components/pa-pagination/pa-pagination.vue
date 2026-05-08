@@ -118,6 +118,69 @@ const internalCurrentPage = ref(props.currentPage);
  * @description 内部维护的每页数量状态
  */
 const internalPageSize = ref(props.pageSize);
+);
+/**
+ * 跳转到指定页
+ * @param page - 目标页码
+ * @description 跳转到指定的页码
+ */
+const goToPage = (page: number): void => {
+  if (props.disabled) return;
+  const validPage = Math.max(1, Math.min(page, pageCount.value));
+  if (validPage !== internalCurrentPage.value) {
+    internalCurrentPage.value = validPage;
+    emit("update:currentPage", validPage);
+    emit("current-change", validPage);
+    if (validPage < internalCurrentPage.value) {
+      emit("prev-click", validPage);
+    } else if (validPage > internalCurrentPage.value) {
+      emit("next-click", validPage);
+    }
+  }
+};
+/**
+ * 处理每页数量变化
+ * @param data - 选择的数据
+ * @description 每页数量变化时的处理
+ */
+const handleSizeChange = (data: { value: number }): void => {
+  if (props.disabled) return;
+  internalPageSize.value = data.value;
+  emit("update:pageSize", data.value);
+  emit("size-change", data.value);
+  const newPageCount = Math.ceil(props.total / data.value);
+  if (internalCurrentPage.value > newPageCount) {
+    goToPage(newPageCount);
+  }
+};
+/**
+ * 处理跳转器输入
+ * @description 跳转器输入确认时的处理
+ */
+const handleJumperEnter = (): void => {
+  if (props.disabled) return;
+  const page = internalCurrentPage.value;
+  if (!isNaN(page) && page >= 1 && page <= pageCount.value) {
+    goToPage(page);
+  }
+  internalCurrentPage.value = page;
+};
+/**
+ * 跳转到左侧更多页
+ * @description 点击左侧更多按钮
+ */
+const jumpPrevMore = (): void => {
+  if (props.disabled) return;
+  goToPage(Math.max(1, internalCurrentPage.value - props.pagerCount));
+};
+/**
+ * 跳转到右侧更多页
+ * @description 点击右侧更多按钮
+ */
+const jumpNextMore = (): void => {
+  if (props.disabled) return;
+  goToPage(Math.min(pageCount.value, internalCurrentPage.value + props.pagerCount));
+};
 /**
  * 每页数量选项
  * @description 计算每页数量选择器的选项
@@ -228,69 +291,6 @@ watch(
   newVal => {
     internalPageSize.value = newVal;
   }
-);
-/**
- * 跳转到指定页
- * @param page - 目标页码
- * @description 跳转到指定的页码
- */
-const goToPage = (page: number): void => {
-  if (props.disabled) return;
-  const validPage = Math.max(1, Math.min(page, pageCount.value));
-  if (validPage !== internalCurrentPage.value) {
-    internalCurrentPage.value = validPage;
-    emit("update:currentPage", validPage);
-    emit("current-change", validPage);
-    if (validPage < internalCurrentPage.value) {
-      emit("prev-click", validPage);
-    } else if (validPage > internalCurrentPage.value) {
-      emit("next-click", validPage);
-    }
-  }
-};
-/**
- * 处理每页数量变化
- * @param data - 选择的数据
- * @description 每页数量变化时的处理
- */
-const handleSizeChange = (data: { value: number }): void => {
-  if (props.disabled) return;
-  internalPageSize.value = data.value;
-  emit("update:pageSize", data.value);
-  emit("size-change", data.value);
-  const newPageCount = Math.ceil(props.total / data.value);
-  if (internalCurrentPage.value > newPageCount) {
-    goToPage(newPageCount);
-  }
-};
-/**
- * 处理跳转器输入
- * @description 跳转器输入确认时的处理
- */
-const handleJumperEnter = (): void => {
-  if (props.disabled) return;
-  const page = internalCurrentPage.value;
-  if (!isNaN(page) && page >= 1 && page <= pageCount.value) {
-    goToPage(page);
-  }
-  internalCurrentPage.value = page;
-};
-/**
- * 跳转到左侧更多页
- * @description 点击左侧更多按钮
- */
-const jumpPrevMore = (): void => {
-  if (props.disabled) return;
-  goToPage(Math.max(1, internalCurrentPage.value - props.pagerCount));
-};
-/**
- * 跳转到右侧更多页
- * @description 点击右侧更多按钮
- */
-const jumpNextMore = (): void => {
-  if (props.disabled) return;
-  goToPage(Math.min(pageCount.value, internalCurrentPage.value + props.pagerCount));
-};
 </script>
 
 <style lang="scss">
