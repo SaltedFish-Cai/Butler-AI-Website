@@ -1,5 +1,5 @@
 <template>
-  <div class="pa-button-group" :class="['pa-button-group--' + type]">
+  <div class="pa-button-group" :class="[type]">
     <slot></slot>
   </div>
 </template>

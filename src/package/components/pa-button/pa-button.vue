@@ -9,8 +9,8 @@
       props.class,
       props.useLine ? 'use-line' : '',
       { disabled },
-      `pa-button--${state.buttonConfig.type}`,
-      `pa-button--${state.buttonConfig.size}`,
+      `${state.buttonConfig.type}`,
+      `${state.buttonConfig.size}`,
       props.usePlain ? 'use-plain' : ''
     ]"
     :style="{ ...props.style }"

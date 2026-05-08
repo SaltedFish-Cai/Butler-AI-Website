@@ -33,6 +33,102 @@
     transition: var(--pa-animation-time, 0.2s);
     cursor: pointer;
   }
+
+  &.primary {
+    --pa-button-color: var(--pa-color-primary);
+    --pa-button-color2: var(--pa-color-primary-light-9);
+    background-color: var(--pa-color-primary);
+    color: var(--pa-color-white);
+    border-color: var(--pa-color-primary);
+
+    &:hover {
+      background-color: var(--pa-color-primary-light-3);
+    }
+  }
+
+  &.warning {
+    --pa-button-color: var(--pa-color-warning);
+    --pa-button-color2: var(--pa-color-warning-light-9);
+    background-color: var(--pa-color-warning);
+    color: var(--pa-color-white);
+    border-color: var(--pa-color-warning);
+
+    &:hover {
+      background-color: var(--pa-color-warning-light-3);
+    }
+  }
+
+  &.danger {
+    --pa-button-color: var(--pa-color-danger);
+    --pa-button-color2: var(--pa-color-danger-light-9);
+    background-color: var(--pa-color-danger);
+    color: var(--pa-color-white);
+    border-color: var(--pa-color-danger);
+
+    &:hover {
+      background-color: var(--pa-color-danger-light-3);
+    }
+  }
+
+  &.info {
+    --pa-button-color: var(--pa-color-info);
+    --pa-button-color2: var(--pa-color-info-light-9);
+    background-color: var(--pa-color-info);
+    color: var(--pa-color-white);
+    border-color: var(--pa-color-info);
+
+    &:hover {
+      background-color: var(--pa-color-info-light-3);
+    }
+  }
+
+  &.success {
+    --pa-button-color: var(--pa-color-success);
+    --pa-button-color2: var(--pa-color-success-light-9);
+    background-color: var(--pa-color-success);
+    color: var(--pa-color-white);
+    border-color: var(--pa-color-success);
+
+    &:hover {
+      background-color: var(--pa-color-success-light-3);
+    }
+  }
+
+  &.default {
+    --pa-button-color2: var(--pa-color-bg);
+    --pa-button-color: var(--pa-color-font);
+    --pa-button-color5: var(--pa-color-bg);
+    --pa-button-color3: var(--pa-color-border);
+    --pa-button-color4: var(--pa-color-primary);
+    background-color: var(--pa-color-bg);
+    color: var(--pa-color-font);
+    border-color: var(--pa-color-border);
+
+    &:hover {
+      color: var(--pa-color-primary);
+      border-color: var(--pa-color-primary);
+    }
+  }
+
+  &.small {
+    --pa-size-font-sm: calc(var(--pa-size-font) - 1px);
+    --pa-size-height-sm: calc(var(--pa-size-height) - 8px);
+    --pa-size-padding-sm: calc(var(--pa-size-padding) / 2);
+
+    font-size: var(--pa-size-font-sm) !important;
+    line-height: var(--pa-size-height-sm) !important;
+    padding: calc(var(--pa-size-padding-sm) / 3) calc(var(--pa-size-padding-sm) / 1.2) !important;
+  }
+
+  &.large {
+    --pa-size-font-sm: calc(var(--pa-size-font) + 1px);
+    --pa-size-height-sm: calc(var(--pa-size-height) + 2px);
+    --pa-size-padding-sm: calc(var(--pa-size-padding) / 1);
+
+    font-size: var(--pa-size-font-sm) !important;
+    line-height: var(--pa-size-height-sm) !important;
+    padding: calc(var(--pa-size-padding-sm) / 3) calc(var(--pa-size-padding-sm) / 1.2) !important;
+  }
 }
 
 .pa-button + .pa-button {
@@ -109,102 +205,6 @@
   }
 }
 
-.pa-button--primary {
-  --pa-button-color: var(--pa-color-primary);
-  --pa-button-color2: var(--pa-color-primary-light-9);
-  background-color: var(--pa-color-primary);
-  color: var(--pa-color-white);
-  border-color: var(--pa-color-primary);
-
-  &:hover {
-    background-color: var(--pa-color-primary-light-3);
-  }
-}
-
-.pa-button--warning {
-  --pa-button-color: var(--pa-color-warning);
-  --pa-button-color2: var(--pa-color-warning-light-9);
-  background-color: var(--pa-color-warning);
-  color: var(--pa-color-white);
-  border-color: var(--pa-color-warning);
-
-  &:hover {
-    background-color: var(--pa-color-warning-light-3);
-  }
-}
-
-.pa-button--danger {
-  --pa-button-color: var(--pa-color-danger);
-  --pa-button-color2: var(--pa-color-danger-light-9);
-  background-color: var(--pa-color-danger);
-  color: var(--pa-color-white);
-  border-color: var(--pa-color-danger);
-
-  &:hover {
-    background-color: var(--pa-color-danger-light-3);
-  }
-}
-
-.pa-button--info {
-  --pa-button-color: var(--pa-color-info);
-  --pa-button-color2: var(--pa-color-info-light-9);
-  background-color: var(--pa-color-info);
-  color: var(--pa-color-white);
-  border-color: var(--pa-color-info);
-
-  &:hover {
-    background-color: var(--pa-color-info-light-3);
-  }
-}
-
-.pa-button--success {
-  --pa-button-color: var(--pa-color-success);
-  --pa-button-color2: var(--pa-color-success-light-9);
-  background-color: var(--pa-color-success);
-  color: var(--pa-color-white);
-  border-color: var(--pa-color-success);
-
-  &:hover {
-    background-color: var(--pa-color-success-light-3);
-  }
-}
-
-.pa-button--default {
-  --pa-button-color2: var(--pa-color-bg);
-  --pa-button-color: var(--pa-color-font);
-  --pa-button-color5: var(--pa-color-bg);
-  --pa-button-color3: var(--pa-color-border);
-  --pa-button-color4: var(--pa-color-primary);
-  background-color: var(--pa-color-bg);
-  color: var(--pa-color-font);
-  border-color: var(--pa-color-border);
-
-  &:hover {
-    color: var(--pa-color-primary);
-    border-color: var(--pa-color-primary);
-  }
-}
-
-.pa-button--small {
-  --pa-size-font-sm: calc(var(--pa-size-font) - 1px);
-  --pa-size-height-sm: calc(var(--pa-size-height) - 8px);
-  --pa-size-padding-sm: calc(var(--pa-size-padding) / 2);
-
-  font-size: var(--pa-size-font-sm) !important;
-  line-height: var(--pa-size-height-sm) !important;
-  padding: calc(var(--pa-size-padding-sm) / 3) calc(var(--pa-size-padding-sm) / 1.2) !important;
-}
-
-.pa-button--large {
-  --pa-size-font-sm: calc(var(--pa-size-font) + 1px);
-  --pa-size-height-sm: calc(var(--pa-size-height) + 2px);
-  --pa-size-padding-sm: calc(var(--pa-size-padding) / 1);
-
-  font-size: var(--pa-size-font-sm) !important;
-  line-height: var(--pa-size-height-sm) !important;
-  padding: calc(var(--pa-size-padding-sm) / 3) calc(var(--pa-size-padding-sm) / 1.2) !important;
-}
-
 .pa-button-group {
   display: inline-flex;
   overflow: hidden;
@@ -243,31 +243,31 @@
     }
   }
 
-  &--primary {
+  &.primary {
     > .pa-button {
       border-color: var(--pa-color-primary);
     }
   }
 
-  &--warning {
+  &.warning {
     > .pa-button {
       border-color: var(--pa-color-warning);
     }
   }
 
-  &--danger {
+  &.danger {
     > .pa-button {
       border-color: var(--pa-color-danger);
     }
   }
 
-  &--info {
+  &.info {
     > .pa-button {
       border-color: var(--pa-color-info);
     }
   }
 
-  &--success {
+  &.success {
     > .pa-button {
       border-color: var(--pa-color-success);
     }
