@@ -118,7 +118,6 @@ const internalCurrentPage = ref(props.currentPage);
  * @description 内部维护的每页数量状态
  */
 const internalPageSize = ref(props.pageSize);
-);
 /**
  * 跳转到指定页
  * @param page - 目标页码
@@ -291,6 +290,7 @@ watch(
   newVal => {
     internalPageSize.value = newVal;
   }
+);
 </script>
 
 <style lang="scss">
