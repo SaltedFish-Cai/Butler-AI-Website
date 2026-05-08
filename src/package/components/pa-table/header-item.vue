@@ -55,7 +55,7 @@
       <div class="pa-table-filter-box" :class="[setIconAction(item.prop) ? 'pa-table-filter-box-act' : '']">
         <pa-icon
           :class="[setIconAction(item.prop) ? 'filter-icon flex-center filter-act' : 'filter-icon flex-center']"
-          name="filter"
+          name="Filter"
         />
       </div>
       <template v-for="slot in Object.keys($slots).filter(item => item != 'default')" #[slot]="scope">
