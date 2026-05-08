@@ -87,10 +87,15 @@ import { ref, computed, watch, inject, ComputedRef } from "vue";
  * @description 导入组件类型定义
  */
 import { ComponentProps, ComponentEmits } from "./types";
+/**
+ * 模块导入
+ * @description 导入全局配置类型
+ */
 import { PancakeGlobalConfigType } from "../pa-manager/types";
 /**
  * 组件属性
- * @description 组件的 props 定义
+ * @type ComponentProps
+ * @description 组件的属性对象
  */
 const props = withDefaults(defineProps<ComponentProps>(), {
   currentPage: 1,
@@ -102,27 +107,31 @@ const props = withDefaults(defineProps<ComponentProps>(), {
   disabled: false
 });
 /**
+ * 组件事件
+ * @description 组件的 emits 定义
+ */
+const emit = defineEmits<ComponentEmits>();
+/**
  * 全局配置注入
  * @type ComputedRef<PancakeGlobalConfigType>
  * @description 注入全局配置对象
  */
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 /**
-/**
- * 组件事件
- * @description 组件的 emits 定义
- */
-const emit = defineEmits<ComponentEmits>();
-/**
  * 语言值
- * @returns string 语言代码
+ * @type ComputedRef<string>
  * @description 获取当前语言设置
  */
 const languageValue = computed(() => {
   return PancakeGlobalConfig.value?.language?.value || "zh-CN";
 });
+/**
+ * 语言包
+ * @type ComputedRef<Record<string, string>>
+ * @description 根据当前语言获取对应的语言包
+ */
 const languagePackage = computed(() => {
-  const data = {
+  const data: Record<string, Record<string, string>> = {
     "en-US": {
       total: "Total",
       records: "records/page",
@@ -141,22 +150,21 @@ const languagePackage = computed(() => {
   return data[languageValue.value];
 });
 /**
-  }
-});
-/**
-/**
  * 内部当前页码
+ * @type Ref<number>
  * @description 内部维护的当前页码状态
  */
 const internalCurrentPage = ref(props.currentPage);
 /**
  * 内部每页数量
+ * @type Ref<number>
  * @description 内部维护的每页数量状态
  */
 const internalPageSize = ref(props.pageSize);
 /**
  * 跳转到指定页
  * @param page - 目标页码
+ * @returns void
  * @description 跳转到指定的页码
  */
 const goToPage = (page: number): void => {
@@ -176,6 +184,7 @@ const goToPage = (page: number): void => {
 /**
  * 处理每页数量变化
  * @param data - 选择的数据
+ * @returns void
  * @description 每页数量变化时的处理
  */
 const handleSizeChange = (data: { value: number }): void => {
@@ -190,6 +199,7 @@ const handleSizeChange = (data: { value: number }): void => {
 };
 /**
  * 处理跳转器输入
+ * @returns void
  * @description 跳转器输入确认时的处理
  */
 const handleJumperEnter = (): void => {
@@ -202,6 +212,7 @@ const handleJumperEnter = (): void => {
 };
 /**
  * 跳转到左侧更多页
+ * @returns void
  * @description 点击左侧更多按钮
  */
 const jumpPrevMore = (): void => {
@@ -210,6 +221,7 @@ const jumpPrevMore = (): void => {
 };
 /**
  * 跳转到右侧更多页
+ * @returns void
  * @description 点击右侧更多按钮
  */
 const jumpNextMore = (): void => {
@@ -218,6 +230,7 @@ const jumpNextMore = (): void => {
 };
 /**
  * 每页数量选项
+ * @type ComputedRef<Array<{ label: string; value: number }>>
  * @description 计算每页数量选择器的选项
  */
 const exOptions = computed(() => {
@@ -228,6 +241,7 @@ const exOptions = computed(() => {
 });
 /**
  * 总页数
+ * @type ComputedRef<number>
  * @description 计算总页数
  */
 const pageCount = computed(() => {
@@ -237,34 +251,39 @@ const pageCount = computed(() => {
 });
 /**
  * 布局配置
+ * @type ComputedRef<Array<string>>
  * @description 解析 layout 配置
  */
 const layoutParts = computed(() => {
-  console.log("++++++++++> props.layout:", props.layout);
   return props.layout.split(",").map(part => part.trim());
 });
 /**
  * 是否显示总数
+ * @type ComputedRef<boolean>
  * @description 是否显示总数
  */
 const showTotal = computed(() => layoutParts.value.includes("total"));
 /**
  * 是否显示每页数量选择器
+ * @type ComputedRef<boolean>
  * @description 是否显示每页数量选择器
  */
 const showSizes = computed(() => layoutParts.value.includes("sizes"));
 /**
  * 是否显示页码
+ * @type ComputedRef<boolean>
  * @description 是否显示页码
  */
 const showPager = computed(() => layoutParts.value.includes("pager"));
 /**
  * 是否显示跳转器
+ * @type ComputedRef<boolean>
  * @description 是否显示跳转器
  */
 const showJumper = computed(() => layoutParts.value.includes("jumper"));
 /**
  * 页码列表
+ * @type ComputedRef<Array<number>>
  * @description 计算显示的页码列表
  */
 const pagerPages = computed(() => {
@@ -282,6 +301,7 @@ const pagerPages = computed(() => {
 });
 /**
  * 是否显示第一页
+ * @type ComputedRef<boolean>
  * @description 是否显示第一页按钮
  */
 const showFirstPage = computed(() => {
@@ -289,6 +309,7 @@ const showFirstPage = computed(() => {
 });
 /**
  * 是否显示最后一页
+ * @type ComputedRef<boolean>
  * @description 是否显示最后一页按钮
  */
 const showLastPage = computed(() => {
@@ -296,6 +317,7 @@ const showLastPage = computed(() => {
 });
 /**
  * 是否显示左侧更多
+ * @type ComputedRef<boolean>
  * @description 是否显示左侧更多按钮
  */
 const showPrevMore = computed(() => {
@@ -303,6 +325,7 @@ const showPrevMore = computed(() => {
 });
 /**
  * 是否显示右侧更多
+ * @type ComputedRef<boolean>
  * @description 是否显示右侧更多按钮
  */
 const showNextMore = computed(() => {
@@ -329,7 +352,6 @@ watch(
   }
 );
 </script>
-
 <style lang="scss">
 @use "./index.scss";
 </style>
