@@ -12,54 +12,54 @@
   flex-direction: column;
   align-items: flex-start;
   cursor: pointer;
-  &_header {
+  .pa-notification_header {
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
     font-size: var(--pa-size-font, 13px);
   }
-  &--success {
+  &.success {
     background-color: var(--pa-color-success-light-9);
     border-color: var(--pa-color-success-light-3);
     color: var(--pa-color-success);
   }
-  &--warning {
+  &.warning {
     background-color: var(--pa-color-warning-light-9);
     border-color: var(--pa-color-warning-light-3);
     color: var(--pa-color-warning);
   }
-  &--error {
+  &.error {
     background-color: var(--pa-color-danger-light-9);
     border-color: var(--pa-color-danger-light-3);
     color: var(--pa-color-danger);
   }
-  &--info {
+  &.info {
     background-color: var(--pa-color-info-light-9);
     border-color: var(--pa-color-info-light-3);
     color: var(--pa-color-info);
   }
-  &__title {
+  .pa-notification__title {
     font-size: calc(var(--pa-size-font, 13px) + 2px);
     font-weight: 500;
     color: var(--pa-size-font);
     display: flex;
     align-items: center;
   }
-  &__content {
+  .pa-notification__content {
     font-size: var(--pa-size-font, 13px);
     color: var(--pa-size-font);
     line-height: 1.4;
     margin: 0;
   }
-  &__icon {
+  .pa-notification__icon {
     margin-right: var(--pa-size-padding, 10px);
     flex-shrink: 0;
     .pa-icon_font {
       font-size: calc(var(--pa-size-font, 13px) + 4px) !important;
     }
   }
-  &__closeBtn {
+  .pa-notification__closeBtn {
     cursor: pointer;
     color: var(--pa-color-danger);
     font-size: calc(var(--pa-size-font, 13px) + 4px);

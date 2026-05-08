@@ -3,7 +3,7 @@
     <div
       v-show="visible"
       :id="id"
-      :class="['pa-notification', type ? `pa-notification--${type}` : '', customClass]"
+      :class="['pa-notification', type ? `${type}` : '', customClass]"
       :style="styles"
       role="alert"
       @click="handleClick"
@@ -20,7 +20,7 @@
         class="pa-notification__content"
         v-html="dangerouslyUseHTMLString ? message : ''"
       ></div>
-      <div v-else class="pa-notification__content">{{ typeof message === "string" ? message : message[language] }}</div>
+      <div v-else class="pa-notification__content">{{ typeof message === "string" ? message : message?.[language] || "" }}</div>
       <div v-if="icon" class="pa-notification__icon" v-html="icon"></div>
     </div>
   </transition>

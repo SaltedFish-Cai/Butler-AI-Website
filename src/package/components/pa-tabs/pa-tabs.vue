@@ -1,6 +1,6 @@
 <template>
   <div
-    :class="[props.class, `pa-tabs-mode-${mode}`, `pa-tabs-style_mode-${styleMode}`, `pa-tabs-style_align-${align}`]"
+    :class="[props.class, 'pa-tabs', `mode-${mode}`, `style_mode-${styleMode}`, `style_align-${align}`]"
     :style="{
       ...props.style,
       '--pa-tabs-label-left': useLabelLeft - headerScroll + 'px',
