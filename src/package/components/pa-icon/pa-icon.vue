@@ -5,7 +5,7 @@
     :class="[props.class]"
     :style="{ ...props.style, fontFamily: props.fontFamily || 'pa-iconfont' }"
   >
-    <span v-if="!tip" :class="['pa-icon_font', `icon-${name}`]"></span>
+    <span v-if="!tip" :class="['pa-icon_font', fontFamily === 'pa-iconfont' ? `icon-${name}` : `butler-${name}`]"></span>
     <template v-else>
       <pa-popover trigger="hover">
         <template #reference> <span class="pa-icon_font" :class="'icon-' + name"></span> </template>
