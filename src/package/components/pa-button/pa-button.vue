@@ -1,5 +1,5 @@
 <template>
-  <button :id="id" type="button" :disabled="disabled" :class="buttonClasses" :style="buttonStyle" @click="btnClick">
+  <button :id="id" type="button" :disabled="disabled" :class="buttonClasses" :style="props.style" @click="btnClick">
     <slot name="icon">
       <pa-icon v-if="showLeftIcon" :name="currentIconName" :class="hasContent ? 'mr-btn pa-button_icon' : ''" />
     </slot>
@@ -19,17 +19,12 @@
  * 模块导入
  * @description 导入 Vue 组合式 API
  */
-import { ref, computed, useSlots, nextTick, inject, onUnmounted, getCurrentInstance, type ComputedRef } from "vue";
+import { ref, computed, useSlots, nextTick, inject, onUnmounted, getCurrentInstance, type ComputedRef, type Ref } from "vue";
 /**
  * 模块导入
  * @description 导入组件类型定义
  */
 import type { ComponentProps, ComponentEmits } from "./types";
-/**
- * 模块导入
- * @description 导入浏览器环境检测工具
- */
-import inBrowser from "../tools/inBrowser";
 /**
  * 模块导入
  * @description 导入消息弹窗组件
@@ -175,12 +170,7 @@ const buttonClasses = computed(() => [
   currentType.value,
   props.size
 ]);
-/**
- * 按钮样式
- * @type Record<string, string | number>
- * @description 合并自定义样式
- */
-const buttonStyle = computed(() => ({ ...props.style }));
+
 /**
  * 加载状态
  * @type Ref<boolean>
@@ -204,11 +194,11 @@ function hasListener(camelKey: string, kebabKey: string): boolean {
   return !!(vnodeProps[camelKey] || vnodeProps[kebabKey]);
 }
 /**
- * 获取确认弹窗配置
- * @returns MessageBoxOptions | null
- * @description 根据监听的事件类型生成对应的确认弹窗配置
+ * 确认弹窗配置
+ * @type ComputedRef<MessageBoxOptions | null>
+ * @description 根据监听的事件类型缓存对应的确认弹窗配置
  */
-function getConfirmConfig() {
+const confirmConfig = computed(() => {
   if (hasListener("onDeleteClick", "onDelete-click")) {
     return {
       title: { "en-US": "Notice", "zh-CN": "注意" },
@@ -237,7 +227,39 @@ function getConfirmConfig() {
     };
   }
   return null;
+});
+/**
+ * MutationObserver 引用
+ * @type MutationObserver | null
+ * @description 用于监听 DOM 变化的 observer 实例
+ */
+let observer: MutationObserver | null = null;
+/**
+ * 安全锁定时器引用
+ * @type ReturnType<typeof setTimeout> | null
+ * @description 防止 loading 状态永久卡住的超时定时器
+ */
+let safeLockTimer: ReturnType<typeof setTimeout> | null = null;
+/**
+ * 清理 MutationObserver 和定时器
+ * @description 断开 observer 连接并清除定时器
+ */
+function cleanupObserver() {
+  observer?.disconnect();
+  observer = null;
+  if (safeLockTimer) {
+    clearTimeout(safeLockTimer);
+    safeLockTimer = null;
+  }
 }
+/**
+ * 组件卸载时清理
+ * @description 断开 MutationObserver 并重置加载状态
+ */
+onUnmounted(() => {
+  cleanupObserver();
+  isLoading.value = false;
+});
 /**
  * 实际点击处理
  * @param event - 鼠标点击事件对象
@@ -246,28 +268,27 @@ function getConfirmConfig() {
  */
 function realClick(event: MouseEvent) {
   emit("click", event);
-  if (!props.loadingBy) return;
+  if (!props.loadingBy || typeof window === "undefined") return;
 
   nextTick(() => {
-    const EL = typeof window !== "undefined" && props.loadingBy && window.document.querySelector(props.loadingBy);
-    if (EL && inBrowser) {
-      isLoading.value = true;
-      const safeLock = setTimeout(() => {
-        isLoading.value = false;
-        observer?.disconnect();
-      }, 15 * 60 * 1000);
+    const EL = window.document.querySelector(props.loadingBy);
+    if (!EL) return;
 
-      const callback = () => {
-        const target = typeof window !== "undefined" && props.loadingBy && window.document.querySelector(props.loadingBy);
-        if (!target) {
-          clearTimeout(safeLock);
-          isLoading.value = false;
-          observer?.disconnect();
-        }
-      };
-      const observer = new window.MutationObserver(callback);
-      observer.observe(document.body, { childList: true });
-    }
+    isLoading.value = true;
+    safeLockTimer = setTimeout(() => {
+      isLoading.value = false;
+      cleanupObserver();
+    }, 15 * 60 * 1000);
+
+    observer = new window.MutationObserver(() => {
+      const target = window.document.querySelector(props.loadingBy!);
+      if (!target) {
+        if (safeLockTimer) clearTimeout(safeLockTimer);
+        isLoading.value = false;
+        cleanupObserver();
+      }
+    });
+    observer.observe(document.body, { childList: true });
   });
 }
 /**
@@ -286,9 +307,9 @@ function btnClick(event: MouseEvent) {
   if (props.disabled) return;
 
   // 确认弹窗优先
-  const confirmConfig = props.confirmConfig || getConfirmConfig();
-  if (confirmConfig) {
-    M_MessageBox.confirm(confirmConfig);
+  const activeConfirmConfig = props.confirmConfig || confirmConfig.value;
+  if (activeConfirmConfig) {
+    M_MessageBox.confirm(activeConfirmConfig);
     return;
   }
 

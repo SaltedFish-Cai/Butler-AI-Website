@@ -16,7 +16,7 @@ import PaButtonGroup from "./pa-button-group.vue";
 const name = "PaButton";
 /**
  * 组件注册函数
- * @param app App Vue 应用实例
+ * @param app - Vue 应用实例
  * @description 将 PaButton 和 PaButtonGroup 组件注册到 Vue 应用中
  */
 const install = function (app: App): void {
