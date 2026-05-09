@@ -6,10 +6,11 @@
  * 模块导入
  * @description 导入多语言类型定义
  */
-import { LanguagePackageType } from "../manager-type";
+import type { LanguagePackageType } from "../manager-type";
 
 /**
  * 组件属性
+ * @type object
  * @description 定义组件的属性类型
  */
 export type ComponentProps = {
@@ -66,12 +67,13 @@ export type ComponentProps = {
 
 /**
  * 组件事件
+ * @type object
  * @description 定义组件可触发的事件
  */
 export type ComponentEmits = {
   /**
    * 点击 Icon 事件
-   * @param event MouseEvent 鼠标事件对象
+   * @param event - 鼠标事件对象
    * @returns void
    */
   (e: "click", event: MouseEvent): void;

@@ -35,11 +35,19 @@
 <script lang="ts" setup>
 /**
  * 模块导入
- * @description 导入 Vue 组合式 API、类型定义、工具函数等依赖
+ * @description 导入 Vue 组合式 API
  */
 import { computed, ComputedRef, inject } from "vue";
-import { ComponentProps, ComponentEmits } from "./types";
-import { PancakeGlobalConfigType } from "../pa-manager/types";
+/**
+ * 模块导入
+ * @description 导入组件类型定义
+ */
+import type { ComponentProps, ComponentEmits } from "./types";
+/**
+ * 模块导入
+ * @description 导入全局配置类型定义
+ */
+import type { PancakeGlobalConfigType } from "../pa-manager/types";
 /**
  * 组件属性
  * @type ComponentProps
@@ -58,13 +66,14 @@ const emit = defineEmits<ComponentEmits>();
  */
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 /**
- * 获取当前语言值
- * @returns string 返回当前语言标识，如 'zh-CN' 或 'en-US'
+ * 当前语言值
+ * @type ComputedRef<string>
+ * @description 获取当前语言标识，如 zh-CN 或 en-US
  */
 const languageValue = computed(() => PancakeGlobalConfig.value?.language?.value || "zh-CN");
 /**
  * 点击事件处理
- * @param event MouseEvent 鼠标事件对象
+ * @param event - 鼠标事件对象
  * @returns void
  */
 function handleClick(event: MouseEvent) {
@@ -72,6 +81,6 @@ function handleClick(event: MouseEvent) {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @use "./index.scss";
 </style>
