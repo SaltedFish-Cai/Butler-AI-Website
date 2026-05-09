@@ -6,12 +6,12 @@
  * 模块导入
  * @description 导入消息弹窗配置类型
  */
-import { MessageBoxOptions } from "../pa-message-box/types";
+import type { MessageBoxOptions } from "../pa-message-box/types";
 /**
  * 模块导入
  * @description 导入多语言类型定义
  */
-import { LanguagePackageType } from "../manager-type";
+import type { LanguagePackageType } from "../manager-type";
 /**
  * 按钮内置样式类型
  * @description 预设按钮样式类型，包含常用的操作按钮图标和样式
