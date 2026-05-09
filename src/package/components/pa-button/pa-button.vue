@@ -195,8 +195,16 @@ const isLoading = ref(false);
  */
 function hasListener(eventName: string): boolean {
   const vnodeProps = getCurrentInstance()?.vnode.props || {};
+  // @deleteClick → onDeleteClick
   const camelKey = `on${eventName.charAt(0).toUpperCase()}${eventName.slice(1)}`;
-  const kebabKey = `on-${eventName.replace(/([A-Z])/g, "-$1").toLowerCase()}`;
+  // @delete-click → onDelete-click
+  const kebabEventName =
+    eventName.charAt(0).toUpperCase() +
+    eventName
+      .slice(1)
+      .replace(/([A-Z])/g, "-$1")
+      .toLowerCase();
+  const kebabKey = `on${kebabEventName}`;
   return !!(vnodeProps[camelKey] || vnodeProps[kebabKey]);
 }
 /**
