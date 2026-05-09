@@ -18,6 +18,7 @@
 | class          | 自定义类名       | `Array<string>` \| `string`                                                         | -          |
 | style          | 自定义样式       | `Record<string, string \| number>`                                                  | -          |
 | modelValue     | 双向绑定值       | `Array<boolean \| number \| string>`                                                | -          |
+| height         | 高度             | `string`                                                                            | `300px`    |
 | displayValue   | 纯展示数据       | `string`                                                                            | -          |
 | exOptions      | 外置数据选项     | [`PaOptionType.SelectList`](/document/PancakeUI_Doc/options#paoptiontypeselectlist) | -          |
 | optionKey      | 选项 Key         | `string`                                                                            | `"value"`  |
