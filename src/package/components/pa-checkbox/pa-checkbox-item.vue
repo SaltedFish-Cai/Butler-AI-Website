@@ -14,7 +14,7 @@
     <div class="pa-checkbox-item-input-inner">
       <div class="pa-checkbox-item-input">
         <pa-icon v-if="isChecked" name="check_line"></pa-icon>
-        <pa-icon v-else-if="isIndeterminate" name="minus"></pa-icon>
+        <pa-icon v-else-if="isIndeterminate" name="minus1"></pa-icon>
       </div>
       <div v-if="props.label || $slots.default" class="pa-checkbox-item-label">
         <slot>{{ typeof props.label === "object" ? props.label[language] : props.label }}</slot>
@@ -110,9 +110,9 @@ let oldValue: boolean | number | string = props.modelValue || "";
  * @description 处理复选框子项点击事件
  */
 function changeEvent(): undefined | void {
-  if (props.disabled || (!isNil(props.isChecked) && !props.isOption) || props.isIndeterminate) return;
-  const _data = props.isOption ? props.value : inValue.value == props.value ? "false" : props.value;
-  inValue.value = _data || "";
+  if (props.disabled || (!isNil(props.isChecked) && !props.isOption) || (!props.isOption && props.isIndeterminate)) return;
+  const _data: any = props.isOption ? props.value !== props.value : inValue.value == props.value ? "false" : props.value;
+  inValue.value = _data;
   if (props.disabled) return;
   emits("update:modelValue", inValue.value);
   emits("change", { value: inValue.value, oldValue });

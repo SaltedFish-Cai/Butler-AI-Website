@@ -42,6 +42,13 @@ export type ComponentProps = {
    */
   modelValue?: Array<boolean | number | string>;
   /**
+   * 高度
+   * @type string | undefined
+   * @default '300px'
+   * @description 当设置该值时，会添加到组件的样式中
+   */
+  height?: string;
+  /**
    * 纯展示数据
    * @type string | undefined
    * @default undefined
