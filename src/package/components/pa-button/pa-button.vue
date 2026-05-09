@@ -188,23 +188,14 @@ const buttonStyle = computed(() => ({ ...props.style }));
  */
 const isLoading = ref(false);
 /**
- * 检查是否有外部事件监听
- * @param eventName - 事件名称
+ * 检查是否有指定事件的监听器
+ * @param camelKey - 驼峰格式 key，如 onDeleteClick
+ * @param kebabKey - kebab 格式 key，如 onDelete-click
  * @returns boolean 是否有外部监听
  * @description 检查 vnode props 中是否有指定事件的监听器
  */
-function hasListener(eventName: string): boolean {
+function hasListener(camelKey: string, kebabKey: string): boolean {
   const vnodeProps = getCurrentInstance()?.vnode.props || {};
-  // @deleteClick → onDeleteClick
-  const camelKey = `on${eventName.charAt(0).toUpperCase()}${eventName.slice(1)}`;
-  // @delete-click → onDelete-click
-  const kebabEventName =
-    eventName.charAt(0).toUpperCase() +
-    eventName
-      .slice(1)
-      .replace(/([A-Z])/g, "-$1")
-      .toLowerCase();
-  const kebabKey = `on${kebabEventName}`;
   return !!(vnodeProps[camelKey] || vnodeProps[kebabKey]);
 }
 /**
@@ -213,7 +204,7 @@ function hasListener(eventName: string): boolean {
  * @description 根据监听的事件类型生成对应的确认弹窗配置
  */
 function getConfirmConfig() {
-  if (hasListener("deleteClick")) {
+  if (hasListener("onDeleteClick", "onDelete-click")) {
     return {
       title: { "en-US": "Notice", "zh-CN": "注意" },
       message: { "en-US": "Are you sure you want to delete?", "zh-CN": "是否删除当前选项？" },
@@ -222,7 +213,7 @@ function getConfirmConfig() {
       onConfirm: () => emit("deleteClick")
     };
   }
-  if (hasListener("submitClick")) {
+  if (hasListener("onSubmitClick", "onSubmit-click")) {
     return {
       title: { "en-US": "Tips", "zh-CN": "温馨提示" },
       message: { "en-US": "Are you sure you want to submit?", "zh-CN": "是否继续提交内容？" },
@@ -231,7 +222,7 @@ function getConfirmConfig() {
       onConfirm: () => emit("submitClick")
     };
   }
-  if (hasListener("confirmClick")) {
+  if (hasListener("onConfirmClick", "onConfirm-click")) {
     return {
       title: { "en-US": "Tips", "zh-CN": "温馨提示" },
       message: { "en-US": "Are you sure you want to continue?", "zh-CN": "是否继续当前任务？" },
