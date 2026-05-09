@@ -188,6 +188,11 @@ const buttonStyle = computed(() => ({ ...props.style }));
  */
 const isLoading = ref(false);
 /**
+ * 组件实例
+ * @description 在 setup 阶段捕获的组件实例，用于访问 vnode.props
+ */
+const instance = getCurrentInstance();
+/**
  * 检查是否有指定事件的监听器
  * @param camelKey - 驼峰格式 key，如 onDeleteClick
  * @param kebabKey - kebab 格式 key，如 onDelete-click
@@ -195,7 +200,7 @@ const isLoading = ref(false);
  * @description 检查 vnode props 中是否有指定事件的监听器
  */
 function hasListener(camelKey: string, kebabKey: string): boolean {
-  const vnodeProps = getCurrentInstance()?.vnode.props || {};
+  const vnodeProps = instance?.vnode.props || {};
   return !!(vnodeProps[camelKey] || vnodeProps[kebabKey]);
 }
 /**
