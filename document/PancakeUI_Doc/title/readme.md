@@ -4,14 +4,14 @@
 
 ## 基础使用
 
-基础样式展示，自带分割线样式。
+基础样式展示，自带分割线样式。在全局配置（[pa-manager](/document/PancakeUI_Doc/manager/readme) ）中可通过 `titleStyle` 可改变默认样式。
 
 <demo src="./base.vue">
 </demo>
 
 ## 分割线控制
 
-使用 `line-config` 属性控制分割线显示和自定义样式。
+使用 `lineConfig` 属性控制分割线显示和自定义样式。
 
 <demo src="./line.vue">
 </demo>
@@ -39,16 +39,16 @@
 
 ## ComponentProps
 
-| 属性名        | 描述       | 类型                                                                                  | 默认值      |
-| ------------- | ---------- | ------------------------------------------------------------------------------------- | ----------- |
-| id            | 唯一标识   | `string`                                                                              | -           |
-| class         | 自定义类名 | `Array<string>` `string`                                                              | -           |
-| style         | 自定义样式 | `Record<string, string>`                                                              | -           |
-| tips          | 提示信息   | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) `string` | -           |
-| tips-position | 提示位置   | `'bottom'` \| `'right'`                                                               | `'bottom'`  |
-| padding       | 内边距方向 | `Array<'all'` \| `'bottom'` \| `'left'` \| `'null'` \| `'right'` \| `'top'>`          | -           |
-| style-mode    | 样式模式   | `'default'` \| `'horizontal'` \| `'vertical'`                                          | `'default'` |
-| line-config   | 分割线配置 | [`ComponentProps`](/document/PancakeUI_Doc/line/readme#componentprops) `boolean`             | -           |
+| 属性名       | 描述       | 类型                                                                                     | 默认值      |
+| ------------ | ---------- | ---------------------------------------------------------------------------------------- | ----------- |
+| id           | 唯一标识   | `string`                                                                                 | -           |
+| class        | 自定义类名 | `Array<string>` \| `string`                                                              | -           |
+| style        | 自定义样式 | `Record<string, string>`                                                                 | -           |
+| tips         | 提示信息   | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) \| `string` | -           |
+| tipsPosition | 提示位置   | `'bottom'` \| `'right'`                                                                  | `'bottom'`  |
+| padding      | 内边距方向 | `Array<'all'` \| `'bottom'` \| `'left'` \| `'null'` \| `'right'` \| `'top'>`             | -           |
+| styleMode    | 样式模式   | `'default'` \| `'horizontal'` \| `'vertical'`                                            | `'default'` |
+| lineConfig   | 分割线配置 | [`ComponentProps`](/document/PancakeUI_Doc/line/readme#componentprops) \| `boolean`      | -           |
 
 ## ComponentSlots
 

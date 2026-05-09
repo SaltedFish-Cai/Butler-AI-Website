@@ -86,6 +86,10 @@ import { PancakeGlobalConfigType } from "../pa-manager/types";
  * @description 导入 lodash 工具函数
  */
 import _ from "lodash";
+/**
+ * lodash 解构
+ * @description 从 lodash 中解构 isEqual 和 isNil 方法
+ */
 const { isEqual, isNil } = _;
 
 /**
@@ -110,8 +114,16 @@ const languageValue = computed(() => {
  * @description 组件的属性对象
  */
 const props = withDefaults(defineProps<ComponentProps>(), {
-  contrastData: undefined
+  contrastData: undefined,
+  activeValue: 1,
+  inActiveValue: 0
 });
+
+/**
+ * 组件事件定义
+ * @description 定义组件可触发的事件
+ */
+const emits = defineEmits<ComponentEmits>();
 
 /**
  * 当前值
@@ -119,12 +131,6 @@ const props = withDefaults(defineProps<ComponentProps>(), {
  * @description 当前开关的绑定值
  */
 const inValue: Ref<boolean | number | string | undefined> = ref(props.modelValue);
-
-/**
- * 组件事件定义
- * @description 定义组件可触发的事件
- */
-const emits = defineEmits<ComponentEmits>();
 
 /**
  * 旧值存储
@@ -140,7 +146,7 @@ let oldValue: boolean | number | string = props.modelValue || "";
  */
 function changeEvent(): void {
   if (props.disabled || props.display) return;
-  const value = inValue.value == options.value.activeValue ? options.value.inActiveValue || "" : options.value.activeValue || "";
+  const value = inValue.value == options.value.activeValue ? options.value.inActiveValue || 0 : options.value.activeValue || 1;
   emits("update:modelValue", value);
   emits("change", { value, oldValue });
   oldValue = value;
@@ -206,8 +212,8 @@ function changeType(type: string, opts: any): PaOptionType.Switch {
 const options = computed(() => {
   const typeIs = typeof inValue.value;
   const {
-    activeValue = true,
-    inActiveValue = false,
+    activeValue = 1,
+    inActiveValue = 0,
     activeText = languageValue.value == "zh-CN" ? "是" : "Yes",
     inActiveText = languageValue.value == "zh-CN" ? "否" : "No"
   } = props.exOptions || props;

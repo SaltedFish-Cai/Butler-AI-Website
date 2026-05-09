@@ -1,9 +1,9 @@
 <template>
-  <pa-title :padding="['bottom']">baseFormData结果值：</pa-title>
+  <pa-title>baseFormData结果值：</pa-title>
 
   <code-view v-model:html="baseFormData"> </code-view>
 
-  <pa-title :padding="['bottom']">FormData结果值：</pa-title>
+  <pa-title>FormData结果值：</pa-title>
 
   <code-view v-model:html="formData"> </code-view>
 

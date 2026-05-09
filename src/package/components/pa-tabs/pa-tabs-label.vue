@@ -84,7 +84,7 @@ const RenderTableColumn = (slots: any): JSX.Element => {
   const className = (props: any): string => {
     const name =
       props?.name == _props.activeName
-        ? `pa-tabs-title pa-tabs-title_action pa-tabs-title_action_${tabsContext.value.tabsId}`
+        ? `pa-tabs-title _action pa-tabs-title_action_${tabsContext.value.tabsId}`
         : "pa-tabs-title";
     return name;
   };

@@ -15,7 +15,7 @@ import PaIcon from "./pa-icon.vue";
 const name = "PaIcon";
 /**
  * 组件注册函数
- * @param app App Vue 应用实例
+ * @param app - Vue 应用实例
  * @description 将 PaIcon 组件注册到 Vue 应用中
  */
 const install = function (app: App): void {

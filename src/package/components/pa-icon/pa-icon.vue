@@ -5,10 +5,27 @@
     :class="[props.class]"
     :style="{ ...props.style, fontFamily: props.fontFamily || 'pa-iconfont' }"
   >
-    <span v-if="!tip" :class="['pa-icon_font', `icon-${name}`]"></span>
+    <span
+      v-if="!tip"
+      :class="[
+        'pa-icon_font',
+        fontFamily === 'pa-iconfont' ? `icon-${name}` : `butler-${name}`,
+        fontColor.length ? `background-color` : ''
+      ]"
+      :style="{ '--set-icon-background-color': `linear-gradient(45deg, ${fontColor.join(', ')})` }"
+    ></span>
     <template v-else>
       <pa-popover trigger="hover">
-        <template #reference> <span class="pa-icon_font" :class="'icon-' + name"></span> </template>
+        <template #reference>
+          <span
+            :class="[
+              'pa-icon_font',
+              fontFamily === 'pa-iconfont' ? `icon-${name}` : `butler-${name}`,
+              fontColor.length ? `background-color` : ''
+            ]"
+            :style="{ '--set-icon-background-color': `linear-gradient(45deg, ${fontColor.join(', ')})` }"
+          ></span>
+        </template>
         {{ typeof tip === "string" ? tip : tip[languageValue] }}
       </pa-popover>
     </template>
@@ -18,17 +35,25 @@
 <script lang="ts" setup>
 /**
  * 模块导入
- * @description 导入 Vue 组合式 API、类型定义、工具函数等依赖
+ * @description 导入 Vue 组合式 API
  */
 import { computed, ComputedRef, inject } from "vue";
-import { ComponentProps, ComponentEmits } from "./types";
-import { PancakeGlobalConfigType } from "../pa-manager/types";
+/**
+ * 模块导入
+ * @description 导入组件类型定义
+ */
+import type { ComponentProps, ComponentEmits } from "./types";
+/**
+ * 模块导入
+ * @description 导入全局配置类型定义
+ */
+import type { PancakeGlobalConfigType } from "../pa-manager/types";
 /**
  * 组件属性
  * @type ComponentProps
  * @description 组件的属性对象，包含 name、tip 等
  */
-const props = withDefaults(defineProps<ComponentProps>(), { name: "magic_line", fontFamily: "pa-iconfont" });
+const props = withDefaults(defineProps<ComponentProps>(), { name: "magic_line", fontFamily: "pa-iconfont", fontColor: () => [] });
 /**
  * 组件事件定义
  * @description 定义组件可触发的事件
@@ -41,13 +66,14 @@ const emit = defineEmits<ComponentEmits>();
  */
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 /**
- * 获取当前语言值
- * @returns string 返回当前语言标识，如 'zh-CN' 或 'en-US'
+ * 当前语言值
+ * @type ComputedRef<string>
+ * @description 获取当前语言标识，如 zh-CN 或 en-US
  */
 const languageValue = computed(() => PancakeGlobalConfig.value?.language?.value || "zh-CN");
 /**
  * 点击事件处理
- * @param event MouseEvent 鼠标事件对象
+ * @param event - 鼠标事件对象
  * @returns void
  */
 function handleClick(event: MouseEvent) {
@@ -55,6 +81,6 @@ function handleClick(event: MouseEvent) {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @use "./index.scss";
 </style>

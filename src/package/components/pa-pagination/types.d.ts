@@ -3,10 +3,6 @@
  * @description PaPagination 类型定义
  */
 /**
- * 组件属性定义
- * @description 分页器组件的属性类型
- */
-/**
  * 组件属性
  * @type object
  * @description PaPagination 组件的属性类型定义

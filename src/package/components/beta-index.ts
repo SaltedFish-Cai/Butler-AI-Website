@@ -70,7 +70,7 @@ const Component = {
   install: async (app, options: GlobalState) => {
     installPackage();
     const {
-      themeColor = "#64605b",
+      themeColor = "#2a3e48",
       isDark = false,
       requestHeader,
       tableConfig = {},

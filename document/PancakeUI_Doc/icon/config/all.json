@@ -1,33 +1,5 @@
 [
   {
-    "icon_id": "7617119",
-    "name": "github",
-    "font_class": "github",
-    "unicode": "e600",
-    "unicode_decimal": 58880
-  },
-  {
-    "icon_id": "3188138",
-    "name": "wechart",
-    "font_class": "wechart1",
-    "unicode": "e618",
-    "unicode_decimal": 58904
-  },
-  {
-    "icon_id": "19446471",
-    "name": "QQ",
-    "font_class": "QQ",
-    "unicode": "ea94",
-    "unicode_decimal": 60052
-  },
-  {
-    "icon_id": "26038883",
-    "name": "gitee",
-    "font_class": "gitee",
-    "unicode": "e8d7",
-    "unicode_decimal": 59607
-  },
-  {
     "icon_id": "36737851",
     "name": "delete",
     "font_class": "delete",

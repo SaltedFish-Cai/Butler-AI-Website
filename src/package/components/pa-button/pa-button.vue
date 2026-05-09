@@ -9,8 +9,8 @@
       props.class,
       props.useLine ? 'use-line' : '',
       { disabled },
-      `pa-button--${state.buttonConfig.type}`,
-      `pa-button--${state.buttonConfig.size}`,
+      `${state.buttonConfig.type}`,
+      `${state.buttonConfig.size}`,
       props.usePlain ? 'use-plain' : ''
     ]"
     :style="{ ...props.style }"
@@ -48,7 +48,7 @@ import { reactive, onBeforeMount, useSlots, nextTick, watch, inject, ComputedRef
 import { ComponentProps, ComponentEmits } from "./types";
 import inBrowser from "../tools/inBrowser";
 import { M_MessageBox } from "../feedback";
-
+import paIcon from "../pa-icon/pa-icon.vue";
 import { PancakeGlobalConfigType } from "../pa-manager/types";
 
 import _ from "lodash";
@@ -263,104 +263,40 @@ watch(
     const config = {
       type: props.type || "primary",
       plain: props.usePlain || true,
-      iconName: props.iconName || "finger_press_line",
+      iconName: props.iconName || "cursor_line",
       size: props.size || "medium"
     };
 
-    if (text) {
-      switch (text) {
-        case "search":
-          config.iconName = "search_line";
-          break;
-        case "view":
-          config.iconName = "document_query_line";
-          config.type = "default";
-          break;
-        case "add":
-          config.iconName = "add_circle_line";
-          break;
-        case "edit":
-          config.iconName = "edit_line";
-          break;
-        case "check":
-          config.iconName = "file_save_line";
-          break;
-        case "save":
-          config.iconName = "save_line";
-          break;
-        case "submit":
-          config.iconName = "send_plane_line";
-          break;
-        case "upload":
-          config.iconName = "upload_line";
-          config.type = "default";
-          break;
-        case "download":
-          config.iconName = "download_line";
-          config.type = "default";
-          break;
-        case "remove":
-          config.iconName = "close_circle_line";
-          config.type = "danger";
-          break;
-        case "trash":
-          config.iconName = "trash_line";
-          config.type = "danger";
-          break;
-        case "refresh":
-          config.iconName = "refresh_line";
-          config.type = "warning";
-          break;
-        case "go":
-          config.iconName = "finger_press_line";
-          break;
-        case "file":
-          config.iconName = "attachment_line";
-          config.type = "default";
-          break;
-        case "time":
-          config.iconName = "time_line";
-          config.type = "default";
-          break;
-        case "switch":
-          config.iconName = "switch_horizontal_line";
-          config.type = "warning";
-          break;
-        case "sync":
-          config.iconName = "refresh_arrows_line";
-          break;
-        case "import":
-          config.iconName = "entrance_line";
-          config.type = "default";
-          break;
-        case "export":
-          config.iconName = "exit_line";
-          config.type = "default";
-          break;
-        case "ok":
-          config.iconName = "check_circle_line";
-          config.type = "success";
-          break;
-        case "cancel":
-          config.iconName = "close_circle_line";
-          config.type = "warning";
-          break;
-        case "more":
-          config.iconName = "version_line";
-          config.type = "warning";
-          break;
-        case "delete":
-          config.iconName = "close_circle_line";
-          config.type = "danger";
-          break;
-        default:
-          break;
-      }
-    }
+    const isMap = {
+      search: { iconName: "search_line" },
+      view: { iconName: "document_query_line", type: "default" },
+      add: { iconName: "add_circle_line", type: "success" },
+      edit: { iconName: "edit_line" },
+      check: { iconName: "subscribed" },
+      save: { iconName: "save_line" },
+      submit: { iconName: "share_forward_line" },
+      upload: { iconName: "upload_line", type: "default" },
+      download: { iconName: "download_line", type: "default" },
+      remove: { iconName: "stop", type: "danger" },
+      trash: { iconName: "trash_line", type: "danger" },
+      refresh: { iconName: "refresh_line", type: "warning" },
+      go: { iconName: "navigation_line" },
+      file: { iconName: "attachment_line", type: "default" },
+      time: { iconName: "time_line", type: "default" },
+      switch: { iconName: "switch_horizontal_line", type: "warning" },
+      sync: { iconName: "refresh_arrows_line" },
+      import: { iconName: "file_download_line", type: "default" },
+      export: { iconName: "file_upload_line", type: "default" },
+      ok: { iconName: "check_circle_line", type: "success" },
+      cancel: { iconName: "close_circle_line", type: "warning" },
+      more: { iconName: "version_line", type: "warning" },
+      delete: { iconName: "delete_back_line", type: "danger" },
+      default: {}
+    };
 
     if (props.size) config.size = props.size;
 
-    state.buttonConfig = config;
+    state.buttonConfig = { ...config, ...isMap[text || "default"] };
   },
   { immediate: true }
 );

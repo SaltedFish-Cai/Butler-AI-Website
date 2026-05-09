@@ -16,6 +16,18 @@
 
 <demo src="./display.vue"></demo>
 
+## 禁用状态
+
+使用 `disabled` 属性禁用开关交互。
+
+<demo src="./disabled.vue"></demo>
+
+## 对比数据
+
+使用 `contrastData` 属性设置对比数据，使用 `alwaysContrast` 属性始终显示对比。
+
+<demo src="./contrast.vue"></demo>
+
 ## ComponentProps
 
 | 属性名         | 描述                     | 类型                                                                                     | 默认值       |
@@ -23,8 +35,8 @@
 | id             | 组件唯一标识             | `string`                                                                                 | -            |
 | class          | 自定义类名               | `Array<string>` \| `string`                                                              | -            |
 | style          | 自定义样式               | `Record<string, string>`                                                                 | -            |
-| activeValue    | 打开时的值               | `number` \| `string`                                                                     | `true`       |
-| inActiveValue  | 关闭时的值               | `number` \| `string`                                                                     | `false`      |
+| activeValue    | 打开时的值               | `boolean` \| `number` \| `string`                                                        | `1`          |
+| inActiveValue  | 关闭时的值               | `boolean` \| `number` \| `string`                                                        | `0`          |
 | activeText     | 打开时的文本             | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) \| `string` | `是` / `Yes` |
 | inActiveText   | 关闭时的文本             | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) \| `string` | `否` / `No`  |
 | iconStyle      | 图标样式                 | `Record<string, string>`                                                                 | -            |
@@ -53,7 +65,7 @@
 
 ## ComponentSlots
 
-| 插槽名称   | 作用                       |
-| ---------- | -------------------------- |
-| exDisplay  | 纯展示模式下自定义展示内容 |
-| exContrast | 对比数据自定义展示内容     |
+| 插槽名称     | 作用                       |
+| ------------ | -------------------------- |
+| 'exDisplay'  | 纯展示模式下自定义展示内容 |
+| 'exContrast' | 对比数据自定义展示内容     |

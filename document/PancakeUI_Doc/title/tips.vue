@@ -1,9 +1,9 @@
 <template>
   <div class="demo-title">
-    <pa-title tips="这是提示信息">带提示的标题</pa-title>
-    <pa-title tips="这是提示信息" tips-position="right">带提示的标题</pa-title>
+    <pa-title style-mode="default" tips="这是提示信息">带提示的标题</pa-title>
+    <pa-title style-mode="default" tips="这是提示信息" tips-position="right">带提示的标题</pa-title>
 
-    <pa-title>
+    <pa-title style-mode="default">
       自定义提示插槽
 
       <template #tips>

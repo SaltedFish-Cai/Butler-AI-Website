@@ -3,7 +3,7 @@
     <div
       v-show="visible"
       :id="id"
-      :class="['pa-message', type ? `pa-message--${type}` : '', customClass]"
+      :class="['pa-message', type ? `${type}` : '', customClass]"
       :style="styles"
       role="alert"
       @click="handleClick"

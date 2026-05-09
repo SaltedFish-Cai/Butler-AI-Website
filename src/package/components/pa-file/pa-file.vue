@@ -39,7 +39,7 @@
       <pa-button
         v-if="inValue?.length && !display"
         :title="languagePackage['clearAddedfiles']"
-        style="--pa-size-font: 12px; --pa-size-height: 24px"
+        style="--pa-size-font: 14px; --pa-size-height: 28px"
         class="btn-width ml-size"
         is="trash"
         :disabled="disabled"
@@ -54,12 +54,14 @@
 
     <div class="tips-box" v-if="!display && (accept || excludeType || fileSingleSize || fileAllSize)">
       <span v-if="accept" class="light-text_box">
-        {{ languagePackage["canUploaded"] }} <span class="light-text_block">{{ accept }}</span
-        >{{ languagePackage["typeFile"] }}
+        {{ languagePackage["canUploaded"] }}
+        <span class="light-text_block" v-for="item in acceptText" :key="item">{{ item }}</span>
+        {{ languagePackage["typeFile"] }}
       </span>
 
       <span v-if="excludeType" class="light-text_box">
-        {{ languagePackage["noCanUploaded"] }} <span class="light-text_block">{{ excludeType }}</span>
+        {{ languagePackage["noCanUploaded"] }}
+        <span class="light-text_block" v-for="item in excludeText" :key="item">{{ item }}</span>
         {{ languagePackage["typeFile"] }}
       </span>
 
@@ -274,6 +276,18 @@ const accept = computed(() => {
 });
 
 /**
+ * 允许的文件类型文本
+ * @type ComputedRef<Array<string>>
+ * @description 返回允许上传的文件类型的显示文本
+ */
+const acceptText = computed(() => {
+  let accept: Array<string> | undefined = undefined;
+  const { fileIncludeType, fileIncludeText } = props;
+  if (fileIncludeType && Array.isArray(fileIncludeType)) accept = fileIncludeText || fileIncludeType;
+  return accept || [];
+});
+
+/**
  * 排除的文件类型
  * @type ComputedRef<string>
  * @description 返回不允许上传的文件类型（逗号分隔的小写字符串）
@@ -283,6 +297,18 @@ const excludeType = computed(() => {
   const { fileExcludeType } = props;
   if (fileExcludeType && Array.isArray(fileExcludeType)) exType = fileExcludeType.join(",");
   return exType?.toLowerCase() || "";
+});
+
+/**
+ * 排除的文件类型文本
+ * @type ComputedRef<string>
+ * @description 返回不允许上传的文件类型的显示文本
+ */
+const excludeText = computed(() => {
+  let exType: Array<string> | undefined = undefined;
+  const { fileExcludeType, fileExcludeText } = props;
+  if (fileExcludeType && Array.isArray(fileExcludeType)) exType = fileExcludeText || fileExcludeType;
+  return exType || [];
 });
 
 /**
@@ -316,8 +342,10 @@ const requestHeader = computed(() => {
  * @description 处理文件上传成功后的响应，更新组件内部值
  */
 const handleSuccess = (response: string | { Code: Number; Data: Array<FileDataType> | FileDataType; Message?: string }): void => {
-  if (!response) return;
-  if (typeof response === "string") return;
+  if (!response || typeof response === "string") {
+    loading.value = false;
+    return;
+  }
   const { Code, Data, Message } = response;
   if (Code == 200) {
     if (!inValue.value) {
@@ -468,7 +496,9 @@ function actionRequest(ajaxFileList: Array<{ filename: string; file: File }>): v
     method: "post",
     action: fileConfigData.value.fileApi?.url,
     ajaxFileList: ajaxFileList,
-    onProgress: () => {},
+    onProgress: () => {
+      loading.value = true;
+    },
     onError: () => {
       handleError();
     },

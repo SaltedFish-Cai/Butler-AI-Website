@@ -1,28 +1,24 @@
 /**
- * Vue 应用类型
- * @description Vue 应用类型
+ * 模块导入
+ * @description 导入 Vue 应用类型
  */
 import type { App } from "vue";
 /**
- * 全局配置组件
- * @description 全局配置组件
+ * 模块导入
+ * @description 导入 PaManager 组件
  */
 import PaManager from "./pa-manager.vue";
 /**
- * 注册 PaManager 组件
- * @param app - Vue 应用实例
- * @description 注册 PaManager 组件到 Vue 应用
- */
-function install(app: App): void {
-  if (!app._context.components["PaManager"]) app.component("PaManager", PaManager);
-}
-/**
  * 组件名称
- * @description 组件名称
+ * @description 组件注册名称
  */
 const name = "PaManager";
 /**
- * 全局配置组件导出
- * @description 全局配置组件导出
+ * 组件注册函数
+ * @param app - Vue 应用实例
+ * @description 将 PaManager 组件注册到 Vue 应用中
  */
+const install = function (app: App): void {
+  if (!app._context.components["PaManager"]) app.component("PaManager", PaManager);
+};
 export default { name, install };

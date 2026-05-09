@@ -27,14 +27,17 @@
         v-show="isSourceCodeMode == 'edit'"
         class="editor-content"
         :class="[openPopover ? 'popver-active' : '']"
-        :style="{ '--pa-color-font': 'var(--pa-color-font)' }"
         contenteditable
         ref="editorRef"
         @input="onContentChange"
         @paste="onPaste"
         @contextmenu.prevent="handleContextMenu"
       ></div>
-      <div v-show="isSourceCodeMode == 'code'" class="source-code-container" :class="[isDarkTheme ? 'github-dark' : 'github']">
+      <div
+        v-show="isSourceCodeMode == 'code'"
+        class="source-code-container"
+        :class="[isDarkTheme ? 'github-dark dark-theme' : 'github light-theme']"
+      >
         <div class="line-numbers" ref="lineNumbersRef"></div>
         <div class="source-code-editor-container" ref="sourceCodeEditorContainerRef" @scroll="onSourceCodeScroll">
           <div class="source-code-overlay" ref="sourceCodeOverlayRef"></div>
@@ -45,7 +48,7 @@
           v-model="isDarkTheme"
           :style="{
             '--pa-size-height': '25px',
-            '--pa-color-primary': 'var(--pa-color-source-code-toggle)'
+            '--pa-color-primary': 'var(--pa-color-info)'
           }"
           :iconStyle="{
             color: isDarkTheme ? 'var(--pa-color-white)' : 'var(--pa-color-black)',
@@ -118,7 +121,6 @@ const sourceCodeRef = ref<HTMLTextAreaElement | null>(null);
  * @description 行号容器引用
  */
 const lineNumbersRef = ref<HTMLDivElement | null>(null);
-
 /**
  * @description 组件事件定义
  */
@@ -209,7 +211,7 @@ function redo(): void {
 /**
  * @description 是否为暗色主题
  */
-const isDarkTheme = ref(true);
+const isDarkTheme = ref(1);
 
 /**
  * @description 源码编辑模式状态
@@ -308,7 +310,8 @@ onUnmounted(() => {
  * @description 切换主题
  */
 function toggleTheme(): void {
-  isDarkTheme.value = !isDarkTheme.value;
+  console.log("++++++++++> 11:", 11);
+  console.log("++++++++++> isDarkTheme.value:", isDarkTheme.value);
   applySyntaxHighlighting();
 }
 
@@ -487,25 +490,20 @@ function applySyntaxHighlighting(): void {
   const content = sourceCodeRef.value.value;
   const highlighted = hljs.highlight(content, { language: "xml" }).value;
   sourceCodeOverlayRef.value.innerHTML = highlighted;
-  const sourceCodeContainer = sourceCodeRef.value.closest(".source-code-container");
   const lineNumbers = lineNumbersRef.value;
   const sourceCodeEditor = sourceCodeRef.value;
   const sourceCodeOverlay = sourceCodeOverlayRef.value;
   if (isDarkTheme.value) {
-    sourceCodeContainer?.classList.add("dark-theme");
     lineNumbers?.classList.add("dark-theme");
     sourceCodeEditor.classList.add("dark-theme");
     sourceCodeOverlay.classList.add("dark-theme");
-    sourceCodeContainer?.classList.remove("light-theme");
     lineNumbers?.classList.remove("light-theme");
     sourceCodeEditor.classList.remove("light-theme");
     sourceCodeOverlay.classList.remove("light-theme");
   } else {
-    sourceCodeContainer?.classList.add("light-theme");
     lineNumbers?.classList.add("light-theme");
     sourceCodeEditor.classList.add("light-theme");
     sourceCodeOverlay.classList.add("light-theme");
-    sourceCodeContainer?.classList.remove("dark-theme");
     lineNumbers?.classList.remove("dark-theme");
     sourceCodeEditor.classList.remove("dark-theme");
     sourceCodeOverlay.classList.remove("dark-theme");
@@ -670,5 +668,7 @@ defineExpose({
 </script>
 
 <style lang="scss">
+@use "./github-dark.scss";
+@use "./github.scss";
 @use "./index.scss";
 </style>

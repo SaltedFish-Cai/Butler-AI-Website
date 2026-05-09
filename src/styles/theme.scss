@@ -131,7 +131,6 @@
         font-size: calc(var(--pa-size-font) + 2px);
       }
       &.level-1.is-active > .item .link {
-        font-style: italic;
         font-weight: bold;
         color: var(--pa-color-primary) !important;
         background-color: var(--pa-color-primary-light-8);
@@ -141,12 +140,22 @@
         padding: 10px 0 10px 15px;
         border-radius: 5px;
         .text {
+          font-style: italic;
           background: none !important;
         }
       }
     }
   }
+  // .Layout {
+  // background: linear-gradient(180deg, var(--pa-color-primary) 1%, #ffffff 100%);
+  // background-size: 10% 10%;
+  // }
 
+  // .VPDoc {
+  //   border-radius: var(--pa-size-radius);
+  //   box-shadow: 0 0 10px 0 var(--pa-color-send-font);
+  //   background-color: var(--pa-color-bg);
+  // }
   // .VPContent {
   //   padding: 0 !important;
   //   margin-left: calc(var(--vp-sidebar-width) + calc(var(--pa-size-padding) * 3)) !important;
@@ -242,6 +251,20 @@
       &:hover {
         --vp-c-text-1: var(--pa-color-white);
       }
+    }
+  }
+  .VPSidebar,
+  .demo,
+  .VPNav {
+    box-shadow: var(--vp-shadow-1);
+  }
+  .vp-doc :not(pre, h1, h2, h3, h4, h5, h6) > code {
+    color: var(--pa-color-font);
+  }
+  .VPSidebarItem.level-1.is-active > .item .link {
+    color: var(--pa-color-white) !important;
+    & .text {
+      color: var(--pa-color-white) !important;
     }
   }
 }

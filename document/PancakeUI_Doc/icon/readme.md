@@ -24,6 +24,7 @@
 | name       | icon 名称  | `string`                                                                              | `magic_line`  |
 | tip        | icon 提示  | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) `string` | -             |
 | fontFamily | 字体名称   | `string`                                                                              | `pa-iconfont` |
+| fontColor  | 字体颜色   | `Array<string>`                                                                       | -             |
 
 ## ComponentEmits
 

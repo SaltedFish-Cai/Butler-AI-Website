@@ -39,16 +39,14 @@
   z-index: 210;
   border: 1px solid var(--pa-color-border);
   border-radius: var(--pa-size-radius, 3px);
-  box-shadow: 0px 0 5px 0px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--pa-shadow-color);
 
   .pa-popover-arrow {
-    position: fixed;
-    top: -5px;
-    left: 50%;
+    position: absolute;
     height: 10px;
     width: 10px;
     box-sizing: border-box;
-    transform: translateX(-50%) rotate(45deg);
+    transform: translate(-50%, -50%) rotate(45deg);
     background: var(--pa-color-bg);
     border: 1px solid var(--pa-color-border);
     z-index: -1;

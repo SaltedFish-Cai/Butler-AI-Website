@@ -79,10 +79,6 @@ watch(
   z-index: 1015;
 }
 
-.dark .VPSidebar {
-  box-shadow: var(--vp-shadow-1);
-}
-
 @media (min-width: 960px) {
   .VPSidebar {
     padding-top: var(--vp-nav-height);

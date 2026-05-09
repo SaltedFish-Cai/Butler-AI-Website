@@ -22,7 +22,8 @@ const PancakeUIConfig = ref({
   size: "default",
   isDark: false,
   baseHost: "",
-  requestHeader: { Authorization: "", Version: 20260101 },
+  requestHeader: { Authorization: "", Version: "01010101" },
+  titleStyle: "horizontal",
   table_config: {
     groupAdvancedQueryApi: groupAdvancedQueryApi,
     advancedQueryApi: advancedQueryApi,
@@ -174,7 +175,7 @@ onMounted(() => {
   z-index: 10;
   width: 224px;
   height: 32px;
-  background: linear-gradient(transparent, var(--vp-c-bg) 70%);
+  /* background: linear-gradient(transparent, var(--vp-c-bg) 70%); */
 }
 
 .aside-content {

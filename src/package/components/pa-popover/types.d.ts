@@ -3,11 +3,6 @@
  * @description PaPopover 类型定义
  */
 /**
- * 模块导入
- * @description 导入语言包类型
- */
-import { LanguagePackageType } from "../manager-type";
-/**
  * 组件属性定义
  * @description 弹出框组件的属性类型
  */
@@ -20,7 +15,7 @@ export type ComponentProps = {
   /**
    * 弹窗标识
    * @type string | undefined
-   * @default
+   * @default undefined
    * @description 弹窗标识
    */
   id?: string;
@@ -54,7 +49,7 @@ export type ComponentProps = {
   referenceStyle?: Record<string, string>;
   /**
    * 是否禁用
-   * @type boolean
+   * @type boolean | undefined
    * @default false
    * @description 是否禁用
    */
@@ -65,15 +60,14 @@ export type ComponentProps = {
    * @default body
    * @description 弹窗挂载位置
    */
-  // eslint-disable-next-line spellcheck/spell-checker
   teleportTo?: string;
   /**
    * 弹窗位置
-   * @type "bottom" | "top" | undefined
-   * @default top
+   * @type "bottom" | "left" | "right" | "top" | undefined
+   * @default bottom
    * @description 弹窗位置
    */
-  placement?: "bottom" | "top";
+  placement?: "bottom" | "left" | "right" | "top";
   /**
    * 触发方式
    * @type "click" | "hover" | undefined
@@ -84,7 +78,7 @@ export type ComponentProps = {
   /**
    * 内容类名
    * @type string | undefined
-   * @default
+   * @default ''
    * @description 内容类名
    */
   contentClassName?: string;
@@ -97,21 +91,21 @@ export type ComponentProps = {
   popoverWidth?: number;
   /**
    * 是否阻止事件冒泡
-   * @type boolean
+   * @type boolean | undefined
    * @default false
    * @description 是否阻止事件冒泡
    */
   stopPropagation?: boolean;
   /**
    * 是否自动宽度
-   * @type boolean
-   * @default true
+   * @type boolean | undefined
+   * @default false
    * @description 是否自动宽度
    */
   autoWidth?: boolean;
   /**
    * 是否点击外部关闭
-   * @type boolean
+   * @type boolean | undefined
    * @default true
    * @description 是否点击外部关闭
    */
@@ -125,7 +119,7 @@ export type ComponentProps = {
   sticky?: "left" | "right";
   /**
    * 是否点击滚动关闭
-   * @type boolean
+   * @type boolean | undefined
    * @default true
    * @description 是否点击滚动关闭
    */
@@ -140,6 +134,7 @@ export type ComponentProps = {
 };
 /**
  * 组件事件类型
+ * @type object
  * @description 定义组件可触发的事件
  */
 export type ComponentEmits = {

@@ -18,6 +18,7 @@
 | class          | 自定义类名       | `Array<string>` \| `string`                                                         | -          |
 | style          | 自定义样式       | `Record<string, string \| number>`                                                  | -          |
 | modelValue     | 双向绑定值       | `Array<boolean \| number \| string>`                                                | -          |
+| height         | 高度             | `string`                                                                            | `300px`    |
 | displayValue   | 纯展示数据       | `string`                                                                            | -          |
 | exOptions      | 外置数据选项     | [`PaOptionType.SelectList`](/document/PancakeUI_Doc/options#paoptiontypeselectlist) | -          |
 | optionKey      | 选项 Key         | `string`                                                                            | `"value"`  |
@@ -25,7 +26,7 @@
 | disabled       | 是否禁用         | `boolean`                                                                           | `false`    |
 | display        | 纯展示模式       | `boolean`                                                                           | `false`    |
 | useSearch      | 是否使用搜索     | `boolean`                                                                           | `false`    |
-| contrastData   | 对比数据         | `Array<number \| string>` \| `number` \| `string`                                   | -          |
+| contrastData   | 对比数据         | `Array<boolean \| number \| string>`                                                | -          |
 | alwaysContrast | 是否显示对比数据 | `boolean`                                                                           | `false`    |
 
 ## ComponentEmits

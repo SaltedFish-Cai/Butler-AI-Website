@@ -47,7 +47,7 @@
         transition: var(--pa-animation-time, 0.2s);
 
         border-color: var(--pa-color-primary);
-        box-shadow: 0 0 0 2px var(--pa-color-primary-light-8);
+        box-shadow: var(--pa-shadow-color);
       }
     }
 
@@ -56,7 +56,7 @@
 
       &.hover {
         border-color: var(--pa-color-primary);
-        box-shadow: 0 0 0 2px var(--pa-color-primary-light-8);
+        box-shadow: var(--pa-shadow-color);
       }
     }
   }
