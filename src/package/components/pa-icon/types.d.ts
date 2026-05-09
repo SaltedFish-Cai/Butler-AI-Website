@@ -55,6 +55,13 @@ export type ComponentProps = {
    * @description 字体名称
    */
   fontFamily?: string;
+  /**
+   * 字体颜色
+   * @type Array<string> | undefined
+   * @default undefined
+   * @description 字体颜色，数组元素为颜色值，数组长度为2
+   */
+  fontColor?: Array<string>;
 };
 
 /**

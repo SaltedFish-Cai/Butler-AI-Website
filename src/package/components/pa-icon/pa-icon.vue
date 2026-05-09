@@ -5,10 +5,27 @@
     :class="[props.class]"
     :style="{ ...props.style, fontFamily: props.fontFamily || 'pa-iconfont' }"
   >
-    <span v-if="!tip" :class="['pa-icon_font', fontFamily === 'pa-iconfont' ? `icon-${name}` : `butler-${name}`]"></span>
+    <span
+      v-if="!tip"
+      :class="[
+        'pa-icon_font',
+        fontFamily === 'pa-iconfont' ? `icon-${name}` : `butler-${name}`,
+        fontColor.length ? `background-color` : ''
+      ]"
+      :style="{ '--set-icon-background-color': `linear-gradient(45deg, ${fontColor.join(', ')})` }"
+    ></span>
     <template v-else>
       <pa-popover trigger="hover">
-        <template #reference> <span class="pa-icon_font" :class="'icon-' + name"></span> </template>
+        <template #reference>
+          <span
+            :class="[
+              'pa-icon_font',
+              fontFamily === 'pa-iconfont' ? `icon-${name}` : `butler-${name}`,
+              fontColor.length ? `background-color` : ''
+            ]"
+            :style="{ '--set-icon-background-color': `linear-gradient(45deg, ${fontColor.join(', ')})` }"
+          ></span>
+        </template>
         {{ typeof tip === "string" ? tip : tip[languageValue] }}
       </pa-popover>
     </template>
@@ -28,7 +45,7 @@ import { PancakeGlobalConfigType } from "../pa-manager/types";
  * @type ComponentProps
  * @description 组件的属性对象，包含 name、tip 等
  */
-const props = withDefaults(defineProps<ComponentProps>(), { name: "magic_line", fontFamily: "pa-iconfont" });
+const props = withDefaults(defineProps<ComponentProps>(), { name: "magic_line", fontFamily: "pa-iconfont", fontColor: () => [] });
 /**
  * 组件事件定义
  * @description 定义组件可触发的事件

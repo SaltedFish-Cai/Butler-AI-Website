@@ -29,7 +29,14 @@ const isExternal = computed(() => (props.href && EXTERNAL_URL_RE.test(props.href
     :target="target ?? (isExternal ? '_blank' : undefined)"
     :rel="rel ?? (isExternal ? 'noreferrer' : undefined)"
   >
-    <pa-icon v-if="iconName" :name="iconName" class="mr-size" style="font-size: 22px" :fontFamily="'butler-iconfont'" />
+    <pa-icon
+      v-if="iconName"
+      :name="iconName"
+      class="mr-size"
+      style="font-size: 22px"
+      :fontFamily="'butler-iconfont'"
+      :fontColor="['var(--pa-color-primary)', '#f56c6c']"
+    />
     <slot />
   </component>
 </template>

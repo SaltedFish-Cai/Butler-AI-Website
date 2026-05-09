@@ -12,5 +12,12 @@
     height: 1em;
     font-size: inherit;
     line-height: 1em;
+
+    &.background-color {
+      background-image: var(--set-icon-background-color);
+      -webkit-background-clip: text; /* 兼容性写法 */
+      background-clip: text;
+      color: transparent; /* 将文字设为透明，显示背景 */
+    }
   }
 }

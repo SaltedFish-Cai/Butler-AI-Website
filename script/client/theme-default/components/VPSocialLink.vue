@@ -23,7 +23,12 @@ const svg = computed(() => {
     target="_blank"
     rel="noopener"
   >
-    <pa-icon :name="icon" fontFamily="butler-iconfont" />
+    <pa-icon
+      :name="icon"
+      fontFamily="butler-iconfont"
+      style="font-size: 22px"
+      :fontColor="['var(--pa-color-primary)', '#f56c6c']"
+    />
   </a>
 </template>
 
