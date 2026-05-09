@@ -1,35 +1,15 @@
 <template>
-  <section
-    class="pa-icon"
-    @click="handleClick"
-    :class="[props.class]"
-    :style="{ ...props.style, fontFamily: props.fontFamily || 'pa-iconfont' }"
-  >
-    <span
-      v-if="!tip"
-      :class="[
-        'pa-icon_font',
-        fontFamily === 'pa-iconfont' ? `icon-${name}` : `butler-${name}`,
-        fontColor.length ? `background-color` : ''
-      ]"
-      :style="{ '--set-icon-background-color': `linear-gradient(45deg, ${fontColor.join(', ')})` }"
-    ></span>
+  <i class="pa-icon" @click="emit('click', $event)" :class="[props.class]" :style="iconStyle">
+    <span v-if="!tip" :class="iconClasses" :style="iconFontStyle"></span>
     <template v-else>
       <pa-popover trigger="hover">
         <template #reference>
-          <span
-            :class="[
-              'pa-icon_font',
-              fontFamily === 'pa-iconfont' ? `icon-${name}` : `butler-${name}`,
-              fontColor.length ? `background-color` : ''
-            ]"
-            :style="{ '--set-icon-background-color': `linear-gradient(45deg, ${fontColor.join(', ')})` }"
-          ></span>
+          <span :class="iconClasses" :style="iconFontStyle"></span>
         </template>
-        {{ typeof tip === "string" ? tip : tip[languageValue] }}
+        {{ tipText }}
       </pa-popover>
     </template>
-  </section>
+  </i>
 </template>
 
 <script lang="ts" setup>
@@ -37,7 +17,7 @@
  * 模块导入
  * @description 导入 Vue 组合式 API
  */
-import { computed, ComputedRef, inject } from "vue";
+import { computed, inject } from "vue";
 /**
  * 模块导入
  * @description 导入组件类型定义
@@ -66,19 +46,46 @@ const emit = defineEmits<ComponentEmits>();
  */
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 /**
- * 当前语言值
- * @type ComputedRef<string>
- * @description 获取当前语言标识，如 zh-CN 或 en-US
+ * 图标类名列表
+ * @type Array<string>
+ * @description 根据 fontFamily 和 fontColor 计算图标元素的类名
  */
-const languageValue = computed(() => PancakeGlobalConfig.value?.language?.value || "zh-CN");
+const iconClasses = computed(() => {
+  const classes: Array<string> = [
+    "pa-icon_font",
+    props.fontFamily === "pa-iconfont" ? `icon-${props.name}` : `butler-${props.name}`
+  ];
+  if (props.fontColor.length) classes.push("background-color");
+  return classes;
+});
 /**
- * 点击事件处理
- * @param event - 鼠标事件对象
- * @returns void
+ * 图标容器样式
+ * @type Record<string, string | number | Record<string, string | number>>
+ * @description 图标容器的行内样式，合并自定义样式和字体设置
  */
-function handleClick(event: MouseEvent) {
-  emit("click", event);
-}
+const iconStyle = computed(() => ({
+  ...props.style,
+  fontFamily: props.fontFamily
+}));
+/**
+ * 图标字体样式
+ * @type Record<string, string>
+ * @description 图标字体元素的行内样式，仅在有渐变色时设置 CSS 变量
+ */
+const iconFontStyle = computed(() => {
+  if (!props.fontColor.length) return {};
+  return { "--set-icon-background-color": `linear-gradient(45deg, ${props.fontColor.join(", ")})` };
+});
+/**
+ * 提示文本
+ * @type string
+ * @description 根据 tip 类型返回对应的提示文字
+ */
+const tipText = computed(() => {
+  if (typeof props.tip === "string") return props.tip;
+  const languageValue = PancakeGlobalConfig.value?.language?.value || "zh-CN";
+  return props.tip?.[languageValue] ?? "";
+});
 </script>
 
 <style lang="scss">
