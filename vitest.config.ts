@@ -25,6 +25,10 @@ export default defineConfig({
         'src/package/components/pa-title/**',
         'src/package/components/pa-line/**',
         'src/package/components/pa-empty/**',
+        'src/package/components/pa-row/**',
+        'src/package/components/pa-col/**',
+        'src/package/components/pa-scrollbar/**',
+        'src/package/components/pa-scrollbar-list/**',
       ]
     }
   }
