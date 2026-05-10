@@ -59,7 +59,7 @@
     "@vant/auto-import-resolver": "^1.2.1",
     "@vitejs/plugin-vue": "^4.1.0",
     "@vitejs/plugin-vue-jsx": "^3.0.1",
-    "@vitest/coverage-v8": "4.1.5",
+    "@vitest/coverage-v8": "^4.1.5",
     "@vue/test-utils": "^2.4.10",
     "autoprefixer": "^10.4.14",
     "commitizen": "4.2.4",
