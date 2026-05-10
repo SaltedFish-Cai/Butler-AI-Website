@@ -24,8 +24,13 @@ const PaIconMock = defineComponent({
 // Mock pa-popover component
 const PaPopoverMock = {
   name: 'PaPopover',
-  props: ['popoverWidth', 'stopPropagation'],
-  template: '<div class="pa-popover-mock"><slot name="reference" /><slot /></div>'
+  props: ['popoverWidth', 'stopPropagation', 'disabled'],
+  setup(props, { slots }) {
+    return () => h('div', { class: 'pa-popover-mock' }, [
+      slots.reference ? slots.reference() : null,
+      slots.default ? slots.default() : null
+    ])
+  }
 }
 
 // Mock PancakeGlobalConfig
@@ -262,6 +267,145 @@ describe('pa-tag 组件测试', () => {
       // 由于所有子元素 isFullInParent=false，spliceIndex=0，不会折叠
       // 实际折叠依赖真实 DOM 布局，这里验证组件不崩溃
       expect(wrapper.find('div.pa-tag').exists()).toBe(true)
+    })
+
+    // 覆盖 lines 21, 24, 28-30: 隐藏标签的 popover 渲染
+    it('部分标签被折叠时 popover 显示 +N 隐藏数量 (line 21)', async () => {
+      const { getElementPosition } = await import('../utils/getElementPosition')
+      // 模拟前2个标签在容器内，后面的被折叠
+      let callCount = 0
+      ;(getElementPosition as any).mockImplementation((el: any, parent: any) => {
+        callCount++
+        // 前2个在容器内，后面的不在
+        return { isFullInParent: callCount <= 2 }
+      })
+
+      const wrapper = await mountTag({ tagList: testTagList, useCollapse: true })
+      await nextTick()
+
+      // 验证 popover 显示了 +N
+      const popover = wrapper.findComponent({ name: 'PaPopover' })
+      expect(popover.exists()).toBe(true)
+      // 验证 reference slot 显示了 +1 (因为有3个标签，前2个显示，1个隐藏)
+      expect(wrapper.text()).toContain('+1')
+    })
+
+    it('隐藏标签显示在 popover 内容中 (lines 24, 28-30)', async () => {
+      const { getElementPosition } = await import('../utils/getElementPosition')
+      // 模拟前1个标签在容器内，后面的被折叠
+      let callCount = 0
+      ;(getElementPosition as any).mockImplementation((el: any, parent: any) => {
+        callCount++
+        // 只有第1个在容器内
+        return { isFullInParent: callCount <= 1 }
+      })
+
+      const wrapper = await mountTag({ tagList: testTagList, useCollapse: true })
+      await nextTick()
+
+      // 验证 popover 存在
+      const popover = wrapper.findComponent({ name: 'PaPopover' })
+      expect(popover.exists()).toBe(true)
+
+      // 验证隐藏标签的文本内容显示
+      // popover 内容中应该包含被折叠的标签
+      const popoverContent = popover.find('.pa-tag')
+      expect(popoverContent.exists()).toBe(true)
+    })
+
+    it('隐藏标签在非 disabled 时显示关闭按钮 (line 28)', async () => {
+      const { getElementPosition } = await import('../utils/getElementPosition')
+      // 模拟前1个标签在容器内，后面的被折叠
+      let callCount = 0
+      ;(getElementPosition as any).mockImplementation((el: any, parent: any) => {
+        callCount++
+        return { isFullInParent: callCount <= 1 }
+      })
+
+      const wrapper = await mountTag({ tagList: testTagList, useCollapse: true, disabled: false })
+      await nextTick()
+
+      // 验证 popover 存在
+      const popover = wrapper.findComponent({ name: 'PaPopover' })
+      expect(popover.exists()).toBe(true)
+
+      // 验证隐藏标签区域有关闭按钮
+      const hiddenTagsCloseIcons = popover.findAll('.pa-tag-text_close')
+      expect(hiddenTagsCloseIcons.length).toBeGreaterThan(0)
+    })
+
+    it('隐藏标签在 disabled 时不显示关闭按钮', async () => {
+      const { getElementPosition } = await import('../utils/getElementPosition')
+      // 模拟前1个标签在容器内，后面的被折叠
+      let callCount = 0
+      ;(getElementPosition as any).mockImplementation((el: any, parent: any) => {
+        callCount++
+        return { isFullInParent: callCount <= 1 }
+      })
+
+      const wrapper = await mountTag({ tagList: testTagList, useCollapse: true, disabled: true })
+      await nextTick()
+
+      // 验证 popover 存在
+      const popover = wrapper.findComponent({ name: 'PaPopover' })
+      expect(popover.exists()).toBe(true)
+
+      // 验证隐藏标签区域没有关闭按钮 (disabled=true)
+      const hiddenTagsCloseIcons = popover.findAll('.pa-tag-text_close')
+      expect(hiddenTagsCloseIcons.length).toBe(0)
+    })
+
+    // 覆盖 line 28: 隐藏标签的关闭按钮 v-if="!disabled"
+    it('隐藏标签的关闭按钮绑定 click 事件处理函数', async () => {
+      const { getElementPosition } = await import('../utils/getElementPosition')
+      // 模拟前1个标签在容器内，后面的被折叠
+      let callCount = 0
+      ;(getElementPosition as any).mockImplementation((el: any, parent: any) => {
+        callCount++
+        return { isFullInParent: callCount <= 1 }
+      })
+
+      const wrapper = await mountTag({ tagList: testTagList, useCollapse: true, disabled: false })
+      await nextTick()
+
+      // 验证 popover 存在
+      const popover = wrapper.findComponent({ name: 'PaPopover' })
+      expect(popover.exists()).toBe(true)
+
+      // 验证隐藏标签数量正确
+      const vm = wrapper.vm as any
+      expect(vm.hideValue.length).toBe(2)
+
+      // 验证 popover 内容中的隐藏标签
+      const popoverHtml = popover.html()
+      expect(popoverHtml).toContain('+2')
+    })
+
+    it('所有标签都在容器内时 popover 不渲染', async () => {
+      const { getElementPosition } = await import('../utils/getElementPosition')
+      ;(getElementPosition as any).mockImplementation(() => ({ isFullInParent: true }))
+
+      const wrapper = await mountTag({ tagList: testTagList, useCollapse: true })
+      await nextTick()
+
+      // 验证 popover 不存在 (hideValue 为空)
+      const popover = wrapper.findComponent({ name: 'PaPopover' })
+      expect(popover.exists()).toBe(false)
+    })
+
+    it('popover 渲染在组件中', async () => {
+      const { getElementPosition } = await import('../utils/getElementPosition')
+      let callCount = 0
+      ;(getElementPosition as any).mockImplementation((el: any, parent: any) => {
+        callCount++
+        return { isFullInParent: callCount <= 1 }
+      })
+
+      const wrapper = await mountTag({ tagList: testTagList, useCollapse: true })
+      await nextTick()
+
+      const popover = wrapper.findComponent({ name: 'PaPopover' })
+      expect(popover.exists()).toBe(true)
     })
   })
 

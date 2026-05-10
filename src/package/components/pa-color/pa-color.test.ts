@@ -318,4 +318,196 @@ describe('pa-color 组件测试', () => {
       expect(wrapper.find('.pa-color-preview-mask').exists()).toBe(true)
     })
   })
+
+  // ==================== popover 打开状态 ====================
+  describe('13. popover 打开状态', () => {
+    it('默认 isPickerOpen 为 false', async () => {
+      const wrapper = await mountColor({ modelValue: '#ff0000' })
+      expect((wrapper.vm as any).isPickerOpen).toBe(false)
+    })
+
+    it('预览区域默认无 active class', async () => {
+      const wrapper = await mountColor({ modelValue: '#ff0000' })
+      expect(wrapper.find('.pa-color-preview').classes()).not.toContain('pa-color-preview-active')
+    })
+
+    it('popover change 事件更新 isPickerOpen', async () => {
+      const wrapper = await mountColor({ modelValue: '#ff0000' })
+      const popover = wrapper.findComponent({ name: 'PaPopover' })
+      
+      // 触发 popover change 事件
+      await popover.vm.$emit('change', true)
+      await nextTick()
+      
+      expect((wrapper.vm as any).isPickerOpen).toBe(true)
+      expect(wrapper.find('.pa-color-preview').classes()).toContain('pa-color-preview-active')
+    })
+
+    it('popover 关闭时移除 active class', async () => {
+      const wrapper = await mountColor({ modelValue: '#ff0000' })
+      const popover = wrapper.findComponent({ name: 'PaPopover' })
+      
+      // 打开
+      await popover.vm.$emit('change', true)
+      await nextTick()
+      expect(wrapper.find('.pa-color-preview').classes()).toContain('pa-color-preview-active')
+      
+      // 关闭
+      await popover.vm.$emit('change', false)
+      await nextTick()
+      expect(wrapper.find('.pa-color-preview').classes()).not.toContain('pa-color-preview-active')
+    })
+  })
+
+  // ==================== 颜色同步 ====================
+  describe('14. 颜色同步', () => {
+    it('currentColor 初始值匹配 modelValue', async () => {
+      const wrapper = await mountColor({ modelValue: '#ff0000' })
+      expect((wrapper.vm as any).currentColor).toBe('#ff0000')
+    })
+
+    it('pa-color-box 接收到正确的 modelValue', async () => {
+      const wrapper = await mountColor({ modelValue: '#ff0000' })
+      const colorBox = wrapper.findComponent({ name: 'PaColorBox' })
+      expect(colorBox.props('modelValue')).toBe('#ff0000')
+    })
+
+    it('pa-color-box 接收到 showAlpha 属性', async () => {
+      const wrapper = await mountColor({ modelValue: '#ff0000', useAlpha: true })
+      const colorBox = wrapper.findComponent({ name: 'PaColorBox' })
+      expect(colorBox.props('showAlpha')).toBe(true)
+    })
+  })
+
+  // ==================== disabled 与 popover 交互 ====================
+  describe('15. disabled 与 popover 交互', () => {
+    it('disabled=true 时 popover 也 disabled', async () => {
+      const wrapper = await mountColor({ disabled: true })
+      const popover = wrapper.findComponent({ name: 'PaPopover' })
+      expect(popover.props('disabled')).toBe(true)
+    })
+
+    it('disabled=false 时 popover enabled', async () => {
+      const wrapper = await mountColor({ disabled: false })
+      const popover = wrapper.findComponent({ name: 'PaPopover' })
+      expect(popover.props('disabled')).toBe(false)
+    })
+
+    it('disabled=true 时不显示预览区域', async () => {
+      const wrapper = await mountColor({ disabled: true })
+      expect(wrapper.find('.pa-color-preview').exists()).toBe(false)
+    })
+  })
+
+  // ==================== watch modelValue 测试 ====================
+  describe('16. watch modelValue 变化', () => {
+    it('外部 modelValue 变化时同步', async () => {
+      const wrapper = await mountColor({ modelValue: '#ff0000' })
+      await wrapper.setProps({ modelValue: '#00ff00' })
+      await nextTick()
+      expect((wrapper.vm as any).currentColor).toBe('#00ff00')
+    })
+
+    it('外部 modelValue 变为相同的值时保持不变', async () => {
+      const wrapper = await mountColor({ modelValue: '#ff0000' })
+      await wrapper.setProps({ modelValue: '#ff0000' })
+      await nextTick()
+      expect((wrapper.vm as any).currentColor).toBe('#ff0000')
+    })
+
+    it('外部 modelValue 变为空字符串', async () => {
+      const wrapper = await mountColor({ modelValue: '#ff0000' })
+      await wrapper.setProps({ modelValue: '' })
+      await nextTick()
+      // 空字符串不会触发更新 (因为 if (newValue && ...))
+      expect((wrapper.vm as any).currentColor).toBe('#ff0000')
+    })
+  })
+
+  // ==================== presetColors 传递给 pa-color-box ====================
+  describe('17. presetColors 配置', () => {
+    it('presetColors 作为数组传递', async () => {
+      const presets = ['#f00', '#0f0', '#00f']
+      const wrapper = await mountColor({ presetColors: presets })
+      const colorBox = wrapper.findComponent({ name: 'PaColorBox' })
+      expect(colorBox.props('presetColors')).toEqual(presets)
+    })
+
+    it('空数组 presetColors 也传递', async () => {
+      const wrapper = await mountColor({ presetColors: [] })
+      const colorBox = wrapper.findComponent({ name: 'PaColorBox' })
+      expect(colorBox.props('presetColors')).toEqual([])
+    })
+  })
+
+  // ==================== computed 属性测试 ====================
+  describe('18. computed 属性测试', () => {
+    it('组件暴露 emit 定义', async () => {
+      const wrapper = await mountColor({ modelValue: '#ff0000' })
+      expect(wrapper.vm.$options.emits).toBeDefined()
+    })
+
+    it('支持 update:modelValue 事件', async () => {
+      const wrapper = await mountColor({ modelValue: '#ff0000' })
+      expect(wrapper.vm.$options.emits).toContain('update:modelValue')
+    })
+
+    it('支持 change 事件', async () => {
+      const wrapper = await mountColor({ modelValue: '#ff0000' })
+      expect(wrapper.vm.$options.emits).toContain('change')
+    })
+  })
+
+  // ==================== 渲染边界测试 ====================
+  describe('19. 渲染边界测试', () => {
+    it('渲染根 div 有正确的 class', async () => {
+      const wrapper = await mountColor({ modelValue: '#ff0000' })
+      const rootDiv = wrapper.find('div.pa-color')
+      expect(rootDiv.exists()).toBe(true)
+    })
+
+    it('非 disabled 时有 preview 区域', async () => {
+      const wrapper = await mountColor({ modelValue: '#ff0000', disabled: false })
+      expect(wrapper.find('.pa-color-preview').exists()).toBe(true)
+    })
+
+    it('预览区域有文本显示', async () => {
+      const wrapper = await mountColor({ modelValue: '#ff0000' })
+      expect(wrapper.find('.pa-color-preview-text').exists()).toBe(true)
+    })
+  })
+
+  // ==================== 颜色格式边界测试 ====================
+  describe('20. 颜色格式边界测试', () => {
+    it('处理大写 HEX 颜色', async () => {
+      const wrapper = await mountColor({ modelValue: '#FF0000' })
+      expect(wrapper.find('.pa-color-preview').exists()).toBe(true)
+    })
+
+    it('处理混合大小写 HEX 颜色', async () => {
+      const wrapper = await mountColor({ modelValue: '#Ff00Aa' })
+      expect(wrapper.find('.pa-color-preview').exists()).toBe(true)
+    })
+
+    it('处理带 # 前缀的 rgb 颜色', async () => {
+      const wrapper = await mountColor({ modelValue: '#rgb(255,0,0)' })
+      expect(wrapper.find('.pa-color-preview').exists()).toBe(true)
+    })
+  })
+
+  // ==================== 组件卸载测试 ====================
+  describe('21. 组件卸载测试', () => {
+    it('组件可以正常卸载', async () => {
+      const wrapper = await mountColor({ modelValue: '#ff0000' })
+      expect(() => wrapper.unmount()).not.toThrow()
+    })
+
+    it('多次挂载卸载不崩溃', async () => {
+      const wrapper1 = await mountColor({ modelValue: '#ff0000' })
+      wrapper1.unmount()
+      
+      const wrapper2 = await mountColor({ modelValue: '#00ff00' })
+      expect(() => wrapper2.unmount()).not.toThrow()
+    })
+  })
 })

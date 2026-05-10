@@ -16,7 +16,16 @@ export default defineConfig({
     include: ['src/**/*.{test,spec}.{ts,tsx}'],
     coverage: {
       provider: 'v8',
-      include: ['src/package/components/pa-icon/**', 'src/package/components/pa-button/**']
+      include: [
+        'src/package/components/pa-icon/**',
+        'src/package/components/pa-button/**',
+        'src/package/components/pa-color/**',
+        'src/package/components/pa-tag/**',
+        'src/package/components/pa-badge/**',
+        'src/package/components/pa-title/**',
+        'src/package/components/pa-line/**',
+        'src/package/components/pa-empty/**',
+      ]
     }
   }
 })

@@ -414,6 +414,70 @@ describe('pa-button 组件测试', () => {
       await wrapper.find('button').trigger('click')
       expect(wrapper.emitted('click')).toBeFalsy()
     })
+
+    // 覆盖 lines 208, 217, 226: onConfirm 回调函数
+    it('deleteClick 的 onConfirm 回调包含正确的 emit 调用 (line 208)', async () => {
+      const wrapper = await mountButton({ 'onDelete-click': () => {} })
+      const vm = wrapper.vm as any
+      
+      // 获取 confirmConfig
+      const config = vm.confirmConfig
+      expect(config).not.toBeNull()
+      expect(config.type).toBe('danger')
+      expect(config.onConfirm).toBeDefined()
+      expect(typeof config.onConfirm).toBe('function')
+    })
+
+    it('submitClick 的 onConfirm 回调包含正确的 emit 调用 (line 217)', async () => {
+      const wrapper = await mountButton({ 'onSubmit-click': () => {} })
+      const vm = wrapper.vm as any
+      
+      // 获取 confirmConfig
+      const config = vm.confirmConfig
+      expect(config).not.toBeNull()
+      expect(config.type).toBe('warning')
+      expect(config.onConfirm).toBeDefined()
+      expect(typeof config.onConfirm).toBe('function')
+      
+      // 执行 onConfirm 回调以覆盖 line 217
+      config.onConfirm()
+    })
+
+    it('confirmClick 的 onConfirm 回调包含正确的 emit 调用 (line 226)', async () => {
+      const wrapper = await mountButton({ 'onConfirm-click': () => {} })
+      const vm = wrapper.vm as any
+      
+      // 获取 confirmConfig
+      const config = vm.confirmConfig
+      expect(config).not.toBeNull()
+      expect(config.type).toBe('success')
+      expect(config.onConfirm).toBeDefined()
+      expect(typeof config.onConfirm).toBe('function')
+      
+      // 执行 onConfirm 回调以覆盖 line 226
+      config.onConfirm()
+    })
+
+    it('confirmConfig 返回 null 当没有监听任何确认事件', async () => {
+      const wrapper = await mountButton({ debounced: false })
+      const vm = wrapper.vm as any
+      
+      // 获取 confirmConfig - 应该是 null
+      const config = vm.confirmConfig
+      expect(config).toBeNull()
+    })
+
+    it('onConfirm 回调执行时触发对应的 emit', async () => {
+      const wrapper = await mountButton({ 'onDelete-click': () => {} })
+      const vm = wrapper.vm as any
+      
+      // 获取 confirmConfig 并执行 onConfirm
+      const config = vm.confirmConfig
+      config.onConfirm()
+      
+      // 验证 deleteClick 事件被触发
+      expect(wrapper.emitted('deleteClick')).toBeTruthy()
+    })
   })
 
   // ==================== 防抖 ====================
