@@ -29,6 +29,16 @@ export default defineConfig({
         'src/package/components/pa-col/**',
         'src/package/components/pa-scrollbar/**',
         'src/package/components/pa-scrollbar-list/**',
+        'src/package/components/pa-input/**',
+        'src/package/components/pa-number/**',
+        'src/package/components/pa-select/**',
+        'src/package/components/pa-select-icon/**',
+        'src/package/components/pa-cascader/**',
+        'src/package/components/pa-radio/**',
+        'src/package/components/pa-checkbox/**',
+        'src/package/components/pa-switch/**',
+        'src/package/components/pa-time/**',
+        'src/package/components/pa-file/**',
       ]
     }
   }
