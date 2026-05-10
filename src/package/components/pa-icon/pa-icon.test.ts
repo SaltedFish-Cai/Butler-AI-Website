@@ -20,7 +20,7 @@ const mockPancakeGlobalConfig = {
 
 describe('pa-icon 组件测试', () => {
   describe('1. 默认渲染测试', () => {
-    it('应该正确渲染 section.pa-icon 和默认 span.icon-magic_line', async () => {
+    it('应该正确渲染 i.pa-icon 和默认 span.icon-magic_line', async () => {
       const { default: PaIcon } = await import('./pa-icon.vue')
       
       const wrapper = mount(PaIcon, {
@@ -34,16 +34,16 @@ describe('pa-icon 组件测试', () => {
         }
       })
       
-      // 验证 section.pa-icon 存在
-      const section = wrapper.find('section.pa-icon')
-      expect(section.exists()).toBe(true)
+      // 验证 i.pa-icon 存在
+      const icon = wrapper.find('i.pa-icon')
+      expect(icon.exists()).toBe(true)
       
       // 验证默认 icon class
       const span = wrapper.find('span.icon-magic_line')
       expect(span.exists()).toBe(true)
       
       // 验证 fontFamily 默认值应用 (HTML style 属性使用 kebab-case)
-      const style = section.attributes('style')
+      const style = icon.attributes('style')
       expect(style).toContain('font-family')
       expect(style).toContain('pa-iconfont')
     })
@@ -71,7 +71,7 @@ describe('pa-icon 组件测试', () => {
   })
 
   describe('3. click 事件测试', () => {
-    it('点击 section 应触发 click 事件', async () => {
+    it('点击 i 应触发 click 事件', async () => {
       const { default: PaIcon } = await import('./pa-icon.vue')
       
       const wrapper = mount(PaIcon, {
@@ -85,15 +85,15 @@ describe('pa-icon 组件测试', () => {
         }
       })
       
-      const section = wrapper.find('section.pa-icon')
-      await section.trigger('click')
+      const icon = wrapper.find('i.pa-icon')
+      await icon.trigger('click')
       
       expect(wrapper.emitted('click')).toBeTruthy()
     })
   })
 
   describe('4. fontFamily prop 测试', () => {
-    it('传入 fontFamily 应应用到 section 的 style 上', async () => {
+    it('传入 fontFamily 应应用到 i 的 style 上', async () => {
       const { default: PaIcon } = await import('./pa-icon.vue')
       
       const wrapper = mount(PaIcon, {
@@ -108,8 +108,8 @@ describe('pa-icon 组件测试', () => {
         }
       })
       
-      const section = wrapper.find('section.pa-icon')
-      const style = section.attributes('style')
+      const icon = wrapper.find('i.pa-icon')
+      const style = icon.attributes('style')
       expect(style).toContain('custom-font')
     })
   })
@@ -152,8 +152,8 @@ describe('pa-icon 组件测试', () => {
         }
       })
       
-      const section = wrapper.find('section.pa-icon')
-      expect(section.classes()).toContain('custom-class')
+      const icon = wrapper.find('i.pa-icon')
+      expect(icon.classes()).toContain('custom-class')
     })
 
     it('传入自定义 style 应正确应用', async () => {
@@ -171,8 +171,8 @@ describe('pa-icon 组件测试', () => {
         }
       })
       
-      const section = wrapper.find('section.pa-icon')
-      const style = section.attributes('style')
+      const icon = wrapper.find('i.pa-icon')
+      const style = icon.attributes('style')
       expect(style).toContain('color')
       expect(style).toContain('red')
     })
@@ -180,7 +180,7 @@ describe('pa-icon 组件测试', () => {
 
   describe('7. id prop 测试', () => {
     it('pa-icon 的 id prop 在组件源码中未绑定到 section（按源码实际情况测试）', async () => {
-      // 注意：当前源码 pa-icon.vue 的 section 标签未绑定 id 属性
+      // 注意：当前源码 pa-icon.vue 的 i 标签未绑定 id 属性
       // 这是源码的限制，测试验证当前行为
       const { default: PaIcon } = await import('./pa-icon.vue')
       
@@ -196,10 +196,10 @@ describe('pa-icon 组件测试', () => {
         }
       })
       
-      const section = wrapper.find('section.pa-icon')
-      // 验证 section 有 pa-icon class（证明组件渲染正常）
-      expect(section.exists()).toBe(true)
-      // 当前源码不传递 id 到 section，此测试记录当前行为
+      const icon = wrapper.find('i.pa-icon')
+      // 验证 i 有 pa-icon class（证明组件渲染正常）
+      expect(icon.exists()).toBe(true)
+      // 当前源码不传递 id 到 i，此测试记录当前行为
     })
   })
 })

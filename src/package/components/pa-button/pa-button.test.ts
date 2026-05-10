@@ -103,8 +103,11 @@ describe('pa-button 组件测试', () => {
         }
       })
       
+      await nextTick()
       const button = wrapper.find('button.pa-button')
-      expect(button.classes()).toContain('pa-button--large')
+      // buttonClasses 返回 [pa-button, class, {disabled, use-line, use-plain}, currentType, size]
+      // 所以 size 值直接作为 class
+      expect(button.classes()).toContain('large')
     })
   })
 
@@ -125,8 +128,11 @@ describe('pa-button 组件测试', () => {
         }
       })
       
+      await nextTick()
       const button = wrapper.find('button.pa-button')
-      expect(button.classes()).toContain('pa-button--primary')
+      // buttonClasses 返回 [pa-button, class, {disabled, use-line, use-plain}, currentType, size]
+      // 所以 type 值直接作为 class
+      expect(button.classes()).toContain('primary')
     })
   })
 
@@ -147,6 +153,7 @@ describe('pa-button 组件测试', () => {
         }
       })
       
+      await nextTick()
       const button = wrapper.find('button.pa-button')
       expect(button.attributes('disabled')).toBeDefined()
       expect(button.classes()).toContain('disabled')
@@ -216,6 +223,7 @@ describe('pa-button 组件测试', () => {
         }
       })
       
+      await nextTick()
       const button = wrapper.find('button.pa-button')
       expect(button.classes()).toContain('use-line')
     })
@@ -238,6 +246,7 @@ describe('pa-button 组件测试', () => {
         }
       })
       
+      await nextTick()
       const button = wrapper.find('button.pa-button')
       expect(button.classes()).toContain('use-plain')
     })
@@ -284,7 +293,8 @@ describe('pa-button 组件测试', () => {
       })
       
       const button = wrapper.find('button.pa-button')
-      expect(button.classes()).toContain('pa-button--danger')
+      // buttonClasses 返回 [..., currentType, size]，currentType 是 danger
+      expect(button.classes()).toContain('danger')
     })
   })
 
