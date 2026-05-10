@@ -32,3 +32,4 @@ egg/app/public/*
 
 components.d.ts
 dist
+coverage/*
