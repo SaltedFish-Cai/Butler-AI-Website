@@ -192,9 +192,13 @@ test.describe('pa-color Component E2E Tests', () => {
     const preview = colorPicker.locator('.pa-color-preview')
     
     await preview.click()
-    await page.waitForTimeout(300)
+    await page.waitForTimeout(500)
     
-    const input = page.locator('.pa-color-picker-inputs-input')
-    await expect(input).toHaveCount(0)
+    // useInput=false 时 popover 内不应渲染 input 元素
+    const popover = page.locator('.pa-color-picker')
+    await expect(popover).toBeVisible({ timeout: 3000 })
+    
+    const inputsInPopover = popover.locator('.pa-color-picker-inputs-input')
+    await expect(inputsInPopover).toHaveCount(0)
   });
 })

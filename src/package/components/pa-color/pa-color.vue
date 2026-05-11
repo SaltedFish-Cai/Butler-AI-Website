@@ -13,8 +13,8 @@
       <pa-color-box
         v-model="currentColor"
         :preset-colors="props.presetColors"
-        :show-alpha="props.useAlpha"
-        :show-input="props.useInput"
+        :use-alpha="props.useAlpha"
+        :use-input="props.useInput"
       ></pa-color-box>
     </pa-popover>
   </div>

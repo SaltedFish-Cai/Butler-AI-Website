@@ -26,8 +26,8 @@ const PaColorBoxMock = defineComponent({
     modelValue: { type: String, default: '' },
     disabled: { type: Boolean, default: false },
     presetColors: { type: Array, default: () => [] },
-    showAlpha: { type: Boolean, default: true },
-    showInput: { type: Boolean, default: true }
+    useAlpha: { type: Boolean, default: true },
+    useInput: { type: Boolean, default: true }
   },
   emits: ['update:modelValue', 'change'],
   setup(props, { emit }) {
@@ -125,45 +125,45 @@ describe('pa-color 组件测试', () => {
 
   // ==================== useAlpha prop ====================
   describe('4. useAlpha prop', () => {
-    it('useAlpha=true 传递给 pa-color-box 的 showAlpha', async () => {
+    it('useAlpha=true 传递给 pa-color-box 的 useAlpha', async () => {
       const wrapper = await mountColor({ useAlpha: true })
       const colorBox = wrapper.findComponent({ name: 'PaColorBox' })
       expect(colorBox.exists()).toBe(true)
-      expect(colorBox.props('showAlpha')).toBe(true)
+      expect(colorBox.props('useAlpha')).toBe(true)
     })
 
-    it('useAlpha=false 传递给 pa-color-box 的 showAlpha', async () => {
+    it('useAlpha=false 传递给 pa-color-box 的 useAlpha', async () => {
       const wrapper = await mountColor({ useAlpha: false })
       const colorBox = wrapper.findComponent({ name: 'PaColorBox' })
       expect(colorBox.exists()).toBe(true)
-      expect(colorBox.props('showAlpha')).toBe(false)
+      expect(colorBox.props('useAlpha')).toBe(false)
     })
 
     it('默认 useAlpha 为 true', async () => {
       const wrapper = await mountColor()
       const colorBox = wrapper.findComponent({ name: 'PaColorBox' })
-      expect(colorBox.props('showAlpha')).toBe(true)
+      expect(colorBox.props('useAlpha')).toBe(true)
     })
   })
 
   // ==================== useInput prop ====================
   describe('5. useInput prop', () => {
-    it('useInput=true 传递给 pa-color-box 的 showInput', async () => {
+    it('useInput=true 传递给 pa-color-box 的 useInput', async () => {
       const wrapper = await mountColor({ useInput: true })
       const colorBox = wrapper.findComponent({ name: 'PaColorBox' })
-      expect(colorBox.props('showInput')).toBe(true)
+      expect(colorBox.props('useInput')).toBe(true)
     })
 
-    it('useInput=false 传递给 pa-color-box 的 showInput', async () => {
+    it('useInput=false 传递给 pa-color-box 的 useInput', async () => {
       const wrapper = await mountColor({ useInput: false })
       const colorBox = wrapper.findComponent({ name: 'PaColorBox' })
-      expect(colorBox.props('showInput')).toBe(false)
+      expect(colorBox.props('useInput')).toBe(false)
     })
 
     it('默认 useInput 为 true', async () => {
       const wrapper = await mountColor()
       const colorBox = wrapper.findComponent({ name: 'PaColorBox' })
-      expect(colorBox.props('showInput')).toBe(true)
+      expect(colorBox.props('useInput')).toBe(true)
     })
   })
 
@@ -372,10 +372,10 @@ describe('pa-color 组件测试', () => {
       expect(colorBox.props('modelValue')).toBe('#ff0000')
     })
 
-    it('pa-color-box 接收到 showAlpha 属性', async () => {
+    it('pa-color-box 接收到 useAlpha 属性', async () => {
       const wrapper = await mountColor({ modelValue: '#ff0000', useAlpha: true })
       const colorBox = wrapper.findComponent({ name: 'PaColorBox' })
-      expect(colorBox.props('showAlpha')).toBe(true)
+      expect(colorBox.props('useAlpha')).toBe(true)
     })
   })
 
