@@ -511,3 +511,125 @@ describe('pa-color 组件测试', () => {
     })
   })
 })
+// ==================== 透明度区域鼠标操作测试 ====================
+describe('22. 透明度区域鼠标操作测试', () => {
+  // 需要直接 mount pa-color.vue 并访问 vm 方法
+  // 由于 pa-color.vue 的 handleAlphaAreaMouseMove/handleAlphaAreaMouseUp 需要真实组件实例
+  // 使用 stubs: false 方式来获取真实方法
+  async function mountColorDirect(props: Record<string, any> = {}) {
+    const { default: PaColor } = await import('./pa-color.vue')
+    return mount(PaColor, {
+      props,
+      global: {
+        stubs: {
+          'pa-popover': false,
+          'pa-color-box': false,
+        }
+      }
+    })
+  }
+
+  it('handleAlphaAreaMouseMove 更新 alpha 值', async () => {
+    const wrapper = await mountColorDirect({ modelValue: '#ff0000' })
+    const vm = wrapper.vm as any
+    vm.alphaAreaRef = {
+      getBoundingClientRect: () => ({ left: 0, top: 0, width: 20, height: 200 })
+    }
+    const mockEvent = { clientX: 10, clientY: 100 } as MouseEvent
+    // pa-color.vue 使用 clientY: alpha = 1 - y / rect.height = 1 - 100/200 = 0.5
+    vm.handleAlphaAreaMouseMove(mockEvent)
+    expect(vm.alpha).toBe(0.5)
+  })
+
+  it('handleAlphaAreaMouseMove alphaAreaRef 为 null 时提前返回', async () => {
+    const wrapper = await mountColorDirect({ modelValue: '#ff0000' })
+    const vm = wrapper.vm as any
+    vm.alphaAreaRef = null
+    const mockEvent = { clientX: 10, clientY: 100 } as MouseEvent
+    expect(() => vm.handleAlphaAreaMouseMove(mockEvent)).not.toThrow()
+  })
+
+  it('handleAlphaAreaMouseMove 处理边界值 y=0', async () => {
+    const wrapper = await mountColorDirect({ modelValue: '#ff0000' })
+    const vm = wrapper.vm as any
+    vm.alphaAreaRef = {
+      getBoundingClientRect: () => ({ left: 0, top: 0, width: 20, height: 200 })
+    }
+    const mockEvent = { clientX: 10, clientY: 0 } as MouseEvent
+    vm.handleAlphaAreaMouseMove(mockEvent)
+    // y=0 => alpha = 1 - 0/200 = 1
+    expect(vm.alpha).toBe(1)
+  })
+
+  it('handleAlphaAreaMouseMove 处理边界值 y>=height', async () => {
+    const wrapper = await mountColorDirect({ modelValue: '#ff0000' })
+    const vm = wrapper.vm as any
+    vm.alphaAreaRef = {
+      getBoundingClientRect: () => ({ left: 0, top: 0, width: 20, height: 200 })
+    }
+    const mockEvent = { clientX: 10, clientY: 300 } as MouseEvent
+    vm.handleAlphaAreaMouseMove(mockEvent)
+    // y clamped to 200 => alpha = 1 - 200/200 = 0
+    expect(vm.alpha).toBe(0)
+  })
+
+  it('handleAlphaAreaMouseUp 清理 ref 和移除事件监听', async () => {
+    const wrapper = await mountColorDirect({ modelValue: '#ff0000' })
+    const vm = wrapper.vm as any
+    vm.alphaAreaRef = { getBoundingClientRect: () => ({ left: 0, top: 0, width: 20, height: 200 }) }
+    const removeSpy = vi.spyOn(document, 'removeEventListener')
+    vm.handleAlphaAreaMouseUp()
+    expect(vm.alphaAreaRef).toBeNull()
+    expect(removeSpy).toHaveBeenCalledWith('mousemove', expect.any(Function))
+    expect(removeSpy).toHaveBeenCalledWith('mouseup', expect.any(Function))
+    removeSpy.mockRestore()
+  })
+})
+
+// ==================== install 函数测试 ====================
+describe('23. install 函数测试', () => {
+  it('导出对象包含 name 属性', async () => {
+    const module = await import('./index.ts')
+    expect(module.default).toBeDefined()
+    expect(module.default.name).toBe('PaColor')
+  })
+
+  it('导出对象包含 install 函数', async () => {
+    const module = await import('./index.ts')
+    expect(module.default.install).toBeDefined()
+    expect(typeof module.default.install).toBe('function')
+  })
+
+  it('install 函数注册组件到 Vue 应用', async () => {
+    const { default: PaColorModule } = await import('./index.ts')
+    const mockComponent = vi.fn()
+    const mockApp = {
+      _context: { components: {} as Record<string, any> },
+      component: mockComponent
+    } as any
+    PaColorModule.install(mockApp)
+    expect(mockComponent).toHaveBeenCalledWith('PaColor', expect.any(Object))
+    expect(mockComponent).toHaveBeenCalledWith('PaColorBox', expect.any(Object))
+  })
+
+  it('install 函数不重复注册已存在的组件', async () => {
+    const { default: PaColorModule } = await import('./index.ts')
+    const mockComponent = vi.fn()
+    const mockApp = {
+      _context: { components: { 'PaColor': { name: 'PaColor' } } },
+      component: mockComponent
+    } as any
+    PaColorModule.install(mockApp)
+    expect(mockComponent).not.toHaveBeenCalled()
+  })
+
+  it('install 函数返回 void', async () => {
+    const { default: PaColorModule } = await import('./index.ts')
+    const mockApp = {
+      _context: { components: {} },
+      component: vi.fn()
+    } as any
+    const result = PaColorModule.install(mockApp)
+    expect(result).toBeUndefined()
+  })
+})

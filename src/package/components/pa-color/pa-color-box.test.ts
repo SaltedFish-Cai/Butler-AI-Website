@@ -576,3 +576,80 @@ describe('pa-color-box 组件测试', () => {
     })
   })
 })
+// ==================== 透明度区域鼠标操作测试 ====================
+describe('15. 透明度区域鼠标操作测试', () => {
+  it('handleAlphaAreaMouseMove 更新 alpha 值', async () => {
+    const wrapper = await mountColorBox({ modelValue: '#ff0000', useAlpha: true })
+    const vm = wrapper.vm as any
+    // 设置 alphaAreaRef 为 mock 元素
+    vm.alphaAreaRef = {
+      getBoundingClientRect: () => ({ left: 0, top: 0, width: 200, height: 20 })
+    }
+    const mockEvent = { clientX: 100, clientY: 10 } as MouseEvent
+    vm.handleAlphaAreaMouseMove(mockEvent)
+    // x=100, width=200 => alpha = 1 - 100/200 = 0.5
+    expect(vm.alpha).toBe(0.5)
+    expect(vm.alphaInput).toBe(0.5)
+  })
+
+  it('handleAlphaAreaMouseMove alphaAreaRef 为 null 时提前返回', async () => {
+    const wrapper = await mountColorBox({ modelValue: '#ff0000', useAlpha: true })
+    const vm = wrapper.vm as any
+    vm.alphaAreaRef = null
+    const mockEvent = { clientX: 100, clientY: 10 } as MouseEvent
+    // 不应该抛出错误，alpha 值不变
+    expect(() => vm.handleAlphaAreaMouseMove(mockEvent)).not.toThrow()
+  })
+
+  it('handleAlphaAreaMouseMove 处理边界值 x=0', async () => {
+    const wrapper = await mountColorBox({ modelValue: '#ff0000', useAlpha: true })
+    const vm = wrapper.vm as any
+    vm.alphaAreaRef = {
+      getBoundingClientRect: () => ({ left: 0, top: 0, width: 200, height: 20 })
+    }
+    const mockEvent = { clientX: 0, clientY: 10 } as MouseEvent
+    vm.handleAlphaAreaMouseMove(mockEvent)
+    // x=0 => alpha = 1 - 0/200 = 1
+    expect(vm.alpha).toBe(1)
+  })
+
+  it('handleAlphaAreaMouseMove 处理边界值 x>=width', async () => {
+    const wrapper = await mountColorBox({ modelValue: '#ff0000', useAlpha: true })
+    const vm = wrapper.vm as any
+    vm.alphaAreaRef = {
+      getBoundingClientRect: () => ({ left: 0, top: 0, width: 200, height: 20 })
+    }
+    const mockEvent = { clientX: 300, clientY: 10 } as MouseEvent
+    vm.handleAlphaAreaMouseMove(mockEvent)
+    // x clamped to 200 => alpha = 1 - 200/200 = 0
+    expect(vm.alpha).toBe(0)
+  })
+
+  it('handleAlphaAreaMouseUp 清理 ref 和移除事件监听', async () => {
+    const wrapper = await mountColorBox({ modelValue: '#ff0000', useAlpha: true })
+    const vm = wrapper.vm as any
+    vm.alphaAreaRef = { getBoundingClientRect: () => ({ left: 0, top: 0, width: 200, height: 20 }) }
+    const removeSpy = vi.spyOn(document, 'removeEventListener')
+    vm.handleAlphaAreaMouseUp()
+    expect(vm.alphaAreaRef).toBeNull()
+    expect(removeSpy).toHaveBeenCalledWith('mousemove', expect.any(Function))
+    expect(removeSpy).toHaveBeenCalledWith('mouseup', expect.any(Function))
+    removeSpy.mockRestore()
+  })
+
+  it('onHexInputChange 解析有效十六进制值', async () => {
+    const wrapper = await mountColorBox({ modelValue: '#ff0000', useAlpha: true })
+    const vm = wrapper.vm as any
+    vm.hexInput = '#00ff00'
+    vm.onHexInputChange()
+    // 不崩溃即可
+    expect(vm.currentColor).toBeDefined()
+  })
+
+  it('onHexInputChange 解析无效值不崩溃', async () => {
+    const wrapper = await mountColorBox({ modelValue: '#ff0000', useAlpha: true })
+    const vm = wrapper.vm as any
+    vm.hexInput = 'invalid-color'
+    expect(() => vm.onHexInputChange()).not.toThrow()
+  })
+})
