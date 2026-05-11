@@ -22,6 +22,11 @@ const tipsText = ref('提示信息')
   提示在右侧
 </pa-title>
 
+## Title with Tips Position Bottom
+<pa-title data-testid="title-tips-bottom" tips="底部提示" tips-position="bottom">
+  提示在底部
+</pa-title>
+
 ## Title with Default Style Mode
 <pa-title data-testid="title-default" style-mode="default">
   默认样式模式
@@ -42,16 +47,30 @@ const tipsText = ref('提示信息')
   带分隔线
 </pa-title>
 
-## Title with Padding
+## Title with Padding Top/Bottom
 <pa-title data-testid="title-padding" :padding="['top', 'bottom']">
   带内边距
+</pa-title>
+
+## Title with Padding Left/Right
+<pa-title data-testid="title-padding-lr" :padding="['left', 'right']">
+  左右内边距
+</pa-title>
+
+## Title with Padding All
+<pa-title data-testid="title-padding-all" :padding="['all']">
+  全部内边距
+</pa-title>
+
+## Title with Padding Null
+<pa-title data-testid="title-padding-null" :padding="['null']">
+  无内边距
 </pa-title>
 
 ## Title with Custom Line Config
 <pa-title 
   data-testid="title-custom-line" 
-  :line-config="{ height: '5px', borderColor: '#ff0000' }"
->
+  :line-config="{ height: '5px', borderColor: '#ff0000' }">
   自定义分隔线
 </pa-title>
 

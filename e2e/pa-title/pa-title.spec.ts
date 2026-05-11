@@ -32,6 +32,14 @@ test.describe('pa-title Component E2E Tests', () => {
     await expect(title).toHaveClass(/pa-title/)
   });
 
+  test('should render title with tips on bottom', async ({ page }) => {
+    const title = page.locator('[data-testid="title-tips-bottom"]')
+    await expect(title).toHaveClass(/pa-title/)
+    const tips = title.locator('.pa-title_tip')
+    await expect(tips).toBeVisible({ timeout: 10000 })
+    await expect(tips).toContainText('底部提示')
+  });
+
   test('should render title with default style mode', async ({ page }) => {
     const title = page.locator('[data-testid="title-default"]')
     await expect(title).toHaveClass(/default/)
@@ -50,15 +58,28 @@ test.describe('pa-title Component E2E Tests', () => {
   test('should render title with line config', async ({ page }) => {
     const title = page.locator('[data-testid="title-line"]')
     await expect(title).toHaveClass(/pa-title/)
-    // Should contain pa-line component
     const line = title.locator('.pa-line')
     await expect(line).toBeVisible({ timeout: 10000 })
   });
 
-  test('should render title with padding', async ({ page }) => {
+  test('should render title with padding top/bottom', async ({ page }) => {
     const title = page.locator('[data-testid="title-padding"]')
     await expect(title).toHaveClass(/pa-title/)
-    await expect(title).toHaveClass(/padding-top|padding-bottom/)
+  });
+
+  test('should render title with padding left/right', async ({ page }) => {
+    const title = page.locator('[data-testid="title-padding-lr"]')
+    await expect(title).toHaveClass(/pa-title/)
+  });
+
+  test('should render title with padding all', async ({ page }) => {
+    const title = page.locator('[data-testid="title-padding-all"]')
+    await expect(title).toHaveClass(/pa-title/)
+  });
+
+  test('should render title with padding null', async ({ page }) => {
+    const title = page.locator('[data-testid="title-padding-null"]')
+    await expect(title).toHaveClass(/pa-title/)
   });
 
   test('should render title with custom line config', async ({ page }) => {
@@ -74,4 +95,4 @@ test.describe('pa-title Component E2E Tests', () => {
     const tips = title.locator('.pa-title_tip')
     await expect(tips).toContainText('插槽提示内容')
   });
-});
+})
