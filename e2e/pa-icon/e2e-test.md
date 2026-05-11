@@ -27,6 +27,15 @@ function handleIconClick() {
 <pa-icon name="search_line" data-testid="icon-clickable" @click="handleIconClick" />
 <span data-testid="icon-click-count">{{ iconClickCount }}</span>
 
+## Icon with Font Family
+<pa-icon name="search_line" fontFamily="butler-iconfont" data-testid="icon-butler-font" />
+
+## Icon with Font Color
+<pa-icon name="search_line" :fontColor="['#ff0000', '#00ff00']" data-testid="icon-font-color" />
+
+## Icon with Custom Style
+<pa-icon name="search_line" :style="{ fontSize: '32px' }" data-testid="icon-custom-style" />
+
 <style scoped>
 .icon-row {
   display: flex;

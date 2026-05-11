@@ -45,4 +45,30 @@ test.describe('pa-icon Component E2E Tests', () => {
     const addInner = iconAdd.locator('.pa-icon_font')
     await expect(addInner).toHaveClass(/icon-add_circle_line/)
   })
+
+  test('should render icon with butler-iconfont fontFamily', async ({ page }) => {
+    const butlerIcon = page.locator('[data-testid="icon-butler-font"]')
+    await expect(butlerIcon).toBeVisible()
+    // butler-iconfont uses butler- prefix class name
+    const inner = butlerIcon.locator('.pa-icon_font')
+    await expect(inner).toHaveClass(/butler-search_line/)
+    // fontFamily should be set to butler-iconfont
+    const style = await butlerIcon.evaluate(el => getComputedStyle(el).fontFamily)
+    expect(style).toContain('butler-iconfont')
+  })
+
+  test('should render icon with fontColor gradient', async ({ page }) => {
+    const fontColorIcon = page.locator('[data-testid="icon-font-color"]')
+    await expect(fontColorIcon).toBeVisible()
+    // fontColor with length > 0 should add background-color class
+    await expect(fontColorIcon.locator('.pa-icon_font')).toHaveClass(/background-color/)
+  })
+
+  test('should render icon with custom style', async ({ page }) => {
+    const customStyleIcon = page.locator('[data-testid="icon-custom-style"]')
+    await expect(customStyleIcon).toBeVisible()
+    // Check that fontSize style is applied
+    const style = await customStyleIcon.evaluate(el => getComputedStyle(el).fontSize)
+    expect(style).toBe('32px')
+  })
 })
