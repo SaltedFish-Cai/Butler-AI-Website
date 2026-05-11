@@ -18,6 +18,12 @@ const deleteClickCount = ref(0)
 function handleConfirmClick() { confirmClickCount.value++ }
 function handleSubmitClick() { submitClickCount.value++ }
 function handleDeleteClick() { deleteClickCount.value++ }
+
+// 防抖测试计数
+const debounceClickCount = ref(0)
+function handleDebounceClick() {
+  debounceClickCount.value++
+}
 </script>
 
 ## Basic Buttons
@@ -90,6 +96,10 @@ function handleDeleteClick() { deleteClickCount.value++ }
   <pa-button :debounced="false" data-testid="btn-debounced-false">Not Debounced</pa-button>
 </div>
 
+## Debounce Effect Test
+<pa-button :debounced="true" :debounced-time="300" data-testid="btn-debounce-effect" @click="handleDebounceClick">Debounce Test</pa-button>
+<span data-testid="debounce-click-count">{{ debounceClickCount }}</span>
+
 ## confirmClick Event (is="ok")
 <pa-button is="ok" data-testid="btn-confirm-event" @confirm-click="handleConfirmClick">Confirm</pa-button>
 <span data-testid="confirm-click-count">{{ confirmClickCount }}</span>
@@ -101,6 +111,10 @@ function handleDeleteClick() { deleteClickCount.value++ }
 ## deleteClick Event (is="trash")
 <pa-button is="trash" data-testid="btn-delete-event" @delete-click="handleDeleteClick">Delete</pa-button>
 <span data-testid="delete-click-count">{{ deleteClickCount }}</span>
+
+## Dialog Confirmation Test
+<pa-button is="ok" data-testid="btn-dialog-confirm" @confirm-click="handleConfirmClick">Dialog Confirm</pa-button>
+<span data-testid="dialog-confirm-count">{{ confirmClickCount }}</span>
 
 ## confirmConfig Prop
 <pa-button data-testid="btn-confirm-config" confirm-config="{ title: 'Confirm', message: 'Are you sure?' }">With ConfirmConfig</pa-button>
