@@ -4,9 +4,9 @@ const SERVER_PORT = process.env.SERVER_PORT || 7107;
 
 test.describe('pa-icon Component E2E Tests', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto(`http://localhost:${SERVER_PORT}/e2e/e2e-test`);
+    await page.goto(`http://localhost:${SERVER_PORT}/e2e/pa-icon/e2e-test`);
     await page.waitForLoadState('networkidle');
-    await page.waitForTimeout(2000); // Wait for Vue components to mount
+    await page.waitForTimeout(2000);
   });
 
   test('should render icon elements', async ({ page }) => {
