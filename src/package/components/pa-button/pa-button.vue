@@ -19,7 +19,7 @@
  * 模块导入
  * @description 导入 Vue 组合式 API
  */
-import { ref, computed, useSlots, nextTick, inject, onUnmounted, getCurrentInstance, type ComputedRef, type Ref } from "vue";
+import { ref, computed, useSlots, nextTick, inject, onUnmounted, getCurrentInstance, type ComputedRef } from "vue";
 /**
  * 模块导入
  * @description 导入组件类型定义
@@ -152,7 +152,7 @@ const currentType = computed(() => {
  * @description 判断是否需要显示左侧图标
  */
 const showLeftIcon = computed(
-  () => props.iconPosition === "left" && !props.loading && !isLoading.value && (props.useFont || !!currentIconName.value)
+  () => props.iconPosition === "left" && !props.loading && !isLoading.value && props.useFont && !!currentIconName.value
 );
 /**
  * 按钮类名
