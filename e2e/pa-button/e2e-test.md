@@ -10,6 +10,14 @@ const buttonClickCount = ref(0)
 function handleButtonClick() {
   buttonClickCount.value++
 }
+
+const confirmClickCount = ref(0)
+const submitClickCount = ref(0)
+const deleteClickCount = ref(0)
+
+function handleConfirmClick() { confirmClickCount.value++ }
+function handleSubmitClick() { submitClickCount.value++ }
+function handleDeleteClick() { deleteClickCount.value++ }
 </script>
 
 ## Basic Buttons
@@ -75,6 +83,27 @@ function handleButtonClick() {
 
 ## Default Type Button
 <pa-button data-testid="btn-default-type">Default</pa-button>
+
+## Debounced Toggle
+<div class="button-row">
+  <pa-button :debounced="true" data-testid="btn-debounced-true">Debounced</pa-button>
+  <pa-button :debounced="false" data-testid="btn-debounced-false">Not Debounced</pa-button>
+</div>
+
+## confirmClick Event (is="ok")
+<pa-button is="ok" data-testid="btn-confirm-event" @confirm-click="handleConfirmClick">Confirm</pa-button>
+<span data-testid="confirm-click-count">{{ confirmClickCount }}</span>
+
+## submitClick Event (is="file")
+<pa-button is="file" data-testid="btn-submit-event" @submit-click="handleSubmitClick">Submit</pa-button>
+<span data-testid="submit-click-count">{{ submitClickCount }}</span>
+
+## deleteClick Event (is="trash")
+<pa-button is="trash" data-testid="btn-delete-event" @delete-click="handleDeleteClick">Delete</pa-button>
+<span data-testid="delete-click-count">{{ deleteClickCount }}</span>
+
+## confirmConfig Prop
+<pa-button data-testid="btn-confirm-config" confirm-config="{ title: 'Confirm', message: 'Are you sure?' }">With ConfirmConfig</pa-button>
 
 <style scoped>
 .button-row {
