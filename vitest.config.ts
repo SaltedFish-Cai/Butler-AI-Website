@@ -39,6 +39,23 @@ export default defineConfig({
         'src/package/components/pa-switch/**',
         'src/package/components/pa-time/**',
         'src/package/components/pa-file/**',
+        'src/package/components/pa-message/**',
+        'src/package/components/pa-message-box/**',
+        'src/package/components/pa-notification/**',
+        'src/package/components/pa-form/**',
+        'src/package/components/pa-transfer/**',
+        'src/package/components/pa-dialog/**',
+        'src/package/components/pa-drawer/**',
+        'src/package/components/pa-overlay/**',
+        'src/package/components/pa-popover/**',
+        'src/package/components/pa-tabs/**',
+        'src/package/components/pa-pagination/**',
+        'src/package/components/pa-development/**',
+        'src/package/components/pa-editor/**',
+        'src/package/components/pa-manager/**',
+        'src/package/components/pa-media-view/**',
+        'src/package/components/pa-playground/**',
+        'src/package/components/pa-table/**',
       ]
     }
   }
