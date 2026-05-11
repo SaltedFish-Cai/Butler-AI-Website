@@ -92,7 +92,32 @@ describe('pa-empty 组件测试', () => {
     })
   })
 
-  describe('5. class/style prop', () => {
+  describe('5. message fallback', () => {
+    it('多语言 message 无匹配语言时 fallback 暂无数据', async () => {
+      const wrapper = await mountEmpty({ message: { 'ja-JP': 'データなし' } })
+      expect(wrapper.find('.pa-empty_message').text()).toContain('暂无数据')
+    })
+
+    it('message 为空对象时 fallback 暂无数据', async () => {
+      const wrapper = await mountEmpty({ message: {} })
+      expect(wrapper.find('.pa-empty_message').text()).toContain('暂无数据')
+    })
+
+    it('多语言 message 有 zh-CN 但无 en-US 时 en-US 环境 fallback', async () => {
+      const enConfig = { value: { language: { value: 'en-US' } } } as ComputedRef<{ language: { value: string } }>
+      const { default: PaEmpty } = await import('./pa-empty.vue')
+      const wrapper = mount(PaEmpty, {
+        props: { message: { 'zh-CN': '只有中文' } },
+        global: {
+          stubs: { 'pa-icon': PaIconMock },
+          provide: { 'PancakeGlobalConfig': enConfig }
+        }
+      })
+      expect(wrapper.find('.pa-empty_message').text()).toContain('暂无数据')
+    })
+  })
+
+  describe('6. class/style prop', () => {
     it('自定义 class 应用到 inner', async () => {
       const wrapper = await mountEmpty({ class: 'custom-empty' })
       expect(wrapper.find('.pa-empty_inner').classes()).toContain('custom-empty')
