@@ -271,7 +271,7 @@ function realClick(event: MouseEvent) {
   if (!props.loadingBy || typeof window === "undefined") return;
 
   nextTick(() => {
-    const EL = window.document.querySelector(props.loadingBy);
+    const EL = props.loadingBy && window.document.querySelector(props.loadingBy);
     if (!EL) return;
 
     isLoading.value = true;
