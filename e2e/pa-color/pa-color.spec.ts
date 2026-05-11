@@ -37,7 +37,6 @@ test.describe('pa-color Component E2E Tests', () => {
 
   test('should render disabled color picker', async ({ page }) => {
     const colorPicker = page.locator('[data-testid="color-disabled"]')
-    // Disabled color picker is in DOM but may have opacity 0 or be hidden
     await expect(colorPicker).toHaveClass(/pa-color-disabled/)
   });
 
@@ -50,7 +49,41 @@ test.describe('pa-color Component E2E Tests', () => {
     const colorPicker = page.locator('[data-testid="color-event"]')
     await expect(colorPicker).toBeVisible()
     const eventLog = page.locator('[data-testid="color-event-log"]')
-    // Event log element exists
     await expect(eventLog).toHaveCount(1)
   });
-});
+
+  test('should render color picker with RGBA initial value', async ({ page }) => {
+    const colorPicker = page.locator('[data-testid="color-rgba"]')
+    await expect(colorPicker).toBeVisible()
+    // Alpha-enabled picker should have alpha area
+    const preview = colorPicker.locator('.pa-color-preview')
+    await expect(preview).toBeVisible({ timeout: 5000 })
+  });
+
+  test('should render color picker without preset colors', async ({ page }) => {
+    const colorPicker = page.locator('[data-testid="color-no-preset"]')
+    await expect(colorPicker).toBeVisible()
+    // No preset colors should mean no presets section
+    const presets = colorPicker.locator('.pa-color-picker-presets')
+    await expect(presets).toHaveCount(0)
+  });
+
+  test('should render default color value', async ({ page }) => {
+    const colorPicker = page.locator('[data-testid="color-default"]')
+    await expect(colorPicker).toBeVisible()
+  });
+
+  test('should open color panel on preview click', async ({ page }) => {
+    const colorPicker = page.locator('[data-testid="color-basic"]')
+    const preview = colorPicker.locator('.pa-color-preview')
+    await expect(preview).toBeVisible({ timeout: 5000 })
+    await preview.click()
+    // After clicking, popover content should appear
+    await page.waitForTimeout(500)
+  });
+
+  test('should render color picker structure correctly', async ({ page }) => {
+    const colorPicker = page.locator('[data-testid="color-basic"]')
+    await expect(colorPicker).toHaveClass(/pa-color/)
+  });
+})

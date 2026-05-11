@@ -39,6 +39,15 @@ function handleColorChange(color) {
 <pa-color data-testid="color-event" v-model="colorValue" @change="handleColorChange" />
 <div data-testid="color-event-log">{{ colorChangeLog }}</div>
 
+## Color Picker with RGBA Initial Value
+<pa-color data-testid="color-rgba" v-model="colorValue" :use-alpha="true" />
+
+## Color Picker without Preset Colors
+<pa-color data-testid="color-no-preset" v-model="colorValue" :preset-colors="undefined" />
+
+## Default Color Value
+<pa-color data-testid="color-default" />
+
 <style scoped>
 div {
   margin: 16px 0;

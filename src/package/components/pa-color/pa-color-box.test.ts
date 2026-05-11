@@ -653,3 +653,68 @@ describe('15. 透明度区域鼠标操作测试', () => {
     expect(() => vm.onHexInputChange()).not.toThrow()
   })
 })
+
+// ==================== 色相区域鼠标操作测试 ====================
+describe('16. 色相区域鼠标操作测试', () => {
+  it('onHueAreaMouseDown 设置 ref 并添加事件监听', async () => {
+    const wrapper = await mountColorBox({ modelValue: '#ff0000', useAlpha: true })
+    const vm = wrapper.vm as any
+    const addSpy = vi.spyOn(document, 'addEventListener')
+    const mockTarget = {
+      getBoundingClientRect: () => ({ left: 0, top: 0, width: 360, height: 20 })
+    }
+    const mockEvent = { clientX: 180, clientY: 10, currentTarget: mockTarget } as any
+    vm.onHueAreaMouseDown(mockEvent)
+    expect(vm.hueAreaRef).toBeDefined()
+    expect(addSpy).toHaveBeenCalledWith('mousemove', expect.any(Function))
+    expect(addSpy).toHaveBeenCalledWith('mouseup', expect.any(Function))
+    addSpy.mockRestore()
+  })
+
+  it('handleHueAreaMouseMove 更新 hue 值', async () => {
+    const wrapper = await mountColorBox({ modelValue: '#ff0000', useAlpha: true })
+    const vm = wrapper.vm as any
+    vm.hueAreaRef = {
+      getBoundingClientRect: () => ({ left: 0, top: 0, width: 360, height: 20 })
+    }
+    const mockEvent = { clientX: 90, clientY: 10 } as MouseEvent
+    vm.handleHueAreaMouseMove(mockEvent)
+    // x=90, width=360 => hue = (90/360)*360 = 90
+    expect(vm.hue).toBe(90)
+  })
+
+  it('handleHueAreaMouseMove hueAreaRef 为 null 时提前返回', async () => {
+    const wrapper = await mountColorBox({ modelValue: '#ff0000', useAlpha: true })
+    const vm = wrapper.vm as any
+    vm.hueAreaRef = null
+    const mockEvent = { clientX: 180, clientY: 10 } as MouseEvent
+    expect(() => vm.handleHueAreaMouseMove(mockEvent)).not.toThrow()
+  })
+
+  it('handleHueAreaMouseUp 清理 ref 和移除事件监听', async () => {
+    const wrapper = await mountColorBox({ modelValue: '#ff0000', useAlpha: true })
+    const vm = wrapper.vm as any
+    vm.hueAreaRef = { getBoundingClientRect: () => ({ left: 0, top: 0, width: 360, height: 20 }) }
+    const removeSpy = vi.spyOn(document, 'removeEventListener')
+    vm.handleHueAreaMouseUp()
+    expect(vm.hueAreaRef).toBeNull()
+    expect(removeSpy).toHaveBeenCalledWith('mousemove', expect.any(Function))
+    expect(removeSpy).toHaveBeenCalledWith('mouseup', expect.any(Function))
+    removeSpy.mockRestore()
+  })
+
+  it('onAlphaAreaMouseDown 设置 ref 并添加事件监听', async () => {
+    const wrapper = await mountColorBox({ modelValue: '#ff0000', useAlpha: true })
+    const vm = wrapper.vm as any
+    const addSpy = vi.spyOn(document, 'addEventListener')
+    const mockTarget = {
+      getBoundingClientRect: () => ({ left: 0, top: 0, width: 200, height: 20 })
+    }
+    const mockEvent = { clientX: 100, clientY: 10, currentTarget: mockTarget } as any
+    vm.onAlphaAreaMouseDown(mockEvent)
+    expect(vm.alphaAreaRef).toBeDefined()
+    expect(addSpy).toHaveBeenCalledWith('mousemove', expect.any(Function))
+    expect(addSpy).toHaveBeenCalledWith('mouseup', expect.any(Function))
+    addSpy.mockRestore()
+  })
+})

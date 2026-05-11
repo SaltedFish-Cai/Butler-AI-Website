@@ -633,3 +633,74 @@ describe('23. install 函数测试', () => {
     expect(result).toBeUndefined()
   })
 })
+
+// ==================== 色相区域鼠标操作测试 ====================
+describe('24. 色相区域鼠标操作测试', () => {
+  async function mountColorDirect(props: Record<string, any> = {}) {
+    const { default: PaColor } = await import('./pa-color.vue')
+    return mount(PaColor, {
+      props,
+      global: {
+        stubs: {
+          'pa-popover': false,
+          'pa-color-box': false,
+        }
+      }
+    })
+  }
+
+  it('handleHueAreaMouseMove 更新 hue 值', async () => {
+    const wrapper = await mountColorDirect({ modelValue: '#ff0000' })
+    const vm = wrapper.vm as any
+    vm.hueAreaRef = {
+      getBoundingClientRect: () => ({ left: 0, top: 0, width: 360, height: 20 })
+    }
+    const mockEvent = { clientX: 180, clientY: 10 } as MouseEvent
+    vm.handleHueAreaMouseMove(mockEvent)
+    // x=180, width=360 => hue = (180/360)*360 = 180
+    expect(vm.hue).toBe(180)
+  })
+
+  it('handleHueAreaMouseMove hueAreaRef 为 null 时提前返回', async () => {
+    const wrapper = await mountColorDirect({ modelValue: '#ff0000' })
+    const vm = wrapper.vm as any
+    vm.hueAreaRef = null
+    const mockEvent = { clientX: 180, clientY: 10 } as MouseEvent
+    expect(() => vm.handleHueAreaMouseMove(mockEvent)).not.toThrow()
+  })
+
+  it('handleHueAreaMouseMove 处理边界值 x=0', async () => {
+    const wrapper = await mountColorDirect({ modelValue: '#ff0000' })
+    const vm = wrapper.vm as any
+    vm.hueAreaRef = {
+      getBoundingClientRect: () => ({ left: 0, top: 0, width: 360, height: 20 })
+    }
+    const mockEvent = { clientX: 0, clientY: 10 } as MouseEvent
+    vm.handleHueAreaMouseMove(mockEvent)
+    expect(vm.hue).toBe(0)
+  })
+
+  it('handleHueAreaMouseMove 处理边界值 x>=width', async () => {
+    const wrapper = await mountColorDirect({ modelValue: '#ff0000' })
+    const vm = wrapper.vm as any
+    vm.hueAreaRef = {
+      getBoundingClientRect: () => ({ left: 0, top: 0, width: 360, height: 20 })
+    }
+    const mockEvent = { clientX: 400, clientY: 10 } as MouseEvent
+    vm.handleHueAreaMouseMove(mockEvent)
+    // x clamped to 360 => hue = 360
+    expect(vm.hue).toBe(360)
+  })
+
+  it('handleHueAreaMouseUp 清理 ref 和移除事件监听', async () => {
+    const wrapper = await mountColorDirect({ modelValue: '#ff0000' })
+    const vm = wrapper.vm as any
+    vm.hueAreaRef = { getBoundingClientRect: () => ({ left: 0, top: 0, width: 360, height: 20 }) }
+    const removeSpy = vi.spyOn(document, 'removeEventListener')
+    vm.handleHueAreaMouseUp()
+    expect(vm.hueAreaRef).toBeNull()
+    expect(removeSpy).toHaveBeenCalledWith('mousemove', expect.any(Function))
+    expect(removeSpy).toHaveBeenCalledWith('mouseup', expect.any(Function))
+    removeSpy.mockRestore()
+  })
+})
