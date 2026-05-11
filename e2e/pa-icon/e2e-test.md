@@ -28,7 +28,7 @@ function handleIconClick() {
 <span data-testid="icon-click-count">{{ iconClickCount }}</span>
 
 ## Icon with Font Family
-<pa-icon name="search_line" fontFamily="butler-iconfont" data-testid="icon-butler-font" />
+<pa-icon name="button" fontFamily="butler-iconfont" data-testid="icon-butler-font" />
 
 ## Icon with Font Color
 <pa-icon name="search_line" :fontColor="['#ff0000', '#00ff00']" data-testid="icon-font-color" />
