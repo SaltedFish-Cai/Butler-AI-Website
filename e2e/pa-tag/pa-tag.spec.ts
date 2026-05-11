@@ -58,4 +58,52 @@ test.describe('pa-tag Component E2E Tests', () => {
     const eventLog = page.locator('[data-testid="tag-removed"]')
     await expect(eventLog).toBeVisible()
   });
-});
+
+  test('should render multi-language label in zh-CN', async ({ page }) => {
+    const tagComponent = page.locator('[data-testid="tag-i18n"]')
+    await expect(tagComponent).toHaveClass(/pa-tag/)
+    const tagContent = tagComponent.locator('.pa-tag-text_content')
+    await expect(tagContent).toHaveText('中文标签')
+  })
+
+  test('should remove tag when clicking close icon', async ({ page }) => {
+    const tagComponent = page.locator('[data-testid="tag-removable"]')
+    const countDiv = page.locator('[data-testid="tag-remaining-count"]')
+    
+    // 等待标签渲染
+    await expect(tagComponent).toHaveClass(/pa-tag/)
+    const initialCount = await countDiv.textContent()
+    
+    // 点击关闭图标移除第一个标签
+    const closeIcon = tagComponent.locator('.pa-tag-text_close').first()
+    await closeIcon.click()
+    await page.waitForTimeout(500)
+    
+    // 验证标签数量减少
+    const newCount = await countDiv.textContent()
+    expect(Number(newCount)).toBeLessThan(Number(initialCount))
+  })
+
+  test('should show removed tag info in event log', async ({ page }) => {
+    const tagComponent = page.locator('[data-testid="tag-removable"]')
+    const eventLog = page.locator('[data-testid="tag-removed"]')
+    
+    await expect(tagComponent).toHaveClass(/pa-tag/)
+    
+    // 点击关闭图标
+    const closeIcon = tagComponent.locator('.pa-tag-text_close').first()
+    await closeIcon.click()
+    await page.waitForTimeout(300)
+    
+    // 验证事件记录显示了被移除的标签
+    const logText = await eventLog.textContent()
+    expect(logText).not.toBe('none')
+  })
+
+  test('should render tag content text correctly', async ({ page }) => {
+    const tagComponent = page.locator('[data-testid="tag-basic"]')
+    await expect(tagComponent).toHaveClass(/pa-tag/)
+    const contents = tagComponent.locator('.pa-tag-text_content')
+    await expect(contents.first()).toBeVisible({ timeout: 10000 })
+  })
+})

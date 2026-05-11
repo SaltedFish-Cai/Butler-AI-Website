@@ -63,6 +63,20 @@ function handleRemoveTag(data) {
 ## Remove Tag Event
 <div data-testid="tag-removed">{{ removedTag ? removedTag.label : 'none' }}</div>
 
+## Multi-language Tags
+<pa-tag 
+  data-testid="tag-i18n" 
+  :tag-list="[{ label: { 'zh-CN': '中文标签', 'en-US': 'English Tag' }, value: 'i18n' }]"
+/>
+
+## Remove Tag Test
+<pa-tag 
+  data-testid="tag-removable" 
+  :tag-list="tagList" 
+  @remove-tag="handleRemoveTag"
+/>
+<div data-testid="tag-remaining-count">{{ tagList.length }}</div>
+
 <style scoped>
 div {
   margin: 16px 0;

@@ -470,3 +470,27 @@ describe('pa-tag 组件测试', () => {
     })
   })
 })
+
+// ==================== install 函数测试 ====================
+describe('13. install 函数', () => {
+  it('注册 PaTag 组件', async () => {
+    const { default: module } = await import('./index')
+    const app = { _context: { components: {} }, component: vi.fn() } as any
+    module.install(app)
+    expect(app.component).toHaveBeenCalledWith('PaTag', expect.anything())
+  })
+
+  it('不重复注册 PaTag 组件', async () => {
+    const { default: module } = await import('./index')
+    const app = { _context: { components: { PaTag: true } }, component: vi.fn() } as any
+    module.install(app)
+    expect(app.component).not.toHaveBeenCalled()
+  })
+
+  it('install 返回 void', async () => {
+    const { default: module } = await import('./index')
+    const app = { _context: { components: {} }, component: vi.fn() } as any
+    const result = module.install(app)
+    expect(result).toBeUndefined()
+  })
+})
