@@ -2,7 +2,7 @@
   <div class="pa-badge">
     <slot></slot>
     <template v-if="useShow || showVal || useDot">
-      <div v-if="useDot" class="pa-badge__dot"></div>
+      <div v-if="useDot || !showVal" class="pa-badge__dot"></div>
       <div v-else class="pa-badge__content">{{ showVal }}</div>
     </template>
   </div>
