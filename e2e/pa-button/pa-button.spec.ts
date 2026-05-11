@@ -42,7 +42,6 @@ test.describe('pa-button Component E2E Tests', () => {
   test('should render button with icon', async ({ page }) => {
     const btnWithIcon = page.locator('[data-testid="btn-with-icon"]')
     await expect(btnWithIcon).toBeVisible({ timeout: 10000 })
-    // icon-name prop renders an icon inside the button
     const iconInside = btnWithIcon.locator('i.pa-icon, .pa-icon_font, .pa-icon')
     await expect(iconInside.first()).toBeVisible({ timeout: 5000 })
   })
@@ -65,5 +64,44 @@ test.describe('pa-button Component E2E Tests', () => {
   test('should render preset style buttons (is prop)', async ({ page }) => {
     await expect(page.locator('[data-testid="btn-is-add"]')).toBeVisible()
     await expect(page.locator('[data-testid="btn-is-delete"]')).toHaveClass(/danger/)
+  })
+
+  test('should render icon position left and right', async ({ page }) => {
+    const btnIconLeft = page.locator('[data-testid="btn-icon-left"]')
+    const btnIconRight = page.locator('[data-testid="btn-icon-right"]')
+    
+    await expect(btnIconLeft).toBeVisible()
+    await expect(btnIconRight).toBeVisible()
+    await expect(btnIconLeft).toHaveClass(/icon-position-left/)
+    await expect(btnIconRight).toHaveClass(/icon-position-right/)
+  })
+
+  test('should render underline button (useLine)', async ({ page }) => {
+    const btnUnderline = page.locator('[data-testid="btn-underline"]')
+    await expect(btnUnderline).toBeVisible()
+    await expect(btnUnderline).toHaveClass(/use-line/)
+  })
+
+  test('should render button with text attribute', async ({ page }) => {
+    const btnTextProp = page.locator('[data-testid="btn-text-prop"]')
+    await expect(btnTextProp).toBeVisible()
+    await expect(btnTextProp).toHaveText('Text Prop Button')
+  })
+
+  test('should render useFont toggle', async ({ page }) => {
+    const btnUseFontTrue = page.locator('[data-testid="btn-use-font-true"]')
+    const btnUseFontFalse = page.locator('[data-testid="btn-use-font-false"]')
+    
+    await expect(btnUseFontTrue).toBeVisible()
+    await expect(btnUseFontFalse).toBeVisible()
+    // useFont=true should have icon, useFont=false should not
+    await expect(btnUseFontTrue.locator('.pa-icon_font').first()).toBeVisible({ timeout: 5000 })
+    await expect(btnUseFontFalse.locator('.pa-icon_font')).toHaveCount(0)
+  })
+
+  test('should render default type button without type class', async ({ page }) => {
+    const btnDefault = page.locator('[data-testid="btn-default-type"]')
+    await expect(btnDefault).toBeVisible()
+    await expect(btnDefault).not.toHaveClass(/primary|success|warning|danger|info/)
   })
 })

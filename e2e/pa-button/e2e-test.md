@@ -55,6 +55,27 @@ function handleButtonClick() {
   <pa-button is="search" data-testid="btn-is-search">Search</pa-button>
 </div>
 
+## Icon Position
+<div class="button-row">
+  <pa-button icon-name="search_line" icon-position="left" data-testid="btn-icon-left">Left Icon</pa-button>
+  <pa-button icon-name="search_line" icon-position="right" data-testid="btn-icon-right">Right Icon</pa-button>
+</div>
+
+## Underline Button (useLine)
+<pa-button use-line data-testid="btn-underline">Underline Button</pa-button>
+
+## Text Attribute Button
+<pa-button text="Text Prop Button" data-testid="btn-text-prop" />
+
+## useFont Toggle
+<div class="button-row">
+  <pa-button is="add" :use-font="true" data-testid="btn-use-font-true">With Font</pa-button>
+  <pa-button is="add" :use-font="false" data-testid="btn-use-font-false">No Font</pa-button>
+</div>
+
+## Default Type Button
+<pa-button data-testid="btn-default-type">Default</pa-button>
+
 <style scoped>
 .button-row {
   display: flex;
