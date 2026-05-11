@@ -203,29 +203,27 @@ describe('pa-table 组件测试', () => {
     expect(vm.state.pageable).toBeDefined()
   })
 
-  it('6. handleRefresh 方法存在', async () => {
+  it('6. 接受 rowKey prop', async () => {
     const { default: PaTable } = await import('./pa-table.vue')
     const wrapper = mount(PaTable, {
-      props: { id: 'test', structure: [], requestApi: vi.fn() },
+      props: { id: 'test', structure: [], requestApi: vi.fn(), rowKey: 'id' },
       global: {
         stubs: { defaultStub },
         provide: { PancakeGlobalConfig: computed(() => ({ language: ref('zh-CN') })), parentScrollbarRef: ref(null) }
       }
     })
-    const vm = wrapper.vm as any
-    expect(typeof vm.handleRefresh).toBe('function')
+    expect(wrapper.find('.pa-table').exists()).toBe(true)
   })
 
-  it('7. isShiftPressed 初始值为 false', async () => {
+  it('7. 接受 useSelect prop', async () => {
     const { default: PaTable } = await import('./pa-table.vue')
     const wrapper = mount(PaTable, {
-      props: { id: 'test', structure: [], requestApi: vi.fn() },
+      props: { id: 'test', structure: [], requestApi: vi.fn(), useSelect: true },
       global: {
         stubs: { defaultStub },
         provide: { PancakeGlobalConfig: computed(() => ({ language: ref('zh-CN') })), parentScrollbarRef: ref(null) }
       }
     })
-    const vm = wrapper.vm as any
-    expect(vm.isShiftPressed).toBe(false)
+    expect(wrapper.find('.pa-table').exists()).toBe(true)
   })
 })

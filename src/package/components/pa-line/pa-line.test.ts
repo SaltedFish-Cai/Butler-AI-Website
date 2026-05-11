@@ -130,7 +130,62 @@ describe('pa-line 组件测试', () => {
     })
   })
 
-  describe('8. class/style prop', () => {
+  describe('8. 混合 padding', () => {
+    it('数字和字符串混合 padding', async () => {
+      const wrapper = await mountLine({ padding: [10, '2em', 10, '2em'] })
+      const style = wrapper.find('div.pa-line').attributes('style')
+      expect(style).toContain('10px')
+      expect(style).toContain('2em')
+    })
+
+    it('padding 全为字符串', async () => {
+      const wrapper = await mountLine({ padding: ['1rem', '2rem', '3rem', '4rem'] })
+      const style = wrapper.find('div.pa-line').attributes('style')
+      expect(style).toContain('1rem')
+      expect(style).toContain('2rem')
+      expect(style).toContain('3rem')
+      expect(style).toContain('4rem')
+    })
+
+    it('padding 全为数字', async () => {
+      const wrapper = await mountLine({ padding: [5, 10, 15, 20] })
+      const style = wrapper.find('div.pa-line').attributes('style')
+      expect(style).toContain('5px')
+      expect(style).toContain('10px')
+      expect(style).toContain('15px')
+      expect(style).toContain('20px')
+    })
+  })
+
+  describe('9. borderColor 为空', () => {
+    it('borderColor 未设置时使用默认值', async () => {
+      const wrapper = await mountLine()
+      const style = wrapper.find('div.pa-line').attributes('style')
+      expect(style).toContain('var(--pa-color-primary-light-6)')
+    })
+
+    it('borderColor 设为 transparent', async () => {
+      const wrapper = await mountLine({ borderColor: 'transparent' })
+      const style = wrapper.find('div.pa-line').attributes('style')
+      expect(style).toContain('transparent')
+    })
+  })
+
+  describe('10. 更多 borderStyle', () => {
+    it('double 样式', async () => {
+      const wrapper = await mountLine({ borderStyle: 'double' })
+      const style = wrapper.find('div.pa-line').attributes('style')
+      expect(style).toContain('double')
+    })
+
+    it('groove 样式', async () => {
+      const wrapper = await mountLine({ borderStyle: 'groove' })
+      const style = wrapper.find('div.pa-line').attributes('style')
+      expect(style).toContain('groove')
+    })
+  })
+
+  describe('11. class/style prop', () => {
     it('自定义 class', async () => {
       const wrapper = await mountLine({ class: 'custom-line' })
       expect(wrapper.find('div.pa-line').classes()).toContain('custom-line')
