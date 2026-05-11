@@ -113,6 +113,7 @@ test.describe("pa-button Component E2E Tests", () => {
 
     await expect(btnDebouncedTrue).toBeVisible();
     await expect(btnDebouncedFalse).toBeVisible();
+    // debounced 效果在专门的防抖测试用例中验证
   });
 
   test("should debounce rapid clicks", async ({ page }) => {
@@ -145,8 +146,8 @@ test.describe("pa-button Component E2E Tests", () => {
     const title = dialog.locator(".pa-message-box__title");
     await expect(title).toHaveText("Confirm");
 
-    // 点击取消按钮关闭弹窗
-    const cancelBtn = dialog.locator(".pa-message-box__cancel");
+    // 点击取消按钮关闭弹窗（取消按钮是 footer 中的第一个按钮）
+    const cancelBtn = dialog.locator(".pa-message-box__footer pa-button").first();
     await cancelBtn.click();
 
     // 验证弹窗关闭
@@ -154,8 +155,8 @@ test.describe("pa-button Component E2E Tests", () => {
   });
 
   test("should trigger confirmClick event with dialog", async ({ page }) => {
-    const btn = page.locator('[data-testid="btn-dialog-confirm"]');
-    const countEl = page.locator('[data-testid="dialog-confirm-count"]');
+    const btn = page.locator('[data-testid="btn-confirm-event"]');
+    const countEl = page.locator('[data-testid="confirm-click-count"]');
 
     await expect(btn).toBeVisible();
     await btn.click();
@@ -164,8 +165,8 @@ test.describe("pa-button Component E2E Tests", () => {
     const dialog = page.locator(".pa-message-box");
     await expect(dialog).toBeVisible({ timeout: 5000 });
 
-    // 点击确认按钮
-    const confirmBtn = dialog.locator(".pa-message-box__confirm");
+    // 点击确认按钮（footer 中的第二个按钮）
+    const confirmBtn = dialog.locator(".pa-message-box__footer pa-button").nth(1);
     await confirmBtn.click();
 
     // 验证计数增加
@@ -183,8 +184,8 @@ test.describe("pa-button Component E2E Tests", () => {
     const dialog = page.locator(".pa-message-box");
     await expect(dialog).toBeVisible({ timeout: 5000 });
 
-    // 点击确认按钮
-    const confirmBtn = dialog.locator(".pa-message-box__confirm");
+    // 点击确认按钮（footer 中的第二个按钮）
+    const confirmBtn = dialog.locator(".pa-message-box__footer pa-button").nth(1);
     await confirmBtn.click();
 
     // 验证计数增加
@@ -204,11 +205,11 @@ test.describe("pa-button Component E2E Tests", () => {
     const dialog = page.locator(".pa-message-box");
     await expect(dialog).toBeVisible({ timeout: 5000 });
 
-    // 验证弹窗类型为 danger
-    await expect(dialog).toHaveClass(/type-danger/);
+    // 验证弹窗类型为 danger（实际类名为 pa-message-box--danger）
+    await expect(dialog).toHaveClass(/pa-message-box--danger/);
 
-    // 点击确认按钮
-    const confirmBtn = dialog.locator(".pa-message-box__confirm");
+    // 点击确认按钮（footer 中的第二个按钮）
+    const confirmBtn = dialog.locator(".pa-message-box__footer pa-button").nth(1);
     await confirmBtn.click();
 
     // 验证计数增加

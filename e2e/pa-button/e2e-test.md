@@ -5,24 +5,34 @@ title: Button E2E Test
 <script setup>
 import { ref } from 'vue'
 
+// 点击事件测试计数
 const buttonClickCount = ref(0)
-
 function handleButtonClick() {
   buttonClickCount.value++
 }
 
-const confirmClickCount = ref(0)
-const submitClickCount = ref(0)
-const deleteClickCount = ref(0)
-
-function handleConfirmClick() { confirmClickCount.value++ }
-function handleSubmitClick() { submitClickCount.value++ }
-function handleDeleteClick() { deleteClickCount.value++ }
-
-// 防抖测试计数
+// 防抖测试计数（独立）
 const debounceClickCount = ref(0)
 function handleDebounceClick() {
   debounceClickCount.value++
+}
+
+// 确认事件计数（独立）
+const confirmClickCount = ref(0)
+function handleConfirmClick() {
+  confirmClickCount.value++
+}
+
+// 提交事件计数（独立）
+const submitClickCount = ref(0)
+function handleSubmitClick() {
+  submitClickCount.value++
+}
+
+// 删除事件计数（独立）
+const deleteClickCount = ref(0)
+function handleDeleteClick() {
+  deleteClickCount.value++
 }
 </script>
 
@@ -100,10 +110,6 @@ function handleDebounceClick() {
 <pa-button :debounced="true" :debounced-time="300" data-testid="btn-debounce-effect" @click="handleDebounceClick">Debounce Test</pa-button>
 <span data-testid="debounce-click-count">{{ debounceClickCount }}</span>
 
-## confirmClick Event (is="ok")
-<pa-button is="ok" data-testid="btn-confirm-event" @confirm-click="handleConfirmClick">Confirm</pa-button>
-<span data-testid="confirm-click-count">{{ confirmClickCount }}</span>
-
 ## submitClick Event (is="file")
 <pa-button is="file" data-testid="btn-submit-event" @submit-click="handleSubmitClick">Submit</pa-button>
 <span data-testid="submit-click-count">{{ submitClickCount }}</span>
@@ -112,12 +118,12 @@ function handleDebounceClick() {
 <pa-button is="trash" data-testid="btn-delete-event" @delete-click="handleDeleteClick">Delete</pa-button>
 <span data-testid="delete-click-count">{{ deleteClickCount }}</span>
 
-## Dialog Confirmation Test
-<pa-button is="ok" data-testid="btn-dialog-confirm" @confirm-click="handleConfirmClick">Dialog Confirm</pa-button>
-<span data-testid="dialog-confirm-count">{{ confirmClickCount }}</span>
+## confirmClick Event with Dialog
+<pa-button is="ok" data-testid="btn-confirm-event" @confirm-click="handleConfirmClick">Confirm</pa-button>
+<span data-testid="confirm-click-count">{{ confirmClickCount }}</span>
 
 ## confirmConfig Prop
-<pa-button data-testid="btn-confirm-config" confirm-config="{ title: 'Confirm', message: 'Are you sure?' }">With ConfirmConfig</pa-button>
+<pa-button data-testid="btn-confirm-config" :confirm-config="{ title: 'Confirm', message: 'Are you sure?' }">With ConfirmConfig</pa-button>
 
 <style scoped>
 .button-row {
