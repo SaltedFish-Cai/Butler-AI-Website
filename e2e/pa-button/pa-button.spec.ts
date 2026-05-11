@@ -72,8 +72,11 @@ test.describe("pa-button Component E2E Tests", () => {
 
     await expect(btnIconLeft).toBeVisible();
     await expect(btnIconRight).toBeVisible();
-    await expect(btnIconLeft).toHaveClass(/icon-position-left/);
-    await expect(btnIconRight).toHaveClass(/icon-position-right/);
+    // iconPosition=left: no right-side icon (pa-button_ml)
+    await expect(btnIconLeft.locator(".pa-button_ml")).toHaveCount(0);
+
+    // iconPosition=right: has right-side icon with pa-button_ml class
+    await expect(btnIconRight.locator(".pa-button_ml")).toBeVisible()
   });
 
   test("should render underline button (useLine)", async ({ page }) => {
