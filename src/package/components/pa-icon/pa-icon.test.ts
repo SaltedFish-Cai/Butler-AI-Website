@@ -221,3 +221,50 @@ describe('pa-icon 组件测试', () => {
     })
   })
 })
+
+// ==================== install 函数测试 ====================
+describe('install 函数测试', () => {
+  it('导出对象包含 name 属性', async () => {
+    const module = await import('./index.ts')
+    expect(module.default).toBeDefined()
+    expect(module.default.name).toBe('PaIcon')
+  })
+
+  it('导出对象包含 install 函数', async () => {
+    const module = await import('./index.ts')
+    expect(module.default.install).toBeDefined()
+    expect(typeof module.default.install).toBe('function')
+  })
+
+  it('install 函数注册组件到 Vue 应用', async () => {
+    const { default: PaIconModule } = await import('./index.ts')
+    const mockComponent = vi.fn()
+    const mockApp = {
+      _context: { components: {} as Record<string, any> },
+      component: mockComponent
+    } as any
+    PaIconModule.install(mockApp)
+    expect(mockComponent).toHaveBeenCalledWith('PaIcon', expect.any(Object))
+  })
+
+  it('install 函数不重复注册已存在的组件', async () => {
+    const { default: PaIconModule } = await import('./index.ts')
+    const mockComponent = vi.fn()
+    const mockApp = {
+      _context: { components: { 'PaIcon': { name: 'PaIcon' } } },
+      component: mockComponent
+    } as any
+    PaIconModule.install(mockApp)
+    expect(mockComponent).not.toHaveBeenCalled()
+  })
+
+  it('install 函数返回 void', async () => {
+    const { default: PaIconModule } = await import('./index.ts')
+    const mockApp = {
+      _context: { components: {} },
+      component: vi.fn()
+    } as any
+    const result = PaIconModule.install(mockApp)
+    expect(result).toBeUndefined()
+  })
+})
