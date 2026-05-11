@@ -20,6 +20,12 @@
 
 <demo src="./disabled.vue"></demo>
 
+## 尺寸
+
+使用 `size` 来定义按钮的大小。
+
+<demo src="./size.vue"></demo>
+
 ## 链接按钮
 
 使用 `useLine` 来定义按钮的链接样式。
@@ -63,12 +69,12 @@
 | type          | 按钮样式类型       | `'danger'` `'default'` `'info'` `'primary'` `'success'` `'warning'`                   | -        |
 | disabled      | 是否禁用状态       | `boolean`                                                                             | -        |
 | loading       | 加载状态           | `boolean`                                                                             | -        |
-| loadingBy     | 自动Loading来源    | `string`                                                                              | -        |
+| loadingBy     | 自动 Loading 来源  | `string`                                                                              | -        |
 | debounced     | 是否开启防抖功能   | `boolean`                                                                             | `true`   |
 | debouncedTime | 防抖按钮时间       | `number`                                                                              | `300`    |
-| iconPosition  | Icon位置           | `'left'` `'right'`                                                                    | `left`   |
-| iconName      | 按钮ICON           | `string`                                                                              | -        |
-| useFont       | 是否使用Icon       | `boolean`                                                                             | `true`   |
+| iconPosition  | Icon 位置          | `'left'` `'right'`                                                                    | `left`   |
+| iconName      | 按钮 ICON          | `string`                                                                              | -        |
+| useFont       | 是否使用 Icon      | `boolean`                                                                             | `true`   |
 | useLine       | 是否使用下划线按钮 | `boolean`                                                                             | -        |
 | usePlain      | 是否使用朴素按钮   | `boolean`                                                                             | `true`   |
 | confirmConfig | 确认弹窗配置       | `MessageBoxOptions`                                                                   | -        |

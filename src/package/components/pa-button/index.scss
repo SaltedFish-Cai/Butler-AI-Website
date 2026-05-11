@@ -111,9 +111,9 @@
   }
 
   &.small {
-    --pa-size-font-sm: calc(var(--pa-size-font) - 1px);
-    --pa-size-height-sm: calc(var(--pa-size-height) - 8px);
-    --pa-size-padding-sm: calc(var(--pa-size-padding) / 2);
+    --pa-size-font-sm: calc(var(--pa-size-font) - 2px);
+    --pa-size-height-sm: calc(var(--pa-size-height) - 10px);
+    --pa-size-padding-sm: calc(var(--pa-size-padding) / 1.8);
 
     font-size: var(--pa-size-font-sm) !important;
     line-height: var(--pa-size-height-sm) !important;
@@ -122,12 +122,12 @@
 
   &.large {
     --pa-size-font-sm: calc(var(--pa-size-font) + 1px);
-    --pa-size-height-sm: calc(var(--pa-size-height) + 2px);
+    --pa-size-height-sm: calc(var(--pa-size-height));
     --pa-size-padding-sm: calc(var(--pa-size-padding) / 1);
 
     font-size: var(--pa-size-font-sm) !important;
     line-height: var(--pa-size-height-sm) !important;
-    padding: calc(var(--pa-size-padding-sm) / 3) calc(var(--pa-size-padding-sm) / 1.2) !important;
+    padding: calc(var(--pa-size-padding-sm) / 5) calc(var(--pa-size-padding-sm) / 1.2) !important;
   }
 }
 
