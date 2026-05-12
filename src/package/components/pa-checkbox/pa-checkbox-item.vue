@@ -17,7 +17,7 @@
         <pa-icon v-else-if="isIndeterminate" name="minus1"></pa-icon>
       </div>
       <div v-if="props.label || $slots.default" class="pa-checkbox-item-label">
-        <slot>{{ typeof props.label === "object" ? props.label[language] : props.label }}</slot>
+        <slot>{{ typeof props.label === "object" ? props.label[languageValue] : props.label }}</slot>
       </div>
     </div>
   </div>
@@ -44,10 +44,9 @@ import { PancakeGlobalConfigType } from "../pa-manager/types";
 
 /**
  * 模块导入
- * @description 导入 lodash 工具函数
+ * @description 导入 lodash isNil 工具函数
  */
-import _ from "lodash";
-const { isNil } = _;
+import isNil from "../tools/is-nil";
 
 /**
  * 组件属性
@@ -64,11 +63,13 @@ const props = withDefaults(defineProps<ComponentItemProps & { isOption?: boolean
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 
 /**
- * 当前语言
- * @type string
- * @description 当前语言设置
+ * 当前语言值
+ * @type ComputedRef<string>
+ * @description 当前选中的语言
  */
-const language = PancakeGlobalConfig.value?.language?.value || "zh-CN";
+const languageValue = computed(() => {
+  return PancakeGlobalConfig.value?.language?.value || "zh-CN";
+});
 
 /**
  * 内部值

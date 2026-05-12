@@ -2,7 +2,7 @@
   <div
     v-if="!display"
     class="pa-checkbox"
-    :class="[props.class]"
+    :class="props.class"
     ref="selectRef"
     :style="{ ...props.style }"
     :disabled="props.disabled"
@@ -26,7 +26,7 @@
     ></pa-checkbox-item>
   </div>
 
-  <div v-else class="pa-display-style" :class="[props.class]" :style="{ ...props.style }">
+  <div v-else class="pa-display-style" :class="props.class" :style="{ ...props.style }">
     <div v-if="title" :style="{ width: titleWidth }" class="pa-cell-label">
       {{ typeof title === "string" ? title : title[languageValue] }}
     </div>
@@ -70,10 +70,14 @@ import { PancakeGlobalConfigType } from "../pa-manager/types";
 import { findData as findDataSelect } from "../utils/find-data";
 /**
  * 模块导入
- * @description 导入 lodash 工具函数
+ * @description 导入 lodash isEqual 工具函数
  */
-import _ from "lodash";
-const { isEqual, isNil } = _;
+import isEqual from "../tools/is-equal";
+/**
+ * 模块导入
+ * @description 导入 lodash isNil 工具函数
+ */
+import isNil from "../tools/is-nil";
 /**
  * 组件属性
  * @type ComponentProps
