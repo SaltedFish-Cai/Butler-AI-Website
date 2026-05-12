@@ -30,7 +30,8 @@ export const study = [
       { text: "关于 LLaMA-Factory 微调", link: "/document/study/ai/llama-factory" },
       { text: "关于 MLX-LM 微调", link: "/document/study/ai/mlx-lm-finetune" },
       { text: "使用 Algolia AI 搜索", link: "/document/study/ai/algolia-search" },
-      { text: "进阶 Algolia AI 本地化搜索", link: "/document/study/ai/algolia-search-advanced" }
+      { text: "进阶 Algolia AI 本地化搜索", link: "/document/study/ai/algolia-search-advanced" },
+      { text: "使用 Open Claw", link: "/document/study/ai/open-claw" }
     ]
   }
 ];

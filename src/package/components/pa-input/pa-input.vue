@@ -89,19 +89,11 @@ import { ComponentProps, ComponentEmits } from "./types";
  */
 import { PancakeGlobalConfigType } from "../pa-manager/types";
 /**
- * 判断值是否为空（null 或 undefined）
- * @param val - 任意值
- * @returns boolean 是否为空
- * @description lodash isNil 内联实现
- */
-function isNil(val: unknown): boolean {
-  return val === null || val === undefined;
-}
-/**
  * 工具函数
  * @description 导入 isEqual 工具函数
  */
 import isEqual from "../tools/is-equal";
+import isNil from "../tools/is-nil";
 /**
  * 全局配置注入
  * @type ComputedRef<PancakeGlobalConfigType>
@@ -308,8 +300,8 @@ watch(
   () => props.modelValue,
   () => {
     const data = props.modelValue;
-    inValue.value = !isNil(data) ? data.toString() : "";
-    oldValue = !isNil(data) ? data.toString() : "";
+    inValue.value = !isNil(data) ? data?.toString() || "" : "";
+    oldValue = !isNil(data) ? data?.toString() || "" : "";
     nextTick(() => {
       adjustTextareaHeight();
     });
