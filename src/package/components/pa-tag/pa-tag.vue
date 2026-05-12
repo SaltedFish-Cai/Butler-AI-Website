@@ -1,20 +1,11 @@
 <template>
-  <div
-    class="pa-tag"
-    ref="tagRef"
-    :class="[useCollapse ? 'pa-tag-collapse' : '', props.class]"
-    :style="{ ...props.style, opacity: isOpacity }"
-  >
+  <div class="pa-tag" ref="tagRef" :class="[useCollapse ? 'pa-tag-collapse' : '', props.class]" :style="mergedStyle">
     <div class="pa-tag-text" v-for="item in inValue" :key="String(item.value)">
       <div class="pa-tag-text_content">
-        {{ typeof item.label === "object" ? item.label[language] || item.label["zh-CN"] : item.label }}
+        {{ getLabel(item.label) }}
       </div>
-      <pa-icon
-        v-if="!props.disabled"
-        name="close_circle_line"
-        class="pa-tag-text_close"
-        @click="e => removeTag(e, item)"
-      ></pa-icon>
+      <pa-icon v-if="!props.disabled" name="close_circle_line" class="pa-tag-text_close" @click="e => removeTag(e, item)">
+      </pa-icon>
     </div>
     <pa-popover ref="popoverRef" v-if="hideValue.length" :popoverWidth="popoverWidth" stopPropagation>
       <template #reference>
@@ -23,21 +14,30 @@
       <div class="pa-tag">
         <div class="pa-tag-text" v-for="item in hideValue" :key="String(item.value)">
           <div class="pa-tag-text_content">
-            {{ typeof item.label === "object" ? item.label[language] || item.label["zh-CN"] : item.label }}
+            {{ getLabel(item.label) }}
           </div>
-          <pa-icon v-if="!disabled" name="close_circle_line" class="pa-tag-text_close" @click="e => removeTag(e, item)"></pa-icon>
+          <pa-icon v-if="!disabled" name="close_circle_line" class="pa-tag-text_close" @click="e => removeTag(e, item)">
+          </pa-icon>
         </div>
       </div>
     </pa-popover>
   </div>
 </template>
 
+<script lang="ts">
+/**
+ * 语言默认值
+ * @description 默认语言标识
+ */
+const DEFAULT_LANGUAGE = "zh-CN";
+</script>
+
 <script lang="ts" setup>
 /**
  * 模块导入
  * @description 导入 Vue 组合式 API
  */
-import { onMounted, ref, Ref, watch, nextTick, inject, ComputedRef } from "vue";
+import { onMounted, ref, watch, nextTick, inject, computed, ComputedRef } from "vue";
 /**
  * 模块导入
  * @description 导入组件类型定义
@@ -61,10 +61,10 @@ import { PancakeGlobalConfigType } from "../pa-manager/types";
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 /**
  * 当前语言
- * @type string
+ * @type ComputedRef<string>
  * @description 当前语言标识
  */
-const language = PancakeGlobalConfig.value?.language?.value || "zh-CN";
+const language = computed(() => PancakeGlobalConfig.value?.language?.value || DEFAULT_LANGUAGE);
 /**
  * 组件属性
  * @type ComponentProps
@@ -72,40 +72,67 @@ const language = PancakeGlobalConfig.value?.language?.value || "zh-CN";
  */
 const props = withDefaults(defineProps<ComponentProps>(), { useCollapse: true });
 /**
+ * 是否折叠模式
+ * @type ComputedRef<boolean>
+ * @description 判断是否使用折叠模式
+ */
+const useCollapse = computed(() => props.useCollapse);
+/**
+ * 合并样式
+ * @type ComputedRef<Record<string, string | number>>
+ * @description 合并后的组件样式
+ */
+const mergedStyle = computed(() => {
+  const base = props.style || {};
+  return { ...base, opacity: isOpacity.value };
+});
+/**
  * 组件事件定义
  * @description 定义组件可触发的事件
  */
 const emits = defineEmits<ComponentEmits>();
 /**
  * 弹窗组件引用
- * @type Ref
+ * @type ReturnType<typeof ref>
  * @description 弹窗组件的引用
  */
 const popoverRef = ref();
 /**
  * 显示的标签列表
- * @type Ref<Array<TagType>>
+ * @type ReturnType<typeof ref>
  * @description 当前显示的标签列表
  */
 const inValue = ref<Array<TagType>>(props.tagList || []);
 /**
  * 标签容器引用
- * @type Ref<HTMLDivElement>
+ * @type ReturnType<typeof ref>
  * @description 标签容器的 DOM 引用
  */
 const tagRef = ref<HTMLDivElement>();
 /**
  * 隐藏的标签列表
- * @type Ref<Array<TagType>>
+ * @type ReturnType<typeof ref>
  * @description 被折叠隐藏的标签列表
  */
-const hideValue: Ref<Array<TagType>> = ref([]);
+const hideValue = ref<Array<TagType>>([]);
 /**
  * 透明度状态
- * @type Ref<number>
+ * @type ReturnType<typeof ref>
  * @description 用于动画效果的透明度值
  */
 const isOpacity = ref(0);
+/**
+ * 获取标签显示文本
+ * @param label - 标签文本或语言包
+ * @returns 格式化后的标签文本
+ * @description 根据语言环境获取标签显示文本
+ */
+function getLabel(label: TagType["label"]): string {
+  if (typeof label === "object") {
+    return label[language.value] || label[DEFAULT_LANGUAGE];
+  }
+  return label;
+}
 /**
  * 移除标签
  * @param e - 点击事件
@@ -127,7 +154,7 @@ function initPopover() {
     nextTick(() => {
       const children = tagRef.value?.children;
       let spliceIndex = 0;
-      if (children && Array.from(children).length) {
+      if (children && children.length) {
         for (let i = 0; i < children.length; i++) {
           const child = children[i];
           const position = getElementPosition(child, tagRef.value as HTMLElement, { top: 0, left: 0, right: 40, bottom: 0 });
