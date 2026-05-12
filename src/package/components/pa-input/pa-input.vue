@@ -98,15 +98,10 @@ function isNil(val: unknown): boolean {
   return val === null || val === undefined;
 }
 /**
- * 判断两个值是否相等
- * @param value - 值1
- * @param other - 值2
- * @returns boolean 是否相等
- * @description lodash isEqual 内联实现
+ * 工具函数
+ * @description 导入 isEqual 工具函数
  */
-function isEqual(value: unknown, other: unknown): boolean {
-  return String(value) === String(other);
-}
+import isEqual from "../tools/is-equal";
 /**
  * 全局配置注入
  * @type ComputedRef<PancakeGlobalConfigType>
