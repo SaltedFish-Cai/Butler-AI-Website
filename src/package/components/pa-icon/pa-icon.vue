@@ -61,18 +61,6 @@ const PancakeGlobalConfig = inject<PancakeGlobalConfigType>("PancakeGlobalConfig
  */
 let butlerFontLoaded = false;
 /**
- * 动态加载 butler-iconfont 字体 CSS
- * @description 仅在 fontFamily 为 butler-iconfont 时按需加载，减少初始包体积
- */
-function loadButlerFont() {
-  if (butlerFontLoaded || props.fontFamily !== "butler-iconfont") return;
-  butlerFontLoaded = true;
-  const link = document.createElement("link");
-  link.rel = "stylesheet";
-  link.href = "butler-iconfont.css";
-  document.head.appendChild(link);
-}
-/**
  * 图标类名列表
  * @type {ReturnType<typeof computed>}
  * @description 根据 fontFamily 和 fontColor 计算图标元素的类名
@@ -111,6 +99,18 @@ const tipText = computed(() => {
   const languageValue = PancakeGlobalConfig?.language?.value || "zh-CN";
   return props.tip?.[languageValue] ?? "";
 });
+/**
+ * 动态加载 butler-iconfont 字体 CSS
+ * @description 仅在 fontFamily 为 butler-iconfont 时按需加载，减少初始包体积
+ */
+function loadButlerFont() {
+  if (butlerFontLoaded || props.fontFamily !== "butler-iconfont") return;
+  butlerFontLoaded = true;
+  const link = document.createElement("link");
+  link.rel = "stylesheet";
+  link.href = "butler-iconfont.css";
+  document.head.appendChild(link);
+}
 /**
  * 组件挂载生命周期
  * @description 按需加载 butler-iconfont 字体
