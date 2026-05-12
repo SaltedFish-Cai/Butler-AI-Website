@@ -55,7 +55,7 @@
  * 模块导入
  * @description 导入 Vue 组合式 API
  */
-import { ref, computed, ComputedRef, watch, onMounted, onUnmounted, inject, nextTick } from "vue";
+import { ref, computed, ComputedRef, watch, onMounted, onBeforeUnmount, onUnmounted, inject, nextTick } from "vue";
 /**
  * 模块导入
  * @description 导入组件类型定义
@@ -72,11 +72,15 @@ import { handlePrecision, keepDecimalPlaces } from "../utils/handlePrecision";
  */
 import { PancakeGlobalConfigType } from "../pa-manager/types";
 /**
- * 模块导入
- * @description 导入 lodash 工具函数
+ * 工具函数
+ * @description 导入 isEqual 工具函数
  */
-import _ from "lodash";
-const { isEqual, isNil } = _;
+import isEqual from "../tools/is-equal";
+/**
+ * 工具函数
+ * @description 导入 isNil 工具函数
+ */
+import isNil from "../tools/is-nil";
 /**
  * 输入框引用
  * @type any
@@ -107,6 +111,18 @@ let lastWheelTime = 0;
  * @description 累计滚动距离
  */
 let wheelDelta = 0;
+/**
+ * 聚焦定时器
+ * @type number | undefined
+ * @description 聚焦时光标定位定时器
+ */
+let focusTimer: number | undefined;
+/**
+ * 自动聚焦定时器
+ * @type number | undefined
+ * @description 自动聚焦定时器
+ */
+let autofocusTimer: number | undefined;
 /**
  * 全局配置注入
  * @type ComputedRef<PancakeGlobalConfigType>
@@ -301,9 +317,8 @@ function handleFocus() {
     if (index > -1) {
       const inputElement = inputRef.value;
       if (inputElement) {
-        const time = setTimeout(() => {
+        focusTimer = setTimeout(() => {
           inputElement.setSelectionRange(index, index);
-          clearTimeout(time);
         }, 10);
       }
     }
@@ -405,11 +420,23 @@ function handleWheel(event: WheelEvent) {
  */
 onMounted(() => {
   if (props.autofocus) {
-    setTimeout(() => {
+    autofocusTimer = setTimeout(() => {
       if (inputRef.value) {
         inputRef.value.focus();
       }
     }, 300);
+  }
+});
+/**
+ * 组件卸载生命周期
+ * @description 清理事件监听器和定时器
+ */
+onBeforeUnmount(() => {
+  if (focusTimer) {
+    clearTimeout(focusTimer);
+  }
+  if (autofocusTimer) {
+    clearTimeout(autofocusTimer);
   }
 });
 /**
@@ -420,6 +447,7 @@ onUnmounted(() => {
   const inputElement = inputRef.value;
   if (inputElement) {
     inputElement.removeEventListener("wheel", handleWheel);
+    inputElement.removeEventListener("keydown", handleKeyDown);
   }
 });
 /**

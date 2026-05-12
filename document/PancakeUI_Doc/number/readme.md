@@ -8,13 +8,13 @@
 
 ## 组件功能展示
 
-<demo src="./base.vue" ></demo>
+<demo src="./base.vue"></demo>
 
 ## Display 纯展示模式
 
 展示单层纯展示模式，使用 `display` 属性开启纯展示模式。
 
-<demo src="./display.vue" ></demo>
+<demo src="./display.vue"></demo>
 
 ## ComponentProps
 
@@ -42,9 +42,16 @@
 
 ## ComponentEmits
 
-| 事件名            | 描述             | 回调函数                                                                  |
-| ----------------- | ---------------- | ------------------------------------------------------------------------- |
-| update:modelValue | 双向绑定值更新时 | `(value: number \| string) => void`                                       |
-| change            | 数据变更时触发   | `(data: { value: number \| string; oldValue: number \| string }) => void` |
-| blur              | 失去焦点时触发   | `() => void`                                                              |
-| focus             | 获得焦点时触发   | `() => void`                                                              |
+| 事件名            | 描述             | 回调函数                                                                                      |
+| ----------------- | ---------------- | --------------------------------------------------------------------------------------------- |
+| update:modelValue | 双向绑定值更新时 | `(value: number \| &#96;string&#96;) => void`                                                 |
+| change            | 数据变更时触发   | `(data: { value: number \| &#96;string&#96;; oldValue: number \| &#96;string&#96; }) => void` |
+| blur              | 失去焦点时触发   | `() => void`                                                                                  |
+| focus             | 获得焦点时触发   | `() => void`                                                                                  |
+
+## ComponentSlots
+
+| 插槽名称     | 作用               |
+| ------------ | ------------------ |
+| 'exDisplay'  | 展示模式自定义内容 |
+| 'exContrast' | 对比数据自定义内容 |
