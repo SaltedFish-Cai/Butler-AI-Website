@@ -97,8 +97,8 @@
     :class="['pa-contrast-style']"
   >
     <slot name="exContrast"></slot>
-    <template v-if="$slots.exContrast"> ( {{ findData(contrastData) || "--" }} )</template>
-    <template v-else>{{ findData(contrastData) || "--" }}</template>
+    <template v-if="$slots.exContrast"> ( {{ findData(contrastData || "") || "--" }} )</template>
+    <template v-else>{{ findData(contrastData || "") || "--" }}</template>
   </div>
 </template>
 
@@ -150,10 +150,9 @@ import isNil from "../tools/is-nil";
 import isEqual from "../tools/is-equal";
 /**
  * 模块导入
- * @description 导入 lodash cloneDeep 工具
+ * @description 导入 cloneDeep 深拷贝工具
  */
-import _ from "lodash";
-const { cloneDeep } = _;
+import cloneDeep from "../tools/clone-deep";
 /**
  * Popover 组件引用
  * @type Ref
@@ -559,8 +558,8 @@ watch(
   () => props.modelValue,
   data => {
     waitTag.value = false;
-    inValue.value = !isNil(data) ? data : isMultiple.value ? [] : "";
-    oldValue = !isNil(data) ? data : isMultiple.value ? [] : "";
+    inValue.value = !isNil(data) ? data || "" : isMultiple.value ? [] : "";
+    oldValue = !isNil(data) ? data || "" : isMultiple.value ? [] : "";
     nextTick(() => {
       waitTag.value = true;
     });
