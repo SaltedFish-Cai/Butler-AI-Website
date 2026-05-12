@@ -1,24 +1,37 @@
-@use "./iconfont/iconfont.css" as icon1;
+@use "./iconfont/iconfont.css";
+@use "./iconfont-2/iconfont.css";
 
 .pa-icon {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   font-size: calc(var(--pa-size-font) + 1px);
   font-style: normal;
+  line-height: 1;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
 
-  .pa-icon_font {
-    position: relative;
-    z-index: 0;
-    display: inline-block;
-    width: 1em;
-    height: 1em;
-    font-size: inherit;
-    line-height: 1em;
-
-    &.background-color {
-      background-image: var(--set-icon-background-color);
-      -webkit-background-clip: text; /* 兼容性写法 */
-      background-clip: text;
-      color: transparent; /* 将文字设为透明，显示背景 */
-    }
+  &:hover {
+    opacity: 0.8;
   }
+
+  &:active {
+    opacity: 0.6;
+  }
+}
+
+.pa-icon__font {
+  position: relative;
+  z-index: 0;
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  font-size: inherit;
+}
+
+.pa-icon__font--gradient {
+  background-image: var(--pa-icon-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
