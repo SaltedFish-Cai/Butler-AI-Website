@@ -129,6 +129,16 @@ const mScrollbarListRef = ref();
  */
 let observer: IntersectionObserver | undefined;
 /**
+ * 自动加载定时器 ID
+ * @description 用于取消待执行的自动加载
+ */
+let autoLoadTimer: ReturnType<typeof setTimeout> | undefined;
+/**
+ * 分页每页条数选项
+ * @description 分页器可选的每页条数
+ */
+const PAGE_SIZES: number[] = [50, 100, 150];
+/**
  * 表格状态
  * @description 表格状态
  */
@@ -167,7 +177,7 @@ const state = reactive({
      * 每页选择页数列表
      * @description 每页选择页数列表
      */
-    pageSizes: [50, 100, 150] as number[],
+    pageSizes: PAGE_SIZES,
     /**
      * 总条数
      * @description 总条数
@@ -230,8 +240,7 @@ const state = reactive({
 function handleIntersecting(el: HTMLElement): void {
   const name = el?.dataset?.name;
   if (name) {
-    const index = name.replace("more-", "");
-    state.pageNum = Number(index);
+    state.pageNum = Number(name.replace("more-", ""));
   }
 }
 /**
@@ -251,7 +260,8 @@ function handleScrollEnd(data: any): void {
  * @description 请求表格数据并更新状态
  */
 async function getTableList(pageNum?: number): Promise<void> {
-  const _pageNum = (pageNum || state.pageable.pageNum) - 1;
+  const currentPage = pageNum || state.pageable.pageNum;
+  const _pageNum = currentPage - 1;
   if (state.tableLoadEnd || state.tableData[_pageNum]?.length) {
     return;
   }
@@ -260,7 +270,7 @@ async function getTableList(pageNum?: number): Promise<void> {
   const _query = {
     ...state.tableQuery,
     Page: {
-      PageNum: pageNum || state.pageable.pageNum,
+      PageNum: currentPage,
       PageSize: state.pageable.pageSize
     }
   };
@@ -269,7 +279,7 @@ async function getTableList(pageNum?: number): Promise<void> {
   const deepData = Data;
   const _data = props.showPagination ? deepData.List || deepData : deepData;
   if (_data.length) {
-    const ar = [{ type: "more", name: pageNum || state.pageable.pageNum }, ..._data];
+    const ar = [{ type: "more", name: currentPage }, ..._data];
     state.flatTableData = [...state.flatTableData, ..._data];
     state.tableData[_pageNum] = ar;
   }
@@ -281,7 +291,7 @@ async function getTableList(pageNum?: number): Promise<void> {
   if (state.flatTableData.length >= deepData.TotalCount) {
     state.tableLoadEnd = true;
   } else {
-    setTimeout(() => {
+    autoLoadTimer = setTimeout(() => {
       getTableList(++state.pageable.pageNum);
     }, 300);
   }
@@ -323,10 +333,11 @@ onMounted(() => {
   getTableList();
 });
 /**
- * 组件卸载前断开观察器
- * @description 组件卸载前断开观察器
+ * 组件卸载前清理资源
+ * @description 组件卸载前清理定时器和观察器
  */
 onBeforeUnmount(() => {
+  if (autoLoadTimer) clearTimeout(autoLoadTimer);
   if (observer?.disconnect) observer?.disconnect();
 });
 /**
@@ -344,6 +355,7 @@ function setScrollTop(value: number): void {
  * @description 重置状态并重新获取数据
  */
 function refresh(): void {
+  if (autoLoadTimer) clearTimeout(autoLoadTimer);
   state.tableLoadEnd = false;
   state.flatTableData.length = 0;
   state.tableData.length = 0;
