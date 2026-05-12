@@ -14,6 +14,19 @@
 
 <demo src="./tip.vue"></demo>
 
+## 字体与颜色
+
+使用 `fontFamily` 切换图标字体库，使用 `fontColor` 设置渐变色
+
+<demo src="./font.vue">
+</demo>
+
+## Icon 选择
+
+全 `Icon` 展示直接点击即可获取 `pa-icon` 所需的 `name` 值
+
+<demo src="./copy.vue" control="false"></demo>
+
 ## ComponentProps
 
 | 属性名     | 描述       | 类型                                                                                  | 默认值        |
@@ -40,16 +53,3 @@
 | ------------------- | ----------------- |
 | `'pa-iconfont'`     | 默认图标字体库    |
 | `'butler-iconfont'` | Butler 图标字体库 |
-
-## 字体与颜色
-
-使用 `fontFamily` 切换图标字体库，使用 `fontColor` 设置渐变色
-
-<demo src="./font.vue">
-</demo>
-
-## Icon 选择
-
-全 `Icon` 展示直接点击即可获取 `pa-icon` 所需的 `name` 值
-
-<demo src="./copy.vue" control="false"></demo>
