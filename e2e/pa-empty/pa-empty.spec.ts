@@ -55,4 +55,11 @@ test.describe('pa-empty Component E2E Tests', () => {
     const message = empty.locator('.pa-empty_message')
     await expect(message).toContainText('这是一个较长的提示信息')
   });
+
+  test('should render empty with i18n message in zh-CN', async ({ page }) => {
+    const empty = page.locator('[data-testid="empty-i18n"]')
+    await expect(empty).toHaveClass(/pa-empty/)
+    const message = empty.locator('.pa-empty_message')
+    await expect(message).toHaveText('暂无内容')
+  })
 });

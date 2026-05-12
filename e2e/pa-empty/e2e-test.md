@@ -26,6 +26,9 @@ const customMessage = ref('没有找到任何内容')
 ## Empty with Long Message
 <pa-empty data-testid="empty-long" message="这是一个较长的提示信息，用于展示当没有数据时的空状态显示效果" />
 
+## Empty with i18n Message
+<pa-empty data-testid="empty-i18n" :message="{ 'zh-CN': '暂无内容', 'en-US': 'No content' }" />
+
 <style scoped>
 div {
   margin: 16px 0;
