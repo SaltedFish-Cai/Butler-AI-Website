@@ -1,6 +1,6 @@
 <template>
   <template v-if="!display">
-    <div class="pa-input" :style="{ ...props.style }" :class="[props.class]">
+    <div class="pa-input" :style="mergedStyle" :class="props.class">
       <div class="pa-input_body" :class="[{ 'is-disabled': disabled }, { 'is-focus': isFocus }]" @click="textareaRef.focus()">
         <div v-if="title" :style="{ width: titleWidth }" class="pa-cell-label">
           {{ typeof title === "string" ? title : title[languageValue] }}
@@ -51,7 +51,7 @@
     </div>
   </template>
 
-  <div v-else class="pa-display-style" :class="[props.class]" :style="{ ...props.style }">
+  <div v-else class="pa-display-style" :class="props.class" :style="mergedStyle">
     <div v-if="title" :style="{ width: titleWidth }" class="pa-cell-label">
       {{ typeof title === "string" ? title : title[languageValue] }}
     </div>
@@ -77,7 +77,7 @@
  * 模块导入
  * @description 导入 Vue 组合式 API
  */
-import { ref, computed, ComputedRef, watch, onMounted, nextTick, inject } from "vue";
+import { ref, computed, ComputedRef, watch, onMounted, onBeforeUnmount, nextTick, inject } from "vue";
 /**
  * 模块导入
  * @description 导入组件类型定义
@@ -89,11 +89,24 @@ import { ComponentProps, ComponentEmits } from "./types";
  */
 import { PancakeGlobalConfigType } from "../pa-manager/types";
 /**
- * 模块导入
- * @description 导入 lodash 工具函数
+ * 判断值是否为空（null 或 undefined）
+ * @param val - 任意值
+ * @returns boolean 是否为空
+ * @description lodash isNil 内联实现
  */
-import _ from "lodash";
-const { isEqual, isNil } = _;
+function isNil(val: unknown): boolean {
+  return val === null || val === undefined;
+}
+/**
+ * 判断两个值是否相等
+ * @param value - 值1
+ * @param other - 值2
+ * @returns boolean 是否相等
+ * @description lodash isEqual 内联实现
+ */
+function isEqual(value: unknown, other: unknown): boolean {
+  return String(value) === String(other);
+}
 /**
  * 全局配置注入
  * @type ComputedRef<PancakeGlobalConfigType>
@@ -140,11 +153,17 @@ const languageValue = computed(() => {
  * @description 根据语言设置计算显示的占位符文本
  */
 const computedPlaceholder: ComputedRef<string> = computed(() => {
-  const language = PancakeGlobalConfig.value?.language?.value || "zh-CN";
   return typeof props.placeholder === "object"
-    ? props.placeholder[language] || languagePackage.value[`inputPlaceholder`]
+    ? props.placeholder[languageValue.value] || languagePackage.value[`inputPlaceholder`]
     : props.placeholder || languagePackage.value[`inputPlaceholder`];
 });
+/**
+ * 计算属性：合并样式
+ * @returns Record<string, string> | undefined 合并后的样式对象
+ * @description 将 props.style 作为响应式样式对象
+ */
+const mergedStyle = computed(() => props.style);
+const disabled = computed(() => !!props.disabled);
 /**
  * 组件属性
  * @type ComponentProps
@@ -167,10 +186,11 @@ const inValue = ref(props.modelValue ? String(props.modelValue) : "");
 const emits = defineEmits<ComponentEmits>();
 /**
  * 处理回车键事件
+ * @param _e - 键盘事件
  * @description 按下回车键时触发 enter 事件
  */
-function handleEnter(e: KeyboardEvent) {
-  if (e.key === "Enter") {
+function handleEnter(_e: KeyboardEvent) {
+  if (_e.key === "Enter") {
     emits("enter");
   }
 }
@@ -239,16 +259,27 @@ function adjustTextareaHeight() {
  * @description 限制输入内容的最大长度
  */
 function limitLength(value: string) {
-  if (props.maxLength && value.length > Number(props.maxLength)) {
-    inValue.value = value.slice(0, Number(props.maxLength));
-    emits("update:modelValue", inValue.value);
-    emits("change", { value: inValue.value, oldValue });
-  } else {
-    emits("update:modelValue", value);
-    emits("change", { value, oldValue });
+  if (props.maxLength) {
+    const maxLen = Number(props.maxLength);
+    if (value.length > maxLen) {
+      inValue.value = value.slice(0, maxLen);
+      emits("update:modelValue", inValue.value);
+      emits("change", { value: inValue.value, oldValue });
+      oldValue = inValue.value;
+      return;
+    }
   }
+  emits("update:modelValue", value);
+  emits("change", { value, oldValue });
   oldValue = value;
 }
+/**
+ * 定时器 ID 存储
+ * @type number | null
+ * @description 用于清理 setTimeout
+ */
+let autofocusTimer: ReturnType<typeof setTimeout> | null = null;
+let initTimer: ReturnType<typeof setTimeout> | null = null;
 /**
  * 组件挂载生命周期
  * @description 初始化组件状态，设置自动聚焦
@@ -256,15 +287,23 @@ function limitLength(value: string) {
 onMounted(() => {
   oldValue = props.modelValue ? String(props.modelValue) : "";
   if (props.autofocus) {
-    setTimeout(() => {
+    autofocusTimer = setTimeout(() => {
       if (props.type === "textarea" && textareaRef.value) {
         textareaRef.value.focus();
       }
     }, 300);
   }
-  setTimeout(() => {
+  initTimer = setTimeout(() => {
     adjustTextareaHeight();
   }, 300);
+});
+/**
+ * 组件卸载前生命周期
+ * @description 清理定时器，防止内存泄漏
+ */
+onBeforeUnmount(() => {
+  if (autofocusTimer) clearTimeout(autofocusTimer);
+  if (initTimer) clearTimeout(initTimer);
 });
 /**
  * 监听 modelValue 变化
