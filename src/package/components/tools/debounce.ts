@@ -1,11 +1,9 @@
 /**
  * 防抖函数
- * @param {Function} fn - 要防抖的函数
- * @param {number} delay - 延迟时间（毫秒）
- * @returns {Function} 防抖处理后的函数
- * @description 简单的 trailing debounce 实现
+ * @type {(fn: (...args: any[]) => void, delay: number) => (...args: any[]) => void}
+ * @description trailing 模式防抖实现，在延迟时间结束后触发最后一次调用
  */
-function debounce(fn: Function, delay: number): Function {
+function debounce(fn: (...args: any[]) => void, delay: number): (...args: any[]) => void {
   let timer: ReturnType<typeof setTimeout> | null = null;
   return function (this: unknown, ...args: unknown[]) {
     if (timer) clearTimeout(timer);
