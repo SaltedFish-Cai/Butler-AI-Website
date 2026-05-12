@@ -112,6 +112,47 @@ const mockRequestApiMultiPage = async (params) => {
   </template>
 </pa-scrollbar-list>
 
+
+## ScrollBarList with Multi-Page API
+<pa-scrollbar-list 
+  data-testid="scrollbar-list-multi-page"
+  :request-api="mockRequestApiMultiPage"
+  :row-key="'id'"
+  style="height: 300px;"
+>
+  <template #default="{ row }">
+    <div data-testid="scrollbar-list-multi-item" class="list-item">{{ row.name }}</div>
+  </template>
+</pa-scrollbar-list>
+
+## ScrollBarList with Border
+<pa-scrollbar-list 
+  data-testid="scrollbar-list-border"
+  :border="['all']"
+  :request-api="mockRequestApi"
+  :row-key="'id'"
+  style="height: 200px;"
+>
+  <template #default="{ row }">
+    <div class="list-item">{{ row.name }}</div>
+  </template>
+</pa-scrollbar-list>
+
+## ScrollBarList with FooterLeft Slot
+<pa-scrollbar-list 
+  data-testid="scrollbar-list-footer-left"
+  :request-api="mockRequestApi"
+  :row-key="'id'"
+  style="height: 200px;"
+>
+  <template #default="{ row }">
+    <div class="list-item">{{ row.name }}</div>
+  </template>
+  <template #footer>
+    <div data-testid="scrollbar-list-footer-left-slot" class="footer-left-content">Left Footer</div>
+  </template>
+</pa-scrollbar-list>
+
 <style scoped>
 .list-item {
   padding: 12px 16px;
