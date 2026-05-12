@@ -77,7 +77,7 @@
 | useFont       | 是否使用 Icon      | `boolean`                                                                             | `true`   |
 | useLine       | 是否使用下划线按钮 | `boolean`                                                                             | -        |
 | usePlain      | 是否使用朴素按钮   | `boolean`                                                                             | `true`   |
-| confirmConfig | 确认弹窗配置       | `MessageBoxOptions`                                                                   | -        |
+| confirmConfig | 确认弹窗配置       | [`MessageBoxOptions`](/document/PancakeUI_Doc/message-box/readme#messageboxoptions)   | -        |
 | useStop       | 是否阻止事件冒泡   | `boolean`                                                                             | `true`   |
 
 ## ComponentEmits
@@ -93,4 +93,28 @@
 
 预设按钮样式类型。
 
-可选值：`'add'` `'cancel'` `'check'` `'delete'` `'download'` `'edit'` `'export'` `'file'` `'go'` `'import'` `'more'` `'ok'` `'refresh'` `'remove'` `'save'` `'search'` `'submit'` `'switch'` `'sync'` `'time'` `'trash'` `'upload'` `'view'`
+| 值           | 描述   |
+| ------------ | ------ |
+| `'add'`      | 新增   |
+| `'cancel'`   | 取消   |
+| `'check'`    | 勾选   |
+| `'delete'`   | 删除   |
+| `'download'` | 下载   |
+| `'edit'`     | 编辑   |
+| `'export'`   | 导出   |
+| `'file'`     | 文件   |
+| `'go'`       | 前往   |
+| `'import'`   | 导入   |
+| `'more'`     | 更多   |
+| `'ok'`       | 确认   |
+| `'refresh'`  | 刷新   |
+| `'remove'`   | 移除   |
+| `'save'`     | 保存   |
+| `'search'`   | 搜索   |
+| `'submit'`   | 提交   |
+| `'switch'`   | 切换   |
+| `'sync'`     | 同步   |
+| `'time'`     | 时间   |
+| `'trash'`    | 回收站 |
+| `'upload'`   | 上传   |
+| `'view'`     | 查看   |

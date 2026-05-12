@@ -239,6 +239,11 @@ let observer: MutationObserver | null = null;
  */
 let safeLockTimer: ReturnType<typeof setTimeout> | null = null;
 /**
+ * 防抖点击函数
+ * @description lodash-es 防抖包装的点击处理函数
+ */
+const debouncedClick = debounce(realClick, props.debouncedTime, { trailing: true });
+/**
  * 清理 MutationObserver 和定时器
  * @description 断开 observer 连接并清除定时器
  */
@@ -250,14 +255,6 @@ function cleanupObserver() {
     safeLockTimer = null;
   }
 }
-/**
- * 组件卸载时清理
- * @description 断开 MutationObserver 并重置加载状态
- */
-onUnmounted(() => {
-  cleanupObserver();
-  isLoading.value = false;
-});
 /**
  * 实际点击处理
  * @param {MouseEvent} event - 鼠标点击事件对象
@@ -290,11 +287,6 @@ function realClick(event: MouseEvent) {
   });
 }
 /**
- * 防抖点击函数
- * @description lodash-es 防抖包装的点击处理函数
- */
-const debouncedClick = debounce(realClick, props.debouncedTime, { trailing: true });
-/**
  * 按钮点击事件处理
  * @param {MouseEvent} event - 鼠标点击事件对象
  * @returns {void}
@@ -316,6 +308,14 @@ function btnClick(event: MouseEvent) {
     realClick(event);
   }
 }
+/**
+ * 组件卸载时清理
+ * @description 断开 MutationObserver 并重置加载状态
+ */
+onUnmounted(() => {
+  cleanupObserver();
+  isLoading.value = false;
+});
 </script>
 
 <style lang="scss">
