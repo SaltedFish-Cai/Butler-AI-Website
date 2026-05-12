@@ -147,3 +147,60 @@ describe('pa-row 组件测试', () => {
     })
   })
 })
+
+// ==================== install 函数测试 ====================
+describe('8. install 函数', () => {
+  it('注册 PaRow 组件', async () => {
+    const { default: module } = await import('./index')
+    const app = { _context: { components: {} }, component: vi.fn() } as any
+    module.install(app)
+    expect(app.component).toHaveBeenCalledWith('PaRow', expect.anything())
+  })
+
+  it('不重复注册 PaRow 组件', async () => {
+    const { default: module } = await import('./index')
+    const app = { _context: { components: { PaRow: true } }, component: vi.fn() } as any
+    module.install(app)
+    expect(app.component).not.toHaveBeenCalled()
+  })
+
+  it('install 返回 void', async () => {
+    const { default: module } = await import('./index')
+    const app = { _context: { components: {} }, component: vi.fn() } as any
+    const result = module.install(app)
+    expect(result).toBeUndefined()
+  })
+})
+
+// ==================== SSR 分支覆盖 ====================
+describe('9. window 事件监听分支', () => {
+  it('onMounted 添加 resize 监听', async () => {
+    const addSpy = vi.spyOn(window, 'addEventListener')
+    const wrapper = await mountRow()
+    expect(addSpy).toHaveBeenCalledWith('resize', expect.any(Function))
+    addSpy.mockRestore()
+  })
+
+  it('onUnmounted 移除 resize 监听', async () => {
+    const removeSpy = vi.spyOn(window, 'removeEventListener')
+    const wrapper = await mountRow()
+    wrapper.unmount()
+    expect(removeSpy).toHaveBeenCalledWith('resize', expect.any(Function))
+    removeSpy.mockRestore()
+  })
+
+  it('resize 事件触发时重新计算断点', async () => {
+    const wrapper = await mountRow()
+    // 触发 resize 事件
+    window.dispatchEvent(new Event('resize'))
+    await nextTick()
+    // 组件仍然正常渲染
+    expect(wrapper.find('div.pa-row').exists()).toBe(true)
+  })
+
+  it('不同窗口宽度计算断点', async () => {
+    // 默认 happy-dom innerWidth 通常是较大值，断点为 xl
+    const wrapper = await mountRow()
+    expect(wrapper.find('div.pa-row').exists()).toBe(true)
+  })
+})

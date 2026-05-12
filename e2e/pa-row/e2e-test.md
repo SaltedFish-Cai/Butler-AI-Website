@@ -59,6 +59,22 @@ title: Row E2E Test
   <pa-col data-testid="col-all-props-2" :span="10">All Props 2</pa-col>
 </pa-row>
 
+## Row with Justify Start
+<pa-row data-testid="row-justify-start" justify="start">
+  <pa-col :span="6">Start</pa-col>
+</pa-row>
+
+## Row with Align Top
+<pa-row data-testid="row-align-top" align="top" style="min-height: 80px;">
+  <pa-col :span="8">Top Align</pa-col>
+</pa-row>
+
+## Row with String Gutter
+<pa-row data-testid="row-string-gutter" gutter="24px">
+  <pa-col :span="12">String Gutter 1</pa-col>
+  <pa-col :span="12">String Gutter 2</pa-col>
+</pa-row>
+
 <style scoped>
 div {
   margin: 8px 0;

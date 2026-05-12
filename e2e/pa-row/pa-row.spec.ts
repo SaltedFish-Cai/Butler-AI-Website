@@ -70,4 +70,25 @@ test.describe('pa-row Component E2E Tests', () => {
     await expect(page.locator('[data-testid="col-2"]')).toBeVisible()
     await expect(page.locator('[data-testid="col-gutter-1"]')).toBeVisible()
   });
+
+  test('should render row with justify start', async ({ page }) => {
+    const row = page.locator('[data-testid="row-justify-start"]')
+    await expect(row).toBeVisible()
+    await expect(row).toHaveClass(/pa-row--start/)
+  });
+
+  test('should render row with align top', async ({ page }) => {
+    const row = page.locator('[data-testid="row-align-top"]')
+    await expect(row).toBeVisible()
+    await expect(row).toHaveClass(/pa-row--align-top/)
+  });
+
+  test('should render row with string gutter', async ({ page }) => {
+    const row = page.locator('[data-testid="row-string-gutter"]')
+    await expect(row).toBeVisible()
+    await expect(row).toHaveClass(/pa-row/)
+    // Verify gutter style is applied
+    const style = await row.evaluate(el => el.style.getPropertyValue('--row-gutter-value'))
+    expect(style).toBe('12px')
+  })
 });
