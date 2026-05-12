@@ -139,11 +139,20 @@ import { PancakeGlobalConfigType } from "../pa-manager/types";
  */
 import PaScrollbar from "../pa-scrollbar/pa-scrollbar.vue";
 /**
- * 模块导入
- * @description 导入 lodash 工具函数
+ * 工具函数
+ * @description 导入 isNil 工具函数
  */
-import _ from "lodash";
-const { isEqual, isNil, debounce } = _;
+import isNil from "../tools/is-nil";
+/**
+ * 工具函数
+ * @description 导入 isEqual 工具函数
+ */
+import isEqual from "../tools/is-equal";
+/**
+ * 工具函数
+ * @description 导入 debounce 工具函数
+ */
+import debounce from "../tools/debounce";
 /**
  * 弹出层引用
  * @type any
@@ -457,7 +466,7 @@ function findData(data) {
   if (props.displayValue) {
     return props.displayValue || "--";
   }
-  return findDataSelect(data, exOptionsList.value, false, languageValue.value);
+  return findDataSelect(data, exOptionsList.value);
 }
 /**
  * 清空输入内容

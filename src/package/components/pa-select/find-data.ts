@@ -4,11 +4,16 @@
  */
 import { PaOptionType } from "PancakeType";
 /**
- * 模块导入
- * @description 导入工具函数
+ * 工具函数
+ * @description 导入 isNil 工具函数
  */
-import _ from "lodash";
-const { isNil } = _;
+import isNil from "../tools/is-nil";
+/**
+ * 语言代码
+ * @type string
+ * @description 获取当前语言设置
+ */
+const language: string = typeof window !== "undefined" ? window.PancakeGlobalConfig?.language || "zh-CN" : "zh-CN";
 /**
  * 查找显示数据函数
  * @param data - | boolean | number | string 要查找的数据
@@ -20,7 +25,11 @@ export function findData(
   data: Array<boolean | number | string> | boolean | number | string,
   options: PaOptionType.SelectList
 ): string {
-  const language: string = typeof window !== "undefined" ? window.PancakeGlobalConfig?.language || "zh-CN" : "zh-CN";
+  /**
+   * 显示文本
+   * @type string
+   * @description 累积查找结果
+   */
   let text: string = "";
   if (!options?.length) return "--";
   if (Array.isArray(data)) {
