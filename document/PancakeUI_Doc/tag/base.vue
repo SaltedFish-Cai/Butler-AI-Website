@@ -1,5 +1,5 @@
 <template>
-  <pa-tag :tag-list="tagList" />
+  <pa-tag :tag-list="tagList" @remove-tag="removeTag" />
 </template>
 
 <script lang="ts" setup>
@@ -27,4 +27,8 @@ const tagList = ref([
   { label: "标签十九", value: "19" },
   { label: "标签二十", value: "20" }
 ]);
+
+function removeTag(tag) {
+  tagList.value = tagList.value.filter(t => t.value !== tag.value);
+}
 </script>
