@@ -14,6 +14,38 @@
   </button>
 </template>
 
+<script lang="ts">
+/**
+ * 按钮内置样式映射
+ * @description 预设按钮样式类型对应的图标和类型配置
+ */
+const IS_MAP: Record<string, { iconName?: string; type?: string }> = {
+  search: { iconName: "search_line" },
+  view: { iconName: "document_query_line", type: "default" },
+  add: { iconName: "add_circle_line", type: "success" },
+  edit: { iconName: "edit_line" },
+  check: { iconName: "subscribed" },
+  save: { iconName: "save_line" },
+  submit: { iconName: "share_forward_line" },
+  upload: { iconName: "upload_line", type: "default" },
+  download: { iconName: "download_line", type: "default" },
+  remove: { iconName: "stop", type: "danger" },
+  trash: { iconName: "trash_line", type: "danger" },
+  refresh: { iconName: "refresh_line", type: "warning" },
+  go: { iconName: "navigation_line" },
+  file: { iconName: "attachment_line", type: "default" },
+  time: { iconName: "time_line", type: "default" },
+  switch: { iconName: "switch_horizontal_line", type: "warning" },
+  sync: { iconName: "refresh_arrows_line" },
+  import: { iconName: "file_download_line", type: "default" },
+  export: { iconName: "file_upload_line", type: "default" },
+  ok: { iconName: "check_circle_line", type: "success" },
+  cancel: { iconName: "close_circle_line", type: "warning" },
+  more: { iconName: "version_line", type: "warning" },
+  delete: { iconName: "delete_back_line", type: "danger" }
+};
+</script>
+
 <script lang="ts" setup>
 /**
  * 模块导入
@@ -40,11 +72,6 @@ import paIcon from "../pa-icon/pa-icon.vue";
  * @description 导入全局配置类型定义
  */
 import type { PancakeGlobalConfigType } from "../pa-manager/types";
-/**
- * 模块导入
- * @description 导入 lodash 防抖函数
- */
-import { debounce } from "lodash-es";
 /**
  * 组件属性
  * @type {ComponentProps}
@@ -96,35 +123,6 @@ const displayText = computed(() => {
  * @description 判断插槽或 text 是否存在内容
  */
 const hasContent = computed(() => !!slots.default || !!props.text);
-/**
- * 按钮内置样式映射
- * @description 预设按钮样式类型对应的图标和类型配置
- */
-const IS_MAP: Record<string, { iconName?: string; type?: string }> = {
-  search: { iconName: "search_line" },
-  view: { iconName: "document_query_line", type: "default" },
-  add: { iconName: "add_circle_line", type: "success" },
-  edit: { iconName: "edit_line" },
-  check: { iconName: "subscribed" },
-  save: { iconName: "save_line" },
-  submit: { iconName: "share_forward_line" },
-  upload: { iconName: "upload_line", type: "default" },
-  download: { iconName: "download_line", type: "default" },
-  remove: { iconName: "stop", type: "danger" },
-  trash: { iconName: "trash_line", type: "danger" },
-  refresh: { iconName: "refresh_line", type: "warning" },
-  go: { iconName: "navigation_line" },
-  file: { iconName: "attachment_line", type: "default" },
-  time: { iconName: "time_line", type: "default" },
-  switch: { iconName: "switch_horizontal_line", type: "warning" },
-  sync: { iconName: "refresh_arrows_line" },
-  import: { iconName: "file_download_line", type: "default" },
-  export: { iconName: "file_upload_line", type: "default" },
-  ok: { iconName: "check_circle_line", type: "success" },
-  cancel: { iconName: "close_circle_line", type: "warning" },
-  more: { iconName: "version_line", type: "warning" },
-  delete: { iconName: "delete_back_line", type: "danger" }
-};
 /**
  * 当前图标名称
  * @type {ReturnType<typeof computed>}
@@ -193,10 +191,9 @@ function hasListener(camelKey: string, kebabKey: string): boolean {
 }
 /**
  * 确认弹窗配置
- * @type {ReturnType<typeof computed>}
- * @description 根据监听的事件类型缓存对应的确认弹窗配置
+ * @description 根据监听的事件类型缓存对应的确认弹窗配置，在 setup 阶段一次性计算
  */
-const confirmConfig = computed(() => {
+const confirmConfig = (() => {
   if (hasListener("onDeleteClick", "onDelete-click")) {
     return {
       title: { "en-US": "Notice", "zh-CN": "注意" },
@@ -225,7 +222,7 @@ const confirmConfig = computed(() => {
     };
   }
   return null;
-});
+})();
 /**
  * MutationObserver 引用
  * @type {MutationObserver | null}
@@ -239,10 +236,26 @@ let observer: MutationObserver | null = null;
  */
 let safeLockTimer: ReturnType<typeof setTimeout> | null = null;
 /**
- * 防抖点击函数
- * @description lodash-es 防抖包装的点击处理函数
+ * 防抖函数
+ * @param {Function} fn - 要防抖的函数
+ * @param {number} delay - 延迟时间（毫秒）
+ * @returns {Function} 防抖处理后的函数
+ * @description 简单的 trailing debounce 实现
  */
-const debouncedClick = debounce(realClick, props.debouncedTime, { trailing: true });
+function debounce(fn: Function, delay: number): Function {
+  let timer: ReturnType<typeof setTimeout> | null = null;
+  return function (this: unknown, ...args: unknown[]) {
+    if (timer) clearTimeout(timer);
+    timer = setTimeout(() => {
+      fn.apply(this, args);
+    }, delay);
+  };
+}
+/**
+ * 防抖点击函数
+ * @description 内联防抖包装的点击处理函数
+ */
+const debouncedClick = debounce(realClick, props.debouncedTime);
 /**
  * 清理 MutationObserver 和定时器
  * @description 断开 observer 连接并清除定时器
@@ -296,7 +309,7 @@ function btnClick(event: MouseEvent) {
   if (props.useStop) event.stopPropagation();
   if (props.disabled) return;
 
-  const activeConfirmConfig = props.confirmConfig || confirmConfig.value;
+  const activeConfirmConfig = props.confirmConfig || confirmConfig;
   if (activeConfirmConfig) {
     M_MessageBox.confirm(activeConfirmConfig);
     return;
