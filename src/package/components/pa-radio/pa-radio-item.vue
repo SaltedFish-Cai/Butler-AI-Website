@@ -40,10 +40,9 @@ import { PancakeGlobalConfigType } from "../pa-manager/types";
 
 /**
  * 模块导入
- * @description 导入 lodash 工具函数
+ * @description 导入 lodash isNil 工具函数
  */
-import _ from "lodash";
-const { isNil } = _;
+import isNil from "../tools/is-nil";
 
 /**
  * 组件属性
@@ -61,10 +60,12 @@ const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<Pan
 
 /**
  * 当前语言
- * @type string
+ * @type ComputedRef<string>
  * @description 当前语言设置
  */
-const language = PancakeGlobalConfig.value?.language?.value || "zh-CN";
+const language = computed(() => {
+  return PancakeGlobalConfig.value?.language?.value || "zh-CN";
+});
 
 /**
  * 内部值
@@ -100,15 +101,14 @@ let oldValue: boolean | number | string | undefined = props.modelValue;
 
 /**
  * 处理点击事件
- * @returns void | undefined
+ * @returns void
  * @description 处理单选框子项点击事件
  */
-function changeEvent(): undefined | void {
+function changeEvent(): void {
   if (props.disabled || (!isNil(props.isChecked) && !props.isOption)) return;
   emits("update:modelValue", props.value);
   emits("change", { value: props.value, oldValue });
   oldValue = props.value;
-  return;
 }
 
 /**

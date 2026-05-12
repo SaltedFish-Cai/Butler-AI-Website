@@ -7,7 +7,7 @@
     :style="{ ...props.style }"
     :disabled="props.disabled"
   >
-    <div v-if="title" :style="{ width: titleWidth }" class="pa-cell-label">
+    <div v-if="title" :style="titleWidthStyle" class="pa-cell-label">
       {{ typeof title === "string" ? title : title[languageValue] }}
     </div>
     <pa-radio-item
@@ -27,7 +27,7 @@
   </div>
 
   <div v-else class="pa-display-style" :class="[props.class]" :style="{ ...props.style }">
-    <div v-if="title" :style="{ width: titleWidth }" class="pa-cell-label">
+    <div v-if="title" :style="titleWidthStyle" class="pa-cell-label">
       {{ typeof title === "string" ? title : title[languageValue] }}
     </div>
     <div class="pa-display-value_content">
@@ -70,10 +70,14 @@ import { PancakeGlobalConfigType } from "../pa-manager/types";
 import { findData as findDataSelect } from "../utils/find-data";
 /**
  * 模块导入
- * @description 导入 lodash 工具函数
+ * @description 导入 lodash isNil 工具函数
  */
-import _ from "lodash";
-const { isEqual, isNil } = _;
+import isNil from "../tools/is-nil";
+/**
+ * 模块导入
+ * @description 导入 lodash isEqual 工具函数
+ */
+import isEqual from "../tools/is-equal";
 /**
  * 全局配置注入
  * @type ComputedRef<PancakeGlobalConfigType>
@@ -87,6 +91,14 @@ const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<Pan
  */
 const languageValue = computed(() => {
   return PancakeGlobalConfig.value?.language?.value || "zh-CN";
+});
+/**
+ * 标签宽度样式
+ * @type ComputedRef<Record<string, string>>
+ * @description 根据 titleWidth 生成宽度样式
+ */
+const titleWidthStyle = computed(() => {
+  return { width: props.titleWidth || "auto" };
 });
 /**
  * 组件属性
