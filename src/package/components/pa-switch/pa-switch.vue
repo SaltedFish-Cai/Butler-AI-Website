@@ -4,7 +4,7 @@
     :id="id"
     class="pa-switch"
     :class="[inValue == options.activeValue ? 'pa-switch-active' : '', props.class, { 'is-disabled': props.disabled }]"
-    :style="{ ...props.style }"
+    :style="rootStyle"
     @click="changeEvent"
   >
     <div v-if="title" :style="{ width: titleWidth }" class="pa-cell-label">
@@ -15,7 +15,7 @@
         {{ options.inActiveText }}
       </div>
       <div class="pa-switch-inner">
-        <div class="pa-switch-thumb" :style="{ ...props.iconStyle }">
+        <div class="pa-switch-thumb" :style="iconStyle">
           <pa-icon
             style="display: flex"
             v-if="options.activeIcon || options.inActiveIcon"
@@ -29,7 +29,7 @@
     </div>
   </div>
 
-  <div v-else class="pa-display-style" :class="[props.class]" :style="{ ...props.style }">
+  <div v-else class="pa-display-style" :class="props.class" :style="rootStyle">
     <div v-if="title" :style="{ width: titleWidth }" class="pa-cell-label">
       {{ typeof title === "string" ? title : title[languageValue] }}
     </div>
@@ -49,6 +49,39 @@
     <template v-else>{{ findData(contrastData, options) || "--" }}</template>
   </div>
 </template>
+
+<script lang="ts">
+/**
+ * 默认激活文本
+ * @description 默认的中英文激活文本
+ */
+const DEFAULT_ACTIVE_TEXT: { "zh-CN": string; "en-US": string } = {
+  "zh-CN": "是",
+  "en-US": "Yes"
+};
+
+/**
+ * 默认未激活文本
+ * @description 默认的中英文未激活文本
+ */
+const DEFAULT_INACTIVE_TEXT: { "zh-CN": string; "en-US": string } = {
+  "zh-CN": "否",
+  "en-US": "No"
+};
+
+/**
+ * 获取语言文本
+ * @param language - 当前语言
+ * @returns 包含中英文文本的对象
+ * @description 根据当前语言获取激活和未激活文本
+ */
+function getDefaultTexts(language: string) {
+  return {
+    activeText: DEFAULT_ACTIVE_TEXT[language] || DEFAULT_ACTIVE_TEXT["zh-CN"],
+    inActiveText: DEFAULT_INACTIVE_TEXT[language] || DEFAULT_INACTIVE_TEXT["zh-CN"]
+  };
+}
+</script>
 
 <script lang="ts" setup>
 /**
@@ -83,14 +116,15 @@ import { PancakeGlobalConfigType } from "../pa-manager/types";
 
 /**
  * 模块导入
- * @description 导入 lodash 工具函数
+ * @description 导入空值判断工具函数
  */
-import _ from "lodash";
+import isNil from "../tools/is-nil";
+
 /**
- * lodash 解构
- * @description 从 lodash 中解构 isEqual 和 isNil 方法
+ * 模块导入
+ * @description 导入值相等判断工具函数
  */
-const { isEqual, isNil } = _;
+import isEqual from "../tools/is-equal";
 
 /**
  * 全局配置注入
@@ -134,10 +168,18 @@ const inValue: Ref<boolean | number | string | undefined> = ref(props.modelValue
 
 /**
  * 旧值存储
- * @type boolean | number | string
  * @description 存储上一次的值，用于对比
  */
 let oldValue: boolean | number | string = props.modelValue || "";
+
+/**
+ * 计算根元素样式
+ * @type ComputedRef<Record<string, string> | undefined>
+ * @description 计算根元素的样式，避免每次渲染创建新对象
+ */
+const rootStyle = computed(() => {
+  return props.style;
+});
 
 /**
  * 处理点击事件
@@ -154,8 +196,8 @@ function changeEvent(): void {
 
 /**
  * 查找显示数据
- * @param data 要查找的数据
- * @param opts 配置选项
+ * @param data - 要查找的数据
+ * @param opts - 配置选项
  * @returns string 显示的文本
  * @description 根据值查找对应的显示文本
  */
@@ -168,8 +210,8 @@ function findData(data: boolean | number | string | undefined, opts: any): strin
 
 /**
  * 转换选项类型
- * @param type 值的类型
- * @param opts 配置选项
+ * @param type - 值的类型
+ * @param opts - 配置选项
  * @returns object 转换后的选项
  * @description 根据值的类型转换 activeValue 和 inActiveValue
  */
@@ -211,18 +253,18 @@ function changeType(type: string, opts: any): PaOptionType.Switch {
  */
 const options = computed(() => {
   const typeIs = typeof inValue.value;
-  const {
-    activeValue = 1,
-    inActiveValue = 0,
-    activeText = languageValue.value == "zh-CN" ? "是" : "Yes",
-    inActiveText = languageValue.value == "zh-CN" ? "否" : "No"
-  } = props.exOptions || props;
+  const { activeValue = 1, inActiveValue = 0, activeText, inActiveText } = props.exOptions || props;
 
+  const defaultTexts = getDefaultTexts(languageValue.value);
   const _opt = changeType(typeIs, {
     activeValue: activeValue,
     inActiveValue: inActiveValue,
-    activeText: typeof activeText == "string" ? activeText : activeText[languageValue.value] || activeText["zh-CN"],
-    inActiveText: typeof inActiveText == "string" ? inActiveText : inActiveText[languageValue.value] || inActiveText["zh-CN"],
+    activeText:
+      typeof activeText == "string" ? activeText : (activeText && activeText[languageValue.value]) || defaultTexts.activeText,
+    inActiveText:
+      typeof inActiveText == "string"
+        ? inActiveText
+        : (inActiveText && inActiveText[languageValue.value]) || defaultTexts.inActiveText,
     activeIcon: props.activeIcon,
     inActiveIcon: props.inActiveIcon
   });
