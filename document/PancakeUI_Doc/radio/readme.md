@@ -1,4 +1,4 @@
-# Radio 单选框
+# pa-radio 单选框
 
 常用于单选选项相关的场景。
 
@@ -56,7 +56,7 @@
 
 | 事件名            | 描述             | 回调函数                                                                                                                     |
 | ----------------- | ---------------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| update:modelValue | 双向绑定值更新时 | `(value: boolean \| number \| string) => void`                                                                               |
+| update:modelValue | 双向绑定值更新时 | `(value: boolean \| number \| string \| undefined) => void`                                                                  |
 | change            | 数据变更回调函数 | `(data: { value: boolean \| number \| string; oldValue: boolean \| number \| string; option: PaOptionType.Select }) => void` |
 
 ## ComponentSlots
