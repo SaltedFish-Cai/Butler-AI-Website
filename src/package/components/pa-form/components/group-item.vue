@@ -79,7 +79,7 @@ import { PaOptionType } from "../../manager-type";
  *
  * @description 数据查找工具
  */
-import { findData } from "../../pa-select/find-data";
+import { findData } from "../../utils/find-data";
 /**
  *
  * @description 工具函数库

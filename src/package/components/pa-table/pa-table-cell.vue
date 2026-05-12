@@ -308,7 +308,7 @@ import { isRowIndex } from "./hooks/isType";
 import CellTag from "./cell-tag.vue";
 import { keepDecimalPlaces } from "../utils/handlePrecision";
 import { findData as findDataSwitch } from "../pa-switch/find-data";
-import { findData as findDataSelect } from "../pa-select/find-data";
+import { findData as findDataSelect } from "../utils/find-data";
 import { PaOptionType } from "../manager-type";
 import { PaFormChildType } from "../pa-form/types";
 import { PancakeGlobalConfigType } from "../pa-manager/types";

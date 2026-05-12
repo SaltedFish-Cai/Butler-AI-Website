@@ -515,8 +515,8 @@ watch(
   () => props.modelValue,
   data => {
     waitTag.value = false;
-    inValue.value = !isNil(data) && data !== "" ? data : isMultiple.value ? [] : "";
-    oldValue = !isNil(data) && data !== "" ? data : isMultiple.value ? [] : "";
+    inValue.value = !isNil(data) && data !== "" ? data || "" : isMultiple.value ? [] : "";
+    oldValue = !isNil(data) && data !== "" ? data || "" : isMultiple.value ? [] : "";
     if (isOnlineSelect.value || isRequestSelect.value) {
       remoteMethodFn(data);
     }
