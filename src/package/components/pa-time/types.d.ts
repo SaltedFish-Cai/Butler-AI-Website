@@ -2,6 +2,7 @@
  * @module pa-time/types
  * @description PaTime 类型定义
  */
+
 /**
  * 模块导入
  * @description 导入多语言类型定义
@@ -11,6 +12,7 @@ import { LanguagePackageType } from "../manager-type";
  * 时间选择器类型
  * @description 定义时间选择器的类型枚举
  */
+
 export type MDatePickerType =
   | "date-picker-group"
   | "date-picker"
@@ -26,6 +28,7 @@ export type MDatePickerType =
  * 日期选择器快捷选项类型
  * @description 定义日期选择器的快捷选项结构
  */
+
 export type DatePickerShortcut = {
   text: string;
   value: Date[] | (() => Date[]);
@@ -34,11 +37,13 @@ export type DatePickerShortcut = {
  * 时间选择器属性类型
  * @description 时间选择器组件的属性定义
  */
+
 /**
  * 组件属性
  * @type object
  * @description PaTime 组件的属性类型定义
  */
+
 export type ComponentProps = {
   /**
    * 组件唯一标识

@@ -134,12 +134,36 @@
 </template>
 
 <script lang="ts" setup>
+/**
+ * 模块导入
+ * @description 导入 Vue 组合式 API
+ */
 import { computed, ref, watch } from "vue";
+/**
+ * 模块导入
+ * @description 导入日期处理库
+ */
 import dayjs from "dayjs";
+/**
+ * 模块导入
+ * @description 导入日期选择器类型定义
+ */
 import type { DatePickerShortcut, MDatePickerType } from "./type";
+/**
+ * 模块导入
+ * @description 导入日期转换工具函数
+ */
 import { convertValue } from "./utils";
+/**
+ * 模块导入
+ * @description 导入时间选择器组件
+ */
 import Timer from "./timer.vue";
 
+/**
+ * 组件属性
+ * @description 组件的属性对象
+ */
 const props = withDefaults(
   defineProps<{
     modelValue?: any;
@@ -154,43 +178,111 @@ const props = withDefaults(
   }
 );
 
+/**
+ * 组件事件定义
+ * @description 定义组件可触发的事件
+ */
 const emit = defineEmits<{
   (e: "update:modelValue", value: any): void;
   (e: "change", value: any): void;
 }>();
 
+/**
+ * 是否为范围选择
+ * @description 判断当前类型是否为范围选择模式
+ */
 const isRange = computed(() => {
   return props.type.endsWith("-group");
 });
+/**
+ * 是否为时间选择
+ * @description 判断当前类型是否为时间选择模式
+ */
 const isTime = computed(() => {
   return props.type.includes("time");
 });
+/**
+ * 是否为日期选择
+ * @description 判断当前类型是否为日期选择模式
+ */
 const isDate = computed(() => {
   return props.type.includes("date-");
 });
 
+/**
+ * 星期标签
+ * @description 星期几的显示标签
+ */
 const weekDays = ["日", "一", "二", "三", "四", "五", "六"];
+/**
+ * 当前日期
+ * @description 当前面板显示的日期
+ */
 const currentDate = ref(dayjs());
+/**
+ * 起始面板日期
+ * @description 范围选择起始面板日期
+ */
 const startPanelDate = ref(dayjs());
+/**
+ * 结束面板日期
+ * @description 范围选择结束面板日期
+ */
 const endPanelDate = ref(dayjs().add(1, "month"));
+/**
+ * 选中日期
+ * @description 当前选中的日期
+ */
 const selectedDate = ref<dayjs.Dayjs | null>(null);
+/**
+ * 选中范围
+ * @description 当前选中的日期范围
+ */
 const selectedRange = ref<[dayjs.Dayjs | null, dayjs.Dayjs | null]>([null, null]);
+/**
+ * 选中时间
+ * @description 当前选中的时间
+ */
 const selectedTime = ref("");
+/**
+ * 起始时间
+ * @description 范围选择起始时间
+ */
 const startTime = ref("");
+/**
+ * 结束时间
+ * @description 范围选择结束时间
+ */
 const endTime = ref("");
 
+/**
+ * 当前月份周数据
+ * @description 当前月份日期网格数据
+ */
 const currentMonthWeeks = computed(() => {
   return generateMonthWeeks(currentDate.value);
 });
 
+/**
+ * 起始面板月份周数据
+ * @description 起始面板月份日期网格数据
+ */
 const startMonthWeeks = computed(() => {
   return generateMonthWeeks(startPanelDate.value);
 });
 
+/**
+ * 结束面板月份周数据
+ * @description 结束面板月份日期网格数据
+ */
 const endMonthWeeks = computed(() => {
   return generateMonthWeeks(endPanelDate.value);
 });
 
+/**
+ * 是否同月
+ * @description 判断起始和结束面板是否为同月
+ */
 const isSameMonth = computed(() => {
   return endPanelDate.value.unix() <= startPanelDate.value.unix();
 });
@@ -302,7 +394,13 @@ function getDayClass(day: dayjs.Dayjs | null, panel?: "end" | "start"): string[]
   return classes;
 }
 
-function selectDate(day: dayjs.Dayjs | null) {
+/**
+ * 选择日期
+ * @param day - 日期对象
+ * @returns void
+ * @description 处理日期选择
+ */
+function selectDate(day: dayjs.Dayjs | null): void {
   if (!day || (props.disabledDate && props.disabledDate(day.toDate())) || isRange.value) {
     return;
   }
@@ -313,7 +411,14 @@ function selectDate(day: dayjs.Dayjs | null) {
   }
 }
 
-function selectRangeDate(day: dayjs.Dayjs | null, position: "end" | "start") {
+/**
+ * 选择范围日期
+ * @param day - 日期对象
+ * @param position - 位置（start/end）
+ * @returns void
+ * @description 处理范围选择日期
+ */
+function selectRangeDate(day: dayjs.Dayjs | null, position: "end" | "start"): void {
   if (!day || (props.disabledDate && props.disabledDate(day.toDate()))) {
     return;
   }
@@ -339,7 +444,13 @@ function selectRangeDate(day: dayjs.Dayjs | null, position: "end" | "start") {
   }
 }
 
-function handleShortcutClick(shortcut: DatePickerShortcut) {
+/**
+ * 处理快捷选项点击
+ * @param shortcut - 快捷选项
+ * @returns void
+ * @description 处理快捷选项点击事件
+ */
+function handleShortcutClick(shortcut: DatePickerShortcut): void {
   let value: [dayjs.Dayjs, dayjs.Dayjs];
 
   if (typeof shortcut.value === "function") {
@@ -366,10 +477,7 @@ function confirmSelection() {
       let startDate = selectedRange.value[0];
       let endDate = selectedRange.value[1];
 
-      /**
-       * 处理时间
-       * @description 如果启用时间选择，处理时间部分
-       */
+      /* 处理时间：如果启用时间选择，处理时间部分 */
       if (isTime.value) {
         if (startTime.value) {
           const [hours, minutes, seconds] = startTime.value.split(":");
@@ -412,7 +520,12 @@ function confirmSelection() {
   emit("change", value);
 }
 
-function handleCancel() {
+/**
+ * 处理取消
+ * @returns void
+ * @description 取消当前选择
+ */
+function handleCancel(): void {
   emit("update:modelValue", isRange.value ? [] : "");
   emit("change", isRange.value ? [] : "");
 }
@@ -421,7 +534,13 @@ function handleCancel() {
  * 导航控制
  * @description 上一年导航函数
  */
-function prevYear(panel?: "end" | "start") {
+/**
+ * 上一年
+ * @param panel - 面板位置
+ * @returns void
+ * @description 上一年导航
+ */
+function prevYear(panel?: "end" | "start"): void {
   if (panel === "start") {
     startPanelDate.value = startPanelDate.value.subtract(1, "year");
   } else if (panel === "end") {
@@ -434,7 +553,13 @@ function prevYear(panel?: "end" | "start") {
   }
 }
 
-function nextYear(panel?: "end" | "start") {
+/**
+ * 下一年
+ * @param panel - 面板位置
+ * @returns void
+ * @description 下一年导航
+ */
+function nextYear(panel?: "end" | "start"): void {
   if (panel === "start") {
     startPanelDate.value =
       startPanelDate.value.add(1, "year").unix() <= endPanelDate.value.unix()
@@ -447,6 +572,12 @@ function nextYear(panel?: "end" | "start") {
   }
 }
 
+/**
+ * 上一个月
+ * @param panel - 面板位置
+ * @returns void
+ * @description 上一个月导航
+ */
 function prevMonth(panel?: "end" | "start") {
   if (panel === "start") {
     startPanelDate.value = startPanelDate.value.subtract(1, "month");
@@ -460,7 +591,13 @@ function prevMonth(panel?: "end" | "start") {
   }
 }
 
-function nextMonth(panel?: "end" | "start") {
+/**
+ * 下一个月
+ * @param panel - 面板位置
+ * @returns void
+ * @description 下一个月导航
+ */
+function nextMonth(panel?: "end" | "start"): void {
   if (panel === "start") {
     startPanelDate.value = startPanelDate.value =
       startPanelDate.value.add(1, "month").unix() <= endPanelDate.value.unix()
@@ -477,10 +614,29 @@ function nextMonth(panel?: "end" | "start") {
  * 处理表格滚轮事件
  * @description 滚动切换月份
  */
+/**
+ * 处理滚轮事件
+ * @param event - 滚轮事件
+ * @param panel - 面板位置
+ * @returns void
+ * @description 处理滚轮切换月份
+ */
 let lastWheelTime = 0;
+
+/**
+ * 滚轮增量
+ * @description 记录滚轮累计增量
+ */
 let wheelDelta = 0;
 
-function handleWheel(event: WheelEvent, panel?: "end" | "start") {
+/**
+ * 滚轮处理函数
+ * @param event - 滚轮事件
+ * @param panel - 面板位置
+ * @returns void
+ * @description 处理滚轮事件用于月份切换
+ */
+function handleWheel(event: WheelEvent, panel?: "end" | "start"): void {
   event.preventDefault();
 
   const now = Date.now();
@@ -507,6 +663,10 @@ function handleWheel(event: WheelEvent, panel?: "end" | "start") {
 /**
  * 初始化值
  * @description 监听外部值变化并初始化内部状态
+ */
+/**
+ * 监听外部值变化
+ * @description 同步外部传入的值到内部状态
  */
 watch(
   () => props.modelValue,

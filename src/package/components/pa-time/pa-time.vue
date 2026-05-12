@@ -4,7 +4,7 @@
     class="pa-time"
     ref="selectRef"
     :class="[props.class, { 'is-disabled': props.disabled }]"
-    :style="{ ...props.style }"
+    :style="props.style"
   >
     <pa-popover
       ref="popoverRef"
@@ -60,7 +60,7 @@
         </div>
       </template>
       <MDateTimePanel
-        v-if="DateTimeMap[type]"
+        v-if="DATE_TIME_MAP[type]"
         :model-value="internalValue"
         :type="type"
         :shortcuts="shortcuts"
@@ -68,7 +68,7 @@
         @change="handlePanelChange"
       />
       <MYearPanel
-        v-else-if="YearMap[type]"
+        v-else-if="YEAR_MAP[type]"
         :model-value="internalValue"
         :type="type"
         :shortcuts="shortcuts"
@@ -78,7 +78,7 @@
     </pa-popover>
   </div>
 
-  <div v-else class="pa-display-style" :class="[props.class]" :style="{ ...props.style }">
+  <div v-else class="pa-display-style" :class="props.class" :style="props.style">
     <div v-if="title" :style="{ width: titleWidth }" class="pa-cell-label">
       {{ typeof title === "string" ? title : title[languageValue] }}
     </div>
@@ -137,17 +137,28 @@ import { convertValue, isValidDate } from "./utils";
 import { PancakeGlobalConfigType } from "../pa-manager/types";
 
 /**
- * 模块导入
- * @description 导入 lodash 工具函数
+ * 深拷贝工具函数
+ * @description 导入深拷贝工具函数
  */
-import _ from "lodash";
-const { isEqual, isNil, cloneDeep } = _;
+import cloneDeep from "../tools/clone-deep";
+
+/**
+ * 空值判断工具函数
+ * @description 导入空值判断工具函数
+ */
+import isNil from "../tools/is-nil";
+
+/**
+ * 相等判断工具函数
+ * @description 导入相等判断工具函数
+ */
+import isEqual from "../tools/is-equal";
 
 /**
  * 日期时间类型映射
  * @description 用于判断是否为日期时间类型
  */
-const DateTimeMap: Record<string, number> = {
+const DATE_TIME_MAP: Record<string, number> = {
   "date-picker-group": 1,
   "date-picker": 1,
   "date-time-picker-group": 1,
@@ -160,7 +171,7 @@ const DateTimeMap: Record<string, number> = {
  * 年份类型映射
  * @description 用于判断是否为年份类型
  */
-const YearMap: Record<string, number> = {
+const YEAR_MAP: Record<string, number> = {
   "year-picker-group": 1,
   "year-picker": 1,
   "month-picker-group": 1,

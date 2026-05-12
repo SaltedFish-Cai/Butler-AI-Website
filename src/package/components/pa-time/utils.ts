@@ -11,6 +11,42 @@ import dayjs from "dayjs";
 import { MDatePickerType } from "./types";
 
 /**
+ * 常见日期格式正则表达式列表
+ * @type Array<RegExp>
+ * @description 支持的日期格式模式
+ */
+const DATE_PATTERNS: Array<RegExp> = [
+  /^\d{4}-\d{2}-\d{2}$/,
+  /^\d{4}\/\d{2}\/\d{2}$/,
+  /^\d{4}\.\d{2}\.\d{2}$/,
+  /^\d{4}年\d{1,2}月\d{1,2}日$/,
+  /^\d{1,2}\/\d{1,2}\/\d{4}$/,
+  /^\d{1,2}\/\d{1,2}\/\d{4}$/,
+  /^\d{2}:\d{2}:\d{2}$/,
+  /^\d{2}:\d{2}$/,
+  /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/,
+  /^\d{4}\/\d{2}\/\d{2} \d{2}:\d{2}:\d{2}$/
+];
+
+/**
+ * 格式映射表
+ * @type Record<MDatePickerType, string>
+ * @description 日期类型与格式字符串的映射
+ */
+const FORMAT_MAP: Record<MDatePickerType, string> = {
+  "time-picker": "HH:mm:ss",
+  "time-picker-group": "HH:mm:ss",
+  "date-time-picker": "YYYY-MM-DD HH:mm:ss",
+  "date-time-picker-group": "YYYY-MM-DD HH:mm:ss",
+  "date-picker": "YYYY-MM-DD",
+  "date-picker-group": "YYYY-MM-DD",
+  "month-picker": "YYYY-MM",
+  "month-picker-group": "YYYY-MM",
+  "year-picker": "YYYY",
+  "year-picker-group": "YYYY"
+};
+
+/**
  * 判断日期格式是否合法
  * @param dateString - 日期字符串
  * @returns boolean 是否合法
@@ -21,25 +57,7 @@ export function isValidDate(dateString: string): boolean {
     return false;
   }
 
-  /**
-   * 常见日期格式正则表达式列表
-   * @type Array<RegExp>
-   * @description 支持的日期格式模式
-   */
-  const datePatterns: Array<RegExp> = [
-    /^\d{4}-\d{2}-\d{2}$/,
-    /^\d{4}\/\d{2}\/\d{2}$/,
-    /^\d{4}\.\d{2}\.\d{2}$/,
-    /^\d{4}年\d{1,2}月\d{1,2}日$/,
-    /^\d{1,2}\/\d{1,2}\/\d{4}$/,
-    /^\d{1,2}\/\d{1,2}\/\d{4}$/,
-    /^\d{2}:\d{2}:\d{2}$/,
-    /^\d{2}:\d{2}$/,
-    /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/,
-    /^\d{4}\/\d{2}\/\d{2} \d{2}:\d{2}:\d{2}$/
-  ];
-
-  const isValidFormat: boolean = datePatterns.some(pattern => pattern.test(dateString));
+  const isValidFormat: boolean = DATE_PATTERNS.some(pattern => pattern.test(dateString));
 
   if (!isValidFormat) {
     return false;
@@ -103,23 +121,5 @@ export function convertValue(type: MDatePickerType, date: dayjs.Dayjs | string):
 
   date = dayjs(date);
 
-  /**
-   * 格式映射表
-   * @type Record<MDatePickerType, string>
-   * @description 日期类型与格式字符串的映射
-   */
-  const formatMap: Record<MDatePickerType, string> = {
-    "time-picker": "HH:mm:ss",
-    "time-picker-group": "HH:mm:ss",
-    "date-time-picker": "YYYY-MM-DD HH:mm:ss",
-    "date-time-picker-group": "YYYY-MM-DD HH:mm:ss",
-    "date-picker": "YYYY-MM-DD",
-    "date-picker-group": "YYYY-MM-DD",
-    "month-picker": "YYYY-MM",
-    "month-picker-group": "YYYY-MM",
-    "year-picker": "YYYY",
-    "year-picker-group": "YYYY"
-  };
-
-  return date?.format?.(formatMap[type || "date-picker"]) || "";
+  return date?.format?.(FORMAT_MAP[type || "date-picker"]) || "";
 }

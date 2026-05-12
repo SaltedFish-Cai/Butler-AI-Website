@@ -118,21 +118,92 @@
 </template>
 
 <script lang="ts" setup>
+/**
+ * 模块导入
+ * @description 导入 Vue 组合式 API
+ */
 import { ref, watch, onMounted, onUnmounted, computed } from "vue";
+/**
+ * 模块导入
+ * @description 导入随机字符工具
+ */
 import { randChar } from "../tools/rand-char";
+/**
+ * 模块导入
+ * @description 导入组件类型定义
+ */
 import { ComponentProps } from "./types";
+
+/**
+ * 组件事件类型
+ * @description 定义组件可触发的事件
+ */
+type TimerComponentEmits = {
+  /**
+   * 更新绑定值事件
+   * @param value - 新的绑定值
+   * @returns void
+   */
+  (e: "update:modelValue", value: string): void;
+  /**
+   * 值变更事件
+   * @param data - 变更数据
+   * @returns void
+   */
+  (e: "change", data: { value: string; oldValue: string | number }): void;
+  /**
+   * 失去焦点事件
+   * @returns void
+   */
+  (e: "blur"): void;
+  /**
+   * 获得焦点事件
+   * @returns void
+   */
+  (e: "focus"): void;
+};
 
 /**
  * 组件引用
  * @description DOM 元素引用
  */
 const popoverRef = ref();
+
+/**
+ * 小时输入框引用
+ * @description 小时输入框 DOM 元素引用
+ */
 const hourInputRef = ref();
+
+/**
+ * 分钟输入框引用
+ * @description 分钟输入框 DOM 元素引用
+ */
 const minuteInputRef = ref();
+
+/**
+ * 秒输入框引用
+ * @description 秒输入框 DOM 元素引用
+ */
 const secondInputRef = ref();
+
+/**
+ * 是否聚焦
+ * @description 输入框是否处于聚焦状态
+ */
 const isFocus = ref(false);
+
+/**
+ * 当前聚焦字段
+ * @description 当前聚焦的时间字段（hour/minute/second）
+ */
 const currentFocus = ref<"hour" | "minute" | "second">("hour");
 
+/**
+ * 组件属性
+ * @type ComponentProps
+ * @description 组件的属性对象
+ */
 const props = withDefaults(defineProps<ComponentProps>(), {
   id: randChar(),
   modelValue: "",
@@ -141,6 +212,10 @@ const props = withDefaults(defineProps<ComponentProps>(), {
   controls: true
 });
 
+/**
+ * 定时器容器引用
+ * @description 定时器容器 DOM 元素引用
+ */
 const timerRef = ref();
 
 /**
@@ -148,10 +223,24 @@ const timerRef = ref();
  * @description 时分秒输入值
  */
 const hours = ref("");
+
+/**
+ * 分钟输入值
+ * @description 用户输入的分钟值
+ */
 const minutes = ref("");
+
+/**
+ * 秒输入值
+ * @description 用户输入的秒值
+ */
 const seconds = ref("");
 
-const emits = defineEmits(["update:modelValue", "change", "blur", "focus"]);
+/**
+ * 组件事件定义
+ * @description 定义组件可触发的事件
+ */
+const emits = defineEmits<TimerComponentEmits>();
 
 /**
  * 计算完整的时间字符串
@@ -242,7 +331,13 @@ function handleTimeInput(event: Event, type: "hour" | "minute" | "second") {
   updateTimeValue();
 }
 
-function handlePopoverChange(data) {
+/**
+ * 处理弹出层变更
+ * @param data - 弹出层状态
+ * @returns void
+ * @description 处理弹出层显示/隐藏变更
+ */
+function handlePopoverChange(data: boolean): void {
   isFocus.value = data;
 }
 
@@ -361,18 +456,43 @@ function validateTime() {
   updateTimeValue();
 }
 
-function selectHour(value: number) {
+/**
+ * 选择小时
+ * @param value - 小时值
+ * @returns void
+ * @description 选择指定的小时值
+ */
+function selectHour(value: number): void {
   selectTimeUnit(value, "hour");
 }
 
-function selectMinute(value: number) {
+/**
+ * 选择分钟
+ * @param value - 分钟值
+ * @returns void
+ * @description 选择指定的分钟值
+ */
+function selectMinute(value: number): void {
   selectTimeUnit(value, "minute");
 }
 
-function selectSecond(value: number) {
+/**
+ * 选择秒
+ * @param value - 秒值
+ * @returns void
+ * @description 选择指定的秒值
+ */
+function selectSecond(value: number): void {
   selectTimeUnit(value, "second");
 }
 
+/**
+ * 选择时间单元
+ * @param value - 时间单元值
+ * @param type - 时间类型（hour/minute/second）
+ * @returns void
+ * @description 选择指定的时间单元并更新值
+ */
 function selectTimeUnit(value: number, type: "hour" | "minute" | "second") {
   const formattedValue = formatTimeUnit(value);
 
@@ -391,7 +511,13 @@ function selectTimeUnit(value: number, type: "hour" | "minute" | "second") {
   updateTimeValue();
 }
 
-function setCurrentTime(type: "current" | "end" | "start") {
+/**
+ * 设置当前时间
+ * @param type - 时间类型（current/end/start）
+ * @returns void
+ * @description 设置时间值为当前时间或边界时间
+ */
+function setCurrentTime(type: "current" | "end" | "start"): void {
   const now = new Date();
   hours.value = type === "current" ? formatTimeUnit(now.getHours()) : type === "start" ? "00" : "23";
   minutes.value = type === "current" ? formatTimeUnit(now.getMinutes()) : type === "start" ? "00" : "59";
@@ -405,7 +531,13 @@ function setCurrentTime(type: "current" | "end" | "start") {
  * @param event - 点击事件
  * @description 处理面板外部点击
  */
-function handleClickOutside(event: MouseEvent) {
+/**
+ * 处理外部点击
+ * @param event - 点击事件
+ * @returns void
+ * @description 处理面板外部点击事件
+ */
+function handleClickOutside(event: MouseEvent): void {
   const panel = document.querySelector(".m-time-panel");
   const inputs = [hourInputRef.value, minuteInputRef.value, secondInputRef.value];
 
@@ -415,6 +547,10 @@ function handleClickOutside(event: MouseEvent) {
 
 /**
  * 初始化监听
+ * @description 组件挂载时初始化事件监听
+ */
+/**
+ * 组件挂载
  * @description 组件挂载时初始化事件监听
  */
 onMounted(() => {
@@ -428,6 +564,10 @@ onMounted(() => {
   }
 });
 
+/**
+ * 组件卸载
+ * @description 组件卸载时清理事件监听
+ */
 onUnmounted(() => {
   document.removeEventListener("click", handleClickOutside);
 });
@@ -491,6 +631,10 @@ function handleWheel(event: WheelEvent, type: "hour" | "minute" | "second") {
  * 组件卸载时清理
  * @description 移除所有事件监听
  */
+/**
+ * 组件卸载
+ * @description 组件卸载时清理事件监听
+ */
 onUnmounted(() => {
   const inputElements = [hourInputRef.value, minuteInputRef.value, secondInputRef.value];
   inputElements.forEach(inputElement => {
@@ -500,6 +644,10 @@ onUnmounted(() => {
   });
 });
 
+/**
+ * 监听外部值变化
+ * @description 同步外部传入的值到内部状态
+ */
 watch(
   () => props.modelValue,
   data => {

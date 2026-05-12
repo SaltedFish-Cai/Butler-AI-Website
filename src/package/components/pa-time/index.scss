@@ -13,12 +13,15 @@
   &:hover {
     border-color: var(--pa-color-primary);
     box-shadow: var(--pa-shadow-color);
+
     .clean-box {
       border-color: var(--pa-color-primary);
     }
+
     .pa-time-input .clear-icon {
       display: block;
     }
+
     .pa-time-input .down-icon {
       display: none;
     }
@@ -51,10 +54,12 @@
       font-size: var(--pa-size-font);
       color: var(--pa-color-font);
       background: none;
+
       &::placeholder {
         color: var(--pa-color-info-light-4);
       }
     }
+
     .pa-time-input-inner.center {
       text-align: center;
     }
@@ -83,8 +88,10 @@
     }
   }
 }
+
 .pa-time.is-disabled {
   background-color: var(--pa-color-bg);
+
   &:hover {
     cursor: not-allowed;
     border-color: var(--pa-color-border);
@@ -93,6 +100,7 @@
     .pa-time-input .clear-icon {
       display: none;
     }
+
     .pa-time-input .down-icon {
       display: block;
     }
@@ -108,12 +116,14 @@
     }
   }
 }
+
 .pa-time-content {
   width: 100%;
   box-sizing: border-box;
   padding: calc(var(--pa-size-padding) / 3) calc(var(--pa-size-padding) / 1.2);
   display: flex;
 }
+
 .pa-time > .pa-popover-reference {
   width: 100%;
 }
@@ -130,18 +140,22 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+
     .check-icon {
       display: none;
     }
+
     &:hover {
       color: var(--pa-color-primary);
       cursor: pointer;
       background-color: var(--pa-color-bg);
     }
   }
+
   .pa-time-option.is-active {
     font-weight: bold;
     color: var(--pa-color-primary);
+
     .check-icon {
       display: block;
     }

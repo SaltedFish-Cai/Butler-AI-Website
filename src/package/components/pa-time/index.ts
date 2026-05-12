@@ -21,5 +21,4 @@ const name = "PaTime";
 const install = function (app: App): void {
   if (!app._context.components["PaTime"]) app.component("PaTime", PaTime);
 };
-
 export default { name, install };

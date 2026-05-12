@@ -112,27 +112,26 @@
 </template>
 
 <script lang="ts" setup>
+/**
+ * 模块导入
+ * @description 导入 Vue 组合式 API
+ */
 import { computed, ref, watch } from "vue";
+/**
+ * 模块导入
+ * @description 导入日期处理库
+ */
 import dayjs from "dayjs";
+/**
+ * 模块导入
+ * @description 导入日期选择器类型定义
+ */
 import type { DatePickerShortcut, MDatePickerType } from "./type";
 
-function convertValue(type: string, date: dayjs.Dayjs): string {
-  switch (type) {
-    case "year":
-    case "yearrange":
-      return date.format("YYYY");
-    case "month":
-    case "monthrange":
-      return date.format("YYYY-MM");
-    case "datetime":
-    case "datetimerange":
-      return date.format("YYYY-MM-DD HH:mm:ss");
-    case "daterange":
-    default:
-      return date.format("YYYY-MM-DD");
-  }
-}
-
+/**
+ * 组件属性
+ * @description 组件的属性对象
+ */
 const props = withDefaults(
   defineProps<{
     modelValue?: any;
@@ -147,21 +146,41 @@ const props = withDefaults(
   }
 );
 
+/**
+ * 组件事件定义
+ * @description 定义组件可触发的事件
+ */
 const emit = defineEmits<{
   (e: "update:modelValue", value: any): void;
   (e: "change", value: any): void;
 }>();
 
+/**
+ * 是否为范围选择
+ * @description 判断当前类型是否为范围选择模式
+ */
 const isRange = computed(() => {
   return props.type.endsWith("-group");
 });
+/**
+ * 是否为年份选择
+ * @description 判断当前类型是否为年份选择
+ */
 const isYear = computed(() => {
   return props.type.includes("year");
 });
+/**
+ * 是否为月份选择
+ * @description 判断当前类型是否为月份选择
+ */
 const isMonth = computed(() => {
   return props.type.includes("month");
 });
 
+/**
+ * 月份标签
+ * @description 月份显示标签数组
+ */
 const months = [
   { value: 1, text: "1月" },
   { value: 2, text: "2月" },
@@ -177,15 +196,47 @@ const months = [
   { value: 12, text: "12月" }
 ];
 
+/**
+ * 当前显示日期
+ * @description 当前面板显示的日期
+ */
 const currentDate = ref(dayjs());
+/**
+ * 起始面板日期
+ * @description 范围选择起始面板日期
+ */
 const startPanelDate = ref(dayjs());
+/**
+ * 结束面板日期
+ * @description 范围选择结束面板日期
+ */
 const endPanelDate = ref(dayjs().add(1, "year"));
 
+/**
+ * 选中年份
+ * @description 当前选中的年份
+ */
 const selectedYear = ref<number | null>(null);
+/**
+ * 选中月份
+ * @description 当前选中的月份
+ */
 const selectedMonth = ref<number | null>(null);
+/**
+ * 选中范围年份
+ * @description 范围选择选中的年份数组
+ */
 const selectedRangeYears = ref<[number | null, number | null]>([null, null]);
+/**
+ * 选中范围月份
+ * @description 范围选择选中的月份数组
+ */
 const selectedRangeMonths = ref<[number | null, number | null]>([null, null]);
 
+/**
+ * 当前面板年份列表
+ * @description 当前面板显示的年份数组
+ */
 const currentYears = computed(() => {
   const years: number[] = [];
   const startYear = Math.floor(currentDate.value.year() / 10) * 10;
@@ -195,6 +246,10 @@ const currentYears = computed(() => {
   return years;
 });
 
+/**
+ * 起始面板年份列表
+ * @description 起始面板显示的年份数组
+ */
 const startYears = computed(() => {
   const years: number[] = [];
   const startYear = Math.floor(startPanelDate.value.year() / 10) * 10;
@@ -204,6 +259,10 @@ const startYears = computed(() => {
   return years;
 });
 
+/**
+ * 结束面板年份列表
+ * @description 结束面板显示的年份数组
+ */
 const endYears = computed(() => {
   const years: number[] = [];
   const startYear = Math.floor(endPanelDate.value.year() / 10) * 10;
@@ -213,9 +272,31 @@ const endYears = computed(() => {
   return years;
 });
 
+/**
+ * 是否同年
+ * @description 判断起始和结束面板是否为同年
+ */
 const isSameYear = computed(() => {
   return endPanelDate.value.year() <= startPanelDate.value.year();
 });
+
+/**
+ * 转换日期格式
+ * @param type - 日期选择器类型
+ * @param date - 日期值
+ * @returns string 转换后的日期字符串
+ * @description 根据日期选择器类型转换日期格式
+ */
+function convertValue(type: string, date: dayjs.Dayjs): string {
+  const year = date.year();
+  const month = date.month() + 1;
+  if (type === "year-picker" || type === "year-picker-group") {
+    return year.toString();
+  } else if (type === "month-picker" || type === "month-picker-group") {
+    return `${year}-${month.toString().padStart(2, "0")}`;
+  }
+  return date.format("YYYY-MM-DD");
+}
 
 function getYearRangeLabel(date: dayjs.Dayjs, position?: "end" | "start"): string {
   const year = date.year();
@@ -237,7 +318,14 @@ function getYearRangeLabel(date: dayjs.Dayjs, position?: "end" | "start"): strin
   return `${year}`;
 }
 
-function selectYear(year: number, position?: "end" | "start") {
+/**
+ * 选择年份
+ * @param year - 年份
+ * @param position - 位置
+ * @returns void
+ * @description 处理年份选择
+ */
+function selectYear(year: number, position?: "end" | "start"): void {
   const date = dayjs().year(year).month(0).date(1);
   if (props.disabledDate && props.disabledDate(date.toDate())) {
     return;
@@ -276,7 +364,14 @@ function selectYear(year: number, position?: "end" | "start") {
   }
 }
 
-function selectMonth(month: number, position?: "end" | "start") {
+/**
+ * 选择月份
+ * @param month - 月份
+ * @param position - 位置
+ * @returns void
+ * @description 处理月份选择
+ */
+function selectMonth(month: number, position?: "end" | "start"): void {
   const year =
     isRange.value && position
       ? position === "start"
@@ -470,7 +565,13 @@ function getMonthClass(month: number, position?: "end" | "start"): string[] {
   return classes;
 }
 
-function handleShortcutClick(shortcut: DatePickerShortcut) {
+/**
+ * 处理快捷选项点击
+ * @param shortcut - 快捷选项
+ * @returns void
+ * @description 处理快捷选项点击事件
+ */
+function handleShortcutClick(shortcut: DatePickerShortcut): void {
   let value: [dayjs.Dayjs, dayjs.Dayjs];
 
   if (typeof shortcut.value === "function") {
@@ -540,7 +641,12 @@ function confirmSelection() {
   emit("change", value);
 }
 
-function handleCancel() {
+/**
+ * 处理取消
+ * @returns void
+ * @description 取消当前选择
+ */
+function handleCancel(): void {
   selectedYear.value = null;
   selectedMonth.value = null;
   selectedRangeYears.value = [null, null];
@@ -550,7 +656,13 @@ function handleCancel() {
   emit("change", isRange.value ? [] : "");
 }
 
-function prevMouth(panel?: "end" | "start") {
+/**
+ * 上一年
+ * @param panel - 面板位置
+ * @returns void
+ * @description 上一年导航
+ */
+function prevMouth(panel?: "end" | "start"): void {
   if (isRange.value) {
     if (panel === "start") {
       startPanelDate.value = startPanelDate.value.year(startPanelDate.value.year() - 1);
@@ -563,7 +675,13 @@ function prevMouth(panel?: "end" | "start") {
     currentDate.value = currentDate.value.year(currentDate.value.year() - 1);
   }
 }
-function nextMouth(panel?: "end" | "start") {
+/**
+ * 下一年
+ * @param panel - 面板位置
+ * @returns void
+ * @description 下一年导航
+ */
+function nextMouth(panel?: "end" | "start"): void {
   if (isRange.value) {
     if (panel === "start") {
       const start = startPanelDate.value.year();
@@ -577,7 +695,13 @@ function nextMouth(panel?: "end" | "start") {
   }
 }
 
-function prevYear(panel?: "end" | "start") {
+/**
+ * 上一年（十年跨度）
+ * @param panel - 面板位置
+ * @returns void
+ * @description 上一年导航（十年跨度）
+ */
+function prevYear(panel?: "end" | "start"): void {
   if (isRange.value) {
     if (panel === "start") {
       startPanelDate.value = startPanelDate.value.year(startPanelDate.value.year() - 10);
@@ -590,7 +714,13 @@ function prevYear(panel?: "end" | "start") {
     currentDate.value = currentDate.value.year(currentDate.value.year() - 10);
   }
 }
-function nextYear(panel?: "end" | "start") {
+/**
+ * 下一年（十年跨度）
+ * @param panel - 面板位置
+ * @returns void
+ * @description 下一年导航（十年跨度）
+ */
+function nextYear(panel?: "end" | "start"): void {
   if (isRange.value) {
     if (panel === "start") {
       const start = startPanelDate.value.year();
@@ -606,7 +736,15 @@ function nextYear(panel?: "end" | "start") {
 
 let lastWheelTime = 0;
 let wheelDelta = 0;
-function handleWheel(event: WheelEvent, type: "month" | "year" = "year", panel?: "end" | "start") {
+/**
+ * 处理滚轮事件
+ * @param event - 滚轮事件
+ * @param type - 切换类型
+ * @param panel - 面板位置
+ * @returns void
+ * @description 处理滚轮切换年份/月份
+ */
+function handleWheel(event: WheelEvent, type: "month" | "year" = "year", panel?: "end" | "start"): void {
   event.preventDefault();
 
   const now = Date.now();
@@ -637,6 +775,10 @@ function handleWheel(event: WheelEvent, type: "month" | "year" = "year", panel?:
   }
 }
 
+/**
+ * 监听外部值变化
+ * @description 同步外部传入的值到内部状态
+ */
 watch(
   () => props.modelValue,
   newValue => {
