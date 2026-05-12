@@ -31,10 +31,12 @@ const props = withDefaults(defineProps<ComponentProps>(), {});
  * @description 根据最大值限制计算实际显示的值
  */
 const showVal = computed(() => {
-  if (props.maxValue && typeof Number(props.value) === "number") {
-    const _maxValue = Number(props.maxValue);
-    const _value = Number(props.value);
-    return _value > _maxValue ? _maxValue + "+" : _value;
+  if (props.maxValue) {
+    const numValue = Number(props.value);
+    if (typeof numValue === "number" && !isNaN(numValue)) {
+      const numMaxValue = Number(props.maxValue);
+      return numValue > numMaxValue ? numMaxValue + "+" : numValue;
+    }
   }
   return props.value;
 });

@@ -19,7 +19,10 @@ const name = "PaBadge";
  * @description 将 PaBadge 组件注册到 Vue 应用中
  */
 const install = function (app: App): void {
-  if (!app._context.components["PaBadge"]) app.component("PaBadge", PaBadge);
+  const components = app._context.components;
+  if (!components[name]) {
+    app.component(name, PaBadge);
+  }
 };
 
 export default { name, install };
