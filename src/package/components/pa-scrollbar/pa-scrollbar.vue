@@ -62,7 +62,7 @@
     </div>
     <pa-icon
       v-if="useBackTop && prop.useScrollY"
-      :style="{ opacity: scrollVerticalValue > 10 ? '1' : '0', right: `${scrollVerticalValue > 10 ? '24px' : '-20px'}` }"
+      :style="{ opacity: showBackTop ? '1' : '0', right: showBackTop ? '24px' : '-20px' }"
       name="arow_to_up_line"
       class="pa-scrollbar-back-top m-hand"
       @click="setScrollTop(0)"
@@ -78,7 +78,7 @@
  * 模块导入
  * @description 导入 Vue 组合式 API
  */
-import { ref, Ref, onMounted, onBeforeUnmount, nextTick, watch, provide } from "vue";
+import { ref, Ref, onMounted, onBeforeUnmount, nextTick, watch, provide, computed } from "vue";
 /**
  * 模块导入
  * @description 导入随机字符生成工具
@@ -106,10 +106,9 @@ import { useIntersectionObserver } from "./useIntersectionObserver";
 import { getElementPosition } from "../utils/getElementPosition";
 /**
  * 模块导入
- * @description 导入 lodash 工具库
+ * @description 导入防抖工具函数
  */
-import _ from "lodash";
-const { debounce } = _;
+import debounce from "../tools/debounce";
 /**
  * 组件事件定义
  * @description 定义组件可触发的事件
@@ -587,6 +586,13 @@ watch(
   },
   { deep: true }
 );
+/**
+ * 是否显示回到顶部按钮
+ * @type import("vue").ComputedRef<boolean>
+ * @description 根据滚动位置计算是否显示回到顶部按钮
+ */
+const showBackTop = computed(() => scrollVerticalValue.value > 10);
+
 defineExpose({
   update: debounceSetUpdate,
   setScrollTop,

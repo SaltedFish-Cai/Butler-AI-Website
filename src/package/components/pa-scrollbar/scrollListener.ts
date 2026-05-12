@@ -1,9 +1,13 @@
 /**
  * 模块导入
- * @description 导入 lodash 工具库
+ * @description 导入 lodash 防抖和节流函数
  */
-import _ from "lodash";
-const { debounce, throttle } = _;
+import { debounce, throttle } from "lodash-es";
+/**
+ * 滚动条滑块最大尺寸
+ * @description 滚动条滑块的最大尺寸常量
+ */
+const MAX_THUMB_SIZE = 60;
 /**
  * 滚动数据接口
  */
@@ -79,7 +83,6 @@ export class ScrollListener {
    */
   public update(element: HTMLElement, parentBoxRef: HTMLElement | undefined): ScrollUserInfo {
     // 为每个已注册的元素重新初始化滚动位置
-    const MAX_THUMB_SIZE = 60;
 
     const { scrollHeight, scrollWidth } = element;
     const { clientWidth: _clientWidth, clientHeight: _clientHeight } = parentBoxRef || element;
