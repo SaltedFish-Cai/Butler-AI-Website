@@ -12,6 +12,11 @@
 import { computed, provide, ref, onMounted, onUnmounted } from "vue";
 /**
  * 模块导入
+ * @description 导入防抖工具函数
+ */
+import debounce from "../tools/debounce";
+/**
+ * 模块导入
  * @description 导入 PaRow 类型定义
  */
 import type { ComponentProps } from "./types";
@@ -57,10 +62,12 @@ const style = computed(() => {
   return styles;
 });
 /**
- * 断点类型
+ * 模块级常量
  * @description 响应式断点类型定义
  */
-type BreakPoint = "lg" | "md" | "sm" | "xl" | "xs";
+const BREAK_POINT_LIST = ["xs", "sm", "md", "lg", "xl"] as const;
+type BreakPoint = (typeof BREAK_POINT_LIST)[number];
+
 /**
  * 当前断点
  * @description 当前响应式断点
@@ -80,26 +87,26 @@ const calculateBreakPoint = (): BreakPoint => {
   return "xl";
 };
 /**
- * 监听窗口大小变化
- * @description 窗口大小变化时重新计算断点
+ * 监听窗口大小变化（防抖）
+ * @description 窗口大小变化时重新计算断点（使用防抖优化性能）
  */
-const handleResize = (): void => {
+const handleResize = debounce((): void => {
   breakPoint.value = calculateBreakPoint();
-};
+}, 100);
 /**
  * 组件挂载
  * @description 初始化断点并添加事件监听
  */
 onMounted(() => {
   breakPoint.value = calculateBreakPoint();
-  if (typeof window !== "undefined") window.addEventListener("resize", handleResize);
+  window.addEventListener("resize", handleResize);
 });
 /**
  * 组件卸载
  * @description 移除事件监听
  */
 onUnmounted(() => {
-  if (typeof window !== "undefined") window.removeEventListener("resize", handleResize);
+  window.removeEventListener("resize", handleResize);
 });
 /**
  * 提供断点信息给子组件
