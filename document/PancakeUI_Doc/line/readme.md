@@ -32,16 +32,16 @@
 
 ## ComponentProps
 
-| 属性名       | 描述       | 类型                                                                                                      | 默认值                              |
-| ------------ | ---------- | --------------------------------------------------------------------------------------------------------- | ----------------------------------- |
-| id           | 唯一标识   | `string`                                                                                                  | -                                   |
-| class        | 自定义类名 | `Array<string>` `string`                                                                                  | -                                   |
-| style        | 自定义样式 | `Record<string, string>`                                                                                  | -                                   |
-| padding      | 内边距     | `Array<number>` `string`                                                                                  | -                                   |
-| width        | 宽度       | `string`                                                                                                  | `'100%'`                            |
-| height       | 高度       | `string`                                                                                                  | `'2px'`                             |
-| border-color | 颜色       | `string`                                                                                                  | `'var(--pa-color-primary-light-6)'` |
-| border-style | 边框样式   | `'dashed'` \| `'dotted'` \| `'double'` \| `'groove'` \| `'inset'` \| `'outset'` \| `'ridge'` \| `'solid'` | `'solid'`                           |
+| 属性名       | 描述       | 类型                                                                                                      | 默认值    |
+| ------------ | ---------- | --------------------------------------------------------------------------------------------------------- | --------- | --- |
+| id           | 唯一标识   | `string`                                                                                                  | -         |
+| class        | 自定义类名 | `Array<string>` `string`                                                                                  | -         |
+| style        | 自定义样式 | `Record<string, string>`                                                                                  | -         |
+| padding      | 内边距     | `Array<number                                                                                             | string>`  | -   |
+| width        | 宽度       | `string`                                                                                                  | `'100%'`  |
+| height       | 高度       | `string`                                                                                                  | `'2px'`   |
+| border-color | 颜色       | `string`                                                                                                  | -         |
+| border-style | 边框样式   | `'dashed'` \| `'dotted'` \| `'double'` \| `'groove'` \| `'inset'` \| `'outset'` \| `'ridge'` \| `'solid'` | `'solid'` |
 
 ## ComponentSlots
 

@@ -1,20 +1,5 @@
 <template>
-  <div
-    class="pa-line"
-    :class="[props.class]"
-    :style="{
-      ...props.style,
-      '--pa-line-margin-top': !isNaN(+padding[0]) ? padding[0] + 'px' : padding[0],
-      '--pa-line-margin-right': !isNaN(+padding[1]) ? padding[1] + 'px' : padding[1],
-      '--pa-line-margin-bottom': !isNaN(+padding[2]) ? padding[2] + 'px' : padding[2],
-      '--pa-line-margin-left': !isNaN(+padding[3]) ? padding[3] + 'px' : padding[3],
-      '--pa-line-height': height,
-      marginTop: `calc(0px - ${height})`,
-      '--pa-line-width': width,
-      '--pa-line-border-color': borderColor || 'transparent',
-      '--pa-line-border-style': borderStyle || 'solid'
-    }"
-  >
+  <div class="pa-line" :class="[props.class]" :style="lineStyle">
     <div v-if="$slots['default']" class="ml-size mr-size">
       <slot />
     </div>
@@ -24,19 +9,14 @@
 <script lang="ts" setup>
 /**
  * 模块导入
- * @description 导入 lodash 工具库
- */
-import _ from "lodash";
-/**
- * 模块导入
  * @description 导入组件类型定义
  */
-import { ComponentProps } from "./types";
+import type { ComponentProps } from "./types";
 /**
- * 解构工具方法
- * @description 从 lodash 中解构 isNaN 方法
+ * 模块导入
+ * @description 导入 vue 的 computed API
  */
-const { isNaN } = _;
+import { computed } from "vue";
 /**
  * 组件属性
  * @type ComponentProps
@@ -48,6 +28,25 @@ const props = withDefaults(defineProps<ComponentProps>(), {
   width: "100%",
   borderColor: "var(--pa-color-primary-light-6)",
   borderStyle: "solid"
+});
+/**
+ * 线条样式计算
+ * @description 根据 padding 数组生成 CSS 变量，处理数值和字符串类型
+ */
+const lineStyle = computed(() => {
+  const paddingValue = (value: number | string) => (Number.isNaN(+value) ? value : `${value}px`);
+  return {
+    ...props.style,
+    "--pa-line-margin-top": paddingValue(props.padding[0]),
+    "--pa-line-margin-right": paddingValue(props.padding[1]),
+    "--pa-line-margin-bottom": paddingValue(props.padding[2]),
+    "--pa-line-margin-left": paddingValue(props.padding[3]),
+    "--pa-line-height": props.height,
+    marginTop: `calc(0px - ${props.height})`,
+    "--pa-line-width": props.width,
+    "--pa-line-border-color": props.borderColor || "transparent",
+    "--pa-line-border-style": props.borderStyle || "solid"
+  };
 });
 </script>
 
