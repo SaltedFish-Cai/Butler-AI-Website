@@ -73,6 +73,11 @@ import paIcon from "../pa-icon/pa-icon.vue";
  */
 import type { PancakeGlobalConfigType } from "../pa-manager/types";
 /**
+ * 模块导入
+ * @description 导入防抖函数
+ */
+import debounce from "../tools/debounce";
+/**
  * 组件属性
  * @type {ComponentProps}
  * @description 组件的属性对象，包含 text、size、type 等
@@ -235,22 +240,6 @@ let observer: MutationObserver | null = null;
  * @description 防止 loading 状态永久卡住的超时定时器
  */
 let safeLockTimer: ReturnType<typeof setTimeout> | null = null;
-/**
- * 防抖函数
- * @param {Function} fn - 要防抖的函数
- * @param {number} delay - 延迟时间（毫秒）
- * @returns {Function} 防抖处理后的函数
- * @description 简单的 trailing debounce 实现
- */
-function debounce(fn: Function, delay: number): Function {
-  let timer: ReturnType<typeof setTimeout> | null = null;
-  return function (this: unknown, ...args: unknown[]) {
-    if (timer) clearTimeout(timer);
-    timer = setTimeout(() => {
-      fn.apply(this, args);
-    }, delay);
-  };
-}
 /**
  * 防抖点击函数
  * @description 内联防抖包装的点击处理函数
