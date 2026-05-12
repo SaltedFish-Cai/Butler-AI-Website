@@ -51,11 +51,11 @@ export type ComponentProps = {
   class?: Array<string> | string;
   /**
    * 自定义样式
-   * @type Record<string, number | string> | undefined
+   * @type Record<string, string> | undefined
    * @default undefined
    * @description 当设置该值时，会添加到组件的样式中
    */
-  style?: Record<string, number | string>;
+  style?: Record<string, string>;
   /**
    * 栅格间隔
    * @type number | string | undefined

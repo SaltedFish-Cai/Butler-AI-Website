@@ -22,7 +22,7 @@
 | ------ | ---------------------------- | ------------------------------------ | ------ |
 | id     | 唯一标识                     | `string`                             | -      |
 | class  | 自定义类名                   | `Array<string>` `string`             | -      |
-| style  | 自定义样式                   | `Record<string, number` `string>`    | -      |
+| style  | 自定义样式                   | `Record<string, string>`             | -      |
 | gutter | 栅格间隔，覆盖 Row 的 gutter | `number` `string`                    | -      |
 | span   | 栅格占据的列数               | `number`                             | -      |
 | offset | 栅格左侧的间隔格数           | `number`                             | `0`    |

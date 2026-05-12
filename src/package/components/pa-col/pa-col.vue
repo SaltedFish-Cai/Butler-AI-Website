@@ -49,7 +49,7 @@ const currentSpan = computed(() => {
   if (span !== undefined) {
     return span;
   }
-  return props.span;
+  return props.span ?? undefined;
 });
 /**
  * 计算栅格间隔值
@@ -80,6 +80,11 @@ const style = computed(() => {
   return data;
 });
 /**
+ * 模块级常量
+ * @description 响应式断点类型定义
+ */
+const BREAK_POINT_LIST = ["xs", "sm", "md", "lg", "xl"] as const;
+/**
  * 计算类名
  * @description 根据属性计算组件类名
  */
@@ -91,8 +96,7 @@ const classes = computed(() => {
   if (props.offset > 0) {
     classList.push(`pa-col-offset-${props.offset}`);
   }
-  const breakPoints: BreakPoint[] = ["xs", "sm", "md", "lg", "xl"];
-  breakPoints.forEach(bp => {
+  BREAK_POINT_LIST.forEach(bp => {
     const responsive = props[bp];
     if (responsive) {
       const span = typeof responsive === "number" ? responsive : responsive.span;
