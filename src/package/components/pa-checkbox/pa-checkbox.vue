@@ -42,8 +42,8 @@
     :class="['pa-contrast-style']"
   >
     <slot name="exContrast"></slot>
-    <template v-if="$slots.exContrast"> ( {{ findData(contrastData) || "--" }} ) </template>
-    <template v-else>{{ findData(contrastData) || "--" }}</template>
+    <template v-if="$slots.exContrast"> ( {{ findData(contrastData || inValue) || "--" }} ) </template>
+    <template v-else>{{ findData(contrastData || inValue) || "--" }}</template>
   </div>
 </template>
 
@@ -67,7 +67,7 @@ import { PancakeGlobalConfigType } from "../pa-manager/types";
  * 模块导入
  * @description 导入数据查找工具函数
  */
-import { findData as findDataSelect } from "../utils/find-data";
+import { findDataWithSelect } from "../utils/find-data";
 /**
  * 模块导入
  * @description 导入 lodash isEqual 工具函数
@@ -149,7 +149,7 @@ function findData(data: Array<boolean | number | string>): string {
   if (props.displayValue) {
     return props.displayValue || "--";
   }
-  return findDataSelect(data, props.exOptions, false, languageValue.value);
+  return findDataWithSelect(data, props.exOptions, false, languageValue.value);
 }
 /**
  * 监听 modelValue 变化
@@ -158,8 +158,8 @@ function findData(data: Array<boolean | number | string>): string {
 watch(
   () => props.modelValue,
   data => {
-    inValue.value = !isNil(data) ? data : [];
-    oldValue = !isNil(data) ? data : [];
+    inValue.value = !isNil(data) ? data || [] : [];
+    oldValue = !isNil(data) ? data || [] : [];
   },
   { immediate: true, deep: true }
 );

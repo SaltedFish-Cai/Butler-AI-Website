@@ -28,7 +28,7 @@
             </template>
 
             <template #exDisplay>
-              {{ findData(injectConfigContext.data[item.prop], radioOptions) || "--" }}
+              {{ findDataWithSelect(injectConfigContext.data[item.prop], radioOptions) || "--" }}
             </template>
 
             <template #exContrast>
@@ -79,7 +79,7 @@ import { PaOptionType } from "../../manager-type";
  *
  * @description 数据查找工具
  */
-import { findData } from "../../utils/find-data";
+import { findDataWithSelect } from "../../utils/find-data";
 /**
  *
  * @description 工具函数库
@@ -153,9 +153,6 @@ const radioOptions = computed(() => {
         value: String(item.value)
       };
     });
-  }
-  if (isNil(injectConfigContext.value?.data?.[String(props.item.prop)])) {
-    injectConfigContext.value.data[String(props.item.prop)] = opts[0].value;
   }
   return opts;
 });

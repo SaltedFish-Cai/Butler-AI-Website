@@ -288,7 +288,7 @@
           </template>
 
           <template v-else-if="item.filterType == 'select'">
-            {{ findDataSelect(row[String(item.prop)], exOptions[String(item.prop)] as PaOptionType.SelectList) }}
+            {{ findDataWithSelect(row[String(item.prop)], exOptions[String(item.prop)] as PaOptionType.SelectList) }}
           </template>
 
           <div v-else :style="{ whiteSpace: setCellWidthIng ? 'nowrap' : 'wrap' }">{{ row[String(item.prop)] }}</div>
@@ -308,7 +308,7 @@ import { isRowIndex } from "./hooks/isType";
 import CellTag from "./cell-tag.vue";
 import { keepDecimalPlaces } from "../utils/handlePrecision";
 import { findData as findDataSwitch } from "../pa-switch/find-data";
-import { findData as findDataSelect } from "../utils/find-data";
+import { findDataWithSelect } from "../utils/find-data";
 import { PaOptionType } from "../manager-type";
 import { PaFormChildType } from "../pa-form/types";
 import { PancakeGlobalConfigType } from "../pa-manager/types";
@@ -370,7 +370,7 @@ function setCellDisplayValue(row: PaTableUseType.PaTableInDataType, prop: string
     type == "multiple-online-select"
   ) {
     const _exOptions = exOptions.value[prop];
-    return findDataSelect(row[prop], _exOptions);
+    return findDataWithSelect(row[prop], _exOptions);
   } else {
     return row[prop];
   }

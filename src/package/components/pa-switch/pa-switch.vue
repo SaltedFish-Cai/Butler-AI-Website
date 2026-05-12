@@ -106,7 +106,7 @@ import { PaOptionType } from "../manager-type";
  * 模块导入
  * @description 导入数据查找工具函数
  */
-import { findData as findDataSwitch } from "./find-data";
+import { findDataWidthSwitch } from "../utils/find-data";
 
 /**
  * 模块导入
@@ -205,7 +205,7 @@ function findData(data: boolean | number | string | undefined, opts: any): strin
   if (props.displayValue) {
     return props.displayValue || "--";
   }
-  return findDataSwitch(data || "", opts, languageValue.value);
+  return findDataWidthSwitch(data || "", opts, languageValue.value);
 }
 
 /**
@@ -279,8 +279,8 @@ watch(
   () => props.modelValue,
   data => {
     inValue.value = !isNil(data) ? data : options.value.inActiveValue;
-    oldValue = !isNil(data) ? data : options.value.inActiveValue || "";
-    emits("update:modelValue", !isNil(data) ? data : options.value.inActiveValue || "");
+    oldValue = !isNil(data) ? data || "" : options.value.inActiveValue || "";
+    emits("update:modelValue", !isNil(data) ? data || "" : options.value.inActiveValue || "");
   },
   { immediate: true }
 );

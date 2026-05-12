@@ -97,8 +97,8 @@
     :class="['pa-contrast-style']"
   >
     <slot name="exContrast"></slot>
-    <template v-if="$slots.exContrast"> ( {{ findData(contrastData || "") || "--" }} )</template>
-    <template v-else>{{ findData(contrastData || "") || "--" }}</template>
+    <template v-if="$slots.exContrast"> ( {{ findData(contrastData || inValue) || "--" }} )</template>
+    <template v-else>{{ findData(contrastData || inValue) || "--" }}</template>
   </div>
 </template>
 
@@ -127,7 +127,7 @@ import { getElementPosition } from "../utils/getElementPosition";
  * 模块导入
  * @description 导入数据查找工具
  */
-import { findData as findDataSelect } from "../utils/find-data";
+import { findDataWithSelect } from "../utils/find-data";
 /**
  * 模块导入
  * @description 导入全局配置类型
@@ -499,7 +499,7 @@ function findData(data: Array<number | string> | number | string): string {
   if (props.displayValue) {
     return props.displayValue || "--";
   }
-  return findDataSelect(data, flatExOptions.value, props.useTextByLink, languageValue.value);
+  return findDataWithSelect(data, flatExOptions.value, props.useTextByLink, languageValue.value);
 }
 /**
  * 清除输入
