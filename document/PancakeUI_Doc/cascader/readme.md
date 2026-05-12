@@ -26,26 +26,26 @@
 
 ## ComponentProps
 
-| 属性名              | 描述                                            | 类型                                                                                       | 默认值       |
-| ------------------- | ----------------------------------------------- | ------------------------------------------------------------------------------------------ | ------------ |
-| id                  | 唯一标识                                        | `string`                                                                                   | -            |
-| class               | 自定义类名                                      | `Array<string>` \| `string`                                                                | -            |
-| style               | 自定义样式                                      | `Record<string, string>`                                                                   | -            |
-| modelValue          | 绑定值                                          | `Array<number \| string>` \| `number` \| `string`                                          | -            |
-| type                | 组件类型                                        | `'cascader-check'` \| `'cascader'` \| `'multiple-cascader-check'` \| `'multiple-cascader'` | `'cascader'` |
-| useTextByLink       | 非多选模式下，是否使用'AA/aa'格式的选项标签模式 | `boolean`                                                                                  | `true`       |
-| clearable           | 显示清除按钮                                    | `boolean`                                                                                  | `true`       |
-| useValueBylink      | 非多选模式下，是否使用'AA-aa'格式的选项值模式   | `boolean`                                                                                  | -            |
-| exOptions           | 选项                                            | [`PaSelectOptionsType`](/document/PancakeUI_Doc/options#paselectoptionstype)               | -            |
-| placeholder         | 输入框提示                                      | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) \| `string`   | -            |
-| disabled            | 禁用状态                                        | `boolean`                                                                                  | -            |
-| display             | 纯展示                                          | `boolean`                                                                                  | -            |
-| displayValue        | 纯展示类型下，直接显示值                        | `string`                                                                                   | -            |
-| contrastData        | 对比用原数据                                    | `Array<number \| string>` \| `number` \| `string`                                          | -            |
-| alwaysContrast      | 是否总是显示对不数据                            | `boolean`                                                                                  | -            |
-| title               | 表单项标签                                      | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) \| `string`   | -            |
-| titleWidth          | 表单项标签宽度                                  | `string`                                                                                   | -            |
-| teleportInContainer | 是否使用 Teleport 挂载到容器                    | `boolean`                                                                                  | -            |
+| 属性名              | 描述                                            | 类型                                                                                     | 默认值       |
+| ------------------- | ----------------------------------------------- | ---------------------------------------------------------------------------------------- | ------------ |
+| id                  | 唯一标识                                        | `string`                                                                                 | -            |
+| class               | 自定义类名                                      | `Array<string>` \| `string`                                                              | -            |
+| style               | 自定义样式                                      | `Record<string, string>`                                                                 | -            |
+| modelValue          | 绑定值                                          | `Array<number \| string>` \| `number` \| `string`                                        | -            |
+| type                | 组件类型                                        | `string`                                                                                 | `'cascader'` |
+| useTextByLink       | 非多选模式下，是否使用'AA/aa'格式的选项标签模式 | `boolean`                                                                                | `true`       |
+| clearable           | 显示清除按钮                                    | `boolean`                                                                                | `true`       |
+| useValueBylink      | 非多选模式下，是否使用'AA-aa'格式的选项值模式   | `boolean`                                                                                | -            |
+| exOptions           | 选项                                            | [`PaSelectOptionsType`](/document/PancakeUI_Doc/options#paselectoptionstype)             | -            |
+| placeholder         | 输入框提示                                      | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) \| `string` | -            |
+| disabled            | 禁用状态                                        | `boolean`                                                                                | -            |
+| display             | 纯展示                                          | `boolean`                                                                                | -            |
+| displayValue        | 纯展示类型下，直接显示值                        | `string`                                                                                 | -            |
+| contrastData        | 对比用原数据                                    | `Array<number \| string>` \| `number` \| `string`                                        | -            |
+| alwaysContrast      | 是否总是显示对不数据                            | `boolean`                                                                                | -            |
+| title               | 表单项标签                                      | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) \| `string` | -            |
+| titleWidth          | 表单项标签宽度                                  | `string`                                                                                 | -            |
+| teleportInContainer | 是否使用 Teleport 挂载到容器                    | `boolean`                                                                                | -            |
 
 ## ComponentEmits
 

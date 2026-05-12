@@ -107,7 +107,7 @@
  * 模块导入
  * @description 导入 Vue 组合式 API
  */
-import { ref, computed, watch, nextTick, provide, inject, ComputedRef } from "vue";
+import { ref, computed, watch, nextTick, provide, inject, ComputedRef, onBeforeUnmount } from "vue";
 /**
  * 模块导入
  * @description 导入级联选项子组件
@@ -140,10 +140,20 @@ import { PancakeGlobalConfigType } from "../pa-manager/types";
 import { PaOptionType } from "@/package/components/manager-type";
 /**
  * 模块导入
- * @description 导入 lodash 工具函数
+ * @description 导入 isNil 判断工具
+ */
+import isNil from "../tools/is-nil";
+/**
+ * 模块导入
+ * @description 导入 isEqual 比较工具
+ */
+import isEqual from "../tools/is-equal";
+/**
+ * 模块导入
+ * @description 导入 lodash cloneDeep 工具
  */
 import _ from "lodash";
-const { isEqual, isNil, cloneDeep } = _;
+const { cloneDeep } = _;
 /**
  * Popover 组件引用
  * @type Ref
@@ -186,6 +196,18 @@ const waitTag = ref(false);
  * @description 选项列表的高度值
  */
 const optionsHeight = ref("auto");
+/**
+ * 焦点定时器引用
+ * @type Ref<ReturnType<typeof setTimeout> | null>
+ * @description 存储 setTimeout 返回值，用于清理
+ */
+const focusTimer = ref<ReturnType<typeof setTimeout> | null>(null);
+/**
+ * 弹出层定时器引用
+ * @type Ref<ReturnType<typeof setTimeout> | null>
+ * @description 存储 setTimeout 返回值，用于清理
+ */
+const popoverTimer = ref<ReturnType<typeof setTimeout> | null>(null);
 /**
  * 全局配置注入
  * @type ComputedRef<PancakeGlobalConfigType>
@@ -379,7 +401,8 @@ function handleInput({ target }): void {
   nextTick(() => {
     if (optionsRef.value) {
       const position = getElementPosition(optionsRef.value);
-      optionsHeight.value = ((position?.height && Number(position?.height)) || 0) + "px";
+      const height = position?.height ? Number(position?.height) : 0;
+      optionsHeight.value = height + "px";
     }
   });
 }
@@ -390,8 +413,8 @@ function handleInput({ target }): void {
  */
 function handleFocus(): void {
   isFocus.value = true;
-  setTimeout(() => {
-    popoverRef.value.showPopover();
+  focusTimer.value = setTimeout(() => {
+    popoverRef.value?.showPopover();
   }, 200);
 }
 /**
@@ -405,13 +428,18 @@ function handlePopoverChange(data: boolean): void {
     isFocus.value = false;
     filterValue.value = "";
     inputVal.value = "";
+    if (popoverTimer.value) {
+      clearTimeout(popoverTimer.value);
+      popoverTimer.value = null;
+    }
   } else {
-    inputRef.value.focus();
+    inputRef.value?.focus();
     optionsHeight.value = "auto";
-    setTimeout(() => {
+    popoverTimer.value = setTimeout(() => {
       if (optionsRef.value) {
         const position = getElementPosition(optionsRef.value);
-        optionsHeight.value = ((position?.height && Number(position?.height)) || 0) + "px";
+        const height = position?.height ? Number(position?.height) : 0;
+        optionsHeight.value = height + "px";
       }
     }, 100);
   }
@@ -551,6 +579,16 @@ watch(
   },
   { immediate: true, deep: true }
 );
+onBeforeUnmount(() => {
+  if (focusTimer.value) {
+    clearTimeout(focusTimer.value);
+    focusTimer.value = null;
+  }
+  if (popoverTimer.value) {
+    clearTimeout(popoverTimer.value);
+    popoverTimer.value = null;
+  }
+});
 </script>
 
 <style lang="scss">
