@@ -19,7 +19,7 @@
  * 模块导入
  * @description 导入 Vue 组合式 API
  */
-import { ref, computed, useSlots, nextTick, inject, onUnmounted, getCurrentInstance, type ComputedRef } from "vue";
+import { ref, computed, useSlots, nextTick, inject, onUnmounted, getCurrentInstance } from "vue";
 /**
  * 模块导入
  * @description 导入组件类型定义
@@ -45,10 +45,9 @@ import type { PancakeGlobalConfigType } from "../pa-manager/types";
  * @description 导入 lodash 防抖函数
  */
 import { debounce } from "lodash-es";
-
 /**
  * 组件属性
- * @type ComponentProps
+ * @type {ComponentProps}
  * @description 组件的属性对象，包含 text、size、type 等
  */
 const props = withDefaults(defineProps<ComponentProps>(), {
@@ -72,19 +71,19 @@ const emit = defineEmits<ComponentEmits>();
 const slots = useSlots();
 /**
  * 全局配置注入
- * @type ComputedRef<PancakeGlobalConfigType>
+ * @type {PancakeGlobalConfigType}
  * @description 从父组件注入的全局配置对象，包含语言设置等
  */
-const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
+const PancakeGlobalConfig = inject<PancakeGlobalConfigType>("PancakeGlobalConfig", {});
 /**
  * 当前语言值
- * @type ComputedRef<string>
+ * @type {ReturnType<typeof computed>}
  * @description 获取当前语言标识，如 zh-CN 或 en-US
  */
-const languageValue = computed(() => PancakeGlobalConfig.value?.language?.value || "zh-CN");
+const languageValue = computed(() => PancakeGlobalConfig?.language?.value || "zh-CN");
 /**
  * 显示文本
- * @type string
+ * @type {ReturnType<typeof computed>}
  * @description 根据 text 类型返回对应的显示文字
  */
 const displayText = computed(() => {
@@ -93,7 +92,7 @@ const displayText = computed(() => {
 });
 /**
  * 是否有内容
- * @type boolean
+ * @type {ReturnType<typeof computed>}
  * @description 判断插槽或 text 是否存在内容
  */
 const hasContent = computed(() => !!slots.default || !!props.text);
@@ -128,7 +127,7 @@ const IS_MAP: Record<string, { iconName?: string; type?: string }> = {
 };
 /**
  * 当前图标名称
- * @type ComputedRef<string>
+ * @type {ReturnType<typeof computed>}
  * @description 根据 iconName 和 is 属性计算当前图标名称
  */
 const currentIconName = computed(() => {
@@ -138,7 +137,7 @@ const currentIconName = computed(() => {
 });
 /**
  * 当前类型
- * @type ComputedRef<string>
+ * @type {ReturnType<typeof computed>}
  * @description 根据 type 和 is 属性计算当前按钮样式类型
  */
 const currentType = computed(() => {
@@ -148,7 +147,7 @@ const currentType = computed(() => {
 });
 /**
  * 是否显示左侧图标
- * @type ComputedRef<boolean>
+ * @type {ReturnType<typeof computed>}
  * @description 判断是否需要显示左侧图标
  */
 const showLeftIcon = computed(
@@ -156,7 +155,7 @@ const showLeftIcon = computed(
 );
 /**
  * 按钮类名
- * @type Array<string | Record<string, boolean>>
+ * @type {ReturnType<typeof computed>}
  * @description 计算按钮的完整类名列表
  */
 const buttonClasses = computed(() => [
@@ -170,10 +169,9 @@ const buttonClasses = computed(() => [
   currentType.value,
   props.size
 ]);
-
 /**
  * 加载状态
- * @type Ref<boolean>
+ * @type {ReturnType<typeof ref>}
  * @description 按钮的自动 loading 状态
  */
 const isLoading = ref(false);
@@ -184,9 +182,9 @@ const isLoading = ref(false);
 const instance = getCurrentInstance();
 /**
  * 检查是否有指定事件的监听器
- * @param camelKey - 驼峰格式 key，如 onDeleteClick
- * @param kebabKey - kebab 格式 key，如 onDelete-click
- * @returns boolean 是否有外部监听
+ * @param {string} camelKey - 驼峰格式 key，如 onDeleteClick
+ * @param {string} kebabKey - kebab 格式 key，如 onDelete-click
+ * @returns {boolean} 是否有外部监听
  * @description 检查 vnode props 中是否有指定事件的监听器
  */
 function hasListener(camelKey: string, kebabKey: string): boolean {
@@ -195,7 +193,7 @@ function hasListener(camelKey: string, kebabKey: string): boolean {
 }
 /**
  * 确认弹窗配置
- * @type ComputedRef<MessageBoxOptions | null>
+ * @type {ReturnType<typeof computed>}
  * @description 根据监听的事件类型缓存对应的确认弹窗配置
  */
 const confirmConfig = computed(() => {
@@ -230,13 +228,13 @@ const confirmConfig = computed(() => {
 });
 /**
  * MutationObserver 引用
- * @type MutationObserver | null
+ * @type {MutationObserver | null}
  * @description 用于监听 DOM 变化的 observer 实例
  */
 let observer: MutationObserver | null = null;
 /**
  * 安全锁定时器引用
- * @type ReturnType<typeof setTimeout> | null
+ * @type {ReturnType<typeof setTimeout> | null}
  * @description 防止 loading 状态永久卡住的超时定时器
  */
 let safeLockTimer: ReturnType<typeof setTimeout> | null = null;
@@ -262,8 +260,8 @@ onUnmounted(() => {
 });
 /**
  * 实际点击处理
- * @param event - 鼠标点击事件对象
- * @returns void
+ * @param {MouseEvent} event - 鼠标点击事件对象
+ * @returns {void}
  * @description 触发 click 事件并处理 loading 状态
  */
 function realClick(event: MouseEvent) {
@@ -298,22 +296,20 @@ function realClick(event: MouseEvent) {
 const debouncedClick = debounce(realClick, props.debouncedTime, { trailing: true });
 /**
  * 按钮点击事件处理
- * @param event - 鼠标点击事件对象
- * @returns void
+ * @param {MouseEvent} event - 鼠标点击事件对象
+ * @returns {void}
  * @description 处理按钮点击事件，包括确认弹窗、防抖、loading 状态等
  */
 function btnClick(event: MouseEvent) {
   if (props.useStop) event.stopPropagation();
   if (props.disabled) return;
 
-  // 确认弹窗优先
   const activeConfirmConfig = props.confirmConfig || confirmConfig.value;
   if (activeConfirmConfig) {
     M_MessageBox.confirm(activeConfirmConfig);
     return;
   }
 
-  // 防抖或直接点击
   if (props.debounced && props.debouncedTime) {
     debouncedClick(event);
   } else {
