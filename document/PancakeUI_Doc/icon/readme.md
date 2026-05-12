@@ -23,14 +23,30 @@
 | style      | 自定义样式 | `Record<string, string>`                                                              | -             |
 | name       | icon 名称  | `string`                                                                              | `magic_line`  |
 | tip        | icon 提示  | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) `string` | -             |
-| fontFamily | 字体名称   | `string`                                                                              | `pa-iconfont` |
+| fontFamily | 字体名称   | [`IconFontFamily`](#iconfontfamily)                                                   | `pa-iconfont` |
 | fontColor  | 字体颜色   | `Array<string>`                                                                       | -             |
 
 ## ComponentEmits
 
-| 事件名 | 描述               | 回调函数                      |
-| ------ | ------------------ | ----------------------------- |
-| click  | 点击 Icon 执行方法 | `(event: MouseEvent) => void` |
+| 事件名     | 描述               | 回调函数                      |
+| ---------- | ------------------ | ----------------------------- |
+| click      | 点击 Icon 执行方法 | `(event: MouseEvent) => void` |
+| mouseenter | 鼠标进入 Icon 事件 | `(event: MouseEvent) => void` |
+| mouseleave | 鼠标离开 Icon 事件 | `(event: MouseEvent) => void` |
+
+## IconFontFamily
+
+| 值                  | 描述              |
+| ------------------- | ----------------- |
+| `'pa-iconfont'`     | 默认图标字体库    |
+| `'butler-iconfont'` | Butler 图标字体库 |
+
+## 字体与颜色
+
+使用 `fontFamily` 切换图标字体库，使用 `fontColor` 设置渐变色
+
+<demo src="./font.vue">
+</demo>
 
 ## Icon 选择
 
