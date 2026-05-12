@@ -184,6 +184,18 @@ interface UploadFileItem {
 const uploadFilesList = ref<Array<UploadFileItem>>([]);
 
 /**
+ * 上传配置数据
+ * @type ComputedRef<{ headerData: Record<string, unknown>; fileApi: unknown; apiBaseUrl: string }>
+ * @description 从全局配置中提取文件上传相关的配置信息
+ */
+const fileConfigData = computed(() => {
+  const headerData = PancakeGlobalConfig.value?.requestHeader || {};
+  const fileApi = PancakeGlobalConfig.value?.file_config;
+  const apiBaseUrl = PancakeGlobalConfig.value?.baseHost;
+  return { headerData, fileApi, apiBaseUrl };
+});
+
+/**
  * 请求头配置
  * @type ComputedRef<Record<string, unknown>>
  * @description 返回 HTTP 请求头配置
@@ -199,27 +211,12 @@ const requestHeader = computed(() => {
 });
 
 /**
- * 上传配置数据
- * @type ComputedRef<{ headerData: Record<string, unknown>; fileApi: unknown; apiBaseUrl: string }>
- * @description 从全局配置中提取文件上传相关的配置信息
- */
-const fileConfigData = computed(() => {
-  const headerData = PancakeGlobalConfig.value?.requestHeader || {};
-  const fileApi = PancakeGlobalConfig.value?.file_config;
-  const apiBaseUrl = PancakeGlobalConfig.value?.baseHost;
-  return { headerData, fileApi, apiBaseUrl };
-});
-
-/**
  * 文件上传数量限制
  * @type ComputedRef<number | undefined>
  * @description 返回允许的最大文件上传数量
  */
 const fileMultiple = computed(() => {
-  let multiple: number | undefined = undefined;
-  const { fileMultiple } = props;
-  if (fileMultiple) multiple = fileMultiple;
-  return multiple;
+  return props.fileMultiple;
 });
 
 /**
@@ -436,9 +433,6 @@ function actionRequest(ajaxFileList: Array<UploadFileItem>): void {
     method: "post",
     action: fileConfigData.value.fileApi?.url,
     ajaxFileList: ajaxFileList.map(item => ({ filename: item.name, file: item.file })),
-    onProgress: (progressEvent: ProgressEvent) => {
-      console.log(progressEvent);
-    },
     onError: () => {
       handleError();
     },

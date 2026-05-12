@@ -1,20 +1,14 @@
 /**
  * 模块导入
- * @description 导入 lodash 工具库
+ * @description 导入公共工具函数
  */
-import _ from "lodash";
+import isNil from "../tools/is-nil";
 
 /**
  * 模块导入
  * @description 导入文件数据类型定义
  */
 import { FileDataType } from "./types";
-
-/**
- * 模块导入
- * @description 从 lodash 中解构 isNil 函数
- */
-const { isNil } = _;
 
 /**
  * 上传作用域常量

@@ -1,5 +1,5 @@
 <template>
-  <div class="pa-file" :class="[props.class, { 'is-disabled': props.disabled }]" :style="{ ...props.style }">
+  <div class="pa-file" :class="[props.class, { 'is-disabled': props.disabled }]" :style="props.style">
     <div class="flex-center-start" v-if="!display" style="flex-wrap: wrap">
       <div class="flex-center-start" style="width: 1px; flex: 1">
         <slot name="reference-before"></slot>
@@ -144,15 +144,11 @@ import { PancakeGlobalConfigType } from "../pa-manager/types";
 
 /**
  * 模块导入
- * @description lodash 工具库导入
+ * @description 公共工具函数导入
  */
-import _ from "lodash";
-
-/**
- * 模块导入
- * @description 从 lodash 中解构常用工具函数
- */
-const { isEqual, debounce, isNil } = _;
+import isEqual from "../tools/is-equal";
+import isNil from "../tools/is-nil";
+import debounce from "../tools/debounce";
 
 /**
  * 组件属性定义
@@ -257,10 +253,7 @@ const fileConfigData = computed(() => {
  * @description 返回允许的最大文件上传数量
  */
 const fileMultiple = computed(() => {
-  let multiple: number | undefined = undefined;
-  const { fileMultiple } = props;
-  if (fileMultiple) multiple = fileMultiple;
-  return multiple;
+  return props.fileMultiple;
 });
 
 /**
@@ -312,16 +305,6 @@ const excludeText = computed(() => {
 });
 
 /**
- * 触发值变更事件
- * @param value - 新的绑定值
- * @description 更新 modelValue 并触发 change 事件
- */
-function changeEvent(value: Array<FileDataType> | undefined): void {
-  emits("change", { value: value ?? [], oldValue: oldValue ?? [] });
-  emits("update:modelValue", value ?? []);
-}
-
-/**
  * 请求头配置
  * @type ComputedRef<Record<string, unknown>>
  * @description 返回 HTTP 请求头配置
@@ -335,6 +318,16 @@ const requestHeader = computed(() => {
   }
   return data;
 });
+
+/**
+ * 触发值变更事件
+ * @param value - 新的绑定值
+ * @description 更新 modelValue 并触发 change 事件
+ */
+function changeEvent(value: Array<FileDataType> | undefined): void {
+  emits("change", { value: value ?? [], oldValue: oldValue ?? [] });
+  emits("update:modelValue", value ?? []);
+}
 
 /**
  * 上传成功处理函数
@@ -514,7 +507,7 @@ function actionRequest(ajaxFileList: Array<{ filename: string; file: File }>): v
  * 清空所有文件
  * @description 弹出确认框，用户确认后清空已上传的文件列表
  */
-const cleanFiles = (): void => {
+const cleanFiles = (): void =>
   M_MessageBox.confirm({
     title: languagePackage.value["tip"],
     message: `${languagePackage.value["isDel"]}`,
@@ -524,7 +517,6 @@ const cleanFiles = (): void => {
       if (inValue.value) inValue.value.length = 0;
     }
   });
-};
 
 /**
  * 删除指定文件

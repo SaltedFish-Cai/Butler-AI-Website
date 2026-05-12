@@ -93,7 +93,6 @@
   position: relative;
   width: 100%;
 
-  /* 上传区域 */
   .upload-area {
     display: inline-flex;
     flex-direction: column;
@@ -116,14 +115,12 @@
     background-color: var(--pa-color-send-bg);
   }
 
-  /* 上传图标 */
   .upload-icon {
     margin-bottom: 15px;
     font-size: calc(var(--pa-size-font) + 35px);
     color: var(--pa-color-send-font);
   }
 
-  /* 上传文本 */
   .upload-text {
     text-align: center;
   }
@@ -164,7 +161,6 @@
     line-height: 1.5;
   }
 
-  /* 文件输入 */
   .upload-input {
     position: absolute;
     width: 0;
@@ -173,12 +169,10 @@
     cursor: pointer;
   }
 
-  /* 文件列表 */
   .file-list {
     display: flex;
     flex-direction: column;
 
-    /* 文件项 */
     .file-item {
       display: flex;
       align-items: center;
@@ -189,7 +183,6 @@
       border-radius: var(--pa-size-radius);
       font-size: var(--pa-size-font);
 
-      /* 文件信息 */
       .file-info {
         flex: 1;
         display: flex;
