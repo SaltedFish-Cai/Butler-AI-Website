@@ -19,15 +19,13 @@
   }
 
   .pa-empty_inner {
-    width: 133px;
-    height: 133px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin: 0 auto;
-    margin-top: 35px;
-    margin-bottom: 27px;
+    width: 133px;
+    height: 133px;
+    margin: 35px auto 27px;
     background: var(--pa-color-bg);
     border-radius: 50%;
     color: var(--pa-color-info-light-1);

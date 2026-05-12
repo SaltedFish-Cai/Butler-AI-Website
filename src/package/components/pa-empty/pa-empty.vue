@@ -1,6 +1,6 @@
 <template>
   <div class="pa-empty">
-    <div class="pa-empty_inner" :class="[props.class]" :style="{ ...props.style }">
+    <div class="pa-empty_inner" :class="props.class" :style="props.style">
       <pa-icon class="pa-empty_icon" :name="props.icon" />
       <div class="pa-empty_message">{{ messageText }}</div>
     </div>
@@ -12,17 +12,17 @@
  * 模块导入
  * @description 导入 Vue 组合式 API
  */
-import { computed, inject, ComputedRef } from "vue";
+import { computed, inject } from "vue";
 /**
  * 模块导入
  * @description 导入组件类型定义
  */
-import { ComponentProps } from "./types";
+import type { ComponentProps } from "./types";
 /**
  * 模块导入
  * @description 导入全局配置类型定义
  */
-import { PancakeGlobalConfigType } from "../pa-manager/types";
+import type { PancakeGlobalConfigType } from "../pa-manager/types";
 /**
  * 组件属性
  * @type ComponentProps
@@ -34,12 +34,15 @@ const props = withDefaults(defineProps<ComponentProps>(), {
 });
 /**
  * 全局配置注入
- * @type ComputedRef<PancakeGlobalConfigType>
+ * @type PancakeGlobalConfigType
  * @description 从父组件注入的全局配置对象
  */
-const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
+const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as {
+  value?: PancakeGlobalConfigType;
+};
 /**
- * 当前语言值
+ * 计算属性：当前语言值
+ * @returns string
  * @description 返回当前语言标识
  */
 const languageValue = computed(() => {
