@@ -10,6 +10,22 @@
 
 <demo src="./color-picker.vue" control="false"></demo>
 
+## 禁用状态
+
+<demo src="./disabled.vue" control="false"></demo>
+
+## 不显示透明度选择
+
+<demo src="./no-alpha.vue" control="false"></demo>
+
+## 不显示输入框
+
+<demo src="./no-input.vue" control="false"></demo>
+
+## 预设颜色列表
+
+<demo src="./preset-colors.vue" control="false"></demo>
+
 ## ComponentProps
 
 | 属性名       | 描述                 | 类型                     | 默认值 |
