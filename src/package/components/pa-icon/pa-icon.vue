@@ -26,7 +26,7 @@
  * 模块导入
  * @description 导入 Vue 组合式 API
  */
-import { computed, inject } from "vue";
+import { computed, inject, onMounted } from "vue";
 /**
  * 模块导入
  * @description 导入组件类型定义
@@ -55,27 +55,50 @@ const emit = defineEmits<ComponentEmits>();
  */
 const PancakeGlobalConfig = inject<PancakeGlobalConfigType>("PancakeGlobalConfig", {});
 /**
+ * butler-iconfont CSS 按需加载标记
+ * @type {boolean}
+ * @description 标记 butler-iconfont 字体是否已加载，避免重复注入
+ */
+let butlerFontLoaded = false;
+/**
+ * 动态加载 butler-iconfont 字体 CSS
+ * @description 仅在 fontFamily 为 butler-iconfont 时按需加载，减少初始包体积
+ */
+function loadButlerFont() {
+  if (butlerFontLoaded || props.fontFamily !== "butler-iconfont") return;
+  butlerFontLoaded = true;
+  const link = document.createElement("link");
+  link.rel = "stylesheet";
+  link.href = "butler-iconfont.css";
+  document.head.appendChild(link);
+}
+/**
  * 图标类名列表
  * @type {ReturnType<typeof computed>}
  * @description 根据 fontFamily 和 fontColor 计算图标元素的类名
  */
 const iconClasses = computed(() => {
   const prefix = props.fontFamily === "pa-iconfont" ? "icon" : "butler";
-  return ["pa-icon__font", `${prefix}-${props.name}`, ...(props.fontColor?.length ? ["pa-icon__font--gradient"] : [])];
+  const base = ["pa-icon__font", `${prefix}-${props.name}`];
+  if (props.fontColor?.length) base.push("pa-icon__font--gradient");
+  return base;
 });
 /**
  * 图标容器样式
  * @type {ReturnType<typeof computed>}
  * @description 图标容器的行内样式，合并自定义样式和字体设置
  */
-const iconStyle = computed(() => ({ ...props.style, fontFamily: props.fontFamily }));
+const iconStyle = computed(() => {
+  if (!props.style) return { fontFamily: props.fontFamily };
+  return { ...props.style, fontFamily: props.fontFamily };
+});
 /**
  * 图标字体样式
  * @type {ReturnType<typeof computed>}
  * @description 图标字体元素的行内样式，仅在有渐变色时设置 CSS 变量
  */
 const iconFontStyle = computed(() => {
-  if (!props.fontColor?.length) return {};
+  if (!props.fontColor?.length) return undefined;
   return { "--pa-icon-gradient": `linear-gradient(45deg, ${props.fontColor.join(", ")})` };
 });
 /**
@@ -87,6 +110,13 @@ const tipText = computed(() => {
   if (typeof props.tip === "string") return props.tip;
   const languageValue = PancakeGlobalConfig?.language?.value || "zh-CN";
   return props.tip?.[languageValue] ?? "";
+});
+/**
+ * 组件挂载生命周期
+ * @description 按需加载 butler-iconfont 字体
+ */
+onMounted(() => {
+  loadButlerFont();
 });
 </script>
 
