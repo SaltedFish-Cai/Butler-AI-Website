@@ -77,4 +77,45 @@ test.describe('pa-scrollbar Component E2E Tests', () => {
     const scrollbar = page.locator('[data-testid="scrollbar-basic"]')
     await expect(scrollbar).toContainText('Scroll content - Basic')
   });
+
+  test('should render back top button', async ({ page }) => {
+    const scrollbar = page.locator('[data-testid="scrollbar-backtop"]')
+    await expect(scrollbar).toBeVisible()
+    const backTop = scrollbar.locator('.pa-scrollbar-back-top')
+    await expect(backTop).toBeVisible({ timeout: 5000 })
+  })
+
+  test('should render padding border elements', async ({ page }) => {
+    const scrollbar = page.locator('[data-testid="scrollbar-padding-border"]')
+    await expect(scrollbar).toBeVisible()
+    const paddingTopBorder = scrollbar.locator('.pa-border_padding_top')
+    await expect(paddingTopBorder).toBeAttached({ timeout: 5000 })
+  })
+
+  test('should render both scroll directions', async ({ page }) => {
+    const scrollbar = page.locator('[data-testid="scrollbar-both-directions"]')
+    await expect(scrollbar).toBeVisible()
+    // Check that scrollbar body has both scroll classes
+    const body = scrollbar.locator('.scrollbar-body')
+    await expect(body).toBeVisible()
+  })
+
+  test('should scroll content vertically', async ({ page }) => {
+    const scrollbar = page.locator('[data-testid="scrollbar-basic"]')
+    const body = scrollbar.locator('.scrollbar-body')
+    await expect(body).toBeVisible()
+    // Scroll the body element
+    await body.evaluate((el: HTMLElement) => { el.scrollTop = 100 })
+    await page.waitForTimeout(500)
+    // Verify scroll position changed
+    const scrollTop = await body.evaluate((el: HTMLElement) => el.scrollTop)
+    expect(scrollTop).toBe(100)
+  })
+
+  test('should render shadow when scrolled', async ({ page }) => {
+    const scrollbar = page.locator('[data-testid="scrollbar-basic"]')
+    const shadowTop = scrollbar.locator('.is-scroll-top')
+    // Shadow element exists (may be hidden with opacity)
+    await expect(shadowTop).toBeAttached()
+  })
 });

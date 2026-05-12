@@ -99,6 +99,42 @@ title: ScrollBar E2E Test
   </div>
 </pa-scrollbar>
 
+
+## ScrollBar with Back Top Button
+<pa-scrollbar data-testid="scrollbar-backtop" :use-back-top="true" style="height: 150px;">
+  <div style="height: 500px; padding: 16px;">
+    <p>Back top test content</p>
+    <p>Line 1</p>
+    <p>Line 2</p>
+    <p>Line 3</p>
+    <p>Line 4</p>
+    <p>Line 5</p>
+  </div>
+</pa-scrollbar>
+
+## ScrollBar with Padding Border
+<pa-scrollbar data-testid="scrollbar-padding-border" :padding-border="['top', 'bottom']" style="height: 150px;">
+  <div style="height: 300px; padding: 16px;">
+    <p>Padding border content</p>
+    <p>Line 1</p>
+    <p>Line 2</p>
+  </div>
+</pa-scrollbar>
+
+## ScrollBar with Both Scroll Directions
+<pa-scrollbar 
+  data-testid="scrollbar-both-directions" 
+  :use-scroll-y="true" 
+  :use-scroll-x="true" 
+  style="height: 150px; width: 300px;">
+  <div style="height: 500px; width: 600px; padding: 16px;">
+    <p>Both directions scroll</p>
+    <p>Line 1</p>
+    <p>Line 2</p>
+    <p>Line 3</p>
+  </div>
+</pa-scrollbar>
+
 <style scoped>
 div {
   margin: 16px 0;

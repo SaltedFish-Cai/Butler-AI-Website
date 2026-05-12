@@ -664,3 +664,32 @@ describe('pa-scrollbar 组件测试', () => {
     })
   })
 })
+
+// ============ index.ts install 函数测试 ============
+describe('pa-scrollbar index.ts install', () => {
+  it('install 注册 PaScrollBar 组件', async () => {
+    const { createApp } = await import('vue')
+    const { default: PaScrollBar } = await import('./index')
+    const app = createApp({})
+    PaScrollBar.install(app)
+    expect(app._context.components['PaScrollBar']).toBeDefined()
+  })
+
+  it('install 不重复注册', async () => {
+    const { createApp } = await import('vue')
+    const { default: PaScrollBar } = await import('./index')
+    const app = createApp({})
+    PaScrollBar.install(app)
+    const comp = app._context.components['PaScrollBar']
+    PaScrollBar.install(app)
+    expect(app._context.components['PaScrollBar']).toBe(comp)
+  })
+
+  it('install 返回 void', async () => {
+    const { createApp } = await import('vue')
+    const { default: PaScrollBar } = await import('./index')
+    const app = createApp({})
+    const result = PaScrollBar.install(app)
+    expect(result).toBeUndefined()
+  })
+})

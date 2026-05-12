@@ -549,12 +549,14 @@ function setUpdate() {
       } else {
         isScrollEnd.value = true;
       }
-      emits("scrollChildChange", {
-        bodyWidth: _scrollbarBodyRef.clientWidth,
-        bodyHeight: _scrollbarBodyRef.clientHeight,
-        useScrollX: useHorizontal.value,
-        useScrollY: useVertical.value
-      });
+      if (_scrollbarBodyRef) {
+        emits("scrollChildChange", {
+          bodyWidth: _scrollbarBodyRef.clientWidth,
+          bodyHeight: _scrollbarBodyRef.clientHeight,
+          useScrollX: useHorizontal.value,
+          useScrollY: useVertical.value
+        });
+      }
     });
   }
 }
