@@ -1,21 +1,14 @@
 /**
  * 深拷贝函数
  * @type {(value: unknown) => unknown}
- * @description 使用 structuredClone 实现深拷贝，支持循环引用、Map、Set、Date 等
+ * @description 优先使用 structuredClone，失败时降级为 JSON 深拷贝。适用于纯数据对象（表单数据、配置项等）。
  */
-
-function safeStructuredClone(obj) {
-  if (typeof structuredClone === "function") {
-    try {
-      return structuredClone(obj);
-    } catch (err: any) {
-      if (err.name === "DataCloneError") {
-        throw new Error(`无法克隆对象：包含不支持的类型 ${err.message}`);
-      }
-      throw err;
-    }
+function cloneDeep<T>(value: T): T {
+  if (value === null || typeof value !== "object") return value;
+  try {
+    return structuredClone(value);
+  } catch {
+    return JSON.parse(JSON.stringify(value));
   }
-  // 降级到 JSON（注意：会丢失 Date、Map、函数等）
-  return JSON.parse(JSON.stringify(obj));
 }
-export default safeStructuredClone;
+export default cloneDeep;
