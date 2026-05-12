@@ -67,7 +67,7 @@ const props = withDefaults(defineProps<ComponentProps>(), {
   teleportTo: "body",
   trigger: "click",
   contentClassName: "",
-  popoverWidth: 200,
+  popoverWidth: undefined,
   stopPropagation: false,
   autoWidth: false,
   placement: "bottom",
