@@ -2,7 +2,7 @@
   <div :id="props.id" :class="['pa-color', { 'pa-color-disabled': props.disabled }]" :style="props.style">
     <pa-popover ref="popoverRef" :disabled="props.disabled" autoWidth @change="e => (isPickerOpen = e)">
       <template #reference>
-        <div class="pa-color-preview" :class="{ 'pa-color-preview-active': isPickerOpen }" v-if="!props.disabled">
+        <div class="pa-color-preview" :class="{ 'pa-color-preview-active': isPickerOpen, disabled: props.disabled }">
           <div class="pa-color-preview-color" :style="{ backgroundColor: currentColor }">
             <div class="pa-color-preview-mask" v-if="!isHexColor(String(currentColor))"></div>
           </div>

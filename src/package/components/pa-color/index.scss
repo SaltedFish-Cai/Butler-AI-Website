@@ -58,6 +58,14 @@
       color: var(--pa-color-font);
       white-space: nowrap;
     }
+
+    &.disabled {
+      cursor: not-allowed;
+      &:hover {
+        border-color: var(--pa-color-border);
+        box-shadow: none;
+      }
+    }
   }
 }
 
