@@ -43,6 +43,18 @@ title: Line E2E Test
   border-style="dashed"
 />
 
+## Line with Groove Style
+<pa-line data-testid="line-groove" border-style="groove" />
+
+## Line with Inset Style
+<pa-line data-testid="line-inset" border-style="inset" />
+
+## Line with Outset Style
+<pa-line data-testid="line-outset" border-style="outset" />
+
+## Line with Ridge Style
+<pa-line data-testid="line-ridge" border-style="ridge" />
+
 <style scoped>
 div {
   margin: 16px 0;

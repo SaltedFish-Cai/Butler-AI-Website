@@ -78,4 +78,32 @@ test.describe('pa-line Component E2E Tests', () => {
     const line = page.locator('[data-testid="line-combined"]')
     await expect(line).toHaveClass(/pa-line/)
   });
-});
+
+  test('should render line with groove style', async ({ page }) => {
+    const line = page.locator('[data-testid="line-groove"]')
+    await expect(line).toHaveClass(/pa-line/)
+    const style = await line.evaluate(el => el.style.getPropertyValue('--pa-line-border-style'))
+    expect(style).toBe('groove')
+  })
+
+  test('should render line with inset style', async ({ page }) => {
+    const line = page.locator('[data-testid="line-inset"]')
+    await expect(line).toHaveClass(/pa-line/)
+    const style = await line.evaluate(el => el.style.getPropertyValue('--pa-line-border-style'))
+    expect(style).toBe('inset')
+  })
+
+  test('should render line with outset style', async ({ page }) => {
+    const line = page.locator('[data-testid="line-outset"]')
+    await expect(line).toHaveClass(/pa-line/)
+    const style = await line.evaluate(el => el.style.getPropertyValue('--pa-line-border-style'))
+    expect(style).toBe('outset')
+  })
+
+  test('should render line with ridge style', async ({ page }) => {
+    const line = page.locator('[data-testid="line-ridge"]')
+    await expect(line).toHaveClass(/pa-line/)
+    const style = await line.evaluate(el => el.style.getPropertyValue('--pa-line-border-style'))
+    expect(style).toBe('ridge')
+  })
+})

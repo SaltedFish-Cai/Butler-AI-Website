@@ -1,7 +1,7 @@
 /**
  * pa-line 组件单元测试
  */
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
 
 async function mountLine(props: Record<string, any> = {}) {
@@ -196,5 +196,50 @@ describe('pa-line 组件测试', () => {
       const style = wrapper.find('div.pa-line').attributes('style')
       expect(style).toContain('color')
     })
+  })
+})
+
+// ==================== install 函数测试 ====================
+describe('12. install 函数', () => {
+  it('注册 PaLine 组件', async () => {
+    const { default: module } = await import('./index')
+    const app = { _context: { components: {} }, component: vi.fn() } as any
+    module.install(app)
+    expect(app.component).toHaveBeenCalledWith('PaLine', expect.anything())
+  })
+
+  it('不重复注册 PaLine 组件', async () => {
+    const { default: module } = await import('./index')
+    const app = { _context: { components: { PaLine: true } }, component: vi.fn() } as any
+    module.install(app)
+    expect(app.component).not.toHaveBeenCalled()
+  })
+
+  it('install 返回 void', async () => {
+    const { default: module } = await import('./index')
+    const app = { _context: { components: {} }, component: vi.fn() } as any
+    const result = module.install(app)
+    expect(result).toBeUndefined()
+  })
+})
+
+// ==================== 剩余 borderStyle ====================
+describe('13. 剩余 borderStyle', () => {
+  it('inset 样式', async () => {
+    const wrapper = await mountLine({ borderStyle: 'inset' })
+    const style = wrapper.find('div.pa-line').attributes('style')
+    expect(style).toContain('inset')
+  })
+
+  it('outset 样式', async () => {
+    const wrapper = await mountLine({ borderStyle: 'outset' })
+    const style = wrapper.find('div.pa-line').attributes('style')
+    expect(style).toContain('outset')
+  })
+
+  it('ridge 样式', async () => {
+    const wrapper = await mountLine({ borderStyle: 'ridge' })
+    const style = wrapper.find('div.pa-line').attributes('style')
+    expect(style).toContain('ridge')
   })
 })
