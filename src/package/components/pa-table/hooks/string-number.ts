@@ -1,8 +1,7 @@
 /**
- * @description lodash 工具库
+ * @description 深拷贝工具函数
  */
-import _ from "lodash";
-const { isNil } = _;
+import isNil from "../../tools/is-nil";
 /**
  * @description 宽度转换函数，将宽度转换为数字
  * @param value 宽度值

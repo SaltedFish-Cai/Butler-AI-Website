@@ -11,10 +11,9 @@ import { setWidthToNumber } from "./string-number";
  */
 import { Ref, ref } from "vue";
 /**
- * @description lodash 工具库
+ * @description 深拷贝工具函数
  */
-import _ from "lodash";
-const { cloneDeep } = _;
+import cloneDeep from "../../tools/clone-deep";
 /**
  * @description 拖拽状态
  */

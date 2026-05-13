@@ -355,7 +355,7 @@ import {
   computed,
   watch,
   provide,
-  onUnmounted,
+  onBeforeUnmount,
   nextTick,
   inject,
   onMounted,
@@ -382,8 +382,14 @@ import { useValidateHooks } from "./hooks/use-validate-hooks";
 import { PancakeGlobalConfigType } from "../pa-manager/types";
 import { splitArray } from "../utils/arraySplit";
 
-import _ from "lodash";
-const { cloneDeep, debounce } = _;
+/**
+ * @description 深拷贝工具函数
+ */
+import cloneDeep from "../tools/clone-deep";
+/**
+ * @description 防抖工具函数
+ */
+import debounce from "../tools/debounce";
 
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 
@@ -777,7 +783,7 @@ function handleScrollChildChange({ bodyHeight, bodyWidth, useScrollX }) {
   }
 }
 
-onUnmounted(() => {
+onBeforeUnmount(() => {
   cleanup();
   clearListen();
 });

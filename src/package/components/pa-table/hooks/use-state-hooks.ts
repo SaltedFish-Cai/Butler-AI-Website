@@ -7,8 +7,18 @@ import { useObserverHooks } from "./use-observer-hooks";
 import { setWidthToNumber, setWidthToString } from "./string-number";
 import { PaFormChildType } from "../../pa-form/types";
 
-import _ from "lodash";
-const { debounce, isNil, cloneDeep } = _;
+/**
+ * @description 防抖工具函数
+ */
+import debounce from "../../tools/debounce";
+/**
+ * @description 空值检查工具函数
+ */
+import isNil from "../../tools/is-nil";
+/**
+ * @description 深拷贝工具函数
+ */
+import cloneDeep from "../../tools/clone-deep";
 
 export const useStateHooks = (
   props: ComponentProps,

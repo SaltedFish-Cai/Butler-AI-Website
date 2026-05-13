@@ -7,10 +7,9 @@ import { nextTick } from "vue";
  */
 import { useIntersectionObserver } from "../../utils/useIntersectionObserver";
 /**
- * @description lodash 工具库
+ * @description 防抖工具函数
  */
-import _ from "lodash";
-const { debounce } = _;
+import debounce from "../../tools/debounce";
 /**
  * @description useObserverHooks 观察器钩子
  * @param props 组件属性

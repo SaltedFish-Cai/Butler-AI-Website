@@ -7,10 +7,9 @@ import { computed, ref } from "vue";
  */
 import { ComponentProps, PaTableUseType } from "../types";
 /**
- * @description lodash 工具库
+ * @description 深拷贝工具函数
  */
-import _ from "lodash";
-const { cloneDeep } = _;
+import cloneDeep from "../../tools/clone-deep";
 /**
  * @description 选择变化状态类型
  */

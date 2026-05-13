@@ -11,10 +11,9 @@ import { FormItemRule } from "../../pa-form/types";
  */
 import { ComponentProps } from "../types";
 /**
- * @description lodash 工具库
+ * @description 深拷贝工具函数
  */
-import _ from "lodash";
-const { cloneDeep } = _;
+import cloneDeep from "../../tools/clone-deep";
 /**
  * @description useValidateHooks 校验钩子
  * @param props 组件属性
