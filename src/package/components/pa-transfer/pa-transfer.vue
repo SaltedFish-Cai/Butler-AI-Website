@@ -4,7 +4,7 @@
     class="pa-transfer"
     ref="selectRef"
     :class="[props.class, { 'is-disabled': props.disabled }]"
-    :style="{ ...props.style, height: props.height }"
+    :style="rootStyle"
   >
     <div class="pa-transfer-select-box">
       <div class="pa-transfer-select-box_title">
@@ -24,7 +24,7 @@
         <pa-scrollbar :useBackTop="false" :useScrollX="false" :padding="['top', 'bottom']">
           <pa-empty
             v-if="searchAllSelectList.length === 0"
-            :style="{ height: `calc(${props.height} - 75px)`, marginTop: '0px', marginBottom: '0px' }"
+            :style="emptyStyle"
             :message="{ 'zh-CN': '无更多数据', 'en-US': 'No more data' }"
           ></pa-empty>
           <div
@@ -77,7 +77,7 @@
         <pa-scrollbar :useBackTop="false" :useScrollX="false" :padding="['top', 'bottom']">
           <pa-empty
             v-if="filterSelectedList.length === 0"
-            :style="{ height: `calc(${props.height} - 75px)`, marginTop: '0px', marginBottom: '0px' }"
+            :style="emptyStyle"
             :message="{ 'zh-CN': '无更多数据', 'en-US': 'No more data' }"
           ></pa-empty>
           <div
@@ -155,14 +155,14 @@ import { findData as findDataSelect } from "./find-data";
 import { PancakeGlobalConfigType } from "../pa-manager/types";
 /**
  * 模块导入
- * @description 导入 lodash 工具函数
+ * @description 导入空值判断工具
  */
-import _ from "lodash";
+import isNil from "../tools/is-nil";
 /**
- * lodash 解构
- * @description 从 lodash 中解构 isEqual 和 isNil 方法
+ * 模块导入
+ * @description 导入值相等判断工具
  */
-const { isEqual, isNil } = _;
+import isEqual from "../tools/is-equal";
 /**
  * 组件属性
  * @type ComponentProps
@@ -272,6 +272,25 @@ const filterSelectedList = computed(() => {
  * @description 组件根元素引用
  */
 const selectRef = ref();
+/**
+ * 根元素样式
+ * @type ComputedRef<Record<string, string | number>>
+ * @description 根元素的动态样式，避免模板中每次渲染创建新对象
+ */
+const rootStyle = computed(() => ({
+  ...props.style,
+  height: props.height
+}));
+/**
+ * 空状态样式
+ * @type ComputedRef<Record<string, string>>
+ * @description 空状态容器的动态样式，避免模板中每次渲染创建新对象
+ */
+const emptyStyle = computed(() => ({
+  height: `calc(${props.height} - 75px)`,
+  marginTop: "0px",
+  marginBottom: "0px"
+}));
 /**
  * 旧值
  * @type Array<boolean | number | string>

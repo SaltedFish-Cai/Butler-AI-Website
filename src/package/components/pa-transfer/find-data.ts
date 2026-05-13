@@ -3,8 +3,8 @@
  * @description 穿梭框数据查找工具
  */
 /**
- * 选项类型
- * @description 选项类型定义
+ * 模块导入
+ * @description 导入选项类型定义
  */
 import type { PaOptionType } from "../manager-type";
 /**
@@ -18,25 +18,24 @@ export function findData(
   data: Array<boolean | number | string> | boolean | number | string,
   options: PaOptionType.SelectList
 ): string {
-  let text = "";
-  if (!options?.length) return "--";
+  if (!options || !options.length) return "--";
+  const optionsMap = new Map<string, PaOptionType.Select>();
+  for (let index = 0; index < options.length; index++) {
+    const option = options[index];
+    optionsMap.set(String(option.value), option);
+  }
   if (Array.isArray(data)) {
+    const results: string[] = [];
     for (let I_index = 0; I_index < data.length; I_index++) {
       const row = data[I_index];
-      for (let index = 0; index < options.length; index++) {
-        const option = options[index];
-        if (option.value == row) {
-          text += option.label + `${I_index < data.length - 1 ? "，" : ""}`;
-        }
+      const option = optionsMap.get(String(row));
+      if (option) {
+        results.push(option.label);
       }
     }
+    return results.length > 0 ? results.join("，") : "--";
   } else {
-    for (let index = 0; index < options.length; index++) {
-      const option = options[index];
-      if (option.value == data) {
-        text += option.label;
-      }
-    }
+    const option = optionsMap.get(String(data));
+    return option ? option.label : "--";
   }
-  return text || "--";
 }
