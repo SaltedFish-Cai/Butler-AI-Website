@@ -36,7 +36,9 @@ const props = withDefaults(
 );
 
 const formRef = useTemplateRef("formRef");
-const emits = defineEmits(["submit"]);
+const emit = defineEmits<{
+  submit: [data: any];
+}>();
 
 const visible = ref(false);
 
@@ -50,7 +52,9 @@ const exOptions = ref({
   adminIndex: props.playgroundItems.map(item => ({ label: item.name + "(" + item.pageId + ")", value: item.pageId }))
 });
 
-// # 打开编辑表格列弹窗
+/**
+ * # 打开编辑表格列弹窗
+ */
 const openEditTableColDialog = () => {
   visible.value = true;
   exOptions.value.adminIndex = props.playgroundItems.map(item => ({
@@ -59,7 +63,9 @@ const openEditTableColDialog = () => {
   }));
 };
 
-// 提交表单
+/**
+ * 提交表单
+ */
 async function handleSubmit() {
   const formData = await formRef.value?.getSubmitForm();
   if (formData && formData != "no-change") {

@@ -56,8 +56,7 @@ import {
 import { PancakeGlobalConfigType } from "../../../pa-manager/types";
 import { MOptionsType } from "../../type";
 
-import _ from "lodash";
-const { cloneDeep } = _;
+import cloneDeep from "../../../tools/clone-deep";
 
 const props = defineProps<{
   exOptionsMaps: MOptionsType[];
@@ -65,7 +64,7 @@ const props = defineProps<{
 }>();
 
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
-const language = PancakeGlobalConfig.value?.language?.value || "zh-CN";
+const language = computed(() => PancakeGlobalConfig.value?.language?.value || "zh-CN");
 
 // @ options
 const exOptions = ref<Record<string, string>>({});
@@ -110,7 +109,9 @@ const emit = defineEmits<{
   handleEditFormItemSubmit: [tableId: string, data: PaStructureType.Form, options: Record<string, string>];
 }>();
 
-// # 打开编辑表格列弹窗
+/**
+ * # 打开编辑表格列弹窗
+ */
 const openEditFormItemDialog = (tableId: string, editItem: PaStructureType.Form, options: Record<string, string>) => {
   visible.value = true;
   editId.value = tableId;
@@ -120,7 +121,9 @@ const openEditFormItemDialog = (tableId: string, editItem: PaStructureType.Form,
   }, 100);
 };
 
-// 提交表单
+/**
+ * 提交表单
+ */
 async function handleSubmit() {
   const formData = await formRef.value?.getSubmitForm();
   if (formData && formData != "no-change") {

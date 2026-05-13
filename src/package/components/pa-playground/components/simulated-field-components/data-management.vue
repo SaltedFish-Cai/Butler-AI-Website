@@ -85,7 +85,9 @@ const visibleTableRef2 = useTemplateRef("visibleTableRef2");
 
 const tableData2: any = ref([]);
 
-// 确认编辑数据
+/**
+ * 确认编辑数据
+ */
 async function handleView(data: MStructureType) {
   if (data) {
     try {
@@ -106,26 +108,38 @@ async function handleView(data: MStructureType) {
   }
 }
 
-// 同步数据
+/**
+ * 同步数据
+ */
 async function handleSync() {
   try {
-    // 处理props.dataStructures中的数据
+    /**
+     * 处理props.dataStructures中的数据
+     */
     for (const dataStructure of props.dataStructures) {
       const findData = tableData.value.find(item => item.id === dataStructure.id) as MStructureType & { dbid: number };
       if (findData) {
-        // 两者都有，使用updateData更新，status = 1
+        /**
+         * 两者都有，使用updateData更新，status = 1
+         */
         await updateData(DB_NAME, STORE_NAME, "id", findData.id, { ...dataStructure, status: "1" });
       } else {
-        // props.dataStructures有，tableData.value没有，使用storeData新增，status = 1
+        /**
+         * props.dataStructures有，tableData.value没有，使用storeData新增，status = 1
+         */
         await storeData(DB_NAME, STORE_NAME, { ...dataStructure, status: "1" });
       }
     }
 
-    // 处理tableData.value中有但props.dataStructures中没有的数据
+    /**
+     * 处理tableData.value中有但props.dataStructures中没有的数据
+     */
     for (const item of tableData.value) {
       const findData = props.dataStructures.find(dataStructure => dataStructure.id === item.id);
       if (!findData) {
-        // props.dataStructures没有，tableData.value有，使用updateData更新，status = 0
+        /**
+         * props.dataStructures没有，tableData.value有，使用updateData更新，status = 0
+         */
         await updateData(DB_NAME, STORE_NAME, "id", (item as MStructureType & { dbid: number }).id, { ...item, status: "0" });
       }
     }
@@ -138,7 +152,9 @@ async function handleSync() {
   }
 }
 
-// 获取表格数据
+/**
+ * 获取表格数据
+ */
 async function getTableList() {
   const data = await getAllData(DB_NAME, STORE_NAME);
   const _data = data.map(item => ({ ...item.data, dbid: item.id }));

@@ -111,7 +111,9 @@ const setWidth = () => {
 };
 const draggedIndex = ref(-1);
 const tableData = ref(props.tableData);
-// 拖拽开始
+/**
+ * 拖拽开始
+ */
 const handleDragStart = (event: DragEvent, index: number) => {
   event.stopPropagation();
   event.dataTransfer?.setData("text/plain", index.toString());
@@ -120,7 +122,9 @@ const handleDragStart = (event: DragEvent, index: number) => {
   draggedIndex.value = index;
 };
 
-// 拖拽悬停
+/**
+ * 拖拽悬停
+ */
 const handleDragOver = (event: DragEvent) => {
   event.preventDefault();
   event.stopPropagation();
@@ -131,13 +135,17 @@ const handleDragOver = (event: DragEvent) => {
   }
 };
 
-// 拖拽进入
+/**
+ * 拖拽进入
+ */
 const handleDragEnter = (event: DragEvent) => {
   event.preventDefault();
   event.stopPropagation();
 };
 
-// 拖拽离开
+/**
+ * 拖拽离开
+ */
 const handleDragLeave = (event: DragEvent) => {
   event.stopPropagation();
   if (event.currentTarget) {
@@ -145,7 +153,9 @@ const handleDragLeave = (event: DragEvent) => {
   }
 };
 
-// 拖拽结束
+/**
+ * 拖拽结束
+ */
 const handleDragEnd = (event: DragEvent) => {
   event.stopPropagation();
   (event.target as HTMLElement).style.opacity = "1";
@@ -155,7 +165,9 @@ const handleDragEnd = (event: DragEvent) => {
   draggedIndex.value = -1;
 };
 
-// 拖拽结束，处理排序
+/**
+ * 拖拽结束
+ */，处理排序
 const handleDrop = (event: DragEvent, targetIndex: number) => {
   event.preventDefault();
   event.stopPropagation();
@@ -168,7 +180,9 @@ const handleDrop = (event: DragEvent, targetIndex: number) => {
     tableData.value = newArray;
   }
 
-  // 重置拖拽状态
+  /**
+ * 重置拖拽状态
+ */
   (event.target as HTMLElement).style.opacity = "1";
   (event.target as HTMLElement).classList.remove("dragging");
   const items = document.querySelectorAll(".m-playground-dialog-table-row");
@@ -182,7 +196,9 @@ onMounted(() => {
   }, 0);
 });
 
-const emit = defineEmits(["update"]);
+const emit = defineEmits<{
+  update: [data: any];
+}>();
 watch(
   () => tableData.value,
   data => {

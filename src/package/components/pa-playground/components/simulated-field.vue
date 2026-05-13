@@ -76,7 +76,9 @@ function openVisibleDialog() {
   visible.value = true;
 }
 
-// 确认删除所有数据
+/**
+ * 确认删除所有数据
+ */
 function handleDeleteAll() {
   M_MessageBox.delete({
     onConfirm: async () => {

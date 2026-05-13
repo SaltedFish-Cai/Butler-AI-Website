@@ -170,8 +170,7 @@ import {
 } from "../../configs/cell-config";
 import { editTableColConfig, editOtherTableColConfig, filterType, exOptionsById } from "../../configs/table-config";
 
-import _ from "lodash";
-const { cloneDeep } = _;
+import cloneDeep from "../../../tools/clone-deep";
 
 const props = defineProps<{
   exOptionsMaps: MOptionsType[];
@@ -179,9 +178,11 @@ const props = defineProps<{
 }>();
 
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
-const language = PancakeGlobalConfig.value?.language?.value || "zh-CN";
+const language = computed(() => PancakeGlobalConfig.value?.language?.value || "zh-CN");
 
-// # Var
+/**
+ * # Var
+ */
 const editId = ref("");
 const tableData = ref<PaStructureType.Table[]>([]);
 const formData = ref<PaStructureType.Table & { cellType?: string }>({});
@@ -245,12 +246,16 @@ const config = computed(() => {
   return outData;
 });
 
-// # 删除选项
+/**
+ * # 删除选项
+ */
 const removeOperation = (index: number) => {
   tableData.value.splice(index, 1);
 };
 
-// # 保存选项
+/**
+ * # 保存选项
+ */
 const handleOperationSubmit = () => {
   for (const item of tableData.value) {
     if (item.prop && item["exOptionsById"]) {
@@ -262,7 +267,9 @@ const handleOperationSubmit = () => {
   OperationVisible.value = false;
 };
 
-// # 保存更多操作
+/**
+ * # 保存更多操作
+ */
 const handleMoreOperationSubmit = async () => {
   const formData = await formRef.value?.getSubmitForm();
   if (formData && formData != "no-change") {
@@ -278,7 +285,9 @@ function openEditDialog(tableId: string, config: PaStructureType.Table[], option
   OperationVisible.value = true;
 }
 
-// # 更多操作
+/**
+ * # 更多操作
+ */
 const handleMoreOperation = (row, index) => {
   OperationMoreVisible.value = true;
   OperationMoreIndex.value = index;

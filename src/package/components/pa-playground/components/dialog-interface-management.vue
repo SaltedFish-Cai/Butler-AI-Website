@@ -106,12 +106,16 @@ const exOptions = ref<PaOptionType.Default>({
 });
 
 const formRef = useTemplateRef("formRef");
-const emits = defineEmits(["submit"]);
+const emit = defineEmits<{
+  submit: [data: any];
+}>();
 
 const visible = ref(false);
 const editVisible = ref(false);
 
-// 处理表单单元格变化
+/**
+ * 处理表单单元格变化
+ */
 const handleFormCellChange = ({ prop, value }) => {
   if (prop === "dataStructure") {
     const findItem = props.dataStructures.find(i => i.id === value);
@@ -124,20 +128,26 @@ const handleFormCellChange = ({ prop, value }) => {
   }
 };
 
-// # 打开新建接口弹窗
+/**
+ * 打开新建接口弹窗
+ */
 const handleAdd = () => {
   inEditDataItem.value = {} as MInterfaceConfig;
   editVisible.value = true;
 };
 
-// # 编辑接口
+/**
+ * 编辑接口
+ */
 const handleEdit = (item: MInterfaceConfig) => {
   handleFormCellChange({ prop: "dataStructure", value: item.dataStructure });
   inEditDataItem.value = item;
   editVisible.value = true;
 };
 
-// # 删除接口
+/**
+ * 删除接口
+ */
 const handleDelete = (item: MInterfaceConfig) => {
   M_MessageBox.delete({
     message: languageValue.value === "zh-CN" ? "确认删除接口吗？" : "Are you sure you want to delete the interface?",
@@ -152,13 +162,17 @@ const handleDelete = (item: MInterfaceConfig) => {
   });
 };
 
-// # 打开编辑表格列弹窗
+/**
+ * 打开编辑表格列弹窗
+ */
 const openEditTableColDialog = () => {
   exOptions.value["dataStructure"] = props.dataStructures.map(i => ({ value: i.id, label: i.description }));
   visible.value = true;
 };
 
-// 提交表单
+/**
+ * 提交表单
+ */
 async function handleSubmit() {
   const formData = await formRef.value?.getSubmitForm();
   if (formData && formData != "no-change") {
@@ -173,7 +187,9 @@ async function handleSubmit() {
   }
 }
 
-// 关闭弹窗
+/**
+ * 关闭弹窗
+ */
 const handleClose = () => {
   visible.value = false;
   emits("submit", inEditData.value);

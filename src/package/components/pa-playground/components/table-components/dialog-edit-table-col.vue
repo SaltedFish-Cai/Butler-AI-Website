@@ -56,8 +56,7 @@ import {
 import { PancakeGlobalConfigType } from "../../../pa-manager/types";
 import { MOptionsType } from "../../type";
 
-import _ from "lodash";
-const { cloneDeep } = _;
+import cloneDeep from "../../../tools/clone-deep";
 
 const props = defineProps<{
   exOptionsMaps: MOptionsType[];
@@ -65,7 +64,7 @@ const props = defineProps<{
 }>();
 
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
-const language = PancakeGlobalConfig.value?.language?.value || "zh-CN";
+const language = computed(() => PancakeGlobalConfig.value?.language?.value || "zh-CN");
 
 const formRef = useTemplateRef("formRef");
 const formData = ref<PaStructureType.Table & { cellType?: string; exOptions?: PaOptionType.SelectList | PaOptionType.Switch }>(
@@ -118,7 +117,9 @@ const config = computed(() => {
   return outData;
 });
 
-// # 打开编辑表格列弹窗
+/**
+ * # 打开编辑表格列弹窗
+ */
 const openEditTableColDialog = (tableId: string, editCol: PaStructureType.Table, options: PaOptionType.Default) => {
   visible.value = true;
   editId.value = tableId;
@@ -134,7 +135,9 @@ const emit = defineEmits<{
   handleEditTableColSubmit: [tableId: string, data: PaStructureType.Table, options: Record<string, string>];
 }>();
 
-// 提交表单
+/**
+ * 提交表单
+ */
 async function handleSubmit() {
   const formData = await formRef.value?.getSubmitForm();
   if (formData && formData != "no-change") {

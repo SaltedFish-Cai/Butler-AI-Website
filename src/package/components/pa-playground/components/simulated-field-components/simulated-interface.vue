@@ -116,7 +116,9 @@ const exTableOptions = ref<PaOptionType.Default>({
   ]
 });
 
-// 确认编辑数据
+/**
+ * 确认编辑数据
+ */
 async function handleEdit(id: number) {
   editId.value = id.toString();
   const { data } = await getDataById(DB_NAME, STORE_NAME, id);
@@ -131,7 +133,9 @@ async function handleEdit(id: number) {
   }
 }
 
-// 确认单元格变化
+/**
+ * 确认单元格变化
+ */
 function cellChange({ prop, value }) {
   if (prop === "apiUrlId") {
     const findInterfaceConfigs = props.interfaceConfigs.find(item => item.id === value);
@@ -148,7 +152,9 @@ function cellChange({ prop, value }) {
   }
 }
 
-// 确认删除数据
+/**
+ * 确认删除数据
+ */
 async function handleDelete(id: number) {
   M_MessageBox.delete({
     onConfirm: async () => {
@@ -164,13 +170,17 @@ async function handleDelete(id: number) {
   });
 }
 
-// 确认提交数据
+/**
+ * 确认提交数据
+ */
 async function handleSubmit() {
   const data = await formRef.value?.getSubmitForm();
 
   if (data && data !== "no-change") {
     if (data.id) {
-      // 存储数据到IndexedDB
+      /**
+       * 存储数据到IndexedDB
+       */
       try {
         await updateData(DB_NAME, STORE_NAME, "apiUrlId", data.apiUrlId, data);
         M_Message.success(language === "en-US" ? "Data updated successfully" : "数据更新成功");
@@ -180,7 +190,9 @@ async function handleSubmit() {
         M_Message.danger(language === "en-US" ? "Data update failed" : "数据更新失败" + error);
       }
     } else {
-      // 存储数据到IndexedDB
+      /**
+       * 存储数据到IndexedDB
+       */
       try {
         await storeData(DB_NAME, STORE_NAME, data);
         M_Message.success(language === "en-US" ? "Data stored successfully" : "数据存储成功");
@@ -193,7 +205,9 @@ async function handleSubmit() {
   }
 }
 
-// 获取表格数据
+/**
+ * 获取表格数据
+ */
 async function getTableList() {
   try {
     const data = await getAllData(DB_NAME, STORE_NAME);

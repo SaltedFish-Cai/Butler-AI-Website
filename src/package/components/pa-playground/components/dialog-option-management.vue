@@ -179,8 +179,7 @@ import { M_Message, M_MessageBox } from "../../feedback";
 import { PancakeGlobalConfigType } from "../../pa-manager/types";
 import MQuickTable from "./quick-table.vue";
 
-import _ from "lodash";
-const { cloneDeep } = _;
+import cloneDeep from "../../tools/clone-deep";
 
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 const languageValue = computed(() => {
@@ -276,12 +275,16 @@ const handleCellChange = ({ prop, value }) => {
 };
 
 const formRef = useTemplateRef("formRef");
-const emits = defineEmits(["submit"]);
+const emit = defineEmits<{
+  submit: [data: MOptionsType[]];
+}>();
 
 const visible = ref(false);
 const editVisible = ref(false);
 
-// # 打开新建接口弹窗
+/**
+ * # 打开新建接口弹窗
+ */
 const handleAdd = () => {
   inEditDataItem.value = {
     id: "",
@@ -292,14 +295,18 @@ const handleAdd = () => {
   editVisible.value = true;
 };
 
-// # 编辑接口
+/**
+ * # 编辑接口
+ */
 const handleEdit = (item: MOptionsType) => {
   inEditDataItem.value = cloneDeep(item);
   selectType.value = inEditDataItem.value.OptionsType;
   editVisible.value = true;
 };
 
-// # 删除接口
+/**
+ * # 删除接口
+ */
 const handleDelete = (item: MOptionsType) => {
   M_MessageBox.delete({
     onConfirm: async () => {
@@ -313,13 +320,17 @@ const handleDelete = (item: MOptionsType) => {
   });
 };
 
-// # 新增属性
+/**
+ * # 新增属性
+ */
 const handleAddProp = () => {
   (inEditDataItem.value.config as PaOptionType.SelectList).push({ label: { "zh-CN": "", "en-US": "" }, value: "" });
   selectTableRef.value?.setWidth();
 };
 
-// # 删除属性
+/**
+ * # 删除属性
+ */
 const handleDeleteProp = (item: PaOptionType.Select) => {
   M_MessageBox.delete({
     onConfirm: async () => {
@@ -335,12 +346,16 @@ const handleDeleteProp = (item: PaOptionType.Select) => {
   });
 };
 
-// # 打开编辑表格列弹窗
+/**
+ * # 打开编辑表格列弹窗
+ */
 const openEditTableColDialog = () => {
   visible.value = true;
 };
 
-// 提交表单
+/**
+ * 提交表单
+ */
 async function handleSubmit() {
   const formData = await formRef.value?.getSubmitForm();
   if (formData && formData != "no-change") {
@@ -366,7 +381,9 @@ async function handleSubmit() {
   }
 }
 
-// 关闭弹窗
+/**
+ * 关闭弹窗
+ */
 const handleClose = () => {
   visible.value = false;
   emits("submit", inEditData.value);

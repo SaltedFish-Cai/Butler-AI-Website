@@ -1,15 +1,21 @@
+/**
+ * @description Playground 主组件
+ */
 import PaPlayground from "./pa-playground.vue";
+/**
+ * @description Playground 可见性组件
+ */
+import PaPlaygroundVisible from "./pa-playground-visible.vue";
 import PaPlaygroundVisible from "./pa-playground-visible.vue";
 
 /**
  * @description 安装 Playground 组件到 Vue 应用
  * @param app Vue 应用实例
- */
-function install(app: {
+ */ function install(app: {
   GlobalState: any;
   _context: { components: Record<string, unknown> };
   component: (name: string, comp: unknown) => void;
-}) {
+}): void {
   if (!app.GlobalState) app.GlobalState = {};
   if (!app._context.components["PaPlayground"]) {
     app.component("PaPlayground", PaPlayground);

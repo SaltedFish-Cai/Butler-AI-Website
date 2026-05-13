@@ -191,7 +191,7 @@
 </template>
 
 <script lang="tsx" setup>
-import { ComputedRef, inject, nextTick, ref, useTemplateRef } from "vue";
+import { ComputedRef, computed, inject, nextTick, ref, useTemplateRef } from "vue";
 import {
   MInterfaceConfig,
   PaPlaygroundType,
@@ -210,11 +210,10 @@ import { deleteDataByKey, getAllData, queryData, storeData, updateData } from ".
 import { PaPlaygroundPageButtonType } from "./components/types";
 import { dictType } from "../tools/type";
 
-import _ from "lodash";
-const { isNil } = _;
+import isNil from "../tools/is-nil";
 
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
-const language = PancakeGlobalConfig.value?.language?.value || "zh-CN";
+const language = computed(() => PancakeGlobalConfig.value?.language?.value || "zh-CN");
 const pageClickButtonConfig = ref<PaPlaygroundPageButtonType>();
 const findNextPage = ref<boolean>(false);
 
@@ -243,7 +242,11 @@ const props = withDefaults(
 
 const exOptionsComputed = ref<PaOptionType.Default>({});
 
-const emits = defineEmits(["closed", "action-before", "visible-before"]);
+const emits = defineEmits<{
+  closed: [];
+  "action-before": [data: { buttonInfo: any; data: any }];
+  "visible-before": [data: any];
+}>();
 
 const setStructure = (
   structure: PaStructureType.Form[] | PaStructureType.Table[]
@@ -272,7 +275,9 @@ function findSlotName(actionButtons) {
   return slotNameList;
 }
 
-// @ description: 打开模拟字段可见性弹窗
+/**
+ * @description 打开模拟字段可见性弹窗
+ */
 function openVisibleDialog(_transmitData?: Record<string, any>, _homeIndexConfig?, _clickButtonConfig?) {
   if (Object.keys(_transmitData || {}).length > 0 || _homeIndexConfig) {
     transmitData.value = _transmitData || {};
@@ -281,7 +286,6 @@ function openVisibleDialog(_transmitData?: Record<string, any>, _homeIndexConfig
     visible.value = true;
     setExOptionsMaps(_homeIndexConfig.value?.itemConfigs || []);
     nextTick(() => getDetailById());
-    // if (id) nextTick(() => getDetailById(id, data));
     return;
   }
   const adminIndex = props.baseConfig.adminIndex;
@@ -310,7 +314,9 @@ if (props.useToPage) {
   openVisibleDialog(props.exTransmitData, props.exHomeIndexConfig, props.exClickButtonConfig);
 }
 
-// @ description: 设置模拟字段可见性选项
+/**
+ * @description 设置模拟字段可见性选项
+ */
 function setExOptionsMaps(itemConfigs: PaPlaygroundItem[]) {
   const exOptionsData = {};
   const dictionariesList: Record<string, MOptionsType> = {};
@@ -374,11 +380,15 @@ function handleClose() {
   if (pageClickButtonConfig.value && pageClickButtonConfig.value.refreshByDialogClose) refreshData();
 }
 
-// 按钮点击
+/**
+ * @description 按钮点击处理
+ */
 async function handleButtonSubmit(item: PaPlaygroundPageButtonType, data: { row?: any; page?: PaPlaygroundItem }) {
   emits("action-before", { buttonInfo: item, data });
 
-  // dialog
+  /**
+   * @description dialog 类型处理
+   */
   if (item.actionType == "dialog") {
     const homeIndexConfig = props.baseConfig.pagesConfigs.find(config => config.pageId === item.dialogContentId);
     findNextPage.value = !isNil(homeIndexConfig);
@@ -393,10 +403,11 @@ async function handleButtonSubmit(item: PaPlaygroundPageButtonType, data: { row?
       }
       visibleDialogRef?.value?.openVisibleDialog(_transmitData, homeIndexConfig, item);
     });
-  }
+  } else if (item.actionType == "save") {
 
-  // save
-  else if (item.actionType == "save") {
+  /**
+   * @description save 类型处理
+   */
     for (const key in ItemRefs.value) {
       if (ItemRefs.value[key].page.type == "form") {
         const query = await ItemRefs.value[key].el?.getSubmitForm();
@@ -413,10 +424,11 @@ async function handleButtonSubmit(item: PaPlaygroundPageButtonType, data: { row?
         }
       }
     }
-  }
+  } else if (item.actionType == "delete") {
 
-  // delete
-  else if (item.actionType == "delete") {
+  /**
+   * @description delete 类型处理
+   */
     const findApi = props.interfaceConfigs.find(api => api.id === item.actionApiId);
     const query = {};
     if (item.transmitData && findApi) {
@@ -427,10 +439,11 @@ async function handleButtonSubmit(item: PaPlaygroundPageButtonType, data: { row?
       }
       DeleteDataToDB(findApi, query, item);
     }
-  }
+  } else if (props.actionFunction?.length) {
 
-  // actionFunction
-  else if (props.actionFunction?.length) {
+  /**
+   * @description actionFunction 类型处理
+   */
     const findItem = props.actionFunction.find(act => act.value === item.actionType);
     if (findItem) {
       const outData = {};
@@ -443,7 +456,9 @@ async function handleButtonSubmit(item: PaPlaygroundPageButtonType, data: { row?
   }
 }
 
-// @ 获取表格数据
+/**
+ * @description 获取表格数据
+ */
 async function getTableList(actionApi: string, query: Record<string, string>) {
   const findApi = props.interfaceConfigs.find(item => item.id === actionApi);
   if (findApi) {
@@ -457,7 +472,9 @@ async function getTableList(actionApi: string, query: Record<string, string>) {
   return { Data: { TotalCount: 0, List: [] }, Code: 200 };
 }
 
-// @ 获取 详情数据 存在id时调用
+/**
+ * @description 获取详情数据，存在id时调用
+ */
 async function getDetailById() {
   for (const key in ItemRefs.value) {
     if (ItemRefs.value[key].page.type == "form") {
@@ -503,7 +520,9 @@ async function GetDetailByDBToId(findApi: MInterfaceConfig, query: Record<string
   return data.data;
 }
 
-// @ 保存数据到数据库
+/**
+ * @description 保存数据到数据库
+ */
 async function SaveDataToDB(findApi: MInterfaceConfig, formData: Record<string, string>, item: PaPlaygroundPageButtonType) {
   if (!props.useMock && props.requestFunction) {
     const { Code } = await props.requestFunction(findApi, formData);
@@ -536,7 +555,9 @@ async function SaveDataToDB(findApi: MInterfaceConfig, formData: Record<string, 
   }
 }
 
-// @ 删除数据到数据库
+/**
+ * @description 删除数据到数据库
+ */
 async function DeleteDataToDB(findApi: MInterfaceConfig, query: Record<string, string>, item: PaPlaygroundPageButtonType) {
   M_MessageBox.delete({
     onConfirm: async () => {

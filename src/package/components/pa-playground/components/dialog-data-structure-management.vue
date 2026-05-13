@@ -160,8 +160,7 @@ import { M_Message, M_MessageBox } from "../../feedback";
 import { PancakeGlobalConfigType } from "../../pa-manager/types";
 import MQuickTable from "./quick-table.vue";
 
-import _ from "lodash";
-const { cloneDeep } = _;
+import cloneDeep from "../../tools/clone-deep";
 
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 const languageValue = computed(() => {
@@ -210,12 +209,16 @@ const formRef = useTemplateRef("formRef");
 const editTableRef = useTemplateRef("editTableRef");
 const visibleTableRef = useTemplateRef("visibleTableRef");
 const fileInput = useTemplateRef("fileInput");
-const emits = defineEmits(["submit"]);
+const emit = defineEmits<{
+  submit: [data: MStructureType[]];
+}>();
 
 const visible = ref(false);
 const editVisible = ref(false);
 
-// # 打开新建接口弹窗
+/**
+ * 打开新建接口弹窗
+ */
 const handleAdd = () => {
   inEditDataItem.value = {
     id: "",
@@ -226,13 +229,17 @@ const handleAdd = () => {
   editVisible.value = true;
 };
 
-// # 编辑接口
+/**
+ * 编辑接口
+ */
 const handleEdit = (item: MStructureType) => {
   inEditDataItem.value = cloneDeep(item);
   editVisible.value = true;
 };
 
-// # 删除接口
+/**
+ * 删除接口
+ */
 const handleDelete = (item: MStructureType) => {
   M_MessageBox.delete({
     message: languageValue.value === "zh-CN" ? "确认删除表吗？" : "Are you sure you want to delete the table?",
@@ -261,12 +268,16 @@ const handleDeleteProp = (item: MStructureTypeItem) => {
   });
 };
 
-// # 打开编辑表格列弹窗
+/**
+ * 打开编辑表格列弹窗
+ */
 const openEditTableColDialog = () => {
   visible.value = true;
 };
 
-// 提交表单
+/**
+ * 提交表单
+ */
 async function handleSubmit() {
   const formData = await formRef.value?.getSubmitForm();
   if (formData && formData != "no-change") {
@@ -284,32 +295,42 @@ async function handleSubmit() {
   }
 }
 
-// 关闭弹窗
+/**
+ * 关闭弹窗
+ */
 const handleClose = () => {
   visible.value = false;
   emits("submit", inEditData.value);
 };
 
-// 触发文件选择
+/**
+ * 触发文件选择
+ */
 const triggerFileUpload = () => {
   fileInput.value?.click();
 };
 
-// 处理文件上传
+/**
+ * 处理文件上传
+ */
 const handleFileUpload = (event: Event) => {
   const target = event.target as HTMLInputElement;
   const file = target.files?.[0];
 
   if (!file) return;
 
-  // 检查文件类型
+  /**
+   * 检查文件类型
+   */
   if (!file.name.endsWith(".json")) {
     M_Message.danger(languageValue.value === "zh-CN" ? "请上传JSON文件" : "Please upload a JSON file");
     return;
   }
 
-  // 检查文件大小（限制为1MB）
-  const maxSize = 1 * 1024 * 1024; // 1MB
+  /**
+   * 检查文件大小（限制为1MB）
+   */
+  const maxSize = 1 * 1024 * 1024;
   if (file.size > maxSize) {
     M_Message.danger(languageValue.value === "zh-CN" ? "文件大小不能超过1MB" : "File size cannot exceed 1MB");
     return;
@@ -320,7 +341,9 @@ const handleFileUpload = (event: Event) => {
     try {
       const jsonContent = e.target?.result as string;
 
-      // 检查文件是否为空
+      /**
+       * 检查文件是否为空
+       */
       if (!jsonContent || jsonContent.trim() === "") {
         M_Message.danger(languageValue.value === "zh-CN" ? "JSON文件内容为空" : "JSON file content is empty");
         return;
@@ -328,15 +351,21 @@ const handleFileUpload = (event: Event) => {
 
       const parsedData = JSON.parse(jsonContent);
 
-      // 检查解析的数据格式
+      /**
+       * 检查解析的数据格式
+       */
       if (Array.isArray(parsedData)) {
-        // 检查数组是否为空
+        /**
+         * 检查数组是否为空
+         */
         if (parsedData.length === 0) {
           M_Message.danger(languageValue.value === "zh-CN" ? "JSON数组为空" : "JSON array is empty");
           return;
         }
 
-        // 验证每个对象的结构
+        /**
+         * 验证每个对象的结构
+         */
         const validData = parsedData.filter((item: any) => {
           return item && typeof item === "object";
         });
@@ -346,10 +375,14 @@ const handleFileUpload = (event: Event) => {
           return;
         }
 
-        // 清空现有配置
+        /**
+         * 清空现有配置
+         */
         inEditDataItem.value.config = [];
 
-        // 添加解析的数据到表格
+        /**
+         * 添加解析的数据到表格
+         */
         validData.forEach((item: any, index: number) => {
           inEditDataItem.value.config.push({
             id: item.id || Date.now().toString() + "_" + index,
@@ -383,11 +416,15 @@ const handleFileUpload = (event: Event) => {
 
   reader.readAsText(file);
 
-  // 重置文件输入，以便可以重复选择同一个文件
+  /**
+   * 重置文件输入，以便可以重复选择同一个文件
+   */
   target.value = "";
 };
 
-// 生成JSON示例
+/**
+ * 生成JSON示例
+ */
 const generateJsonExample = () => {
   const example = [
     {
@@ -418,7 +455,9 @@ const generateJsonExample = () => {
 
   const exampleJson = JSON.stringify(example, null, 2);
 
-  // 创建一个临时链接下载示例文件
+  /**
+   * 创建一个临时链接下载示例文件
+   */
   const blob = new Blob([exampleJson], { type: "application/json" });
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");

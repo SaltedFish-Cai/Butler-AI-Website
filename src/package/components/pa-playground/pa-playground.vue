@@ -416,11 +416,17 @@ const props = withDefaults(defineProps<ComponentProps>(), {
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as Ref<any>;
 const language = computed(() => PancakeGlobalConfig.value?.language?.value || "zh-CN");
 
-// 表格组件引用
+/**
+ * 表格组件引用
+ */
 const tableRefs = ref<Record<string, any>>({});
-// 表单组件引用
+/**
+ * 表单组件引用
+ */
 const formRefs = ref<Record<string, any>>({});
-// 选项卡组件引用
+/**
+ * 选项卡组件引用
+ */
 const tabsItemRefs = ref<Record<string, any>>({});
 
 const draggableRefs = ref<Record<string, any>>({});
@@ -459,7 +465,9 @@ const setFormRef = (el: any, id: string) => el && (formRefs.value[id] = el);
 const setTabsItemRef = (el: any, id: string) => el && (tabsItemRefs.value[id] = el);
 const setDraggableRef = (el: any, id: string) => el && (draggableRefs.value[id] = el);
 
-// 生成随机ID
+/**
+ * 生成随机ID
+ */
 const generateRandomId = (prefix: string = "page") => `${prefix}_${Date.now()}_${Math.floor(Math.random() * 1000)}`;
 
 provide(
@@ -510,7 +518,9 @@ provide(
   }
 );
 
-// 使用SVG相关的hooks
+/**
+ * 使用SVG相关的hooks
+ */
 const {
   scale,
   translateX,
@@ -526,27 +536,39 @@ const {
   handleDeletePage
 } = useSvgHooks(lockScroll, inValue);
 
-// 处理编辑表格列提交
+/**
+ * 处理编辑表格列提交
+ */
 const handleEditTableColSubmit = (tableId: string, data: PaStructureType.Table, options: Record<string, string>) =>
   tableRefs.value[tableId].updateCol(data, options);
 
-// 处理编辑表单项提交
+/**
+ * 处理编辑表单项提交
+ */
 const handleEditFormItemSubmit = (formId: string, data: PaStructureType.Form, options: Record<string, string>) =>
   formRefs.value[formId].updateItem(data, options);
 
-// 处理编辑表格列快速提交
+/**
+ * 处理编辑表格列快速提交
+ */
 const handleEditTableColQuickSubmit = (tableId: string, data: PaStructureType.Table[], options: Record<string, string>) =>
   tableRefs.value[tableId].updateItemAll(data, options);
 
-// 处理编辑表单项快速提交
+/**
+ * 处理编辑表单项快速提交
+ */
 const handleEditFormItemQuickSubmit = (formId: string, data: PaStructureType.Form[], options: Record<string, string>) =>
   formRefs.value[formId].updateItemAll(data, options);
 
-// 处理编辑选项卡项快速提交
+/**
+ * 处理编辑选项卡项快速提交
+ */
 const handleEditTabsItemQuickSubmit = (tableId: string, data: PaStructureType.Form[]) =>
   tabsItemRefs.value[tableId].updateItemAll(data);
 
-// # 保存基础配置
+/**
+ * 保存基础配置
+ */
 function saveBaseConfig() {
   const position = getSvgTransform();
   const formData = inValue.value;
@@ -554,23 +576,35 @@ function saveBaseConfig() {
   console.log("++++++++++> _exData:", JSON.stringify(_exData));
 }
 
-// # 创建页面
+/**
+ * 创建页面
+ */
 function handleCreatePage() {
-  // 生成随机ID和名称
+  /**
+ * 生成随机ID
+ */和名称
   const id = generateRandomId();
   const name = `页面`;
 
-  // 计算新表格的位置（错开排列）
+  /**
+ * 计算新表格的位置（错开排列）
+ */
   const x = inValue.value.pagesConfigs.length * 200 + 10;
   const y = Math.floor(inValue.value.pagesConfigs.length + 1) * 200;
 
-  // 添加到表格列表
+  /**
+ * 添加到表格列表
+ */
   inValue.value.pagesConfigs.push({ pageId: id, name, x, y, itemConfigs: [] });
 }
 
-// # 创建表格
+/**
+ * 创建表格
+ */
 function handleCreateTable(index: number) {
-  // 添加到表格列表
+  /**
+ * 添加到表格列表
+ */
   const itemId = generateRandomId("table");
 
   inValue.value.pagesConfigs[index].itemConfigs.push({
@@ -585,18 +619,26 @@ function handleCreateTable(index: number) {
     sourceTable: ""
   });
 
-  // 延迟创建表格，确保组件已经渲染
+  /**
+ * 延迟创建表格，确保组件已经渲染
+ */
   setTimeout(() => {
     const tableComponent = tableRefs.value[itemId];
     if (tableComponent) tableComponent.createTable();
   }, 100);
 }
 
-// # 创建表单
+/**
+ * 创建表单
+ */
 function handleCreateForm(index: number) {
-  // 生成随机ID和名称
+  /**
+ * 生成随机ID
+ */和名称
   const itemId = generateRandomId("form");
-  // 添加到表单列表
+  /**
+ * 添加到表单列表
+ */
   inValue.value.pagesConfigs[index].itemConfigs.push({
     itemId,
     width: 0,
@@ -610,11 +652,17 @@ function handleCreateForm(index: number) {
   });
 }
 
-// # 创建选项卡
+/**
+ * 创建选项卡
+ */
 function handleCreateTabs(index: number) {
-  // 生成随机ID和名称
+  /**
+ * 生成随机ID
+ */和名称
   const itemId = generateRandomId("tabs");
-  // 添加到选项卡列表
+  /**
+ * 添加到选项卡列表
+ */
   inValue.value.pagesConfigs[index].itemConfigs.push({
     itemId,
     width: 0,
@@ -628,7 +676,9 @@ function handleCreateTabs(index: number) {
   });
 }
 
-// @ 删除元素
+/**
+ * @description 删除元素
+ */
 function handleDeleteItem(itemId: string) {
   inValue.value.pagesConfigs.forEach(page => {
     page.itemConfigs = page.itemConfigs.filter(item => item.itemId !== itemId);
@@ -636,7 +686,9 @@ function handleDeleteItem(itemId: string) {
   inValue.value.pagesConfigs = inValue.value.pagesConfigs;
 }
 
-// @ 处理<按钮>提交
+/**
+ * @description 处理按钮提交
+ */
 function handleEditOperationSubmit(editId: string, data: PaPlaygroundPageButtonType[]) {
   inValue.value.pagesConfigs.forEach(page => {
     page.itemConfigs.forEach(item => {
@@ -647,9 +699,13 @@ function handleEditOperationSubmit(editId: string, data: PaPlaygroundPageButtonT
   });
 }
 
-// # 点击元素移动到数组最后面
+/**
+ * 点击元素移动到数组最后面
+ */
 function handleClickItem(index: number) {
-  // 将点击的表格或表单移动到数组最后面
+  /**
+ * 将点击的表格或表单移动到数组最后面
+ */
   if (index >= 0 && index < inValue.value.pagesConfigs.length) {
     const item = inValue.value.pagesConfigs.splice(index, 1)[0];
     inValue.value.pagesConfigs.push(item);
@@ -674,10 +730,10 @@ const handleEditItemBaseSubmit = (data: PaPlaygroundItem) => {
   }
 };
 
-// 处理模拟场
-// const handlePlayground = async () => {
-//   simulatedFieldRef.value?.openVisibleDialog();
-// };
+/**
+ * 处理模拟场
+ */
+
 
 const handleEnablePlayground = async () => {
   useMock.value = true;
@@ -691,7 +747,9 @@ const handleEnableTraining = async () => {
 
 const draggedIndex = ref(-1);
 
-// 拖拽开始
+/**
+ * 拖拽开始
+ */
 const handleDragStart = (event: DragEvent, index: number) => {
   event.stopPropagation();
   event.dataTransfer?.setData("text/plain", index.toString());
@@ -700,7 +758,9 @@ const handleDragStart = (event: DragEvent, index: number) => {
   draggedIndex.value = index;
 };
 
-// 拖拽悬停
+/**
+ * 拖拽悬停
+ */
 const handleDragOver = (event: DragEvent) => {
   event.preventDefault();
   event.stopPropagation();
@@ -711,13 +771,17 @@ const handleDragOver = (event: DragEvent) => {
   }
 };
 
-// 拖拽进入
+/**
+ * 拖拽进入
+ */
 const handleDragEnter = (event: DragEvent) => {
   event.preventDefault();
   event.stopPropagation();
 };
 
-// 拖拽离开
+/**
+ * 拖拽离开
+ */
 const handleDragLeave = (event: DragEvent) => {
   event.stopPropagation();
   if (event.currentTarget) {
@@ -725,7 +789,9 @@ const handleDragLeave = (event: DragEvent) => {
   }
 };
 
-// 拖拽结束
+/**
+ * 拖拽结束
+ */
 const handleDragEnd = (event: DragEvent) => {
   event.stopPropagation();
   (event.target as HTMLElement).style.opacity = "1";
@@ -735,7 +801,9 @@ const handleDragEnd = (event: DragEvent) => {
   draggedIndex.value = -1;
 };
 
-// 拖拽结束，处理排序
+/**
+ * 拖拽结束
+ */，处理排序
 const handleDrop = (event: DragEvent, pageIndex: number, targetIndex: number) => {
   event.preventDefault();
   event.stopPropagation();
@@ -748,7 +816,9 @@ const handleDrop = (event: DragEvent, pageIndex: number, targetIndex: number) =>
     inValue.value.pagesConfigs[pageIndex].itemConfigs = newArray;
   }
 
-  // 重置拖拽状态
+  /**
+ * 重置拖拽状态
+ */
   (event.target as HTMLElement).style.opacity = "1";
   (event.target as HTMLElement).classList.remove("dragging");
   const items = document.querySelectorAll(".glass-container");

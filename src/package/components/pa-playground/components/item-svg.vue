@@ -152,14 +152,18 @@ import { MOptionsType, PaPlaygroundItem, MStructureType } from "../types";
 import { PaOptionType, PaStructureType } from "PancakeType";
 import { PaPlaygroundPageButtonType } from "./types";
 import { M_Message } from "../../feedback";
-// import { PaPlaygroundPageButtonType } from "./types";
-import _ from "lodash";
-const { isNil, isArray } = _;
+/**
+ * import { PaPlaygroundPageButtonType } from "./types";
+ */
+import isNil from "../../tools/is-nil";
+import isArray from "../../tools/is-array";
 
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as Ref<any>;
 const language = computed(() => PancakeGlobalConfig.value?.language?.value || "zh-CN");
 
-// 接收props
+/**
+ * 接收props
+ */
 const props = defineProps<{
   pageId: string;
   pageY: number;
@@ -173,21 +177,21 @@ const props = defineProps<{
   dataStructures: MStructureType[];
 }>();
 
-const emit = defineEmits([
-  "lock-scroll",
-  "delete-form",
-  "handleClickItem",
-  "updateFormConfig",
-  "updateButtonConfig",
-  "updateExOptionsConfig",
-  "updatePageSize",
-  "handleDragStart",
-  "handleDragOver",
-  "handleDragEnter",
-  "handleDragLeave",
-  "handleDragEnd",
-  "handleDrop"
-]);
+const emit = defineEmits<{
+  "lock-scroll": [visible: boolean];
+  "delete-form": [itemId: string];
+  handleClickItem: [item: any];
+  updateFormConfig: [data: any];
+  updateButtonConfig: [data: any];
+  updateExOptionsConfig: [data: any];
+  updatePageSize: [size: { width: number; height: number }];
+  handleDragStart: [event: DragEvent, itemIndex: number];
+  handleDragOver: [event: DragEvent, itemIndex: number];
+  handleDragEnter: [event: DragEvent, itemIndex: number];
+  handleDragLeave: [event: DragEvent, itemIndex: number];
+  handleDragEnd: [event: DragEvent, pageIndex: number, itemIndex: number];
+  handleDrop: [event: DragEvent, pageIndex: number, itemIndex: number];
+}>();
 
 const baseConfig = ref<PaPlaygroundItem>();
 
@@ -196,10 +200,18 @@ const formExOptions = ref<Record<string, string>>({});
 const actionButtons = ref<PaPlaygroundPageButtonType[]>([]);
 const dataStructures = computed(() => props.dataStructures);
 
-// 注入方法
-// const openVisibleDialog = inject("openVisibleDialog") as Ref<
-//   (type: "form" | "table", config: PaStructureType.Form[] | PaStructureType.Table[]) => void
-// >;
+/**
+ * 注入方法
+ */
+/**
+ * const openVisibleDialog = inject("openVisibleDialog") as Ref<
+ */
+/**
+ *   (type: "form" | "table", config: PaStructureType.Form[] | PaStructureType.Table[]) => void
+ */
+/**
+ * >;
+ */
 
 const openEditItemBaseDialog = inject("openEditItemBaseDialog") as Ref<(baseConfig: PaPlaygroundItem) => void>;
 
@@ -214,7 +226,9 @@ const openEditTableColQuickDialog = inject("openEditTableColQuickDialog") as Ref
 >;
 const openEditOperationDialog = inject("openEditOperationDialog") as Ref<(tableId: string, editOperation: any) => void>;
 
-// 删除表单确认配置
+/**
+ * 删除表单确认配置
+ */
 const deleteConfirmConfig = {
   type: "danger" as const,
   title: language.value === "zh-CN" ? "确认删除" : "Confirm Delete",
@@ -224,12 +238,16 @@ const deleteConfirmConfig = {
   }
 };
 
-// 处理编辑表头提交
+/**
+ * 处理编辑表头提交
+ */
 function handleEditHeadersSubmit() {
   openEditOperationDialog.value(props.itemId, actionButtons.value);
 }
 
-// 导出表单配置
+/**
+ * 导出表单配置
+ */
 function exportFormConfig() {
   const exOptions: PaOptionType.Default = {};
   const config: PaStructureType.Form[] = formData.value.map(item => {
@@ -248,19 +266,33 @@ function exportFormConfig() {
   return { config, exOptions };
 }
 
-// 预览表单
-// const visibleForm = () => {
-//   const { config } = exportFormConfig();
-//   openVisibleDialog.value("form", config);
-// };
+/**
+ * 预览表单
+ */
+/**
+ * const visibleForm = () => {
+ */
+/**
+ *   const { config } = exportFormConfig();
+ */
+/**
+ *   openVisibleDialog.value("form", config);
+ */
+/**
+ * };
+ */
 
-// 更新所有列
+/**
+ * 更新所有列
+ */
 function updateItemAll(items: any, exOptions?: Record<string, string>) {
   formData.value = items;
   if (exOptions) formExOptions.value = exOptions;
 }
 
-// 刷新表单数据
+/**
+ * 刷新表单数据
+ */
 function handleRefresh() {
   const _baseConfig = baseConfig.value;
   if (!_baseConfig) return;
@@ -314,7 +346,9 @@ function handleRefresh() {
   }
 }
 
-// 更新操作列
+/**
+ * 更新操作列
+ */
 function updateOperation(operation: PaPlaygroundPageButtonType[]) {
   const ope = operation.filter(item => item.useType == "operation");
   if (ope.length && formData.value.findIndex(item => item.prop === "operation") === -1) {
@@ -382,13 +416,17 @@ defineExpose({
     cursor: grab;
   }
 
-  // 拖拽悬停时的目标位置样式
+  /**
+ * 拖拽悬停时的目标位置样式
+ */
   &.dragover {
     border: 2px dashed var(--pa-color-primary);
     background-color: var(--pa-color-primary-light-8);
   }
 
-  // 拖拽中的元素样式
+  /**
+ * 拖拽中的元素样式
+ */
   &.dragging {
     opacity: 0.5;
     transform: scale(1.02);

@@ -275,11 +275,10 @@ import { ButtonTypeV2Is } from "../../../pa-button/type";
 import DialogEditButton from "./dialog-edit-button.vue";
 import { M_MessageBox } from "../../../feedback";
 
-import _ from "lodash";
-const { cloneDeep } = _;
+import cloneDeep from "../../../tools/clone-deep";
 
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
-const language = PancakeGlobalConfig.value?.language?.value || "zh-CN";
+const language = computed(() => PancakeGlobalConfig.value?.language?.value || "zh-CN");
 const editOperationDialogRef = useTemplateRef("editOperationDialogRef");
 
 type EditButtonType = {
@@ -296,7 +295,9 @@ const props = withDefaults(defineProps<EditButtonType>(), {
   authorizationFunction: () => []
 });
 
-// # Var
+/**
+ * # Var
+ */
 const editId = ref("");
 const tableData = ref<PaPlaygroundPageButtonType[]>([]);
 const visibleTableRef = useTemplateRef("visibleTableRef");
@@ -388,9 +389,13 @@ const isChange = (val: ButtonTypeV2Is, index: number) => {
   tableData.value[index].isText = isOptions.find(item => item.value === val)?.label || undefined;
 };
 
-// # 新增选项
+/**
+ * # 新增选项
+ */
 const addOperation = () => {
-  // 确保Operation是数组类型
+  /**
+   * 确保Operation是数组类型
+   */
   tableData.value.push({
     buttonId: new Date().getTime().toString(),
     text: { "zh-CN": "按钮", "en-US": "Button" },
@@ -406,7 +411,9 @@ const addOperation = () => {
   visibleTableRef.value?.setWidth();
 };
 
-// # 删除选项
+/**
+ * # 删除选项
+ */
 const removeOperation = (index: number) => {
   M_MessageBox.delete({
     onConfirm: async () => {
@@ -415,7 +422,9 @@ const removeOperation = (index: number) => {
   });
 };
 
-// # 保存选项
+/**
+ * # 保存选项
+ */
 const handleOperationSubmit = () => {
   emit("handleEditOperationSubmit", editId.value, tableData.value);
   OperationVisible.value = false;
@@ -436,7 +445,9 @@ function openEditOperationDialog(edit_id: string, config: PaPlaygroundPageButton
   });
 }
 
-// # 保存选项
+/**
+ * # 保存选项
+ */
 const handleEditOperationSubmit = (editId: string, data: PaPlaygroundPageButtonType[]) => {
   tableData.value.forEach(item => {
     if (item.buttonId == editId) {
@@ -462,13 +473,17 @@ defineExpose({
     cursor: grab;
   }
 
-  // 拖拽悬停时的目标位置样式
+  /**
+ * 拖拽悬停时的目标位置样式
+ */
   &.dragover {
     border: 2px dashed var(--pa-color-primary);
     background-color: var(--pa-color-primary-light-8);
   }
 
-  // 拖拽中的元素样式
+  /**
+ * 拖拽中的元素样式
+ */
   &.dragging {
     opacity: 0.5;
     transform: scale(1.02);

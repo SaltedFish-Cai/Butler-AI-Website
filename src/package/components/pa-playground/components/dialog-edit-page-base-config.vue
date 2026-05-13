@@ -34,7 +34,9 @@ const editBaseData = ref<PaPlaygroundPagesType>({
 });
 
 const formRef = useTemplateRef("formRef");
-const emits = defineEmits(["submit"]);
+const emit = defineEmits<{
+  submit: [data: any];
+}>();
 const editIndex = ref(-1);
 const visible = ref(false);
 
@@ -42,14 +44,18 @@ const config = ref<PaStructureType.Form[]>([
   { label: { "en-US": "Project Name", "zh-CN": "页面名称" }, prop: "name", type: "input" }
 ]);
 
-// # 打开编辑表格列弹窗
+/**
+ * # 打开编辑表格列弹窗
+ */
 const openEditTableColDialog = (index: number) => {
   editIndex.value = index;
   editBaseData.value = props.playgroundItems[index];
   visible.value = true;
 };
 
-// 提交表单
+/**
+ * 提交表单
+ */
 async function handleSubmit() {
   const formData = await formRef.value?.getSubmitForm();
   if (formData && formData != "no-change") {

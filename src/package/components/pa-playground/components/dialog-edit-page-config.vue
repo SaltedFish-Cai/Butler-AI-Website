@@ -45,7 +45,9 @@ import { PancakeGlobalConfigType } from "../../pa-manager/types";
 const formRef = useTemplateRef("formRef");
 
 const props = defineProps<{ dataStructures: MStructureType[]; interfaceConfigs: MInterfaceConfig[] }>();
-const emit = defineEmits(["handleEditItemBaseSubmit"]);
+const emit = defineEmits<{
+  handleEditItemBaseSubmit: [data: any];
+}>();
 
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 const language = PancakeGlobalConfig.value?.language?.value || "zh-CN";
@@ -65,7 +67,9 @@ const exOptions = ref<PaOptionType.Default>({
   ]
 });
 
-// # 基础配置
+/**
+ * # 基础配置
+ */
 const itemBaseConfig = computed<PaStructureType.Form[]>(() => {
   const baseConfig: PaStructureType.Form[] =
     editItemData.value.type == "tabs"
@@ -101,7 +105,9 @@ const itemBaseConfig = computed<PaStructureType.Form[]>(() => {
   ];
 });
 
-// # 打开编辑表格列弹窗
+/**
+ * # 打开编辑表格列弹窗
+ */
 const openEditTableColDialog = (itemConfig: PaPlaygroundItem) => {
   exOptions.value["actionApi"] = props.interfaceConfigs.map(item => ({
     label: `${item.name} ( ${item.apiUrl || "--"} )`,
@@ -120,7 +126,9 @@ const openEditTableColDialog = (itemConfig: PaPlaygroundItem) => {
   visible.value = true;
 };
 
-// 提交表单
+/**
+ * 提交表单
+ */
 async function handleSubmit() {
   const formData = await formRef.value?.getSubmitForm();
   if (formData && formData != "no-change") {

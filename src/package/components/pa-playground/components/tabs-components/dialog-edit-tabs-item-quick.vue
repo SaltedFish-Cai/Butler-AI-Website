@@ -78,8 +78,7 @@ import { PaStructureType } from "PancakeType";
 import { MOptionsType, PaPlaygroundPagesType } from "../../type";
 import MQuickTable from "../quick-table.vue";
 
-import _ from "lodash";
-const { cloneDeep } = _;
+import cloneDeep from "../../../tools/clone-deep";
 
 const props = defineProps<{
   playgroundItems: PaPlaygroundPagesType[];
@@ -100,7 +99,7 @@ const exOptionsComputed = computed(() => {
 });
 
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
-const language = PancakeGlobalConfig.value?.language?.value || "zh-CN";
+const language = computed(() => PancakeGlobalConfig.value?.language?.value || "zh-CN");
 const visibleTableRef = useTemplateRef("visibleTableRef");
 
 const tableConfig = ref<PaStructureType.Table[]>([
@@ -115,14 +114,20 @@ const tableConfig = ref<PaStructureType.Table[]>([
 
 // @ options
 const exOptions = ref<Record<string, string>>({});
-// const props = defineProps<{}>();
-// # Var
+/**
+ * const props = defineProps<{}>();
+ */
+/**
+ * # Var
+ */
 const editId = ref("");
 const formData = ref<Array<PaStructureType.Form & { scroll: number; padding: string[] }>>([]);
 
 const OperationVisible = ref(false);
 
-// # 添加选项卡项
+/**
+ * # 添加选项卡项
+ */
 const handleAddTabsItem = () => {
   formData.value.push({
     label: { "en-US": "Tabs Item Name", "zh-CN": "选项卡项名称" },
@@ -136,12 +141,16 @@ const handleAddTabsItem = () => {
   });
 };
 
-// # 删除选项
+/**
+ * # 删除选项
+ */
 const removeOperation = (index: number) => {
   formData.value.splice(index, 1);
 };
 
-// # 保存选项
+/**
+ * # 保存选项
+ */
 const handleOperationSubmit = () => {
   emit("handleEditTabsItemQuickSubmit", editId.value, formData.value);
   OperationVisible.value = false;

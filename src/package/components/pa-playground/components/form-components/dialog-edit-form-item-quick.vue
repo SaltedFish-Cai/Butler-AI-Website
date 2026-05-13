@@ -81,8 +81,7 @@ import { cellMapConfig } from "../../configs/cell-config";
 import { MOptionsType } from "../../type";
 import MQuickTable from "../quick-table.vue";
 
-import _ from "lodash";
-const { cloneDeep } = _;
+import cloneDeep from "../../../tools/clone-deep";
 
 const props = defineProps<{
   exOptionsMaps: MOptionsType[];
@@ -90,7 +89,7 @@ const props = defineProps<{
 }>();
 
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
-const language = PancakeGlobalConfig.value?.language?.value || "zh-CN";
+const language = computed(() => PancakeGlobalConfig.value?.language?.value || "zh-CN");
 
 const tableConfig = ref<PaStructureType.Table[]>([
   { prop: "label", label: { "en-US": "Column Name", "zh-CN": "列名" }, width: "300px" },
@@ -112,19 +111,27 @@ const exOptionsComputed = computed(() => {
   exOptionsData["exOptionsById"] = exOptionsMap.value;
   return exOptionsData;
 });
-// const props = defineProps<{}>();
-// # Var
+/**
+ * const props = defineProps<{}>();
+ */
+/**
+ * # Var
+ */
 const editId = ref("");
 const formData = ref<PaStructureType.Form[]>([]);
 
 const OperationVisible = ref(false);
 
-// # 删除选项
+/**
+ * # 删除选项
+ */
 const removeOperation = (index: number) => {
   formData.value.splice(index, 1);
 };
 
-// # 保存选项
+/**
+ * # 保存选项
+ */
 const handleOperationSubmit = () => {
   for (const item of formData.value) {
     if (item.prop && item["exOptionsById"]) {
