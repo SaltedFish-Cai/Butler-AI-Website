@@ -25,7 +25,11 @@
           <pa-empty
             v-if="searchAllSelectList.length === 0"
             :style="emptyStyle"
-            :message="{ 'zh-CN': '无更多数据', 'en-US': 'No more data' }"
+            :message="
+              searchAll.length
+                ? { 'zh-CN': '无匹配数据', 'en-US': 'No match data' }
+                : { 'zh-CN': '无更多数据', 'en-US': 'No more data' }
+            "
           ></pa-empty>
           <div
             v-else
@@ -78,7 +82,11 @@
           <pa-empty
             v-if="filterSelectedList.length === 0"
             :style="emptyStyle"
-            :message="{ 'zh-CN': '无更多数据', 'en-US': 'No more data' }"
+            :message="
+              searchSelected.length
+                ? { 'zh-CN': '无匹配数据', 'en-US': 'No match data' }
+                : { 'zh-CN': '无更多数据', 'en-US': 'No more data' }
+            "
           ></pa-empty>
           <div
             v-else
