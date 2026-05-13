@@ -6,12 +6,7 @@
         :class="[state.fullscreen ? 'pa-dialog_full' : '']"
         ref="DialogRef"
         v-if="state.visible"
-        :style="{
-          height: `${setHeight}`,
-          width: `${setSize}`,
-          '--pa-dialog-offset-x': `${setOffsetX}`,
-          '--pa-dialog-offset-y': `${setOffsetY}`
-        }"
+        :style="dialogStyle"
       >
         <div class="pa-dialog-content">
           <div class="pa-dialog-content_header">
@@ -35,7 +30,6 @@
                     {{ typeof subTitle === "string" ? subTitle : subTitle?.[language] }}
                   </slot>
                 </div>
-                <div><div></div></div>
               </div>
             </slot>
             <div class="pa-dialog-content_header_close" @click="closeMenu">
@@ -50,29 +44,11 @@
               @scroll-child-change="scrollChildChange"
               :parentBoxRef="ScrollbarRef"
             >
-              <div
-                class="dialog__body flex-col"
-                ref="ScrollbarBodyRef"
-                :class="{
-                  'padding-top': padding?.includes('top') || padding?.includes('all'),
-                  'padding-left': padding?.includes('left') || padding?.includes('all'),
-                  'padding-bottom': padding?.includes('bottom') || padding?.includes('all'),
-                  'padding-right': padding?.includes('right') || padding?.includes('all')
-                }"
-              >
+              <div class="dialog__body flex-col" ref="ScrollbarBodyRef" :class="paddingClasses">
                 <template v-if="keepAlive"> <slot></slot> </template>
               </div>
             </pa-scrollbar>
-            <div
-              v-else
-              class="dialog__body flex-col"
-              :class="{
-                'padding-top': padding?.includes('top') || padding?.includes('all'),
-                'padding-left': padding?.includes('left') || padding?.includes('all'),
-                'padding-bottom': padding?.includes('bottom') || padding?.includes('all'),
-                'padding-right': padding?.includes('right') || padding?.includes('all')
-              }"
-            >
+            <div v-else class="dialog__body flex-col" :class="paddingClasses">
               <template v-if="keepAlive"> <slot></slot> </template>
             </div>
           </div>
@@ -128,12 +104,6 @@ const props = withDefaults(defineProps<ComponentProps>(), {
   scroll: true
 });
 /**
- * 打开标识
- * @type string
- * @description 弹窗打开时的唯一标识
- */
-let openId: string = "";
-/**
  * 滚动条引用
  * @type Ref<HTMLElement | undefined>
  * @description 滚动条容器 DOM 引用
@@ -147,7 +117,7 @@ const ScrollbarRef: Ref<HTMLElement | undefined> = ref();
 const ScrollbarBodyRef: Ref<HTMLElement | undefined> = ref();
 /**
  * 组件状态
- * @type Ref<{ visible: boolean; fullscreen: boolean }>
+ * @type { visible: boolean; fullscreen: boolean }
  * @description 组件的响应式状态
  */
 const state = reactive({
@@ -156,60 +126,28 @@ const state = reactive({
 });
 /**
  * 当前语言
- * @type string
+ * @type ComputedRef<string>
  * @description 当前使用的语言
  */
-const language: string =
-  (typeof window !== "undefined" && typeof window !== "undefined" && window.PancakeGlobalConfig?.language) || "zh-CN" || "zh-CN";
+const language = computed(() => {
+  if (typeof window !== "undefined" && window.PancakeGlobalConfig?.language) {
+    return window.PancakeGlobalConfig.language;
+  }
+  return "zh-CN";
+});
 /**
  * 计算宽度
  * @type ComputedRef<number | string>
  * @description 计算弹窗的宽度
  */
 const setSize = computed(() => {
-  let size: number | string = 500;
-  switch (props.size) {
-    case "s":
-      size = "30%";
-      break;
-    case "m":
-      size = "50%";
-      break;
-    case "l":
-      size = "70%";
-      break;
-    case "max":
-      size = "95%";
-      break;
-    default:
-      break;
-  }
-  return props.width || size;
-});
-/**
- * 计算偏移
- * @type ComputedRef<number | string>
- * @description 计算弹窗的偏移量
- */
-const transform = computed(() => {
-  let size: number | string = 0;
-  switch (props.size) {
-    case "s":
-      size = 0;
-      break;
-    case "m":
-      size = 0;
-      break;
-    case "l":
-      size = 0;
-      break;
-    case "max":
-      size = 0;
-      break;
-    default:
-      break;
-  }
-  return props.offsetX || size;
+  const sizeMap = {
+    s: "30%",
+    m: "50%",
+    l: "70%",
+    max: "95%"
+  } as const;
+  return props.width || sizeMap[props.size as keyof typeof sizeMap] || "50%";
 });
 /**
  * 计算X轴偏移量
@@ -217,9 +155,9 @@ const transform = computed(() => {
  * @description 计算弹窗的X轴偏移量
  */
 const setOffsetX = computed(() => {
-  let data = transform.value;
-  if (props.offsetX) {
-    data = isNumber(props.offsetX) ? props.offsetX + "px" : props.offsetX;
+  let data = props.offsetX || 0;
+  if (isNumber(props.offsetX)) {
+    data = props.offsetX + "px";
   }
   if (state.fullscreen) {
     data = 0;
@@ -247,20 +185,17 @@ const setOffsetY = computed(() => {
  * @description 计算弹窗的高度
  */
 const setHeight = computed(() => {
-  let data: number | string = 500;
-  if (props.size == "max") {
-    data = "95%";
-  } else if (props.size == "l") {
-    data = "85%";
-  } else if (props.size == "m") {
-    data = "70%";
-  } else if (props.size == "s") {
-    data = "50%";
-  }
-  if (props.height && props.height != "auto") {
+  const heightMap: Record<string, string> = {
+    max: "95%",
+    l: "85%",
+    m: "70%",
+    s: "50%"
+  };
+  let data = heightMap[props.size] || "70%";
+  if (props.height && props.height !== "auto") {
     data = isNumber(props.height) ? props.height + "px" : props.scroll === false ? "" : props.height;
   }
-  if (props.height == "auto" && props.scroll) {
+  if (props.height === "auto" && props.scroll) {
     data = "max-content";
   }
   if (state.fullscreen) {
@@ -268,6 +203,28 @@ const setHeight = computed(() => {
   }
   return data;
 });
+/**
+ * 弹窗样式
+ * @type ComputedRef<Record<string, string>>
+ * @description 计算弹窗的样式对象
+ */
+const dialogStyle = computed(() => ({
+  height: `${setHeight.value}`,
+  width: `${setSize.value}`,
+  "--pa-dialog-offset-x": `${setOffsetX.value}`,
+  "--pa-dialog-offset-y": `${setOffsetY.value}`
+}));
+/**
+ * 内边距样式类
+ * @type ComputedRef<Record<string, boolean>>
+ * @description 根据 padding 属性计算样式类
+ */
+const paddingClasses = computed(() => ({
+  "padding-top": props.padding?.includes("top") || props.padding?.includes("all"),
+  "padding-left": props.padding?.includes("left") || props.padding?.includes("all"),
+  "padding-bottom": props.padding?.includes("bottom") || props.padding?.includes("all"),
+  "padding-right": props.padding?.includes("right") || props.padding?.includes("all")
+}));
 /**
  * 判断是否为数字
  * @param value - 要判断的值
@@ -315,6 +272,12 @@ function scrollChildChange(): void {
     ScrollbarRef.value.style.height = ScrollbarBodyRef.value.clientHeight + "px";
   }
 }
+/**
+ * 打开标识
+ * @type string
+ * @description 弹窗打开时的唯一标识
+ */
+let openId: string = "";
 /**
  * 组件挂载生命周期
  * @description 初始化组件

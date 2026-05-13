@@ -28,43 +28,43 @@
 
 ## ComponentProps
 
-| 属性名             | 描述               | 类型                                                                 | 默认值      |
-| ------------------ | ------------------ | -------------------------------------------------------------------- | ----------- |
-| id                 | 唯一标识           | `string`                                                             | -           |
-| class              | 自定义类名         | `Array<string>` `string`                                             | -           |
-| style              | 自定义样式         | `Record<string, string>`                                             | -           |
-| modelValue         | 是否打开弹窗       | `boolean`                                                            | -           |
-| size               | 弹窗尺寸           | `'full'` `'l'` `'m'` `'max'` `'s'`                                   | `'m'`       |
-| height             | 弹窗高度           | `number` `string` `'auto'` `'default'`                               | `'auto'`    |
-| width              | 弹窗宽度           | `number` `string`                                                    | -           |
-| offsetX            | X轴偏移量          | `number` `string`                                                    | `0`         |
-| offsetY            | Y轴偏移量          | `number` `string`                                                    | `0`         |
-| keepAlive          | 是否使用缓存页面   | `boolean`                                                            | `true`      |
-| title              | 弹窗标题           | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) `string` | `'标题'`    |
-| subTitle           | 弹窗副标题         | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) `string` | -           |
-| useFull            | 是否开启全屏按钮   | `boolean`                                                            | `true`      |
-| scroll             | 内容是否支持滚动   | `boolean`                                                            | `true`      |
-| useScrollX         | 是否使用X轴滚动    | `boolean`                                                            | `false`     |
-| titleAlign         | 标题对齐方式       | `'center'` `'left'` `'right'`                                        | `'left'`    |
-| closeOnClickModal  | 是否点击蒙层关闭   | `boolean`                                                            | `true`      |
-| closeOnPressEscape | 是否按ESC键关闭    | `boolean`                                                            | `true`      |
-| padding            | 内边距方向         | `Array<"all" \| "bottom" \| "left" \| "right" \| "top">`             | -           |
+| 属性名             | 描述              | 类型                                                                                  | 默认值   |
+| ------------------ | ----------------- | ------------------------------------------------------------------------------------- | -------- |
+| id                 | 唯一标识          | `string`                                                                              | -        |
+| class              | 自定义类名        | `Array<string>` `string`                                                              | -        |
+| style              | 自定义样式        | `Record<string, string>`                                                              | -        |
+| modelValue         | 是否打开弹窗      | `boolean`                                                                             | -        |
+| size               | 弹窗尺寸          | `'full'` `'l'` `'m'` `'max'` `'s'`                                                    | `'m'`    |
+| height             | 弹窗高度          | `number` `string` `'auto'` `'default'`                                                | `'auto'` |
+| width              | 弹窗宽度          | `number` `string`                                                                     | -        |
+| offsetX            | X 轴偏移量        | `number` `string`                                                                     | `0`      |
+| offsetY            | Y 轴偏移量        | `number` `string`                                                                     | `0`      |
+| keepAlive          | 是否使用缓存页面  | `boolean`                                                                             | `true`   |
+| title              | 弹窗标题          | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) `string` | `'标题'` |
+| subTitle           | 弹窗副标题        | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) `string` | -        |
+| useFull            | 是否开启全屏按钮  | `boolean`                                                                             | `true`   |
+| scroll             | 内容是否支持滚动  | `boolean`                                                                             | `true`   |
+| useScrollX         | 是否使用 X 轴滚动 | `boolean`                                                                             | `false`  |
+| titleAlign         | 标题对齐方式      | `'center'` `'left'` `'right'`                                                         | `'left'` |
+| closeOnClickModal  | 是否点击蒙层关闭  | `boolean`                                                                             | `true`   |
+| closeOnPressEscape | 是否按 ESC 键关闭 | `boolean`                                                                             | `true`   |
+| padding            | 内边距方向        | `Array<"all" \| "bottom" \| "left" \| "right" \| "top">`                              | -        |
 
 ## ComponentEmits
 
-| 字段              | 描述                       | 参数类型         |
-| ----------------- | -------------------------- | ---------------- |
-| update:modelValue | 当弹窗显示状态改变时触发   | `value: boolean` |
-| closed            | 当弹窗关闭时触发           | `value: boolean` |
+| 字段              | 描述                     | 参数类型         |
+| ----------------- | ------------------------ | ---------------- |
+| update:modelValue | 当弹窗显示状态改变时触发 | `value: boolean` |
+| closed            | 当弹窗关闭时触发         | `value: boolean` |
 
 ## ComponentSlots
 
-| 插槽名       | 作用           |
-| ------------ | -------------- |
-| `'default'`  | 默认内容插槽   |
-| `'header'`   | 头部插槽       |
-| `'title'`    | 标题插槽       |
-| `'subTitle'` | 副标题插槽     |
-| `'footer'`   | 底部插槽       |
+| 插槽名          | 作用         |
+| --------------- | ------------ |
+| `'default'`     | 默认内容插槽 |
+| `'header'`      | 头部插槽     |
+| `'title'`       | 标题插槽     |
+| `'subTitle'`    | 副标题插槽   |
+| `'footer'`      | 底部插槽     |
 | `'footerLeft'`  | 底部左侧插槽 |
 | `'footerRight'` | 底部右侧插槽 |

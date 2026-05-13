@@ -5,6 +5,7 @@
   height: 100%;
   max-height: calc(100vh - var(--pa-size-padding) * 2);
   z-index: 1;
+
   .pa-dialog-content {
     display: flex;
     flex-direction: column;
@@ -32,6 +33,7 @@
       font-weight: bold;
       color: var(--pa-color-font);
       border-bottom: 1px solid var(--pa-color-border);
+
       .title_body {
         padding: calc(var(--pa-size-padding)) !important;
         width: 100%;
@@ -39,9 +41,11 @@
         justify-content: space-between;
         align-items: center;
         font-size: calc(var(--pa-size-font) + 1px);
+
         .is_title_body {
           font-size: calc(var(--pa-size-font) + 1px);
         }
+
         .sub_title_body {
           position: absolute;
           left: 50%;
@@ -63,35 +67,38 @@
         color: var(--pa-color-white);
         font-size: calc(var(--pa-size-font, 13px) + 3px);
         transition: var(--pa-animation-time, 0.2s);
+
         &:hover {
           cursor: pointer;
           background-color: var(--pa-color-danger);
         }
       }
     }
+
     .pa-dialog-content_body {
       height: 100%;
       overflow: hidden;
+
       .dialog__body {
         width: 100%;
         height: 100%;
         box-sizing: border-box;
       }
+
       .dialog__body.padding-top {
         padding-top: calc(var(--pa-size-padding, 10px)) !important;
       }
+
       .dialog__body.padding-left {
         padding-left: calc(var(--pa-size-padding, 10px)) !important;
       }
+
       .dialog__body.padding-bottom {
         padding-bottom: calc(var(--pa-size-padding, 10px)) !important;
       }
+
       .dialog__body.padding-right {
         padding-right: calc(var(--pa-size-padding, 10px)) !important;
-      }
-      .dialog__body.padding-top.padding-bottom {
-      }
-      .dialog__body.padding-left.padding-right {
       }
     }
   }
@@ -104,6 +111,7 @@
     border: 1px solid;
     border-radius: var(--pa-size-radius, 3px);
     transition: var(--pa-animation-time, 0.2s);
+
     &:hover {
       color: var(--pa-color-primary);
     }
@@ -121,12 +129,14 @@
     &:has(.pa-dialog-content_footer_left),
     &:has(.pa-dialog-content_footer_right) {
       justify-content: space-between;
+
       .pa-dialog-content_footer_center {
         position: absolute;
         left: 50%;
         transform: translateX(-50%);
       }
     }
+
     .pa-dialog-content_footer_left,
     .pa-dialog-content_footer_right {
       display: flex;
@@ -143,6 +153,7 @@
   max-height: 100% !important;
   margin: 0 !important;
   border-radius: 0 !important;
+
   > .pa-dialog-content {
     max-height: 100% !important;
     border-radius: 0px !important;
