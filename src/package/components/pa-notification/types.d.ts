@@ -23,10 +23,6 @@ export type NotificationType = "danger" | "info" | "primary" | "success" | "warn
  */
 export type NotificationPosition = "bottom-left" | "bottom-right" | "top-left" | "top-right";
 /**
- * 组件属性定义
- * @description 通知组件的配置选项
- */
-/**
  * 组件属性
  * @type object
  * @description PaNotification 组件的属性类型定义
@@ -38,105 +34,105 @@ export type ComponentProps = {
    * @default undefined
    * @description 当设置该值时，会作为组件的唯一标识
    */
-  id?: string;
+  id?: string | undefined;
   /**
    * 自定义类名
    * @type Array<string> | string | undefined
    * @default undefined
    * @description 当设置该值时，会添加到组件的类名中
    */
-  class?: Array<string> | string;
+  class?: Array<string> | string | undefined;
   /**
    * 自定义样式
    * @type Record<string, string> | undefined
    * @default undefined
    * @description 当设置该值时，会添加到组件的样式中
    */
-  style?: Record<string, string>;
+  style?: Record<string, string> | undefined;
   /**
    * 通知标题
    * @type LanguagePackageType | string | undefined
    * @default undefined
    * @description 通知标题，支持多语言
    */
-  title?: LanguagePackageType | string;
+  title?: LanguagePackageType | string | undefined;
   /**
    * 通知内容
    * @type LanguagePackageType | string | undefined
    * @default undefined
    * @description 通知内容，支持多语言
    */
-  message?: LanguagePackageType | string;
+  message?: LanguagePackageType | string | undefined;
   /**
    * 通知类型
    * @type NotificationType | undefined
-   * @default 'primary'
+   * @default undefined
    * @description 通知类型，影响通知样式
    */
-  type?: NotificationType;
+  type?: NotificationType | undefined;
   /**
    * 显示时间
    * @type number | undefined
-   * @default 3000
+   * @default undefined
    * @description 显示时间，单位毫秒，设为 0 则不会自动关闭
    */
-  duration?: number;
+  duration?: number | undefined;
   /**
    * 自定义类名
    * @type string | undefined
    * @default undefined
    * @description 自定义通知容器的类名
    */
-  customClass?: string;
+  customClass?: string | undefined;
   /**
    * 点击回调
    * @type (() => void) | undefined
    * @default undefined
    * @description 点击通知时的回调函数
    */
-  onClick?: () => void;
+  onClick?: (() => void) | undefined;
   /**
    * 关闭回调
    * @type (() => void) | undefined
    * @default undefined
    * @description 关闭通知时的回调函数
    */
-  onClose?: () => void;
+  onClose?: (() => void) | undefined;
   /**
    * 偏移量
    * @type number | undefined
-   * @default 20
+   * @default undefined
    * @description 通知距离边缘的偏移量
    */
-  offset?: number;
+  offset?: number | undefined;
   /**
    * 显示位置
    * @type NotificationPosition | undefined
-   * @default 'top-right'
+   * @default undefined
    * @description 通知显示的位置
    */
-  position?: NotificationPosition;
+  position?: NotificationPosition | undefined;
   /**
    * 是否使用HTML字符串
    * @type boolean | undefined
-   * @default false
+   * @default undefined
    * @description 是否使用 HTML 字符串渲染消息
    */
-  dangerouslyUseHTMLString?: boolean;
+  dangerouslyUseHTMLString?: boolean | undefined;
   /**
    * 自定义图标
    * @type VNode | undefined
    * @default undefined
    * @description 自定义图标组件
    */
-  icon?: VNode;
+  icon?: VNode | undefined;
   /**
    * 层级
    * @type number | undefined
-   * @default 2050
+   * @default undefined
    * @description 通知的 z-index 值
    */
-  zIndex?: number;
+  zIndex?: number | undefined;
 };
 /**
  * 通知配置选项
@@ -204,7 +200,7 @@ export type NotificationManager = {
    * @param position - 位置
    * @returns number 偏移量
    */
-  getOffset: (position: string) => number;
+  getOffset: (position: NotificationPosition) => number;
   /**
    * 设置偏移量
    * @param id - 通知ID

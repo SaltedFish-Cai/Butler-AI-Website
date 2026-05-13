@@ -13,6 +13,19 @@ import MNotification from "./pa-notification.vue";
  * @description 导入通知相关类型
  */
 import type { NotificationOptions, NotificationInstance, NotificationManager } from "./types.d.ts";
+
+/**
+ * 基础偏移量
+ * @description 通知距离边缘的初始偏移量（像素）
+ */
+const BASE_OFFSET = 20;
+
+/**
+ * 通知间距
+ * @description 相邻通知之间的间距（像素）
+ */
+const NOTIFICATION_GAP = 16;
+
 /**
  * 通知管理器实现类
  * @description 通知管理器的具体实现
@@ -23,11 +36,13 @@ class NotificationManagerImpl implements NotificationManager {
    * @description 当前显示的所有通知实例
    */
   notifications: Array<NotificationInstance> = [];
+
   /**
    * 基础层级
    * @description 通知的基础 z-index 值
    */
   zIndex = 2050;
+
   /**
    * 添加通知
    * @param options - 通知配置
@@ -61,18 +76,30 @@ class NotificationManagerImpl implements NotificationManager {
       }
     };
     this.notifications.unshift(instance);
-    const handleClose = (event: CustomEvent) => {
+
+    /**
+     * 关闭事件处理
+     * @param event - 通知关闭事件
+     */
+    function handleClose(event: CustomEvent) {
       if (event.detail.id === id) {
-        this.close(id);
-        if (typeof window !== "undefined") window.removeEventListener("notification-closed", handleClose as EventListener);
+        if (typeof window !== "undefined") {
+          window.removeEventListener("notification-closed", handleClose as EventListener);
+        }
+        self.close(id);
       }
-    };
-    if (typeof window !== "undefined") window.addEventListener("notification-closed", handleClose as EventListener);
+    }
+
+    const self = this;
+    if (typeof window !== "undefined") {
+      window.addEventListener("notification-closed", handleClose as EventListener);
+    }
     setTimeout(() => {
       this.repositionNotifications();
     }, 100);
     return instance;
   }
+
   /**
    * 关闭通知
    * @param id - 通知ID
@@ -94,6 +121,7 @@ class NotificationManagerImpl implements NotificationManager {
       document.getElementById(`m-notification-container-${id}`)?.remove();
     }
   }
+
   /**
    * 关闭所有通知
    * @description 关闭所有当前显示的通知
@@ -103,6 +131,7 @@ class NotificationManagerImpl implements NotificationManager {
       instance.vm.$el.__vnode.ctx.exposed.close();
     });
   }
+
   /**
    * 获取偏移量
    * @param position - 位置参数
@@ -110,21 +139,20 @@ class NotificationManagerImpl implements NotificationManager {
    * @description 计算新通知的偏移量
    */
   getOffset(position: string): number {
-    const baseOffset = 20;
-    const gap = 16;
     const samePositionNotifications = this.notifications.filter(notification => notification.options.position === position);
     if (this.notifications.length === 1 || samePositionNotifications.length === 0) {
-      return baseOffset;
+      return BASE_OFFSET;
     }
     const lastNotification = samePositionNotifications[samePositionNotifications.length - 1];
     const lastEl = lastNotification.vm.$el;
     if (!lastEl) {
-      return baseOffset;
+      return BASE_OFFSET;
     }
     const lastHeight = lastEl.offsetHeight;
-    const lastOffset = lastNotification.options.offset || baseOffset;
-    return lastOffset + lastHeight + gap;
+    const lastOffset = lastNotification.options.offset || BASE_OFFSET;
+    return lastOffset + lastHeight + NOTIFICATION_GAP;
   }
+
   /**
    * 设置偏移量
    * @param id - 通知ID
@@ -137,6 +165,7 @@ class NotificationManagerImpl implements NotificationManager {
       instance.vm.$el.style.top = `${offset}px`;
     }
   }
+
   /**
    * 重新定位通知
    * @description 重新计算所有通知的位置
@@ -152,17 +181,18 @@ class NotificationManagerImpl implements NotificationManager {
     });
     Object.keys(notificationsByPosition).forEach(position => {
       const notifications = notificationsByPosition[position];
-      let offset = 20;
+      let offset = BASE_OFFSET;
       notifications.forEach(notification => {
         notification.vm.$el.style.top = `${offset}px`;
         const el = notification.vm.$el;
         if (el) {
-          offset += el.offsetHeight + 16;
+          offset += el.offsetHeight + NOTIFICATION_GAP;
         }
       });
     });
   }
 }
+
 /**
  * 通知管理器实例
  * @description 导出的通知管理器单例
