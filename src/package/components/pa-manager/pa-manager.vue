@@ -4,24 +4,11 @@
 
 <script lang="ts">
 /**
- * 模块导入
- * @description 导入 ZIndex 管理工具
- */
-import { useZIndex } from "element-plus";
-
-/**
  * 全局 Z 索引
  * @type number
  * @description SSR 安全的全局 Z 索引初始值
  */
-let globalZIndex = 1000;
-
-/**
- * ZIndex 管理器
- * @type { nextZIndex: () => number }
- * @description Element Plus 提供的 ZIndex 管理器
- */
-const { nextZIndex } = useZIndex();
+let globalZIndex = 2000;
 </script>
 
 <script lang="ts" setup name="PaManager">
@@ -61,7 +48,7 @@ import isNil from "../tools/is-nil";
  * @description 提供全局 Z 索引获取方法给子组件使用
  */
 const getPaAnagerGlobalZIndex = () => {
-  return nextZIndex() || globalZIndex++;
+  return globalZIndex++;
 };
 
 /**
