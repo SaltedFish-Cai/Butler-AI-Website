@@ -2,7 +2,7 @@
   <div
     class="pa-popover-reference"
     :class="[props.class, { 'is-disabled': props.disabled, 'is-click': props.trigger == 'click' }]"
-    :style="referenceStyle"
+    :style="[props.style, props.referenceStyle]"
     ref="popoverReferenceRef"
     @click="handleClick"
     @mouseenter="handleMouseEnter"
@@ -36,27 +36,62 @@
  * 模块导入
  * @description 导入 Vue 组合式 API
  */
-import { nextTick, onMounted, onUnmounted, useSlots, ref, Ref, inject, watch } from "vue";
+import { inject, nextTick, onBeforeUnmount, onMounted, ref, type Ref, useSlots, watch } from "vue";
 /**
  * 模块导入
  * @description 导入组件类型定义
  */
-import { ComponentProps, ComponentEmits } from "./types";
+import type { ComponentEmits, ComponentProps } from "./types";
 /**
  * 模块导入
  * @description 导入元素位置计算工具
  */
 import { getElementPosition } from "../utils/getElementPosition";
 /**
- * 模块导入
- * @description 导入 lodash 工具函数
+ * 位置偏移常量
+ * @description 弹窗与参考元素之间的像素偏移
  */
-import _ from "lodash";
+const OFFSET = 9;
 /**
- * 解构工具方法
- * @description 从 lodash 中解构 throttle 方法
+ * 安全距离常量
+ * @description 弹窗距离视口边界的最小安全距离
  */
-const { throttle } = _;
+const SAFE_DISTANCE = 10;
+
+/**
+ * 节流函数
+ * @param fn - 要节流的函数
+ * @param wait - 等待时间（毫秒）
+ * @param options - 配置选项
+ * @returns 节流后的函数
+ * @description trailing 模式节流实现
+ */
+function throttle(
+  fn: (...args: unknown[]) => void,
+  wait: number,
+  options?: { trailing?: boolean }
+): (...args: unknown[]) => void {
+  let lastTime = 0;
+  let timer: ReturnType<typeof setTimeout> | null = null;
+  const trailing = options?.trailing ?? true;
+  return function (this: unknown, ...args: unknown[]) {
+    const now = Date.now();
+    if (now - lastTime >= wait) {
+      if (timer) {
+        clearTimeout(timer);
+        timer = null;
+      }
+      fn.apply(this, args);
+      lastTime = now;
+    } else if (trailing && !timer) {
+      timer = setTimeout(() => {
+        fn.apply(this, args);
+        lastTime = Date.now();
+        timer = null;
+      }, wait - (now - lastTime));
+    }
+  };
+}
 /**
  * 组件属性
  * @type ComponentProps
@@ -67,7 +102,6 @@ const props = withDefaults(defineProps<ComponentProps>(), {
   teleportTo: "body",
   trigger: "click",
   contentClassName: "",
-  popoverWidth: undefined,
   stopPropagation: false,
   autoWidth: false,
   placement: "bottom",
@@ -138,13 +172,13 @@ const popoverStyle: Ref<Record<string, string>> = ref({
  * @type Ref<Record<string, string>>
  * @description 弹窗内容的样式对象
  */
-const popoverContentStyle = ref({});
+const popoverContentStyle = ref<Record<string, string>>({});
 /**
  * 弹窗箭头样式
  * @type Ref<Record<string, string>>
  * @description 弹窗箭头的样式对象
  */
-const popoverArrowStyle = ref({});
+const popoverArrowStyle = ref<Record<string, string>>({});
 /**
  * 弹窗可见状态
  * @type Ref<boolean>
@@ -153,10 +187,10 @@ const popoverArrowStyle = ref({});
 const visible = ref(false);
 /**
  * 悬停计时器
- * @type Ref<any>
+ * @type Ref<ReturnType<typeof setTimeout> | null>
  * @description 悬停延迟的计时器
  */
-const hoverTimer = ref<any>(null);
+const hoverTimer = ref<ReturnType<typeof setTimeout> | null>(null);
 /**
  * 插槽对象
  * @type Slots
@@ -275,8 +309,6 @@ function checkPositionOverOut() {
   const popoverRefPosition = getElementPosition(popoverRef.value);
   if (!ReferencePosition || !popoverRefPosition) return;
 
-  const OFFSET = 9;
-  const SAFE_DISTANCE = 10;
   const winH = window.innerHeight;
   const winW = window.innerWidth;
 
@@ -505,7 +537,7 @@ onMounted(() => {
  * 组件卸载生命周期
  * @description 组件卸载时的清理操作
  */
-onUnmounted(() => {
+onBeforeUnmount(() => {
   removeGlobalClickListener();
   if (hoverTimer.value) {
     clearTimeout(hoverTimer.value);
