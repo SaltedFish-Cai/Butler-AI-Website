@@ -108,9 +108,13 @@
           </div>
         </div>
         <div class="pa-timer-panel-footer">
-          <pa-button @click="setCurrentTime('start')" is="go" type="default">开始</pa-button>
-          <pa-button @click="setCurrentTime('current')" is="go" type="default">当前</pa-button>
-          <pa-button @click="setCurrentTime('end')" is="go" type="default">结束</pa-button>
+          <pa-button @click="setCurrentTime('start')" is="go" type="default" icon-name="clock-circle" size="small"
+            >开始</pa-button
+          >
+          <pa-button @click="setCurrentTime('current')" is="go" type="default" icon-name="clock-circle" size="small"
+            >当前</pa-button
+          >
+          <pa-button @click="setCurrentTime('end')" is="go" type="default" icon-name="clock-circle" size="small">结束</pa-button>
         </div>
       </div>
     </pa-popover>
@@ -150,7 +154,7 @@ type TimerComponentEmits = {
    * @param data - 变更数据
    * @returns void
    */
-  (e: "change", data: { value: string; oldValue: string | number }): void;
+  (e: "change", data: { value: string; oldValue: number | string }): void;
   /**
    * 失去焦点事件
    * @returns void

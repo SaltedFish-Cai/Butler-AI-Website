@@ -793,7 +793,7 @@ watch(
     }
 
     &.current-month {
-      border-radius: 3px;
+      border-radius: var(--pa-size-radius, 3px);
       color: var(--pa-color-font);
       transition: all var(--pa-animation-time, 0.2s);
     }
