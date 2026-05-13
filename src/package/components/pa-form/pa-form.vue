@@ -70,12 +70,17 @@ import { ref, Ref, reactive, watch, nextTick, computed, provide, onMounted, onUn
  * 表单控制器组件
  * @description 表单控制器组件
  */
-import mFormV2Control from "./pa-form-control.vue";
+import paFormControl from "./pa-form-control.vue";
 /**
  * 浏览器环境检测工具
  * @description 浏览器环境检测工具
  */
 import inBrowser from "../tools/inBrowser";
+/**
+ * 随机字符生成工具
+ * @description 随机字符生成工具
+ */
+import randChar from "../tools/rand-char";
 /**
  * Tab表单项组件
  * @description Tab表单项组件
@@ -100,7 +105,7 @@ import { ExMultipleConfigType, MultipleConfigType } from "./types";
  * 日期选择器快捷选项类型
  * @description 日期选择器快捷选项类型
  */
-import { DatePickerShortcut } from "../pa-time/type";
+import { DatePickerShortcut } from "../pa-time/types";
 /**
  * 全局配置类型
  * @description 全局配置类型
@@ -118,6 +123,7 @@ const { cloneDeep, isEqual, debounce } = _;
  * @description 组件属性
  */
 const props = withDefaults(defineProps<ComponentProps>(), {
+  id: randChar(),
   contrastData: () => ({}),
   useRequired: true,
   noLabel: false,
@@ -270,8 +276,8 @@ const languagePackage = computed(() => {
         inputPlaceholder: "请输入内容",
         selectPlaceholder: "请选择内容",
         clickChangeIcon: "点击更改图标",
-        empyt: "无数据",
-        empytFind: "无匹配数据",
+        empty: "无数据",
+        emptyFind: "无匹配数据",
         isDelete: "已删除"
       }
     : {
@@ -295,8 +301,8 @@ const languagePackage = computed(() => {
         inputPlaceholder: "Please Enter Content",
         selectPlaceholder: "Please Select Content",
         clickChangeIcon: "Click To Change Icon",
-        empyt: "No Data",
-        empytFind: "No Matching Data",
+        empty: "No Data",
+        emptyFind: "No Matching Data",
         isDelete: "Deleted"
       };
 });
@@ -365,7 +371,7 @@ const exCellConfig = ref({});
 const formState = ref("Pending");
 provide("changeFormState", (data: string) => (formState.value = data));
 
-provide("formCellChange", (data: FormDataType) => emit("formCellChange", data));
+provide("formCellChange", (data: { prop: string; value: any; oldValue: any; option: any }) => emit("formCellChange", data));
 
 /**
  * 基础表单数据（用于对比）

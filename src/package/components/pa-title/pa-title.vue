@@ -15,7 +15,7 @@
         </div>
       </div>
     </div>
-    <pa-line v-if="styleMode.lineConfig" v-bind="styleMode.lineConfig" />
+    <pa-line v-if="styleMode.lineConfig" v-bind="(styleMode.lineConfig as LineComponentProps)" />
 
     <div class="pa-title_tip" v-if="tipsPosition == 'bottom'">
       <slot name="tips">{{ tips }}</slot>
@@ -44,6 +44,11 @@ import { computed, ComputedRef, inject } from "vue";
 import type { ComponentProps } from "./types";
 /**
  * 模块导入
+ * @description 导入分割线组件类型定义
+ */
+import type { ComponentProps as LineComponentProps } from "../pa-line/types";
+/**
+ * 模块导入
  * @description 导入全局配置类型
  */
 import type { PancakeGlobalConfigType } from "../pa-manager/types";
@@ -61,7 +66,6 @@ const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<Pan
 const props = withDefaults(defineProps<ComponentProps>(), {
   tipsPosition: "bottom"
 });
-defineEmits();
 defineExpose();
 /**
  * padding class 缓存
@@ -80,7 +84,7 @@ const paddingRightClass = computed(() => (paddingSet.value.has("right") ? "paddi
 const styleMode = computed(() => {
   const model = props.styleMode || PancakeGlobalConfig.value?.titleStyle || "default";
   const padding = props.padding || [];
-  let lineConfig = false;
+  let lineConfig: LineComponentProps | boolean = false;
   if (props.lineConfig === true) {
     lineConfig = DEFAULT_LINE_CONFIG;
   } else if (typeof props.lineConfig === "object") {

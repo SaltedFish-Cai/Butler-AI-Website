@@ -357,7 +357,7 @@
 <script lang="ts" setup>
 import { ref, computed, onMounted, inject, Ref, watch, ComputedRef } from "vue";
 import formLabel from "./form-label.vue";
-import mFormV2Item from "./pa-form-item.vue"; // 添加这行
+import paFormItem from "./pa-form-item.vue"; // 添加这行
 import groupItem from "./components/group-item.vue";
 
 import { ConfigContextType, PaFormItemType } from "./types";

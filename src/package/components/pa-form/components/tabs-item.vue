@@ -51,7 +51,7 @@
                       ? item.titleLabel
                       : item.titleLabel[injectConfigContext.language as "en-US" | "zh-CN"]
                   }}
-                  ({{ tabIndex + 1 }})
+                  ({{ Number(tabIndex) + 1 }})
                 </template>
                 <template v-else>
                   {{ titleArr[tabIndex] }}
@@ -67,7 +67,7 @@
                       ? item.titleLabel
                       : item.titleLabel[injectConfigContext.language as "en-US" | "zh-CN"]
                   }}
-                  ({{ tabIndex + 1 }})
+                  ({{ Number(tabIndex) + 1 }})
                 </div>
                 <div
                   v-else
@@ -129,7 +129,7 @@
                       :id="id"
                       :item="tabFormItem"
                       :tabsProps="item.prop"
-                      :tabsIndex="tabIndex"
+                      :tabsIndex="Number(tabIndex)"
                       :ruleFormRef="getRuleTabsFormRef(tab.name)"
                     >
                       <template v-for="slot in Object.keys($slots)" #[slot]="scope">
@@ -159,7 +159,7 @@
                     ? item.titleLabel
                     : item.titleLabel[injectConfigContext.language as "en-US" | "zh-CN"]
                 }}
-                ({{ tabIndex + 1 }})
+                ({{ Number(tabIndex) + 1 }})
               </template>
               <template v-else>
                 {{ titleArr[tabIndex] }}
@@ -191,7 +191,7 @@
                       :item="tabFormItem"
                       :exData="tab[String(tabFormItem.prop)] || ''"
                       :tabsProps="item.prop"
-                      :tabsIndex="tabIndex"
+                      :tabsIndex="Number(tabIndex)"
                       :enforcementDisplay="true"
                       :ruleFormRef="getRuleTabsFormRef(tab.name)"
                     >
@@ -208,7 +208,7 @@
       </pa-tabs>
 
       <div v-else class="pa-display-style">
-        {{ injectConfigContext.languagePackage["empyt"] }}
+        {{ injectConfigContext.languagePackage["empty"] }}
       </div>
     </pa-form-item>
   </template>
@@ -234,7 +234,7 @@ import formItem from "../form-basics-element.vue";
  *
  * @description 表单控制器组件
  */
-import mFormV2Control from "../pa-form-control.vue";
+import paFormControl from "../pa-form-control.vue";
 /**
  *
  * @description 表单类型定义

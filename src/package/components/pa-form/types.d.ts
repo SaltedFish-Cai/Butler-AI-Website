@@ -464,10 +464,11 @@ export type ConfigContextType = {
   contrastData: Record<string, any>;
   /**
    * 是否一直对比
-   * @type boolean
+   * @type boolean | undefined
+   * @default undefined
    * @description 是否一直显示对比
    */
-  alwaysContrast: boolean;
+  alwaysContrast: boolean | undefined;
   /**
    * 是否展示模式
    * @type boolean

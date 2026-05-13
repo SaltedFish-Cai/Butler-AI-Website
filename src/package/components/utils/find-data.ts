@@ -8,7 +8,7 @@ import { LanguagePackageType, PaOptionType } from "../manager-type";
  * 默认激活文本
  * @description 默认的中英文激活文本
  */
-const DEFAULT_ACTIVE_TEXT: { "zh-CN": string; "en-US": string } = {
+const DEFAULT_ACTIVE_TEXT: LanguagePackageType = {
   "zh-CN": "是",
   "en-US": "Yes"
 };
@@ -17,7 +17,7 @@ const DEFAULT_ACTIVE_TEXT: { "zh-CN": string; "en-US": string } = {
  * 默认未激活文本
  * @description 默认的中英文未激活文本
  */
-const DEFAULT_INACTIVE_TEXT: { "zh-CN": string; "en-US": string } = {
+const DEFAULT_INACTIVE_TEXT: LanguagePackageType = {
   "zh-CN": "否",
   "en-US": "No"
 };

@@ -241,6 +241,7 @@ function handleIntersecting(el: HTMLElement): void {
   const name = el?.dataset?.name;
   if (name) {
     state.pageNum = Number(name.replace("more-", ""));
+    emit("intersecting", el);
   }
 }
 /**

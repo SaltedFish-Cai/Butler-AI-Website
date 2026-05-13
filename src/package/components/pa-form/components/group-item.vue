@@ -128,7 +128,9 @@ const injectConfigContext = inject<Ref<ConfigContextType>>(
  */
 const injectSetRule = inject<
   (item: PaFormChildType | PaFormItemType, type?: string, options?: { titleKey?: string; removeList?: string[] }) => void
->("setRule", () => {});
+>("setRule", data => {
+  console.log(data);
+});
 
 /**
  *

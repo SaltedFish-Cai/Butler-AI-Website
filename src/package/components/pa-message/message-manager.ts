@@ -108,11 +108,10 @@ class MessageManagerTypeImpl implements MessageManagerType {
   }
   /**
    * 获取偏移量
-   * @param _position - 位置参数（未使用）
    * @returns number 计算得出的偏移量
    * @description 计算新消息的偏移量
    */
-  getOffset(_position: string): number {
+  getOffset(): number {
     const baseOffset = 20;
     const gap = 16;
     const samePositionMessages = this.Messages;

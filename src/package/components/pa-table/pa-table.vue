@@ -247,7 +247,7 @@
             style="text-align: center"
           >
             <pa-icon name="empty" style="font-size: 40px"></pa-icon>
-            {{ languagePackage["empyt"] }}
+            {{ languagePackage["empty"] }}
           </div>
           <!-- footer -->
           <div v-if="(useSummary && !usePagination) || summaryFunction" class="pa-table_body_summary">
@@ -489,7 +489,7 @@ const languagePackage = computed(() => {
         groupText: "组与组关系",
         group: "搜索条件组",
         addGroup: "新增条件组",
-        endterSearch: "确认搜索",
+        enterSearch: "确认搜索",
         Advanced: "高级搜索",
         clenGroup: "删除当前组",
         tip: "温馨提示：",
@@ -498,7 +498,7 @@ const languagePackage = computed(() => {
         selectAdvanced: "请选择需要搜索的字段",
         inputAdvanced: "请输入搜索内容",
         selectConditional: "请选择关系类型",
-        empyt: "暂无数据",
+        empty: "暂无数据",
         selectAll: "一键全选",
         selectInvert: "取消全选",
         switchSelect: "切换全选",
@@ -560,7 +560,7 @@ const languagePackage = computed(() => {
         groupText: "Group And Group Relationships",
         group: "Search Condition Group",
         addGroup: "Add New Condition Group",
-        endterSearch: "Confirm Search",
+        enterSearch: "Confirm Search",
         Advanced: "Advanced Search",
         clenGroup: "Delete Current Group",
         tip: "Tips：",
@@ -569,7 +569,7 @@ const languagePackage = computed(() => {
         selectAdvanced: "Please Select The Fields To Search",
         inputAdvanced: "Please Enter The Search Content",
         selectConditional: "Please Select The Relationship Type",
-        empyt: "No Data",
+        empty: "No Data",
         selectAll: "Select All",
         selectInvert: "Invert Selection",
         switchSelect: "Switch Selection",

@@ -122,7 +122,7 @@ export type ComponentEmits = {
    * @param index - 标签页索引
    * @returns void
    */
-  (e: "tabChange", name: string, index: number): void;
+  (e: "tabChange", { name: string, index: number }): void;
 };
 export type ComponentItemProps = {
   /**

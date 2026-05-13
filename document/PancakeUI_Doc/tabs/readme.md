@@ -101,7 +101,7 @@
 | 事件名            | 描述           | 回调函数                                |
 | ----------------- | -------------- | --------------------------------------- |
 | update:modelValue | 更新绑定值事件 | `(value: string) => void`               |
-| tabChange         | 标签页切换事件 | `(name: string, index: number) => void` |
+| tabChange         | 标签页切换事件 | `{name: string, index: number} => void` |
 
 ## ComponentSlots（pa-tabs）
 

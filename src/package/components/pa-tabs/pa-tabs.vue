@@ -353,7 +353,7 @@ function changeTabs(name: string, index: number, scrollToIntersect = true) {
   slotIndex.value = index;
   activeName.value = name;
   emit("update:modelValue", name);
-  emit("tabChange", name, index);
+  emit("tabChange", { name, index });
   if (props.mode === "slider" && scrollToIntersect) {
     const targetEl = document.querySelector(`#${tabsId.value} #${tabsId.value}-${name}`);
     if (targetEl) mScrollRef.value?.setScrollToIntersect(targetEl);
