@@ -1,7 +1,7 @@
 /**
  * pa-development 组件单元测试
  */
-import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+import { describe, it, expect, vi, beforeEach } from "vitest";
 import { mount } from "@vue/test-utils";
 import { nextTick, defineComponent, h } from "vue";
 import type { ComputedRef } from "vue";
@@ -11,11 +11,6 @@ vi.mock("../feedback", () => ({
   M_Message: {
     success: vi.fn()
   }
-}));
-
-// Mock randChar
-vi.mock("../tools/rand-char", () => ({
-  randChar: () => "testrand"
 }));
 
 // Mock PaIcon

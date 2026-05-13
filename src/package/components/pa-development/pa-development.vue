@@ -22,7 +22,7 @@
  * Vue 核心响应式 API
  * @description Vue 核心响应式 API
  */
-import { reactive, inject, ComputedRef, onMounted, nextTick, onUnmounted } from "vue";
+import { reactive, inject, ComputedRef, onMounted, nextTick, onBeforeUnmount } from "vue";
 /**
  * 开发工具组件 Props 类型
  * @description 开发工具组件 Props 类型
@@ -130,10 +130,10 @@ onMounted(() => {
   }
 });
 /**
- * 组件卸载
- * @description 开发环境下组件卸载时移除右键菜单事件
+ * 组件卸载前
+ * @description 开发环境下组件卸载前移除右键菜单事件
  */
-onUnmounted(() => {
+onBeforeUnmount(() => {
   if (PancakeGlobalConfig.value.env == "development") {
     const element = typeof window !== "undefined" && window.document.getElementById(props.id);
     if (element) {
