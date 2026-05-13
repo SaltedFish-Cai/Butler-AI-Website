@@ -196,9 +196,10 @@ function hasListener(camelKey: string, kebabKey: string): boolean {
 }
 /**
  * 确认弹窗配置
- * @description 根据监听的事件类型缓存对应的确认弹窗配置，在 setup 阶段一次性计算
+ * @type {ReturnType<typeof computed>}
+ * @description 根据监听的事件类型缓存对应的确认弹窗配置
  */
-const confirmConfig = (() => {
+const confirmConfig = computed(() => {
   if (hasListener("onDeleteClick", "onDelete-click")) {
     return {
       title: { "en-US": "Notice", "zh-CN": "注意" },
@@ -227,7 +228,7 @@ const confirmConfig = (() => {
     };
   }
   return null;
-})();
+});
 /**
  * MutationObserver 引用
  * @type {MutationObserver | null}
@@ -298,7 +299,7 @@ function btnClick(event: MouseEvent) {
   if (props.useStop) event.stopPropagation();
   if (props.disabled) return;
 
-  const activeConfirmConfig = props.confirmConfig || confirmConfig;
+  const activeConfirmConfig = props.confirmConfig || confirmConfig.value;
   if (activeConfirmConfig) {
     M_MessageBox.confirm(activeConfirmConfig);
     return;

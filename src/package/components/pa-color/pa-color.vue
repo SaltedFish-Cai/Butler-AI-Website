@@ -148,7 +148,6 @@ function parseColor(color: string): boolean {
   }
   return false;
 }
-
 /**
  * 从 HSV 更新颜色值
  * @description 根据 HSV 值更新当前颜色并触发事件
@@ -176,7 +175,6 @@ function handleColorAreaMouseMove(e: MouseEvent) {
   value.value = 100 - (y / rect.height) * 100;
   updateColorFromHsv();
 }
-
 /**
  * 颜色区域鼠标抬起处理
  */
@@ -207,7 +205,6 @@ function handleHueAreaMouseUp() {
   document.removeEventListener("mousemove", handleHueAreaMouseMove);
   document.removeEventListener("mouseup", handleHueAreaMouseUp);
 }
-
 /**
  * 透明度区域鼠标移动处理
  * @param e - 鼠标事件
@@ -229,7 +226,6 @@ function handleAlphaAreaMouseUp() {
   document.removeEventListener("mousemove", handleAlphaAreaMouseMove);
   document.removeEventListener("mouseup", handleAlphaAreaMouseUp);
 }
-
 /**
  * 组件挂载生命周期
  * @description 初始化颜色值
@@ -251,7 +247,6 @@ onUnmounted(() => {
   document.removeEventListener("mousemove", handleAlphaAreaMouseMove);
   document.removeEventListener("mouseup", handleAlphaAreaMouseUp);
 });
-
 /**
  * 监听 modelValue 变化
  * @description 当外部传入的 modelValue 变化时更新组件内部状态
