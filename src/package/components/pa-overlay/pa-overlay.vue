@@ -19,7 +19,7 @@ import { ref, reactive, watch, inject } from "vue";
  * 模块导入
  * @description 导入组件类型定义
  */
-import { ComponentProps, ComponentEmits } from "./types.d.ts";
+import { ComponentProps, ComponentEmits } from "./types";
 /**
  * 组件属性定义
  * @description 定义组件的 props

@@ -37,7 +37,7 @@
   align-items: flex-start;
   cursor: pointer;
 
-  &__overlay {
+  &_header {
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -49,19 +49,19 @@
     }
   }
 
-  &--success {
+  &.success {
     color: var(--pa-color-success);
   }
 
-  &--warning {
+  &.warning {
     color: var(--pa-color-warning);
   }
 
-  &--danger {
+  &.danger {
     color: var(--pa-color-danger);
   }
 
-  &--info {
+  &.info {
     color: var(--pa-color-info);
   }
 

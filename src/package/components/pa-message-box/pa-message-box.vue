@@ -6,7 +6,7 @@
         <div
           v-show="visible"
           :id="id"
-          :class="['pa-message-box', type ? `pa-message-box--${type}` : '', customClass]"
+          :class="['pa-message-box', type ? `${type}` : '', customClass]"
           :style="boxStyles"
           role="alert"
         >
