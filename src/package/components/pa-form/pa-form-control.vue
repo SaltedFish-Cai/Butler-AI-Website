@@ -20,8 +20,16 @@ import { ConfigContextType, FormItemRule } from "./types";
  * 工具函数库
  * @description 工具函数库
  */
-import _ from "lodash";
-const { cloneDeep, isEqual } = _;
+/**
+ * 深拷贝工具函数
+ * @description 用于深拷贝对象
+ */
+import cloneDeep from "../tools/clone-deep";
+/**
+ * 深度相等判断工具函数
+ * @description 用于判断两个值是否深度相等
+ */
+import isEqual from "../tools/is-equal";
 
 /**
  * 组件属性

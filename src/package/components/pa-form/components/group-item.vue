@@ -84,8 +84,16 @@ import { findDataWithSelect } from "../../utils/find-data";
  *
  * @description 工具函数库
  */
-import _ from "lodash";
-const { isNil, isEqual } = _;
+/**
+ * 判断值是否为 null 或 undefined
+ * @description 用于检测空值
+ */
+import isNil from "../../tools/is-nil";
+/**
+ * 深度相等判断工具函数
+ * @description 用于判断两个值是否深度相等
+ */
+import isEqual from "../../tools/is-equal";
 /**
  *
  * @description 组件属性

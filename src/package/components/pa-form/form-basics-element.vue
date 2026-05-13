@@ -364,8 +364,11 @@ import { ConfigContextType, PaFormItemType } from "./types";
 import { PaOptionType } from "../manager-type";
 import { GetSystemAddressMap } from "../api/form";
 
-import _ from "lodash";
-const { isNil } = _;
+/**
+ * 判断值是否为 null 或 undefined
+ * @description 用于检测空值
+ */
+import isNil from "../tools/is-nil";
 
 type BasicsItemPropsType = {
   id: string;

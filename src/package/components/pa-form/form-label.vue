@@ -33,6 +33,10 @@ export type labelPropsType = {
   data: Record<string, string>;
 };
 defineProps<labelPropsType>();
+/**
+ * 标签容器引用
+ * @description 标签容器 DOM 引用
+ */
 const RefLabelContainer = ref();
 </script>
 

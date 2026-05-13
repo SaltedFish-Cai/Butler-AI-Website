@@ -65,7 +65,7 @@
  * Vue 核心响应式 API
  * @description Vue 核心响应式 API
  */
-import { ref, Ref, reactive, watch, nextTick, computed, provide, onMounted, onUnmounted, ComputedRef, inject } from "vue";
+import { ref, Ref, reactive, watch, nextTick, computed, provide, onMounted, onBeforeUnmount, ComputedRef, inject } from "vue";
 /**
  * 表单控制器组件
  * @description 表单控制器组件
@@ -112,11 +112,20 @@ import { DatePickerShortcut } from "../pa-time/types";
  */
 import { PancakeGlobalConfigType } from "../pa-manager/types";
 /**
- * 工具函数库
- * @description 工具函数库
+ * 深拷贝工具函数
+ * @description 用于深拷贝对象
  */
-import _ from "lodash";
-const { cloneDeep, isEqual, debounce } = _;
+import cloneDeep from "../tools/clone-deep";
+/**
+ * 深度相等判断工具函数
+ * @description 用于判断两个值是否深度相等
+ */
+import isEqual from "../tools/is-equal";
+/**
+ * 防抖工具函数
+ * @description 用于防抖处理
+ */
+import debounce from "../tools/debounce";
 
 /**
  * 组件属性
@@ -428,7 +437,7 @@ function createSpanStyle() {
       });
 
       observer.observe(boxWidth);
-      onUnmounted(() => observer.disconnect());
+      onBeforeUnmount(() => observer.disconnect());
     }
   }
 }
