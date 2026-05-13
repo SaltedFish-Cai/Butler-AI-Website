@@ -47,6 +47,7 @@ import type { ComponentEmits, ComponentProps } from "./types";
  * @description 导入元素位置计算工具
  */
 import { getElementPosition } from "../utils/getElementPosition";
+import throttle from "../tools/throttle";
 /**
  * 位置偏移常量
  * @description 弹窗与参考元素之间的像素偏移
@@ -58,40 +59,6 @@ const OFFSET = 9;
  */
 const SAFE_DISTANCE = 10;
 
-/**
- * 节流函数
- * @param fn - 要节流的函数
- * @param wait - 等待时间（毫秒）
- * @param options - 配置选项
- * @returns 节流后的函数
- * @description trailing 模式节流实现
- */
-function throttle(
-  fn: (...args: unknown[]) => void,
-  wait: number,
-  options?: { trailing?: boolean }
-): (...args: unknown[]) => void {
-  let lastTime = 0;
-  let timer: ReturnType<typeof setTimeout> | null = null;
-  const trailing = options?.trailing ?? true;
-  return function (this: unknown, ...args: unknown[]) {
-    const now = Date.now();
-    if (now - lastTime >= wait) {
-      if (timer) {
-        clearTimeout(timer);
-        timer = null;
-      }
-      fn.apply(this, args);
-      lastTime = now;
-    } else if (trailing && !timer) {
-      timer = setTimeout(() => {
-        fn.apply(this, args);
-        lastTime = Date.now();
-        timer = null;
-      }, wait - (now - lastTime));
-    }
-  };
-}
 /**
  * 组件属性
  * @type ComponentProps
@@ -441,7 +408,7 @@ function startObserving() {
       animationFrameId.value = requestAnimationFrame(throttleCheckPosition);
     }
   };
-  const throttleCheckPosition = throttle(checkPosition, 300, { trailing: true });
+  const throttleCheckPosition = throttle(checkPosition, 30, { trailing: true });
   animationFrameId.value = requestAnimationFrame(throttleCheckPosition);
 }
 /**
