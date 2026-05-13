@@ -127,14 +127,9 @@ import inBrowser from "../tools/inBrowser";
 import { getElementPosition } from "../utils/getElementPosition";
 /**
  * 模块导入
- * @description 导入 lodash 工具库
+ * @description 导入防抖函数工具
  */
-import _ from "lodash";
-/**
- * 解构赋值
- * @description 从 lodash 中解构出 debounce 函数
- */
-const { debounce } = _;
+import debounce from "../tools/debounce";
 /**
  * 组件属性
  * @type ComponentProps
@@ -252,18 +247,14 @@ const emit = defineEmits<ComponentEmits>();
  * 防抖函数
  * @description 防抖处理标签页尺寸计算
  */
-const _debounce = debounce(setTabsBoxSize, 10, { trailing: true });
+const _debounce = debounce(setTabsBoxSize, 10);
 /**
  * 标题防抖函数
  * @description 防抖处理标题数据更新
  */
-const _debounceTitle = debounce(
-  () => {
-    createSlotData(true);
-  },
-  500,
-  { trailing: true }
-);
+const _debounceTitle = debounce(() => {
+  createSlotData(true);
+}, 500);
 /**
  * DOM 观察器
  * @type {MutationObserver | undefined}
@@ -331,6 +322,12 @@ onMounted(() => {
   });
 });
 /**
+ * 防抖定时器 ID
+ * @type {number | undefined}
+ * @description 用于清理 setLabelPosition 中的防抖定时器
+ */
+let labelPositionTimer: ReturnType<typeof setTimeout> | undefined;
+/**
  * 组件卸载生命周期
  * @description 清理观察器和事件监听
  */
@@ -339,6 +336,9 @@ onUnmounted(() => {
   const tabsTitleElement = tabsTitleRef.value;
   if (tabsTitleElement) {
     tabsTitleElement.removeEventListener("wheel", handleWheel);
+  }
+  if (labelPositionTimer) {
+    clearTimeout(labelPositionTimer);
   }
 });
 /**
@@ -554,7 +554,10 @@ function handleMouseLeave() {
  */
 function setLabelPosition() {
   if (props.styleMode != "border-card") return;
-  setTimeout(() => {
+  if (labelPositionTimer) {
+    clearTimeout(labelPositionTimer);
+  }
+  labelPositionTimer = setTimeout(() => {
     const el: HTMLElement | null =
       typeof window !== "undefined" ? window.document?.querySelector(`.pa-tabs-title_action_${tabsId.value}`) : null;
     if (el) {

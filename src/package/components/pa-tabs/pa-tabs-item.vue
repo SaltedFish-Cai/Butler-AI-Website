@@ -50,7 +50,7 @@
  * 模块导入
  * @description 导入 Vue 组合式 API
  */
-import { ref, onMounted, inject, provide, watch, computed, ComputedRef } from "vue";
+import { ref, onMounted, onBeforeUnmount, inject, provide, watch, computed, ComputedRef } from "vue";
 /**
  * 模块导入
  * @description 导入组件属性类型定义
@@ -122,6 +122,12 @@ const ScrollbarRef = ref<any>();
  */
 const init = ref(false);
 /**
+ * 懒加载定时器 ID
+ * @type {number | undefined}
+ * @description 用于清理懒加载定时器
+ */
+let lazyTimer: ReturnType<typeof setTimeout> | undefined;
+/**
  * 组件挂载生命周期
  * @description 初始化组件懒加载状态
  */
@@ -131,12 +137,21 @@ onMounted(() => {
   } else if (props.lazy == false) {
     init.value = true;
   } else {
-    setTimeout(
+    lazyTimer = setTimeout(
       () => {
         init.value = true;
       },
       typeof props.lazy === "number" ? props.lazy : 3000
     );
+  }
+});
+/**
+ * 组件卸载前生命周期
+ * @description 清理懒加载定时器
+ */
+onBeforeUnmount(() => {
+  if (lazyTimer) {
+    clearTimeout(lazyTimer);
   }
 });
 /**
