@@ -45,14 +45,6 @@
     color: var(--pa-color-info);
   }
 
-  .pa-message__title {
-    font-size: calc(var(--pa-size-font, 13px) + 1px);
-    font-weight: 500;
-    color: var(--pa-size-font);
-    display: flex;
-    align-items: center;
-  }
-
   .pa-message__content {
     font-size: var(--pa-size-font, 13px);
     color: var(--pa-size-font);

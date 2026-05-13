@@ -13,10 +13,7 @@ import MMessage from "./pa-message.vue";
  * @description 导入消息相关类型
  */
 import type { MessageOptions, MessageInstance, MessageManagerType } from "./types.d.ts";
-/**
- * 消息管理器实现类
- * @description 消息管理器的具体实现
- */
+
 class MessageManagerTypeImpl implements MessageManagerType {
   /**
    * 消息列表
@@ -28,18 +25,12 @@ class MessageManagerTypeImpl implements MessageManagerType {
    * @description 消息的基础 z-index 值
    */
   zIndex = 2050;
-  /**
-   * 添加消息
-   * @param options - 消息配置
-   * @returns MessageInstance 消息实例
-   * @description 创建并显示一条新消息
-   */
+
   add(options: MessageOptions): MessageInstance {
     const id = `Message_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
     const languageKey = (typeof window !== "undefined" && window.PancakeGlobalConfig?.language) || "zh-CN";
     const mergedOptions = {
       ...options,
-      title: typeof options.title === "string" ? options.title : options.title?.[languageKey] || "",
       message: typeof options.message === "string" ? options.message : options.message?.[languageKey] || "",
       zIndex: options.zIndex || this.zIndex++,
       position: "center"
@@ -64,25 +55,24 @@ class MessageManagerTypeImpl implements MessageManagerType {
       }
     };
     this.Messages.unshift(instance);
+
     const handleClose = (event: CustomEvent) => {
       if (event.detail.id === id) {
+        window.removeEventListener("Message-closed", handleClose as EventListener);
         this.close(id);
-        if (typeof window !== "undefined") window.removeEventListener("Message-closed", handleClose as EventListener);
       }
     };
-    if (typeof window !== "undefined") window.addEventListener("Message-closed", handleClose as EventListener);
+    if (typeof window !== "undefined") {
+      window.addEventListener("Message-closed", handleClose as EventListener);
+    }
+
     setTimeout(() => {
       this.repositionMessages();
     }, 100);
     return instance;
   }
-  /**
-   * 关闭消息
-   * @param id - 消息ID
-   * @param forceClose - 是否强制关闭
-   * @description 关闭指定ID的消息
-   */
-  close(id: string, forceClose: boolean = false): void {
+
+  close(id: string, forceClose?: boolean): void {
     const index = this.Messages.findIndex(Message => Message.id === id);
     if (index !== -1) {
       const instance = this.Messages[index];
@@ -97,20 +87,13 @@ class MessageManagerTypeImpl implements MessageManagerType {
       document.getElementById(`m-message-container-${id}`)?.remove();
     }
   }
-  /**
-   * 关闭所有消息
-   * @description 关闭所有当前显示的消息
-   */
+
   closeAll(): void {
     this.Messages.forEach(instance => {
       instance.vm.$el.__vnode.ctx.exposed.close();
     });
   }
-  /**
-   * 获取偏移量
-   * @returns number 计算得出的偏移量
-   * @description 计算新消息的偏移量
-   */
+
   getOffset(): number {
     const baseOffset = 20;
     const gap = 16;
@@ -127,22 +110,14 @@ class MessageManagerTypeImpl implements MessageManagerType {
     const lastOffset = lastMessage.options.offset || baseOffset;
     return lastOffset + lastHeight + gap;
   }
-  /**
-   * 设置偏移量
-   * @param id - 消息ID
-   * @param offset - 偏移量
-   * @description 设置指定消息的偏移量
-   */
+
   setOffset(id: string, offset: number): void {
     const instance = this.Messages.find(Message => Message.id === id);
     if (instance && instance.vm.$el) {
       instance.vm.$el.style.top = `${offset}px`;
     }
   }
-  /**
-   * 重新定位消息
-   * @description 重新计算所有消息的位置
-   */
+
   private repositionMessages(): void {
     const MessagesByPosition: Record<string, Array<MessageInstance>> = {};
     this.Messages.forEach(Message => {
@@ -165,6 +140,7 @@ class MessageManagerTypeImpl implements MessageManagerType {
     });
   }
 }
+
 /**
  * 消息管理器实例
  * @description 导出的消息管理器单例

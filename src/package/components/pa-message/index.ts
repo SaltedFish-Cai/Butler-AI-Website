@@ -32,7 +32,7 @@ Message.success = (options: MessageOptions | string): MessageInstance => {
   if (typeof options === "string") {
     return Message({ message: options, type: "success" });
   }
-  return Message({ ...options, type: "success" });
+  return Message({ type: "success", ...options });
 };
 /**
  * 警告消息
@@ -44,7 +44,7 @@ Message.warning = (options: MessageOptions | string): MessageInstance => {
   if (typeof options === "string") {
     return Message({ message: options, type: "warning" });
   }
-  return Message({ ...options, type: "warning" });
+  return Message({ type: "warning", ...options });
 };
 /**
  * 危险消息
@@ -56,7 +56,7 @@ Message.danger = (options: MessageOptions | string): MessageInstance => {
   if (typeof options === "string") {
     return Message({ message: options, type: "danger" });
   }
-  return Message({ ...options, type: "danger" });
+  return Message({ type: "danger", ...options });
 };
 /**
  * 信息消息
@@ -68,7 +68,7 @@ Message.info = (options: MessageOptions | string): MessageInstance => {
   if (typeof options === "string") {
     return Message({ message: options, type: "info" });
   }
-  return Message({ ...options, type: "info" });
+  return Message({ type: "info", ...options });
 };
 /**
  * 关闭所有消息
