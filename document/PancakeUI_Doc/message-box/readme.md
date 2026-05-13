@@ -44,27 +44,29 @@ M_MessageBox.confirm({
 
 ## ComponentProps
 
-| 属性名                   | 描述                                                                 | 类型                                                                     | 默认值     |
-| ------------------------ | -------------------------------------------------------------------- | ------------------------------------------------------------------------ | ---------- |
-| id                       | 唯一标识                                                             | `string`                                                                 | -          |
-| class                    | 自定义类名                                                           | `Array<string>` \| `string`                                              | -          |
-| style                    | 自定义样式                                                           | `Record<string, string>`                                                 | -          |
-| title                    | 弹窗标题，支持多语言                                                 | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) \| `string` | -          |
-| message                  | 弹窗消息，支持多语言                                                 | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) \| `string` | -          |
-| isType                   | 是否为确认弹窗                                                       | `'confirm'`                                                              | -          |
-| type                     | 弹窗类型，影响弹窗样式                                               | `MessageBoxType`                                                         | -          |
-| customClass              | 自定义弹窗类名                                                       | `string`                                                                 | -          |
-| confirmButtonText        | 确认按钮文本，支持多语言                                             | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) \| `string` | -          |
-| cancelButtonText         | 取消按钮文本，支持多语言                                             | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) \| `string` | -          |
-| confirmButtonIcon        | 确认按钮图标                                                         | `string`                                                                 | -          |
-| cancelButtonIcon         | 取消按钮图标                                                         | `string`                                                                 | -          |
-| onConfirm                | 确认按钮点击回调函数                                                 | `() => void`                                                             | -          |
-| onClose                  | 取消按钮点击回调函数                                                 | `() => void`                                                             | -          |
-| dangerouslyUseHTMLString | 是否使用 HTML 字符串渲染消息                                         | `boolean`                                                                | `false`    |
-| zIndex                   | 弹窗的 z-index 值                                                    | `number`                                                                 | `2050`     |
-| closeOnPressEscape       | 是否在按下 ESC 键时关闭                                              | `boolean`                                                                | `true`     |
+| 属性名                   | 描述                         | 类型                                                                                     | 默认值  |
+| ------------------------ | ---------------------------- | ---------------------------------------------------------------------------------------- | ------- |
+| id                       | 唯一标识                     | `string`                                                                                 | -       |
+| class                    | 自定义类名                   | `Array<string>` \| `string`                                                              | -       |
+| style                    | 自定义样式                   | `Record<string, string>`                                                                 | -       |
+| title                    | 弹窗标题，支持多语言         | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) \| `string` | -       |
+| message                  | 弹窗消息，支持多语言         | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) \| `string` | -       |
+| isType                   | 是否为确认弹窗               | `'confirm'`                                                                              | -       |
+| type                     | 弹窗类型，影响弹窗样式       | `MessageBoxType`                                                                         | -       |
+| customClass              | 自定义弹窗类名               | `string`                                                                                 | -       |
+| confirmButtonText        | 确认按钮文本，支持多语言     | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) \| `string` | -       |
+| cancelButtonText         | 取消按钮文本，支持多语言     | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) \| `string` | -       |
+| confirmButtonIcon        | 确认按钮图标                 | `string`                                                                                 | -       |
+| cancelButtonIcon         | 取消按钮图标                 | `string`                                                                                 | -       |
+| onConfirm                | 确认按钮点击回调函数         | `() => void`                                                                             | -       |
+| onClose                  | 取消按钮点击回调函数         | `() => void`                                                                             | -       |
+| dangerouslyUseHTMLString | 是否使用 HTML 字符串渲染消息 | `boolean`                                                                                | `false` |
+| zIndex                   | 弹窗的 z-index 值            | `number`                                                                                 | `2050`  |
+| closeOnPressEscape       | 是否在按下 ESC 键时关闭      | `boolean`                                                                                | `true`  |
 
 ## MessageBoxType
+
+消息框类型，用于设置弹窗的样式主题。
 
 | 类型值      | 说明     |
 | ----------- | -------- |
@@ -76,12 +78,12 @@ M_MessageBox.confirm({
 
 ## MessageBoxInstance
 
-| 属性名  | 类型                   | 说明               |
-| ------- | ---------------------- | ------------------ |
-| id      | `string`               | 消息框实例的唯一标识 |
-| vm      | `ComponentPublicInstance` | Vue 组件实例   |
-| options | `MessageBoxOptions`    | 消息框的配置选项   |
-| close   | `() => void`           | 关闭消息框的方法   |
+| 属性名  | 类型                      | 说明                 |
+| ------- | ------------------------- | -------------------- |
+| id      | `string`                  | 消息框实例的唯一标识 |
+| vm      | `ComponentPublicInstance` | Vue 组件实例         |
+| options | `MessageBoxOptions`       | 消息框的配置选项     |
+| close   | `() => void`              | 关闭消息框的方法     |
 
 ## 最佳实践
 

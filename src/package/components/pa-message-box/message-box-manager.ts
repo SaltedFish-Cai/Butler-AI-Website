@@ -1,4 +1,30 @@
 /**
+ * 模块级变量
+ * @description 检查 window 对象是否可用
+ */
+const isBrowser = typeof window !== "undefined";
+/**
+ * 模块级变量
+ * @description PancakeGlobalConfig 引用
+ */
+const PancakeGlobalConfig = isBrowser ? window.PancakeGlobalConfig : undefined;
+/**
+ * 模块级函数
+ * @description 获取语言键值
+ * @returns 语言键值，默认为 zh-CN
+ */
+function getLanguageKey(): string {
+  return PancakeGlobalConfig?.language || "zh-CN";
+}
+/**
+ * 模块级函数
+ * @description 生成唯一 ID
+ * @returns 唯一标识字符串
+ */
+function generateId(): string {
+  return `notification_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+}
+/**
  * 模块导入
  * @description 导入 Vue 创建应用和渲染函数
  */
@@ -30,8 +56,8 @@ class MessageBoxManagerImpl implements MessageBoxManager {
    * @description 创建并显示一条新消息框
    */
   add(options: MessageBoxOptions): MessageBoxInstance {
-    const id = `notification_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-    const languageKey = (typeof window !== "undefined" && window.PancakeGlobalConfig?.language) || "zh-CN";
+    const id = generateId();
+    const languageKey = getLanguageKey();
     const mergedOptions = {
       ...options,
       title: typeof options.title === "string" ? options.title : options.title?.[languageKey] || "",
@@ -68,10 +94,10 @@ class MessageBoxManagerImpl implements MessageBoxManager {
     const handleClose = (event: CustomEvent) => {
       if (event.detail.id === id) {
         this.close(id);
-        if (typeof window !== "undefined") window.removeEventListener("notification-closed", handleClose as EventListener);
+        window.removeEventListener("notification-closed", handleClose as EventListener);
       }
     };
-    if (typeof window !== "undefined") window.addEventListener("notification-closed", handleClose as EventListener);
+    window.addEventListener("notification-closed", handleClose as EventListener);
     return instance;
   }
   /**
@@ -100,12 +126,13 @@ class MessageBoxManagerImpl implements MessageBoxManager {
    */
   closeAll(): void {
     this.notifications.forEach(instance => {
-      instance.vm.$el.__vnode.ctx.exposed.close();
+      instance.vm.$.exposed?.close();
     });
   }
 }
 /**
  * 消息框管理器实例
+ * @type MessageBoxManager
  * @description 导出的消息框管理器单例
  */
 export const messageBoxManager = new MessageBoxManagerImpl();

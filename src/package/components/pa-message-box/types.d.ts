@@ -18,10 +18,6 @@ import { LanguagePackageType } from "../manager-type";
  */
 export type MessageBoxType = "danger" | "info" | "primary" | "success" | "warning";
 /**
- * 组件属性定义
- * @description 确认弹窗组件的配置选项
- */
-/**
  * 组件属性
  * @type object
  * @description PaMessageBox 组件的属性类型定义
@@ -68,7 +64,7 @@ export type ComponentProps = {
    * @default undefined
    * @description 是否为确认弹窗
    */
-  isType?: "confirm" | undefined;
+  isType?: "confirm";
   /**
    * 消息类型
    * @type MessageBoxType | undefined
@@ -149,6 +145,7 @@ export type ComponentProps = {
 };
 /**
  * 消息框配置选项
+ * @type ComponentProps
  * @description 消息框配置选项别名，与 ComponentProps 保持一致
  */
 export type MessageBoxOptions = ComponentProps;
@@ -197,15 +194,18 @@ export type MessageBoxManager = {
    * 添加消息框
    * @param options - 消息框配置
    * @returns MessageBoxInstance 消息框实例
+   * @description 添加一个消息框
    */
   add: (options: MessageBoxOptions) => MessageBoxInstance;
   /**
    * 关闭消息框
    * @param id - 消息框ID
+   * @description 关闭指定ID的消息框
    */
   close: (id: string) => void;
   /**
    * 关闭所有消息框
+   * @description 关闭所有当前显示的消息框
    */
   closeAll: () => void;
 };
