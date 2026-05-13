@@ -1,46 +1,23 @@
 <template>
-  <pa-overlay
-    :modelValue="state.visible"
-    @click-overlay="closeOnClickModal && closeMenu()"
-    :class="[
-      position == 'bottom'
-        ? 'flex-end-center'
-        : position == 'left'
-        ? 'flex-center-start'
-        : position == 'top'
-        ? 'flex-start-center'
-        : 'flex-center-end'
-    ]"
-  >
-    <transition
-      :name="
-        position == 'bottom'
-          ? 'mo-animation-fadeDownBig'
-          : position == 'left'
-          ? 'mo-animation-fadeLeftBig'
-          : position == 'top'
-          ? 'mo-animation-fadeUpBig'
-          : 'mo-animation-fadeRightBig'
-      "
-    >
-      <div class="pa-drawer" v-if="state.visible">
-        <div class="pa-drawer-content" :class="[position]" :style="{ width: width, height: height }">
+  <pa-overlay :modelValue="state.visible" @click-overlay="closeOnClickModal && closeMenu()" :class="positionClass">
+    <transition :name="transitionName">
+      <div v-if="state.visible" class="pa-drawer">
+        <div class="pa-drawer-content" :class="position" :style="contentStyle">
           <div class="pa-drawer-content_header">
             <slot name="header">
               <div class="title_body">
                 <div class="flex-center">
                   <slot name="title">
-                    <div class="is_title_body" :style="{ fontWeight: subTitle ? 'bold' : 'bold' }">
-                      {{ typeof title === "string" ? title : title[language] }}
+                    <div class="is_title_body" :style="{ fontWeight: 'bold' }">
+                      {{ displayTitle }}
                     </div>
                   </slot>
                 </div>
-                <div v-if="subTitle" class="sub_title_body" :style="{ fontWeight: subTitle ? 'bold' : 'normal' }">
+                <div v-if="subTitle" class="sub_title_body" :style="{ fontWeight: 'bold' }">
                   <slot name="subTitle">
-                    {{ typeof subTitle === "string" ? subTitle : subTitle[language] }}
+                    {{ displaySubTitle }}
                   </slot>
                 </div>
-                <div><div></div></div>
               </div>
             </slot>
             <div class="pa-drawer-content_header_close">
@@ -49,29 +26,12 @@
           </div>
           <div class="pa-drawer-content_body">
             <pa-scrollbar always v-if="scroll" :useScrollX="useScrollX">
-              <div
-                class="pa-drawer-content_body_content flex-col"
-                :class="{
-                  'padding-top': padding?.includes('top') || padding?.includes('all'),
-                  'padding-left': padding?.includes('left') || padding?.includes('all'),
-                  'padding-bottom': padding?.includes('bottom') || padding?.includes('all'),
-                  'padding-right': padding?.includes('right') || padding?.includes('all')
-                }"
-              >
-                <slot></slot>
+              <div class="pa-drawer-content_body_content flex-col" :class="paddingClasses">
+                <slot />
               </div>
             </pa-scrollbar>
-            <div
-              v-else
-              class="pa-drawer-content_body_content flex-col"
-              :class="{
-                'padding-top': padding?.includes('top') || padding?.includes('all'),
-                'padding-left': padding?.includes('left') || padding?.includes('all'),
-                'padding-bottom': padding?.includes('bottom') || padding?.includes('all'),
-                'padding-right': padding?.includes('right') || padding?.includes('all')
-              }"
-            >
-              <slot></slot>
+            <div v-else class="pa-drawer-content_body_content flex-col" :class="paddingClasses">
+              <slot />
             </div>
           </div>
           <div v-if="$slots['footer']" class="pa-drawer-content_footer">
@@ -139,6 +99,60 @@ const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<Pan
  * @description 当前使用的语言
  */
 const language = computed(() => PancakeGlobalConfig.value?.language?.value || "zh-CN");
+/**
+ * 位置映射表
+ * @description 存储位置对应的样式类和动画名称
+ */
+const positionMap = {
+  bottom: { class: "flex-end-center", animation: "mo-animation-fadeDownBig" },
+  left: { class: "flex-center-start", animation: "mo-animation-fadeLeftBig" },
+  top: { class: "flex-start-center", animation: "mo-animation-fadeUpBig" },
+  right: { class: "flex-center-end", animation: "mo-animation-fadeRightBig" }
+} as const;
+/**
+ * 抽屉弹窗样式类
+ * @type ComputedRef<string>
+ * @description 根据位置获取对应的样式类名
+ */
+const positionClass = computed(() => positionMap[props.position]?.class || "flex-center-end");
+/**
+ * 抽屉弹窗动画名称
+ * @type ComputedRef<string>
+ * @description 根据位置获取对应的动画名称
+ */
+const transitionName = computed(() => positionMap[props.position]?.animation || "mo-animation-fadeRightBig");
+/**
+ * 抽屉弹窗内容样式
+ * @type ComputedRef<{ width?: string; height?: string }>
+ * @description 抽屉弹窗的宽度和高度样式
+ */
+const contentStyle = computed(() => ({
+  width: props.width,
+  height: props.height
+}));
+/**
+ * 内边距样式类
+ * @type ComputedRef<Record<string, boolean>>
+ * @description 根据 padding 属性生成的样式类
+ */
+const paddingClasses = computed(() => ({
+  "padding-top": props.padding?.includes("top") || props.padding?.includes("all"),
+  "padding-left": props.padding?.includes("left") || props.padding?.includes("all"),
+  "padding-bottom": props.padding?.includes("bottom") || props.padding?.includes("all"),
+  "padding-right": props.padding?.includes("right") || props.padding?.includes("all")
+}));
+/**
+ * 显示标题
+ * @type ComputedRef<string>
+ * @description 根据语言返回对应的标题文本
+ */
+const displayTitle = computed(() => (typeof props.title === "string" ? props.title : props.title[language.value]));
+/**
+ * 显示副标题
+ * @type ComputedRef<string>
+ * @description 根据语言返回对应的副标题文本
+ */
+const displaySubTitle = computed(() => (typeof props.subTitle === "string" ? props.subTitle : props.subTitle[language.value]));
 /**
  * 关闭抽屉弹窗
  * @description 关闭抽屉弹窗并触发相关事件

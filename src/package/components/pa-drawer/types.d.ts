@@ -8,10 +8,6 @@
  */
 import { LanguagePackageType } from "../manager-type";
 /**
- * 组件属性定义
- * @description 抽屉弹窗组件的属性类型
- */
-/**
  * 组件属性
  * @type object
  * @description PaDrawer 组件的属性类型定义
@@ -115,10 +111,6 @@ export type ComponentProps = {
    */
   position?: "bottom" | "left" | "right" | "top";
 };
-/**
- * 组件事件类型
- * @description 定义组件可触发的事件
- */
 /**
  * 组件事件类型
  * @type object
