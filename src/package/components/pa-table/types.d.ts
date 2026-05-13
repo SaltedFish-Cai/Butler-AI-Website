@@ -821,6 +821,19 @@ export namespace PaTableUseType {
     props: string;
   };
 
+  export type PaTableInDataType = {
+    parentRenderIndex: number;
+    rowIndex: number;
+    renderIndex: number;
+    isOpenChild?: boolean;
+    isSelected?: boolean;
+    isIndeterminate?: boolean;
+    children?: dataType;
+    type?: string;
+    name?: string;
+    errorList?: Record<string, string>;
+  };
+
   /**
    * 表格查询参数/
   export type TableQueryType = {
