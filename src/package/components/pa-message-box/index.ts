@@ -2,7 +2,7 @@
  * 模块导入
  * @description 导入消息框配置类型
  */
-import type { MessageBoxOptions, MessageBoxInstance } from "./type";
+import type { MessageBoxOptions, MessageBoxInstance } from "./types";
 /**
  * 模块导入
  * @description 导入消息框管理器

@@ -1,9 +1,7 @@
 <template>
-  <pa-button font="star_arc_line" @click="debouncedClick1">快捷弹窗1</pa-button>
-
-  <pa-button font="star_arc_line" @click="debouncedClick2">快捷弹窗2</pa-button>
-
-  <pa-button font="star_arc_line" @click="debouncedClick3">自定义弹窗</pa-button>
+  <pa-button @click="clickConfirm" type="success">快捷 Confirm</pa-button>
+  <pa-button @click="clickDelete" type="danger">快捷 Delete</pa-button>
+  <pa-button @click="clickCustomConfirm" type="info">快捷 Custom Confirm</pa-button>
 </template>
 
 <script lang="ts" setup>
@@ -16,7 +14,7 @@ import { M_MessageBox, M_Message } from "PancakeUI";
  * 快捷确认弹窗
  * @description 显示快捷确认消息框
  */
-function debouncedClick1() {
+function clickConfirm() {
   M_MessageBox.confirm("是否继续", () => {
     M_Message.success("确认");
   });
@@ -25,7 +23,7 @@ function debouncedClick1() {
  * 删除确认弹窗
  * @description 显示删除确认消息框
  */
-function debouncedClick2() {
+function clickDelete() {
   M_MessageBox.delete({
     onConfirm: () => {
       M_Message.success("确认");
@@ -39,7 +37,7 @@ function debouncedClick2() {
  * 自定义弹窗
  * @description 显示自定义配置的消息框
  */
-function debouncedClick3() {
+function clickCustomConfirm() {
   M_MessageBox.confirm({
     title: "自定义弹窗",
     type: "success",

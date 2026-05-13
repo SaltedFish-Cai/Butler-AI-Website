@@ -162,7 +162,7 @@ const verticalOffset = ref(offset.value);
  * @description 计算通知的样式对象
  */
 const styles = computed(() => {
-  const style: Record<string, string | number> = {
+  const style: Record<string, number | string> = {
     zIndex: zIndex.value,
     top: `${verticalOffset.value}px`,
     left: "auto",

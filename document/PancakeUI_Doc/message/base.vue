@@ -1,8 +1,8 @@
 <template>
-  <pa-button font="star_arc_line" @click="clickSuccess" type="success">快捷 Success</pa-button>
-  <pa-button font="star_arc_line" @click="clickDanger" type="danger">快捷 Danger</pa-button>
-  <pa-button font="star_arc_line" @click="clickInfo" type="info">快捷 Info</pa-button>
-  <pa-button font="star_arc_line" @click="clickWarning" type="warning">快捷 Warning</pa-button>
+  <pa-button @click="clickSuccess" type="success">快捷 Success</pa-button>
+  <pa-button @click="clickDanger" type="danger">快捷 Danger</pa-button>
+  <pa-button @click="clickInfo" type="info">快捷 Info</pa-button>
+  <pa-button @click="clickWarning" type="warning">快捷 Warning</pa-button>
 </template>
 
 <script lang="ts" setup>
