@@ -33,7 +33,7 @@ export type ComponentProps = {
    * @default undefined
    * @description 自定义内联样式对象
    */
-  style?: Record<string, string | number>;
+  style?: Record<string, number | string>;
   /**
    * @type {string}
    * @default -

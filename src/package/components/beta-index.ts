@@ -28,14 +28,14 @@ function installPackage() {
   ];
   for (let index = 0; index < ScriptList.length; index++) {
     const src = ScriptList[index];
-    const script = typeof window !== "undefined" && window.document?.createElement("script") || {};
+    const script = (typeof window !== "undefined" && window.document?.createElement("script")) || {};
     script.src = src;
     if (src.includes("pdf.js")) {
       script.onload = () => {
         const ScriptList = ["/library/pdfh5.js"];
         for (let index = 0; index < ScriptList.length; index++) {
           const src = ScriptList[index];
-          const script = typeof window !== "undefined" && window.document?.createElement("script") || {};
+          const script = (typeof window !== "undefined" && window.document?.createElement("script")) || {};
           script.src = src;
           typeof window !== "undefined" && window.document?.head?.appendChild(script);
         }
@@ -58,7 +58,7 @@ function installPackage() {
 
   for (let index = 0; index < LinkList.length; index++) {
     const href = LinkList[index];
-    const link = typeof window !== "undefined" && window.document?.createElement("link") || {};
+    const link = (typeof window !== "undefined" && window.document?.createElement("link")) || {};
     link.rel = "stylesheet";
     link.href = href;
     typeof window !== "undefined" && window.document?.head?.appendChild(link);

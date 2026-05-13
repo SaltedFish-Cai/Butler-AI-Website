@@ -48,8 +48,33 @@ import { PancakeGlobalConfigType } from "../pa-manager/types";
 // import "pdfh5/css/pdfh5.css";
 
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
+/**
+ * 当前语言值
+ * @type ComputedRef<string>
+ * @description 当前选中的语言
+ */
+const languageValue = computed(() => {
+  return PancakeGlobalConfig.value?.language?.value || "zh-CN";
+});
+/**
+ * 语言包
+ * @type ComputedRef
+ * @description 当前语言的文本配置
+ */
 const languagePackage = computed(() => {
-  return PancakeGlobalConfig.value?.language?.package["media"] || {};
+  return languageValue.value === "zh-CN"
+    ? {
+        rotateLeftTip: "左旋转",
+        rotateRightTip: "右旋转",
+        rotateUpDownTip: "上下翻转",
+        rotateLeftRightTip: "左右翻转"
+      }
+    : {
+        rotateLeftTip: "Rotate Left",
+        rotateRightTip: "Rotate Right",
+        rotateUpDownTip: "Rotate Up Down",
+        rotateLeftRightTip: "Rotate Left Right"
+      };
 });
 
 const pdf: Ref<any> = ref(null);

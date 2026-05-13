@@ -72,7 +72,7 @@
         </pa-scrollbar>
       </div>
       <div v-else-if="exOptionsList.length" class="pa-select-no-data">{{ languagePackage["empytFind"] }}</div>
-      <div v-else class="pa-select-no-data">{{ languagePackage["empyt"] }}</div>
+      <div v-else class="pa-select-no-data">{{ languagePackage["empty"] }}</div>
     </pa-popover>
   </div>
 
@@ -208,20 +208,22 @@ const optionsHeight = ref("auto");
  */
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 /**
- * 语言包
- * @returns Record<string, string> 语言包对象
- * @description 获取当前语言包配置
- */
-const languagePackage = computed(() => {
-  return PancakeGlobalConfig.value?.language?.package?.["cell"] || "zh-CN";
-});
-/**
- * 语言值
- * @returns string 语言代码
- * @description 获取当前语言设置
+ * 当前语言值
+ * @type ComputedRef<string>
+ * @description 当前选中的语言
  */
 const languageValue = computed(() => {
   return PancakeGlobalConfig.value?.language?.value || "zh-CN";
+});
+/**
+ * 语言包
+ * @type ComputedRef
+ * @description 当前语言的文本配置
+ */
+const languagePackage = computed(() => {
+  return languageValue.value === "zh-CN"
+    ? { selectPlaceholder: "请选择内容", empty: "暂无数据" }
+    : { selectPlaceholder: "Please Select Content", empty: "No Data" };
 });
 /**
  * 组件属性

@@ -116,13 +116,13 @@ let wheelDelta = 0;
  * @type number | undefined
  * @description 聚焦时光标定位定时器
  */
-let focusTimer: number | undefined;
+let focusTimer: any;
 /**
  * 自动聚焦定时器
  * @type number | undefined
  * @description 自动聚焦定时器
  */
-let autofocusTimer: number | undefined;
+let autofocusTimer: any;
 /**
  * 全局配置注入
  * @type ComputedRef<PancakeGlobalConfigType>
@@ -130,20 +130,20 @@ let autofocusTimer: number | undefined;
  */
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 /**
- * 语言包
- * @returns Record<string, string> 语言包对象
- * @description 获取当前语言包配置
- */
-const languagePackage = computed(() => {
-  return PancakeGlobalConfig.value?.language?.package?.["cell"] || {};
-});
-/**
- * 语言值
- * @returns string 语言代码
- * @description 获取当前语言设置
+ * 当前语言值
+ * @type ComputedRef<string>
+ * @description 当前选中的语言
  */
 const languageValue = computed(() => {
   return PancakeGlobalConfig.value?.language?.value || "zh-CN";
+});
+/**
+ * 语言包
+ * @type ComputedRef
+ * @description 当前语言的文本配置
+ */
+const languagePackage = computed(() => {
+  return languageValue.value === "zh-CN" ? { inputPlaceholder: "请输入内容" } : { inputPlaceholder: "Please Input Content" };
 });
 /**
  * 计算属性：占位符文本

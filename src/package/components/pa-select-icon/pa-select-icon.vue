@@ -156,18 +156,20 @@ let oldValue: string = props.modelValue || "";
  */
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 /**
- * 语言值
- * @returns string 语言代码
+ * 当前语言值
+ * @type ComputedRef<string>
+ * @description 当前选中的语言
  */
 const languageValue = computed(() => {
   return PancakeGlobalConfig.value?.language?.value || "zh-CN";
 });
 /**
  * 语言包
- * @returns 语言包对象
+ * @type ComputedRef
+ * @description 当前语言的文本配置
  */
 const languagePackage = computed(() => {
-  return PancakeGlobalConfig.value?.language?.package?.["cell"] || {};
+  return languageValue.value === "zh-CN" ? { clickChangeIcon: "点击切换图标" } : { clickChangeIcon: "Click To Change Icon" };
 });
 /**
  * 输入框占位符

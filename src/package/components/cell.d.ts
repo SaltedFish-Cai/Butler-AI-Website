@@ -14,11 +14,11 @@ export type MCellV2Type =
   | SaInputType
   | SaSelectType
   | SaTimeType
+  | (MSelectIconV2Type & { type: "select-icon" })
   | (SaCheckboxType & { type?: "checkbox" })
   | (SaFileType & { type: "file" })
   | (SaNumberType & { type?: "number" })
   | (SaRadioType & { type?: "radio" })
-  | (MSelectIconV2Type & { type: "select-icon" })
   | (SaSwitchType & { type?: "switch" });
 
 type UnionKeys<T> = T extends T ? keyof T : never;

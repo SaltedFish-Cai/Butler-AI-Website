@@ -108,13 +108,15 @@
           </div>
         </div>
         <div class="pa-timer-panel-footer">
-          <pa-button @click="setCurrentTime('start')" is="go" type="default" icon-name="clock-circle" size="small"
-            >开始</pa-button
-          >
-          <pa-button @click="setCurrentTime('current')" is="go" type="default" icon-name="clock-circle" size="small"
-            >当前</pa-button
-          >
-          <pa-button @click="setCurrentTime('end')" is="go" type="default" icon-name="clock-circle" size="small">结束</pa-button>
+          <pa-button @click="setCurrentTime('start')" is="go" type="default" icon-name="clock-circle" size="small">
+            {{ languagePackage["start"] }}
+          </pa-button>
+          <pa-button @click="setCurrentTime('current')" is="go" type="default" icon-name="clock-circle" size="small">
+            >{{ languagePackage["current"] }}
+          </pa-button>
+          <pa-button @click="setCurrentTime('end')" is="go" type="default" icon-name="clock-circle" size="small">
+            {{ languagePackage["end"] }}
+          </pa-button>
         </div>
       </div>
     </pa-popover>
@@ -126,7 +128,7 @@
  * 模块导入
  * @description 导入 Vue 组合式 API
  */
-import { ref, watch, onMounted, onUnmounted, computed } from "vue";
+import { ref, watch, onMounted, onUnmounted, computed, inject, ComputedRef } from "vue";
 /**
  * 模块导入
  * @description 导入随机字符工具
@@ -137,7 +139,35 @@ import { randChar } from "../tools/rand-char";
  * @description 导入组件类型定义
  */
 import { ComponentProps } from "./types";
-
+/**
+ * 模块导入
+ * @description 导入全局配置类型
+ */
+import { PancakeGlobalConfigType } from "../pa-manager/types";
+/**
+ * 全局配置注入
+ * @type ComputedRef<PancakeGlobalConfigType>
+ * @description 从父组件注入的全局配置
+ */
+const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
+/**
+ * 当前语言值
+ * @type ComputedRef<string>
+ * @description 当前选中的语言
+ */
+const languageValue = computed(() => {
+  return PancakeGlobalConfig.value?.language?.value || "zh-CN";
+});
+/**
+ * 语言包
+ * @type ComputedRef
+ * @description 当前语言的文本配置
+ */
+const languagePackage = computed(() => {
+  return languageValue.value === "zh-CN"
+    ? { start: "开始", end: "结束", current: "当前" }
+    : { start: "Start", end: "End", current: "Current" };
+});
 /**
  * 组件事件类型
  * @description 定义组件可触发的事件
@@ -154,7 +184,7 @@ type TimerComponentEmits = {
    * @param data - 变更数据
    * @returns void
    */
-  (e: "change", data: { value: string; oldValue: number | string }): void;
+  (e: "change", data: { value: string; oldValue: string }): void;
   /**
    * 失去焦点事件
    * @returns void

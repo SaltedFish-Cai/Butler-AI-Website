@@ -38,7 +38,7 @@
 
       <pa-button
         v-if="inValue?.length && !display"
-        :title="languagePackage['clearAddedfiles']"
+        :title="languagePackage['clearAddedFiles']"
         style="--pa-size-font: 14px; --pa-size-height: 28px"
         class="btn-width ml-size"
         is="trash"
@@ -212,14 +212,63 @@ const ajaxFileList: Array<Record<string, string>> = [];
  * @description 从父组件注入的全局配置信息
  */
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
-
+/**
+ * 当前语言值
+ * @type ComputedRef<string>
+ * @description 当前选中的语言
+ */
+const languageValue = computed(() => {
+  return PancakeGlobalConfig.value?.language?.value || "zh-CN";
+});
 /**
  * 语言包计算属性
  * @type ComputedRef<Record<string, string>>
  * @description 根据当前语言设置返回对应的文件模块语言包
  */
 const languagePackage = computed(() => {
-  return PancakeGlobalConfig.value?.language?.package?.["file"] || {};
+  return languageValue.value === "zh-CN"
+    ? {
+        uploadText: "点击上传",
+        clearAddedFiles: "清空已添加文件",
+        clean: "清空",
+        canUploaded: "可上传",
+        noCanUploaded: "不可上传",
+        typeFile: "类型文件",
+        singleMax: " / 单文件最大",
+        singleMaxAll: " / 单次总文件最大",
+        del: "点击删除",
+        noFile: "暂无文件",
+        upFail: "上传失败",
+        fail: "上传文件配置错误！",
+        msg: "上传文件限制数量",
+        tip1: "上传文件过大，文件大小",
+        tip2: "上传文件总体过大，单次总文件大小",
+        tip: "温馨提示",
+        isDel: "是否删除当前已选文件?",
+        enterDel: "确认删除",
+        downloadTemplate: "模板"
+      }
+    : {
+        uploadText: "Click To Upload",
+        clearAddedFiles: "Clear Added Files",
+        clean: "Clear",
+        canUploaded: "Can Upload",
+        noCanUploaded: "Can't Upload",
+        typeFile: "Type File",
+        singleMax: " / Single File Maximum",
+        singleMaxAll: " / Single Total File Maximum",
+        del: "Click To Delete",
+        noFile: "No File",
+        upFail: "Upload Failed",
+        fail: "Upload File Configuration Error!",
+        msg: "Upload File Limit Quantity",
+        tip1: "Upload File Is Too Large, File Size",
+        tip2: "Upload File Total Size Is Too Large, Single Total File Size",
+        tip: "Tips",
+        isDel: "Whether To Delete The Current Selected File?",
+        enterDel: "Confirm Delete",
+        downloadTemplate: "Template"
+      };
 });
 
 /**
@@ -459,22 +508,18 @@ const beforeUpload = (fileList: Array<{ name: string; size: number }>): boolean 
  * 触发上传请求
  * @description 使用防抖封装上传逻辑，避免频繁触发请求
  */
-const fetchUpload = debounce(
-  (): void => {
-    if (!uploadFilesList.length) return;
-    if (!beforeUpload(uploadFilesList)) {
-      uploadFilesList.length = 0;
-      ajaxFileList.length = 0;
-      (uploadRef?.value as { clearFiles?: () => void })?.clearFiles?.();
-      loading.value = false;
-      return;
-    } else {
-      actionRequest(uploadFilesList.map(item => ({ filename: item.name, file: item })));
-    }
-  },
-  300,
-  { trailing: true }
-);
+const fetchUpload = debounce((): void => {
+  if (!uploadFilesList.length) return;
+  if (!beforeUpload(uploadFilesList)) {
+    uploadFilesList.length = 0;
+    ajaxFileList.length = 0;
+    (uploadRef?.value as { clearFiles?: () => void })?.clearFiles?.();
+    loading.value = false;
+    return;
+  } else {
+    actionRequest(uploadFilesList.map(item => ({ filename: item.name, file: item })));
+  }
+}, 300);
 
 /**
  * 发起 Ajax 上传请求

@@ -15,7 +15,7 @@ import type { PaOptionType } from "../manager-type";
  * @description 根据 value 在选项列表中查找对应的 label
  */
 export function findData(
-  data: boolean | number | string | Array<boolean | number | string>,
+  data: Array<boolean | number | string> | boolean | number | string,
   options: PaOptionType.SelectList
 ): string {
   let text = "";

@@ -45,7 +45,7 @@ export type TabsItemPropType = {
    * @type Record<string, FormItemRule | Array<FormItemRule>>
    * @description 校验规则
    */
-  rules: Record<string, FormItemRule | Array<FormItemRule>>;
+  rules: Record<string, Array<FormItemRule> | FormItemRule>;
 };
 /**
  * 插槽项属性类型

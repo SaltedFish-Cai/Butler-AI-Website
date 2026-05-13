@@ -76,8 +76,8 @@
           </pa-cascader-option>
         </div>
       </div>
-      <div v-else-if="exOptionsList.length" class="pa-cascader-no-data">{{ languagePackage["empytFind"] }}</div>
-      <div v-else class="pa-cascader-no-data">{{ languagePackage["empyt"] }}</div>
+      <div v-else-if="exOptionsList.length" class="pa-cascader-no-data">{{ languagePackage["emptyFind"] }}</div>
+      <div v-else class="pa-cascader-no-data">{{ languagePackage["empty"] }}</div>
     </pa-popover>
   </div>
 
@@ -214,20 +214,22 @@ const popoverTimer = ref<ReturnType<typeof setTimeout> | null>(null);
  */
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 /**
- * 语言包
- * @type ComputedRef
- * @description 当前语言的文本配置
- */
-const languagePackage = computed(() => {
-  return PancakeGlobalConfig.value?.language?.package?.["cell"] || {};
-});
-/**
  * 当前语言值
  * @type ComputedRef<string>
  * @description 当前选中的语言
  */
 const languageValue = computed(() => {
   return PancakeGlobalConfig.value?.language?.value || "zh-CN";
+});
+/**
+ * 语言包
+ * @type ComputedRef
+ * @description 当前语言的文本配置
+ */
+const languagePackage = computed(() => {
+  return languageValue.value === "zh-CN"
+    ? { empty: "暂无数据", emptyFind: "暂无数据", selectPlaceholder: "请选择内容" }
+    : { empty: "No Data", emptyFind: "No Data", selectPlaceholder: "Please Select Content" };
 });
 /**
  * 组件属性

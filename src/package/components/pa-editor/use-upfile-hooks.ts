@@ -9,7 +9,7 @@ import { M_Message } from "../feedback";
 /**
  * @description 导入文件数据类型
  */
-import type { PaFileDataType } from "../pa-file/type";
+import type { FileDataType } from "../pa-file/types";
 /**
  * @description 导入文件上传请求
  */
@@ -64,10 +64,20 @@ export function useUpFileHooks(
   });
 
   /**
-   * @description 语言包（计算属性）
+   * 当前语言值
+   * @type ComputedRef<string>
+   * @description 当前选中的语言
+   */
+  const languageValue = computed(() => {
+    return PancakeGlobalConfig.value?.language?.value || "zh-CN";
+  });
+  /**
+   * 语言包计算属性
+   * @type ComputedRef<Record<string, string>>
+   * @description 根据当前语言设置返回对应的文件模块语言包
    */
   const languagePackage = computed(() => {
-    return PancakeGlobalConfig.value?.language?.package?.["file"] || {};
+    return languageValue.value === "zh-CN" ? { upFail: "上传失败" } : { upFail: "Upload Failed" };
   });
 
   /**
@@ -111,7 +121,7 @@ export function useUpFileHooks(
    * @description 上传成功处理
    * @param response - 响应数据
    */
-  function handleSuccess(response: { Code: Number; Data: PaFileDataType; Message?: string }): void {
+  function handleSuccess(response: { Code: Number; Data: FileDataType; Message?: string }): void {
     if (!response) return;
     if (!editorRef.value) return;
     editorRef.value.focus();
@@ -124,7 +134,7 @@ export function useUpFileHooks(
           img.alt = item?.OriginalName || item?.FileName;
           const div = document.createElement("div");
           div.appendChild(img);
-          const selection = typeof window !== "undefined" ? window.getSelection() : null();
+          const selection = typeof window !== "undefined" ? window.getSelection() : null;
           if (selection && selection.rangeCount > 0) {
             const range = selection.getRangeAt(0);
             range.deleteContents();
@@ -149,7 +159,7 @@ export function useUpFileHooks(
         }
         const div = document.createElement("div");
         div.appendChild(img);
-        const selection = typeof window !== "undefined" ? window.getSelection() : null();
+        const selection = typeof window !== "undefined" ? window.getSelection() : null;
         if (selection && selection.rangeCount > 0) {
           const range = selection.getRangeAt(0);
           range.deleteContents();

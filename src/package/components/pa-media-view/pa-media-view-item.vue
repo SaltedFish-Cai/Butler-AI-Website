@@ -145,11 +145,34 @@ const viewRef = useTemplateRef("viewRef");
  */
 const props = withDefaults(defineProps<ComponentItemProps>(), {});
 /**
+ * 当前语言值
+ * @type ComputedRef<string>
+ * @description 当前选中的语言
+ */
+const languageValue = computed(() => {
+  return PancakeGlobalConfig.value?.language?.value || "zh-CN";
+});
+/**
  * 语言包
- * @description 语言包
+ * @type ComputedRef
+ * @description 当前语言的文本配置
  */
 const languagePackage = computed(() => {
-  return PancakeGlobalConfig.value?.language?.package["cell"] || {};
+  return languageValue.value === "zh-CN"
+    ? {
+        errorText: "暂不支持打开该文件，请下载查看。",
+        download: "下载",
+        downloadFiles: "下载文件",
+        rotate: "旋转",
+        zoom: "使用滚轮可缩放"
+      }
+    : {
+        errorText: "Opening This File Is Not Supported At The Moment. Please Download It For Viewing.",
+        download: "Download",
+        downloadFiles: "Download Files",
+        rotate: "Rotate",
+        zoom: "Zoom"
+      };
 });
 /**
  * 打开文件预览

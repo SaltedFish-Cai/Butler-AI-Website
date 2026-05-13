@@ -234,7 +234,72 @@ const injectSetScrollToIntersect = inject("setScrollToIntersect") as (
   callback?: () => void,
   options?: { offsetY?: number }
 ) => void;
-
+/**
+ * 当前语言值
+ * @type ComputedRef<string>
+ * @description 当前选中的语言
+ */
+const languageValue = computed(() => {
+  return PancakeGlobalConfig.value?.language?.value || "zh-CN";
+});
+/**
+ * 语言包
+ * @type ComputedRef
+ * @description 当前语言的文本配置
+ */
+const languagePackage = computed(() => {
+  return languageValue.value === "zh-CN"
+    ? {
+        warning: "请检查配置或权限",
+        requiredMessage: "此项为必填项",
+        add: "新增标签",
+        information: "标签",
+        select: "请选择",
+        selectTime: "请选择时间",
+        startTime: "开始时间",
+        endTime: "结束时间",
+        startYear: "开始年份",
+        endYear: "结束年份",
+        input: "请输入",
+        to: "至",
+        errorText: "暂不支持打开该文件，请下载查看。",
+        zoom: "使用滚轮可缩放",
+        download: "下载",
+        downloadFiles: "下载文件",
+        rotate: "旋转",
+        inputPlaceholder: "请输入内容",
+        selectPlaceholder: "请选择内容",
+        clickChangeIcon: "点击更改图标",
+        empyt: "无数据",
+        empytFind: "无匹配数据",
+        isDelete: "已删除"
+      }
+    : {
+        warning: "Please Check The Configuration Or Permissions",
+        requiredMessage: "This Item Is Mandatory",
+        add: "New Tab",
+        information: "Tag",
+        select: "Please Select ",
+        selectTime: "Please Select Time ",
+        startTime: "Start Time",
+        endTime: "End Time",
+        startYear: "Start Year",
+        endYear: "End Year",
+        input: "Please Input ",
+        to: "To",
+        errorText: "Opening This File Is Not Supported At The Moment. Please Download It For Viewing.",
+        zoom: "You Can Zoom In And Out By Using The Scroll Wheel.",
+        download: "Down",
+        downloadFiles: "Download Files",
+        rotate: "Rotate",
+        inputPlaceholder: "Please Enter Content",
+        selectPlaceholder: "Please Select Content",
+        clickChangeIcon: "Click To Change Icon",
+        empyt: "No Data",
+        empytFind: "No Matching Data",
+        isDelete: "Deleted"
+      };
+});
 /**
  * 配置上下文
  * @description 配置上下文
@@ -248,7 +313,7 @@ const configContext: Ref<ConfigContextType> = ref({
   contrastData: computed(() => props.contrastData),
   alwaysContrast: computed(() => props.alwaysContrast),
   display: computed(() => props.display),
-  languagePackage: computed(() => PancakeGlobalConfig.value?.language?.package?.["form"] || {}),
+  languagePackage: computed(() => languagePackage.value),
   language: computed(() => PancakeGlobalConfig.value?.language?.value || "zh-CN"),
   exOptions: computed(() => props.exOptions),
   exDependent: computed(() => props.exDependent),

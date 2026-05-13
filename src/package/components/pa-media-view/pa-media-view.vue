@@ -184,11 +184,38 @@ const props = withDefaults(defineProps<ComponentProps>(), {
  */
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 /**
+ * 当前语言值
+ * @type ComputedRef<string>
+ * @description 当前选中的语言
+ */
+const languageValue = computed(() => {
+  return PancakeGlobalConfig.value?.language?.value || "zh-CN";
+});
+/**
  * 语言包
- * @description 语言包
+ * @type ComputedRef
+ * @description 当前语言的文本配置
  */
 const languagePackage = computed(() => {
-  return PancakeGlobalConfig.value?.language?.package["media"] || {};
+  return languageValue.value === "zh-CN"
+    ? {
+        expand: "展开",
+        collapse: "收起",
+        filePreview: "文件预览",
+        downloadCurrentFile: "下载当前文件",
+        downloadAllFiles: "下载所有文件",
+        zoomTip: "使用滚轮可缩放",
+        rotateTip: "旋转"
+      }
+    : {
+        expand: "Expand",
+        collapse: "Collapse",
+        filePreview: "File Preview",
+        downloadCurrentFile: "Download Current File",
+        downloadAllFiles: "Download All Files",
+        zoomTip: "Use the scroll wheel to zoom.",
+        rotateTip: "Rotate"
+      };
 });
 /**
  * 打开文件预览

@@ -245,15 +245,6 @@ const internalValue: Ref<Array<string> | string | null> = ref(isRange.value ? []
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 
 /**
- * 当前语言值
- * @type ComputedRef<string>
- * @description 当前选中的语言
- */
-const languageValue = computed(() => {
-  return PancakeGlobalConfig.value?.language?.value || "zh-CN";
-});
-
-/**
  * 输入框占位符
  * @type ComputedRef<string>
  * @description 输入框的占位符文本
@@ -265,12 +256,22 @@ const inputPlaceholder = computed(() => {
 });
 
 /**
+ * 当前语言值
+ * @type ComputedRef<string>
+ * @description 当前选中的语言
+ */
+const languageValue = computed(() => {
+  return PancakeGlobalConfig.value?.language?.value || "zh-CN";
+});
+/**
  * 语言包
- * @type ComputedRef<Record<string, string>>
+ * @type ComputedRef
  * @description 当前语言的文本配置
  */
 const languagePackage = computed(() => {
-  return PancakeGlobalConfig.value?.language?.package?.["cell"] || {};
+  return languageValue.value === "zh-CN"
+    ? { selectPlaceholder: "请选择内容", to: "至", startTime: "开始时间", endTime: "结束时间" }
+    : { selectPlaceholder: "Please Select Content", to: "To", startTime: "Start Time", endTime: "End Time" };
 });
 
 /**

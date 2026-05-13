@@ -134,12 +134,44 @@ const isDragging = ref<boolean>(false);
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 
 /**
+ * 当前语言值
+ * @type ComputedRef<string>
+ * @description 当前选中的语言
+ */
+const languageValue = computed(() => {
+  return PancakeGlobalConfig.value?.language?.value || "zh-CN";
+});
+/**
  * 语言包计算属性
  * @type ComputedRef<Record<string, string>>
  * @description 根据当前语言设置返回对应的文件模块语言包
  */
 const languagePackage = computed(() => {
-  return PancakeGlobalConfig.value?.language?.package?.["file"] || {};
+  return languageValue.value === "zh-CN"
+    ? {
+        canUploaded: "可上传",
+        noCanUploaded: "不可上传",
+        typeFile: "类型文件",
+        singleMax: " / 单文件最大",
+        singleMaxAll: " / 单次总文件最大",
+        msg: "上传文件限制数量",
+        fail: "上传文件配置错误！",
+        tip1: "上传文件过大，文件大小",
+        tip2: "上传文件总体过大，单次总文件大小",
+        upFail: "上传失败"
+      }
+    : {
+        canUploaded: "Can Upload",
+        noCanUploaded: "Can't Upload",
+        typeFile: "Type File",
+        singleMax: " / Single File Maximum",
+        singleMaxAll: " / Single Total File Maximum",
+        upFail: "Upload Failed",
+        fail: "Upload File Configuration Error!",
+        msg: "Upload File Limit Quantity",
+        tip1: "Upload File Is Too Large, File Size",
+        tip2: "Upload File Total Size Is Too Large, Single Total File Size"
+      };
 });
 
 /**

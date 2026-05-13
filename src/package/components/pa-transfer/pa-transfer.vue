@@ -16,7 +16,7 @@
             :isChecked="awaitSelectList.length === searchAllSelectList.length && searchAllSelectList.length > 0"
             @change="handleCheckedChange('left')"
           ></pa-checkbox-item>
-          {{ languagePackage["unselected"] }}
+          {{ languagePackage["unSelected"] }}
         </div>
         <pa-input v-if="useSearch" style="width: 1px; flex: 1" class="ml-size" :disabled="props.disabled" v-model="searchAll" />
       </div>
@@ -184,20 +184,22 @@ const emits = defineEmits<ComponentEmits>();
  */
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 /**
- * 语言包
- * @type ComputedRef<Record<string, string>>
- * @description 根据当前语言获取对应的语言包
- */
-const languagePackage = computed(() => {
-  return PancakeGlobalConfig.value?.language?.package?.["cell"] || {};
-});
-/**
  * 当前语言值
  * @type ComputedRef<string>
  * @description 当前选中的语言
  */
 const languageValue = computed(() => {
   return PancakeGlobalConfig.value?.language?.value || "zh-CN";
+});
+/**
+ * 语言包
+ * @type ComputedRef
+ * @description 当前语言的文本配置
+ */
+const languagePackage = computed(() => {
+  return languageValue.value === "zh-CN"
+    ? { unSelected: "未选择", selected: "已选择" }
+    : { unSelected: "Unselected", selected: "Selected" };
 });
 /**
  * 外置数据选项列表
