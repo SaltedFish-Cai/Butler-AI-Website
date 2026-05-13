@@ -124,8 +124,8 @@
   >
     <div v-if="exOptionsList?.length">
       <slot name="exContrast"></slot>
-      <template v-if="$slots.exContrast"> ( {{ findData(contrastData) }} )</template>
-      <template v-else>{{ findData(contrastData) }}</template>
+      <template v-if="$slots.exContrast"> ( {{ findData(contrastData || []) || "--" }} )</template>
+      <template v-else>{{ findData(contrastData || []) || "--" }}</template>
     </div>
   </div>
 </template>

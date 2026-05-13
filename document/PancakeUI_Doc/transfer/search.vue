@@ -1,10 +1,11 @@
 <template>
-  <pa-transfer v-model="value" :exOptions="options" useSearch />
+  <pa-transfer v-model="value" :exOptions="options" useSearch :contrastData="selectedList" />
 </template>
 
 <script lang="ts" setup>
 import { ref } from "vue";
 const value = ref([1]);
+const selectedList = ref([1, 3]);
 const options = ref([
   { value: 1, label: "选项一" },
   { value: 2, label: "选项二" },
