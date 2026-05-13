@@ -22,6 +22,14 @@
           <m-icon name="switch_horizontal_line"> </m-icon>
           <div class="ml5">{{ languagePackage["rotateUpDownTip"] }}</div>
         </div>
+        <div class="setting-item flex-center mt5" @click="changePix(0.5)">
+          <m-icon name="circle_arrow_up_line"> </m-icon>
+          <div class="ml5">{{ languagePackage["zoomInTip"] }}</div>
+        </div>
+        <div class="setting-item flex-center mt5" @click="changePix(-0.5)">
+          <m-icon name="circle_arrow_down_line"> </m-icon>
+          <div class="ml5">{{ languagePackage["zoomOutTip"] }}</div>
+        </div>
       </div>
     </transition>
   </div>
@@ -52,7 +60,8 @@ const textUrl = String(props.filePath);
 
 const client = ref({ x: -500, y: -500 });
 const menuSettingVisible = ref(false);
-
+const pxit = ref(1.5);
+let blobDataObject;
 onMounted(async () => {
   const config = {
     requestHeader: PancakeGlobalConfig.value?.requestHeader,
@@ -60,43 +69,72 @@ onMounted(async () => {
   };
   const blobData = await useGetBlob(config, textUrl);
   if (blobData) {
-    const _data = typeof window !== "undefined" && window.URL.createObjectURL(blobData);
-    nextTick(() => {
-      pdf.value = new window.Pdfh5("#" + PDF_ID.value + "-pdf", {
-        pdfurl: _data,
-        zoomEnable: false,
-        pageNum: false,
-        backTop: false,
-        scrollEnable: false
-      });
-      pdf.value.on("complete", function () {
-        // status: string, msg: string, time: string
-        typeof window !== "undefined" && window.URL.revokeObjectURL(_data);
-        const el = document.getElementById(PDF_ID.value + "-pdf");
-        if (el) {
-          const container = el.querySelectorAll(".pageContainer");
-          for (let i = 0; i < container.length; i++) {
-            (container[i] as HTMLElement).oncontextmenu = function (e: any) {
-              e.preventDefault();
-              return false;
-            };
-            container[i].addEventListener(
-              "mouseup",
-              event =>
-                mouseUp(event as MouseEvent, e => {
-                  menuSettingVisible.value = true;
-                  client.value = { x: e.clientX + 5, y: e.clientY + 10 };
-                }),
-              { passive: false }
-            );
-          }
-        }
-      });
-    });
+    blobDataObject = window.URL.createObjectURL(blobData);
+    createPdf();
   }
 });
 
+function createPdf() {
+  nextTick(() => {
+    pdf.value = new window.Pdfh5("#" + PDF_ID.value + "-pdf", {
+      pdfurl: blobDataObject,
+      zoomEnable: false,
+      pageNum: false,
+      backTop: false,
+      scrollEnable: false,
+      scale: pxit.value
+      // autoFit: false,
+      // fitWidth: false,
+
+      // renderType: "canvas",
+      // cMapUrl: "https://cdn.jsdelivr.net/npm/pdfjs-dist@2.10.377/cmaps/",
+      // cMapPacked: true,
+
+      // // 大文件必开
+      // lazyLoad: true, // 懒加载，只渲染可视区域
+      // onePageRender: false, // 不分页强制一次性渲染
+      // scrollEnable: true,
+      // pageNumbers: false, // 关闭页码、缩略图减少性能开销
+      // thumbnail: false,
+      // toolbar: true
+    });
+    pdf.value.on("complete", function () {
+      complete();
+    });
+  });
+}
+
+function complete() {
+  const el = document.getElementById(PDF_ID.value + "-pdf");
+  if (el) {
+    const container = el.querySelectorAll(".pageContainer");
+    for (let i = 0; i < container.length; i++) {
+      (container[i] as HTMLElement).oncontextmenu = function (e: any) {
+        e.preventDefault();
+        return false;
+      };
+      container[i].addEventListener(
+        "mouseup",
+        event =>
+          mouseUp(event as MouseEvent, e => {
+            menuSettingVisible.value = true;
+            client.value = { x: e.clientX + 5, y: e.clientY + 10 };
+          }),
+        { passive: false }
+      );
+    }
+  }
+}
+
+const changePix = (val: number) => {
+  pxit.value = pxit.value + val;
+  pdf.value.destroy(() => {
+    createPdf();
+  });
+};
+
 onUnmounted(() => {
+  window.URL.revokeObjectURL(blobDataObject);
   pdf.value?.destroy();
 });
 
