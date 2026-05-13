@@ -1,7 +1,7 @@
 <template>
-  <div class="pa-pagination" :class="[props.class, { 'is-disabled': props.disabled }]" :style="{ ...props.style }">
+  <div class="pa-pagination" :class="[props.class, { 'is-disabled': props.disabled }]" :style="mergedStyles">
     <span v-if="showTotal" class="m-pagination-total">
-      {{ languagePackage?.["total"] }} <span>{{ total }}</span> {{ languagePackage?.["records2"] }}
+      {{ languagePackage?.total }} <span>{{ total }}</span> {{ languagePackage?.records2 }}
     </span>
     <div v-if="showSizes" class="m-pagination-sizes">
       <pa-select
@@ -11,7 +11,8 @@
         :clearable="false"
         :exOptions="exOptions"
         :disabled="props.disabled"
-      ></pa-select>
+      >
+      </pa-select>
     </div>
     <button
       class="m-pagination-btn m-pagination-prev"
@@ -57,7 +58,7 @@
       <pa-icon name="right_line"></pa-icon>
     </button>
     <div v-if="showJumper" class="m-pagination-jumper">
-      <span>{{ languagePackage?.["jumpTo"] }}</span>
+      <span>{{ languagePackage?.jumpTo }}</span>
       <pa-number
         :min="1"
         :max="pageCount"
@@ -71,10 +72,33 @@
         @change="handleJumperEnter"
         :disabled="props.disabled"
       ></pa-number>
-      <span>{{ languagePackage?.["records3"] || "" }}</span>
+      <span>{{ languagePackage?.records3 || "" }}</span>
     </div>
   </div>
 </template>
+
+<script lang="ts">
+/**
+ * 语言包数据
+ * @description 静态语言包数据，提取到模块级避免每次 computed 重新创建
+ */
+const LANGUAGE_PACKAGE_DATA: Record<string, Record<string, string>> = {
+  "en-US": {
+    total: "Total",
+    records: "records/page",
+    records2: "records",
+    jumpTo: "Jump to",
+    records3: "page"
+  },
+  "zh-CN": {
+    total: "共",
+    records2: "条",
+    records: "条/页",
+    records3: "页",
+    jumpTo: "跳转"
+  }
+};
+</script>
 
 <script lang="ts" setup>
 /**
@@ -127,27 +151,19 @@ const languageValue = computed(() => {
 });
 /**
  * 语言包
- * @type ComputedRef<Record<string, string>>
+ * @type ComputedRef<Record<string, string> | undefined>
  * @description 根据当前语言获取对应的语言包
  */
 const languagePackage = computed(() => {
-  const data: Record<string, Record<string, string>> = {
-    "en-US": {
-      total: "Total",
-      records: "records/page",
-      records2: "records",
-      jumpTo: "Jump to",
-      records3: "page"
-    },
-    "zh-CN": {
-      total: "共",
-      records2: "条",
-      records: "条/页",
-      records3: "页",
-      jumpTo: "跳转"
-    }
-  };
-  return data[languageValue.value];
+  return LANGUAGE_PACKAGE_DATA[languageValue.value];
+});
+/**
+ * 合并样式
+ * @type ComputedRef<Record<string, string>>
+ * @description 合并传入的样式与组件默认样式
+ */
+const mergedStyles = computed(() => {
+  return props.style || {};
 });
 /**
  * 内部当前页码
@@ -161,26 +177,6 @@ const internalCurrentPage = ref(props.currentPage);
  * @description 内部维护的每页数量状态
  */
 const internalPageSize = ref(props.pageSize);
-/**
- * 跳转到指定页
- * @param page - 目标页码
- * @returns void
- * @description 跳转到指定的页码
- */
-const goToPage = (page: number): void => {
-  if (props.disabled) return;
-  const validPage = Math.max(1, Math.min(page, pageCount.value));
-  if (validPage !== internalCurrentPage.value) {
-    internalCurrentPage.value = validPage;
-    emit("update:currentPage", validPage);
-    emit("current-change", validPage);
-    if (validPage < internalCurrentPage.value) {
-      emit("prev-click", validPage);
-    } else if (validPage > internalCurrentPage.value) {
-      emit("next-click", validPage);
-    }
-  }
-};
 /**
  * 处理每页数量变化
  * @param data - 选择的数据
@@ -229,15 +225,44 @@ const jumpNextMore = (): void => {
   goToPage(Math.min(pageCount.value, internalCurrentPage.value + props.pagerCount));
 };
 /**
+ * 跳转到指定页
+ * @param page - 目标页码
+ * @returns void
+ * @description 跳转到指定的页码
+ */
+const goToPage = (page: number): void => {
+  if (props.disabled) return;
+  const validPage = Math.max(1, Math.min(page, pageCount.value));
+  if (validPage !== internalCurrentPage.value) {
+    internalCurrentPage.value = validPage;
+    emit("update:currentPage", validPage);
+    emit("current-change", validPage);
+    if (validPage < internalCurrentPage.value) {
+      emit("prev-click", validPage);
+    } else if (validPage > internalCurrentPage.value) {
+      emit("next-click", validPage);
+    }
+  }
+};
+/**
  * 每页数量选项
  * @type ComputedRef<Array<{ label: string; value: number }>>
  * @description 计算每页数量选择器的选项
  */
 const exOptions = computed(() => {
+  const recordsText = languagePackage.value?.records || "";
   return props.pageSizes.map(size => ({
-    label: ` ${size}${languagePackage.value?.["records"] || ""}`,
+    label: ` ${size}${recordsText}`,
     value: size
   }));
+});
+/**
+ * 布局配置
+ * @type ComputedRef<Array<string>>
+ * @description 解析 layout 配置
+ */
+const layoutParts = computed(() => {
+  return props.layout.split(",").map(part => part.trim());
 });
 /**
  * 总页数
@@ -248,14 +273,6 @@ const pageCount = computed(() => {
   const data = Math.max(1, Math.ceil(props.total / internalPageSize.value));
   emit("change-max-page", data);
   return data;
-});
-/**
- * 布局配置
- * @type ComputedRef<Array<string>>
- * @description 解析 layout 配置
- */
-const layoutParts = computed(() => {
-  return props.layout.split(",").map(part => part.trim());
 });
 /**
  * 是否显示总数

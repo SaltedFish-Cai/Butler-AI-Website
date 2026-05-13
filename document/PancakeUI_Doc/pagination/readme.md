@@ -37,12 +37,6 @@
 | layout      | 组件布局           | `string`                    | `'total,sizes,prev,pager,next,jumper'` |
 | disabled    | 是否禁用           | `boolean`                   | `false`                                |
 
-## ComponentSlots
-
-| 插槽名称  | 描述       |
-| --------- | ---------- |
-| `default` | 自定义内容 |
-
 ## ComponentEmits
 
 | 事件名             | 描述         | 回调参数              |
