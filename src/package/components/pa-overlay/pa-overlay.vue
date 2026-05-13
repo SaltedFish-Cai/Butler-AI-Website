@@ -2,14 +2,14 @@
   <teleport :to="teleportTo || 'body'">
     <transition name="mo-dialog-overlay-fade">
       <div v-show="state.visible" class="pa-overlay" :class="props.class" :style="{ ...props.style, zIndex: zIndex }">
-        <div class="pa-overlay-content" :style="{ opacity: useBlock ? 1 : 0 }" @click="closeOverlay"></div>
-        <slot></slot>
+        <div class="pa-overlay-content" :style="{ opacity: useBlock ? 1 : 0 }" @click="handleOverlayClick" />
+        <slot />
       </div>
     </transition>
   </teleport>
 </template>
 
-<script lang="ts" setup>
+<script lang="ts">
 /**
  * 模块导入
  * @description 导入 Vue 响应式 API
@@ -19,7 +19,10 @@ import { ref, reactive, watch, inject } from "vue";
  * 模块导入
  * @description 导入组件类型定义
  */
-import { ComponentProps, ComponentEmits } from "./types";
+import type { ComponentProps, ComponentEmits } from "./types";
+</script>
+
+<script lang="ts" setup>
 /**
  * 组件属性定义
  * @description 定义组件的 props
@@ -52,6 +55,7 @@ const state = reactive({
 /**
  * 关闭遮罩层
  * @description 触发关闭事件，更新 modelValue
+ * @returns void
  */
 function closeMenu(): void {
   emits("update:modelValue", false);
@@ -59,8 +63,9 @@ function closeMenu(): void {
 /**
  * 点击遮罩层回调
  * @description 点击遮罩层时关闭并触发点击事件
+ * @returns void
  */
-function closeOverlay(): void {
+function handleOverlayClick(): void {
   closeMenu();
   emits("clickOverlay");
 }
@@ -75,8 +80,8 @@ defineExpose({ closeMenu });
  */
 watch(
   () => props.modelValue,
-  data => {
-    state.visible = data;
+  value => {
+    state.visible = value;
   },
   { immediate: true }
 );
