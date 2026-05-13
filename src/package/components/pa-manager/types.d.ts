@@ -135,11 +135,11 @@ export type PancakeGlobal = {
   file_config?: ApiType & { downloadHose: string; compareKey: string };
   /**
    * 请求头
-   * @type any | undefined
+   * @type Record<string, unknown> | undefined
    * @default undefined
    * @description 当设置该值时，会自定义请求头
    */
-  requestHeader?: any;
+  requestHeader?: Record<string, unknown>;
 };
 /**
  * PaManager 组件 Props
@@ -167,7 +167,7 @@ export type ComponentProps = PancakeGlobal & {
    * @default undefined
    * @description 当设置该值时，会添加到组件的样式中
    */
-  style?: Record<string, number | string>;
+  style?: Record<string, string | number>;
   /**
    * 组件唯一标识
    * @type string | undefined

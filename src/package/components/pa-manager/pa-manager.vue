@@ -2,6 +2,28 @@
   <slot></slot>
 </template>
 
+<script lang="ts">
+/**
+ * 模块导入
+ * @description 导入 ZIndex 管理工具
+ */
+import { useZIndex } from "element-plus";
+
+/**
+ * 全局 Z 索引
+ * @type number
+ * @description SSR 安全的全局 Z 索引初始值
+ */
+let globalZIndex = 1000;
+
+/**
+ * ZIndex 管理器
+ * @type { nextZIndex: () => number }
+ * @description Element Plus 提供的 ZIndex 管理器
+ */
+const { nextZIndex } = useZIndex();
+</script>
+
 <script lang="ts" setup name="PaManager">
 /**
  * 模块导入
@@ -30,44 +52,25 @@ import languageMap from "../language.json";
 import { createLog } from "../utils/develop-log";
 /**
  * 模块导入
- * @description 导入 ZIndex 管理工具
+ * @description 导入空值判断工具函数
  */
-import { useZIndex } from "element-plus";
-/**
- * 模块导入
- * @description 导入 lodash 工具函数
- */
-import _ from "lodash";
-/**
- * lodash 解构
- * @description 从 lodash 中解构 isNil 方法
- */
-const { isNil } = _;
-/**
- * 全局 Z 索引
- * @type number
- * @description SSR 安全的全局 Z 索引初始值
- */
-let globalZIndex = 1000;
-/**
- * ZIndex 管理器
- * @type { nextZIndex: () => number }
- * @description Element Plus 提供的 ZIndex 管理器
- */
-const { nextZIndex } = useZIndex();
+import isNil from "../tools/is-nil";
+
 /**
  * 全局 Z 索引获取方法
  * @description 提供全局 Z 索引获取方法给子组件使用
  */
-provide("getPaAnagerGlobalZIndex", () => {
+const getPaAnagerGlobalZIndex = () => {
   return nextZIndex() || globalZIndex++;
-});
+};
+
 /**
  * 组件属性
  * @type ComponentProps
  * @description 组件的属性对象
  */
 const props = withDefaults(defineProps<ComponentProps>(), {});
+
 /**
  * 全局配置状态
  * @type PancakeGlobalConfigType
@@ -87,6 +90,7 @@ const state = reactive({
   file_config: props.file_config,
   requestHeader: props.requestHeader
 } as PancakeGlobalConfigType);
+
 /**
  * 全局配置注入
  * @description 通过 provide 向子组件提供全局配置
@@ -100,7 +104,11 @@ provide(
     return state;
   })
 );
+
+provide("getPaAnagerGlobalZIndex", getPaAnagerGlobalZIndex);
+
 setThemeColor(state.themeColor, state.isDark || false);
+
 /**
  * 设置主题颜色
  * @param themeColor - 主题颜色
@@ -113,6 +121,7 @@ function setPaManagerThemeColor(themeColor: string | undefined, isDark: boolean 
   state.isDark = !isNil(isDark) ? isDark : state.isDark;
   setThemeColor(state.themeColor, state.isDark || false);
 }
+
 /**
  * 设置组件尺寸
  * @param size - 组件尺寸
@@ -121,12 +130,13 @@ function setPaManagerThemeColor(themeColor: string | undefined, isDark: boolean 
  */
 function setPaManagerSize(size: "default" | "large" | "small"): void {
   if (typeof window !== "undefined") {
-    const classList = (typeof window !== "undefined" && window.document?.documentElement.classList) || null;
+    const classList = window.document?.documentElement.classList || null;
     classList?.toggle("small", size == "small");
     classList?.toggle("default", size == "default");
     classList?.toggle("large", size == "large");
   }
 }
+
 /**
  * 设置语言
  * @param language - 语言标识
@@ -139,15 +149,17 @@ function setPaManagerLanguage(language: "en-US" | "zh-CN"): void {
     package: languageMap[language]
   };
 }
+
 /**
  * 设置表格无限滚动配置
  * @param value - 表格配置项
  * @returns void
  * @description 更新表格配置
  */
-function setPaManagerTableInfiniteScroll(value: Record<string, any>): void {
+function setPaManagerTableInfiniteScroll(value: Record<string, unknown>): void {
   state.table_config = { ...state.table_config, ...value };
 }
+
 /**
  * 统一设置配置项
  * @param type - 配置类型
@@ -155,12 +167,17 @@ function setPaManagerTableInfiniteScroll(value: Record<string, any>): void {
  * @returns void
  * @description 根据类型调用对应的配置方法
  */
-function setPaManagerConfig(type: keyof PancakeGlobalConfigType & {}, config: any): void {
-  if (type == "language") setPaManagerLanguage(config);
-  else if (type == "themeColor" || type == "isDark") setPaManagerThemeColor(config.themeColor, config.isDark);
-  else if (type == "size") setPaManagerSize(config.size);
-  else if (type == "table_config") setPaManagerTableInfiniteScroll(config);
+function setPaManagerConfig(type: keyof PancakeGlobalConfigType & {}, config: unknown): void {
+  if (type == "language") setPaManagerLanguage(config as "en-US" | "zh-CN");
+  else if (type == "themeColor" || type == "isDark") {
+    const configObj = config as { themeColor?: string; isDark?: boolean };
+    setPaManagerThemeColor(configObj.themeColor, configObj.isDark);
+  } else if (type == "size") {
+    const configObj = config as { size?: "default" | "large" | "small" };
+    setPaManagerSize(configObj.size!);
+  } else if (type == "table_config") setPaManagerTableInfiniteScroll(config as Record<string, unknown>);
 }
+
 /**
  * 配置设置方法注入
  * @description 通过 provide 向子组件提供配置设置方法
@@ -173,6 +190,7 @@ defineExpose({
   setPaManagerTableInfiniteScroll,
   setPaManagerConfig
 });
+
 /**
  * 组件挂载
  * @description 组件挂载时初始化全局配置和开发日志
@@ -184,6 +202,7 @@ onMounted(() => {
     window.developLog = createLog(props.env || "product");
   }
 });
+
 /**
  * Props 同步监听
  * @description 监听 props 变化并同步更新全局配置状态
