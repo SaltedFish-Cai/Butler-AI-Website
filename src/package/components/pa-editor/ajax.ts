@@ -1,14 +1,16 @@
 /**
- * @description 导入 lodash 的 isNil 函数
+ * @description 空值判断工具函数
  */
-import _ from "lodash";
-
-const { isNil } = _;
 
 /**
  * @description 错误作用域名称
  */
 const SCOPE = "ElUpload";
+
+/**
+ * @description 导入 isNil 工具函数
+ */
+import isNil from "../tools/is-nil";
 
 /**
  * @description 上传请求错误类

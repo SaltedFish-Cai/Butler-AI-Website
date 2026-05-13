@@ -33,7 +33,6 @@
                 : {}
             "
           >
-            <!-- {{ tool.icon }} -->
             <template v-if="tool.command == 'fontSizeArray'">{{ tool.icon }}</template>
             <pa-icon v-else :name="tool.icon"></pa-icon>
           </button>
@@ -81,21 +80,6 @@
 
         <div v-else class="pa-editor-toolbar_array">
           <template v-for="child in tool.children" :key="child.command + child.value">
-            <!-- <div v-if="child.command == 'backColor' || child.command == 'foreColor'">
-              <button
-                :style="
-                  isSourceCodeMode == 'edit'
-                    ? {
-                        backgroundColor: `${child.value} !important`,
-                        color: child.command == 'foreColor' ? child.value : 'transparent'
-                      }
-                    : {}
-                "
-                :disabled="isSourceCodeMode != 'edit'"
-                class="color-block"
-                @mousedown.prevent="executeCommand(child.command, child.value)"
-              ></button>
-            </div> -->
             <button
               v-if="child.command == 'fontSize'"
               :class="{ active: child.isActive }"
@@ -103,7 +87,6 @@
               @click="executeCommand(child.command, child.value)"
               :title="child.title"
             >
-              <!-- {{ tool.icon }} -->
               {{ child.title }}
             </button>
 
@@ -114,7 +97,6 @@
               @click="executeCommand(child.command, child.value)"
               :title="child.title"
             >
-              <!-- {{ tool.icon }} -->
               <pa-icon :name="child.icon"></pa-icon>
             </button>
           </template>
@@ -159,7 +141,6 @@
           (isSourceCodeMode == 'visible' && tool.command != 'visible')
         "
       >
-        <!-- {{ tool.icon }} -->
         <pa-icon :name="tool.icon"></pa-icon>
       </button>
     </template>
@@ -172,7 +153,6 @@
         :title="tool.name"
         :disabled="isSourceCodeMode == 'code' || isSourceCodeMode == 'visible'"
       >
-        <!-- {{ tool.icon }} -->
         <pa-icon :name="tool.icon"></pa-icon>
       </button>
     </template>
@@ -180,14 +160,12 @@
 </template>
 
 <script setup lang="ts">
-import { ComputedRef, inject, nextTick, onMounted, onUnmounted, ref, Ref } from "vue";
+import { ComputedRef, inject, nextTick, onMounted, onBeforeUnmount, ref, Ref } from "vue";
 import { ComponentProps, ComponentTool } from "./types";
 import { toolsConfig } from "./tools-config";
 import { useUpFileHooks } from "./use-upfile-hooks";
 import { PancakeGlobalConfigType } from "../pa-manager/types";
-
-import _ from "lodash";
-const { throttle } = _;
+import throttle from "../tools/throttle";
 
 const props = withDefaults(
   defineProps<
@@ -204,7 +182,9 @@ const props = withDefaults(
 );
 const sourceCodeMode = ref(props.isSourceCodeMode);
 
-// 定义emits
+/**
+ * @description 定义组件事件发射器
+ */
 const emit = defineEmits(["popverChange", "sourceCodeModeChange"]);
 
 const ManagerGlobalConfig = inject("ManagerGlobalConfig") as ComputedRef<PancakeGlobalConfigType>;
@@ -227,13 +207,17 @@ const popoverVisible = ref(false);
 const onContentChange = inject("onContentChange") as () => void;
 const editorRef = inject("provideEditorRef") as Ref<HTMLDivElement | null>;
 
-// 更新工具栏工具的激活状态
+/**
+ * @description 更新工具栏工具的激活状态
+ */
 const isToolActiveArrayFn = () => {
   const selection = window.getSelection();
 
   if (!selection || selection.rangeCount === 0) return;
 
-  // 获取当前光标位置的字体颜色和背景颜色
+  /**
+   * @description 获取当前光标位置的字体颜色和背景颜色
+   */
   const foreColor = document.queryCommandValue("foreColor");
   const backColor = document.queryCommandValue("backColor");
 
@@ -243,7 +227,9 @@ const isToolActiveArrayFn = () => {
     currentElement = currentElement.parentElement;
   }
 
-  // 更新颜色图标和字体图标的颜色
+  /**
+   * @description 更新颜色图标和字体图标的颜色
+   */
   toolbarTools.value.forEach(tool => {
     if (tool.children?.length) {
       tool.children.map(child => {
@@ -253,7 +239,9 @@ const isToolActiveArrayFn = () => {
     } else {
       tool.isActive = props.isToolActive(tool);
     }
-    // 更新颜色图标和字体图标的颜色
+    /**
+     * @description 更新颜色图标和字体图标的颜色
+     */
     if (tool.command === "foreColor") {
       tool.foreColor = foreColor;
       tool.backColor = backColor;
@@ -291,7 +279,10 @@ const isToolActiveArrayFn = () => {
   });
 };
 
-// 判断选中的文本是否是某个标签下的所有文本内容
+/**
+ * @description 判断选中的文本是否是某个标签下的所有文本内容
+ * @returns 是否为完整标签内容及父元素
+ */
 const isSelectedTextFullTagContent = () => {
   const selection = window.getSelection();
   if (!selection || selection.rangeCount === 0) {
@@ -304,9 +295,13 @@ const isSelectedTextFullTagContent = () => {
     return { isFull: false, parentElement: null };
   }
 
-  // 获取选中内容的父元素
+  /**
+   * @description 获取选中内容的父元素
+   */
   let parentElement: any = range.commonAncestorContainer;
-  // 如果父元素是文本节点，则获取其父元素
+  /**
+   * @description 如果父元素是文本节点，则获取其父元素
+   */
   if (parentElement.nodeType === Node.TEXT_NODE) {
     parentElement = parentElement.parentNode;
   }
@@ -315,10 +310,14 @@ const isSelectedTextFullTagContent = () => {
     return { isFull: false, parentElement: null };
   }
 
-  // 获取父元素的所有文本内容（去除首尾空白）
+  /**
+   * @description 获取父元素的所有文本内容（去除首尾空白）
+   */
   const parentTextContent = parentElement.textContent?.trim() || "";
 
-  // 判断选中的文本是否与父元素的所有文本内容相等
+  /**
+   * @description 判断选中的文本是否与父元素的所有文本内容相等
+   */
   const isFull = selectedText === parentTextContent;
 
   return { isFull, parentElement };
@@ -326,13 +325,17 @@ const isSelectedTextFullTagContent = () => {
 
 let linkElement: any = null;
 
-// 从父组件注入撤销/恢复相关函数
+/**
+ * @description 从父组件注入撤销/恢复相关函数
+ */
 const saveToUndoStack = inject("saveToUndoStack") as () => void;
 const undo = inject("undo") as () => void;
 const redo = inject("redo") as () => void;
 const toggleFullscreen = inject("toggleFullscreen") as () => void;
 const executeCommand = (command: string, value?: any) => {
-  // 确保编辑器存在并获得焦点
+  /**
+   * @description 确保编辑器存在并获得焦点
+   */
   if (
     !editorRef.value &&
     ![
@@ -349,30 +352,44 @@ const executeCommand = (command: string, value?: any) => {
     return;
   editorRef.value?.focus?.();
   console.log("++++++++++> command:", command);
-  // 处理撤销命令
+  /**
+   * @description 处理撤销命令
+   */
   if (command === "undo") {
-    // 调用父组件注入的撤销函数
+    /**
+     * @description 调用父组件注入的撤销函数
+     */
     undo();
     return;
   }
 
-  // 处理恢复命令
+  /**
+   * @description 处理恢复命令
+   */
   if (command === "redo") {
-    // 调用父组件注入的恢复函数
+    /**
+     * @description 调用父组件注入的恢复函数
+     */
     redo();
     return;
   }
 
-  // 处理背景色命令
+  /**
+   * @description 处理背景色命令
+   */
   if (command === "backColor" && value) {
-    // 在执行编辑操作前保存当前状态到撤销栈
+    /**
+     * @description 在执行编辑操作前保存当前状态到撤销栈
+     */
     saveToUndoStack();
     const selection = window.getSelection();
 
     if (selection && selection.rangeCount > 0) {
       const range = selection.getRangeAt(0);
 
-      // 创建带有背景色的span元素
+      /**
+       * @description 创建带有背景色的span元素
+       */
       const span = document.createElement("span");
       span.style.backgroundColor = value;
 
@@ -390,10 +407,14 @@ const executeCommand = (command: string, value?: any) => {
               selection.addRange(newRange);
             }, 0);
           } else {
-            // 如果有选中内容，将选中内容包裹在span标签中
+            /**
+             * @description 如果有选中内容，将选中内容包裹在span标签中
+             */
             range.surroundContents(span);
 
-            // 重新设置光标位置到span后面
+            /**
+             * @description 重新设置光标位置到span后面
+             */
             const newRange = document.createRange();
             newRange.setStart(span, 0);
             newRange.setEnd(span, 1);
@@ -406,18 +427,23 @@ const executeCommand = (command: string, value?: any) => {
       }
     }
     return;
-  }
+  } else if (command === "foreColor" && value) {
 
-  // 处理字体颜色命令
-  else if (command === "foreColor" && value) {
-    // 在执行编辑操作前保存当前状态到撤销栈
+  /**
+   * @description 处理字体颜色命令
+   */
+    /**
+     * @description 在执行编辑操作前保存当前状态到撤销栈
+     */
     saveToUndoStack();
     const selection = window.getSelection();
 
     if (selection && selection.rangeCount > 0) {
       const range = selection.getRangeAt(0);
 
-      // 创建带有字体颜色的span元素
+      /**
+       * @description 创建带有字体颜色的span元素
+       */
       const span = document.createElement("span");
       span.style.color = value;
       span.style.backgroundColor = "inherit";
@@ -435,8 +461,10 @@ const executeCommand = (command: string, value?: any) => {
               selection.addRange(newRange);
             }, 0);
           } else {
-            // 如果有选中内容，将选中内容包裹在span标签中
-            range.surroundContents(span); /// 保持选择状态
+            /**
+             * @description 如果有选中内容，将选中内容包裹在span标签中
+             */
+            range.surroundContents(span);
             const newRange = document.createRange();
             newRange.setStart(span, 0);
             newRange.setEnd(span, 1);
@@ -449,11 +477,14 @@ const executeCommand = (command: string, value?: any) => {
       }
     }
     return;
-  }
+  } else if (command === "fontSize" && value) {
 
-  // 处理字体大小命令
-  else if (command === "fontSize" && value) {
-    // 在执行编辑操作前保存当前状态到撤销栈
+  /**
+   * @description 处理字体大小命令
+   */
+    /**
+     * @description 在执行编辑操作前保存当前状态到撤销栈
+     */
     saveToUndoStack();
     document.execCommand("formatBlock", false, "<p>");
 
@@ -462,7 +493,9 @@ const executeCommand = (command: string, value?: any) => {
     if (selection && selection.rangeCount > 0) {
       const range = selection.getRangeAt(0);
 
-      // 创建带有字体大小的span元素
+      /**
+       * @description 创建带有字体大小的span元素
+       */
       const span = document.createElement("span");
       span.style.fontSize = value;
 
@@ -472,21 +505,26 @@ const executeCommand = (command: string, value?: any) => {
           if (isFull && parentElement) {
             parentElement.style.fontSize = value;
           } else {
-            // 如果有选中内容，将选中内容包裹在span标签中
+            /**
+             * @description 如果有选中内容，将选中内容包裹在span标签中
+             */
             range.surroundContents(span);
           }
-          /// 保持选择状态
           const newRange = document.createRange();
           newRange.setStart(span, 0);
           newRange.setEnd(span, 1);
           selection.removeAllRanges();
           selection.addRange(newRange);
         } else {
-          // 如果没有选中内容，创建一个带有字体大小的空span
+          /**
+           * @description 如果没有选中内容，创建一个带有字体大小的空span
+           */
           span.innerHTML = "&nbsp;";
           range.insertNode(span);
 
-          // 将光标移动到span后面
+          /**
+           * @description 将光标移动到span后面
+           */
           const newRange = document.createRange();
           newRange.setStartAfter(span);
           newRange.collapse(true);
@@ -497,17 +535,22 @@ const executeCommand = (command: string, value?: any) => {
         console.error("设置字体大小失败:", error);
       }
     }
-  }
+  } else if (command === "createLink") {
 
-  // 处理创建链接命令
-  else if (command === "createLink") {
-    // 在执行编辑操作前保存当前状态到撤销栈
+  /**
+   * @description 处理创建链接命令
+   */
+    /**
+     * @description 在执行编辑操作前保存当前状态到撤销栈
+     */
     saveToUndoStack();
     const selection = window.getSelection();
     if (selection && selection.rangeCount > 0) {
       const range = selection.getRangeAt(0);
 
-      // 获取当前元素
+      /**
+       * @description 获取当前元素
+       */
       let currentElement: any = range.startContainer;
       if (currentElement.nodeType === 3) {
         currentElement = currentElement.parentElement;
@@ -520,7 +563,6 @@ const executeCommand = (command: string, value?: any) => {
         try {
           if (!range.collapsed) {
             range.surroundContents(a);
-            // const { parentElement }: any = isSelectedTextFullTagContent();
             linkElement = a;
           }
         } catch (error) {
@@ -529,47 +571,62 @@ const executeCommand = (command: string, value?: any) => {
       }
     }
     return;
-  }
+  } else if (command === "confirmLink") {
 
-  // 处理确认链接命令
-  else if (command === "confirmLink") {
-    // 在执行编辑操作前保存当前状态到撤销栈
+  /**
+   * @description 处理确认链接命令
+   */
+    /**
+     * @description 在执行编辑操作前保存当前状态到撤销栈
+     */
     saveToUndoStack();
     if (linkElement && linkElement.tagName === "A") {
       linkElement.title = value;
       linkElement.href = value;
     }
-  }
+  } else if (command === "deleteLink") {
 
-  // 处理删除链接命令
-  else if (command === "deleteLink") {
-    // 在执行编辑操作前保存当前状态到撤销栈
+  /**
+   * @description 处理删除链接命令
+   */
+    /**
+     * @description 在执行编辑操作前保存当前状态到撤销栈
+     */
     saveToUndoStack();
     if (linkElement && linkElement.tagName === "A") {
       try {
         const textContent = linkElement.textContent || "";
         const textNode = document.createTextNode(textContent);
 
-        // 替换链接元素为文本节点
+        /**
+         * @description 替换链接元素为文本节点
+         */
         if (linkElement.parentNode) {
           linkElement.parentNode.replaceChild(textNode, linkElement);
         }
 
-        // 清除链接元素引用
+        /**
+         * @description 清除链接元素引用
+         */
         linkElement = null;
       } catch (error) {
         console.error("删除链接失败:", error);
 
-        // 备选方案：使用execCommand
+        /**
+         * @description 备选方案：使用execCommand
+         */
         document.execCommand("unlink");
         linkElement = null;
       }
     }
-  }
+  } else if (command === "insertTable") {
 
-  // 处理插入表格命令
-  else if (command === "insertTable") {
-    // 在执行编辑操作前保存当前状态到撤销栈
+  /**
+   * @description 处理插入表格命令
+   */
+    /**
+     * @description 在执行编辑操作前保存当前状态到撤销栈
+     */
     saveToUndoStack();
     const { rows = 3, cols = 3 } = typeof value === "object" ? value : {};
 
@@ -583,17 +640,23 @@ const executeCommand = (command: string, value?: any) => {
         boxDiv.style.maxWidth = "100%";
         boxDiv.style.overflow = "auto";
 
-        // 创建表格元素
+        /**
+         * @description 创建表格元素
+         */
         const table = document.createElement("table");
         table.style.borderCollapse = "collapse";
         table.style.width = "fit-content";
 
-        // 显式创建tbody元素
+        /**
+         * @description 显式创建tbody元素
+         */
         const tableBody = document.createElement("tbody");
         table.appendChild(tableBody);
         boxDiv.appendChild(table);
 
-        // 创建表格行和单元格
+        /**
+         * @description 创建表格行和单元格
+         */
         for (let i = 0; i < rows; i++) {
           const tr = document.createElement("tr");
 
@@ -607,19 +670,27 @@ const executeCommand = (command: string, value?: any) => {
             tr.appendChild(td);
           }
 
-          // 将行添加到tbody而不是直接添加到table
+          /**
+           * @description 将行添加到tbody而不是直接添加到table
+           */
           tableBody.appendChild(tr);
         }
 
-        // 插入表格
+        /**
+         * @description 插入表格
+         */
         range.insertNode(boxDiv);
 
-        // 在表格后添加一个空段落
+        /**
+         * @description 在表格后添加一个空段落
+         */
         const p = document.createElement("p");
         p.innerHTML = "&nbsp;";
         boxDiv.parentNode?.insertBefore(p, table.nextSibling);
 
-        // 将光标移动到表格后的空段落
+        /**
+         * @description 将光标移动到表格后的空段落
+         */
         const newRange = document.createRange();
         newRange.setStart(p, 0);
         newRange.collapse(true);
@@ -629,60 +700,86 @@ const executeCommand = (command: string, value?: any) => {
         console.error("插入表格失败:", error);
       }
     }
-  }
+  } else if (command === "sourceCode") {
 
-  // 源码编辑
-  else if (command === "sourceCode") {
-    // 切换源码编辑模式
+  /**
+   * @description 源码编辑
+   */
+    /**
+     * @description 切换源码编辑模式
+     */
     sourceCodeMode.value = sourceCodeMode.value === "edit" ? "code" : "edit";
     emit("sourceCodeModeChange", sourceCodeMode.value);
     if (sourceCodeMode.value === "code") {
-      // 切换到源码模式：将编辑器内容转为HTML源码
+      /**
+       * @description 切换到源码模式：将编辑器内容转为HTML源码
+       */
       if (editorRef.value && injectSourceCodeRef.value) {
         injectSourceCodeRef.value.value = editorRef.value.innerHTML;
-        // 更新行号
+        /**
+         * @description 更新行号
+         */
         updateLineNumbers();
-        // 自动格式化代码
+        /**
+         * @description 自动格式化代码
+         */
         props.autoFormatCode(true);
-        // 应用语法高亮
+        /**
+         * @description 应用语法高亮
+         */
         nextTick(() => {
           props.applySyntaxHighlighting();
         });
       }
     } else {
-      // 切换到可视化模式：将源码转为HTML内容
+      /**
+       * @description 切换到可视化模式：将源码转为HTML内容
+       */
       if (injectSourceCodeRef.value && editorRef.value) {
         editorRef.value.innerHTML = injectSourceCodeRef.value.value;
         onContentChange();
       }
     }
 
-    // 更新工具栏激活状态
+    /**
+     * @description 更新工具栏激活状态
+     */
     isToolActiveArrayFn();
     return;
-  }
+  } else if (command === "visible") {
 
-  // 预览
-  else if (command === "visible") {
-    // 切换源码编辑模式
+  /**
+   * @description 预览
+   */
+    /**
+     * @description 切换源码编辑模式
+     */
     sourceCodeMode.value = sourceCodeMode.value === "edit" ? "visible" : "edit";
     emit("sourceCodeModeChange", sourceCodeMode.value);
 
-    // 更新工具栏激活状态
+    /**
+     * @description 更新工具栏激活状态
+     */
     isToolActiveArrayFn();
     return;
-  }
+  } else if (command === "fullscreen") {
 
-  // 全屏功能
-  else if (command === "fullscreen") {
+  /**
+   * @description 全屏功能
+   */
     toggleFullscreen();
     return;
-  }
+  } else {
 
-  // 处理其他命令
-  else {
-    // 在执行其他编辑命令前保存当前状态到撤销栈
-    // 特别是formatBlock命令（标题设置）
+  /**
+   * @description 处理其他命令
+   */
+    /**
+     * @description 在执行其他编辑命令前保存当前状态到撤销栈
+     */
+    /**
+     * @description 特别是formatBlock命令（标题设置）
+     */
     if (
       [
         "formatBlock",
@@ -709,16 +806,24 @@ const executeCommand = (command: string, value?: any) => {
 };
 const throttleExecuteCommand = throttle(executeCommand, 1);
 
-// 组件挂载事件
+/**
+ * @description 组件挂载事件
+ */
 onMounted(() => {
-  // 添加事件监听
+  /**
+   * @description 添加事件监听
+   */
   document.addEventListener("mouseup", isToolActiveArrayFn);
   document.addEventListener("keyup", isToolActiveArrayFn);
 });
 
-// 组件卸载事件
-onUnmounted(() => {
-  // 移除事件监听
+/**
+ * @description 组件卸载事件
+ */
+onBeforeUnmount(() => {
+  /**
+   * @description 移除事件监听
+   */
   document.removeEventListener("mouseup", isToolActiveArrayFn);
   document.removeEventListener("keyup", isToolActiveArrayFn);
 });

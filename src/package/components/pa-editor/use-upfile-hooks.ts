@@ -22,12 +22,10 @@ import type { PancakeGlobalConfigType } from "../pa-manager/types";
  * @description 导入编辑器类型
  */
 import type { ComponentProps } from "./types";
+import debounce from "../tools/debounce";
 /**
- * @description 导入 lodash 防抖函数
+ * @description 防抖工具函数
  */
-import _ from "lodash";
-
-const { debounce } = _;
 
 /**
  * @description 文件上传钩子函数

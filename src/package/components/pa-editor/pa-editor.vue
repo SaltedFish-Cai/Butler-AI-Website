@@ -73,7 +73,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, onMounted, onUnmounted, Ref, provide, nextTick, useTemplateRef } from "vue";
+import { ref, watch, onMounted, onBeforeUnmount, Ref, provide, nextTick, useTemplateRef } from "vue";
 import type { ComponentProps, ComponentEmits } from "./types";
 import EditImage from "./edit-images.vue";
 import EditTable from "./edit-table.vue";
@@ -83,9 +83,7 @@ import { useToolsHooks } from "./use-tools-hooks";
 import * as prettier from "prettier/standalone";
 import * as prettierHtmlParser from "prettier/parser-html";
 import hljs from "highlight.js";
-import _ from "lodash";
-
-const { debounce } = _;
+import debounce from "../tools/debounce";
 
 /**
  * @description 组件 props 定义
@@ -297,7 +295,7 @@ onMounted(() => {
 /**
  * @description 组件卸载时移除事件监听器
  */
-onUnmounted(() => {
+onBeforeUnmount(() => {
   document.removeEventListener("fullscreenchange", handleFullscreenChange);
   document.removeEventListener("webkitfullscreenchange", handleFullscreenChange);
   document.removeEventListener("mozfullscreenchange", handleFullscreenChange);
