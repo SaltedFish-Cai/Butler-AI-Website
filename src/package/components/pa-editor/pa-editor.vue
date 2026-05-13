@@ -1,6 +1,6 @@
 <template>
   <div :id="ID" class="pa-editor" :style="{ ...props.style }" :class="[props.class]">
-    <m-editor-tools
+    <editor-tools
       ref="editorToolsRef"
       :isSourceCodeMode="isSourceCodeMode"
       v-bind="{ ...props, id: ID }"
@@ -12,7 +12,7 @@
       @popver-change="value => (openPopover = value)"
       @source-code-mode-change="value => (isSourceCodeMode = value)"
     >
-    </m-editor-tools>
+    </editor-tools>
     <pa-scrollbar
       useShadow
       style="flex: 1"
@@ -77,7 +77,7 @@ import { ref, watch, onMounted, onUnmounted, Ref, provide, nextTick, useTemplate
 import type { ComponentProps, ComponentEmits } from "./types";
 import EditImage from "./edit-images.vue";
 import EditTable from "./edit-table.vue";
-import MEditorTools from "./m-editor-tools.vue";
+import EditorTools from "./editor-tools.vue";
 import { randChar } from "../tools/rand-char";
 import { useToolsHooks } from "./use-tools-hooks";
 import * as prettier from "prettier/standalone";
@@ -245,6 +245,7 @@ function toggleFullscreen(): void {
       (editorElement as any).msRequestFullscreen();
     }
   } else {
+    const document: any = window.document;
     if (document.exitFullscreen) {
       document.exitFullscreen();
     } else if (document.webkitExitFullscreen) {
@@ -274,7 +275,7 @@ function handleFullscreenChange(): void {
  */
 function saveCursorPosition(): void {
   if (!editorRef.value) return;
-  const selection = typeof window !== "undefined" ? window.getSelection() : null();
+  const selection = typeof window !== "undefined" ? window.getSelection() : null;
   if (selection && selection.rangeCount > 0) {
     savedCursorRange = selection.getRangeAt(0).cloneRange();
   }
@@ -570,7 +571,7 @@ watch(
 function onPaste(e: ClipboardEvent): void {
   e.preventDefault();
   const text = e.clipboardData?.getData("text/plain") || "";
-  const selection = typeof window !== "undefined" ? window.getSelection() : null();
+  const selection = typeof window !== "undefined" ? window.getSelection() : null;
   if (selection && selection.rangeCount > 0) {
     const range = selection.getRangeAt(0);
     range.deleteContents();
@@ -618,7 +619,7 @@ function getEditorValue(): string {
  */
 function insertTextAtCursor(text: string): void {
   editorRef.value?.focus?.();
-  const selection = typeof window !== "undefined" ? window.getSelection() : null();
+  const selection = typeof window !== "undefined" ? window.getSelection() : null;
   if (selection) {
     try {
       if (savedCursorRange && editorRef.value?.contains(savedCursorRange.startContainer)) {
