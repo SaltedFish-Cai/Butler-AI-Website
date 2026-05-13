@@ -1,36 +1,26 @@
-// # Import
-// import { showNotify, showDialog } from "@nutui/nutui";
-// import { useBaseStore as globalState } from "../../store/index";
-// import inBrowser from "@mo/tools/inBrowser";
-// import Taro from "@tarojs/taro";
-import inBrowser from "../tools/inBrowser";
-import { M_MessageBox, M_Notification } from "../feedback";
-
 /**
- * @description 接收数据流生成 blob，创建链接，下载文件
- * @param {String} path 下载文件地址 (必传)
- * @param {Boolean} isNotify 是否有导出消息提示 (默认为 true) (必传)
- * @param {Boolean} relPath 是否真实路径 (false时，使用前置getFiler) (必传)
- * @param {String} exFileName 外置下载文件名称
+ * 浏览器环境判断工具
+ * @description 检测代码是否在浏览器环境中运行
  */
-
-export const useGetBlob = async (config = { downloadHose: "", requestHeader: {} }, path: string) => {
+import inBrowser from "../tools/inBrowser";
+/**
+ * 消息反馈组件
+ * @description 消息、对话框、通知组件
+ */
+import { M_MessageBox, M_Notification } from "../feedback";
+/**
+ * 获取文件 Blob 数据
+ * @param config - 下载配置
+ * @param config.downloadHose - 下载服务器地址
+ * @param config.requestHeader - 请求头配置
+ * @param path - 文件路径
+ * @returns Promise<Blob | undefined>
+ * @description 接收数据流生成 blob，创建链接，下载文件
+ */
+export const useGetBlob = async (config = { downloadHose: "", requestHeader: {} }, path: string): Promise<Blob | undefined> => {
   try {
-    // const baseURL = process.env.TARO_APP_DOMAIN_URL as string;
-    // const TOKEN = Taro.getStorageSync("BBRAUN_TOKEN") || "";
-
     const headerData = config.requestHeader;
     const baseURL = config.downloadHose;
-    // const headers: objectType = {
-    //   Version: process.env.TARO_APP_API_VERSION,
-    //   Authorization: `Bearer ${TOKEN}`
-    // };
-    // if (headerData) {
-    //   for (const key in headerData) {
-    //     headers[key] = headerData[key];
-    //   }
-    // }
-    // const _path = (fileApi?.downloadApi || "") + path;
 
     const _path = baseURL + path;
     return await fetch(`${_path}`, {
@@ -38,10 +28,6 @@ export const useGetBlob = async (config = { downloadHose: "", requestHeader: {} 
       mode: "cors",
       headers: headerData
     }).then(async (response: any) => {
-      // 切割出文件名
-      // const fileNameEncode = response.headers.get("content-disposition")?.split("filename=")[1];
-      // 解码
-      // const fileName = (fileNameEncode && decodeURIComponent(fileNameEncode)) || exFileName || "下载文件";
       if (response.status != 200) {
       } else if (response.headers.get("Content-Type")?.includes("application/json")) {
         response.json().then(json => {
@@ -78,8 +64,21 @@ export const useGetBlob = async (config = { downloadHose: "", requestHeader: {} 
     window.log.error(String(error));
   }
 };
-
-export const useDownload = async (config = { downloadHose: "", requestHeader: {} }, path: string, exFileName?: string) => {
+/**
+ * 下载文件
+ * @param config - 下载配置
+ * @param config.downloadHose - 下载服务器地址
+ * @param config.requestHeader - 请求头配置
+ * @param path - 文件路径
+ * @param exFileName - 下载时的文件名
+ * @returns Promise<void>
+ * @description 根据文件路径下载文件，支持自定义文件名
+ */
+export const useDownload = async (
+  config = { downloadHose: "", requestHeader: {} },
+  path: string,
+  exFileName?: string
+): Promise<void> => {
   const megNotify: any = M_Notification({
     title: "温馨提示",
     dangerouslyUseHTMLString: true,
@@ -94,7 +93,7 @@ export const useDownload = async (config = { downloadHose: "", requestHeader: {}
     const headerData = config.requestHeader;
     const baseURL = config.downloadHose;
 
-    const headers = {};
+    const headers: Record<string, string> = {};
     if (headerData) {
       for (const key in headerData) {
         headers[key] = headerData[key];
@@ -106,9 +105,7 @@ export const useDownload = async (config = { downloadHose: "", requestHeader: {}
       mode: "cors",
       headers
     }).then(response => {
-      // 切割出文件名
       const fileNameEncode = response.headers.get("content-disposition")?.split("filename=")[1];
-      // 解码
       const fileName = (fileNameEncode && decodeURIComponent(fileNameEncode)) || exFileName || "下载文件";
       if (response.status != 200) {
         megNotify?.close();
@@ -158,7 +155,6 @@ export const useDownload = async (config = { downloadHose: "", requestHeader: {}
       }
       if (inBrowser) {
         response.blob().then(res => {
-          // 兼容 edge 不支持 createObjectURL 方法
           if ("msSaveOrOpenBlob" in navigator) {
             const _navigator: any = window.navigator;
             return _navigator.msSaveOrOpenBlob(res, `${fileName}` || `${new Date().getTime()}.xlsx`);
@@ -170,7 +166,6 @@ export const useDownload = async (config = { downloadHose: "", requestHeader: {}
           exportFile.href = blobUrl;
           typeof window !== "undefined" && window.document.body.appendChild(exportFile);
           exportFile.click();
-          // 去除下载对 url 的影响
           typeof window !== "undefined" && window.document.body.removeChild(exportFile);
           typeof window !== "undefined" && window.URL.revokeObjectURL(blobUrl);
         });

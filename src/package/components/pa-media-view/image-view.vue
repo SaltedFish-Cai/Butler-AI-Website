@@ -32,16 +32,36 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted, computed, watch, inject, ComputedRef } from "vue";
+import { ref, onMounted, computed, watch, inject, ComputedRef, onBeforeUnmount } from "vue";
 import { useGetBlob } from "./use-download";
 import randChar from "../tools/rand-char";
 import { mouseUp, left90, leftAll90 } from "./rotate-fn";
 import { PancakeGlobalConfigType } from "../pa-manager/types";
-
+/**
+ * 默认菜单位置
+ * @description 菜单弹出时的默认位置坐标
+ */
+const DEFAULT_CLIENT = { x: -500, y: -500 } as const;
+/**
+ * 图片引用
+ * @description DOM 中图片元素的引用
+ */
 const imgRef = ref();
+/**
+ * 滚动容器引用
+ * @description 滚动条容器的引用
+ */
 const scrollRef = ref();
+/**
+ * 媒体图片地址
+ * @description 当前加载的图片 URL
+ */
 const mediaImage = ref("");
-const IMG_ID = ref(randChar());
+/**
+ * 图片容器 ID
+ * @description 用于标识图片容器的唯一 ID
+ */
+const IMG_ID = randChar();
 
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 /**
@@ -73,17 +93,17 @@ const languagePackage = computed(() => {
       };
 });
 
-// const startDistance = ref(0);
-
-// let scaleFactor = 1;
-
 const props = withDefaults(defineProps<{ filePath: string; modelValue: number }>(), {});
 const textUrl = String(props.filePath);
 const zoomIndex = ref(1);
 const baseIndex = ref(1);
-// const emits = defineEmits(["update:modelValue"]);
-const client = ref({ x: -500, y: -500 });
+const client = ref({ ...DEFAULT_CLIENT });
 const menuSettingVisible = ref(false);
+/**
+ * 鼠标事件处理器数组
+ * @description 用于存储事件处理器以便清理
+ */
+const mouseUpHandlers: Array<() => void> = [];
 
 onMounted(async () => {
   const config = {
@@ -100,9 +120,13 @@ onMounted(async () => {
     }, 1000);
   }
 });
-
-function imgLoaded() {
-  const el = document.getElementById(IMG_ID.value + "-img");
+/**
+ * 图片加载完成回调
+ * @returns void
+ * @description 图片加载完成后绑定右键菜单事件
+ */
+function imgLoaded(): void {
+  const el = document.getElementById(IMG_ID + "-img");
   if (el) {
     const container = el.querySelectorAll(".image-wrapper");
     for (let i = 0; i < container.length; i++) {
@@ -110,31 +134,32 @@ function imgLoaded() {
         e.preventDefault();
         return false;
       };
-      container[i].addEventListener(
-        "mouseup",
-        event =>
-          mouseUp(event as MouseEvent, e => {
-            menuSettingVisible.value = true;
-            client.value = { x: e.clientX + 5, y: e.clientY + 10 };
-          }),
-        { passive: false }
-      );
+      const handler = (event: MouseEvent) =>
+        mouseUp(event as MouseEvent, e => {
+          menuSettingVisible.value = true;
+          client.value = { x: e.clientX + 5, y: e.clientY + 10 };
+        });
+      mouseUpHandlers.push(handler);
+      container[i].addEventListener("mouseup", handler, { passive: false });
     }
   }
-
-  // setTimeout(() => {
-  //   const { clientWidth } = imgRef.value;
-  //   const scrollBody = scrollRef.value.el.wrapRef;
-  //   console.dir(scrollBody);
-  //   const _zoomIndex = scrollBody.clientWidth / clientWidth;
-  //   zoomIndex.value = _zoomIndex;
-  //   baseIndex.value = _zoomIndex;
-  //   emits("update:modelValue", _zoomIndex);
-  // }, 200);
-  // scaleFactor = zoomIndex.value;
 }
+/**
+ * 组件卸载前清理
+ * @description 移除事件监听器，防止内存泄漏
+ */
+onBeforeUnmount(() => {
+  mouseUpHandlers.forEach(handler => {
+    const el = document.getElementById(IMG_ID + "-img");
+    if (el) {
+      const container = el.querySelectorAll(".image-wrapper");
+      container.forEach(item => item.removeEventListener("mouseup", handler));
+    }
+  });
+  mouseUpHandlers.length = 0;
+});
 
-defineExpose({ leftAll90: () => leftAll90(IMG_ID.value + "-img") });
+defineExpose({ leftAll90: () => leftAll90(IMG_ID + "-img") });
 
 watch(
   () => props.modelValue,

@@ -1,11 +1,18 @@
-// #Function 创建A_Z列表
-export function generateAlphabetSequence(end = "ZZ", start = "A", tableEnd = "ZZ") {
+/**
+ * 生成字母序列
+ * @param end - 结束字母，默认为 "ZZ"
+ * @param start - 开始字母，默认为 "A"
+ * @param tableEnd - 表格结束字母，默认为 "ZZ"
+ * @returns Array<string>
+ * @description 生成从 start 到 end 的字母序列
+ */
+export function generateAlphabetSequence(end = "ZZ", start = "A", tableEnd = "ZZ"): Array<string> {
   const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  const sequence: string[] = [];
+  const sequence: Array<string> = [];
   let RIndexText = "";
   let RIndex = 0;
   let startSave = false;
-  function generateAlphabetSequenceAr(startText) {
+  function generateAlphabetSequenceAr(startText: string): void {
     for (let i = 0; i < alphabet.length; i++) {
       const Text = startText + alphabet[i];
       if (Text == start) startSave = true;
@@ -26,14 +33,24 @@ export function generateAlphabetSequence(end = "ZZ", start = "A", tableEnd = "ZZ
 
   return sequence;
 }
-
-// #Function  判断是否有合并单元格
-export function hasMergedCells(worksheet) {
+/**
+ * 判断是否有合并单元格
+ * @param worksheet - 工作表对象
+ * @returns boolean
+ * @description 检查工作表是否存在合并单元格
+ */
+export function hasMergedCells(worksheet: Record<string, any>): boolean {
   return worksheet["!merges"] && worksheet["!merges"].length > 0;
 }
-
-export function getMergedCellArr(worksheet, tableEnd) {
-  const arr: string[] = [];
+/**
+ * 获取合并单元格数组
+ * @param worksheet - 工作表对象
+ * @param tableEnd - 表格结束位置
+ * @returns Array<string>
+ * @description 获取所有合并单元格范围内的单元格坐标
+ */
+export function getMergedCellArr(worksheet: Record<string, any>, tableEnd: string): Array<string> {
+  const arr: Array<string> = [];
   if (hasMergedCells(worksheet)) {
     for (const merge of worksheet["!merges"]) {
       const startCell = `${getColumnName(merge.s.c)}${merge.s.r + 1}`;
@@ -58,9 +75,21 @@ export function getMergedCellArr(worksheet, tableEnd) {
 
   return arr;
 }
-
-// #Function  获取合并单元格
-export function getMergedCells(worksheet, configDataArrWidthMap, key, tableEnd) {
+/**
+ * 获取合并单元格
+ * @param worksheet - 工作表对象
+ * @param configDataArrWidthMap - 列宽配置映射
+ * @param key - 单元格键名
+ * @param tableEnd - 表格结束位置
+ * @returns { row: number, col: number }
+ * @description 获取指定单元格的合并尺寸
+ */
+export function getMergedCells(
+  worksheet: Record<string, any>,
+  configDataArrWidthMap: Record<string, number>,
+  key: string,
+  tableEnd: string
+): { row: number; col: number } {
   const CELL_HEIGHT = 30;
   const KEY = key.replace(/\d/g, "");
 
@@ -94,9 +123,13 @@ export function getMergedCells(worksheet, configDataArrWidthMap, key, tableEnd) 
 
   return mergedCells;
 }
-
-// #Function  获取列名称
-export function getColumnName(columnIndex) {
+/**
+ * 获取列名称
+ * @param columnIndex - 列索引
+ * @returns string
+ * @description 根据列索引获取对应的字母列名
+ */
+export function getColumnName(columnIndex: number): string {
   const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   let columnName = "";
   while (columnIndex >= 0) {
@@ -105,14 +138,19 @@ export function getColumnName(columnIndex) {
   }
   return columnName;
 }
-
-// #Function 获取合并单元格范围内的所有单元格
-export function getCellsInMergedRange(startCell, endCell) {
-  const cells: string[] = [];
+/**
+ * 获取合并单元格范围内的所有单元格
+ * @param startCell - 起始单元格
+ * @param endCell - 结束单元格
+ * @returns Array<string>
+ * @description 获取指定范围内的所有单元格坐标
+ */
+export function getCellsInMergedRange(startCell: string, endCell: string): Array<string> {
+  const cells: Array<string> = [];
   const startCol = getColumnIndex(startCell);
   const endCol = getColumnIndex(endCell);
-  const startRow = parseInt(startCell.match(/\d+/)[0]) - 1;
-  const endRow = parseInt(endCell.match(/\d+/)[0]) - 1;
+  const startRow = parseInt(startCell.match(/\d+/)?.[0] || "0") - 1;
+  const endRow = parseInt(endCell.match(/\d+/)?.[0] || "0") - 1;
 
   for (let row = startRow; row <= endRow; row++) {
     for (let col = startCol; col <= endCol; col++) {
@@ -122,9 +160,13 @@ export function getCellsInMergedRange(startCell, endCell) {
 
   return cells;
 }
-
-// #Function 获取列索引
-export function getColumnIndex(columnName) {
+/**
+ * 获取列索引
+ * @param columnName - 列名称
+ * @returns number
+ * @description 根据列名称获取对应的列索引
+ */
+export function getColumnIndex(columnName: string): number {
   const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   let columnIndex = 0;
   for (let i = 0; i < columnName.length; i++) {
@@ -132,9 +174,13 @@ export function getColumnIndex(columnName) {
   }
   return columnIndex - 1;
 }
-
-// #Function 计算字符串长度;
-export function getStringLength(str) {
+/**
+ * 计算字符串长度
+ * @param str - 输入字符串
+ * @returns number
+ * @description 计算字符串的显示长度，中文字符按双字节计算
+ */
+export function getStringLength(str: string): number {
   let length = 0;
   for (let i = 0; i < str.length; i++) {
     if (str.charCodeAt(i) > 255) {

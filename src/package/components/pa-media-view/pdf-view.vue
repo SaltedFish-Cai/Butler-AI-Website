@@ -41,11 +41,11 @@ import { useGetBlob } from "./use-download";
 import randChar from "../tools/rand-char";
 import { mouseUp, left90, leftAll90 } from "./rotate-fn";
 import { PancakeGlobalConfigType } from "../pa-manager/types";
-
-// import Pdfh5 from "./pdf/js/pdfh5";
-// import "./pdf/css/pdfh5.css";
-// import Pdfh5 from "pdfh5";
-// import "pdfh5/css/pdfh5.css";
+/**
+ * 默认菜单位置
+ * @description 菜单弹出时的默认位置坐标
+ */
+const DEFAULT_CLIENT = { x: -500, y: -500 } as const;
 
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 /**
@@ -67,26 +67,41 @@ const languagePackage = computed(() => {
         rotateLeftTip: "左旋转",
         rotateRightTip: "右旋转",
         rotateUpDownTip: "上下翻转",
-        rotateLeftRightTip: "左右翻转"
+        rotateLeftRightTip: "左右翻转",
+        zoomInTip: "放大",
+        zoomOutTip: "缩小"
       }
     : {
         rotateLeftTip: "Rotate Left",
         rotateRightTip: "Rotate Right",
         rotateUpDownTip: "Rotate Up Down",
-        rotateLeftRightTip: "Rotate Left Right"
+        rotateLeftRightTip: "Rotate Left Right",
+        zoomInTip: "Zoom In",
+        zoomOutTip: "Zoom Out"
       };
 });
-
+/**
+ * PDF 实例
+ * @description Pdfh5 库的实例引用
+ */
 const pdf: Ref<any> = ref(null);
-const PDF_ID = ref(randChar());
+/**
+ * PDF 容器 ID
+ * @description 用于标识 PDF 容器的唯一 ID
+ */
+const PDF_ID = randChar();
 
 const props = withDefaults(defineProps<{ filePath: string; zoom: number }>(), {});
 const textUrl = String(props.filePath);
 
-const client = ref({ x: -500, y: -500 });
+const client = ref({ ...DEFAULT_CLIENT });
 const menuSettingVisible = ref(false);
-const pxit = ref(1.5);
-let blobDataObject;
+let pxit = 1.5;
+let blobDataObject: string | undefined;
+/**
+ * 组件挂载后加载 PDF
+ * @description 获取文件 blob 并创建 PDF 预览实例
+ */
 onMounted(async () => {
   const config = {
     requestHeader: PancakeGlobalConfig.value?.requestHeader,
@@ -98,39 +113,33 @@ onMounted(async () => {
     createPdf();
   }
 });
-
-function createPdf() {
+/**
+ * 创建 PDF 预览实例
+ * @returns void
+ * @description 初始化 Pdfh5 并加载 PDF 文件
+ */
+function createPdf(): void {
   nextTick(() => {
-    pdf.value = new window.Pdfh5("#" + PDF_ID.value + "-pdf", {
+    pdf.value = new window.Pdfh5("#" + PDF_ID + "-pdf", {
       pdfurl: blobDataObject,
       zoomEnable: false,
       pageNum: false,
       backTop: false,
       scrollEnable: false,
-      scale: pxit.value
-      // autoFit: false,
-      // fitWidth: false,
-
-      // renderType: "canvas",
-      // cMapUrl: "https://cdn.jsdelivr.net/npm/pdfjs-dist@2.10.377/cmaps/",
-      // cMapPacked: true,
-
-      // // 大文件必开
-      // lazyLoad: true, // 懒加载，只渲染可视区域
-      // onePageRender: false, // 不分页强制一次性渲染
-      // scrollEnable: true,
-      // pageNumbers: false, // 关闭页码、缩略图减少性能开销
-      // thumbnail: false,
-      // toolbar: true
+      scale: pxit
     });
     pdf.value.on("complete", function () {
       complete();
     });
   });
 }
-
-function complete() {
-  const el = document.getElementById(PDF_ID.value + "-pdf");
+/**
+ * PDF 加载完成回调
+ * @returns void
+ * @description PDF 加载完成后绑定右键菜单事件
+ */
+function complete(): void {
+  const el = document.getElementById(PDF_ID + "-pdf");
   if (el) {
     const container = el.querySelectorAll(".pageContainer");
     for (let i = 0; i < container.length; i++) {
@@ -150,20 +159,30 @@ function complete() {
     }
   }
 }
-
-const changePix = (val: number) => {
-  pxit.value = pxit.value + val;
+/**
+ * 调整缩放比例
+ * @param val - 缩放增量
+ * @returns void
+ * @description 根据增量调整 PDF 缩放比例
+ */
+const changePix = (val: number): void => {
+  pxit = pxit + val;
   pdf.value.destroy(() => {
     createPdf();
   });
 };
-
+/**
+ * 组件卸载前清理
+ * @description 释放 blob URL 和销毁 PDF 实例
+ */
 onUnmounted(() => {
-  window.URL.revokeObjectURL(blobDataObject);
+  if (blobDataObject) {
+    window.URL.revokeObjectURL(blobDataObject);
+  }
   pdf.value?.destroy();
 });
 
-defineExpose({ leftAll90: () => leftAll90(PDF_ID.value + "-pdf") });
+defineExpose({ leftAll90: () => leftAll90(PDF_ID + "-pdf") });
 </script>
 
 <style lang="scss" scoped>

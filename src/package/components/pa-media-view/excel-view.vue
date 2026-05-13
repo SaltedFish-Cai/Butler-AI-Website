@@ -9,11 +9,16 @@ import { PancakeGlobalConfigType } from "../pa-manager/types";
 
 const props = withDefaults(defineProps<{ filePath: string; zoom: number }>(), {});
 const textUrl = String(props.filePath);
-
-// # Excel
+/**
+ * Excel 容器引用
+ * @description DOM 中 Excel 容器的引用
+ */
 const excelRef = ref();
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
-
+/**
+ * 组件挂载后加载 Excel
+ * @description 获取文件 blob 并创建 Excel 预览实例
+ */
 onMounted(async () => {
   const config = {
     requestHeader: PancakeGlobalConfig.value?.requestHeader,
@@ -26,14 +31,7 @@ onMounted(async () => {
       widthOffset: 10,
       heightOffset: 10
     });
-    myExcelPreviewer
-      .preview(blob)
-      .then(res => {
-        console.log("预览完成", res);
-      })
-      .catch(e => {
-        console.log("预览失败", e);
-      });
+    myExcelPreviewer.preview(blob);
   }
 });
 </script>

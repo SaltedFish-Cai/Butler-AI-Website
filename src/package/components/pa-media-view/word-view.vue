@@ -13,10 +13,16 @@ import { PancakeGlobalConfigType } from "../pa-manager/types";
 
 const props = withDefaults(defineProps<{ filePath: string; zoom: number }>(), {});
 const textUrl = String(props.filePath);
-
+/**
+ * Word 容器引用
+ * @description DOM 中 Word 容器的引用
+ */
 const docxRef = ref();
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
-
+/**
+ * 组件挂载后加载 Word
+ * @description 获取文件 blob 并创建 Word 预览实例
+ */
 onMounted(async () => {
   const config = {
     requestHeader: PancakeGlobalConfig.value?.requestHeader,
@@ -25,17 +31,11 @@ onMounted(async () => {
   const blob = await useGetBlob(config, textUrl);
   if (blob) {
     const myDocxPreviewer = window.jsPreviewDocx.init(docxRef.value);
-    myDocxPreviewer
-      .preview(blob)
-      .then(res => {
-        console.log("预览完成", res);
-      })
-      .catch(e => {
-        console.log("预览失败", e);
-      });
+    myDocxPreviewer.preview(blob);
   }
 });
 </script>
+
 <style lang="scss">
 .word-view-body {
   width: 100%;

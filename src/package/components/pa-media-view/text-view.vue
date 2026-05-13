@@ -15,10 +15,16 @@ import { PancakeGlobalConfigType } from "../pa-manager/types";
 
 const props = withDefaults(defineProps<{ filePath: string; zoom: number }>(), {});
 const textUrl = String(props.filePath);
-
+/**
+ * 媒体文本内容
+ * @description 当前加载的文本文件内容
+ */
 const mediaText = ref("");
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
-
+/**
+ * 组件挂载后加载文本
+ * @description 获取文件 blob 并读取为文本内容
+ */
 onMounted(async () => {
   const config = {
     requestHeader: PancakeGlobalConfig.value?.requestHeader,
