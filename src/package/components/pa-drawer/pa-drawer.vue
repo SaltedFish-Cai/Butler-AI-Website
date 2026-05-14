@@ -48,7 +48,7 @@
  * 模块导入
  * @description 导入 Vue 组合式 API
  */
-import { reactive, watch, onMounted, onUnmounted, computed, inject, ComputedRef } from "vue";
+import { reactive, watch, onMounted, onUnmounted, computed, inject, type ComputedRef } from "vue";
 /**
  * 模块导入
  * @description 导入组件类型定义
@@ -60,10 +60,11 @@ import { ComponentProps, ComponentEmits } from "./types";
  */
 import { PancakeGlobalConfigType } from "../pa-manager/types";
 /**
- * 组件事件定义
- * @description 定义组件可触发的事件
+ * 全局配置
+ * @type ComputedRef<PancakeGlobalConfigType>
+ * @description 全局配置对象
  */
-const emits = defineEmits<ComponentEmits>();
+const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 /**
  * 组件属性
  * @type ComponentProps
@@ -79,6 +80,12 @@ const props = withDefaults(defineProps<ComponentProps>(), {
   position: "right"
 });
 /**
+ * 组件事件定义
+ * @type ComponentEmits
+ * @description 定义组件可触发的事件
+ */
+const emits = defineEmits<ComponentEmits>();
+/**
  * 组件状态
  * @type Ref<{ visible: boolean; fullscreen: boolean }>
  * @description 组件的响应式状态
@@ -87,18 +94,6 @@ const state = reactive({
   visible: false,
   fullscreen: false
 });
-/**
- * 全局配置
- * @type ComputedRef<PancakeGlobalConfigType>
- * @description 全局配置对象
- */
-const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
-/**
- * 当前语言
- * @type ComputedRef<string>
- * @description 当前使用的语言
- */
-const language = computed(() => PancakeGlobalConfig.value?.language?.value || "zh-CN");
 /**
  * 位置映射表
  * @description 存储位置对应的样式类和动画名称
@@ -109,6 +104,12 @@ const positionMap = {
   top: { class: "flex-start-center", animation: "mo-animation-fadeUpBig" },
   right: { class: "flex-center-end", animation: "mo-animation-fadeRightBig" }
 } as const;
+/**
+ * 当前语言
+ * @type ComputedRef<string>
+ * @description 当前使用的语言
+ */
+const language = computed(() => PancakeGlobalConfig.value?.language?.value || "zh-CN");
 /**
  * 抽屉弹窗样式类
  * @type ComputedRef<string>

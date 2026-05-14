@@ -74,17 +74,12 @@
  * 模块导入
  * @description 导入 Vue 组合式 API
  */
-import { ref, Ref, reactive, watch, computed, onMounted, onUnmounted, nextTick } from "vue";
+import { ref, reactive, watch, computed, onMounted, onUnmounted, nextTick, type Ref } from "vue";
 /**
  * 模块导入
  * @description 导入组件类型定义
  */
 import { ComponentProps, ComponentEmits } from "./types";
-/**
- * 组件事件定义
- * @description 定义组件可触发的事件
- */
-const emits = defineEmits<ComponentEmits>();
 /**
  * 组件属性
  * @type ComponentProps
@@ -103,6 +98,12 @@ const props = withDefaults(defineProps<ComponentProps>(), {
   titleAlign: "left",
   scroll: true
 });
+/**
+ * 组件事件定义
+ * @type ComponentEmits
+ * @description 定义组件可触发的事件
+ */
+const emits = defineEmits<ComponentEmits>();
 /**
  * 滚动条引用
  * @type Ref<HTMLElement | undefined>
@@ -124,6 +125,12 @@ const state = reactive({
   visible: false,
   fullscreen: false
 });
+/**
+ * 打开标识
+ * @type string
+ * @description 弹窗打开时的唯一标识
+ */
+let openId: string = "";
 /**
  * 当前语言
  * @type ComputedRef<string>
@@ -273,12 +280,6 @@ function scrollChildChange(): void {
   }
 }
 /**
- * 打开标识
- * @type string
- * @description 弹窗打开时的唯一标识
- */
-let openId: string = "";
-/**
  * 组件挂载生命周期
  * @description 初始化组件
  */
@@ -295,6 +296,7 @@ onMounted(() => {
 onUnmounted(() => {
   props.closeOnPressEscape && document.removeEventListener("keydown", handleKeyDown);
 });
+
 defineExpose({ ScrollbarRef: ScrollbarRef });
 /**
  * 监听modelValue
