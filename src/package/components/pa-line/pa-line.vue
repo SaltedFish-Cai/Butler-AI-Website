@@ -1,5 +1,5 @@
 <template>
-  <div class="pa-line" :class="[props.class]" :style="lineStyle">
+  <div class="pa-line" :class="props.class" :style="lineStyle">
     <div v-if="$slots['default']" class="ml-size mr-size">
       <slot />
     </div>
@@ -30,24 +30,28 @@ const props = withDefaults(defineProps<ComponentProps>(), {
   borderStyle: "solid"
 });
 /**
- * 线条样式计算
- * @description 根据 padding 数组生成 CSS 变量，处理数值和字符串类型
+ * 样式数值转 CSS 字符串
+ * @description 判断 padding 值是否为数字，数字自动添加 px 后缀
  */
-const lineStyle = computed(() => {
-  const paddingValue = (value: number | string) => (Number.isNaN(+value) ? value : `${value}px`);
-  return {
-    ...props.style,
-    "--pa-line-margin-top": paddingValue(props.padding[0]),
-    "--pa-line-margin-right": paddingValue(props.padding[1]),
-    "--pa-line-margin-bottom": paddingValue(props.padding[2]),
-    "--pa-line-margin-left": paddingValue(props.padding[3]),
-    "--pa-line-height": props.height,
-    marginTop: `calc(0px - ${props.height})`,
-    "--pa-line-width": props.width,
-    "--pa-line-border-color": props.borderColor || "transparent",
-    "--pa-line-border-style": props.borderStyle || "solid"
-  };
-});
+function toPx(value: number | string): string {
+  return typeof value === "number" ? `${value}px` : String(value);
+}
+/**
+ * 线条样式计算
+ * @description 根据 padding 数组生成 CSS 变量
+ */
+const lineStyle = computed(() => ({
+  ...props.style,
+  "--pa-line-margin-top": toPx(props.padding[0]),
+  "--pa-line-margin-right": toPx(props.padding[1]),
+  "--pa-line-margin-bottom": toPx(props.padding[2]),
+  "--pa-line-margin-left": toPx(props.padding[3]),
+  "--pa-line-height": props.height,
+  marginTop: `calc(0px - ${props.height})`,
+  "--pa-line-width": props.width,
+  "--pa-line-border-color": props.borderColor || "transparent",
+  "--pa-line-border-style": props.borderStyle || "solid"
+}));
 </script>
 
 <style lang="scss" scoped>
