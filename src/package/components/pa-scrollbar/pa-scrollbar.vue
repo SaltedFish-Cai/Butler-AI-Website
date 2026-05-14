@@ -3,42 +3,21 @@
     :id="id"
     class="pa-scrollbar"
     :class="[prop.class, prop.styleMode === 'color' ? 'color-scrollbar' : '']"
-    :style="{
-      ...style,
-      '--pa-size-padding_use': prop.paddingWidth
-        ? typeof prop.paddingWidth === 'number'
-          ? prop.paddingWidth + 'px'
-          : prop.paddingWidth
-        : ''
-    }"
+    :style="rootStyle"
   >
     <div class="pa-scrollbar-content">
-      <div v-if="useShadow" class="is-scroll-top" :style="{ opacity: scrollVerticalThumb > 5 ? '1' : '0' }"></div>
+      <div v-if="useShadow" class="is-scroll-top" :style="scrollTopShadowStyle"></div>
       <div
         :id="id + '_scrollbar_body'"
         class="scrollbar-body"
         :class="{ 'scrollbar-body-y': prop.useScrollY, 'scrollbar-body-x': prop.useScrollX }"
-        :style="{ ...contentStyle }"
+        :style="contentStyle"
         ref="scrollbarBodyRef"
       >
         <div
           class="scrollbar-body-content"
-          :class="{
-            'padding-top': padding?.includes('top') || padding?.includes('all'),
-            'padding-left': padding?.includes('left') || padding?.includes('all'),
-            'padding-bottom': padding?.includes('bottom') || padding?.includes('all'),
-            'padding-right': padding?.includes('right') || padding?.includes('all')
-          }"
-          :style="{
-            '--border-padding-top':
-              padding?.includes('top') || padding?.includes('all') ? `var(--pa-size-padding_use, 10px)` : '',
-            '--border-padding-left':
-              padding?.includes('left') || padding?.includes('all') ? `var(--pa-size-padding_use, 10px)` : '',
-            '--border-padding-bottom':
-              padding?.includes('bottom') || padding?.includes('all') ? `var(--pa-size-padding_use, 10px)` : '',
-            '--border-padding-right':
-              padding?.includes('right') || padding?.includes('all') ? `var(--pa-size-padding_use, 10px)` : ''
-          }"
+          :class="paddingContentClasses"
+          :style="paddingBorderVars"
           ref="scrollbarBodyContentRef"
         >
           <div v-if="border?.includes('top') || border?.includes('all')" class="pa-border_top"></div>
@@ -52,7 +31,7 @@
           <slot></slot>
         </div>
       </div>
-      <div v-if="useShadow" class="is-scroll-end" :style="{ opacity: !isScrollEnd ? '1' : '0' }"></div>
+      <div v-if="useShadow" class="is-scroll-end" :style="scrollEndShadowStyle"></div>
     </div>
     <div v-if="useVertical && prop.useScrollY && prop.showThumb" class="scrollbar__bar is-vertical">
       <div class="scrollbar__thumb" ref="verticalThumbRef" :style="{ height: verticalThumb + 'px' }"></div>
@@ -62,7 +41,7 @@
     </div>
     <pa-icon
       v-if="useBackTop && prop.useScrollY"
-      :style="{ opacity: showBackTop ? '1' : '0', right: showBackTop ? '24px' : '-20px' }"
+      :style="backTopStyle"
       name="arow_to_up_line"
       class="pa-scrollbar-back-top m-hand"
       @click="setScrollTop(0)"
@@ -592,6 +571,60 @@ watch(
  * @description 根据滚动位置计算是否显示回到顶部按钮
  */
 const showBackTop = computed(() => scrollVerticalValue.value > 10);
+/**
+ * 顶部阴影样式（避免模板内联表达式）
+ */
+const scrollTopShadowStyle = computed(() => ({ opacity: scrollVerticalThumb.value > 5 ? "1" : "0" }));
+/**
+ * 底部阴影样式（避免模板内联表达式）
+ */
+const scrollEndShadowStyle = computed(() => ({ opacity: isScrollEnd.value ? "0" : "1" }));
+/**
+ * 返回顶部按钮样式（避免模板内联表达式）
+ */
+const backTopStyle = computed(() => ({
+  opacity: showBackTop.value ? "1" : "0",
+  right: showBackTop.value ? "24px" : "-20px"
+}));
+/**
+ * 内边距类名（缓存 includes('all') 结果，避免重复调用）
+ */
+const paddingContentClasses = computed(() => {
+  const padding = prop.padding;
+  if (!padding) return {};
+  const hasAll = padding.includes("all");
+  return {
+    "padding-top": hasAll || padding.includes("top"),
+    "padding-left": hasAll || padding.includes("left"),
+    "padding-bottom": hasAll || padding.includes("bottom"),
+    "padding-right": hasAll || padding.includes("right")
+  };
+});
+/**
+ * 内边距边框 CSS 变量（缓存 includes('all') 结果，避免重复调用）
+ */
+const paddingBorderVars = computed(() => {
+  const padding = prop.padding;
+  if (!padding) return {};
+  const hasAll = padding.includes("all");
+  const cssVal = "var(--pa-size-padding_use, 10px)";
+  return {
+    "--border-padding-top": hasAll || padding.includes("top") ? cssVal : "",
+    "--border-padding-left": hasAll || padding.includes("left") ? cssVal : "",
+    "--border-padding-bottom": hasAll || padding.includes("bottom") ? cssVal : "",
+    "--border-padding-right": hasAll || padding.includes("right") ? cssVal : ""
+  };
+});
+/**
+ * 根元素样式（合并 style prop 与 paddingWidth，避免模板展开对象）
+ */
+const rootStyle = computed(() => {
+  const pw = prop.paddingWidth;
+  return {
+    ...prop.style,
+    "--pa-size-padding_use": pw ? (typeof pw === "number" ? `${pw}px` : pw) : ""
+  };
+});
 
 defineExpose({
   update: debounceSetUpdate,
