@@ -1,12 +1,5 @@
 <template>
-  <div
-    v-if="!display"
-    class="pa-radio"
-    :class="[props.class]"
-    ref="selectRef"
-    :style="{ ...props.style }"
-    :disabled="props.disabled"
-  >
+  <div v-if="!display" class="pa-radio" :class="[props.class]" ref="selectRef" :style="props.style" :disabled="props.disabled">
     <div v-if="title" :style="titleWidthStyle" class="pa-cell-label">
       {{ typeof title === "string" ? title : title[languageValue] }}
     </div>
@@ -26,7 +19,7 @@
     ></pa-radio-item>
   </div>
 
-  <div v-else class="pa-display-style" :class="[props.class]" :style="{ ...props.style }">
+  <div v-else class="pa-display-style" :class="[props.class]" :style="props.style">
     <div v-if="title" :style="titleWidthStyle" class="pa-cell-label">
       {{ typeof title === "string" ? title : title[languageValue] }}
     </div>
@@ -52,12 +45,17 @@
  * 模块导入
  * @description 导入 Vue 组合式 API
  */
-import { ref, watch, computed, inject, ComputedRef } from "vue";
+import { ref, watch, computed, inject, type ComputedRef } from "vue";
 /**
  * 模块导入
  * @description 导入组件类型定义
  */
 import { ComponentProps, ComponentEmits } from "./types";
+/**
+ * 模块导入
+ * @description 导入选项类型定义
+ */
+import { PaOptionType } from "../manager-type";
 /**
  * 模块导入
  * @description 导入全局配置类型
@@ -85,6 +83,35 @@ import isEqual from "../tools/is-equal";
  */
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 /**
+ * 组件属性
+ * @type ComponentProps
+ * @description 组件的属性对象
+ */
+const props = withDefaults(defineProps<ComponentProps>(), {});
+/**
+ * 组件事件定义
+ * @description 定义组件可触发的事件
+ */
+const emits = defineEmits<ComponentEmits>();
+/**
+ * 选项列表
+ * @type Ref<Array<PaOptionType.Select>>
+ * @description 外部传入的选项列表
+ */
+const exOptionsList = ref([] as PaOptionType.Select[]);
+/**
+ * 当前值
+ * @type Ref<boolean | number | string>
+ * @description 当前选中的值
+ */
+const inValue = ref<boolean | number | string>("");
+/**
+ * 旧值存储
+ * @type boolean | number | string
+ * @description 存储上一次的值，用于对比
+ */
+let oldValue: boolean | number | string = "";
+/**
  * 当前语言值
  * @type ComputedRef<string>
  * @description 当前选中的语言
@@ -101,35 +128,6 @@ const titleWidthStyle = computed(() => {
   return { width: props.titleWidth || "auto" };
 });
 /**
- * 组件属性
- * @type ComponentProps
- * @description 组件的属性对象
- */
-const props = withDefaults(defineProps<ComponentProps>(), {});
-/**
- * 选项列表
- * @type Ref<Array<PaOptionType.Select>>
- * @description 外部传入的选项列表
- */
-const exOptionsList = ref(props?.exOptions || []);
-/**
- * 当前值
- * @type Ref<boolean | number | string | undefined>
- * @description 当前选中的值
- */
-const inValue = ref<boolean | number | string | undefined>(props.modelValue);
-/**
- * 组件事件定义
- * @description 定义组件可触发的事件
- */
-const emits = defineEmits<ComponentEmits>();
-/**
- * 旧值存储
- * @type boolean | number | string
- * @description 存储上一次的值，用于对比
- */
-let oldValue: boolean | number | string = props.modelValue || "";
-/**
  * 处理变更事件
  * @param value 选中的值
  * @param option 选中的选项
@@ -140,7 +138,7 @@ function changeEvent({ value, option }: { value: boolean | number | string; opti
   if (props.disabled) return;
   inValue.value = value;
   emits("update:modelValue", value);
-  emits("change", { value: value, oldValue, option });
+  emits("change", { value, oldValue, option });
   oldValue = value;
 }
 /**
@@ -162,7 +160,7 @@ function findData(data: boolean | number | string | undefined): string {
 watch(
   () => props.modelValue,
   data => {
-    inValue.value = !isNil(data) ? data : "";
+    inValue.value = !isNil(data) ? data || "" : "";
     oldValue = !isNil(data) ? data || "" : "";
   },
   { immediate: true, deep: true }

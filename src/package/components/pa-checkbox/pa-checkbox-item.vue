@@ -8,7 +8,7 @@
       { 'is-indeterminate': isIndeterminate }
     ]"
     ref="selectRef"
-    :style="{ ...props.style }"
+    :style="props.style"
     @click="changeEvent"
   >
     <div class="pa-checkbox-item-input-inner">
@@ -28,7 +28,7 @@
  * 模块导入
  * @description 导入 Vue 组合式 API
  */
-import { computed, ComputedRef, inject, ref, watch } from "vue";
+import { computed, inject, ref, watch, type ComputedRef } from "vue";
 
 /**
  * 模块导入
@@ -72,17 +72,17 @@ const languageValue = computed(() => {
 });
 
 /**
- * 内部值
- * @type Ref<boolean | number | string>
- * @description 复选框子项的内部绑定值
- */
-const inValue = ref(props.modelValue || "");
-
-/**
  * 组件事件定义
  * @description 定义组件可触发的事件
  */
 const emits = defineEmits<ComponentItemEmits>();
+
+/**
+ * 内部值
+ * @type Ref<boolean | number | string>
+ * @description 复选框子项的内部绑定值
+ */
+const inValue = ref<boolean | number | string | string>("");
 
 /**
  * 是否选中
@@ -100,10 +100,10 @@ const isChecked = computed(() => {
 
 /**
  * 旧值存储
- * @type boolean | number | string | undefined
+ * @type boolean | number | string
  * @description 存储上一次的值，用于对比
  */
-let oldValue: boolean | number | string = props.modelValue || "";
+let oldValue: boolean | number | string = "";
 
 /**
  * 处理点击事件

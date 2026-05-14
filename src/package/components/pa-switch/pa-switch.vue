@@ -4,7 +4,7 @@
     :id="id"
     class="pa-switch"
     :class="[inValue == options.activeValue ? 'pa-switch-active' : '', props.class, { 'is-disabled': props.disabled }]"
-    :style="rootStyle"
+    :style="props.style"
     @click="changeEvent"
   >
     <div v-if="title" :style="{ width: titleWidth }" class="pa-cell-label">
@@ -29,7 +29,7 @@
     </div>
   </div>
 
-  <div v-else class="pa-display-style" :class="props.class" :style="rootStyle">
+  <div v-else class="pa-display-style" :class="props.class" :style="props.style">
     <div v-if="title" :style="{ width: titleWidth }" class="pa-cell-label">
       {{ typeof title === "string" ? title : title[languageValue] }}
     </div>
@@ -88,7 +88,7 @@ function getDefaultTexts(language: string) {
  * 模块导入
  * @description 导入 Vue 组合式 API
  */
-import { computed, ComputedRef, inject, ref, Ref, watch } from "vue";
+import { computed, inject, ref, watch, type Ref, type ComputedRef } from "vue";
 
 /**
  * 模块导入
@@ -134,15 +134,6 @@ import isEqual from "../tools/is-equal";
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 
 /**
- * 当前语言值
- * @type ComputedRef<string>
- * @description 当前选中的语言
- */
-const languageValue = computed(() => {
-  return PancakeGlobalConfig.value?.language?.value || "zh-CN";
-});
-
-/**
  * 组件属性
  * @type ComponentProps
  * @description 组件的属性对象
@@ -164,21 +155,46 @@ const emits = defineEmits<ComponentEmits>();
  * @type Ref<boolean | number | string | undefined>
  * @description 当前开关的绑定值
  */
-const inValue: Ref<boolean | number | string | undefined> = ref(props.modelValue);
+const inValue: Ref<boolean | number | string | undefined> = ref();
 
 /**
  * 旧值存储
  * @description 存储上一次的值，用于对比
  */
-let oldValue: boolean | number | string = props.modelValue || "";
+let oldValue: boolean | number | string = "";
 
 /**
- * 计算根元素样式
- * @type ComputedRef<Record<string, string> | undefined>
- * @description 计算根元素的样式，避免每次渲染创建新对象
+ * 当前语言值
+ * @type ComputedRef<string>
+ * @description 当前选中的语言
  */
-const rootStyle = computed(() => {
-  return props.style;
+const languageValue = computed(() => {
+  return PancakeGlobalConfig.value?.language?.value || "zh-CN";
+});
+
+/**
+ * 计算选项
+ * @type ComputedRef<PaOptionType.Switch>
+ * @description 计算开关的配置选项
+ */
+const options = computed((): PaOptionType.Switch => {
+  const typeIs = typeof inValue.value;
+  const { activeValue = 1, inActiveValue = 0, activeText, inActiveText } = props.exOptions || props;
+
+  const defaultTexts = getDefaultTexts(languageValue.value);
+  const _opt = changeType(typeIs, {
+    activeValue,
+    inActiveValue,
+    activeText:
+      typeof activeText == "string" ? activeText : (activeText && activeText[languageValue.value]) || defaultTexts.activeText,
+    inActiveText:
+      typeof inActiveText == "string"
+        ? inActiveText
+        : (inActiveText && inActiveText[languageValue.value]) || defaultTexts.inActiveText,
+    activeIcon: props.activeIcon,
+    inActiveIcon: props.inActiveIcon
+  });
+  return _opt;
 });
 
 /**
@@ -212,7 +228,7 @@ function findData(data: boolean | number | string | undefined, opts: any): strin
  * 转换选项类型
  * @param type - 值的类型
  * @param opts - 配置选项
- * @returns object 转换后的选项
+ * @returns PaOptionType.Switch 转换后的选项
  * @description 根据值的类型转换 activeValue 和 inActiveValue
  */
 function changeType(type: string, opts: any): PaOptionType.Switch {
@@ -245,31 +261,6 @@ function changeType(type: string, opts: any): PaOptionType.Switch {
     };
   }
 }
-
-/**
- * 计算选项
- * @type ComputedRef<object>
- * @description 计算开关的配置选项
- */
-const options = computed(() => {
-  const typeIs = typeof inValue.value;
-  const { activeValue = 1, inActiveValue = 0, activeText, inActiveText } = props.exOptions || props;
-
-  const defaultTexts = getDefaultTexts(languageValue.value);
-  const _opt = changeType(typeIs, {
-    activeValue: activeValue,
-    inActiveValue: inActiveValue,
-    activeText:
-      typeof activeText == "string" ? activeText : (activeText && activeText[languageValue.value]) || defaultTexts.activeText,
-    inActiveText:
-      typeof inActiveText == "string"
-        ? inActiveText
-        : (inActiveText && inActiveText[languageValue.value]) || defaultTexts.inActiveText,
-    activeIcon: props.activeIcon,
-    inActiveIcon: props.inActiveIcon
-  });
-  return _opt;
-});
 
 /**
  * 监听 modelValue 变化
