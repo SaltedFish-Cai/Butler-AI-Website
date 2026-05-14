@@ -1,27 +1,29 @@
 /**
- * 模块导入
- * @description Vue 应用实例类型
+ * **模块导入**
+ * @description 导入 Vue 应用实例类型
  */
 import type { App } from "vue";
+
 /**
- * PaForm 表单组件
- * @description 用于快速搭建带有校验、组合、拆分等功能的表单
+ * **模块导入**
+ * @description 导入 PaForm 表单组件
  */
 import PaForm from "./pa-form.vue";
 /**
- * PaFormControl 表单控制器组件
- * @description 表单内部数据管理、验证逻辑处理
+ * **模块导入**
+ * @description 导入 PaFormControl 表单控制器组件
  */
 import PaFormControl from "./pa-form-control.vue";
 /**
- * PaFormItem 表单项组件
- * @description 表单字段容器，包含标签、校验、错误提示等功能
+ * **模块导入**
+ * @description 导入 PaFormItem 表单项组件
  */
 import PaFormItem from "./pa-form-item.vue";
+
 /**
- * 安装 PaForm 组件
- * @param app - Vue 应用实例
- * @description 注册 PaForm、PaFormControl、PaFormItem 三个组件
+ * **组件注册函数**
+ * @param `app` `App` Vue 应用实例
+ * @description 将 PaForm、PaFormControl、PaFormItem 组件注册到 Vue 应用中
  */
 function install(app: App): void {
   if (!app._context.components["PaForm"]) {
@@ -30,13 +32,15 @@ function install(app: App): void {
     app.component("PaFormItem", PaFormItem);
   }
 }
+
 /**
- * 模块导入
- * @description 组件名称
+ * **组件名称**
+ * @description PaForm 组件的名称标识
  */
 const name = "PaForm";
+
 /**
- * 模块导入
- * @description PaForm 表单组件导出
+ * **组件导出**
+ * @description PaForm 表单组件的默认导出
  */
 export default { name, install };

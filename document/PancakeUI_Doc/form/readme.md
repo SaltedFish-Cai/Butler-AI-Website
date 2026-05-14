@@ -33,7 +33,7 @@ const formConfig: ComponentItemProps[] = [
 
 ## 数据变更
 
-你可以使用 `changeData_All` 变更所有数据，也可以使用 `changeData_Item` 变更单个数据。
+你可以使用 `changeDataAll` 变更所有数据，也可以使用 `changeDataItem` 变更单个数据。
 
 <demo src="./default-data.vue"></demo>
 
@@ -177,7 +177,7 @@ const formConfig: ComponentItemProps[] = [
 | noLabel          | 是否隐藏 label       | `boolean`                                                                                                                                                                    | `false` |
 | labelWidth       | 标签宽度             | `number` \| `string`                                                                                                                                                         | `-`     |
 | labelPosition    | 标签位置             | `'left'` \| `'right'` \| `'top'`                                                                                                                                             | `'top'` |
-| structure        | 表单结构配置         | `Array<ComponentItemProps>`                                                                                                                                                  | `-`     |
+| structure        | 表单结构配置         | `Array<`[`PaFormItemType`](#paformitemtype)`>`    | `-`      |
 | disabled         | 是否禁用表单         | `boolean`                                                                                                                                                                    | `false` |
 | display          | 是否纯展示表单       | `boolean`                                                                                                                                                                    | `false` |
 | exDependent      | 表单额外依赖         | [`PaFormExDependentType`](#paformexdependenttype)                                                                                                                            | `-`     |
@@ -195,6 +195,16 @@ const formConfig: ComponentItemProps[] = [
 | formCellChange    | 单元素变化时触发   | `(data: { prop: string; value: any; oldValue: any; option: any }) => void` |
 | onFormStateChange | 表单状态变化时触发 | `(data: string) => void`                                                   |
 
+## ComponentSlots
+
+| 插槽名称 | 作用 |
+| --- | --- |
+| `{prop}` | 根据表单项的 `prop` 值匹配的插槽，用于自定义内容 |
+| `cell-{prop}` | 表单项底部额外内容的插槽 |
+| `option-{prop}` | 选择器选项的自定义标签插槽 |
+| `exDisplay` | 展示模式下额外内容的插槽 |
+| `exContrast` | 对比模式下额外内容的插槽 |
+
 ## ComponentItemProps
 
 | 字段     | 描述             | 类型                                                                                                                                 | 默认值  |
@@ -205,7 +215,7 @@ const formConfig: ComponentItemProps[] = [
 | label    | 表单项标题       | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) \| `string`                                             | `-`     |
 | tip      | 表单项提示       | [`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype) \| `string`                                             | `-`     |
 | disabled | 是否禁用         | `boolean`                                                                                                                            | `false` |
-| rules    | 外置校验规则     | `Array<{ required?: boolean; message?: LanguagePackageType \| string }>` \| `boolean`                                                | `-`     |
+| rules    | 外置校验规则     | `Array<{ required?: boolean; message?: `[`LanguagePackageType`](/document/PancakeUI_Doc/options#languagepackagetype)` \| string }>` \| `boolean` | `-`     |
 | exSpan   | 单行分栏         | `1` \| `2` \| `3` \| `4`                                                                                                             | `1`     |
 | required | 是否必填         | `boolean`                                                                                                                            | `false` |
 | exStyles | 额外样式         | `{ style?: Record<string, string>; message?: string; class?: string; messageClass?: string; messageStyle?: Record<string, string> }` | `-`     |
@@ -248,11 +258,11 @@ const formConfig: ComponentItemProps[] = [
 | 方法名称         | 描述                                       | 请求参数                                           |
 | ---------------- | ------------------------------------------ | -------------------------------------------------- |
 | getSubmitForm    | 获取提交表单数据（校验表单数据并获取数据） | `-`                                                |
-| clean_All        | 清除所有数据                               | `-`                                                |
-| setStructure_All | 设置所有结构                               | `(structure: Array<ComponentItemProps>) => void`   |
-| setStructureItem | 设置单个结构                               | `(prop: string, item: ComponentItemProps) => void` |
-| changeData_All   | 设置所有数据                               | `(data: object) => void`                           |
-| changeData_Item  | 设置单个数据                               | `(prop: string, value: any) => void`               |
+| cleanAll         | 清除所有数据                               | `-`                                                |
+| setStructureAll  | 设置所有结构                               | `(structure: Array<`[`PaFormItemType`](#paformitemtype)`>) => void`   |
+| setStructureItem | 设置单个结构                               | `(prop: string, item: `[`PaFormItemType`](#paformitemtype)`) => void` |
+| changeDataAll    | 设置所有数据                               | `(data: object) => void`                           |
+| changeDataItem   | 设置单个数据                               | `(prop: string, value: any) => void`               |
 
 ## FormItemRule
 
@@ -278,16 +288,3 @@ const formConfig: ComponentItemProps[] = [
 | isError | 是否有错误 | `boolean` | `-`    |
 
 ## ExMultipleConfigType
-
-| 字段             | 描述         | 类型                        | 默认值 |
-| ---------------- | ------------ | --------------------------- | ------ |
-| inMultipleConfig | 多配置选项   | `Array<MultipleConfigType>` | `-`    |
-| tabsFormConfig   | Tab 表单配置 | `Array<PaFormChildType>`    | `-`    |
-
-## MultipleConfigType
-
-| 字段     | 描述         | 类型                        | 默认值 |
-| -------- | ------------ | --------------------------- | ------ |
-| unitName | 自动划组名称 | `string`                    | `-`    |
-| unitTip  | 自动划组提示 | `string`                    | `-`    |
-| configs  | 配置列表     | `Array<ComponentItemProps>` | `-`    |

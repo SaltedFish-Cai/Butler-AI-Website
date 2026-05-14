@@ -424,54 +424,54 @@ describe("pa-form 组件测试", () => {
       expect(typeof vm.getSubmitForm).toBe("function");
     });
 
-    it("clean_All 方法存在", async () => {
+    it("cleanAll 方法存在", async () => {
       const wrapper = await mountForm({
         structure: []
       });
       await nextTick();
       vi.advanceTimersByTime(100);
       const vm = wrapper.vm as any;
-      expect(typeof vm.clean_All).toBe("function");
+      expect(typeof vm.cleanAll).toBe("function");
     });
 
-    it("setStructure_All 方法存在", async () => {
+    it("setStructureAll 方法存在", async () => {
       const wrapper = await mountForm({
         structure: []
       });
       await nextTick();
       vi.advanceTimersByTime(100);
       const vm = wrapper.vm as any;
-      expect(typeof vm.setStructure_All).toBe("function");
+      expect(typeof vm.setStructureAll).toBe("function");
     });
 
-    it("setStructure_Item 方法存在", async () => {
+    it("setStructureItem 方法存在", async () => {
       const wrapper = await mountForm({
         structure: []
       });
       await nextTick();
       vi.advanceTimersByTime(100);
       const vm = wrapper.vm as any;
-      expect(typeof vm.setStructure_Item).toBe("function");
+      expect(typeof vm.setStructureItem).toBe("function");
     });
 
-    it("changeData_All 方法存在", async () => {
+    it("changeDataAll 方法存在", async () => {
       const wrapper = await mountForm({
         structure: []
       });
       await nextTick();
       vi.advanceTimersByTime(100);
       const vm = wrapper.vm as any;
-      expect(typeof vm.changeData_All).toBe("function");
+      expect(typeof vm.changeDataAll).toBe("function");
     });
 
-    it("changeData_Item 方法存在", async () => {
+    it("changeDataItem 方法存在", async () => {
       const wrapper = await mountForm({
         structure: []
       });
       await nextTick();
       vi.advanceTimersByTime(100);
       const vm = wrapper.vm as any;
-      expect(typeof vm.changeData_Item).toBe("function");
+      expect(typeof vm.changeDataItem).toBe("function");
     });
   });
 

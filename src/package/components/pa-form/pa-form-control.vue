@@ -7,90 +7,79 @@
 
 <script lang="tsx" setup>
 /**
- * Vue 核心响应式 API
- * @description Vue 核心响应式 API
+ * **Vue 核心响应式 API**
+ * @description 导入 Vue 组合式 API 核心函数
  */
 import { ref, reactive, watch, computed, provide, inject, Ref } from "vue";
 /**
- * 表单类型定义
- * @description 表单类型定义
+ * **模块导入**
+ * @description 导入表单类型定义
  */
 import { ConfigContextType, FormItemRule } from "./types";
 /**
- * 工具函数库
- * @description 工具函数库
- */
-/**
- * 深拷贝工具函数
- * @description 用于深拷贝对象
+ * **模块导入**
+ * @description 导入深拷贝工具函数
  */
 import cloneDeep from "../tools/clone-deep";
 /**
- * 深度相等判断工具函数
- * @description 用于判断两个值是否深度相等
+ * **模块导入**
+ * @description 导入深度相等判断工具函数
  */
 import isEqual from "../tools/is-equal";
 
 /**
- * 组件属性
- * @description 组件属性
+ * **组件属性**
+ * @description PaFormControl 组件的属性对象
  */
 const props = withDefaults(
   defineProps<{
     /**
-     * 表单唯一标识
-     * @type string
-     * @default undefined
+     * **表单唯一标识**
+     * @type `string` | `undefined`
+     * @default `undefined`
      * @description 当设置该值时，会添加到组件的 `id` 属性中
-     * @description 该值的类型为 `string`，可以是任意类型
      */
     id?: string;
     /**
-     * 自定义类名
-     * @type string
-     * @default undefined
+     * **自定义类名**
+     * @type `string` | `undefined`
+     * @default `undefined`
      * @description 当设置该值时，会添加到组件的 `class` 属性中
-     * @description 该值的类型为 `string`，可以是任意类型
      */
     class?: string;
     /**
-     * 自定义样式
-     * @type Record<string, string>
-     * @default undefined
+     * **自定义样式**
+     * @type `Record<string, string>` | `undefined`
+     * @default `undefined`
      * @description 当设置该值时，会添加到组件的样式中
-     * @description 该值的类型为 `Record<string, string>`，可以是任意类型
      */
     style?: Record<string, string>;
     /**
-     * 表单数据模型
-     * @type Record<string, any>
-     * @default undefined
-     * @description 当设置该值时，会添加到组件的 `model` 属性中
-     * @description 该值的类型为 `Record<string, any>`，可以是任意类型
+     * **表单数据模型**
+     * @type `Record<string, any>` | `undefined`
+     * @default `undefined`
+     * @description 表单的数据模型
      */
     model?: Record<string, any>;
     /**
-     * 表单规则
-     * @type Record<string, FormItemRule | FormItemRule[]>
-     * @default undefined
-     * @description 当设置该值时，会添加到组件的 `rules` 属性中
-     * @description 该值的类型为 `Record<string, FormItemRule | FormItemRule[]>`，可以是任意类型
+     * **表单规则**
+     * @type `Record<string, `[`FormItemRule`](#formitemrule)` | `[`FormItemRule`](#formitemrule)`[]>` | `undefined`
+     * @default `undefined`
+     * @description 表单的验证规则
      */
     rules?: Record<string, FormItemRule | FormItemRule[]>;
     /**
-     * 是否禁用
-     * @type boolean
-     * @default false
+     * **是否禁用**
+     * @type `boolean`
+     * @default `false`
      * @description 当设置该值为 `true` 时，会禁用组件
-     * @description 该值的类型为 `boolean`，可以是任意类型
      */
     disabled?: boolean;
     /**
-     * 是否在Tabs表单中
-     * @type boolean
-     * @default false
-     * @description 当设置该值为 `true` 时，会在Tabs表单中使用该组件
-     * @description 该值的类型为 `boolean`，可以是任意类型
+     * **是否在Tabs表单中**
+     * @type `boolean`
+     * @default `false`
+     * @description 当设置该值为 `true` 时，会在 Tabs 表单中使用该组件
      */
     inTabsForm?: boolean;
   }>(),
@@ -102,8 +91,8 @@ const props = withDefaults(
 );
 
 /**
- * 组件事件
- * @description 组件事件
+ * **组件事件**
+ * @description 组件事件发射器
  */
 const emit = defineEmits<{
   (e: "validate", valid: boolean, errors?: any): void;
@@ -116,8 +105,9 @@ const emit = defineEmits<{
 emit("setRef", { validate });
 
 /**
- * 计算类名
- * @description 计算类名
+ * **计算类名**
+ * @type `ComputedRef<Array<string>>`
+ * @description 计算组件的类名列表
  */
 const className = computed(() => {
   const classes = ["pa-form-control"];
@@ -128,8 +118,9 @@ const className = computed(() => {
 });
 
 /**
- * 计算样式
- * @description 计算样式
+ * **计算样式**
+ * @type `ComputedRef<Record<string, string>>`
+ * @description 计算组件的样式对象
  */
 const styles = computed(() => {
   const styleObj = { ...props.style };
@@ -146,30 +137,33 @@ const styles = computed(() => {
 });
 
 /**
- * 表单数据存储
- * @description 表单数据存储
+ * **表单数据存储**
+ * @type `Record<string, any>`
+ * @description 响应式存储表单所有字段的数据
  */
 const formData = reactive<Record<string, any>>({});
 /**
- * 错误信息存储
- * @description 错误信息存储
+ * **错误信息存储**
+ * @type `Ref<Record<string, string>>`
+ * @description 存储各字段的验证错误信息
  */
 const errorsMessage = ref<Record<string, string>>({});
-
 /**
- * 验证规则存储
- * @description 验证规则存储
+ * **验证规则存储**
+ * @type `Ref<Record<string, `[`FormItemRule`](#formitemrule)` | `[`FormItemRule`](#formitemrule)`[]>>`
+ * @description 存储表单各字段的验证规则
  */
 const formRules = ref<Record<string, FormItemRule | FormItemRule[]>>(props.rules || {});
 /**
- * 验证状态存储
- * @description 验证状态存储
+ * **验证状态存储**
+ * @type `Record<string, { state: "" | "error" | "success" | "validating"; message: string }>`
+ * @description 存储各字段的验证状态信息
  */
 const validateStates = reactive<Record<string, { state: "" | "error" | "success" | "validating"; message: string }>>({});
 
 /**
- * 表单上下文
- * @description 表单上下文
+ * **表单上下文**
+ * @description 表单上下文对象，提供给子组件使用
  */
 const formContext = reactive({
   rules: formRules,
@@ -183,8 +177,9 @@ const formContext = reactive({
 });
 
 /**
- * 配置上下文注入
- * @description 配置上下文注入
+ * **配置上下文注入**
+ * @type `Ref<ConfigContextType>`
+ * @description 注入的配置上下文
  */
 const injectConfigContext = inject<Ref<ConfigContextType>>(
   "configContext",
@@ -501,8 +496,8 @@ function getFormData(): Record<string, any> {
 }
 
 /**
- * 监听model变化并初始化表单数据
- * @description 监听model变化并初始化表单数据
+ * **监听model变化**
+ * @description 监听 model 变化并初始化表单数据
  */
 watch(
   () => props.model,
@@ -515,8 +510,8 @@ watch(
 );
 
 /**
- * 监听rules变化并更新验证规则
- * @description 监听rules变化并更新验证规则
+ * **监听rules变化**
+ * @description 监听 rules 变化并更新验证规则
  */
 watch(
   () => props.rules,

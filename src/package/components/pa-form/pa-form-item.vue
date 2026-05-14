@@ -33,77 +33,68 @@
 
 <script lang="ts" setup>
 /**
- * Vue 核心响应式 API
- * @description Vue 核心响应式 API
+ * **Vue 核心响应式 API**
+ * @description 导入 Vue 组合式 API 核心函数
  */
 import { computed, ref, Ref, inject, provide } from "vue";
 /**
- * 表单类型定义
- * @description 表单类型定义
+ * **模块导入**
+ * @description 导入表单类型定义
  */
 import { ConfigContextType } from "./types";
 
 type PaFormItemProps = {
   /**
-   * 表单字段名
-   * @type string
-   * @default undefined
-   * @description 当设置该值时，会添加到组件的 `prop` 属性中
-   * @description 该值的类型为 `string`，可以是任意类型
+   * **表单字段名**
+   * @type `string`
+   * @description 表单字段的名称标识
    */
   prop: string;
-
   /**
-   * 标签文本
-   * @type string
-   * @default undefined
-   * @description 当设置该值时，会添加到组件的 `label` 属性中
-   * @description 该值的类型为 `string`，可以是任意类型
+   * **标签文本**
+   * @type `string` | `undefined`
+   * @default `undefined`
+   * @description 表单项的标签文本
    */
   label?: string;
-
   /**
-   * 自定义类名
-   * @type string
-   * @default undefined
-   * @description 当设置该值时，会添加到组件的 `class` 属性中
-   * @description 该值的类型为 `string`，可以是任意类型
+   * **自定义类名**
+   * @type `Array<string>` | `undefined`
+   * @default `undefined`
+   * @description 添加到组件的自定义类名
    */
-  class?: string[];
-
+  class?: Array<string>;
   /**
-   * 自定义样式
-   * @type Record<string, string>
-   * @default undefined
-   * @description 当设置该值时，会添加到组件的 `style` 属性中
-   * @description 该值的类型为 `Record<string, string>`，可以是任意类型
+   * **自定义样式**
+   * @type `Record<string, string>` | `undefined`
+   * @default `undefined`
+   * @description 添加到组件的自定义样式
    */
   style?: Record<string, string>;
-
   /**
-   * 帮助信息
-   * @type string
-   * @default undefined
-   * @description 当设置该值时，会添加到组件的 `help` 属性中
-   * @description 该值的类型为 `string`，可以是任意类型
+   * **帮助信息**
+   * @type `string` | `undefined`
+   * @default `undefined`
+   * @description 表单项的帮助提示信息
    */
   help?: string;
 };
 
 /**
- * 组件属性
- * @description 组件属性
+ * **组件属性**
+ * @description PaFormItem 组件的属性对象
  */
 const props = withDefaults(defineProps<PaFormItemProps>(), {});
 
 /**
- * 表单上下文注入
- * @description 表单上下文注入
+ * **表单上下文注入**
+ * @description 注入的表单上下文对象
  */
 const injectFormContext = inject<any>("formContext", {});
 /**
- * 配置上下文注入
- * @description 配置上下文注入
+ * **配置上下文注入**
+ * @type `Ref<ConfigContextType>`
+ * @description 注入的配置上下文
  */
 const injectConfigContext = inject<Ref<ConfigContextType>>(
   "configContext",
@@ -126,8 +117,9 @@ const injectConfigContext = inject<Ref<ConfigContextType>>(
   })
 );
 /**
- * 标签样式
- * @description 标签样式
+ * **标签样式**
+ * @type `ComputedRef<Record<string, string>>`
+ * @description 计算标签的样式对象
  */
 const labelStyle = computed(() => {
   const style: Record<string, string> = {};
@@ -136,31 +128,30 @@ const labelStyle = computed(() => {
   }
   return style;
 });
-
 /**
- * 标签位置
- * @description 标签位置
+ * **标签位置**
+ * @type `ComputedRef<string>`
+ * @description 计算标签的显示位置
  */
 const useLabelPosition = computed(() => injectConfigContext.value.labelPosition || "top");
-
 /**
- * 内容样式
- * @description 内容样式
+ * **内容样式**
+ * @type `ComputedRef<Record<string, string>>`
+ * @description 计算内容区域的样式对象
  */
 const contentStyle = computed(() => {
   const style: Record<string, string> = {};
   return style;
 });
-
 /**
- * 是否必填项
- * @description 是否必填项
+ * **是否必填项**
+ * @type `ComputedRef<boolean>`
+ * @description 判断当前表单项是否为必填项
  */
 const isRequired = computed(() => {
   if (injectFormContext.rulesKeys.length) {
     return injectFormContext.rulesKeys.includes(props.prop || "");
   }
-
   return false;
 });
 

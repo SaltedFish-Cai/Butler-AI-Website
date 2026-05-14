@@ -40,8 +40,8 @@ const exOptions = ref({
 });
 
 async function changeData() {
-  proForm.value?.changeData_Item("Input2", "默认值2");
-  proForm.value?.changeData_Item("Input1", "默认值2");
+  proForm.value?.changeDataItem("Input2", "默认值2");
+  proForm.value?.changeDataItem("Input1", "默认值2");
 }
 
 async function submitForm() {

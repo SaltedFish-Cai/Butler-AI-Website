@@ -21,9 +21,11 @@
     box-sizing: border-box;
     transition: var(--pa-animation-time, 0.2s);
     padding: calc(var(--pa-size-padding, 10px) / 3) calc(var(--pa-size-padding, 10px) / 1.2);
+
     .click-tag-icon {
       color: var(--pa-color-primary);
     }
+
     &:hover {
       cursor: pointer;
       color: var(--pa-color-primary);
@@ -42,14 +44,17 @@
 
 .pa-form-tabs {
   padding-top: calc(var(--pa-size-padding, 10px) / 2);
+
   .pa-form_tabs-title {
     font-size: var(--pa-size-font, 13px);
   }
+
   .pa-form_tabs-title.deleted {
     color: var(--pa-color-danger);
     text-decoration: line-through;
     text-decoration-color: var(--pa-color-danger);
   }
+
   .tabs-form-item.deleted {
     .pa-display-style {
       color: var(--pa-color-danger);
@@ -57,12 +62,15 @@
       text-decoration-color: var(--pa-color-danger);
     }
   }
+
   .pa-tabs-title_action:has(.pa-form_tabs-title_error) {
     background-color: var(--pa-color-danger) !important;
   }
+
   .tab-edit-title-input {
     min-width: 120px;
     transform: scale(0.9);
+
     & > .pa-input > .pa-input-input > .pa-input-input-inner {
       text-align: center;
     }
@@ -70,6 +78,7 @@
 
   .remove-hand {
     font-size: calc(var(--pa-size-font, 13px) + 2px);
+
     &:hover {
       color: var(--pa-color-danger);
       cursor: pointer;
@@ -82,9 +91,10 @@
   }
 
   > .pa-tabs-content > .pa-tabs-scroll > .pa-tabs-contents > .pa-tabs-item {
-    border-radius: 3px;
+    border-radius: var(--pa-size-radius, 3px);
     border: 1px solid var(--pa-border-color);
     box-sizing: border-box;
     padding: calc(var(--pa-size-padding, 10px) / 2);
   }
 }
+
