@@ -1,9 +1,5 @@
 <template>
-  <div
-    class="pa-title"
-    :class="[props.class, styleMode.model, paddingTopClass, paddingLeftClass, paddingBottomClass, paddingRightClass]"
-    :style="{ ...props.style }"
-  >
+  <div class="pa-title" :class="[props.class, styleMode.model, paddingClasses]" :style="props.style">
     <div class="pa-title_box">
       <div class="pa-title_text">
         <slot />
@@ -44,7 +40,7 @@ import { computed, ComputedRef, inject } from "vue";
 import type { ComponentProps } from "./types";
 /**
  * 模块导入
- * @description 导入分割线组件类型定义
+ * @description 导入分割线组件类型定义（用于变量类型注解）
  */
 import type { ComponentProps as LineComponentProps } from "../pa-line/types";
 /**
@@ -68,22 +64,25 @@ const props = withDefaults(defineProps<ComponentProps>(), {
 });
 defineExpose();
 /**
- * padding class 缓存
- * @description 使用 Set 避免重复 includes 调用
+ * padding class 计算（合并为单个 computed，减少 Vue 依赖追踪节点）
+ * @description 根据 padding prop 计算 padding class 列表
  */
-const paddingSet = computed(() => new Set(props.padding || []));
-const paddingTopClass = computed(() => (paddingSet.value.has("top") ? "padding-top" : ""));
-const paddingLeftClass = computed(() => (paddingSet.value.has("left") ? "padding-left" : ""));
-const paddingBottomClass = computed(() => (paddingSet.value.has("bottom") ? "padding-bottom" : ""));
-const paddingRightClass = computed(() => (paddingSet.value.has("right") ? "padding-right" : ""));
+const paddingClasses = computed(() => {
+  const padding = props.padding || [];
+  const classes: string[] = [];
+  if (padding.includes("top")) classes.push("padding-top");
+  if (padding.includes("left")) classes.push("padding-left");
+  if (padding.includes("bottom")) classes.push("padding-bottom");
+  if (padding.includes("right")) classes.push("padding-right");
+  return classes;
+});
 /**
  * 样式模式计算
- * @type ComputedRef<object>
- * @description 根据属性计算标题的样式模式、内边距和分割线配置
+ * @type ComputedRef<{ model: string; lineConfig: LineComponentProps | boolean }>
+ * @description 根据属性计算标题的样式模式和分割线配置
  */
 const styleMode = computed(() => {
   const model = props.styleMode || PancakeGlobalConfig.value?.titleStyle || "default";
-  const padding = props.padding || [];
   let lineConfig: LineComponentProps | boolean = false;
   if (props.lineConfig === true) {
     lineConfig = DEFAULT_LINE_CONFIG;
@@ -93,7 +92,7 @@ const styleMode = computed(() => {
   if (!lineConfig && model === "default") {
     lineConfig = DEFAULT_LINE_CONFIG;
   }
-  return { model, padding, lineConfig };
+  return { model, lineConfig };
 });
 </script>
 
