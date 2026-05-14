@@ -23,7 +23,7 @@
           v-if="injectConfigContext.data && injectConfigContext.data[item.prop] == groupItem.value && groupItem.type != 'null'"
         >
           <formItem :id="id" :item="{ ...groupItem }" noLabel>
-            <template v-for="slot in Object.keys($slots)" #[slot]="scope">
+            <template v-for="slot in slotKeys" #[slot]="scope" :key="slot">
               <slot :name="slot" v-bind="scope"></slot>
             </template>
 
@@ -54,7 +54,7 @@
  *
  * @description Vue 核心响应式 API
  */
-import { Ref, ref, inject, computed, onMounted } from "vue";
+import { Ref, ref, inject, computed, onMounted, useSlots } from "vue";
 /**
  *
  * @description 基础表单项组件
@@ -99,6 +99,13 @@ import isEqual from "../../tools/is-equal";
  * @description 组件属性
  */
 const props = withDefaults(defineProps<GroupItemPropsType>(), {});
+
+/**
+ * 插槽键列表
+ * @description 预计算插槽键列表，避免每次渲染时重复调用 Object.keys($slots)
+ */
+const slots = useSlots();
+const slotKeys = computed(() => Object.keys(slots));
 
 /**
  *

@@ -33,7 +33,7 @@
                     :item="item"
                     :rules="baseRulesMap"
                   >
-                    <template v-for="slot in Object.keys($slots)" #[slot]="scope">
+                    <template v-for="slot in slotKeys" #[slot]="scope" :key="slot">
                       <slot :name="slot" v-bind="scope"></slot>
                     </template>
                   </tabsItem>
@@ -41,7 +41,7 @@
 
                 <!-- 标准表格 -->
                 <formItem v-else :id="id" :item="item">
-                  <template v-for="slot in Object.keys($slots)" #[slot]="scope">
+                  <template v-for="slot in slotKeys" #[slot]="scope" :key="slot">
                     <slot :name="slot" :config="item" :data="scope.data"></slot>
                   </template>
                 </formItem>
@@ -64,7 +64,7 @@
  * **Vue 核心响应式 API**
  * @description 导入 Vue 组合式 API 核心函数
  */
-import { ref, Ref, reactive, watch, nextTick, computed, provide, onMounted, onBeforeUnmount, ComputedRef, inject } from "vue";
+import { ref, Ref, reactive, watch, computed, provide, onMounted, onBeforeUnmount, ComputedRef, inject, useSlots } from "vue";
 /**
  * **模块导入**
  * @description 导入表单控制器组件
@@ -330,6 +330,13 @@ const configContext: Ref<ConfigContextType> = ref({
 provide("configContext", configContext);
 
 /**
+ * **插槽键列表**
+ * @description 预计算插槽键列表，避免每次渲染时重复调用 Object.keys($slots)
+ */
+const slots = useSlots();
+const slotKeys = computed(() => Object.keys(slots));
+
+/**
  * 设置Tab表单校验引用
  * @param el - Tab表单组件实例
  * @param key - Tab表单标识
@@ -348,15 +355,10 @@ function setRuleTabsFormRef(el: { submitTabsForm: () => Promise<boolean | undefi
  */
 const baseInMultipleConfigKeys: string[] = [];
 /**
- * **内部多配置分组键列表**
- * @description 内部多配置分组键列表
- */
-const inMultipleConfigKeys: string[] = [];
-/**
  * **内部多配置数据**
  * @description 内部多配置数据
  */
-let inMultipleConfig = reactive([] as MultipleConfigType[]);
+const inMultipleConfig = reactive([] as MultipleConfigType[]);
 /**
  * **单元格外置配置**
  * @description 单元格外置配置
@@ -512,164 +514,222 @@ function setRule(
 provide("setRule", setRule);
 
 /**
- * 设置多配置分组
- * @param configItem - 多配置项
- * @param baseIndex - 基础索引
- * @returns void
- * @description 将配置项分配到对应的多配置分组中
- */
-function setMultipleConfig(configItem: ExMultipleConfigType, baseIndex: number) {
-  const _groupName = configItem.unitName as string;
-  const _index = inMultipleConfigKeys.indexOf(_groupName);
-
-  if (configItem.tabsFormConfig?.length) {
-    let _prop = "";
-    if (configItem.prop) {
-      _prop = Array.isArray(configItem.prop) ? configItem.prop.join("-") : configItem.prop;
-    }
-
-    const propsArr = configItem.tabsFormConfig.map(item => item.prop);
-    configItem.tabsFormConfig.map((value: PaFormChildType, configIndex: number) => {
-      const item: PaFormItemType = { ...value };
-
-      item.display = item.display != undefined ? item.display : props.display;
-      item.disabled = item.disabled == undefined ? configItem.disabled : item.disabled;
-
-      setRule(item, _prop, { titleKey: configItem.titleKey });
-
-      const _tabsGroupName =
-        typeof item?.unitName == "object"
-          ? item?.unitName?.[PancakeGlobalConfig.value?.language?.value || "zh-CN"]
-          : item.unitName || "default";
-
-      for (let index = 0; index < inMultipleConfig.length; index++) {
-        const element = inMultipleConfig[index];
-        for (let i = 0; i < element.configs.length; i++) {
-          const elementConfig = element.configs[i];
-          if (elementConfig.prop == configItem.prop) {
-            elementConfig.tabsFormConfig = elementConfig.tabsFormConfig?.filter(item => propsArr.includes(item.prop)) || [];
-          }
-        }
-      }
-      const _tabsIndex =
-        configItem?.inMultipleConfig?.findIndex?.((value: MultipleConfigType) => value.unitName == _tabsGroupName) || 0;
-      if (_tabsIndex >= 0 && configItem?.inMultipleConfig) {
-        let findItem = configItem?.inMultipleConfig[_tabsIndex].configs.find((value: PaFormItemType) => value.prop == item.prop);
-        if (findItem) {
-          findItem = item;
-        } else {
-          configItem?.inMultipleConfig[_tabsIndex].configs.splice(configIndex, 0, item);
-        }
-      } else {
-        configItem.inMultipleConfig = configItem.inMultipleConfig || [];
-        configItem.inMultipleConfig.push({
-          unitName: _tabsGroupName,
-          unitTip: String(
-            typeof configItem.unitTip == "object"
-              ? configItem.unitTip?.[PancakeGlobalConfig.value?.language?.value || "zh-CN"] || configItem.unitTip
-              : configItem.unitTip || ""
-          ),
-          configs: [item]
-        });
-      }
-    });
-  }
-
-  if (_index >= 0) {
-    const findIndex = inMultipleConfig[_index].configs.findIndex((value: PaFormItemType) => value.prop == configItem.prop);
-    if (findIndex > -1) {
-      inMultipleConfig[_index].configs[findIndex] = configItem;
-    } else {
-      inMultipleConfig[_index].configs.splice(baseIndex, 0, configItem);
-    }
-  } else {
-    const _index = baseInMultipleConfigKeys.indexOf(_groupName);
-    inMultipleConfigKeys.splice(_index, 1, _groupName);
-    inMultipleConfig.splice(_index, 1, {
-      unitName: _groupName,
-      unitTip: String(
-        typeof configItem.unitTip == "object"
-          ? configItem.unitTip?.[PancakeGlobalConfig.value?.language?.value || "zh-CN"] || configItem.unitTip
-          : configItem.unitTip || ""
-      ),
-      configs: [configItem]
-    });
-  }
-}
-
-/**
  * 初始化表单配置
  * @returns void
  * @description 处理表单结构配置，生成校验规则和分组配置
+ * @performance 优化：消除嵌套nextTick，使用普通对象批量构建后再一次性赋值给reactive数组，大幅减少响应式更新次数
  */
 function initConfig() {
-  nextTick(() => {
-    inRules.value = {};
-    baseInMultipleConfigKeys.length = 0;
-    createSpanStyle();
-    const propsArr = inConfig.value.map(item => {
-      const _groupName =
-        typeof item.unitName == "object"
-          ? item.unitName?.[PancakeGlobalConfig.value?.language?.value || "zh-CN"]
-          : item.unitName || "default";
-      if (!baseInMultipleConfigKeys.includes(_groupName)) {
-        baseInMultipleConfigKeys.push(_groupName);
-      }
-      item.unitName = _groupName;
-      return item.prop;
-    });
+  // 重置状态
+  inRules.value = {};
+  baseRulesMap.value = {};
+  baseInMultipleConfigKeys.length = 0;
+  createSpanStyle();
 
-    inMultipleConfig = inMultipleConfig.filter(item => baseInMultipleConfigKeys.includes(item.unitName as string));
+  // createSpanStyle 需要 DOM 已渲染，放在 initConfig 外层 nextTick 中处理
+  // 这里只准备数据
 
-    for (let index = 0; index < baseInMultipleConfigKeys.length; index++) {
-      const elIndex = inMultipleConfig.findIndex(item => item.unitName == baseInMultipleConfigKeys[index]);
-      if (elIndex >= 0) {
-        inMultipleConfig[elIndex].configs = inMultipleConfig[elIndex].configs.filter(item => {
-          return propsArr.includes(item.prop);
-        });
-        inMultipleConfig.splice(index, 0, inMultipleConfig[elIndex]);
-      } else {
-        inMultipleConfig.splice(index, 0, { unitName: baseInMultipleConfigKeys[index], configs: [] });
+  // --- 第一步：收集分组键 ---
+  const propsArr: (string[] | string | undefined)[] = [];
+  for (const item of inConfig.value) {
+    const _groupName =
+      typeof item.unitName == "object"
+        ? item.unitName?.[PancakeGlobalConfig.value?.language?.value || "zh-CN"]
+        : item.unitName || "default";
+    if (!baseInMultipleConfigKeys.includes(_groupName)) {
+      baseInMultipleConfigKeys.push(_groupName);
+    }
+    item.unitName = _groupName;
+    propsArr.push(item.prop);
+  }
+
+  // --- 第二步：用普通 Map 缓存已存在的配置数据 ---
+  const existingConfigMap = new Map<string, PaFormItemType[]>();
+  for (const mc of inMultipleConfig) {
+    const key = mc.unitName as string;
+    if (baseInMultipleConfigKeys.includes(key)) {
+      const filtered = mc.configs.filter(c => propsArr.includes(c.prop));
+      existingConfigMap.set(key, filtered);
+    }
+  }
+
+  // --- 第三步：构建完整的多配置列表（普通非响应式对象） ---
+  const newMultipleConfig: MultipleConfigType[] = baseInMultipleConfigKeys.map(key => ({
+    unitName: key,
+    unitTip: "",
+    configs: existingConfigMap.get(key) || []
+  }));
+
+  // --- 第四步：处理每个表单项，内联规则生成和分组分配 ---
+  const allRules: Record<string, Record<string, any>> = { default: {} };
+
+  // 预读取频繁访问的值
+  const _exCellConfig = exCellConfig.value;
+  const _exDependent = props.exDependent;
+  const _exCellRules = _exDependent?.exCellRules || {};
+  const _useRequired = props.useRequired;
+  const _disabled = props.disabled;
+  const _display = props.display;
+  const _language = PancakeGlobalConfig.value?.language?.value || "zh-CN";
+  const _requiredMessage = configContext.value.languagePackage["requiredMessage"];
+
+  for (let idx = 0; idx < inConfig.value.length; idx++) {
+    const value = inConfig.value[idx];
+    const exConfig = _exCellConfig[String(value.prop)];
+    const item: PaFormItemType = {
+      ...value,
+      ...exConfig,
+      exSpan: value.type == "transfer" || value.type == "group" ? value.exSpan || 1 : value.exSpan
+    };
+    const _prop = Array.isArray(item.prop) ? item.prop.join("-") : item.prop;
+    if (_prop) inConfigObj[_prop] = item;
+
+    // 合并 disabled / display
+    if (_disabled) item.disabled = true;
+    item.display = item.display != undefined ? item.display : _display;
+
+    useRequired.value = !_display;
+
+    // group 子项继承 disabled / display
+    if (item.type == "group" && item?.groupFormConfig?.length) {
+      for (let gi = 0; gi < item.groupFormConfig.length; gi++) {
+        item.groupFormConfig[gi] = {
+          ...item.groupFormConfig[gi],
+          disabled: item.disabled,
+          display: item.display
+        };
       }
     }
-    inMultipleConfig = inMultipleConfig.splice(0, baseInMultipleConfigKeys.length);
 
-    nextTick(() => {
-      inConfig.value.map((value: PaFormItemType, index: number) => {
-        const item: PaFormItemType = {
-          ...value,
-          ...exCellConfig.value[String(value.prop)],
-          exSpan: value.type == "transfer" || value.type == "group" ? value.exSpan || 1 : value.exSpan
+    // --- 内联 setRule 逻辑 ---
+    const _prop2 = item.prop as string;
+    const baseRulesForItem =
+      item.display || item.disabled ? [] : [{ required: true, message: _requiredMessage, trigger: "blur" }];
+    let _rules = baseRulesForItem;
+
+    if (item.rules && Array.isArray(item.rules)) {
+      let isRequired = true;
+      _rules = item.rules.map(r => {
+        if (r.required == false) isRequired = false;
+        return {
+          trigger: "blur",
+          required: r.required || true,
+          ...r,
+          message: typeof r.message == "string" ? r.message : r.message?.[_language] || _requiredMessage
         };
-        const _prop = Array.isArray(item.prop) ? item.prop.join("-") : item.prop;
-        if (_prop) inConfigObj[_prop] = item;
+      });
+      if (!isRequired) item.rules = false;
+    }
+    if (item.required == false) item.rules = false;
 
-        if (props.disabled) {
-          item.disabled = true;
-        }
-        item.display = item.display != undefined ? item.display : props.display;
+    if (_useRequired && useRequired.value && _prop2 && item.rules != false && _rules.length) {
+      allRules["default"][_prop2] = _exCellRules[_prop2] ? [..._rules, ..._exCellRules[_prop2]] : _rules;
+    } else if (!_useRequired || !useRequired.value) {
+      allRules["default"][_prop2] = item.display || item.disabled ? [] : item.rules || [];
+    }
 
-        if (props.display) {
-          useRequired.value = false;
-        } else {
-          useRequired.value = true;
-        }
+    // --- 处理 tabs-form 的多配置和子项规则（原 setMultipleConfig 逻辑） ---
+    if ((item as ExMultipleConfigType).tabsFormConfig?.length) {
+      const configItem = item as ExMultipleConfigType;
+      const tabsProp = Array.isArray(item.prop) ? item.prop.join("-") : item.prop;
+      const propsArr = configItem.tabsFormConfig.map(c => c.prop);
 
-        if (item.type == "group" && item?.groupFormConfig?.length) {
-          for (let index = 0; index < item.groupFormConfig.length; index++) {
-            item.groupFormConfig[index] = {
-              ...item.groupFormConfig[index],
-              disabled: item.disabled,
-              display: item.display
-            };
+      configItem.inMultipleConfig = configItem.inMultipleConfig || [];
+
+      configItem.tabsFormConfig.forEach((childValue: PaFormChildType, configIndex: number) => {
+        const childItem: PaFormItemType = { ...childValue };
+
+        childItem.display = childItem.display != undefined ? childItem.display : _display;
+        childItem.disabled = childItem.disabled == undefined ? item.disabled : childItem.disabled;
+
+        // setRule for child (inline)
+        const childProp = childItem.prop as string;
+        if (childProp) {
+          if (!inRules.value[tabsProp]) inRules.value[tabsProp] = {};
+          if (!allRules[tabsProp]) allRules[tabsProp] = {};
+
+          const childBaseRules =
+            childItem.display || childItem.disabled ? [] : [{ required: true, message: _requiredMessage, trigger: "blur" }];
+          let childRules = childBaseRules;
+
+          if (childItem.rules && Array.isArray(childItem.rules)) {
+            let isRequired = true;
+            childRules = childItem.rules.map(r => {
+              if (r.required == false) isRequired = false;
+              return {
+                trigger: "blur",
+                required: r.required || true,
+                ...r,
+                message: typeof r.message == "string" ? r.message : r.message?.[_language] || _requiredMessage
+              };
+            });
+            if (!isRequired) childItem.rules = false;
+          }
+          if (childItem.required == false || childItem.prop == configItem.titleKey) childItem.rules = false;
+
+          if (_useRequired && useRequired.value && childProp && childItem.rules != false && childRules.length) {
+            const _cellRules2 = _exCellRules[childProp] || [];
+            allRules[tabsProp][childProp] = _cellRules2.length ? [...childRules, ..._cellRules2] : childRules;
+          } else if (!_useRequired || !useRequired.value) {
+            allRules[tabsProp][childProp] = childItem.display || childItem.disabled ? [] : childItem.rules || [];
           }
         }
 
-        setRule(item);
-        setMultipleConfig(item as ExMultipleConfigType, index);
+        // 添加到 inMultipleConfig 分组
+        const tabsGroupName =
+          typeof childItem?.unitName == "object" ? childItem?.unitName?.[_language] : childItem.unitName || "default";
+
+        // 在当前项的 inMultipleConfig 中找到或创建分组
+        const tabsGroup = configItem.inMultipleConfig.find(g => g.unitName === tabsGroupName);
+        if (tabsGroup) {
+          const existIdx = tabsGroup.configs.findIndex(c => String(c.prop) === String(childItem.prop));
+          if (existIdx >= 0) {
+            tabsGroup.configs[existIdx] = childItem;
+          } else {
+            tabsGroup.configs.splice(configIndex, 0, childItem);
+          }
+        } else {
+          configItem.inMultipleConfig.push({
+            unitName: tabsGroupName,
+            unitTip: "",
+            configs: [childItem]
+          });
+        }
       });
-    });
-  });
+
+      // 过滤掉已不存在的 configs
+      for (const g of configItem.inMultipleConfig) {
+        g.configs = g.configs.filter(c => propsArr.includes(c.prop));
+      }
+    }
+
+    // --- 将 item 分配到对应的主分组中 ---
+    const unitName = (item.unitName as string) || "default";
+    const groupIndex = baseInMultipleConfigKeys.indexOf(unitName);
+    if (groupIndex >= 0) {
+      const configs = newMultipleConfig[groupIndex].configs;
+      const existingIdx = configs.findIndex(c => String(c.prop) === String(item.prop));
+      if (existingIdx >= 0) {
+        configs[existingIdx] = item;
+      } else {
+        configs.push(item);
+      }
+    }
+  }
+
+  // --- 第五步：一次性赋值给响应式数据 ---
+  // 合并所有规则的 baseRulesMap
+  inRules.value = allRules;
+  baseRulesMap.value = {};
+  for (const key of Object.keys(allRules)) {
+    baseRulesMap.value[key] = cloneDeep(allRules[key]);
+  }
+
+  // 一次性替换 inMultipleConfig 全部内容
+  inMultipleConfig.length = 0;
+  for (const mc of newMultipleConfig) {
+    inMultipleConfig.push(mc);
+  }
 }
 /**
  * 防抖初始化配置函数
@@ -689,6 +749,7 @@ let initLoadingTime: any;
 onMounted(() => {
   if (inConfig.value?.length > 0) {
     debounceInitConfig();
+
     clearTimeout(initLoadingTime);
     initialization.value = 1;
   }
@@ -772,9 +833,10 @@ function setStructureAll(newConfig: Array<PaFormItemType>) {
   inConfig.value = cloneDeep(newConfig);
   clearTimeout(initLoadingTime);
   if (inConfig.value?.length > 0) {
-    inMultipleConfigKeys.length = 0;
     inMultipleConfig.length = 0;
+
     debounceInitConfig();
+
     clearTimeout(initLoadingTime);
     initialization.value = 1;
   }
@@ -883,39 +945,41 @@ watch(
 );
 
 /**
- * **监听外置数据变化**
- * @description 监听外置数据变化并提示使用内部方法变更数据
+ * **监听外置数据变化（仅引用比较，不 deep 监听）**
+ * @description 移除 deep:true，避免每次字段变更都触发深度比较。
+ * 组件内使用数据隔离方案，外部数据变更提示用户使用 changeDataAll/changeDataItem 方法
  */
 watch(
   () => props.data,
   () => {
     typeof window !== "undefined" &&
       window.developLog.log("注意", "组件内使用数据隔离方案，请使用 changeDataAll 或 changeDataItem 方法变更内部数据", "danger");
-  },
-  { deep: true }
+  }
 );
 
 /**
  * **监听表单数据变化**
  * @description 监听表单数据变化并触发 formDataChange 事件
+ * 使用 deep: true 确保深层对象变更也能触发；使用 flush: 'post' 确保 DOM 更新后触发
  */
 watch(
   () => formData.value,
-  value => emit("formDataChange", value),
+  value => {
+    emit("formDataChange", value);
+  },
   { deep: true }
 );
 
 /**
- * **监听展示模式变化**
- * @description 监听展示模式变化并重新初始化配置
+ * **监听展示/禁用模式变化**
+ * @description 合并到单个 watch 中，避免两次独立的 debounceInitConfig
  */
-watch(() => props.display, debounceInitConfig);
-
-/**
- * **监听禁用状态变化**
- * @description 监听禁用状态变化并重新初始化配置
- */
-watch(() => props.disabled, debounceInitConfig);
+watch(
+  () => [props.display, props.disabled],
+  () => {
+    debounceInitConfig();
+  }
+);
 
 /**
  * **监听表单状态变化**

@@ -210,10 +210,16 @@ provide("formContext", formContext);
  */
 function initFormData() {
   if (props.model) {
+    const modelData = props.model;
+    // 只删除已存在的 key 中不在新数据中的
+    const newKeys = Object.keys(modelData);
     Object.keys(formData).forEach(key => {
-      delete formData[key];
+      if (!newKeys.includes(key)) {
+        delete formData[key];
+      }
     });
-    Object.assign(formData, cloneDeep(props.model));
+    // 只需拷贝一次，批量赋值
+    Object.assign(formData, cloneDeep(modelData));
   }
 }
 
@@ -482,7 +488,6 @@ async function submitForm(): Promise<Record<string, any> | false> {
  * @description 设置表单的数据
  */
 function setFormData(data: Record<string, any>) {
-  console.log("++++++++++> data:", data);
   Object.assign(formData, cloneDeep(data));
 }
 
@@ -497,30 +502,34 @@ function getFormData(): Record<string, any> {
 
 /**
  * **监听model变化**
- * @description 监听 model 变化并初始化表单数据
+ * @performance 优化：使用 JSON 序列化做浅比较，减少 deep watch 的深度比较开销
  */
+let modelInitDone = false;
 watch(
-  () => props.model,
-  newVal => {
-    if (newVal && !isEqual(newVal, formData)) {
+  () => JSON.stringify(props.model),
+  newModelStr => {
+    if (!newModelStr) return;
+    const newModel = JSON.parse(newModelStr);
+    if (!modelInitDone || !isEqual(newModel, formData)) {
+      modelInitDone = true;
       initFormData();
     }
   },
-  { deep: true, immediate: true }
+  { immediate: true }
 );
 
 /**
  * **监听rules变化**
- * @description 监听 rules 变化并更新验证规则
+ * @performance 优化：使用 JSON 序列化做浅比较
  */
 watch(
-  () => props.rules,
-  newRules => {
-    if (newRules) {
-      formRules.value = cloneDeep(newRules);
+  () => JSON.stringify(props.rules),
+  newRulesStr => {
+    if (newRulesStr) {
+      formRules.value = JSON.parse(newRulesStr);
     }
   },
-  { deep: true, immediate: true }
+  { immediate: true }
 );
 
 defineExpose({

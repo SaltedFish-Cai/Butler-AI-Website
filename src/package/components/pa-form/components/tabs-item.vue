@@ -1,19 +1,7 @@
 <template>
   <template v-if="item.type == 'tabs-form' && item.prop">
     <pa-form-item :prop="item.prop">
-      <!-- label -->
-      <!-- <template #label v-if="computedLabel">
-        <form-label
-          :label="computedLabel"
-          :tip="computedTip"
-          :item="item"
-          :data="injectConfigContext.data[String(props.item.prop)]"
-        >
-          <template v-for="slot in Object.keys($slots)" #[slot]="scope">
-            <slot :name="slot" v-bind="scope"></slot>
-          </template>
-        </form-label>
-      </template> -->
+      <!-- label（已注释） -->
       <pa-tabs
         v-if="injectConfigContext.data[String(item.prop)]?.length || !injectConfigContext.display"
         ref="tabsFormRef"
@@ -132,7 +120,7 @@
                       :tabsIndex="Number(tabIndex)"
                       :ruleFormRef="getRuleTabsFormRef(tab.name)"
                     >
-                      <template v-for="slot in Object.keys($slots)" #[slot]="scope">
+                      <template v-for="slot in slotKeys" #[slot]="scope" :key="slot">
                         <slot :name="slot" v-bind="scope"></slot>
                       </template>
                     </formItem>
@@ -170,8 +158,6 @@
           <!-- form -->
           <section class="tabs-form-body flat-style">
             <pa-form-control :id="id + '-tabs-form'" :model="tab" inTabsForm @validation-states="validateTabsForm">
-              <!-- v-show 防闪烁 -->
-              <!-- v-show="stepsIndex == tab.name" -->
               <section class="tabs-form-item deleted" v-for="tabGroupItem in item.inMultipleConfig" :key="tabGroupItem.unitName">
                 <!-- 标题 -->
                 <template v-if="tabGroupItem.unitName != 'default'">
@@ -195,7 +181,7 @@
                       :enforcementDisplay="true"
                       :ruleFormRef="getRuleTabsFormRef(tab.name)"
                     >
-                      <template v-for="slot in Object.keys($slots)" #[slot]="scope">
+                      <template v-for="slot in slotKeys" #[slot]="scope" :key="slot">
                         <slot :name="slot" v-bind="scope"></slot>
                       </template>
                     </formItem>
@@ -219,7 +205,7 @@
  *
  * @description Vue 核心响应式 API
  */
-import { ref, Ref, watch, nextTick, computed, inject } from "vue";
+import { ref, Ref, watch, nextTick, computed, inject, useSlots } from "vue";
 /**
  *
  * @description 随机字符串生成工具
@@ -275,6 +261,13 @@ const injectConfigContext = inject<Ref<ConfigContextType>>(
     noLabel: false
   })
 );
+
+/**
+ * 插槽键列表
+ * @description 预计算插槽键列表，避免每次渲染时重复调用 Object.keys($slots)
+ */
+const slots = useSlots();
+const slotKeys = computed(() => Object.keys(slots));
 
 /**
  *
@@ -448,11 +441,12 @@ function removeTab(row: Record<string, string>) {
  * @description 验证所有Tab表单并返回验证结果
  */
 const submitTabsForm = async () => {
-  if (!Object.keys(ruleTabsFormRef).length) return undefined;
+  const refKeys = Object.keys(ruleTabsFormRef);
+  if (!refKeys.length) return undefined;
 
   let formResult = true;
   lock = false;
-  for (const index in ruleTabsFormRef) {
+  for (const index of refKeys) {
     const element = ruleTabsFormRef[index];
 
     const { valid } = await element?.ref?.validate?.();
@@ -517,7 +511,6 @@ watch(
         }
       }
       stepsIndex.value = data[0]?.name;
-    } else {
     }
   },
   { immediate: true }

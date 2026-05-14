@@ -10,7 +10,7 @@
         <!-- label -->
         <template #label v-if="computedLabel && !injectConfigContext.noLabel && !noLabel">
           <form-label :label="computedLabel" :tip="computedTip" :item="item" :data="computedValue">
-            <template v-for="slot in Object.keys($slots)" #[slot]="scope">
+            <template v-for="slot in slotKeys" #[slot]="scope" :key="slot">
               <slot :name="slot" v-bind="scope"></slot>
             </template>
           </form-label>
@@ -97,26 +97,26 @@
             </pa-select>
           </template>
 
-          <!-- cascader -->
+          <!-- cascader / address -->
           <template
             v-else-if="
-              item.type == 'cascader' ||
-              item.type == 'cascader-check' ||
-              item.type == 'multiple-cascader' ||
-              item.type == 'multiple-cascader-check'
+              resolvedItemType == 'cascader' ||
+              resolvedItemType == 'cascader-check' ||
+              resolvedItemType == 'multiple-cascader' ||
+              resolvedItemType == 'multiple-cascader-check'
             "
           >
             <pa-cascader
               :id="id + '-' + item.prop + '-cascader'"
               v-model="computedValue"
-              :type="item.type"
+              :type="resolvedItemType"
               :displayValue="item.displayValue ? injectConfigContext.data[item.displayValue] : undefined"
-              :exOptions="useExOptions as PaOptionType.SelectList"
+              :exOptions="(resolvedItemType !== item.type && addressMap?.length ? addressMap : useExOptions) as PaOptionType.SelectList"
               :placeholder="usePlaceholder"
               :disabled="item.disabled || disabledFn(injectConfigContext.data)"
               :display="useDisplay"
-              :useValueBylink="item.useValueBylink"
-              :useTextByLink="item.useTextByLink"
+              :useValueBylink="resolvedUseValueBylink"
+              :useTextByLink="resolvedUseTextByLink"
               :clearable="item.clearable"
               :contrastData="item.prop && injectConfigContext.contrastData?.[item.prop]"
               :alwaysContrast="injectConfigContext.alwaysContrast"
@@ -314,7 +314,7 @@
           <!-- group -->
           <template v-else-if="item.type == 'group'">
             <groupItem :id="id + '-' + item.prop + '-group'" :item="item">
-              <template v-for="slot in Object.keys($slots)" #[slot]="scope">
+              <template v-for="slot in slotKeys" #[slot]="scope" :key="slot">
                 <slot :name="slot" v-bind="scope"></slot>
               </template>
             </groupItem>
@@ -355,9 +355,9 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed, onMounted, inject, Ref, watch, ComputedRef } from "vue";
+import { ref, computed, onMounted, inject, Ref, ComputedRef, useSlots } from "vue";
 import formLabel from "./form-label.vue";
-import paFormItem from "./pa-form-item.vue"; // 添加这行
+import paFormItem from "./pa-form-item.vue";
 import groupItem from "./components/group-item.vue";
 
 import { ConfigContextType, PaFormItemType } from "./types";
@@ -414,6 +414,13 @@ const injectConfigContext = inject<Ref<ConfigContextType>>(
  */
 const injectFormContext = inject<any>("formContext", {});
 /**
+ * 插槽键列表
+ * @description 预计算插槽键列表，避免每次渲染时重复调用 Object.keys($slots)
+ */
+const slots = useSlots();
+const slotKeys = computed(() => Object.keys(slots));
+
+/**
  * 地址数据
  * @description 地址数据
  */
@@ -428,13 +435,13 @@ const computedValue = computed({
     const data = !isNil(props.exData)
       ? props.exData
       : props.tabsProps && !isNil(props.tabsIndex)
-      ? injectConfigContext.value.data[props.tabsProps][props.tabsIndex][String(props.item.prop)]
+      ? injectConfigContext.value.data[props.tabsProps][Number(props.tabsIndex)][String(props.item.prop)]
       : injectConfigContext.value.data[String(props.item.prop)];
     return data;
   },
   set: value => {
     if (props.tabsProps && !isNil(props.tabsIndex)) {
-      injectConfigContext.value.data[props.tabsProps][props.tabsIndex][String(props.item.prop)] = value;
+      injectConfigContext.value.data[props.tabsProps][Number(props.tabsIndex)][String(props.item.prop)] = value;
     } else {
       injectConfigContext.value.data[String(props.item.prop)] = value;
     }
@@ -471,27 +478,35 @@ const useExOptions = computed(() => {
 
 /**
  * 组件挂载时初始化地址数据
- * @description 组件挂载时初始化地址数据
+ * @performance 优化：不直接修改 props.item，改用本地响应式变量覆盖 type，避免违反单向数据流
  */
+const resolvedItemType = computed(() => {
+  return props.item.type === "address" ? "cascader" : props.item.type;
+});
+const resolvedUseValueBylink = computed(() => {
+  return props.item.type === "address" ? false : props.item.useValueBylink;
+});
+const resolvedUseTextByLink = computed(() => {
+  return props.item.type === "address" ? true : props.item.useTextByLink;
+});
+
+const setSmallLabel = (arrayData: any[]): any[] => {
+  return arrayData.map(item => {
+    item.label = item.Label || item.label;
+    item.value = item.Value || item.value;
+    delete item.Label;
+    delete item.Value;
+    if (item.Children?.length) {
+      item.children = setSmallLabel(item.Children);
+      delete item.Children;
+    }
+    return item;
+  });
+};
+
 onMounted(async () => {
   if (props.item.type == "address") {
-    props.item.type = "cascader" as any;
-    props.item.useValueBylink = false as any;
-    props.item.useTextByLink = true as any;
     const res = await GetSystemAddressMap();
-    function setSmallLabel(arrayData) {
-      return arrayData.map(item => {
-        item.label = item.Label || item.label;
-        item.value = item.Value || item.value;
-        delete item.Label;
-        delete item.Value;
-        if (item.Children?.length) {
-          item.children = setSmallLabel(item.Children);
-          delete item.Children;
-        }
-        return item;
-      });
-    }
     addressMap.value = setSmallLabel(res || []);
   }
 });
@@ -624,21 +639,6 @@ function disabledFn(data) {
 
   return disabledRule[prop] && disabledRule[prop](data);
 }
-
-/**
- * 监听item类型变化
- * @description 监听item类型变化
- */
-watch(
-  () => props.item.type,
-  newVal => {
-    if (newVal == "address") {
-      props.item.type = "cascader" as any;
-      props.item.useValueBylink = false as any;
-      props.item.useTextByLink = true as any;
-    }
-  }
-);
 </script>
 
 <style lang="scss" scoped>
