@@ -167,7 +167,7 @@ const handleDragEnd = (event: DragEvent) => {
 
 /**
  * 拖拽结束
- */，处理排序
+ */
 const handleDrop = (event: DragEvent, targetIndex: number) => {
   event.preventDefault();
   event.stopPropagation();
@@ -181,8 +181,8 @@ const handleDrop = (event: DragEvent, targetIndex: number) => {
   }
 
   /**
- * 重置拖拽状态
- */
+   * 重置拖拽状态
+   */
   (event.target as HTMLElement).style.opacity = "1";
   (event.target as HTMLElement).classList.remove("dragging");
   const items = document.querySelectorAll(".m-playground-dialog-table-row");

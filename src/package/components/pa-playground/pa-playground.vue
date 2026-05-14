@@ -581,20 +581,20 @@ function saveBaseConfig() {
  */
 function handleCreatePage() {
   /**
- * 生成随机ID
- */和名称
+   * 生成随机ID
+   */ 和名称;
   const id = generateRandomId();
   const name = `页面`;
 
   /**
- * 计算新表格的位置（错开排列）
- */
+   * 计算新表格的位置（错开排列）
+   */
   const x = inValue.value.pagesConfigs.length * 200 + 10;
   const y = Math.floor(inValue.value.pagesConfigs.length + 1) * 200;
 
   /**
- * 添加到表格列表
- */
+   * 添加到表格列表
+   */
   inValue.value.pagesConfigs.push({ pageId: id, name, x, y, itemConfigs: [] });
 }
 
@@ -603,8 +603,8 @@ function handleCreatePage() {
  */
 function handleCreateTable(index: number) {
   /**
- * 添加到表格列表
- */
+   * 添加到表格列表
+   */
   const itemId = generateRandomId("table");
 
   inValue.value.pagesConfigs[index].itemConfigs.push({
@@ -620,8 +620,8 @@ function handleCreateTable(index: number) {
   });
 
   /**
- * 延迟创建表格，确保组件已经渲染
- */
+   * 延迟创建表格，确保组件已经渲染
+   */
   setTimeout(() => {
     const tableComponent = tableRefs.value[itemId];
     if (tableComponent) tableComponent.createTable();
@@ -633,12 +633,12 @@ function handleCreateTable(index: number) {
  */
 function handleCreateForm(index: number) {
   /**
- * 生成随机ID
- */和名称
+   * 生成随机ID
+   */ 和名称;
   const itemId = generateRandomId("form");
   /**
- * 添加到表单列表
- */
+   * 添加到表单列表
+   */
   inValue.value.pagesConfigs[index].itemConfigs.push({
     itemId,
     width: 0,
@@ -657,12 +657,12 @@ function handleCreateForm(index: number) {
  */
 function handleCreateTabs(index: number) {
   /**
- * 生成随机ID
- */和名称
+   * 生成随机ID
+   */ 和名称;
   const itemId = generateRandomId("tabs");
   /**
- * 添加到选项卡列表
- */
+   * 添加到选项卡列表
+   */
   inValue.value.pagesConfigs[index].itemConfigs.push({
     itemId,
     width: 0,
@@ -704,8 +704,8 @@ function handleEditOperationSubmit(editId: string, data: PaPlaygroundPageButtonT
  */
 function handleClickItem(index: number) {
   /**
- * 将点击的表格或表单移动到数组最后面
- */
+   * 将点击的表格或表单移动到数组最后面
+   */
   if (index >= 0 && index < inValue.value.pagesConfigs.length) {
     const item = inValue.value.pagesConfigs.splice(index, 1)[0];
     inValue.value.pagesConfigs.push(item);
@@ -733,7 +733,6 @@ const handleEditItemBaseSubmit = (data: PaPlaygroundItem) => {
 /**
  * 处理模拟场
  */
-
 
 const handleEnablePlayground = async () => {
   useMock.value = true;
@@ -803,7 +802,7 @@ const handleDragEnd = (event: DragEvent) => {
 
 /**
  * 拖拽结束
- */，处理排序
+ */
 const handleDrop = (event: DragEvent, pageIndex: number, targetIndex: number) => {
   event.preventDefault();
   event.stopPropagation();
@@ -817,8 +816,8 @@ const handleDrop = (event: DragEvent, pageIndex: number, targetIndex: number) =>
   }
 
   /**
- * 重置拖拽状态
- */
+   * 重置拖拽状态
+   */
   (event.target as HTMLElement).style.opacity = "1";
   (event.target as HTMLElement).classList.remove("dragging");
   const items = document.querySelectorAll(".glass-container");

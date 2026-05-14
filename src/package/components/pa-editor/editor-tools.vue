@@ -37,19 +37,18 @@
             <pa-icon v-else :name="tool.icon"></pa-icon>
           </button>
         </template>
-
-        <pa-color-item
+        <pa-color-box
           v-if="tool.command == 'foreColor'"
-          :value="tool.value"
+          v-model="tool.foreColor"
           @change="value => throttleExecuteCommand(tool.command, value)"
           :presetColors="presetColors"
-        ></pa-color-item>
-        <pa-color-item
+        ></pa-color-box>
+        <pa-color-box
           v-else-if="tool.command == 'backColor'"
-          :value="tool.value"
+          v-model="tool.backColor"
           @change="value => throttleExecuteCommand(tool.command, value)"
           :presetColors="presetColors"
-        ></pa-color-item>
+        ></pa-color-box>
 
         <div class="pa-editor-toolbar_input" v-else-if="tool.command == 'createLink'">
           <input
@@ -428,10 +427,9 @@ const executeCommand = (command: string, value?: any) => {
     }
     return;
   } else if (command === "foreColor" && value) {
-
-  /**
-   * @description 处理字体颜色命令
-   */
+    /**
+     * @description 处理字体颜色命令
+     */
     /**
      * @description 在执行编辑操作前保存当前状态到撤销栈
      */
@@ -478,10 +476,9 @@ const executeCommand = (command: string, value?: any) => {
     }
     return;
   } else if (command === "fontSize" && value) {
-
-  /**
-   * @description 处理字体大小命令
-   */
+    /**
+     * @description 处理字体大小命令
+     */
     /**
      * @description 在执行编辑操作前保存当前状态到撤销栈
      */
@@ -536,10 +533,9 @@ const executeCommand = (command: string, value?: any) => {
       }
     }
   } else if (command === "createLink") {
-
-  /**
-   * @description 处理创建链接命令
-   */
+    /**
+     * @description 处理创建链接命令
+     */
     /**
      * @description 在执行编辑操作前保存当前状态到撤销栈
      */
@@ -572,10 +568,9 @@ const executeCommand = (command: string, value?: any) => {
     }
     return;
   } else if (command === "confirmLink") {
-
-  /**
-   * @description 处理确认链接命令
-   */
+    /**
+     * @description 处理确认链接命令
+     */
     /**
      * @description 在执行编辑操作前保存当前状态到撤销栈
      */
@@ -585,10 +580,9 @@ const executeCommand = (command: string, value?: any) => {
       linkElement.href = value;
     }
   } else if (command === "deleteLink") {
-
-  /**
-   * @description 处理删除链接命令
-   */
+    /**
+     * @description 处理删除链接命令
+     */
     /**
      * @description 在执行编辑操作前保存当前状态到撤销栈
      */
@@ -620,10 +614,9 @@ const executeCommand = (command: string, value?: any) => {
       }
     }
   } else if (command === "insertTable") {
-
-  /**
-   * @description 处理插入表格命令
-   */
+    /**
+     * @description 处理插入表格命令
+     */
     /**
      * @description 在执行编辑操作前保存当前状态到撤销栈
      */
@@ -701,10 +694,9 @@ const executeCommand = (command: string, value?: any) => {
       }
     }
   } else if (command === "sourceCode") {
-
-  /**
-   * @description 源码编辑
-   */
+    /**
+     * @description 源码编辑
+     */
     /**
      * @description 切换源码编辑模式
      */
@@ -747,10 +739,9 @@ const executeCommand = (command: string, value?: any) => {
     isToolActiveArrayFn();
     return;
   } else if (command === "visible") {
-
-  /**
-   * @description 预览
-   */
+    /**
+     * @description 预览
+     */
     /**
      * @description 切换源码编辑模式
      */
@@ -763,17 +754,15 @@ const executeCommand = (command: string, value?: any) => {
     isToolActiveArrayFn();
     return;
   } else if (command === "fullscreen") {
-
-  /**
-   * @description 全屏功能
-   */
+    /**
+     * @description 全屏功能
+     */
     toggleFullscreen();
     return;
   } else {
-
-  /**
-   * @description 处理其他命令
-   */
+    /**
+     * @description 处理其他命令
+     */
     /**
      * @description 在执行其他编辑命令前保存当前状态到撤销栈
      */
