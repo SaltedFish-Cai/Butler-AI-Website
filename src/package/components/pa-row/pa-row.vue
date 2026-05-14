@@ -33,33 +33,29 @@ const props = withDefaults(defineProps<ComponentProps>(), {
  * 计算类名
  * @description 根据属性计算组件类名
  */
-const classes = computed(() => {
-  const classList = ["pa-row"];
-  classList.push(`pa-row--${props.justify}`);
-  classList.push(`pa-row--align-${props.align}`);
-  return classList;
-});
+const classes = computed(() => ["pa-row", `pa-row--${props.justify}`, `pa-row--align-${props.align}`]);
 /**
  * 计算栅格间隔值
- * @description 计算实际的栅格间隔值
+ * @description 计算实际的栅格间隔值（数字直接除2，字符串提取数字后除2，无效返回0）
  */
 const gutterValue = computed(() => {
-  return props.gutter
-    ? typeof props.gutter === "number"
-      ? props.gutter / 2
-      : Number(props.gutter.replace(/\D/g, "") || 0) / 2
-    : 0;
+  const { gutter } = props;
+  if (!gutter && gutter !== 0) return 0;
+  const num = typeof gutter === "number" ? gutter : parseInt(gutter, 10);
+  return Number.isNaN(num) ? 0 : num / 2;
 });
 /**
  * 计算样式
  * @description 根据间隔值计算行样式
  */
 const style = computed(() => {
-  const styles: Record<string, string> = {};
-  styles["--row-gutter-value"] = gutterValue.value ? `${gutterValue.value}px` : "calc(var(--pa-size-padding) / 2)";
-  styles.marginTop = gutterValue.value ? `calc(0px - ${gutterValue.value}px)` : "calc(0px - var(--pa-size-padding) / 2)";
-  styles.marginBottom = gutterValue.value ? `calc(0px - ${gutterValue.value}px)` : "calc(0px - var(--pa-size-padding) / 2)";
-  return styles;
+  const value = gutterValue.value;
+  const hasGutter = !!value;
+  return {
+    "--row-gutter-value": hasGutter ? `${value}px` : "calc(var(--pa-size-padding) / 2)",
+    marginTop: hasGutter ? `calc(0px - ${value}px)` : "calc(0px - var(--pa-size-padding) / 2)",
+    marginBottom: hasGutter ? `calc(0px - ${value}px)` : "calc(0px - var(--pa-size-padding) / 2)"
+  };
 });
 /**
  * 模块级常量
