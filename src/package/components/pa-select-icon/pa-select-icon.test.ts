@@ -69,7 +69,7 @@ const PaTabsItemMock = defineComponent({
 
 // Mock PancakeGlobalConfig
 const mockPancakeGlobalConfig = computed(() => ({
-  language: { value: "zh-CN", package: { cell: { clickChangeIcon: "选择图标" } } }
+  language: { value: "zh-CN", package: { cell: { clickChangeIcon: "点击切换图标" } } }
 })) as ComputedRef<{ language: { value: string; package?: { cell?: Record<string, string> } } }>;
 
 /** 通用 mount 辅助函数 */
@@ -225,7 +225,7 @@ describe("pa-select-icon 组件测试", () => {
   describe("10. inputPlaceholder computed", () => {
     it("显示默认占位符", async () => {
       const wrapper = await mountSelectIcon();
-      expect(wrapper.vm.inputPlaceholder).toContain("选择图标");
+      expect(wrapper.vm.inputPlaceholder).toContain("点击切换图标");
     });
 
     it("自定义占位符", async () => {

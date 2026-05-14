@@ -4,7 +4,7 @@
     class="pa-select"
     ref="selectRef"
     :class="[props.class, { 'is-disabled': props.disabled }]"
-    :style="{ ...props.style }"
+    :style="props.style"
   >
     <pa-popover
       ref="popoverRef"
@@ -76,7 +76,7 @@
     </pa-popover>
   </div>
 
-  <div v-else class="pa-display-style" :class="[props.class]" :style="{ ...props.style }">
+  <div v-else class="pa-display-style" :class="[props.class]" :style="props.style">
     <div v-if="title" :style="{ width: titleWidth }" class="pa-cell-label">
       {{ typeof title === "string" ? title : title[languageValue] }}
     </div>
@@ -102,7 +102,7 @@
  * 模块导入
  * @description 导入 Vue 组合式 API
  */
-import { ref, computed, watch, nextTick, ComputedRef, inject, useTemplateRef, onMounted } from "vue";
+import { ref, computed, watch, nextTick, inject, useTemplateRef, onMounted, type ComputedRef } from "vue";
 /**
  * 模块导入
  * @description 导入组件类型定义
@@ -154,6 +154,26 @@ import isEqual from "../tools/is-equal";
  */
 import debounce from "../tools/debounce";
 /**
+ * 全局配置注入
+ * @type ComputedRef<PancakeGlobalConfigType>
+ * @description 注入全局配置对象
+ */
+const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
+/**
+ * 组件属性
+ * @type ComponentProps
+ * @description 组件的属性对象
+ */
+const props = withDefaults(defineProps<ComponentProps>(), {
+  type: "select",
+  clearable: true
+});
+/**
+ * 组件事件定义
+ * @description 定义组件可触发的事件
+ */
+const emits = defineEmits<ComponentEmits>();
+/**
  * 弹出层引用
  * @type any
  * @description 弹出层组件引用
@@ -202,11 +222,53 @@ const awaitSelecting = ref(false);
  */
 const optionsHeight = ref("auto");
 /**
- * 全局配置注入
- * @type ComputedRef<PancakeGlobalConfigType>
- * @description 注入全局配置对象
+ * 扩展选项列表
+ * @type Array<any>
+ * @description 处理后的选项列表
  */
-const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
+const exOptionsList = ref([]);
+/**
+ * 过滤值
+ * @type string
+ * @description 输入框过滤关键词
+ */
+const filterValue = ref("");
+/**
+ * 内部值
+ * @type any
+ * @description 选择器的内部绑定值
+ */
+const inValue = ref(props.modelValue || []);
+/**
+ * 是否多选模式
+ * @returns boolean 是否为多选模式
+ * @description 判断当前是否为多选选择器
+ */
+const isMultiple = computed(() => {
+  return props.type == "multiple-select" || props.type == "multiple-online-select" || props.type == "multiple-request-select";
+});
+/**
+ * 是否在线选择器
+ * @returns boolean 是否为在线选择器
+ * @description 判断当前是否为在线搜索选择器
+ */
+const isOnlineSelect = computed(() => {
+  return props.type == "online-select" || props.type == "multiple-online-select";
+});
+/**
+ * 是否请求选择器
+ * @returns boolean 是否为请求选择器
+ * @description 判断当前是否为远程请求选择器
+ */
+const isRequestSelect = computed(() => {
+  return props.type == "request-select" || props.type == "multiple-request-select";
+});
+/**
+ * 旧值存储
+ * @type Array<number | string> | number | string
+ * @description 存储上一次的值，用于变更事件
+ */
+let oldValue: Array<number | string> | number | string = props.modelValue || (isMultiple.value ? [] : "");
 /**
  * 当前语言值
  * @type ComputedRef<string>
@@ -224,68 +286,6 @@ const languagePackage = computed(() => {
   return languageValue.value === "zh-CN"
     ? { selectPlaceholder: "请选择内容", empty: "暂无数据" }
     : { selectPlaceholder: "Please Select Content", empty: "No Data" };
-});
-/**
- * 组件属性
- * @type ComponentProps
- * @description 组件的属性对象
- */
-const props = withDefaults(defineProps<ComponentProps>(), {
-  type: "select",
-  clearable: true
-});
-/**
- * 组件事件定义
- * @description 定义组件可触发的事件
- */
-const emits = defineEmits<ComponentEmits>();
-/**
- * 是否多选模式
- * @returns boolean 是否为多选模式
- * @description 判断当前是否为多选选择器
- */
-const isMultiple = computed(() => {
-  return props.type == "multiple-select" || props.type == "multiple-online-select" || props.type == "multiple-request-select";
-});
-/**
- * 内部值
- * @type any
- * @description 选择器的内部绑定值
- */
-const inValue = ref(props.modelValue || []);
-/**
- * 扩展选项列表
- * @type Array<any>
- * @description 处理后的选项列表
- */
-const exOptionsList = ref(props?.exOptions || []);
-/**
- * 过滤值
- * @type string
- * @description 输入框过滤关键词
- */
-const filterValue = ref("");
-/**
- * 旧值存储
- * @type Array<number | string> | number | string
- * @description 存储上一次的值，用于变更事件
- */
-let oldValue: Array<number | string> | number | string = props.modelValue || (isMultiple.value ? [] : "");
-/**
- * 是否在线选择器
- * @returns boolean 是否为在线选择器
- * @description 判断当前是否为在线搜索选择器
- */
-const isOnlineSelect = computed(() => {
-  return props.type == "online-select" || props.type == "multiple-online-select";
-});
-/**
- * 是否请求选择器
- * @returns boolean 是否为请求选择器
- * @description 判断当前是否为远程请求选择器
- */
-const isRequestSelect = computed(() => {
-  return props.type == "request-select" || props.type == "multiple-request-select";
 });
 /**
  * 过滤后的选项列表

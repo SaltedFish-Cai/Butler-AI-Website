@@ -1,6 +1,6 @@
 <template>
   <template v-if="!display">
-    <div class="pa-input" :style="mergedStyle" :class="props.class">
+    <div class="pa-input" :style="props.style" :class="props.class">
       <div class="pa-input_body" :class="[{ 'is-disabled': disabled }, { 'is-focus': isFocus }]" @click="textareaRef.focus()">
         <div v-if="title" :style="{ width: titleWidth }" class="pa-cell-label">
           {{ typeof title === "string" ? title : title[languageValue] }}
@@ -51,7 +51,7 @@
     </div>
   </template>
 
-  <div v-else class="pa-display-style" :class="props.class" :style="mergedStyle">
+  <div v-else class="pa-display-style" :class="props.class" :style="props.style">
     <div v-if="title" :style="{ width: titleWidth }" class="pa-cell-label">
       {{ typeof title === "string" ? title : title[languageValue] }}
     </div>
@@ -77,7 +77,7 @@
  * 模块导入
  * @description 导入 Vue 组合式 API
  */
-import { ref, computed, ComputedRef, watch, onMounted, onBeforeUnmount, nextTick, inject } from "vue";
+import { ref, computed, watch, onMounted, onBeforeUnmount, nextTick, inject, type ComputedRef } from "vue";
 /**
  * 模块导入
  * @description 导入组件类型定义
@@ -92,7 +92,15 @@ import { PancakeGlobalConfigType } from "../pa-manager/types";
  * 工具函数
  * @description 导入 isEqual 工具函数
  */
+/**
+ * 模块导入
+ * @description 导入值相等比较函数
+ */
 import isEqual from "../tools/is-equal";
+/**
+ * 模块导入
+ * @description 导入空值判断函数
+ */
 import isNil from "../tools/is-nil";
 /**
  * 全局配置注入
@@ -145,13 +153,6 @@ const computedPlaceholder: ComputedRef<string> = computed(() => {
     : props.placeholder || languagePackage.value[`inputPlaceholder`];
 });
 /**
- * 计算属性：合并样式
- * @returns Record<string, string> | undefined 合并后的样式对象
- * @description 将 props.style 作为响应式样式对象
- */
-const mergedStyle = computed(() => props.style);
-const disabled = computed(() => !!props.disabled);
-/**
  * 组件属性
  * @type ComponentProps
  * @description 组件的属性对象
@@ -161,16 +162,22 @@ const props = withDefaults(defineProps<ComponentProps>(), {
   clearable: true
 });
 /**
+ * 组件事件定义
+ * @description 定义组件可触发的事件
+ */
+const emits = defineEmits<ComponentEmits>();
+/**
  * 内部值
  * @type string
  * @description 输入框的内部绑定值
  */
 const inValue = ref(props.modelValue ? String(props.modelValue) : "");
 /**
- * 组件事件定义
- * @description 定义组件可触发的事件
+ * 是否禁用
+ * @type ComputedRef<boolean>
+ * @description 根据 disabled prop 计算是否禁用
  */
-const emits = defineEmits<ComponentEmits>();
+const disabled = computed(() => !!props.disabled);
 /**
  * 处理回车键事件
  * @param _e - 键盘事件
@@ -265,7 +272,6 @@ function limitLength(value: string) {
  * @type number | null
  * @description 用于清理 setTimeout
  */
-let autofocusTimer: ReturnType<typeof setTimeout> | null = null;
 let initTimer: ReturnType<typeof setTimeout> | null = null;
 /**
  * 组件挂载生命周期
@@ -273,14 +279,10 @@ let initTimer: ReturnType<typeof setTimeout> | null = null;
  */
 onMounted(() => {
   oldValue = props.modelValue ? String(props.modelValue) : "";
-  if (props.autofocus) {
-    autofocusTimer = setTimeout(() => {
-      if (props.type === "textarea" && textareaRef.value) {
-        textareaRef.value.focus();
-      }
-    }, 300);
-  }
   initTimer = setTimeout(() => {
+    if (props.autofocus && props.type === "textarea" && textareaRef.value) {
+      textareaRef.value.focus();
+    }
     adjustTextareaHeight();
   }, 300);
 });
@@ -289,7 +291,6 @@ onMounted(() => {
  * @description 清理定时器，防止内存泄漏
  */
 onBeforeUnmount(() => {
-  if (autofocusTimer) clearTimeout(autofocusTimer);
   if (initTimer) clearTimeout(initTimer);
 });
 /**

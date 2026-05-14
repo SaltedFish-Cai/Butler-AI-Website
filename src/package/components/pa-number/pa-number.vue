@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!display" class="pa-number" :class="[props.class, { 'is-disabled': props.disabled }]" :style="{ ...props.style }">
+  <div v-if="!display" class="pa-number" :class="[props.class, { 'is-disabled': props.disabled }]" :style="props.style">
     <div v-if="title" :style="{ width: titleWidth }" class="pa-cell-label">
       {{ typeof title === "string" ? title : title[languageValue] }}
     </div>
@@ -16,7 +16,7 @@
         @change="handleChange"
         @keyup="handleKeyUp"
         @keyup.enter="handleChange"
-        :disabled="disabled"
+        :disabled="props.disabled"
         autocomplete="off"
         :placeholder="computedPlaceholder"
       />
@@ -29,7 +29,7 @@
     </div>
   </div>
 
-  <div v-else class="pa-display-style" :class="[props.class]" :style="{ ...props.style }">
+  <div v-else class="pa-display-style" :class="[props.class]" :style="props.style">
     <div v-if="title" :style="{ width: titleWidth }" class="pa-cell-label">
       {{ typeof title === "string" ? title : title[languageValue] }}
     </div>
@@ -55,7 +55,7 @@
  * 模块导入
  * @description 导入 Vue 组合式 API
  */
-import { ref, computed, ComputedRef, watch, onMounted, onBeforeUnmount, onUnmounted, inject, nextTick } from "vue";
+import { ref, computed, watch, onMounted, onBeforeUnmount, inject, nextTick, type ComputedRef } from "vue";
 /**
  * 模块导入
  * @description 导入组件类型定义
@@ -81,6 +81,28 @@ import isEqual from "../tools/is-equal";
  * @description 导入 isNil 工具函数
  */
 import isNil from "../tools/is-nil";
+/**
+ * 全局配置注入
+ * @type ComputedRef<PancakeGlobalConfigType>
+ * @description 注入全局配置对象
+ */
+const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
+/**
+ * 组件属性
+ * @type ComponentProps
+ * @description 组件的属性对象
+ */
+const props = withDefaults(defineProps<ComponentProps>(), {
+  clearable: true,
+  controls: true,
+  step: 1,
+  precision: 0
+});
+/**
+ * 组件事件定义
+ * @description 定义组件可触发的事件
+ */
+const emits = defineEmits<ComponentEmits>();
 /**
  * 输入框引用
  * @type any
@@ -113,28 +135,34 @@ let lastWheelTime = 0;
 let wheelDelta = 0;
 /**
  * 聚焦定时器
- * @type number | undefined
+ * @type ReturnType<typeof setTimeout> | null
  * @description 聚焦时光标定位定时器
  */
-let focusTimer: any;
+let focusTimer: ReturnType<typeof setTimeout> | null = null;
 /**
  * 自动聚焦定时器
- * @type number | undefined
+ * @type ReturnType<typeof setTimeout> | null
  * @description 自动聚焦定时器
  */
-let autofocusTimer: any;
+let autofocusTimer: ReturnType<typeof setTimeout> | null = null;
 /**
- * 全局配置注入
- * @type ComputedRef<PancakeGlobalConfigType>
- * @description 注入全局配置对象
+ * 内部值
+ * @type string
+ * @description 数字框的内部绑定值
  */
-const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
+const inValue = ref(handlePrecision(props.modelValue, props.precision));
+/**
+ * 旧值存储
+ * @type number | string
+ * @description 存储上一次的值，用于变更事件
+ */
+let oldValue: number | string = props.modelValue || "";
 /**
  * 当前语言值
  * @type ComputedRef<string>
  * @description 当前选中的语言
  */
-const languageValue = computed(() => {
+const languageValue = computed<string>(() => {
   return PancakeGlobalConfig.value?.language?.value || "zh-CN";
 });
 /**
@@ -147,43 +175,14 @@ const languagePackage = computed(() => {
 });
 /**
  * 计算属性：占位符文本
- * @returns string 占位符文本
+ * @returns string
  * @description 根据语言设置计算显示的占位符文本
  */
 const computedPlaceholder: ComputedRef<string> = computed(() => {
-  const language = PancakeGlobalConfig.value?.language?.value || "zh-CN";
   return typeof props.placeholder === "object"
-    ? props.placeholder[language] || languagePackage.value[`inputPlaceholder`]
+    ? props.placeholder[languageValue.value] || languagePackage.value[`inputPlaceholder`]
     : props.placeholder || languagePackage.value[`inputPlaceholder`];
 });
-/**
- * 组件属性
- * @type ComponentProps
- * @description 组件的属性对象
- */
-const props = withDefaults(defineProps<ComponentProps>(), {
-  clearable: true,
-  controls: true,
-  step: 1,
-  precision: 0
-});
-/**
- * 内部值
- * @type string
- * @description 数字框的内部绑定值
- */
-const inValue = ref(handlePrecision(props.modelValue, props.precision));
-/**
- * 组件事件定义
- * @description 定义组件可触发的事件
- */
-const emits = defineEmits<ComponentEmits>();
-/**
- * 旧值存储
- * @type number | string
- * @description 存储上一次的值，用于变更事件
- */
-let oldValue: number | string = props.modelValue || "";
 /**
  * 检查最大最小值限制
  * @description 验证当前值是否在 min/max 范围内
@@ -340,6 +339,7 @@ function handleBlur() {
 }
 /**
  * 处理控制按钮点击
+ * @param type - 控制类型
  * @description 增减数字值
  */
 function handleControl(type: "down" | "up") {
@@ -432,18 +432,12 @@ onMounted(() => {
  * @description 清理事件监听器和定时器
  */
 onBeforeUnmount(() => {
-  if (focusTimer) {
-    clearTimeout(focusTimer);
-  }
   if (autofocusTimer) {
     clearTimeout(autofocusTimer);
   }
-});
-/**
- * 组件卸载生命周期
- * @description 清理事件监听器
- */
-onUnmounted(() => {
+  if (focusTimer) {
+    clearTimeout(focusTimer);
+  }
   const inputElement = inputRef.value;
   if (inputElement) {
     inputElement.removeEventListener("wheel", handleWheel);
