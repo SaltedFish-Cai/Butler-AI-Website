@@ -61,7 +61,7 @@
  * 模块导入
  * @description 导入 Vue 组合式 API
  */
-import { ref, inject, watch, Ref, computed, ComputedRef } from "vue";
+import { ref, inject, watch, computed, type Ref, type ComputedRef } from "vue";
 /**
  * 模块导入
  * @description 导入数据比较工具
@@ -82,6 +82,18 @@ import PaCascaderOption from "./pa-cascader-option.vue";
  * @description 导入全局配置类型
  */
 import { PancakeGlobalConfigType } from "../pa-manager/types";
+/**
+ * 全局配置注入
+ * @type ComputedRef<PancakeGlobalConfigType>
+ * @description 从父组件注入的全局配置
+ */
+const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
+/**
+ * 选项点击处理函数注入
+ * @type any
+ * @description 从父组件注入的选项点击处理函数
+ */
+const injectHandleOptionClick: any = inject("handleOptionClick");
 /**
  * 组件属性
  * @description 组件的属性对象
@@ -110,23 +122,11 @@ const props = withDefaults(
  */
 const childExOptions = ref([] as Array<PaOptionType.Select>);
 /**
- * 选项点击处理函数注入
- * @type any
- * @description 从父组件注入的选项点击处理函数
- */
-const injectHandleOptionClick: any = inject("handleOptionClick");
-/**
  * 激活值
  * @type Ref<boolean | number | string | undefined>
  * @description 当前鼠标悬停的选项值
  */
 const activeValue: Ref<boolean | number | string | undefined> = ref("");
-/**
- * 全局配置注入
- * @type ComputedRef<PancakeGlobalConfigType>
- * @description 从父组件注入的全局配置
- */
-const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 /**
  * 当前语言值
  * @type ComputedRef<string>
@@ -155,20 +155,6 @@ function handleOptionClick(item: PaOptionType.Select, type: "click" | "over"): v
   }
 }
 /**
- * 监听 exOptions 变化
- * @description 当选项列表变化时重置子级选项
- */
-watch(
-  () => props.exOptions,
-  () => {
-    childExOptions.value = [];
-  },
-  {
-    immediate: true,
-    deep: true
-  }
-);
-/**
  * 查找索引
  * @param {Array<PaOptionType.Select>} map - 选项列表
  * @param {number[]} arr - 索引数组
@@ -186,6 +172,20 @@ function findIndex(map: Array<PaOptionType.Select>, arr: number[], parentIndex: 
     }
   });
 }
+/**
+ * 监听 exOptions 变化
+ * @description 当选项列表变化时重置子级选项
+ */
+watch(
+  () => props.exOptions,
+  () => {
+    childExOptions.value = [];
+  },
+  {
+    immediate: true,
+    deep: true
+  }
+);
 /**
  * 监听 inValue 变化
  * @description 当值变化时自动展开对应选项
