@@ -6,11 +6,7 @@
  * @returns 防抖后的函数
  * @description trailing 模式防抖实现，在延迟时间结束后触发最后一次调用
  */
-function debounce(
-  fn: (...args: unknown[]) => void,
-  delay: number,
-  options?: { trailing?: boolean }
-): (...args: unknown[]) => void {
+function debounce(fn: (...args: any) => void, delay: number, options?: { trailing?: boolean }): (...args: unknown[]) => void {
   let timer: ReturnType<typeof setTimeout> | null = null;
   const trailing = options?.trailing ?? true;
   return function (this: unknown, ...args: unknown[]) {

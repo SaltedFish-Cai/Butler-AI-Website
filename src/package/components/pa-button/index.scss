@@ -1,3 +1,16 @@
+// 按钮颜色主题 Mixin - 减少重复代码
+@mixin button-type($var-color, $var-hover, $var-bg) {
+  --pa-button-color: var(#{$var-color});
+  --pa-button-color2: var(#{$var-bg});
+  background-color: var(#{$var-color});
+  color: var(--pa-color-white);
+  border-color: var(#{$var-color});
+
+  &:hover {
+    background-color: var(#{$var-hover});
+  }
+}
+
 .pa-button {
   display: inline-flex;
   justify-content: center;
@@ -35,63 +48,23 @@
   }
 
   &.primary {
-    --pa-button-color: var(--pa-color-primary);
-    --pa-button-color2: var(--pa-color-primary-light-9);
-    background-color: var(--pa-color-primary);
-    color: var(--pa-color-white);
-    border-color: var(--pa-color-primary);
-
-    &:hover {
-      background-color: var(--pa-color-primary-light-3);
-    }
+    @include button-type(--pa-color-primary, --pa-color-primary-light-3, --pa-color-primary-light-9);
   }
 
   &.warning {
-    --pa-button-color: var(--pa-color-warning);
-    --pa-button-color2: var(--pa-color-warning-light-9);
-    background-color: var(--pa-color-warning);
-    color: var(--pa-color-white);
-    border-color: var(--pa-color-warning);
-
-    &:hover {
-      background-color: var(--pa-color-warning-light-3);
-    }
+    @include button-type(--pa-color-warning, --pa-color-warning-light-3, --pa-color-warning-light-9);
   }
 
   &.danger {
-    --pa-button-color: var(--pa-color-danger);
-    --pa-button-color2: var(--pa-color-danger-light-9);
-    background-color: var(--pa-color-danger);
-    color: var(--pa-color-white);
-    border-color: var(--pa-color-danger);
-
-    &:hover {
-      background-color: var(--pa-color-danger-light-3);
-    }
+    @include button-type(--pa-color-danger, --pa-color-danger-light-3, --pa-color-danger-light-9);
   }
 
   &.info {
-    --pa-button-color: var(--pa-color-info);
-    --pa-button-color2: var(--pa-color-info-light-9);
-    background-color: var(--pa-color-info);
-    color: var(--pa-color-white);
-    border-color: var(--pa-color-info);
-
-    &:hover {
-      background-color: var(--pa-color-info-light-3);
-    }
+    @include button-type(--pa-color-info, --pa-color-info-light-3, --pa-color-info-light-9);
   }
 
   &.success {
-    --pa-button-color: var(--pa-color-success);
-    --pa-button-color2: var(--pa-color-success-light-9);
-    background-color: var(--pa-color-success);
-    color: var(--pa-color-white);
-    border-color: var(--pa-color-success);
-
-    &:hover {
-      background-color: var(--pa-color-success-light-3);
-    }
+    @include button-type(--pa-color-success, --pa-color-success-light-3, --pa-color-success-light-9);
   }
 
   &.default {
@@ -161,13 +134,11 @@
   }
 }
 
-.pa-button.use-line.disabled {
-  &:hover {
-    cursor: not-allowed;
-    color: var(--pa-color-info-light-1) !important;
-    border-color: var(--pa-color-border);
-    box-shadow: none;
-  }
+.pa-button.use-line.disabled:hover {
+  cursor: not-allowed;
+  color: var(--pa-color-info-light-1) !important;
+  border-color: var(--pa-color-border);
+  box-shadow: none;
 }
 
 .pa-button.use-line {

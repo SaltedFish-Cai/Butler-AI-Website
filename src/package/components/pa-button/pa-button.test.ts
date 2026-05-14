@@ -103,11 +103,10 @@ describe("pa-button 组件测试", () => {
       expect(wrapper.find("button").text()).toContain("Submit");
     });
 
-    it("无 text 无 slot 时不渲染文本区", async () => {
+    it("无 text 无 slot 时文本区不渲染", async () => {
       const wrapper = await mountButton({ useFont: false });
-      // hasContent = false → pa-button_text div 为空
-      const textDiv = wrapper.find(".pa-button_text");
-      expect(textDiv.text()).toBe("");
+      // hasContent = false → pa-button_text div 不存在
+      expect(wrapper.find(".pa-button_text").exists()).toBe(false);
     });
   });
 

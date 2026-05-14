@@ -3,14 +3,12 @@
     <slot name="icon">
       <pa-icon v-if="showLeftIcon" :name="currentIconName" :class="hasContent ? 'mr-btn pa-button_icon' : ''" />
     </slot>
-    <div class="pa-button_text">
-      <template v-if="hasContent">
-        <slot>
-          <template v-if="text">{{ displayText }}</template>
-        </slot>
-      </template>
+    <div v-if="hasContent" class="pa-button_text">
+      <slot>
+        <template v-if="text">{{ displayText }}</template>
+      </slot>
     </div>
-    <pa-icon v-if="iconPosition === 'right' && useFont" :name="currentIconName" class="pa-button_ml pa-button_icon" />
+    <pa-icon v-if="showRightIcon" :name="currentIconName" class="pa-button_ml pa-button_icon" />
   </button>
 </template>
 
@@ -113,6 +111,7 @@ const PancakeGlobalConfig = inject<PancakeGlobalConfigType>("PancakeGlobalConfig
  * @description 获取当前语言标识，如 zh-CN 或 en-US
  */
 const languageValue = computed(() => PancakeGlobalConfig?.language?.value || "zh-CN");
+
 /**
  * 显示文本
  * @type {ReturnType<typeof computed>}
@@ -156,6 +155,7 @@ const currentType = computed(() => {
 const showLeftIcon = computed(
   () => props.iconPosition === "left" && !props.loading && !isLoading.value && props.useFont && !!currentIconName.value
 );
+const showRightIcon = computed(() => props.iconPosition === "right" && props.useFont && !!currentIconName.value);
 /**
  * 按钮类名
  * @type {ReturnType<typeof computed>}
