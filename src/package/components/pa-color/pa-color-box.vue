@@ -111,12 +111,6 @@ const alpha = ref(1);
  */
 const hexInput = ref("");
 /**
- * 透明度输入值
- * @type number
- * @description 透明度输入框的值
- */
-const alphaInput = ref(1);
-/**
  * 色相颜色
  * @returns string HSL 颜色字符串
  */
@@ -126,8 +120,13 @@ const hueColor = computed(() => `hsl(${hue.value}, 100%, 50%)`);
  * @returns string RGB 颜色字符串
  */
 const currentColorWithoutAlpha = computed(() => {
-  const color = hexToRgb(String(currentColor.value));
-  return color ? `rgb(${color.r}, ${color.g}, ${color.b})` : currentColor.value;
+  const c = currentColor.value || "";
+  // 从 rgba() 或 rgb() 中提取 RGB 部分
+  const match = c.match(/^rgba?\s*\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)/i);
+  if (match) return `rgb(${match[1]}, ${match[2]}, ${match[3]})`;
+  // hex 颜色直接返回
+  const rgb = hexToRgb(c);
+  return rgb ? `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})` : c;
 });
 /**
  * 颜色区域 DOM 引用
@@ -158,7 +157,6 @@ function parseColor(color: string): boolean {
       const g = parseInt(match[2]);
       const b = parseInt(match[3]);
       alpha.value = parseFloat(match[4]);
-      alphaInput.value = alpha.value;
       const hsv = rgbToHsv(r, g, b);
       hue.value = hsv.h;
       saturation.value = hsv.s;
@@ -200,7 +198,6 @@ function updateColorFromHsv() {
   if (props.useAlpha) color = `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${alpha.value})`;
   currentColor.value = color;
   hexInput.value = color;
-  alphaInput.value = alpha.value;
   emit("update:modelValue", color);
   emit("change", color);
 }
@@ -294,7 +291,6 @@ function handleAlphaAreaMouseMove(e: MouseEvent) {
   const rect = target.getBoundingClientRect();
   const x = Math.max(0, Math.min(e.clientX - rect.left, rect.width));
   alpha.value = parseFloat((1 - x / rect.width).toFixed(2));
-  alphaInput.value = alpha.value;
   updateColorFromHsv();
 }
 
@@ -333,7 +329,7 @@ function selectPresetColor(color: string) {
 onMounted(() => {
   currentColor.value = props.modelValue;
   hexInput.value = String(props.modelValue);
-  alphaInput.value = 1;
+  alpha.value = 1;
   parseColor(String(props.modelValue));
 });
 

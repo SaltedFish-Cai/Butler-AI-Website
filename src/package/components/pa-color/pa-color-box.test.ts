@@ -539,12 +539,6 @@ describe("pa-color-box 组件测试", () => {
       const vm = wrapper.vm as any;
       expect(vm.hexInput).toBe("#00ff00");
     });
-
-    it("alphaInput 初始化为 1", async () => {
-      const wrapper = await mountColorBox({ modelValue: "#ff0000" });
-      const vm = wrapper.vm as any;
-      expect(vm.alphaInput).toBe(1);
-    });
   });
 
   // ==================== 边界条件测试 ====================
@@ -588,7 +582,6 @@ describe("15. 透明度区域鼠标操作测试", () => {
     vm.handleAlphaAreaMouseMove(mockEvent);
     // x=100, width=200 => alpha = 1 - 100/200 = 0.5
     expect(vm.alpha).toBe(0.5);
-    expect(vm.alphaInput).toBe(0.5);
   });
 
   it("handleAlphaAreaMouseMove alphaAreaRef 为 null 时提前返回", async () => {

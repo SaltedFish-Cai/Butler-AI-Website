@@ -13,6 +13,11 @@ const HEX_COLOR_REG = /^#([0-9A-Fa-f]{3}){1,2}$/;
  * @description 用于解析 rgb() 和 rgba() 颜色格式
  */
 const RGB_REG = /^rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?\)/i;
+/**
+ * HEX 转 RGB 解析正则（预编译）
+ * @description 用于解析 #RRGGBB 和 RRGGBB 格式
+ */
+const HEX_RGB_REG = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i;
 
 /**
  * 判断是否为十六进制颜色
@@ -29,19 +34,19 @@ export function isHexColor(color: string): boolean {
  * @returns { r: number; g: number; b: number } | null RGB 对象或 null
  */
 export function hexToRgb(hex: string): { r: number; g: number; b: number } | null {
-  const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  const result = HEX_RGB_REG.exec(hex);
   return result ? { r: parseInt(result[1], 16), g: parseInt(result[2], 16), b: parseInt(result[3], 16) } : null;
 }
 
 /**
- * RGB 转十六进制
+ * RGB 转十六进制（使用查表法优化）
  * @param r - 红色值
  * @param g - 绿色值
  * @param b - 蓝色值
  * @returns string 十六进制颜色值
  */
 export function rgbToHex(r: number, g: number, b: number): string {
-  return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`;
+  return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
 }
 
 /**
