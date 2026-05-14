@@ -55,18 +55,18 @@ describe("pa-overlay 组件测试", () => {
   describe("2. v-model 双向绑定", () => {
     it("modelValue=true 时 state.visible 为 true", async () => {
       const wrapper = await mountOverlay({ modelValue: true });
-      expect(wrapper.vm.state.visible).toBe(true);
+      expect(wrapper.vm.visible).toBe(true);
     });
 
     it("modelValue=false 时 state.visible 为 false", async () => {
       const wrapper = await mountOverlay({ modelValue: false });
-      expect(wrapper.vm.state.visible).toBe(false);
+      expect(wrapper.vm.visible).toBe(false);
     });
 
     it("modelValue 变化时 state.visible 同步更新", async () => {
       const wrapper = await mountOverlay({ modelValue: false });
       await wrapper.setProps({ modelValue: true });
-      expect(wrapper.vm.state.visible).toBe(true);
+      expect(wrapper.vm.visible).toBe(true);
     });
   });
 
@@ -137,11 +137,11 @@ describe("pa-overlay 组件测试", () => {
     it("v-show 控制显示隐藏", async () => {
       const wrapper1 = await mountOverlay({ modelValue: true });
       // visible=true 时 state.visible 为 true
-      expect(wrapper1.vm.state.visible).toBe(true);
+      expect(wrapper1.vm.visible).toBe(true);
 
       const wrapper2 = await mountOverlay({ modelValue: false });
-      // visible=false 时 state.visible 为 false
-      expect(wrapper2.vm.state.visible).toBe(false);
+      // visible=false 时 visible 为 false
+      expect(wrapper2.vm.visible).toBe(false);
     });
   });
 });

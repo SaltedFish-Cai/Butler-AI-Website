@@ -72,7 +72,7 @@ class MessageManagerTypeImpl implements MessageManagerType {
     return instance;
   }
 
-  close(id: string, forceClose?: boolean): void {
+  close(id: string): void {
     const index = this.Messages.findIndex(Message => Message.id === id);
     if (index !== -1) {
       const instance = this.Messages[index];
@@ -80,17 +80,18 @@ class MessageManagerTypeImpl implements MessageManagerType {
         instance.vm.$el.parentNode.removeChild(instance.vm.$el);
       }
       instance.vm.$.appContext.app.unmount();
-      if (!forceClose) {
-        this.Messages.splice(index, 1);
-        this.repositionMessages();
-      }
+      this.Messages.splice(index, 1);
+      this.repositionMessages();
       document.getElementById(`m-message-container-${id}`)?.remove();
     }
   }
 
   closeAll(): void {
     this.Messages.forEach(instance => {
-      instance.vm.$el.__vnode.ctx.exposed.close();
+      const closeFn = (instance.vm as any)?.close;
+      if (closeFn) {
+        closeFn();
+      }
     });
   }
 

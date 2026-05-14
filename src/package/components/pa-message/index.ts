@@ -28,7 +28,7 @@ export function Message(options: MessageOptions | string): MessageInstance {
  * @returns MessageInstance 消息实例
  * @description 显示成功类型的消息提示
  */
-Message.success = (options: MessageOptions | string): MessageInstance => {
+Message.success = function (options: MessageOptions | string): MessageInstance {
   if (typeof options === "string") {
     return Message({ message: options, type: "success" });
   }
@@ -40,7 +40,7 @@ Message.success = (options: MessageOptions | string): MessageInstance => {
  * @returns MessageInstance 消息实例
  * @description 显示警告类型的消息提示
  */
-Message.warning = (options: MessageOptions | string): MessageInstance => {
+Message.warning = function (options: MessageOptions | string): MessageInstance {
   if (typeof options === "string") {
     return Message({ message: options, type: "warning" });
   }
@@ -52,7 +52,7 @@ Message.warning = (options: MessageOptions | string): MessageInstance => {
  * @returns MessageInstance 消息实例
  * @description 显示危险类型的消息提示
  */
-Message.danger = (options: MessageOptions | string): MessageInstance => {
+Message.danger = function (options: MessageOptions | string): MessageInstance {
   if (typeof options === "string") {
     return Message({ message: options, type: "danger" });
   }
@@ -64,7 +64,7 @@ Message.danger = (options: MessageOptions | string): MessageInstance => {
  * @returns MessageInstance 消息实例
  * @description 显示信息类型的消息提示
  */
-Message.info = (options: MessageOptions | string): MessageInstance => {
+Message.info = function (options: MessageOptions | string): MessageInstance {
   if (typeof options === "string") {
     return Message({ message: options, type: "info" });
   }
@@ -74,7 +74,7 @@ Message.info = (options: MessageOptions | string): MessageInstance => {
  * 关闭所有消息
  * @description 关闭所有当前显示的消息
  */
-Message.closeAll = (): void => {
+Message.closeAll = function (): void {
   MessageManager.closeAll();
 };
 export default Message;

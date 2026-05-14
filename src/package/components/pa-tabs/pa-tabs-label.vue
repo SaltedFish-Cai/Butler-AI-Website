@@ -55,14 +55,16 @@ const languageValue = computed(() => {
  * @description 根据当前语言设置返回标签文本，支持字符串和语言对象两种格式
  */
 function setLabel(label: Record<string, string> | string): string | undefined {
-  if (typeof label !== "string") return (label as Record<string, string>)?.[languageValue.value];
-  try {
-    const jsonStr = label.replace(/'/g, '"');
-    return JSON.parse(jsonStr)[languageValue.value];
-  } catch (err) {
-    console.error("多语言文本转对象失败:", err);
-    return label;
+  if (typeof label === "object") return label?.[languageValue.value];
+  if (label.includes("'") || label.includes('"')) {
+    try {
+      const jsonStr = label.replace(/'/g, '"');
+      return JSON.parse(jsonStr)[languageValue.value];
+    } catch {
+      return label;
+    }
   }
+  return label;
 }
 /**
  * 渲染标签列组件
@@ -104,5 +106,3 @@ const RenderTableColumn = (slots: any): JSX.Element => {
   );
 };
 </script>
-
-<style lang="scss"></style>

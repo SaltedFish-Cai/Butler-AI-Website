@@ -1,7 +1,7 @@
 <template>
   <teleport :to="teleportTo || 'body'">
     <transition name="mo-dialog-overlay-fade">
-      <div v-show="state.visible" class="pa-overlay" :class="props.class" :style="{ ...props.style, zIndex: zIndex }">
+      <div v-show="visible" class="pa-overlay" :class="props.class" :style="{ ...props.style, zIndex: zIndex }">
         <div class="pa-overlay-content" :style="{ opacity: useBlock ? 1 : 0 }" @click="handleOverlayClick" />
         <slot />
       </div>
@@ -9,20 +9,17 @@
   </teleport>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 /**
  * 模块导入
  * @description 导入 Vue 响应式 API
  */
-import { ref, reactive, watch, inject } from "vue";
+import { ref, watch, inject } from "vue";
 /**
  * 模块导入
  * @description 导入组件类型定义
  */
 import type { ComponentProps, ComponentEmits } from "./types";
-</script>
-
-<script lang="ts" setup>
 /**
  * 组件属性定义
  * @description 定义组件的 props
@@ -46,24 +43,22 @@ const getPaAnagerGlobalZIndex = inject("getPaAnagerGlobalZIndex") as () => numbe
  */
 const zIndex = ref(getPaAnagerGlobalZIndex());
 /**
- * 组件状态
+ * 遮罩层可见状态
  * @description 遮罩层的可见状态
  */
-const state = reactive({
-  visible: false
-});
+const visible = ref(false);
 /**
  * 关闭遮罩层
- * @description 触发关闭事件，更新 modelValue
  * @returns void
+ * @description 触发关闭事件更新 modelValue
  */
 function closeMenu(): void {
   emits("update:modelValue", false);
 }
 /**
  * 点击遮罩层回调
- * @description 点击遮罩层时关闭并触发点击事件
  * @returns void
+ * @description 点击遮罩层时关闭并触发点击事件
  */
 function handleOverlayClick(): void {
   closeMenu();
@@ -76,12 +71,12 @@ function handleOverlayClick(): void {
 defineExpose({ closeMenu });
 /**
  * 监听 modelValue 变化
- * @description 同步 modelValue 到组件内部状态
+ * @description 同步 modelValue 到组件内部 visible 状态
  */
 watch(
   () => props.modelValue,
   value => {
-    state.visible = value;
+    visible.value = value;
   },
   { immediate: true }
 );

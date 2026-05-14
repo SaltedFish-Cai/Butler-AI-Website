@@ -33,7 +33,7 @@ import { createApp, h } from "vue";
  * 模块导入
  * @description 导入消息框组件
  */
-import MessageBox from "./pa-message-box.vue";
+import MessageBoxVue from "./pa-message-box.vue";
 /**
  * 模块导入
  * @description 导入消息框相关类型
@@ -50,11 +50,11 @@ class MessageBoxManagerImpl implements MessageBoxManager {
    */
   notifications: Array<MessageBoxInstance> = [];
   /**
-   * 添加消息框
-   * @param options - 消息框配置
-   * @returns MessageBoxInstance 消息框实例
-   * @description 创建并显示一条新消息框
+   * 基础层级
+   * @description 消息框的基础 z-index 值
    */
+  zIndex = 2050;
+
   add(options: MessageBoxOptions): MessageBoxInstance {
     const id = generateId();
     const languageKey = getLanguageKey();
@@ -68,7 +68,7 @@ class MessageBoxManagerImpl implements MessageBoxManager {
           : options.confirmButtonText?.[languageKey] || "",
       cancelButtonText:
         typeof options.cancelButtonText === "string" ? options.cancelButtonText : options.cancelButtonText?.[languageKey] || "",
-      zIndex: options.zIndex,
+      zIndex: options.zIndex || this.zIndex++,
       position: "center"
     };
     const container = document.createElement("div");
@@ -76,7 +76,7 @@ class MessageBoxManagerImpl implements MessageBoxManager {
     document.body.appendChild(container);
     const app = createApp({
       render: () =>
-        h(MessageBox, {
+        h(MessageBoxVue, {
           id,
           options: mergedOptions
         })
@@ -100,12 +100,7 @@ class MessageBoxManagerImpl implements MessageBoxManager {
     window.addEventListener("notification-closed", handleClose as EventListener);
     return instance;
   }
-  /**
-   * 关闭消息框
-   * @param id - 消息框ID
-   * @param forceClose - 是否强制关闭
-   * @description 关闭指定ID的消息框
-   */
+
   close(id: string, forceClose: boolean = false): void {
     const index = this.notifications.findIndex(notification => notification.id === id);
     if (index !== -1) {
@@ -120,13 +115,13 @@ class MessageBoxManagerImpl implements MessageBoxManager {
       document.getElementById(`m-message-box-container-${id}`)?.remove();
     }
   }
-  /**
-   * 关闭所有消息框
-   * @description 关闭所有当前显示的消息框
-   */
+
   closeAll(): void {
     this.notifications.forEach(instance => {
-      instance.vm.$.exposed?.close();
+      const closeFn = (instance.vm as any)?.close;
+      if (closeFn) {
+        closeFn();
+      }
     });
   }
 }

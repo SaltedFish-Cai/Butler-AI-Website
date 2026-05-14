@@ -123,7 +123,7 @@ const ScrollbarRef = ref<any>();
 const init = ref(false);
 /**
  * 懒加载定时器 ID
- * @type {number | undefined}
+ * @type {ReturnType<typeof setTimeout> | undefined}
  * @description 用于清理懒加载定时器
  */
 let lazyTimer: ReturnType<typeof setTimeout> | undefined;
@@ -162,22 +162,11 @@ defineExpose({
   ScrollbarRef: ScrollbarRef
 });
 /**
- * 监听 name 变化
- * @description 标签名变化时重新初始化标题数据
+ * 监听 name 和 label 变化
+ * @description 标签名或标签内容变化时重新初始化标题数据
  */
 watch(
-  () => props.name,
-  () => {
-    initTitle();
-  },
-  { immediate: true }
-);
-/**
- * 监听 label 变化
- * @description 标签内容变化时重新初始化标题数据
- */
-watch(
-  () => props.label,
+  [() => props.name, () => props.label],
   () => {
     initTitle();
   },

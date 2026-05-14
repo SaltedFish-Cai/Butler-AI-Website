@@ -13,19 +13,16 @@ import MNotification from "./pa-notification.vue";
  * @description 导入通知相关类型
  */
 import type { NotificationOptions, NotificationInstance, NotificationManager } from "./types.d.ts";
-
 /**
  * 基础偏移量
  * @description 通知距离边缘的初始偏移量（像素）
  */
 const BASE_OFFSET = 20;
-
 /**
  * 通知间距
  * @description 相邻通知之间的间距（像素）
  */
 const NOTIFICATION_GAP = 16;
-
 /**
  * 通知管理器实现类
  * @description 通知管理器的具体实现
@@ -36,19 +33,12 @@ class NotificationManagerImpl implements NotificationManager {
    * @description 当前显示的所有通知实例
    */
   notifications: Array<NotificationInstance> = [];
-
   /**
    * 基础层级
    * @description 通知的基础 z-index 值
    */
   zIndex = 2050;
 
-  /**
-   * 添加通知
-   * @param options - 通知配置
-   * @returns NotificationInstance 通知实例
-   * @description 创建并显示一条新通知
-   */
   add(options: NotificationOptions): NotificationInstance {
     const id = `notification_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
     const mergedOptions = {
@@ -77,20 +67,14 @@ class NotificationManagerImpl implements NotificationManager {
     };
     this.notifications.unshift(instance);
 
-    /**
-     * 关闭事件处理
-     * @param event - 通知关闭事件
-     */
-    function handleClose(event: CustomEvent) {
+    const handleClose = (event: CustomEvent) => {
       if (event.detail.id === id) {
         if (typeof window !== "undefined") {
           window.removeEventListener("notification-closed", handleClose as EventListener);
         }
-        self.close(id);
+        this.close(id);
       }
-    }
-
-    const self = this;
+    };
     if (typeof window !== "undefined") {
       window.addEventListener("notification-closed", handleClose as EventListener);
     }
@@ -100,12 +84,6 @@ class NotificationManagerImpl implements NotificationManager {
     return instance;
   }
 
-  /**
-   * 关闭通知
-   * @param id - 通知ID
-   * @param forceClose - 是否强制关闭
-   * @description 关闭指定ID的通知
-   */
   close(id: string, forceClose: boolean = false): void {
     const index = this.notifications.findIndex(notification => notification.id === id);
     if (index !== -1) {
@@ -122,24 +100,19 @@ class NotificationManagerImpl implements NotificationManager {
     }
   }
 
-  /**
-   * 关闭所有通知
-   * @description 关闭所有当前显示的通知
-   */
   closeAll(): void {
     this.notifications.forEach(instance => {
-      instance.vm.$el.__vnode.ctx.exposed.close();
+      const closeFn = (instance.vm as any)?.close;
+      if (closeFn) {
+        closeFn();
+      }
     });
   }
 
-  /**
-   * 获取偏移量
-   * @param position - 位置参数
-   * @returns number 计算得出的偏移量
-   * @description 计算新通知的偏移量
-   */
   getOffset(position: string): number {
-    const samePositionNotifications = this.notifications.filter(notification => notification.options.position === position);
+    const samePositionNotifications = this.notifications.filter(
+      notification => notification.options.position === position
+    );
     if (this.notifications.length === 1 || samePositionNotifications.length === 0) {
       return BASE_OFFSET;
     }
@@ -153,12 +126,6 @@ class NotificationManagerImpl implements NotificationManager {
     return lastOffset + lastHeight + NOTIFICATION_GAP;
   }
 
-  /**
-   * 设置偏移量
-   * @param id - 通知ID
-   * @param offset - 偏移量
-   * @description 设置指定通知的偏移量
-   */
   setOffset(id: string, offset: number): void {
     const instance = this.notifications.find(notification => notification.id === id);
     if (instance && instance.vm.$el) {
@@ -166,10 +133,6 @@ class NotificationManagerImpl implements NotificationManager {
     }
   }
 
-  /**
-   * 重新定位通知
-   * @description 重新计算所有通知的位置
-   */
   private repositionNotifications(): void {
     const notificationsByPosition: Record<string, Array<NotificationInstance>> = {};
     this.notifications.forEach(notification => {
@@ -192,7 +155,6 @@ class NotificationManagerImpl implements NotificationManager {
     });
   }
 }
-
 /**
  * 通知管理器实例
  * @description 导出的通知管理器单例

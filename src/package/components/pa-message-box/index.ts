@@ -9,16 +9,6 @@ import type { MessageBoxOptions, MessageBoxInstance } from "./types";
  */
 import { messageBoxManager } from "./message-box-manager";
 /**
- * 模块导入
- * @description 导入 z-index 管理工具
- */
-import { useZIndex } from "element-plus";
-/**
- * 模块级变量
- * @description 全局 Z 索引获取函数
- */
-const { nextZIndex } = useZIndex();
-/**
  * 模块级常量
  * @description confirm 方法的基础配置
  */
@@ -41,14 +31,6 @@ const DELETE_BASE_OPTIONS = {
   cancelButtonText: { "en-US": "Cancel", "zh-CN": "取消" }
 };
 /**
- * 模块级函数
- * @description 获取全局 Z 索引
- * @returns z-index 值
- */
-function getZIndex(): number {
-  return nextZIndex() || window.globalZIndex++;
-}
-/**
  * 消息框函数
  * @param options - 消息框配置或字符串消息
  * @returns 消息框实例
@@ -57,14 +39,10 @@ function getZIndex(): number {
 export function MessageBox(options: MessageBoxOptions | string): MessageBoxInstance {
   if (typeof options === "string") {
     return messageBoxManager.add({
-      message: options,
-      zIndex: getZIndex()
+      message: options
     });
   }
-  return messageBoxManager.add({
-    ...options,
-    zIndex: getZIndex()
-  });
+  return messageBoxManager.add(options);
 }
 /**
  * 确认方法
@@ -73,7 +51,7 @@ export function MessageBox(options: MessageBoxOptions | string): MessageBoxInsta
  * @returns 消息框实例
  * @description 显示确认消息框
  */
-MessageBox.confirm = (options: MessageBoxOptions | string, onConfirm?: () => void): MessageBoxInstance => {
+MessageBox.confirm = function (options: MessageBoxOptions | string, onConfirm?: () => void): MessageBoxInstance {
   if (typeof options === "string") {
     return MessageBox({ ...CONFIRM_BASE_OPTIONS, message: options, onConfirm, isType: "confirm" });
   }
@@ -85,7 +63,7 @@ MessageBox.confirm = (options: MessageBoxOptions | string, onConfirm?: () => voi
  * @returns 消息框实例
  * @description 显示删除确认消息框
  */
-MessageBox.delete = (options: MessageBoxOptions | string): MessageBoxInstance => {
+MessageBox.delete = function (options: MessageBoxOptions | string): MessageBoxInstance {
   if (typeof options === "string") {
     return MessageBox({ ...DELETE_BASE_OPTIONS, message: options, isType: "confirm" });
   }

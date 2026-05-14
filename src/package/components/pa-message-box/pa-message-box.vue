@@ -1,5 +1,5 @@
 <template>
-  <transition name="mo-animation-fadeIn" @after-enter="handleAfterEnter" @after-leave="handleAfterLeave">
+  <transition name="mo-animation-fadeIn" @after-leave="handleAfterLeave">
     <div v-if="visible" class="pa-message-box__overlay" :style="overlayStyles">
       <div class="pa-message-box__overlay_mo" :style="overlayStyles" @click="handleClose"></div>
       <transition name="mo-animation-fadeIn">
@@ -7,7 +7,7 @@
           v-show="visible"
           :id="id"
           :class="['pa-message-box', type ? `${type}` : '', customClass]"
-          :style="boxStyles"
+          :style="overlayStyles"
           role="alert"
         >
           <div class="pa-message-box_header mb-size">
@@ -101,17 +101,12 @@ function getLanguageKey(): string {
  * 语言键
  * @description 当前语言键值
  */
-const languageKey = getLanguageKey();
+const language = getLanguageKey();
 /**
  * 语言包
  * @description 当前语言的消息文本
  */
-const languagePackage = languageMap[languageKey]?.message || languageMap["zh-CN"]?.message;
-/**
- * 当前语言
- * @description 获取全局配置的语言设置
- */
-const language = languageKey;
+const languagePackage = languageMap[language]?.message || languageMap["zh-CN"]?.message;
 /**
  * 解构选项
  * @description 从 props.options 中解构配置项
@@ -138,33 +133,15 @@ const {
  */
 const visible = ref(false);
 /**
- * 定时器
- * @description 自动关闭的定时器引用
- */
-const timer = ref<number | null>(null);
-/**
  * overlay 样式
- * @description 计算遮罩层的样式对象
+ * @description 计算遮罩层和消息框的 z-index 样式
  */
 const overlayStyles = computed(() => ({ zIndex }));
 /**
- * 消息框样式
- * @description 计算消息框的样式对象
- */
-const boxStyles = computed(() => ({ zIndex }));
-/**
  * ESC 键映射表
- * @description 获取全局 ESC 键映射表
+ * @description 获取全局 ESC 键映射表的引用
  */
 const escapeMap = typeof window !== "undefined" ? window.PancakeGlobalConfig?.escapeMap || [] : [];
-/**
- * 进入后处理
- * @returns void
- * @description 动画进入后的回调
- */
-const handleAfterEnter = (): void => {
-  // 动画完成后的处理
-};
 /**
  * 离开后处理
  * @returns void
@@ -184,7 +161,6 @@ const handleAfterLeave = (): void => {
 const handleClick = (): void => {
   onConfirm?.();
   visible.value = false;
-  clearTimeout(timer.value!);
 };
 /**
  * 关闭处理
@@ -194,7 +170,6 @@ const handleClick = (): void => {
 const handleClose = (): void => {
   onClose?.();
   visible.value = false;
-  clearTimeout(timer.value!);
 };
 /**
  * ESC键处理
@@ -216,18 +191,24 @@ onMounted(() => {
     visible.value = true;
   }, 10);
   if (!window.PancakeGlobalConfig.escapeMap) window.PancakeGlobalConfig.escapeMap = [];
-  closeOnPressEscape && document.addEventListener("keydown", handleKeyDown);
   if (closeOnPressEscape) {
+    document.addEventListener("keydown", handleKeyDown);
     window.PancakeGlobalConfig.escapeMap.push(props.id);
   }
 });
 /**
  * 组件卸载
- * @description 清理定时器和事件监听
+ * @description 清理事件监听
  */
 onBeforeUnmount(() => {
-  clearTimeout(timer.value!);
-  closeOnPressEscape && document.removeEventListener("keydown", handleKeyDown);
+  if (closeOnPressEscape) {
+    document.removeEventListener("keydown", handleKeyDown);
+    const map = window.PancakeGlobalConfig?.escapeMap;
+    if (map) {
+      const idx = map.indexOf(props.id);
+      if (idx !== -1) map.splice(idx, 1);
+    }
+  }
 });
 /**
  * 暴露方法

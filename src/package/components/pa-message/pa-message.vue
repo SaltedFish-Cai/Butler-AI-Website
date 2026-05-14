@@ -11,7 +11,7 @@
       <div class="pa-message_header">
         <div class="flex-center-start">
           <pa-icon class="pa-message__icon mr-size" name="warning_line"></pa-icon>
-          <div v-if="dangerouslyUseHTMLString" class="pa-message__content" v-html="dangerouslyUseHTMLString ? message : ''"></div>
+          <div v-if="dangerouslyUseHTMLString" class="pa-message__content" v-html="message"></div>
           <div v-else class="pa-message__content">{{ typeof message === "string" ? message : message?.[language] }}</div>
         </div>
         <pa-icon class="pa-message__closeBtn" @click="handleClose" name="close_line"></pa-icon>
@@ -36,14 +36,23 @@ import type { MessageOptions } from "./types.d.ts";
  * @description 导入图标组件
  */
 import PaIcon from "../pa-icon/pa-icon.vue";
-
-const language = computed(() => (typeof window !== "undefined" && window.PancakeGlobalConfig?.language) || "zh-CN");
-
+/**
+ * 当前语言
+ * @description 获取全局配置的语言设置
+ */
+const language = (typeof window !== "undefined" && window.PancakeGlobalConfig?.language) || "zh-CN";
+/**
+ * 组件属性
+ * @description 组件的 props 定义
+ */
 const props = defineProps<{
   id: string;
   options: MessageOptions;
 }>();
-
+/**
+ * 解构选项
+ * @description 从 props.options 中解构配置项
+ */
 const {
   message,
   type,
@@ -56,57 +65,99 @@ const {
   zIndex = 2050,
   closeOnPressEscape = true
 } = props.options;
-
+/**
+ * 可见状态
+ * @description 控制消息的显示与隐藏
+ */
 const visible = ref(false);
-const timer = ref<number | null>(null);
+/**
+ * 定时器
+ * @description 自动关闭的定时器引用
+ */
+const timer = ref<ReturnType<typeof setTimeout> | null>(null);
+/**
+ * 垂直偏移
+ * @description 消息距离顶部的偏移量
+ */
 const verticalOffset = ref(offset);
-
+/**
+ * ESC 映射表
+ * @description 获取全局 ESC 键映射表的引用
+ */
+const escapeMap = typeof window !== "undefined" ? window.PancakeGlobalConfig?.escapeMap : undefined;
+/**
+ * 计算样式
+ * @description 计算消息的样式对象
+ */
 const styles = computed(() => ({
   zIndex,
   top: `${verticalOffset.value}px`
 }));
-
-const escapeMap = computed(() => (typeof window !== "undefined" && window.PancakeGlobalConfig.escapeMap) || []);
-
-const handleAfterEnter = () => {
+/**
+ * 进入后处理
+ * @returns void
+ * @description 动画进入后启动自动关闭定时器
+ */
+const handleAfterEnter = (): void => {
   if (duration > 0) {
-    timer.value = window.setTimeout(() => {
+    timer.value = setTimeout(() => {
       if (visible.value) {
         handleClose();
       }
     }, duration);
   }
 };
-
-const handleAfterLeave = () => {
+/**
+ * 离开后处理
+ * @returns void
+ * @description 动画离开后触发关闭事件
+ */
+const handleAfterLeave = (): void => {
   const event = new CustomEvent("Message-closed", {
     detail: { id: props.id }
   });
   window.dispatchEvent(event);
 };
-
-const handleClick = () => {
+/**
+ * 点击处理
+ * @returns void
+ * @description 点击消息时触发回调
+ */
+const handleClick = (): void => {
   if (onClick) {
     onClick();
   }
 };
-
-const handleClose = () => {
+/**
+ * 关闭处理
+ * @returns void
+ * @description 关闭消息并触发回调
+ */
+const handleClose = (): void => {
   visible.value = false;
   if (timer.value) {
     clearTimeout(timer.value);
+    timer.value = null;
   }
   if (onClose) {
     onClose();
   }
 };
-
+/**
+ * ESC键处理
+ * @param e - 键盘事件
+ * @returns void
+ * @description 监听 ESC 键关闭当前消息
+ */
 function handleKeyDown(e: KeyboardEvent): void {
-  if (e.key === "Escape" && escapeMap.value[escapeMap.value.length - 1] === props.id) {
+  if (e.key === "Escape" && escapeMap && escapeMap[escapeMap.length - 1] === props.id) {
     handleClose();
   }
 }
-
+/**
+ * 组件挂载
+ * @description 初始化消息显示和事件监听
+ */
 onMounted(() => {
   setTimeout(() => {
     visible.value = true;
@@ -117,10 +168,14 @@ onMounted(() => {
     window.PancakeGlobalConfig.escapeMap.push(props.id);
   }
 });
-
+/**
+ * 组件卸载前
+ * @description 清理定时器和事件监听
+ */
 onBeforeUnmount(() => {
   if (timer.value) {
     clearTimeout(timer.value);
+    timer.value = null;
   }
   if (closeOnPressEscape) {
     document.removeEventListener("keydown", handleKeyDown);
@@ -131,7 +186,10 @@ onBeforeUnmount(() => {
     }
   }
 });
-
+/**
+ * 暴露方法
+ * @description 暴露给父组件的方法
+ */
 defineExpose({
   close: handleClose,
   setOffset: (offset: number) => {

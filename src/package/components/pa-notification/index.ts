@@ -13,7 +13,6 @@ import type { NotificationOptions, NotificationInstance } from "./types.d.ts";
  * @description 导入通知管理器
  */
 import { notificationManager } from "./notification-manager";
-
 /**
  * 通知函数
  * @param options - 通知配置或消息内容
@@ -28,7 +27,6 @@ export function Notification(options: NotificationOptions | string): Notificatio
   }
   return notificationManager.add(options);
 }
-
 /**
  * 成功通知
  * @param options - 通知配置或消息内容
@@ -41,7 +39,6 @@ Notification.success = function (options: NotificationOptions | string): Notific
   }
   return Notification({ ...options, type: "success" });
 };
-
 /**
  * 警告通知
  * @param options - 通知配置或消息内容
@@ -54,7 +51,6 @@ Notification.warning = function (options: NotificationOptions | string): Notific
   }
   return Notification({ ...options, type: "warning" });
 };
-
 /**
  * 危险通知
  * @param options - 通知配置或消息内容
@@ -67,7 +63,6 @@ Notification.danger = function (options: NotificationOptions | string): Notifica
   }
   return Notification({ ...options, type: "danger" });
 };
-
 /**
  * 信息通知
  * @param options - 通知配置或消息内容
@@ -80,7 +75,6 @@ Notification.info = function (options: NotificationOptions | string): Notificati
   }
   return Notification({ ...options, type: "info" });
 };
-
 /**
  * 关闭所有通知
  * @description 关闭所有当前显示的通知
@@ -88,16 +82,12 @@ Notification.info = function (options: NotificationOptions | string): Notificati
 Notification.closeAll = function (): void {
   notificationManager.closeAll();
 };
-
 /**
  * 安装插件
  * @param app - Vue 应用实例
  * @description 将通知组件安装为 Vue 插件
  */
-function install(app: App) {
+Notification.install = function (app: App): void {
   app.config.globalProperties.$notification = Notification;
-}
-
-Notification.install = install;
-
+};
 export default Notification;

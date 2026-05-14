@@ -10,10 +10,7 @@
     ref="tabsRef"
   >
     <div :class="['pa-tabs-content', mode === 'portrait' || mode === 'slider' ? 'flex' : 'flex-col']">
-      <div
-        :class="['pa-tabs-header', useHeaderLine ? 'pa-tabs-header_line' : '']"
-        :style="{ '--tab-header-over-width': overFixWidth + 'px' }"
-      >
+      <div :class="['pa-tabs-header', useHeaderLine ? 'pa-tabs-header_line' : '']">
         <div v-if="$slots['HeaderLeft']" style="margin-right: calc(var(--pa-size-padding, 10px) / 2)">
           <slot name="HeaderLeft"></slot>
         </div>
@@ -167,12 +164,6 @@ const tabsTitleRef = ref<HTMLElement>();
  */
 const slots = ref<any>({});
 /**
- * 溢出固定宽度
- * @type {Ref<number>}
- * @description 标签页标题溢出时的固定宽度
- */
-const overFixWidth = ref(0);
-/**
  * 默认插槽
  * @type {ReturnType<typeof useSlots>['default']}
  * @description 获取默认插槽内容
@@ -290,6 +281,12 @@ let lastWheelTime = 0;
  */
 let wheelDelta = 0;
 /**
+ * 防抖定时器 ID
+ * @type {ReturnType<typeof setTimeout> | undefined}
+ * @description 用于清理 setLabelPosition 中的防抖定时器
+ */
+let labelPositionTimer: ReturnType<typeof setTimeout> | undefined;
+/**
  * 滚动容器引用
  * @type {Ref<any>}
  * @description 滚动容器的 DOM 引用
@@ -307,41 +304,6 @@ provide("initTitle", () => {
   _debounceTitle();
 });
 /**
- * 组件挂载生命周期
- * @description 初始化组件状态
- */
-onMounted(() => {
-  createSlotData();
-  const defaultValue = props.modelValue;
-  observer?.disconnect && observer?.disconnect();
-  nextTick(() => {
-    watchDom();
-    if (props.mode === "slider") {
-      changeTabs(defaultValue as string, 0);
-    }
-  });
-});
-/**
- * 防抖定时器 ID
- * @type {number | undefined}
- * @description 用于清理 setLabelPosition 中的防抖定时器
- */
-let labelPositionTimer: ReturnType<typeof setTimeout> | undefined;
-/**
- * 组件卸载生命周期
- * @description 清理观察器和事件监听
- */
-onUnmounted(() => {
-  observer?.disconnect && observer?.disconnect();
-  const tabsTitleElement = tabsTitleRef.value;
-  if (tabsTitleElement) {
-    tabsTitleElement.removeEventListener("wheel", handleWheel);
-  }
-  if (labelPositionTimer) {
-    clearTimeout(labelPositionTimer);
-  }
-});
-/**
  * 变更 Tab
  * @param name - 标签页标识
  * @param index - 标签页索引
@@ -349,7 +311,7 @@ onUnmounted(() => {
  * @returns void
  * @description 切换当前激活的标签页
  */
-function changeTabs(name: string, index: number, scrollToIntersect = true) {
+function changeTabs(name: string, index: number, scrollToIntersect = true): void {
   slotIndex.value = index;
   activeName.value = name;
   emit("update:modelValue", name);
@@ -359,13 +321,14 @@ function changeTabs(name: string, index: number, scrollToIntersect = true) {
     if (targetEl) mScrollRef.value?.setScrollToIntersect(targetEl);
   }
   setTabItemPosition();
+  setLabelPosition();
 }
 /**
  * 更新 Tab 按钮位置
  * @returns void
  * @description 计算并更新当前激活标签的位置
  */
-function setTabItemPosition() {
+function setTabItemPosition(): void {
   nextTick(() => {
     const targetEl = document.querySelector(`#${tabsId.value} .pa-tabs-title_action_${tabsId.value}`);
     const parentElement = document.querySelector(`#${tabsId.value} #pa-tabs-box_${tabsId.value}`);
@@ -389,7 +352,7 @@ function setTabItemPosition() {
  * @returns void
  * @description 解析插槽内容生成标签页数据
  */
-function createSlotData(Mandatory = false) {
+function createSlotData(Mandatory = false): void {
   if (tabsRef.value) {
     if (defaultSlot) {
       slots.value = defaultSlot();
@@ -401,7 +364,7 @@ function createSlotData(Mandatory = false) {
      * @returns void
      * @description 递归解析插槽中的子组件
      */
-    function setChild(arrayData: any[]) {
+    function setChild(arrayData: any[]): void {
       for (let index = 0; index < arrayData.length; index++) {
         const element = arrayData[index];
         if (element.props) {
@@ -441,7 +404,7 @@ function createSlotData(Mandatory = false) {
  * @returns void
  * @description 使用 MutationObserver 监听 DOM 变化
  */
-function watchDom() {
+function watchDom(): void {
   if (tabsRef.value) {
     const config = { childList: true, subtree: true };
     observer = new MutationObserver(() => createSlotData());
@@ -453,7 +416,7 @@ function watchDom() {
  * @returns void
  * @description 计算并更新标签标题区域的滚动信息
  */
-function setTabsBoxSize() {
+function setTabsBoxSize(): void {
   if (!inBrowser) return;
   nextTick(() => {
     const tabId = tabsRef?.value?.id;
@@ -477,7 +440,7 @@ function setTabsBoxSize() {
  * @returns void
  * @description 当标签页滚动到可见区域时切换标签
  */
-function handleIntersecting(el: HTMLElement) {
+function handleIntersecting(el: HTMLElement): void {
   const name = el?.dataset?.name;
   if (name) {
     changeTabs(
@@ -492,7 +455,7 @@ function handleIntersecting(el: HTMLElement) {
  * @returns void
  * @description 标题区域向左或向上滚动
  */
-function minusScroll() {
+function minusScroll(): void {
   const chr = headerScroll.value - 50;
   headerScroll.value = chr <= 0 ? 0 : chr;
   headerScrollEnd.value = false;
@@ -502,7 +465,7 @@ function minusScroll() {
  * @returns void
  * @description 标题区域向右或向下滚动
  */
-function addScroll() {
+function addScroll(): void {
   if (props.mode == "portrait" || props.mode == "slider") {
     const { scrollHeight, clientHeight } = tabsTitle;
     const chr = headerScroll.value + 50;
@@ -530,7 +493,7 @@ function addScroll() {
  * @returns void
  * @description 添加滚轮事件监听
  */
-function handleMouseEnter() {
+function handleMouseEnter(): void {
   const tabsTitleElement = tabsTitleRef.value;
   if (tabsTitleElement) {
     tabsTitleElement.addEventListener("wheel", handleWheel, { passive: false });
@@ -541,7 +504,7 @@ function handleMouseEnter() {
  * @returns void
  * @description 移除滚轮事件监听
  */
-function handleMouseLeave() {
+function handleMouseLeave(): void {
   const tabsTitleElement = tabsTitleRef.value;
   if (tabsTitleElement) {
     tabsTitleElement.removeEventListener("wheel", handleWheel);
@@ -552,7 +515,7 @@ function handleMouseLeave() {
  * @returns void
  * @description 计算并设置激活标签的左侧位置和宽度
  */
-function setLabelPosition() {
+function setLabelPosition(): void {
   if (props.styleMode != "border-card") return;
   if (labelPositionTimer) {
     clearTimeout(labelPositionTimer);
@@ -571,18 +534,14 @@ function setLabelPosition() {
  * 处理滚轮事件
  * @param event - 滚轮事件对象
  * @returns void
- * @description 监听鼠标滚轮事件，控制标签页滚动切换
+ * @description 监听鼠标滚轮事件控制标签页滚动切换
  */
-const handleWheel = (event: WheelEvent) => {
+function handleWheel(event: WheelEvent): void {
   event.preventDefault();
   const now = Date.now();
   wheelDelta += Math.abs(event.deltaY);
-  if (wheelDelta < 25) {
-    return;
-  }
-  if (now - lastWheelTime < 50) {
-    return;
-  }
+  if (wheelDelta < 25) return;
+  if (now - lastWheelTime < 50) return;
   wheelDelta = 0;
   lastWheelTime = now;
   if (event.deltaY < 0) {
@@ -590,11 +549,40 @@ const handleWheel = (event: WheelEvent) => {
   } else {
     addScroll();
   }
-};
+}
+/**
+ * 组件挂载生命周期
+ * @description 初始化组件状态
+ */
+onMounted(() => {
+  createSlotData();
+  const defaultValue = props.modelValue;
+  observer?.disconnect();
+  nextTick(() => {
+    watchDom();
+    if (props.mode === "slider") {
+      changeTabs(defaultValue as string, 0);
+    }
+  });
+});
+/**
+ * 组件卸载生命周期
+ * @description 清理观察器和事件监听
+ */
+onUnmounted(() => {
+  observer?.disconnect();
+  const tabsTitleElement = tabsTitleRef.value;
+  if (tabsTitleElement) {
+    tabsTitleElement.removeEventListener("wheel", handleWheel);
+  }
+  if (labelPositionTimer) {
+    clearTimeout(labelPositionTimer);
+  }
+});
 /**
  * 监听 modelValue 变化
  * @param data - | undefined 当前 modelValue 值
- * @description 同步激活标签页状态
+ * @description 同步激活标签页状态和标签位置
  */
 watch(
   () => props.modelValue,
@@ -609,14 +597,6 @@ watch(
     });
   },
   { immediate: true }
-);
-/**
- * 监听 activeName 变化
- * @description 更新标签位置
- */
-watch(
-  () => activeName.value,
-  () => setLabelPosition()
 );
 defineExpose({
   el: tabsRef
