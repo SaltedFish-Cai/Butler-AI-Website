@@ -1,22 +1,21 @@
 <template>
-  <div class="pa-tag" ref="tagRef" :class="[useCollapse ? 'pa-tag-collapse' : '', props.class]" :style="mergedStyle">
+  <div class="pa-tag" ref="tagRef" :class="[props.useCollapse ? 'pa-tag-collapse' : '', props.class]" :style="mergedStyle">
     <div class="pa-tag-text" v-for="item in inValue" :key="String(item.value)">
       <div class="pa-tag-text_content">
         {{ getLabel(item.label) }}
       </div>
-      <pa-icon v-if="!props.disabled" name="close_circle_line" class="pa-tag-text_close" @click="e => removeTag(e, item)">
-      </pa-icon>
+      <pa-icon v-if="!props.disabled" name="close_circle_line" class="pa-tag-text_close" @click.stop="removeTag(item)"> </pa-icon>
     </div>
     <pa-popover ref="popoverRef" v-if="hideValue.length" :popoverWidth="popoverWidth" stopPropagation>
       <template #reference>
-        <div class="pa-tag-text" style="width: initial">+{{ hideValue.length }}</div>
+        <div class="pa-tag-text pa-tag-collapse-count">+{{ hideValue.length }}</div>
       </template>
       <div class="pa-tag">
         <div class="pa-tag-text" v-for="item in hideValue" :key="String(item.value)">
           <div class="pa-tag-text_content">
             {{ getLabel(item.label) }}
           </div>
-          <pa-icon v-if="!disabled" name="close_circle_line" class="pa-tag-text_close" @click="e => removeTag(e, item)">
+          <pa-icon v-if="!props.disabled" name="close_circle_line" class="pa-tag-text_close" @click.stop="removeTag(item)">
           </pa-icon>
         </div>
       </div>
@@ -62,7 +61,7 @@ const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<Pan
 /**
  * 当前语言
  * @type ComputedRef<string>
- * @description 当前语言标识
+ * @description 当前语言标识，在 getLabel 中使用
  */
 const language = computed(() => PancakeGlobalConfig.value?.language?.value || DEFAULT_LANGUAGE);
 /**
@@ -72,25 +71,19 @@ const language = computed(() => PancakeGlobalConfig.value?.language?.value || DE
  */
 const props = withDefaults(defineProps<ComponentProps>(), { useCollapse: true });
 /**
- * 是否折叠模式
- * @type ComputedRef<boolean>
- * @description 判断是否使用折叠模式
+ * 组件事件定义
+ * @description 定义组件可触发的事件
  */
-const useCollapse = computed(() => props.useCollapse);
+const emits = defineEmits<ComponentEmits>();
 /**
  * 合并样式
  * @type ComputedRef<Record<string, string | number>>
- * @description 合并后的组件样式
+ * @description 合并后的组件样式（减少计算开销：直接引用 isOpacity 和 props.style）
  */
 const mergedStyle = computed(() => {
   const base = props.style || {};
   return { ...base, opacity: isOpacity.value };
 });
-/**
- * 组件事件定义
- * @description 定义组件可触发的事件
- */
-const emits = defineEmits<ComponentEmits>();
 /**
  * 弹窗组件引用
  * @type ReturnType<typeof ref>
@@ -128,6 +121,7 @@ const isOpacity = ref(0);
  * @description 根据语言环境获取标签显示文本
  */
 function getLabel(label: TagType["label"]): string {
+  // 直接读取 language.value 以保持响应性
   if (typeof label === "object") {
     return label[language.value] || label[DEFAULT_LANGUAGE];
   }
@@ -135,12 +129,10 @@ function getLabel(label: TagType["label"]): string {
 }
 /**
  * 移除标签
- * @param e - 点击事件
  * @param data - 标签数据
- * @description 触发 removeTag 事件
+ * @description 触发 removeTag 事件（已通过 @click.stop 处理冒泡）
  */
-function removeTag(e: Event, data: TagType) {
-  e.stopPropagation();
+function removeTag(data: TagType) {
   emits("removeTag", data);
 }
 /**

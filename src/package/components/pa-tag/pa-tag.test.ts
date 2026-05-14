@@ -179,12 +179,11 @@ describe("pa-tag 组件测试", () => {
       await nextTick();
       const closeIcon = wrapper.find(".pa-tag-text_close");
       if (closeIcon.exists()) {
-        const stopPropagationSpy = vi.fn();
-        const event = { stopPropagation: stopPropagationSpy } as unknown as MouseEvent;
-        // 直接通过 vm 调用验证逻辑
+        // @click.stop 已在模板中绑定，验证 removeTag 事件带正确的数据
         const vm = wrapper.vm as any;
-        vm.removeTag(event, testTagList[0]);
-        expect(stopPropagationSpy).toHaveBeenCalled();
+        vm.removeTag(testTagList[0]);
+        expect(wrapper.emitted("removeTag")).toBeTruthy();
+        expect(wrapper.emitted("removeTag")![0][0]).toEqual(testTagList[0]);
       }
     });
   });
