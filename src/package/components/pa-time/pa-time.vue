@@ -104,7 +104,7 @@
  * 模块导入
  * @description 导入 Vue 组合式 API
  */
-import { ref, Ref, computed, watch, inject, ComputedRef } from "vue";
+import { ref, computed, watch, inject, type Ref, type ComputedRef } from "vue";
 
 /**
  * 模块导入
@@ -137,19 +137,19 @@ import { convertValue, isValidDate } from "./utils";
 import { PancakeGlobalConfigType } from "../pa-manager/types";
 
 /**
- * 深拷贝工具函数
+ * 模块导入
  * @description 导入深拷贝工具函数
  */
 import cloneDeep from "../tools/clone-deep";
 
 /**
- * 空值判断工具函数
+ * 模块导入
  * @description 导入空值判断工具函数
  */
 import isNil from "../tools/is-nil";
 
 /**
- * 相等判断工具函数
+ * 模块导入
  * @description 导入相等判断工具函数
  */
 import isEqual from "../tools/is-equal";
@@ -177,6 +177,13 @@ const YEAR_MAP: Record<string, number> = {
   "month-picker-group": 1,
   "month-picker": 1
 };
+
+/**
+ * 全局配置注入
+ * @type ComputedRef<PancakeGlobalConfigType>
+ * @description 注入全局配置对象
+ */
+const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 
 /**
  * 组件属性
@@ -233,27 +240,23 @@ const inputRef = ref();
 /**
  * 内部值
  * @type Ref<Array<string> | string | null>
- * @description 组件内部的绑定值
+ * @description 组件内部的绑定值，供面板使用
  */
 const internalValue: Ref<Array<string> | string | null> = ref(isRange.value ? [] : null);
 
 /**
- * 全局配置注入
- * @type ComputedRef<PancakeGlobalConfigType>
- * @description 注入全局配置对象
+ * 显示值
+ * @type Ref<Array<string> | string>
+ * @description 输入框显示的值
  */
-const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
+const inValue = ref<Array<string> | string>([]);
 
 /**
- * 输入框占位符
- * @type ComputedRef<string>
- * @description 输入框的占位符文本
+ * 旧值存储
+ * @type Array<string> | string
+ * @description 存储上一次的值，用于对比
  */
-const inputPlaceholder = computed(() => {
-  return typeof props.placeholder === "object"
-    ? props.placeholder[languageValue.value] || languagePackage.value[`selectPlaceholder`]
-    : props.placeholder || languagePackage.value[`selectPlaceholder`];
-});
+let oldValue: Array<string> | string = "";
 
 /**
  * 当前语言值
@@ -263,6 +266,7 @@ const inputPlaceholder = computed(() => {
 const languageValue = computed(() => {
   return PancakeGlobalConfig.value?.language?.value || "zh-CN";
 });
+
 /**
  * 语言包
  * @type ComputedRef
@@ -275,18 +279,15 @@ const languagePackage = computed(() => {
 });
 
 /**
- * 显示值
- * @type Ref<Array<string> | string>
- * @description 输入框显示的值
+ * 输入框占位符
+ * @type ComputedRef<string>
+ * @description 输入框的占位符文本
  */
-const inValue = ref<Array<string> | string>(props.modelValue || []);
-
-/**
- * 旧值存储
- * @type Array<string> | string
- * @description 存储上一次的值，用于对比
- */
-let oldValue: Array<string> | string = props.modelValue || "";
+const inputPlaceholder = computed(() => {
+  return typeof props.placeholder === "object"
+    ? props.placeholder[languageValue.value] || languagePackage.value[`selectPlaceholder`]
+    : props.placeholder || languagePackage.value[`selectPlaceholder`];
+});
 
 /**
  * 处理输入事件

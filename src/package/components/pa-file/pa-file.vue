@@ -116,32 +116,27 @@
  * 模块导入
  * @description Vue 响应式 API 导入
  */
-import { ref, computed, ComputedRef, watch, inject } from "vue";
-
+import { ref, computed, watch, inject, type ComputedRef } from "vue";
 /**
  * 模块导入
  * @description 文件组件类型定义导入
  */
 import { ComponentProps, FileDataType, ComponentEmits } from "./types";
-
 /**
  * 模块导入
  * @description Ajax 上传函数导入
  */
 import { ajaxUpload } from "./ajax";
-
 /**
  * 模块导入
  * @description 消息提示和对话框组件导入
  */
 import { M_Message, M_MessageBox } from "../feedback";
-
 /**
  * 模块导入
  * @description 全局配置类型导入
  */
 import { PancakeGlobalConfigType } from "../pa-manager/types";
-
 /**
  * 模块导入
  * @description 公共工具函数导入
@@ -151,67 +146,59 @@ import isNil from "../tools/is-nil";
 import debounce from "../tools/debounce";
 
 /**
+ * 全局配置注入
+ * @type ComputedRef<PancakeGlobalConfigType>
+ * @description 从父组件注入的全局配置信息
+ */
+const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
+/**
  * 组件属性定义
  * @type ComponentProps
  * @description 定义 PaFile 组件的接收属性
  */
 const props = withDefaults(defineProps<ComponentProps>(), {});
-
-/**
- * 组件内部值
- * @type Ref<Array<FileDataType> | undefined>
- * @description 组件内部维护的文件列表数据
- */
-const inValue = ref<Array<FileDataType> | undefined>(props.modelValue);
-
-/**
- * 旧值备份
- * @type Array<FileDataType> | undefined
- * @description 用于记录上一次的绑定值，支持变更事件回传
- */
-let oldValue: Array<FileDataType> | undefined = props.modelValue;
-
 /**
  * 组件事件定义
  * @type ComponentEmits
  * @description 定义 PaFile 组件可触发的事件
  */
 const emits = defineEmits<ComponentEmits>();
-
+/**
+ * 组件内部值
+ * @type Ref<Array<FileDataType> | undefined>
+ * @description 组件内部维护的文件列表数据
+ */
+const inValue = ref<Array<FileDataType> | undefined>();
 /**
  * 上传组件引用
  * @type Ref<unknown>
  * @description 引用子组件 PaUpload
  */
 const uploadRef = ref<unknown>();
-
 /**
  * 上传加载状态
  * @type Ref<boolean>
  * @description 标记当前是否正在上传文件
  */
 const loading = ref<boolean>(false);
-
+/**
+ * 旧值备份
+ * @type Array<FileDataType> | undefined
+ * @description 用于记录上一次的绑定值，支持变更事件回传
+ */
+let oldValue: Array<FileDataType> | undefined;
 /**
  * 待上传文件列表
  * @type Array<{ name: string; size: number }>
  * @description 缓存待上传的文件信息
  */
 const uploadFilesList: Array<File> = [];
-
 /**
  * Ajax 请求文件列表
  * @type Array<Record<string, string>>
  * @description 缓存用于 Ajax 请求的文件数据
  */
 const ajaxFileList: Array<Record<string, string>> = [];
-
-/**
- * 全局配置注入
- * @type ComputedRef<PancakeGlobalConfigType>
- * @description 从父组件注入的全局配置信息
- */
-const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 /**
  * 当前语言值
  * @type ComputedRef<string>
@@ -270,7 +257,6 @@ const languagePackage = computed(() => {
         downloadTemplate: "Template"
       };
 });
-
 /**
  * 计算占位符文本
  * @type ComputedRef<string>
@@ -283,7 +269,6 @@ const computedPlaceholder: ComputedRef<string> = computed(() => {
     ? props.placeholder[language] || languagePackage.value[`uploadText`]
     : props.placeholder || languagePackage.value[`uploadText`];
 });
-
 /**
  * 上传配置数据
  * @type ComputedRef<{ headerData: Record<string, unknown>; fileApi: unknown; apiBaseUrl: string }>
@@ -295,7 +280,6 @@ const fileConfigData = computed(() => {
   const apiBaseUrl = PancakeGlobalConfig.value?.baseHost;
   return { headerData, fileApi, apiBaseUrl };
 });
-
 /**
  * 文件上传数量限制
  * @type ComputedRef<number | undefined>
@@ -304,7 +288,6 @@ const fileConfigData = computed(() => {
 const fileMultiple = computed(() => {
   return props.fileMultiple;
 });
-
 /**
  * 允许的文件类型
  * @type ComputedRef<string>
@@ -316,7 +299,6 @@ const accept = computed(() => {
   if (fileIncludeType && Array.isArray(fileIncludeType)) accept = fileIncludeType.join(",");
   return accept?.toLowerCase() || "";
 });
-
 /**
  * 允许的文件类型文本
  * @type ComputedRef<Array<string>>
@@ -328,7 +310,6 @@ const acceptText = computed(() => {
   if (fileIncludeType && Array.isArray(fileIncludeType)) accept = fileIncludeText || fileIncludeType;
   return accept || [];
 });
-
 /**
  * 排除的文件类型
  * @type ComputedRef<string>
@@ -340,7 +321,6 @@ const excludeType = computed(() => {
   if (fileExcludeType && Array.isArray(fileExcludeType)) exType = fileExcludeType.join(",");
   return exType?.toLowerCase() || "";
 });
-
 /**
  * 排除的文件类型文本
  * @type ComputedRef<string>
@@ -352,7 +332,6 @@ const excludeText = computed(() => {
   if (fileExcludeType && Array.isArray(fileExcludeType)) exType = fileExcludeText || fileExcludeType;
   return exType || [];
 });
-
 /**
  * 请求头配置
  * @type ComputedRef<Record<string, unknown>>
@@ -377,7 +356,6 @@ function changeEvent(value: Array<FileDataType> | undefined): void {
   emits("change", { value: value ?? [], oldValue: oldValue ?? [] });
   emits("update:modelValue", value ?? []);
 }
-
 /**
  * 上传成功处理函数
  * @param response - 服务器响应数据
@@ -423,7 +401,6 @@ const handleSuccess = (response: string | { Code: Number; Data: Array<FileDataTy
     loading.value = false;
   }
 };
-
 /**
  * 上传失败处理函数
  * @description 处理文件上传失败的情况，清空文件列表并显示错误信息
@@ -435,7 +412,6 @@ const handleError = (): void => {
   M_Message.danger({ message: `${languagePackage.value["upFail"]}(02)` });
   loading.value = false;
 };
-
 /**
  * 文件选择处理函数
  * @param event - 文件选择事件对象
@@ -448,7 +424,6 @@ const handleFileChange = (event: Event): void => {
   fetchUpload();
   (event.target as HTMLInputElement).value = "";
 };
-
 /**
  * 上传前校验函数
  * @param fileList - 待校验的文件列表
@@ -503,7 +478,6 @@ const beforeUpload = (fileList: Array<{ name: string; size: number }>): boolean 
     return true;
   }
 };
-
 /**
  * 触发上传请求
  * @description 使用防抖封装上传逻辑，避免频繁触发请求
@@ -520,7 +494,6 @@ const fetchUpload = debounce((): void => {
     actionRequest(uploadFilesList.map(item => ({ filename: item.name, file: item })));
   }
 }, 300);
-
 /**
  * 发起 Ajax 上传请求
  * @param ajaxFileList - 待上传文件列表
@@ -547,7 +520,6 @@ function actionRequest(ajaxFileList: Array<{ filename: string; file: File }>): v
 
   ajaxUpload(ajaxOptions);
 }
-
 /**
  * 清空所有文件
  * @description 弹出确认框，用户确认后清空已上传的文件列表
@@ -562,7 +534,6 @@ const cleanFiles = (): void =>
       if (inValue.value) inValue.value.length = 0;
     }
   });
-
 /**
  * 删除指定文件
  * @param index - 要删除的文件索引
@@ -572,7 +543,6 @@ const removeFile = (index: number): void => {
   inValue.value?.splice(index, 1);
   changeEvent(inValue.value);
 };
-
 /**
  * 比较数据是否相等
  * @param data - 当前数据
@@ -610,7 +580,6 @@ watch(
   },
   { immediate: true, deep: true }
 );
-
 /**
  * 监听 loading 状态变化
  * @param data - 加载状态
