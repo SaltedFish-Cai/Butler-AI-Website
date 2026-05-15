@@ -64,7 +64,7 @@ import { M_MessageBox } from "../feedback";
  * **模块导入**
  * @description 导入图标组件
  */
-import paIcon from "../pa-icon/pa-icon.vue";
+import PaIcon from "../pa-icon/pa-icon.vue";
 /**
  * **模块导入**
  * @description 导入全局配置类型定义
