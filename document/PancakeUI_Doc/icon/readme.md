@@ -39,14 +39,6 @@
 | fontFamily | 字体名称   | [`IconFontFamily`](#iconfontfamily)                                                   | `pa-iconfont` |
 | fontColor  | 字体颜色   | `Array<string>`                                                                       | -             |
 
-## ComponentEmits
-
-| 事件名     | 描述               | 回调函数                      |
-| ---------- | ------------------ | ----------------------------- |
-| click      | 点击 Icon 执行方法 | `(event: MouseEvent) => void` |
-| mouseenter | 鼠标进入 Icon 事件 | `(event: MouseEvent) => void` |
-| mouseleave | 鼠标离开 Icon 事件 | `(event: MouseEvent) => void` |
-
 ## IconFontFamily
 
 | 值                  | 描述              |
