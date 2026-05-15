@@ -1,29 +1,32 @@
 /**
- * @description vue 响应式相关导入
+ * 模块导入
+ * @description 导入 Vue 响应式 API
  */
 import { computed, ref } from "vue";
 /**
- * @description ComponentProps 和 PaTableUseType 类型导入
+ * 模块导入
+ * @description 导入组件类型定义
  */
 import { ComponentProps, PaTableUseType } from "../types";
 /**
- * @description 深拷贝工具函数
+ * 模块导入
+ * @description 导入深拷贝工具函数
  */
 import cloneDeep from "../../tools/clone-deep";
 /**
- * @description 选择变化状态类型
+ * 选择变化状态类型
  */
-type selectChangeStateType = {
+type SelectChangeStateType = {
   row: PaTableUseType.PaTableInDataType;
   status?: boolean;
   parentRow?: PaTableUseType.PaTableInDataType;
 };
 /**
- * @description useSelectHooks 选择钩子
- * @param props 组件属性
- * @param state 表格状态
- * @param emits 事件发射器
- * @param getTableList 获取表格数据方法
+ * useSelectHooks 选择钩子
+ * @param props - 组件属性
+ * @param state - 表格状态
+ * @param emits - 事件发射器
+ * @param getTableList - 获取表格数据方法
  * @returns 选择相关方法和状态
  */
 export const useSelectHooks = (
@@ -32,67 +35,76 @@ export const useSelectHooks = (
   emits: any,
   getTableList: () => void
 ) => {
+  const isBrowser = typeof window !== "undefined";
   /**
+   * 全选状态
+   * @type Ref<boolean>
    * @description 是否全选状态
    */
   const isTableSelectAll = ref<boolean>(false);
   /**
+   * 上次选中索引
+   * @type Ref<number>
    * @description 上次选中索引
    */
   const lastSelectedIndex = ref<number>(-1);
   /**
+   * 上次选中索引状态
+   * @type Ref<boolean>
    * @description 上次选中索引状态
    */
   const lastSelectedIndexStatus = ref<boolean>(true);
   /**
+   * 上次选中是否子项
+   * @type Ref<number>
    * @description 上次选中是否子项
    */
   const lastSelectIsChildren = ref<number>(-1);
   /**
+   * Shift 键状态
+   * @type Ref<boolean>
    * @description Shift 键是否按下
    */
   const isShiftPressed = ref<boolean>(false);
   /**
+   * 选中行数
+   * @type ComputedRef<number>
    * @description 选中行数计算属性
    */
   const selectedRowsLength = computed(() => {
-    let selectedArr;
     if (props.useChildren) {
-      selectedArr = state.selectTableData.reduce((acc, cur) => acc + (cur.children?.length || 0), 0);
-    } else {
-      selectedArr = Object.keys(state.selectTableData).length;
+      return state.selectTableData.reduce((acc, cur) => acc + (cur.children?.length || 0), 0);
     }
-    return selectedArr;
+    return Object.keys(state.selectTableData).length;
   });
   /**
-   * @description 键盘按下处理
-   * @param event 键盘事件
+   * 键盘按下处理
+   * @param event - 键盘事件
+   * @description 监听 Shift 键按下
    */
   const handleKeyDown = (event: KeyboardEvent) => {
-    if (event.key === "Shift") {
-      isShiftPressed.value = true;
-    }
+    if (event.key === "Shift") isShiftPressed.value = true;
   };
   /**
-   * @description 键盘释放处理
-   * @param event 键盘事件
+   * 键盘释放处理
+   * @param event - 键盘事件
+   * @description 监听 Shift 键抬起
    */
   const handleKeyUp = (event: KeyboardEvent) => {
-    if (event.key === "Shift") {
-      isShiftPressed.value = false;
-    }
+    if (event.key === "Shift") isShiftPressed.value = false;
   };
-  if (typeof window !== "undefined" && props.useSelect) {
-    typeof window !== "undefined" && window.developLog.log(`添加监听——键盘事件`, props.id, "success");
-    if (typeof window !== "undefined") window.addEventListener("keydown", handleKeyDown);
-    if (typeof window !== "undefined") window.addEventListener("keyup", handleKeyUp);
+  if (isBrowser && props.useSelect) {
+    isBrowser && window.developLog.log(`添加监听——键盘事件`, props.id, "success");
+    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("keyup", handleKeyUp);
   }
   /**
-   * @description 选择行处理
-   * @param row 行数据
-   * @param parentRow 父行数据
+   * 选择行处理
+   * @param row - 行数据
+   * @param parentRow - 父行数据
+   * @description 处理行选择变化，支持 Shift 多选
    */
-  function handleSelectChange({ row, parentRow }: selectChangeStateType) {
+  function handleSelectChange({ row, parentRow }: SelectChangeStateType) {
     if (!props.rowKey) return;
     const rowIndex = Number(row.parentRenderIndex) || Number(row.renderIndex);
     if (isShiftPressed.value && lastSelectedIndex.value !== -1) {
@@ -159,14 +171,14 @@ export const useSelectHooks = (
     }
   }
   /**
-   * @description 处理单个选择变化
-   * @param row 行数据
-   * @param parentRow 父行数据
-   * @param status 选中状态
+   * 处理单个选择变化
+   * @param row - 行数据
+   * @param parentRow - 父行数据
+   * @param status - 选中状态
+   * @description 切换单行选中状态并同步子行和父行状态
    */
-  function handleSingeSelectChange({ row, parentRow, status }: selectChangeStateType) {
+  function handleSingeSelectChange({ row, parentRow, status }: SelectChangeStateType) {
     if (!props.rowKey) return;
-    const rowIndex = row.parentRenderIndex || row.renderIndex;
     if (props.useRadio) {
       state.tableData.map((arrItem: any) => {
         arrItem.map((item: any) => {
@@ -191,6 +203,7 @@ export const useSelectHooks = (
       parentRow.isSelected = selectChildren?.length == parentRow.children?.length;
     }
     if (typeof status != "boolean") {
+      const rowIndex = row.parentRenderIndex || row.renderIndex;
       lastSelectedIndex.value = rowIndex - 1 || 0;
       lastSelectIsChildren.value = row.renderIndex;
       lastSelectedIndexStatus.value = row.isSelected;
@@ -200,8 +213,9 @@ export const useSelectHooks = (
     else if (props.useRadio) emits("radioRowBack", { row, isSelected: row.isSelected, parentRow });
   }
   /**
-   * @description 处理选择状态映射
-   * @param row 行数据
+   * 处理选择状态映射
+   * @param row - 行数据
+   * @description 同步选中状态到 selectTableData 列表
    */
   function handleSelectStatusMap({ row }: { row: PaTableUseType.PaTableInDataType }) {
     const _row = cloneDeep(row);
@@ -213,10 +227,7 @@ export const useSelectHooks = (
           _row.children = _row.children?.filter((child: any) => child.isSelected);
           state.selectTableData.splice(index, 1, _row);
         } else {
-          state.selectTableData.push({
-            ..._row,
-            children: _row.children?.filter((child: any) => child.isSelected)
-          });
+          state.selectTableData.push({ ..._row, children: _row.children?.filter((child: any) => child.isSelected) });
         }
       } else if (!isSelected && index >= 0) {
         state.selectTableData.splice(index, 1);
@@ -231,7 +242,8 @@ export const useSelectHooks = (
     }
   }
   /**
-   * @description 处理全选状态变化
+   * 处理全选状态变化
+   * @description 切换全选状态并触发事件
    */
   function handleSelectAllStatus() {
     isTableSelectAll.value = !isTableSelectAll.value;
@@ -244,28 +256,31 @@ export const useSelectHooks = (
     emits("selectRowAllBack", { isSelected: isTableSelectAll.value });
   }
   /**
-   * @description 设置选中数据
-   * @param dataKeys 数据键列表
+   * 设置选中数据
+   * @param dataKeys - 数据键列表
+   * @description 设置外部传入的选中数据键并重新请求
    */
   function setSelectedData(dataKeys: Record<string, any>[]) {
     state.awaitSelectData = dataKeys;
     getTableList();
   }
   /**
-   * @description 获取选中数据
+   * 获取选中数据
    * @returns 选中的数据列表
+   * @description 获取表格当前选中的所有数据
    */
   function getSelectedData() {
     return [...state.awaitSelectData, ...state.selectTableData];
   }
   /**
-   * @description 清理函数
+   * 清理函数
+   * @description 移除键盘事件监听
    */
   const cleanup = () => {
-    typeof window !== "undefined" && window.developLog.log(`关闭监听——键盘事件`, props.id, "danger");
-    if (typeof window !== "undefined") {
-      if (typeof window !== "undefined") window.removeEventListener("keydown", handleKeyDown);
-      if (typeof window !== "undefined") window.removeEventListener("keyup", handleKeyUp);
+    if (isBrowser) {
+      window.developLog.log(`关闭监听——键盘事件`, props.id, "danger");
+      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("keyup", handleKeyUp);
     }
   };
   return {

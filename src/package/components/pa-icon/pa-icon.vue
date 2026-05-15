@@ -26,7 +26,7 @@
  * 模块导入
  * @description 导入 Vue 组合式 API
  */
-import { computed, inject, onMounted } from "vue";
+import { computed, inject, onMounted, ComputedRef } from "vue";
 /**
  * 模块导入
  * @description 导入组件类型定义
@@ -50,10 +50,10 @@ const props = withDefaults(defineProps<ComponentProps>(), { name: "magic_line", 
 const emit = defineEmits<ComponentEmits>();
 /**
  * 全局配置注入
- * @type {PancakeGlobalConfigType}
- * @description 从父组件注入的全局配置对象，包含语言设置等
+ * @type {ComputedRef<PancakeGlobalConfigType>}
+ * @description 从父组件注入的全局配置对象
  */
-const PancakeGlobalConfig = inject<PancakeGlobalConfigType>("PancakeGlobalConfig", {});
+const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 /**
  * butler-iconfont CSS 按需加载标记
  * @type {boolean}
@@ -96,14 +96,15 @@ const iconFontStyle = computed(() => {
  */
 const tipText = computed(() => {
   if (typeof props.tip === "string") return props.tip;
-  const languageValue = PancakeGlobalConfig?.language?.value || "zh-CN";
+  const languageValue = PancakeGlobalConfig.value?.language?.value || "zh-CN";
   return props.tip?.[languageValue] ?? "";
 });
 /**
  * 动态加载 butler-iconfont 字体 CSS
+ * @returns void
  * @description 仅在 fontFamily 为 butler-iconfont 时按需加载，减少初始包体积
  */
-function loadButlerFont() {
+function loadButlerFont(): void {
   if (butlerFontLoaded || props.fontFamily !== "butler-iconfont") return;
   butlerFontLoaded = true;
   const link = document.createElement("link");

@@ -103,7 +103,6 @@
                       :style="{ display: dragIng ? 'none' : '' }"
                       @mousedown="handleDragWidthStart($event, index)"
                     />
-                    <!-- <template v-else>{{ item.label }}</template> -->
                   </div>
                 </template>
               </template>
@@ -138,14 +137,8 @@
               '--scroll-body-height': scrollBodyHeight,
               '--scroll-body-width': scrollBodyWidth,
               '--body_content_col_hover_index': -1
-              // minHeight: useSummary
-              //   ? `calc(${scrollBodyHeight} - var(--pa-size-padding, 10px) * 2 - 4em)`
-              //   : `calc(${scrollBodyHeight} - var(--pa-size-padding, 10px) - 2em)`
             }"
           >
-            <!-- <div style="width: 3200px; height: 3200px; background-color: bisque">
-          cadcsadsccadcsadsccadcsadsccadcsadsccadcsadsccadcsadsccadcsadsccadcsadsccadcsadsc
-        </div> -->
             <template v-for="(item, index) in showTableList" :key="index">
               <div class="pa-table_body_content_rows" :style="{ opacity: state.flatTableData.length > 0 ? 1 : 0 }">
                 <template v-for="row in item" :key="row[rowKey]">
@@ -155,8 +148,7 @@
                     :class="{ 'm-scrollbar-more_ing': state.listenCellInViewIng }"
                     :id="`${id}-more-${row.name}`"
                   >
-                    <!-- PageNum:{{ state.PageNum }} ,type:{{ row.type }} ,index:{{ index }} {{ index > Number(state.PageNum) + 1 }}
-              {{ index < Number(state.PageNum) - 2 }} -->
+                    <!-- PageNum:{{ state.PageNum }} ,type:{{ row.type }} ,index:{{ index }} -->
                   </div>
                   <template
                     v-if="row.type != 'more' && index + 1 <= Number(state.PageNum) + 2 && index + 1 >= Number(state.PageNum) - 3"
@@ -164,10 +156,7 @@
                     <div
                       v-if="row.type == 'empty' || index > Number(state.PageNum) + 2 || index < Number(state.PageNum) - 3"
                       class="pa-table_body_content_cell_empty"
-                    >
-                      <!-- {{ index }} -->
-                      <!-- <loading1></loading1> -->
-                    </div>
+                    ></div>
 
                     <div
                       v-else
@@ -235,11 +224,7 @@
               </div>
             </template>
 
-            <template v-if="state.tableLoadStatus">
-              <!-- <div v-for="index in Array.from({ length: 10 })" :key="String(index)" class="pa-table_body_content_cell_empty">
-                <loading1></loading1>
-              </div> -->
-            </template>
+            <template v-if="state.tableLoadStatus"> </template>
           </div>
           <div
             v-if="!state.flatTableData.length && state.tableLoadEndStatus"
@@ -334,7 +319,7 @@
               :pageable="state.pageable"
               :pageNum="state.PageNum"
               :exPagination="exPagination"
-              :handle-size-change="(handleSizeChange as (val: number) => void)"
+              :handle-size-change="handleSizeChange"
               :handle-current-change="handleCurrentChange"
               :handleChangeMaxPage="value => (state.maxPage = value)"
             />
@@ -346,7 +331,10 @@
 </template>
 
 <script lang="ts" setup>
-// >-------------> 依赖 <------------<
+/**
+ * 模块导入
+ * @description 导入 Vue 核心响应式 API
+ */
 import {
   ref,
   Ref,
@@ -361,53 +349,169 @@ import {
   onMounted,
   ComputedRef
 } from "vue";
-
-import mLightTableCell from "./pa-table-cell.vue";
-// import loading1 from "./loading-1.vue";
-import headerItem from "./header-item.vue";
-// import Taro from "@tarojs/taro";
-
-import { ComponentItemProps, ComponentProps, ComponentUseItemProps, PaTableUseType } from "./types";
-import { isRowIndex } from "./hooks/isType";
-
-import Pagination from "./pagination.vue";
-import mTableV2Filter from "./pa-table-filter.vue";
-
-import { useSortHooks } from "./hooks/use-sort-hooks";
-import { useStateHooks } from "./hooks/use-state-hooks";
-import { useScrollHooks } from "./hooks/use-scroll-hooks";
-import { useSelectHooks } from "./hooks/use-select-hooks";
-import { useDragHooks } from "./hooks/use-drag-hooks";
-import { useValidateHooks } from "./hooks/use-validate-hooks";
-import { PancakeGlobalConfigType } from "../pa-manager/types";
-import { splitArray } from "../utils/arraySplit";
-
 /**
- * @description 深拷贝工具函数
+ * 模块导入
+ * @description 导入表格单元格子组件
+ */
+import mLightTableCell from "./pa-table-cell.vue";
+/**
+ * 模块导入
+ * @description 导入表头子组件
+ */
+import headerItem from "./header-item.vue";
+/**
+ * 模块导入
+ * @description 导入组件类型定义
+ */
+import { ComponentItemProps, ComponentProps, ComponentUseItemProps, PaTableUseType } from "./types";
+/**
+ * 模块导入
+ * @description 导入行索引判断工具
+ */
+import { isRowIndex } from "./hooks/isType";
+/**
+ * 模块导入
+ * @description 导入分页子组件
+ */
+import Pagination from "./pagination.vue";
+/**
+ * 模块导入
+ * @description 导入表格筛选子组件
+ */
+import mTableV2Filter from "./pa-table-filter.vue";
+/**
+ * 模块导入
+ * @description 导入排序钩子
+ */
+import { useSortHooks } from "./hooks/use-sort-hooks";
+/**
+ * 模块导入
+ * @description 导入状态钩子
+ */
+import { useStateHooks } from "./hooks/use-state-hooks";
+/**
+ * 模块导入
+ * @description 导入滚动钩子
+ */
+import { useScrollHooks } from "./hooks/use-scroll-hooks";
+/**
+ * 模块导入
+ * @description 导入选择钩子
+ */
+import { useSelectHooks } from "./hooks/use-select-hooks";
+/**
+ * 模块导入
+ * @description 导入拖拽钩子
+ */
+import { useDragHooks } from "./hooks/use-drag-hooks";
+/**
+ * 模块导入
+ * @description 导入校验钩子
+ */
+import { useValidateHooks } from "./hooks/use-validate-hooks";
+/**
+ * 模块导入
+ * @description 导入全局配置类型
+ */
+import { PancakeGlobalConfigType } from "../pa-manager/types";
+/**
+ * 模块导入
+ * @description 导入数组分割工具
+ */
+import { splitArray } from "../utils/arraySplit";
+/**
+ * 模块导入
+ * @description 导入深拷贝工具函数
  */
 import cloneDeep from "../tools/clone-deep";
 /**
- * @description 防抖工具函数
+ * 模块导入
+ * @description 导入防抖工具函数
  */
 import debounce from "../tools/debounce";
-
+/**
+ * 全局配置注入
+ * @type ComputedRef<PancakeGlobalConfigType>
+ * @description 注入全局配置对象
+ */
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
-
+/**
+ * 滚动列表引用
+ * @type Ref
+ * @description 表格主体滚动容器引用
+ */
 const mScrollbarListRef = useTemplateRef("mScrollbarListRef");
+/**
+ * 表头滚动列表引用
+ * @type Ref
+ * @description 表头滚动容器引用
+ */
 const mScrollbarHeaderListRef = ref();
+/**
+ * 筛选组件引用
+ * @type Ref
+ * @description 表格筛选组件引用
+ */
 const filterRef = useTemplateRef("filterRef");
+/**
+ * 滚动主体高度
+ * @type Ref<string>
+ * @description 滚动主体的高度
+ */
 const scrollBodyHeight = ref("0px");
+/**
+ * 滚动主体宽度
+ * @type Ref<string>
+ * @description 滚动主体的宽度
+ */
 const scrollBodyWidth = ref("0px");
+/**
+ * 主体内容高度
+ * @type Ref<number>
+ * @description 表格主体内容区域高度
+ */
 const bodyContentHeight = ref(0);
+/**
+ * 主体内容宽度
+ * @type Ref<number>
+ * @description 表格主体内容区域宽度
+ */
 const bodyContentWidth = ref(0);
+/**
+ * 底部高度
+ * @type Ref<string>
+ * @description 表格底部区域高度
+ */
 const footerHeight = ref("0px");
+/**
+ * 表头盒子引用
+ * @type Ref
+ * @description 表头容器 DOM 引用
+ */
 const headerBoxRef = ref();
+/**
+ * 内容引用
+ * @type Ref
+ * @description 表格内容区域 DOM 引用
+ */
 const contentRef = ref();
+/**
+ * 主体引用
+ * @type Ref
+ * @description 表格主体 DOM 引用
+ */
 const bodyRef = ref();
+/**
+ * 底部引用
+ * @type Ref
+ * @description 表格底部 DOM 引用
+ */
 const footerRef = ref();
-
-// const isScrollEnd = ref(false);
-
+/**
+ * 组件属性
+ * @type ComponentProps
+ * @description 组件的属性对象
+ */
 const props = withDefaults(defineProps<ComponentProps>(), {
   rowKey: "id",
   structure: () => [],
@@ -421,11 +525,7 @@ const props = withDefaults(defineProps<ComponentProps>(), {
   display: true,
   embeddedToolButton: false,
   exOptions: () => ({}),
-  exDependent: () => ({
-    disabledRule: {},
-    displayRule: {},
-    exCellRules: {}
-  }),
+  exDependent: () => ({ disabledRule: {}, displayRule: {}, exCellRules: {} }),
   exCellDependent: () => ({
     select_RequestApi: {},
     file_attachedData: {},
@@ -434,18 +534,14 @@ const props = withDefaults(defineProps<ComponentProps>(), {
     tag_click: {},
     tag_disabled: {}
   }),
-  exPagination: () => ({
-    PageNum: 1,
-    PageSize: 30,
-    pageSizes: [30, 50, 100, 150]
-  }),
-  summaryConfig: () => ({
-    sumText: "合计",
-    unitText: ""
-  }),
+  exPagination: () => ({ PageNum: 1, PageSize: 30, pageSizes: [30, 50, 100, 150] }),
+  summaryConfig: () => ({ sumText: "合计", unitText: "" }),
   useSticky: false
 });
-
+/**
+ * 组件事件
+ * @description 组件的 emits 定义
+ */
 const emits = defineEmits([
   "changeRowStatus",
   "tableCellChange",
@@ -454,26 +550,40 @@ const emits = defineEmits([
   "radioRowBack",
   "selectRowAllBack"
 ]);
-
-// 要观察的元素
+/**
+ * 交叉观察列表
+ * @type Ref
+ * @description 存储需要观察的交叉元素列表
+ */
 const isIntersectingList = ref(
   [] as unknown as Ref<{ isIntersecting: boolean; stopObserving: () => void; el: Element; Els: Element }[]>
 );
+/**
+ * 视窗内元素列表
+ * @type Ref
+ * @description 存储已在视窗内的元素列表
+ */
 const isInViewList = ref(
   [] as unknown as Ref<{ isIntersecting: boolean; stopObserving: () => void; el: Element; Els: Element }[]>
 );
+/**
+ * 粘性视图状态
+ * @type Ref<boolean>
+ * @description 是否使用粘性视图
+ */
 const useStickyViewIn = ref(false);
-
+/**
+ * 父级滚动条引用
+ * @type Ref
+ * @description 注入的父级滚动条引用
+ */
 const parentScrollbarRef = inject("parentScrollbarRef");
-
 /**
  * 当前语言值
  * @type ComputedRef<string>
  * @description 当前选中的语言
  */
-const languageValue = computed(() => {
-  return PancakeGlobalConfig.value?.language?.value || "zh-CN";
-});
+const languageValue = computed(() => PancakeGlobalConfig.value?.language?.value || "zh-CN");
 /**
  * 语言包
  * @type ComputedRef
@@ -624,11 +734,28 @@ const languagePackage = computed(() => {
         confirm: "Confirm"
       };
 });
+/**
+ * 语言
+ * @type ComputedRef<string>
+ * @description 当前语言标识
+ */
 const language = computed(() => PancakeGlobalConfig.value?.language?.value || "zh-CN");
+/**
+ * 无限滚动
+ * @type ComputedRef<boolean>
+ * @description 是否启用无限滚动
+ */
 const infiniteScroll = computed(() => PancakeGlobalConfig.value?.table_config?.infiniteScroll || false);
+/**
+ * 表头滚动状态
+ * @type Ref<boolean>
+ * @description 表头是否正在滚动
+ */
 const isScrollHeaderIng = ref(false);
-
-// # Hooks
+/**
+ * 状态钩子
+ * @description 初始化表格状态相关钩子
+ */
 const {
   state,
   tableStructure,
@@ -654,7 +781,10 @@ const {
   infiniteScroll,
   languagePackage
 });
-
+/**
+ * 滚动钩子
+ * @description 初始化表格滚动相关钩子
+ */
 const { isLeft, isRight, scrollDirectionY, handleSizeChange, handleCurrentChange, refreshTable, directlyScroll } = useScrollHooks(
   props,
   state,
@@ -669,7 +799,10 @@ const { isLeft, isRight, scrollDirectionY, handleSizeChange, handleCurrentChange
     getTableList
   }
 );
-
+/**
+ * 选择钩子
+ * @description 初始化表格行选择相关钩子
+ */
 const {
   isShiftPressed,
   selectedRowsLength,
@@ -680,14 +813,23 @@ const {
   getSelectedData,
   cleanup
 } = useSelectHooks(props, state, emits, getTableList);
-
+/**
+ * 拖拽钩子
+ * @description 初始化表格拖拽相关钩子
+ */
 const { handleDragStart, handleDragOver, handleDrop, handleDragEnd, dragIng, handleDragWidthStart, positionWidthIndex } =
   useDragHooks(tableStructure);
-
+/**
+ * 滚动到相交位置
+ * @description 注入的滚动到视图方法
+ */
 const injectSetScrollToIntersect = inject("setScrollToIntersect", () => {
   console.warn("未找到滚动方法");
 }) as (el: Element, callback?: () => void, options?: { offsetY?: number; offsetX?: number }) => void;
-
+/**
+ * 校验钩子
+ * @description 初始化表格校验相关钩子
+ */
 const { getSubmitTableList, validateField } = useValidateHooks(
   props,
   state.inRules,
@@ -696,7 +838,19 @@ const { getSubmitTableList, validateField } = useValidateHooks(
   mScrollbarListRef,
   getTableData
 );
-
+/**
+ * 显示表格列表
+ * @type ComputedRef
+ * @description 当前需要展示的表格数据列表
+ */
+const showTableList: Ref<Array<Array<PaTableUseType.PaTableInDataType>>> = computed(() => {
+  if (state.showSelectList) return [state.selectTableData];
+  return state.tableData;
+});
+/**
+ * 注入 getTableList
+ * @description 提供获取表格列表方法
+ */
 provide("getTableList", getTableList);
 provide("cleanTableData", cleanTableData);
 provide("setTableConfig", setTableConfig);
@@ -705,72 +859,82 @@ provide("handleSelectChange", handleSelectChange);
 provide("isTableSelectAll", isTableSelectAll);
 provide("handleCellMouseEnter", handleCellMouseEnter);
 provide("handleCellMouseLeave", handleCellMouseLeave);
-
 provide("tableCellChange", (data: PaTableUseType.dataType) => emits("tableCellChange", data));
 provide("validateField", validateField);
-
-const showTableList: Ref<Array<Array<PaTableUseType.PaTableInDataType>>> = computed(() => {
-  if (state.showSelectList) {
-    return [state.selectTableData];
-  }
-  return state.tableData;
-});
-
 provide(
   "languagePackage",
   computed(() => PancakeGlobalConfig.value?.language?.package?.["table"] || {})
 );
-
 provide(
   "language",
   computed(() => PancakeGlobalConfig.value?.language?.value || "zh-CN")
 );
-
 provide(
   "exOptions",
   computed(() => props.exOptions)
 );
-
 provide(
   "exDependent",
   computed(() => props.exDependent)
 );
-
 provide(
   "exCellDependent",
   computed(() => props.exCellDependent)
 );
-
 provide(
   "useGlobalSeniorFilter",
   computed(() => PancakeGlobalConfig.value?.table_config?.useSeniorFilter || false)
 );
-
+/**
+ * 禁用规则
+ * @type Ref
+ * @description 存储外部传入的禁用规则
+ */
 const exDisabled = ref({} as { [x: string]: (value) => boolean });
+/**
+ * 显示规则
+ * @type Ref
+ * @description 存储外部传入的显示规则
+ */
 const exDisplay = ref({} as { [x: string]: (value) => boolean });
+/**
+ * 滚动条列表引用
+ * @type Ref
+ * @description 滚动条列表的 DOM 引用
+ */
 const scrollBarList = ref();
-
+/**
+ * 排序钩子
+ * @description 初始化表格排序相关钩子
+ */
+const { handleSortChange, handleColSetting } = useSortHooks(state, getTableList);
+/**
+ * 组件挂载前
+ * @description 检查组件 id 是否必填
+ */
 onBeforeMount(() => {
   if (!props.id) {
-    typeof window !== "undefined" && window.developLog.log("警告", "PaTable 组件参数 id 必填", "warning");
+    if (typeof window !== "undefined") window.developLog.log("警告", "PaTable 组件参数 id 必填", "warning");
     return;
   }
 });
-
+/**
+ * 组件挂载后
+ * @description 自动请求表格数据
+ */
 onMounted(() => {
   nextTick(() => {
-    // 初始化列宽
-    // if (!Taro.moTable) Taro.moTable = {};
-    // if (!Taro.moTable[props.id]) Taro.moTable[props.id] = {};
-    // Taro.moTable[props.id].getTableList = getTableList;
-    if (!props.requestAuto) {
-      // state.tableLoadStatus = false;
-      return;
-    }
+    if (!props.requestAuto) return;
     getTableList();
   });
 });
-
+/**
+ * 处理滚动子元素变化
+ * @param bodyHeight - 主体高度
+ * @param bodyWidth - 主体宽度
+ * @param useScrollX - 是否使用水平滚动
+ * @description 同步表格主体和表头的滚动位置
+ */
 function handleScrollChildChange({ bodyHeight, bodyWidth, useScrollX }) {
   bodyContentHeight.value = bodyHeight;
   bodyContentWidth.value = bodyWidth;
@@ -782,19 +946,20 @@ function handleScrollChildChange({ bodyHeight, bodyWidth, useScrollX }) {
     isRight.value = true;
   }
 }
-
+/**
+ * 组件卸载前
+ * @description 清理事件监听和观察器
+ */
 onBeforeUnmount(() => {
   cleanup();
   clearListen();
 });
-
-// function getScrollBodyHeight(value) {
-//   scrollBodyHeight.value = mScrollbarListRef.value?.clientHeight + "px";
-// }
-
-const { handleSortChange, handleColSetting } = useSortHooks(state, getTableList);
-
-// @ 清除表格数据中的多余属性
+/**
+ * 清除表格数据中的多余属性
+ * @param filterData - 过滤后的数据
+ * @returns 清除多余属性后的数据
+ * @description 递归删除表格数据中的内部属性
+ */
 function cleanTableItemData(filterData) {
   return filterData?.map(item => {
     delete item.parentRenderIndex;
@@ -805,25 +970,26 @@ function cleanTableItemData(filterData) {
     delete item.isIndeterminate;
     delete item.type;
     delete item.name;
-
-    if (item.children?.length) {
-      item.children = cleanTableItemData(item.children);
-    }
+    if (item.children?.length) item.children = cleanTableItemData(item.children);
     delete item.children;
     return item;
   });
 }
-
+/**
+ * 获取表格数据
+ * @param data - 可选的数据源
+ * @returns 清理后的表格数据
+ * @description 获取并清理表格数据，供外部提交使用
+ */
 function getTableData(data?) {
   const arr: Array<PaTableUseType.PaTableInDataType> = cloneDeep(data?.flat?.(2) || state.tableData?.flat(2));
   const filterData = arr?.filter?.(item => item.type != "more");
   return cleanTableItemData(filterData);
 }
-
 /**
- * @description: 设置表格结构
- * @param {ComponentItemProps[]} structure
- * @return {*}
+ * 设置表格结构
+ * @param structure - 表格列配置数组
+ * @description 重置表格结构并重新监听视窗变化
  */
 function setStructure_All(structure: ComponentItemProps[]) {
   clearListen();
@@ -833,12 +999,11 @@ function setStructure_All(structure: ComponentItemProps[]) {
     listenCellChildChange.create();
   });
 }
-
 /**
- * @description: 设置表格单个结构
- * @param {string} prop
- * @param {ComponentItemProps} item
- * @return {*}
+ * 设置表格单个结构
+ * @param prop - 列标识
+ * @param item - 列配置对象
+ * @description 更新指定列的配置
  */
 function setStructure_Item(prop: string, item: ComponentItemProps) {
   if (!prop) return;
@@ -852,11 +1017,10 @@ function setStructure_Item(prop: string, item: ComponentItemProps) {
     });
   }
 }
-
 /**
- * @description: 设置表格所有数据
- * @param {Record<string, any>} data
- * @return {*}
+ * 设置表格所有数据
+ * @param data - 表格数据
+ * @description 替换表格所有数据
  */
 function changeData_All(data: PaTableUseType.dataType) {
   const cloneData = cloneDeep(data);
@@ -866,12 +1030,11 @@ function changeData_All(data: PaTableUseType.dataType) {
     state.tableData = splitArray(cloneData, state.pageable.PageSize);
   }
 }
-
 /**
- * @description: 设置表格单个数据
- * @param {string} prop
- * @param {any} value
- * @return {*}
+ * 设置表格单个数据
+ * @param rowKey - 行标识值
+ * @param value - 新数据
+ * @description 更新指定行的数据
  */
 function changeData_Item(rowKey: string, value: any) {
   if (!rowKey) return;
@@ -891,78 +1054,63 @@ function changeData_Item(rowKey: string, value: any) {
     state.tableData[paretIndex][rowIndex] = cloneValue;
   }
 }
-
+/**
+ * 暴露组件方法
+ * @description 对外暴露表格操作方法
+ */
+defineExpose({
+  /** @description 获取表格查询参数 */
+  getTableQuery: () => state.tableQuery,
+  /** @description 请求表格数据 */
+  getTableList: refreshTable,
+  /** @description 清除表格数据 */
+  cleanTableData,
+  /** @description 获取提交表格数据 */
+  getSubmitTableList,
+  /** @description 获取表格内数据 */
+  getTableData,
+  /** @description 获取选中数据 */
+  getSelectedData,
+  /** @description 设置选中数据 */
+  setSelectedData,
+  /** @description 设置表格所有结构 */
+  setStructure_All,
+  /** @description 设置表格单个结构 */
+  setStructure_Item,
+  /** @description 设置表格所有数据 */
+  changeData_All,
+  /** @description 设置表格单个数据 */
+  changeData_Item
+});
+/**
+ * 监听交叉元素列表
+ * @description 根据滚动方向自动加载更多数据
+ */
 watch(
   () => isIntersectingList.value,
   debounce(newVal => {
-    // const InView = newVal.find(item => !!item.Els);
-    // if (InView) {
-    //   useStickyViewIn.value = InView.isIntersecting;
-    // }
     const filterList = newVal.filter(item => item.isIntersecting);
     const showItem = filterList[filterList.length - 1];
     const showIndex = showItem?.el?.id.split(props.id + "-more-")[1] || -1;
     const showIndexNumber = Number(showIndex);
-
     if (showIndexNumber == -1 || state.tableLoadStatus) return;
-
     if (state.maxPage != 0 && showIndexNumber + 1 >= state.maxPage) return;
-
     if (state.oldPageIndex == showIndexNumber) return;
-
     if (scrollDirectionY.value == "down") {
-      getTableList({
-        Page: {
-          PageNum: showIndexNumber + 2
-        }
-      });
+      getTableList({ Page: { PageNum: showIndexNumber + 2 } });
     } else {
-      getTableList({
-        Page: {
-          PageNum: showIndexNumber
-        }
-      });
+      getTableList({ Page: { PageNum: showIndexNumber } });
     }
-
     state.PageNum = showIndexNumber + 1;
-    typeof window !== "undefined" && window.developLog.log("当前页面", state.PageNum, "danger");
+    if (typeof window !== "undefined") window.developLog.log("当前页面", state.PageNum, "danger");
     state.oldPageIndex = showIndexNumber;
-    return;
-    // for (let i = 0; i < newVal.length; i++) {
-    //   const isIntersecting = newVal[i].isIntersecting;
-    //   const el = newVal[i].el;
-    //   if (isIntersecting) {
-    //     showIndex = Number(el.id.split(props.id + "-more-")[1]);
-    //     state.PageNum = showIndex + 1;
-    //     if (isDown.value) {
-    //       if (oldIndex == showIndex) return;
-    //       oldIndex = showIndex;
-    //       const _PageNum = showIndex + 2;
-    //       if (state.tableLoadStatus) return;
-    //       getTableList({
-    //         Page: {
-    //           PageNum: _PageNum
-    //         }
-    //       });
-    //     } else {
-    //       if (oldIndex == showIndex) return;
-    //       oldIndex = showIndex;
-    //       const _PageNum = showIndex;
-    //       if (state.tableLoadStatus) return;
-    //       getTableList({
-    //         Page: {
-    //           PageNum: _PageNum
-    //         }
-    //       });
-    //     }
-    //   }
-    // }
   }, 50),
-  {
-    deep: true
-  }
+  { deep: true }
 );
-
+/**
+ * 监听视窗内元素列表
+ * @description 更新粘性视图状态和底部高度
+ */
 watch(
   () => isInViewList.value,
   newVal => {
@@ -972,122 +1120,12 @@ watch(
       footerHeight.value = footerRef.value?.clientHeight || "0px";
     }
   },
-  {
-    deep: true
-  }
+  { deep: true }
 );
-
-// watch(
-//   () => isEndIntersectingList.value,
-//   newVal => {
-//     let showIndex = -1;
-//     if (state.tableLoadStatus) return;
-//     for (let i = 0; i < newVal.length; i++) {
-//       const isIntersecting = newVal[i].isIntersecting;
-//       const el = newVal[i].el;
-//       if (isIntersecting) {
-//         showIndex = Number(el.id.split(props.id + "-more-end-")[1]);
-//         if (isDown.value) {
-//           if (oldIndex == showIndex) return;
-//           oldIndex = showIndex;
-//           const _PageNum = showIndex + 2;
-//           if (state.tableLoadStatus) return;
-//           getTableList({
-//             Page: {
-//               PageNum: _PageNum,
-//               PageSize: state.pageable.PageSize
-//             }
-//           });
-//         } else {
-//           if (oldIndex == showIndex) return;
-//           oldIndex = showIndex;
-//           const _PageNum = showIndex;
-//           if (state.tableLoadStatus) return;
-//           getTableList({
-//             Page: {
-//               PageNum: _PageNum,
-//               PageSize: state.pageable.PageSize
-//             }
-//           });
-//         }
-//       }
-//     }
-//   },
-//   {
-//     deep: true
-//   }
-// );
-
-defineExpose({
-  /**
-   * @description: 获取表格查询参数
-   * @return {*}
-   */
-  getTableQuery: () => state.tableQuery,
-  /**
-   * @description: 请求表格用数据
-   * @return {*}
-   */
-  getTableList: refreshTable,
-  /**
-   * @description: 清除表格数据
-   * @return {*}
-   */
-  cleanTableData,
-  /**
-   * @description: 请求提交表格用数据
-   * @return {*}
-   */
-  getSubmitTableList,
-  /**
-   * @description: 获取表格内数据
-   * @return {*}
-   */
-  getTableData,
-
-  /**
-   * @description: 获取表格内选中数据
-   * @return {*}
-   */
-  getSelectedData,
-
-  /**
-   * @description: 设置表格内选中数据
-   * @param {Array<any>} data
-   * @return {*}
-   */
-  setSelectedData,
-  /**
-   * @description: 设置表格所有结构
-   * @param {Array<ComponentItemProps & ComponentUseItemProps>} structure
-   * @return {*}
-   */
-  setStructure_All,
-  /**
-   * @description: 设置表格单个结构
-   * @param {string} prop
-   * @param {ComponentItemProps} item
-   * @return {*}
-   */
-  setStructure_Item,
-
-  /**
-   * @description: 设置表格所有数据
-   * @param {Record<string, any>} data
-   * @return {*}
-   */
-  changeData_All,
-
-  /**
-   * @description: 设置表格单个数据
-   * @param {string} prop
-   * @param {any} value
-   * @return {*}
-   */
-  changeData_Item
-});
-
-// #Watch exDependent
+/**
+ * 监听外部依赖变化
+ * @description 同步外部传入的禁用和显示规则
+ */
 watch(
   () => props.exDependent,
   data => {
@@ -1096,15 +1134,20 @@ watch(
   },
   { deep: true, immediate: true }
 );
-
-// @ watch 结构配置
+/**
+ * 监听表格结构变化
+ * @description 当传入的 structure 变化时重新设置表格配置
+ */
 watch(
   () => props.structure,
   value => {
     setStructure_All(value);
   }
 );
-
+/**
+ * 监听无限滚动配置变化
+ * @description 刷新表格以应用新的滚动模式
+ */
 watch(
   () => infiniteScroll.value,
   () => {

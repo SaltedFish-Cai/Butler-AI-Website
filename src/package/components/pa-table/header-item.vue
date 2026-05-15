@@ -76,13 +76,30 @@
 </template>
 
 <script setup lang="ts" name="headerItem">
-// # Import
+/**
+ * 模块导入
+ * @description 导入 Vue 响应式 API
+ */
 import { ref, Ref, watch, inject } from "vue";
+/**
+ * 模块导入
+ * @description 导入表头筛选子组件
+ */
 import Filter from "./header-item-filter.vue";
-
+/**
+ * 模块导入
+ * @description 导入类型判断工具
+ */
 import { isSelectType, isUseCellConfig, isTimeType } from "./hooks/isType";
+/**
+ * 模块导入
+ * @description 导入组件类型定义
+ */
 import { ComponentItemProps, ComponentUseItemProps, PaTableUseType } from "./types";
 
+/**
+ * 表头组件属性类型
+ */
 type HeaderItemType = {
   id: string;
   item: ComponentItemProps & ComponentUseItemProps;
@@ -91,19 +108,57 @@ type HeaderItemType = {
   setCellWidthIng?: boolean;
   tableQuery: PaTableUseType.TableQueryType;
 };
-
-// # Var
+/**
+ * 组件属性
+ * @type HeaderItemType
+ * @description 表头组件的属性对象
+ */
 const props = withDefaults(defineProps<HeaderItemType>(), {});
-
+/**
+ * 组件事件
+ * @description 表头组件的事件定义
+ */
 const emits = defineEmits(["handleSortChange", "saveAndFilter", "openSeniorFilter"]);
-
+/**
+ * 排序方向
+ * @type Ref
+ * @description 当前列的排序方向
+ */
 const orderString: Ref<"ascending" | "descending" | null> = ref(null);
+/**
+ * 筛选值
+ * @type Ref<PaTableUseType.FilterType>
+ * @description 当前列的筛选条件
+ */
 const filterValue = ref({} as PaTableUseType.FilterType);
+/**
+ * 列筛选组件引用
+ * @type Ref
+ * @description 列筛选弹出框组件引用
+ */
 const columnFilter = ref();
+/**
+ * 筛选数据存储
+ * @description 缓存筛选数据列表
+ */
 let filterData = [] as Array<PaTableUseType.FilterType>;
+/**
+ * 语言包
+ * @type Record<string, string>
+ * @description 注入当前语言包
+ */
 const languagePackage = inject("languagePackage") as Record<string, string>;
+/**
+ * 全局高级搜索
+ * @type Ref<boolean>
+ * @description 注入是否启用全局高级搜索
+ */
 const useGlobalSeniorFilter = inject("useGlobalSeniorFilter") as Ref<boolean>;
-// #Function 点击表格排序
+/**
+ * 点击表格排序
+ * @param state - 列配置对象
+ * @description 切换当前列的排序状态并触发排序事件
+ */
 function handleTableOrder(state: ComponentItemProps & ComponentUseItemProps) {
   switch (orderString.value) {
     case null:
@@ -119,11 +174,14 @@ function handleTableOrder(state: ComponentItemProps & ComponentUseItemProps) {
   const upData = { prop: state.prop, order: orderString.value };
   emits("handleSortChange", upData);
 }
-
-// #Function 设置筛选打开icon的颜色状态
+/**
+ * 设置筛选图标状态
+ * @param prop - 列标识
+ * @returns 是否激活筛选状态
+ * @description 根据查询参数判断筛选图标是否高亮
+ */
 function setIconAction(prop) {
   const { AdvancedFilter } = props.tableQuery;
-
   let index = -1;
   const _index = AdvancedFilter && AdvancedFilter.findIndex(item => item.fieldName == prop);
   index = _index != undefined ? _index : -1;
@@ -133,27 +191,30 @@ function setIconAction(prop) {
     return filterValue.value?.fieldName == prop && String(filterValue.value.fieldValue)?.length;
   }
 }
-
-// #Function 删除筛选框数据时,同步删除相关数据
-// function handleRemoveQ(scope) {
-//   emits("handleRemoveQ", scope, "column");
-// }
-
-// #Function 打开高级搜索
+/**
+ * 打开高级搜索
+ * @param item - 列配置对象
+ * @description 打开当前列的高级搜索弹窗
+ */
 function openSeniorFilter(item: ComponentItemProps & ComponentUseItemProps) {
   columnFilter.value?.closePopover();
   emits("openSeniorFilter", item);
 }
-
-// #Function 提交筛选
+/**
+ * 提交筛选
+ * @param data - 筛选数据
+ * @description 提交当前列的筛选条件
+ */
 function saveAndFilter(data) {
   const prop = props.item.prop;
   let _filterData = filterData?.filter(item => item.fieldName != prop);
   _filterData = [..._filterData, ...data];
   emits("saveAndFilter", { Filter: _filterData });
 }
-
-// #Watch 排序
+/**
+ * 监听排序名称变化
+ * @description 当其他列排序时重置当前列排序状态
+ */
 watch(
   () => props.useOrderPropName,
   (value: string) => {
@@ -161,8 +222,10 @@ watch(
   },
   { immediate: true }
 );
-
-// #Watch Filter值
+/**
+ * 监听筛选条件变化
+ * @description 同步外部筛选条件到当前列的状态
+ */
 watch(
   () => props.tableQuery.Filter,
   value => {
@@ -177,10 +240,7 @@ watch(
         const fieldValue = item.fieldValue as string;
         arr[item.conditionalType == 3 ? 0 : 1] = fieldValue?.split?.(" ")[0] || "";
       }
-      filterValue.value = {
-        ...findItemArr[0],
-        fieldValue: arr
-      };
+      filterValue.value = { ...findItemArr[0], fieldValue: arr };
     } else {
       const findItem = value?.find(item => item.fieldName == prop);
       if (findItem && findItem.fieldValue && String(findItem.fieldValue)?.length) {

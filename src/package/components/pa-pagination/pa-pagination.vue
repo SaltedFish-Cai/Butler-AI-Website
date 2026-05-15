@@ -1,5 +1,5 @@
 <template>
-  <div class="pa-pagination" :class="[props.class, { 'is-disabled': props.disabled }]" :style="mergedStyles">
+  <div class="pa-pagination" :class="[props.class, { 'is-disabled': props.disabled }]" :style="props.style || {}">
     <span v-if="showTotal" class="m-pagination-total">
       {{ languagePackage?.total }} <span>{{ total }}</span> {{ languagePackage?.records2 }}
     </span>
@@ -77,10 +77,25 @@
   </div>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
+/**
+ * 模块导入
+ * @description 导入 Vue 响应式 API
+ */
+import { ref, computed, watch, inject, ComputedRef } from "vue";
+/**
+ * 模块导入
+ * @description 导入组件类型定义
+ */
+import { ComponentProps, ComponentEmits } from "./types";
+/**
+ * 模块导入
+ * @description 导入全局配置类型
+ */
+import { PancakeGlobalConfigType } from "../pa-manager/types";
 /**
  * 语言包数据
- * @description 静态语言包数据，提取到模块级避免每次 computed 重新创建
+ * @description 静态语言包数据，避免每次计算时重新创建
  */
 const LANGUAGE_PACKAGE_DATA: Record<string, Record<string, string>> = {
   "en-US": {
@@ -98,24 +113,6 @@ const LANGUAGE_PACKAGE_DATA: Record<string, Record<string, string>> = {
     jumpTo: "跳转"
   }
 };
-</script>
-
-<script lang="ts" setup>
-/**
- * 模块导入
- * @description 导入 Vue 响应式 API
- */
-import { ref, computed, watch, inject, ComputedRef } from "vue";
-/**
- * 模块导入
- * @description 导入组件类型定义
- */
-import { ComponentProps, ComponentEmits } from "./types";
-/**
- * 模块导入
- * @description 导入全局配置类型
- */
-import { PancakeGlobalConfigType } from "../pa-manager/types";
 /**
  * 组件属性
  * @type ComponentProps
@@ -158,14 +155,6 @@ const languagePackage = computed(() => {
   return LANGUAGE_PACKAGE_DATA[languageValue.value];
 });
 /**
- * 合并样式
- * @type ComputedRef<Record<string, string>>
- * @description 合并传入的样式与组件默认样式
- */
-const mergedStyles = computed(() => {
-  return props.style || {};
-});
-/**
  * 内部当前页码
  * @type Ref<number>
  * @description 内部维护的当前页码状态
@@ -177,73 +166,6 @@ const internalCurrentPage = ref(props.currentPage);
  * @description 内部维护的每页数量状态
  */
 const internalPageSize = ref(props.pageSize);
-/**
- * 处理每页数量变化
- * @param data - 选择的数据
- * @returns void
- * @description 每页数量变化时的处理
- */
-const handleSizeChange = (data: { value: number }): void => {
-  if (props.disabled) return;
-  internalPageSize.value = data.value;
-  emit("update:pageSize", data.value);
-  emit("size-change", data.value);
-  const newPageCount = Math.ceil(props.total / data.value);
-  if (internalCurrentPage.value > newPageCount) {
-    goToPage(newPageCount);
-  }
-};
-/**
- * 处理跳转器输入
- * @returns void
- * @description 跳转器输入确认时的处理
- */
-const handleJumperEnter = (): void => {
-  if (props.disabled) return;
-  const page = internalCurrentPage.value;
-  if (!isNaN(page) && page >= 1 && page <= pageCount.value) {
-    goToPage(page);
-  }
-  internalCurrentPage.value = page;
-};
-/**
- * 跳转到左侧更多页
- * @returns void
- * @description 点击左侧更多按钮
- */
-const jumpPrevMore = (): void => {
-  if (props.disabled) return;
-  goToPage(Math.max(1, internalCurrentPage.value - props.pagerCount));
-};
-/**
- * 跳转到右侧更多页
- * @returns void
- * @description 点击右侧更多按钮
- */
-const jumpNextMore = (): void => {
-  if (props.disabled) return;
-  goToPage(Math.min(pageCount.value, internalCurrentPage.value + props.pagerCount));
-};
-/**
- * 跳转到指定页
- * @param page - 目标页码
- * @returns void
- * @description 跳转到指定的页码
- */
-const goToPage = (page: number): void => {
-  if (props.disabled) return;
-  const validPage = Math.max(1, Math.min(page, pageCount.value));
-  if (validPage !== internalCurrentPage.value) {
-    internalCurrentPage.value = validPage;
-    emit("update:currentPage", validPage);
-    emit("current-change", validPage);
-    if (validPage < internalCurrentPage.value) {
-      emit("prev-click", validPage);
-    } else if (validPage > internalCurrentPage.value) {
-      emit("next-click", validPage);
-    }
-  }
-};
 /**
  * 每页数量选项
  * @type ComputedRef<Array<{ label: string; value: number }>>
@@ -270,9 +192,7 @@ const layoutParts = computed(() => {
  * @description 计算总页数
  */
 const pageCount = computed(() => {
-  const data = Math.max(1, Math.ceil(props.total / internalPageSize.value));
-  emit("change-max-page", data);
-  return data;
+  return Math.max(1, Math.ceil(props.total / internalPageSize.value));
 });
 /**
  * 是否显示总数
@@ -321,33 +241,93 @@ const pagerPages = computed(() => {
  * @type ComputedRef<boolean>
  * @description 是否显示第一页按钮
  */
-const showFirstPage = computed(() => {
-  return pagerPages.value[0] > 1;
-});
+const showFirstPage = computed(() => pagerPages.value[0] > 1);
 /**
  * 是否显示最后一页
  * @type ComputedRef<boolean>
  * @description 是否显示最后一页按钮
  */
-const showLastPage = computed(() => {
-  return pagerPages.value[pagerPages.value.length - 1] < pageCount.value;
-});
+const showLastPage = computed(() => pagerPages.value[pagerPages.value.length - 1] < pageCount.value);
 /**
  * 是否显示左侧更多
  * @type ComputedRef<boolean>
  * @description 是否显示左侧更多按钮
  */
-const showPrevMore = computed(() => {
-  return pagerPages.value[0] > 2;
-});
+const showPrevMore = computed(() => pagerPages.value[0] > 2);
 /**
  * 是否显示右侧更多
  * @type ComputedRef<boolean>
  * @description 是否显示右侧更多按钮
  */
-const showNextMore = computed(() => {
-  return pagerPages.value[pagerPages.value.length - 1] < pageCount.value - 1;
-});
+const showNextMore = computed(() => pagerPages.value[pagerPages.value.length - 1] < pageCount.value - 1);
+/**
+ * 每页数量变化处理
+ * @param data - 选择的数据
+ * @returns void
+ * @description 每页数量变化时的处理
+ */
+const handleSizeChange = (data: { value: number }): void => {
+  if (props.disabled) return;
+  internalPageSize.value = data.value;
+  emit("update:pageSize", data.value);
+  emit("size-change", data.value);
+  const newPageCount = Math.ceil(props.total / data.value);
+  if (internalCurrentPage.value > newPageCount) {
+    goToPage(newPageCount);
+  }
+};
+/**
+ * 跳转器输入处理
+ * @returns void
+ * @description 跳转器输入确认时的处理
+ */
+const handleJumperEnter = (): void => {
+  if (props.disabled) return;
+  const page = internalCurrentPage.value;
+  if (!isNaN(page) && page >= 1 && page <= pageCount.value) {
+    goToPage(page);
+  }
+  internalCurrentPage.value = page;
+};
+/**
+ * 跳转到左侧更多页
+ * @returns void
+ * @description 点击左侧更多按钮
+ */
+const jumpPrevMore = (): void => {
+  if (props.disabled) return;
+  goToPage(Math.max(1, internalCurrentPage.value - props.pagerCount));
+};
+/**
+ * 跳转到右侧更多页
+ * @returns void
+ * @description 点击右侧更多按钮
+ */
+const jumpNextMore = (): void => {
+  if (props.disabled) return;
+  goToPage(Math.min(pageCount.value, internalCurrentPage.value + props.pagerCount));
+};
+/**
+ * 跳转到指定页
+ * @param page - 目标页码
+ * @returns void
+ * @description 跳转到指定的页码
+ */
+const goToPage = (page: number): void => {
+  if (props.disabled) return;
+  const validPage = Math.max(1, Math.min(page, pageCount.value));
+  if (validPage !== internalCurrentPage.value) {
+    const prevPage = internalCurrentPage.value;
+    internalCurrentPage.value = validPage;
+    emit("update:currentPage", validPage);
+    emit("current-change", validPage);
+    if (validPage < prevPage) {
+      emit("prev-click", validPage);
+    } else if (validPage > prevPage) {
+      emit("next-click", validPage);
+    }
+  }
+};
 /**
  * 监听当前页码变化
  * @description 同步 props.currentPage 到内部状态
@@ -367,6 +347,17 @@ watch(
   newVal => {
     internalPageSize.value = newVal;
   }
+);
+/**
+ * 监听总页数变化
+ * @description 总页数变化时发出 change-max-page 事件
+ */
+watch(
+  pageCount,
+  maxPage => {
+    emit("change-max-page", maxPage);
+  },
+  { immediate: true }
 );
 </script>
 <style lang="scss">

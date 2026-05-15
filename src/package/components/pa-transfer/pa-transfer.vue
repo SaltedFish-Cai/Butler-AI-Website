@@ -36,7 +36,7 @@
             v-for="(item, index) in searchAllSelectList"
             :key="String(item.value)"
             class="pa-transfer-option"
-            @click="handleOptionClick(item, 'left', index, searchAllSelectList)"
+            @click="handleOptionClick(item, 'left', index)"
           >
             <pa-checkbox-item :disabled="props.disabled" :isChecked="item.value ? awaitSelectList.includes(item.value) : false">{{
               item.label
@@ -93,7 +93,7 @@
             v-for="(item, index) in filterSelectedList"
             :key="String(item.value)"
             class="pa-transfer-option"
-            @click="handleOptionClick(item, 'right', index, filterSelectedList)"
+            @click="handleOptionClick(item, 'right', index)"
           >
             <pa-checkbox-item :disabled="props.disabled" :isChecked="awaitSelectedList.includes(item.value)">{{
               item.label
@@ -111,17 +111,7 @@
     </template>
     <div v-else>--</div>
   </div>
-  <div
-    v-if="
-      (alwaysContrast && !isNil(contrastData)) ||
-      (!isNil(contrastData) &&
-        !isEqual(
-          selectedList.map(item => item.value),
-          contrastData
-        ))
-    "
-    :class="['pa-contrast-style']"
-  >
+  <div v-if="useContrast" :class="['pa-contrast-style']">
     <div v-if="exOptionsList?.length">
       <slot name="exContrast"></slot>
       <template v-if="$slots.exContrast"> ( {{ findData(contrastData || []) || "--" }} )</template>
@@ -172,6 +162,14 @@ import isNil from "../tools/is-nil";
  */
 import isEqual from "../tools/is-equal";
 /**
+ * 语言包映射
+ * @description 穿梭框组件的语言文本映射表
+ */
+const LANGUAGE_MAP: Record<string, Record<string, string>> = {
+  "zh-CN": { unSelected: "未选择", selected: "已选择" },
+  "en-US": { unSelected: "Unselected", selected: "Selected" }
+};
+/**
  * 组件属性
  * @type ComponentProps
  * @description 组件的属性对象
@@ -201,20 +199,15 @@ const languageValue = computed(() => {
 });
 /**
  * 语言包
- * @type ComputedRef
  * @description 当前语言的文本配置
  */
-const languagePackage = computed(() => {
-  return languageValue.value === "zh-CN"
-    ? { unSelected: "未选择", selected: "已选择" }
-    : { unSelected: "Unselected", selected: "Selected" };
-});
+const languagePackage = computed(() => LANGUAGE_MAP[languageValue.value]);
 /**
  * 外置数据选项列表
  * @type Ref<PaOptionType.SelectList>
  * @description 外置数据选项列表
  */
-const exOptionsList = ref(props?.exOptions || []);
+const exOptionsList: Ref<PaOptionType.SelectList> = ref(props?.exOptions || []);
 /**
  * 左侧搜索关键词
  * @type Ref<string>
@@ -246,6 +239,18 @@ const awaitSelectList: Ref<Array<boolean | number | string>> = ref([]);
  */
 const awaitSelectedList: Ref<Array<boolean | number | string>> = ref([]);
 /**
+ * 组件根元素引用
+ * @type Ref<HTMLElement | undefined>
+ * @description 组件根元素引用
+ */
+const selectRef = ref();
+/**
+ * Shift 键是否按下
+ * @type Ref<boolean>
+ * @description Shift 键是否按下
+ */
+const isShiftPressed = ref(false);
+/**
  * 左侧搜索过滤后的未选中列表
  * @type ComputedRef<PaOptionType.SelectList>
  * @description 左侧搜索过滤后的未选中列表
@@ -275,15 +280,9 @@ const filterSelectedList = computed(() => {
   return selectedList.value;
 });
 /**
- * 组件根元素引用
- * @type Ref<HTMLElement | undefined>
- * @description 组件根元素引用
- */
-const selectRef = ref();
-/**
  * 根元素样式
  * @type ComputedRef<Record<string, string | number>>
- * @description 根元素的动态样式，避免模板中每次渲染创建新对象
+ * @description 根元素的动态样式
  */
 const rootStyle = computed(() => ({
   ...props.style,
@@ -292,7 +291,7 @@ const rootStyle = computed(() => ({
 /**
  * 空状态样式
  * @type ComputedRef<Record<string, string>>
- * @description 空状态容器的动态样式，避免模板中每次渲染创建新对象
+ * @description 空状态容器的动态样式
  */
 const emptyStyle = computed(() => ({
   height: `calc(${props.height} - 75px)`,
@@ -300,41 +299,43 @@ const emptyStyle = computed(() => ({
   marginBottom: "0px"
 }));
 /**
+ * 是否使用对比模式
+ * @type ComputedRef<boolean>
+ * @description 根据 alwaysContrast 和 contrastData 判断是否显示对比数据
+ */
+const useContrast = computed(() => {
+  if (isNil(props.contrastData)) return false;
+  if (props.alwaysContrast) return true;
+  return !isEqual(
+    selectedList.value.map(item => item.value),
+    props.contrastData
+  );
+});
+/**
  * 旧值
- * @type Array<boolean | number | string>
- * @description 旧值，用于 change 事件对比
+ * @description 用于 change 事件对比的旧值缓存
  */
 let oldValue = props.modelValue || [];
 /**
  * 左侧上次点击索引
- * @type number
- * @description 左侧上次点击索引
+ * @description 左侧 Shift 多选的起始索引
  */
 let leftOldIndex = -1;
 /**
  * 右侧上次点击索引
- * @type number
- * @description 右侧上次点击索引
+ * @description 右侧 Shift 多选的起始索引
  */
 let rightOldIndex = -1;
 /**
  * 左侧添加或删除标记
- * @type number
- * @description 左侧添加或删除标记
+ * @description 1=添加 2=删除
  */
 let leftAddOrDel = 1;
 /**
  * 右侧添加或删除标记
- * @type number
- * @description 右侧添加或删除标记
+ * @description 1=添加 2=删除
  */
 let rightAddOrDel = 1;
-/**
- * Shift 键是否按下
- * @type Ref<boolean>
- * @description Shift 键是否按下
- */
-const isShiftPressed = ref(false);
 /**
  * 处理键盘按下事件
  * @param event - 键盘事件对象
@@ -360,28 +361,21 @@ function handleKeyUp(event: KeyboardEvent): void {
 /**
  * 处理选项点击事件
  * @param item - 点击的选项对象
- * @param direction - 方向，'left' 或 'right'
+ * @param direction - 方向 left 或 right
  * @param index - 选项索引
- * @param list - 当前列表
  * @returns void
  * @description 点击选项时切换选中状态，支持 Shift 多选
  */
-function handleOptionClick(item: PaOptionType.Select, direction: string, index: number, list: PaOptionType.SelectList): void {
-  if (props.disabled) {
-    return;
-  }
+function handleOptionClick(item: PaOptionType.Select, direction: string, index: number): void {
+  if (props.disabled) return;
   if (direction === "left") {
     const start = Math.min(leftOldIndex, index);
     const end = Math.max(leftOldIndex, index);
     let splitArr: Array<boolean | number | string> = [item.value];
     if (leftOldIndex != -1 && isShiftPressed.value) {
-      splitArr = list.slice(start, end + 1).map(item => item.value);
+      splitArr = searchAllSelectList.value.slice(start, end + 1).map(item => item.value);
     }
-    if (awaitSelectList.value.includes(item.value)) {
-      leftAddOrDel = 2;
-    } else {
-      leftAddOrDel = 1;
-    }
+    leftAddOrDel = awaitSelectList.value.includes(item.value) ? 2 : 1;
     if (leftAddOrDel == 2) {
       awaitSelectList.value = awaitSelectList.value.filter(val => !splitArr.includes(val));
     } else {
@@ -392,14 +386,10 @@ function handleOptionClick(item: PaOptionType.Select, direction: string, index: 
     const start = Math.min(rightOldIndex, index);
     const end = Math.max(rightOldIndex, index);
     let splitArr: Array<boolean | number | string> = [item.value];
-    if (leftOldIndex != -1 && isShiftPressed.value) {
-      splitArr = list.slice(start, end + 1).map(item => item.value);
+    if (rightOldIndex != -1 && isShiftPressed.value) {
+      splitArr = filterSelectedList.value.slice(start, end + 1).map(item => item.value);
     }
-    if (awaitSelectedList.value.includes(item.value)) {
-      rightAddOrDel = 2;
-    } else {
-      rightAddOrDel = 1;
-    }
+    rightAddOrDel = awaitSelectedList.value.includes(item.value) ? 2 : 1;
     if (rightAddOrDel == 2) {
       awaitSelectedList.value = awaitSelectedList.value.filter(val => !splitArr.includes(val));
     } else {
@@ -410,14 +400,12 @@ function handleOptionClick(item: PaOptionType.Select, direction: string, index: 
 }
 /**
  * 处理穿梭按钮点击事件
- * @param direction - 方向，'left' 或 'right'
+ * @param direction - 方向 left 或 right
  * @returns void
  * @description 点击穿梭按钮时将选中项移动到对面列表
  */
 function handleTransferClick(direction: string): void {
-  if (props.disabled) {
-    return;
-  }
+  if (props.disabled) return;
   if (direction === "left") {
     selectedList.value = selectedList.value.filter(item => !awaitSelectedList.value.includes(item.value));
     awaitSelectedList.value = [];
@@ -439,14 +427,12 @@ function handleTransferClick(direction: string): void {
 }
 /**
  * 处理全选/取消全选
- * @param direction - 方向，'left' 或 'right'
+ * @param direction - 方向 left 或 right
  * @returns void
  * @description 切换当前列表的全选状态
  */
 function handleCheckedChange(direction: string): void {
-  if (props.disabled) {
-    return;
-  }
+  if (props.disabled) return;
   if (direction === "left") {
     if (awaitSelectList.value.length === searchAllSelectList.value.length) {
       awaitSelectList.value.length = 0;
@@ -465,7 +451,7 @@ function handleCheckedChange(direction: string): void {
  * 查找数据标签
  * @param data - 数据值数组
  * @returns 对应的标签字符串
- * @description 根据 value 查找对应的 label，优先使用 displayValue
+ * @description 根据 value 查找对应的 label
  */
 function findData(data: Array<boolean | number | string>): string {
   if (props.displayValue) {
@@ -478,45 +464,31 @@ function findData(data: Array<boolean | number | string>): string {
  * @description 组件挂载时添加键盘事件监听
  */
 onMounted(() => {
-  if (typeof window !== "undefined") window.addEventListener("keydown", handleKeyDown);
-  if (typeof window !== "undefined") window.addEventListener("keyup", handleKeyUp);
+  window.addEventListener("keydown", handleKeyDown);
+  window.addEventListener("keyup", handleKeyUp);
 });
 /**
  * 组件卸载
  * @description 组件卸载时移除键盘事件监听
  */
 onUnmounted(() => {
-  if (typeof window !== "undefined") window.removeEventListener("keydown", handleKeyDown);
-  if (typeof window !== "undefined") window.removeEventListener("keyup", handleKeyUp);
+  window.removeEventListener("keydown", handleKeyDown);
+  window.removeEventListener("keyup", handleKeyUp);
 });
 /**
- * modelValue 同步监听
- * @description 监听 modelValue 变化，同步更新已选中列表
+ * 监听 modelValue 和 exOptions
+ * @description 同步外部数据到内部状态，合并两个 watcher 消除挂载时重复初始化
  */
 watch(
-  () => props.modelValue,
-  data => {
-    if (props.exOptions && data && Array.isArray(data)) {
-      selectedList.value = props.exOptions.filter(item => data.includes(item.value)) || [];
+  [() => props.modelValue, () => props.exOptions],
+  ([modelValue, exOptions]) => {
+    exOptionsList.value = exOptions || [];
+    if (exOptions && modelValue && Array.isArray(modelValue)) {
+      selectedList.value = exOptions.filter(item => modelValue.includes(item.value));
       oldValue = selectedList.value.map(item => item.value);
     }
   },
   { immediate: true }
-);
-/**
- * exOptions 同步监听
- * @description 监听 exOptions 变化，同步更新外置选项列表
- */
-watch(
-  () => props.exOptions,
-  data => {
-    exOptionsList.value = data || [];
-    if (props.exOptions && props.modelValue && Array.isArray(props.modelValue)) {
-      selectedList.value = props.exOptions.filter(item => props.modelValue?.includes(item.value)) || [];
-      oldValue = selectedList.value.map(item => String(item.value));
-    }
-  },
-  { immediate: true, deep: true }
 );
 </script>
 

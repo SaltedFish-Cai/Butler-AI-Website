@@ -834,8 +834,6 @@ export namespace PaTableUseType {
     errorList?: Record<string, string>;
   };
 
-  /**
-   * 表格查询参数/
   export type TableQueryType = {
     Filter?: Array<FilterType>;
     AdvancedFilter?: Array<AdvancedFilterType>;
@@ -844,22 +842,12 @@ export namespace PaTableUseType {
     Sort?: Array<{ SortKey: string; SortValue: SortValue }>;
   };
 
-  type allType = Array<boolean | number | string> | boolean | number | string | null | undefined;
-
   export type dataType = Array<PaTableInDataType>;
 
-  export type PaTableInDataType = {
-    parentRenderIndex: number;
-    rowIndex: number;
-    renderIndex: number;
-    isOpenChild?: boolean;
-    isSelected?: boolean;
-    isIndeterminate?: boolean;
-    children?: dataType;
-    type?: string;
-    name?: string;
-    errorList?: Record<string, string>;
-  };
+  /**
+   * 表格查询参数/
+ 
+  type allType = Array<boolean | number | string> | boolean | number | string | null | undefined;
 
   /**
    * 内部状态

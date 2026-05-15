@@ -292,7 +292,6 @@
           </template>
 
           <div v-else :style="{ whiteSpace: setCellWidthIng ? 'nowrap' : 'wrap' }">{{ row[String(item.prop)] }}</div>
-          <!-- <pa-input v-else v-model="" :display="props.display" /> -->
         </div>
       </div>
     </template>
@@ -300,18 +299,56 @@
 </template>
 
 <script lang="ts" setup>
-// >-------------> 依赖 <------------<
+/**
+ * 模块导入
+ * @description 导入 Vue 响应式 API
+ */
 import { inject, Ref, ComputedRef } from "vue";
+/**
+ * 模块导入
+ * @description 导入操作列子组件
+ */
 import Operation from "./operation.vue";
+/**
+ * 模块导入
+ * @description 导入组件类型定义
+ */
 import { ComponentUseItemProps, PaTableUseType, PaTableCellExDependentType } from "./types";
 import { isRowIndex } from "./hooks/isType";
+/**
+ * 模块导入
+ * @description 导入标签子组件
+ */
 import CellTag from "./cell-tag.vue";
+/**
+ * 模块导入
+ * @description 导入精度处理工具
+ */
 import { keepDecimalPlaces } from "../utils/handlePrecision";
+/**
+ * 模块导入
+ * @description 导入数据查找工具
+ */
 import { findDataWithSelect, findDataWidthSwitch } from "../utils/find-data";
+/**
+ * 模块导入
+ * @description 导入选项类型定义
+ */
 import { PaOptionType } from "../manager-type";
+/**
+ * 模块导入
+ * @description 导入表单子项类型定义
+ */
 import { PaFormChildType } from "../pa-form/types";
+/**
+ * 模块导入
+ * @description 导入全局配置类型
+ */
 import { PancakeGlobalConfigType } from "../pa-manager/types";
 
+/**
+ * 单元格组件属性类型
+ */
 type TableCellType = {
   structure: Array<ComponentUseItemProps>;
   row: PaTableUseType.PaTableInDataType;
@@ -328,27 +365,85 @@ type TableCellType = {
   useChildren?: boolean;
   useAverageWidth?: -1 | 0 | 1;
 };
-
+/**
+ * 组件属性
+ * @type TableCellType
+ * @description 单元格组件的属性对象
+ */
 const props = withDefaults(defineProps<TableCellType>(), {});
+/**
+ * 全局配置注入
+ * @type ComputedRef<PancakeGlobalConfigType>
+ * @description 注入全局配置对象
+ */
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
-
-// const exFunction = ref({} as Record<string, string>);
-// const exFormatter = ref({} as Record<string, string>);
-// const exParser = ref({} as Record<string, string>);
+/**
+ * 表格全选状态
+ * @type Ref<boolean>
+ * @description 注入表格全选状态
+ */
 const isTableSelectAll = inject("isTableSelectAll") as Ref<boolean>;
+/**
+ * 外部选项
+ * @type PaOptionType.Default
+ * @description 注入外部传入的选项数据
+ */
 const exOptions = inject("exOptions") as PaOptionType.Default;
+/**
+ * 单元格外部依赖
+ * @type PaTableCellExDependentType
+ * @description 注入单元格外部依赖
+ */
 const exCellDependent = inject("exCellDependent") as PaTableCellExDependentType;
+/**
+ * 语言包
+ * @type Record<string, string>
+ * @description 注入当前语言包
+ */
 const languagePackage = inject("languagePackage") as Record<string, string>;
+/**
+ * 选择变化处理
+ * @description 注入行选择变化处理方法
+ */
 const handleSelectChange = inject("handleSelectChange") as (params: {
   row: PaTableUseType.PaTableInDataType;
   parentRow?: PaTableUseType.PaTableInDataType;
 }) => void;
-
-// 注入鼠标悬停相关函数和状态
+/**
+ * 单元格鼠标移入处理
+ * @description 注入鼠标移入事件处理函数
+ */
 const handleCellMouseEnter = inject("handleCellMouseEnter") as (rowIndex: number, columnIndex: number) => void;
+/**
+ * 单元格鼠标移出处理
+ * @description 注入鼠标移出事件处理函数
+ */
 const handleCellMouseLeave = inject("handleCellMouseLeave") as () => void;
-
-// # 处理单元格显示值
+/**
+ * 表格单元格变化回调
+ * @type any
+ * @description 注入单元格变化回调函数
+ */
+const tableCellChange: any = inject("tableCellChange");
+/**
+ * 校验字段
+ * @type any
+ * @description 注入字段校验函数
+ */
+const validateField: any = inject("validateField");
+/**
+ * 组件事件
+ * @description 单元格组件的事件定义
+ */
+const emits = defineEmits(["changeRowStatus", "handleChangeChecked", "selectRowBack", "radioRowBack"]);
+/**
+ * 设置单元格显示值
+ * @param row - 行数据
+ * @param prop - 属性名
+ * @param cellConfig - 单元格配置
+ * @returns 格式化后的显示值
+ * @description 根据单元格类型格式化显示值
+ */
 function setCellDisplayValue(row: PaTableUseType.PaTableInDataType, prop: string, cellConfig: PaFormChildType) {
   const type = cellConfig.type;
   if (type == "number") {
@@ -374,16 +469,16 @@ function setCellDisplayValue(row: PaTableUseType.PaTableInDataType, prop: string
     return row[prop];
   }
 }
-
-const tableCellChange: any = inject("tableCellChange");
-const validateField: any = inject("validateField");
-
+/**
+ * 值变化处理
+ * @param data - 变化的数据
+ * @param row - 行数据
+ * @description 处理单元格值变化，触发表格单元格变化事件和校验
+ */
 function valueChange(data, row) {
   delete row.isSelected;
   delete row.isIndeterminate;
   tableCellChange({ prop: row.prop, ...data, row });
   validateField(row.prop, data.value, row);
 }
-
-const emits = defineEmits(["changeRowStatus", "handleChangeChecked", "selectRowBack", "radioRowBack"]);
 </script>

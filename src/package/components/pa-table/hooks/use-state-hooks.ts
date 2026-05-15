@@ -1,7 +1,7 @@
 /**
  * @description useStateHooks 状态钩子
  */
-import { Reactive, Ref, ref, reactive, nextTick } from "vue";
+import { Ref, ref, reactive, nextTick, Reactive } from "vue";
 import { ComponentProps, ComponentItemProps, ComponentUseItemProps, PaTableUseType } from "../types";
 import { useObserverHooks } from "./use-observer-hooks";
 import { setWidthToNumber, setWidthToString } from "./string-number";
@@ -92,7 +92,12 @@ export const useStateHooks = (
     awaitSelectData: []
   });
 
-  // 添加鼠标悬停事件处理函数
+  /**
+   * 鼠标悬停事件处理
+   * @param rowIndex - 行索引
+   * @param columnIndex - 列索引
+   * @description 鼠标移入单元格时更新悬停状态
+   */
   function handleCellMouseEnter(rowIndex: number, columnIndex: number) {
     state.hoveredRowIndex = rowIndex;
     state.hoveredColumnIndex = columnIndex;
@@ -130,16 +135,16 @@ export const useStateHooks = (
     return item.prop == "operation";
   }
 
-  // # Function  解析·校验规则
+  /**
+   * 解析·校验规则
+   * @param item - 表单项配置
+   * @description 解析并设置单元格的校验规则
+   */
   function setRule(item: PaFormChildType) {
     const baseRules =
       item.display || item.disabled
         ? []
         : [{ required: true, message: languagePackage.value["requiredMessage"], trigger: "blur" }];
-    // if (item.type == "select" || item.type == "multiple-select" || item.type == "number") {
-    //   baseRules = [{ required: true, message: "此项为必填项", trigger: "change" }];
-    // }
-    // const _rules = item?.isText == true ? [] : item.rules ? item.rules : [{ required: true, message: "此项为必填项", trigger: "blur" }];
     let _rules = baseRules;
     if (item.rules && Array.isArray(item.rules)) {
       let isRequired = true;
@@ -168,12 +173,7 @@ export const useStateHooks = (
       item.rules = false;
     }
 
-    // >-------------> 强制不使用校验 <------------<
     const _prop = item.prop as string;
-    // if (props.display) {
-    //   state.inRules[_prop] = item.display || item.disabled ? [] : item.rules || [];
-    //   return;
-    // }
     if (_prop && item.rules != false && _rules.length) {
       const _baseRules = props.exDependent?.exCellRules || {};
       if (_baseRules[_prop]) {
@@ -185,9 +185,10 @@ export const useStateHooks = (
   }
 
   /**
-   * # Function 设置表格配置
-   * @description 设置表格配置，根据 props.useChildren 或 props.useExpand 来添加 row 类型的列
-   * @param {Array<ComponentItemProps>} _config - 表格配置
+   * 设置表格配置
+   * @param _config - 表格列配置数组
+   * @param callback - 配置完成回调
+   * @description 根据 props.useChildren 或 props.useExpand 添加 row 类型的列
    */
   function setTableConfig(_config: Array<ComponentItemProps & ComponentUseItemProps>, callback?: () => void) {
     const config = cloneDeep(_config);

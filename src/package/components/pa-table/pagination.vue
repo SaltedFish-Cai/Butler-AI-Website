@@ -13,9 +13,15 @@
 </template>
 
 <script setup lang="ts" name="Pagination">
-// # Import
+/**
+ * 模块导入
+ * @description 导入组件类型定义
+ */
 import { PaTableUseType } from "./types";
 
+/**
+ * 分页组件属性类型
+ */
 interface PaginationPropsType {
   pageable: PaTableUseType.Pageable;
   pageNum: number;
@@ -31,7 +37,11 @@ interface PaginationPropsType {
   handleCurrentChange: (currentPage: number) => void;
   handleChangeMaxPage: (maxPage: number) => void;
 }
-
+/**
+ * 组件属性
+ * @type PaginationPropsType
+ * @description 分页组件的属性对象
+ */
 const props = defineProps<PaginationPropsType>();
 </script>
 

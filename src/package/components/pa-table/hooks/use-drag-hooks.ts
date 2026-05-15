@@ -1,58 +1,71 @@
 /**
- * @description ComponentItemProps 和 ComponentUseItemProps 类型导入
+ * 模块导入
+ * @description 导入组件类型定义
  */
 import { ComponentItemProps, ComponentUseItemProps } from "../types";
 /**
- * @description setWidthToNumber 函数导入
+ * 模块导入
+ * @description 导入宽度转换工具
  */
 import { setWidthToNumber } from "./string-number";
 /**
- * @description vue 响应式相关导入
+ * 模块导入
+ * @description 导入 Vue 响应式 API
  */
 import { Ref, ref } from "vue";
 /**
- * @description 深拷贝工具函数
+ * 模块导入
+ * @description 导入深拷贝工具函数
  */
 import cloneDeep from "../../tools/clone-deep";
 /**
- * @description 拖拽状态
+ * 拖拽状态
+ * @type Ref<number>
+ * @description 当前拖拽宽度列索引
  */
 const positionWidthIndex = ref(-1);
+/**
+ * 拖拽中状态
+ * @type Ref<boolean>
+ * @description 是否正在拖拽
+ */
 const dragIng = ref(false);
 /**
- * @description useDragHooks 拖拽钩子
- * @param tableStructure 表格结构
+ * useDragHooks 拖拽钩子
+ * @param tableStructure - 表格结构引用
  * @returns 拖拽相关方法
  */
 export const useDragHooks = (tableStructure: Ref<Array<ComponentItemProps & ComponentUseItemProps>>) => {
+  const isBrowser = typeof window !== "undefined";
   /**
-   * @description 拖拽开始处理
-   * @param e 拖拽事件
-   * @param index 索引
+   * 拖拽开始处理
+   * @param e - 拖拽事件
+   * @param index - 索引
+   * @description 拖拽列开始时设置透明度
    */
-  const handleDragStart = (e: DragEvent, index: number) => {
+  function handleDragStart(e: DragEvent, index: number) {
     e.dataTransfer!.setData("text/plain", index.toString());
     (e.target as HTMLElement).style.opacity = "0.5";
     dragIng.value = true;
-  };
+  }
   /**
-   * @description 拖拽经过处理
-   * @param e 拖拽事件
+   * 拖拽经过处理
+   * @param e - 拖拽事件
+   * @description 拖拽经过列时高亮
    */
-  const handleDragOver = (e: DragEvent) => {
+  function handleDragOver(e: DragEvent) {
     e.preventDefault();
     const items = document.querySelectorAll(".pa-table_body_header_label");
     items.forEach(item => item.classList.remove("dragover"));
-    if (e.currentTarget) {
-      (e.currentTarget as HTMLElement).classList.add("dragover");
-    }
-  };
+    if (e.currentTarget) (e.currentTarget as HTMLElement).classList.add("dragover");
+  }
   /**
-   * @description 拖拽放置处理
-   * @param e 拖拽事件
-   * @param newIndex 新索引
+   * 拖拽放置处理
+   * @param e - 拖拽事件
+   * @param newIndex - 新索引
+   * @description 拖拽放置列时重新排列
    */
-  const handleDrop = (e: DragEvent, newIndex: number) => {
+  function handleDrop(e: DragEvent, newIndex: number) {
     e.preventDefault();
     const oldIndex = parseInt(e.dataTransfer!.getData("text/plain"));
     if (oldIndex !== newIndex) {
@@ -62,29 +75,31 @@ export const useDragHooks = (tableStructure: Ref<Array<ComponentItemProps & Comp
       tableStructure.value = newStructure;
     }
     (e.target as HTMLElement).style.opacity = "1";
-  };
+  }
   /**
-   * @description 拖拽结束处理
-   * @param e 拖拽事件
+   * 拖拽结束处理
+   * @param e - 拖拽事件
+   * @description 拖拽结束后恢复样式
    */
-  const handleDragEnd = (e: DragEvent) => {
+  function handleDragEnd(e: DragEvent) {
     (e.target as HTMLElement).style.opacity = "1";
     const items = document.querySelectorAll(".pa-table_body_header_label");
     items.forEach(item => item.classList.remove("dragover"));
     dragIng.value = false;
-  };
+  }
   /**
-   * @description 拖拽宽度开始处理
-   * @param e 鼠标事件
-   * @param index 索引
+   * 拖拽宽度开始处理
+   * @param e - 鼠标事件
+   * @param index - 索引
+   * @description 拖拽调整列宽度
    */
-  const handleDragWidthStart = (e: DragEvent, index: number) => {
+  function handleDragWidthStart(e: DragEvent, index: number) {
     e.preventDefault();
     const basePositionX = e.clientX;
     const basePositionRow = cloneDeep(tableStructure.value[index]);
     let basePositionIndex = index;
     positionWidthIndex.value = index;
-    const handleDragWidthOver = (e: MouseEvent) => {
+    function handleDragWidthOver(e: MouseEvent) {
       e.preventDefault();
       if (!basePositionRow) return;
       const currentPositionX = e.clientX;
@@ -93,17 +108,21 @@ export const useDragHooks = (tableStructure: Ref<Array<ComponentItemProps & Comp
       const width = `${isWidth % 2 == 0 ? isWidth : isWidth + 1}px`;
       tableStructure.value[basePositionIndex].baseWidth = width;
       tableStructure.value[basePositionIndex].width = width;
-    };
-    const handleDragWidthEnd = (e: MouseEvent) => {
+    }
+    function handleDragWidthEnd(e: MouseEvent) {
       e.preventDefault();
       basePositionIndex = -1;
       positionWidthIndex.value = -1;
-      if (typeof window !== "undefined") window.removeEventListener("mousemove", handleDragWidthOver);
-      if (typeof window !== "undefined") window.removeEventListener("mouseup", handleDragWidthEnd);
-    };
-    if (typeof window !== "undefined") window.addEventListener("mousemove", handleDragWidthOver);
-    if (typeof window !== "undefined") window.addEventListener("mouseup", handleDragWidthEnd);
-  };
+      if (isBrowser) {
+        window.removeEventListener("mousemove", handleDragWidthOver);
+        window.removeEventListener("mouseup", handleDragWidthEnd);
+      }
+    }
+    if (isBrowser) {
+      window.addEventListener("mousemove", handleDragWidthOver);
+      window.addEventListener("mouseup", handleDragWidthEnd);
+    }
+  }
   return {
     handleDragStart,
     handleDragOver,
