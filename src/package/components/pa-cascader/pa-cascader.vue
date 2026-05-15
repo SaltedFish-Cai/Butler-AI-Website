@@ -104,64 +104,64 @@
 
 <script lang="ts" setup>
 /**
- * 模块导入
+ * **模块导入**
  * @description 导入 Vue 组合式 API
  */
 import { ref, computed, watch, nextTick, provide, inject, onBeforeUnmount, type ComputedRef } from "vue";
 /**
- * 模块导入
+ * **模块导入**
  * @description 导入级联选项子组件
  */
 import PaCascaderOption from "./pa-cascader-option.vue";
 /**
- * 模块导入
+ * **模块导入**
  * @description 导入组件类型定义
  */
-import { ComponentProps, ComponentEmits } from "./types";
+import type { ComponentProps, ComponentEmits } from "./types";
 /**
- * 模块导入
+ * **模块导入**
  * @description 导入元素位置获取工具
  */
 import { getElementPosition } from "../utils/getElementPosition";
 /**
- * 模块导入
+ * **模块导入**
  * @description 导入数据查找工具
  */
 import { findDataWithSelect } from "../utils/find-data";
 /**
- * 模块导入
+ * **模块导入**
  * @description 导入全局配置类型
  */
-import { PancakeGlobalConfigType } from "../pa-manager/types";
+import type { PancakeGlobalConfigType } from "../pa-manager/types";
 /**
- * 模块导入
+ * **模块导入**
  * @description 导入选项类型定义
  */
-import { PaOptionType } from "../manager-type";
+import type { PaOptionType } from "../manager-type";
 /**
- * 模块导入
+ * **模块导入**
  * @description 导入 isNil 判断工具
  */
 import isNil from "../tools/is-nil";
 /**
- * 模块导入
+ * **模块导入**
  * @description 导入 isEqual 比较工具
  */
 import isEqual from "../tools/is-equal";
 /**
- * 模块导入
+ * **模块导入**
  * @description 导入 cloneDeep 深拷贝工具
  */
 import cloneDeep from "../tools/clone-deep";
 /**
- * 全局配置注入
- * @type ComputedRef<PancakeGlobalConfigType>
+ * **全局配置注入**
+ * @type `ComputedRef<PancakeGlobalConfigType>`
  * @description 从父组件注入的全局配置
  */
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 /**
- * 组件属性
- * @type ComponentProps
+ * **组件属性**
+ * @type `ComponentProps`
  * @description 组件的属性对象
  */
 const props = withDefaults(defineProps<ComponentProps>(), {
@@ -170,111 +170,111 @@ const props = withDefaults(defineProps<ComponentProps>(), {
   useTextByLink: true
 });
 /**
- * 组件事件定义
+ * **组件事件定义**
  * @description 定义组件可触发的事件
  */
 const emit = defineEmits<ComponentEmits>();
 /**
- * Popover 组件引用
- * @type Ref
+ * **Popover 组件引用**
+ * @type `Ref`
  * @description 弹出层组件的引用
  */
 const popoverRef = ref();
 /**
- * 选择器容器引用
- * @type Ref
+ * **选择器容器引用**
+ * @type `Ref`
  * @description 选择器容器的 DOM 引用
  */
 const selectRef = ref();
 /**
- * 焦点状态
- * @type Ref<boolean>
+ * **焦点状态**
+ * @type `Ref<boolean>`
  * @description 当前是否处于焦点状态
  */
 const isFocus = ref(false);
 /**
- * 选项列表引用
- * @type Ref
+ * **选项列表引用**
+ * @type `Ref`
  * @description 选项列表容器的 DOM 引用
  */
 const optionsRef = ref();
 /**
- * 输入框引用
- * @type Ref
+ * **输入框引用**
+ * @type `Ref`
  * @description 输入框的 DOM 引用
  */
 const inputRef = ref();
 /**
- * 等待标签状态
- * @type Ref<boolean>
+ * **等待标签状态**
+ * @type `Ref<boolean>`
  * @description 是否等待标签渲染完成
  */
 const waitTag = ref(false);
 /**
- * 选项列表高度
- * @type Ref<string>
+ * **选项列表高度**
+ * @type `Ref<string>`
  * @description 选项列表的高度值
  */
 const optionsHeight = ref("auto");
 /**
- * 焦点定时器引用
- * @type Ref<ReturnType<typeof setTimeout> | null>
+ * **焦点定时器引用**
+ * @type `Ref<ReturnType<typeof setTimeout> | null>`
  * @description 存储 setTimeout 返回值，用于清理
  */
 const focusTimer = ref<ReturnType<typeof setTimeout> | null>(null);
 /**
- * 弹出层定时器引用
- * @type Ref<ReturnType<typeof setTimeout> | null>
+ * **弹出层定时器引用**
+ * @type `Ref<ReturnType<typeof setTimeout> | null>`
  * @description 存储 setTimeout 返回值，用于清理
  */
 const popoverTimer = ref<ReturnType<typeof setTimeout> | null>(null);
 /**
- * 选项列表
- * @type Ref<Array<PaOptionType.Select>>
+ * **选项列表**
+ * @type `Ref<Array<PaOptionType.Select>>`
  * @description 外部传入的选项列表
  */
 const exOptionsList = ref([] as PaOptionType.Select[]);
 /**
- * 扁平化选项列表
- * @type Ref<Array<PaOptionType.Select>>
+ * **扁平化选项列表**
+ * @type `Ref<Array<PaOptionType.Select>>`
  * @description 扁平化处理后的选项列表
  */
 const flatExOptions = ref([] as PaOptionType.Select[]);
 /**
- * 过滤值
- * @type Ref<string>
+ * **过滤值**
+ * @type `Ref<string>`
  * @description 输入框过滤值
  */
 const filterValue = ref("");
 /**
- * 输入框值
- * @type Ref<string>
+ * **输入框值**
+ * @type `Ref<string>`
  * @description 输入框中显示的值
  */
 const inputVal = ref("");
 /**
- * 当前值
- * @type Ref<Array<number | string> | number | string>
+ * **当前值**
+ * @type `Ref<Array<number | string> | number | string>`
  * @description 当前选中的值
  */
 const inValue = ref<Array<number | string> | number | string>(props.modelValue || []);
 /**
- * 旧值存储
- * @type Array<number | string> | number | string
+ * **旧值存储**
+ * @type `Array<number | string>` | `number` | `string`
  * @description 用于存储上一次的值，用于对比
  */
 let oldValue: Array<number | string> | number | string = props.modelValue || typeof props.modelValue === "string" ? "" : [];
 /**
- * 当前语言值
- * @type ComputedRef<string>
+ * **当前语言值**
+ * @returns `string` 当前选中的语言
  * @description 当前选中的语言
  */
 const languageValue = computed(() => {
   return PancakeGlobalConfig.value?.language?.value || "zh-CN";
 });
 /**
- * 语言包
- * @type ComputedRef
+ * **语言包**
+ * @returns `object` 当前语言的文本配置
  * @description 当前语言的文本配置
  */
 const languagePackage = computed(() => {
@@ -283,24 +283,24 @@ const languagePackage = computed(() => {
     : { empty: "No Data", emptyFind: "No Data", selectPlaceholder: "Please Select Content" };
 });
 /**
- * 是否多选模式
- * @type ComputedRef<boolean>
+ * **是否多选模式**
+ * @returns `boolean` 是否为多选模式
  * @description 根据类型判断是否为多选模式
  */
 const isMultiple = computed(() => {
   return props.type == "multiple-cascader-check" || props.type == "multiple-cascader";
 });
 /**
- * 是否带复选框
- * @type ComputedRef<boolean>
+ * **是否带复选框**
+ * @returns `boolean` 是否显示复选框
  * @description 根据类型判断是否显示复选框
  */
 const isCheck = computed(() => {
   return props.type == "cascader-check" || props.type == "multiple-cascader-check";
 });
 /**
- * 过滤后的选项列表
- * @type ComputedRef<Array<PaOptionType.Select>>
+ * **过滤后的选项列表**
+ * @returns `Array<PaOptionType.Select>` 过滤后的选项列表
  * @description 根据输入值过滤后的选项列表
  */
 const filterOptionsList = computed(() => {
@@ -316,8 +316,8 @@ const filterOptionsList = computed(() => {
   return exData;
 });
 /**
- * 输入框显示值
- * @type ComputedRef<string>
+ * **输入框显示值**
+ * @returns `string` 输入框中实际显示的文本
  * @description 输入框中实际显示的文本
  */
 const inputValue = computed(() => {
@@ -333,8 +333,8 @@ const inputValue = computed(() => {
   }
 });
 /**
- * 输入框占位符
- * @type ComputedRef<string>
+ * **输入框占位符**
+ * @returns `string` 输入框的占位符文本
  * @description 输入框的占位符文本
  */
 const inputPlaceholder = computed(() => {
@@ -359,8 +359,8 @@ const inputPlaceholder = computed(() => {
   }
 });
 /**
- * 标签值列表
- * @type ComputedRef<Array<PaOptionType.Select>>
+ * **标签值列表**
+ * @returns `Array<PaOptionType.Select>` 多选模式下的标签列表
  * @description 多选模式下显示的标签列表
  */
 const tagValue = computed(() => {
@@ -375,10 +375,10 @@ const tagValue = computed(() => {
   }
 });
 /**
- * 查找父级标签
- * @param item - 当前选项
- * @param findText - 当前文本
- * @returns string 拼接后的完整路径文本
+ * **查找父级标签**
+ * @param `item` `PaOptionType.Select` | `undefined` 当前选项
+ * @param `findText` `object` | `string` 当前文本
+ * @returns `string` 拼接后的完整路径文本
  * @description 递归查找父级并拼接标签路径
  */
 function findParent(item: PaOptionType.Select | undefined, findText: object | string): string {
@@ -390,9 +390,9 @@ function findParent(item: PaOptionType.Select | undefined, findText: object | st
   return findText as string;
 }
 /**
- * 处理输入事件
- * @param target - 输入事件对象
- * @returns void
+ * **处理输入事件**
+ * @param `target` `object` 输入事件对象
+ * @returns `void`
  * @description 处理输入框输入事件，更新过滤值
  */
 function handleInput({ target }): void {
@@ -408,8 +408,8 @@ function handleInput({ target }): void {
   });
 }
 /**
- * 处理焦点事件
- * @returns void
+ * **处理焦点事件**
+ * @returns `void`
  * @description 处理输入框获取焦点事件
  */
 function handleFocus(): void {
@@ -419,9 +419,9 @@ function handleFocus(): void {
   }, 200);
 }
 /**
- * 处理弹出层变化
- * @param data - 弹出层显示状态
- * @returns void
+ * **处理弹出层变化**
+ * @param `data` `boolean` 弹出层显示状态
+ * @returns `void`
  * @description 处理弹出层显示/隐藏状态变化
  */
 function handlePopoverChange(data: boolean): void {
@@ -446,9 +446,9 @@ function handlePopoverChange(data: boolean): void {
   }
 }
 /**
- * 处理选项点击
- * @param item - 被点击的选项
- * @returns void
+ * **处理选项点击**
+ * @param `item` `PaOptionType.Select` 被点击的选项
+ * @returns `void`
  * @description 处理选项点击事件，更新选中值
  */
 function handleOptionClick(item: PaOptionType.Select): void {
@@ -475,9 +475,9 @@ function handleOptionClick(item: PaOptionType.Select): void {
 }
 provide("handleOptionClick", handleOptionClick);
 /**
- * 移除标签
- * @param param - 包含要移除值的对象
- * @returns void
+ * **移除标签**
+ * @param `param` `object` 包含要移除值的对象
+ * @returns `void`
  * @description 从多选值中移除指定标签
  */
 function removeTag({ value }): void {
@@ -492,9 +492,9 @@ function removeTag({ value }): void {
   oldValue = inValue.value;
 }
 /**
- * 查找数据显示
- * @param data - 要查找的数据
- * @returns string 查找到的显示文本
+ * **查找数据显示**
+ * @param `data` `Array<number | string>` | `number` | `string` 要查找的数据
+ * @returns `string` 查找到的显示文本
  * @description 根据值查找对应的显示文本
  */
 function findData(data: Array<number | string> | number | string): string {
@@ -504,9 +504,9 @@ function findData(data: Array<number | string> | number | string): string {
   return findDataWithSelect(data, flatExOptions.value, props.useTextByLink, languageValue.value);
 }
 /**
- * 清除输入
- * @param e - 鼠标事件
- * @returns void
+ * **清除输入**
+ * @param `e` `MouseEvent` 鼠标事件
+ * @returns `void`
  * @description 清空当前选中的值
  */
 function clearInput(e: MouseEvent): void {
@@ -517,9 +517,9 @@ function clearInput(e: MouseEvent): void {
   oldValue = inValue.value;
 }
 /**
- * 扁平化选项列表
- * @param options - 选项列表
- * @returns Array<PaOptionType.Select> 扁平化后的列表
+ * **扁平化选项列表**
+ * @param `options` `Array<PaOptionType.Select>` 选项列表
+ * @returns `Array<PaOptionType.Select>` 扁平化后的列表
  * @description 将树形选项列表转换为扁平结构
  */
 function flatOptions(options: Array<PaOptionType.Select>): Array<PaOptionType.Select> {
@@ -535,10 +535,10 @@ function flatOptions(options: Array<PaOptionType.Select>): Array<PaOptionType.Se
   });
 }
 /**
- * 设置映射值
- * @param data - 选项数据
- * @param parentValue - 父级值
- * @returns Array<PaOptionType.Select> 处理后的数据
+ * **设置映射值**
+ * @param `data` `Array<PaOptionType.Select>` 选项数据
+ * @param `parentValue` `string` | `undefined` 父级值
+ * @returns `Array<PaOptionType.Select>` 处理后的数据
  * @description 递归设置选项值的映射关系
  */
 function setMapValue(data: Array<PaOptionType.Select>, parentValue?: string): Array<PaOptionType.Select> {
@@ -553,7 +553,7 @@ function setMapValue(data: Array<PaOptionType.Select>, parentValue?: string): Ar
   return _data;
 }
 /**
- * 组件卸载前生命周期
+ * **组件卸载前生命周期**
  * @description 清理定时器，防止内存泄漏
  */
 onBeforeUnmount(() => {
@@ -567,7 +567,7 @@ onBeforeUnmount(() => {
   }
 });
 /**
- * 监听 modelValue 变化
+ * **监听 modelValue 变化**
  * @description 同步外部传入的值到内部状态
  */
 watch(
@@ -583,7 +583,7 @@ watch(
   { immediate: true }
 );
 /**
- * 监听 exOptions 变化
+ * **监听 exOptions 变化**
  * @description 同步外部传入的选项列表
  */
 watch(

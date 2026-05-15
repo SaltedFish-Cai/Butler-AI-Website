@@ -25,46 +25,46 @@
 
 <script lang="ts" setup>
 /**
- * 模块导入
+ * **模块导入**
  * @description 导入 Vue 组合式 API
  */
 import { computed, inject, ref, watch, type ComputedRef } from "vue";
 
 /**
- * 模块导入
+ * **模块导入**
  * @description 导入组件类型定义
  */
-import { ComponentItemProps, ComponentItemEmits } from "./types";
+import type { ComponentItemProps, ComponentItemEmits } from "./types";
 
 /**
- * 模块导入
+ * **模块导入**
  * @description 导入全局配置类型
  */
-import { PancakeGlobalConfigType } from "../pa-manager/types";
+import type { PancakeGlobalConfigType } from "../pa-manager/types";
 
 /**
- * 模块导入
+ * **模块导入**
  * @description 导入 lodash isNil 工具函数
  */
 import isNil from "../tools/is-nil";
 
 /**
- * 组件属性
- * @type ComponentItemProps & { isOption?: boolean }
+ * **组件属性**
+ * @type `ComponentItemProps & { isOption?: boolean }`
  * @description 组件的属性对象
  */
 const props = withDefaults(defineProps<ComponentItemProps & { isOption?: boolean }>(), { value: "", isChecked: undefined });
 
 /**
- * 全局配置注入
- * @type ComputedRef<PancakeGlobalConfigType>
+ * **全局配置注入**
+ * @type `ComputedRef<PancakeGlobalConfigType>`
  * @description 注入全局配置对象
  */
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 
 /**
- * 当前语言值
- * @type ComputedRef<string>
+ * **当前语言值**
+ * @returns `string` 当前选中的语言
  * @description 当前选中的语言
  */
 const languageValue = computed(() => {
@@ -72,21 +72,21 @@ const languageValue = computed(() => {
 });
 
 /**
- * 组件事件定义
+ * **组件事件定义**
  * @description 定义组件可触发的事件
  */
 const emits = defineEmits<ComponentItemEmits>();
 
 /**
- * 内部值
- * @type Ref<boolean | number | string>
+ * **内部值**
+ * @type `Ref<boolean | number | string>`
  * @description 复选框子项的内部绑定值
  */
 const inValue = ref<boolean | number | string | string>("");
 
 /**
- * 是否选中
- * @type ComputedRef<boolean>
+ * **是否选中**
+ * @returns `boolean` 当前复选框是否选中
  * @description 计算当前复选框是否处于选中状态
  */
 const isChecked = computed(() => {
@@ -99,15 +99,15 @@ const isChecked = computed(() => {
 });
 
 /**
- * 旧值存储
- * @type boolean | number | string
+ * **旧值存储**
+ * @type `boolean` | `number` | `string`
  * @description 存储上一次的值，用于对比
  */
 let oldValue: boolean | number | string = "";
 
 /**
- * 处理点击事件
- * @returns void | undefined
+ * **处理点击事件**
+ * @returns `void` | `undefined`
  * @description 处理复选框子项点击事件
  */
 function changeEvent(): undefined | void {
@@ -122,7 +122,7 @@ function changeEvent(): undefined | void {
 }
 
 /**
- * 监听 modelValue 变化
+ * **监听 modelValue 变化**
  * @description 同步外部传入的值到内部状态
  */
 watch(
