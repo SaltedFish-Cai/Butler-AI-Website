@@ -34,12 +34,6 @@
       />
 
       <pa-button-group type="warning" class="mr-size">
-        <!-- <pa-button
-          type="warning"
-          icon-name="setting_line"
-          @click="handlePlayground"
-          :text="{ 'zh-CN': '模拟场配置', 'en-US': 'Playground Config' }"
-        /> -->
         <pa-button
           type="warning"
           icon-name="report_data_line"
@@ -358,45 +352,136 @@
 
 <script lang="tsx" setup>
 /**
+ * 模块导入
  * @description 导入 Vue 相关模块
  */
 import { ref, watch, computed, provide, useTemplateRef, onMounted, inject, Ref } from "vue";
+/**
+ * 模块导入
+ * @description 导入组件类型定义
+ */
 import { ComponentProps, PaPlaygroundType, PaPlaygroundItem } from "./types";
+/**
+ * 模块导入
+ * @description 导入 SVG 钩子
+ */
 import { useSvgHooks } from "./hooks/use-svg-hooks";
+/**
+ * 模块导入
+ * @description 导入自动保存钩子
+ */
 import { useAutoSave } from "./hooks/use-auto-save";
-
+/**
+ * 模块导入
+ * @description 导入项目 SVG 子组件
+ */
 import MItemSvg from "./components/item-svg.vue";
-
+/**
+ * 模块导入
+ * @description 导入 SVG 拖拽子组件
+ */
 import MSvgDraggable from "./components/svg-draggable.vue";
-
+/**
+ * 模块导入
+ * @description 导入表格列编辑弹窗子组件
+ */
 import DialogEditTableCol from "./components/table-components/dialog-edit-table-col.vue";
+/**
+ * 模块导入
+ * @description 导入表格列快捷编辑弹窗子组件
+ */
 import DialogEditTableColQuick from "./components/table-components/dialog-edit-table-col-quick.vue";
+/**
+ * 模块导入
+ * @description 导入表单项编辑弹窗子组件
+ */
 import DialogEditFormItem from "./components/form-components/dialog-edit-form-item.vue";
+/**
+ * 模块导入
+ * @description 导入表单项快捷编辑弹窗子组件
+ */
 import DialogEditFormItemQuick from "./components/form-components/dialog-edit-form-item-quick.vue";
+/**
+ * 模块导入
+ * @description 导入选项卡项快捷编辑弹窗子组件
+ */
 import DialogEditTabsItemQuick from "./components/tabs-components/dialog-edit-tabs-item-quick.vue";
-
+/**
+ * 模块导入
+ * @description 导入可见性弹窗子组件
+ */
 import MVisibleDialog from "./components/visible-dialog.vue";
+/**
+ * 模块导入
+ * @description 导入按钮编辑弹窗子组件
+ */
 import DialogEditButton from "./components/table-components/dialog-edit-button.vue";
+/**
+ * 模块导入
+ * @description 导入基础配置编辑弹窗子组件
+ */
 import DialogEditBaseConfig from "./components/dialog-edit-base-config.vue";
+/**
+ * 模块导入
+ * @description 导入页面配置编辑弹窗子组件
+ */
 import DialogEditPageConfig from "./components/dialog-edit-page-config.vue";
-
+/**
+ * 模块导入
+ * @description 导入接口管理弹窗子组件
+ */
 import DialogInterfaceManagement from "./components/dialog-interface-management.vue";
+/**
+ * 模块导入
+ * @description 导入数据结构管理弹窗子组件
+ */
 import DialogDataStructureManagement from "./components/dialog-data-structure-management.vue";
+/**
+ * 模块导入
+ * @description 导入页面基础配置编辑弹窗子组件
+ */
 import DialogEditPageBaseConfig from "./components/dialog-edit-page-base-config.vue";
+/**
+ * 模块导入
+ * @description 导入选项管理弹窗子组件
+ */
 import DialogOptionManagement from "./components/dialog-option-management.vue";
-
+/**
+ * 模块导入
+ * @description 导入模拟场子组件
+ */
 import MSimulatedField from "./components/simulated-field.vue";
+/**
+ * 模块导入
+ * @description 导入模拟场可见性子组件
+ */
 import PaPlaygroundVisible from "./pa-playground-visible.vue";
-
+/**
+ * 模块导入
+ * @description 导入 Pancake 类型定义
+ */
 import { PaStructureType } from "PancakeType";
+/**
+ * 模块导入
+ * @description 导入页面按钮类型
+ */
 import { PaPlaygroundPageButtonType } from "./components/types";
+/**
+ * 模块导入
+ * @description 导入 IndexDB 工具
+ */
 import { openDB } from "../indexDB/indexDB";
+/**
+ * 模块导入
+ * @description 导入表格选项配置
+ */
 import { TableUseOptions } from "./configs/options";
 
 /**
- * @description 组件属性
+ * 组件属性
+ * @type ComponentProps
+ * @description 组件属性对象
  */
-
 const props = withDefaults(defineProps<ComponentProps>(), {
   data: () => ({
     id: new Date().getTime().toString(),
@@ -413,82 +498,246 @@ const props = withDefaults(defineProps<ComponentProps>(), {
   })
 });
 
+/**
+ * 全局配置
+ * @type Ref
+ * @description 注入全局配置
+ */
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as Ref<any>;
+/**
+ * 语言设置
+ * @type ComputedRef
+ * @description 当前语言设置
+ */
 const language = computed(() => PancakeGlobalConfig.value?.language?.value || "zh-CN");
 
 /**
  * 表格组件引用
+ * @type Ref
+ * @description 表格组件引用映射
  */
 const tableRefs = ref<Record<string, any>>({});
 /**
  * 表单组件引用
+ * @type Ref
+ * @description 表单组件引用映射
  */
 const formRefs = ref<Record<string, any>>({});
 /**
  * 选项卡组件引用
+ * @type Ref
+ * @description 选项卡组件引用映射
  */
 const tabsItemRefs = ref<Record<string, any>>({});
-
+/**
+ * 拖拽组件引用
+ * @type Ref
+ * @description SVG 拖拽组件引用映射
+ */
 const draggableRefs = ref<Record<string, any>>({});
-
+/**
+ * 编辑基础信息弹窗引用
+ * @type TemplateRef
+ */
 const editBaseDialogRef = useTemplateRef("editBaseDialogRef");
+/**
+ * 数据结构管理弹窗引用
+ * @type TemplateRef
+ */
 const dataStructureManagementDialogRef = useTemplateRef("dataStructureManagementDialogRef");
+/**
+ * 接口管理弹窗引用
+ * @type TemplateRef
+ */
 const interfaceManagementDialogRef = useTemplateRef("interfaceManagementDialogRef");
+/**
+ * 选项管理弹窗引用
+ * @type TemplateRef
+ */
 const optionManagementDialogRef = useTemplateRef("optionManagementDialogRef");
+/**
+ * 编辑项目基础信息弹窗引用
+ * @type TemplateRef
+ */
 const editItemBaseDialogRef = useTemplateRef("editItemBaseDialogRef");
+/**
+ * 编辑页面基础信息弹窗引用
+ * @type TemplateRef
+ */
 const editPageBaseDialogRef = useTemplateRef("editPageBaseDialogRef");
+/**
+ * 编辑表格列弹窗引用
+ * @type TemplateRef
+ */
 const editTableColDialogRef = useTemplateRef("editTableColDialogRef");
+/**
+ * 编辑表单项弹窗引用
+ * @type TemplateRef
+ */
 const editFormItemDialogRef = useTemplateRef("editFormItemDialogRef");
+/**
+ * 编辑表单项快捷弹窗引用
+ * @type TemplateRef
+ */
 const editFormItemQuickDialogRef = useTemplateRef("editFormItemQuickDialogRef");
+/**
+ * 编辑选项卡项快捷弹窗引用
+ * @type TemplateRef
+ */
 const editTabsItemQuickDialogRef = useTemplateRef("editTabsItemQuickDialogRef");
-
+/**
+ * 可见性弹窗引用
+ * @type TemplateRef
+ */
 const visibleDialogRef = useTemplateRef("visibleDialogRef");
+/**
+ * 编辑操作弹窗引用
+ * @type TemplateRef
+ */
 const editOperationDialogRef = useTemplateRef("editOperationDialogRef");
+/**
+ * 编辑表格列快捷弹窗引用
+ * @type TemplateRef
+ */
 const editTableColQuickDialogRef = useTemplateRef("editTableColQuickDialogRef");
+/**
+ * 模拟场配置弹窗引用
+ * @type TemplateRef
+ */
 const simulatedFieldRef = useTemplateRef("simulatedFieldRef");
+/**
+ * 模拟场可见性弹窗引用
+ * @type TemplateRef
+ */
 const simulatedFieldVisibleRef = useTemplateRef("simulatedFieldVisibleRef");
-
+/**
+ * 编辑表格列数据
+ * @type Ref
+ * @description 当前编辑的表格列数据
+ */
 const editTableColData = ref<PaStructureType.Table | undefined>();
-
+/**
+ * 编辑表单项数据
+ * @type Ref
+ * @description 当前编辑的表单项数据
+ */
 const editFormItemData = ref<PaStructureType.Form | undefined>();
-
+/**
+ * 内部数据
+ * @type Ref
+ * @description 组件内部数据
+ */
 const inValue = ref<PaPlaygroundType>(props.data);
+/**
+ * 是否使用模拟数据
+ * @type Ref
+ * @description 是否使用 IndexDB 模拟数据
+ */
 const useMock = ref(true);
-
+/**
+ * SVG 引用
+ * @type Ref
+ * @description SVG 元素引用
+ */
 const svgRef = ref<SVGSVGElement>();
+/**
+ * 锁定滚动状态
+ * @type Ref
+ * @description 是否锁定画布滚动
+ */
 const lockScroll = ref(false);
-
+/**
+ * 自动保存方法
+ * @description 自动保存相关方法
+ */
 const { start, stop, getSavedValue } = useAutoSave(inValue, "pa-playground-data");
 
-const setTableRef = (el: any, id: string) => el && (tableRefs.value[id] = el);
-const setFormRef = (el: any, id: string) => el && (formRefs.value[id] = el);
-const setTabsItemRef = (el: any, id: string) => el && (tabsItemRefs.value[id] = el);
-const setDraggableRef = (el: any, id: string) => el && (draggableRefs.value[id] = el);
+/**
+ * 设置表格组件引用
+ * @param el 组件实例
+ * @param id 组件标识
+ */
+function setTableRef(el: any, id: string) {
+  el && (tableRefs.value[id] = el);
+}
+/**
+ * 设置表单组件引用
+ * @param el 组件实例
+ * @param id 组件标识
+ */
+function setFormRef(el: any, id: string) {
+  el && (formRefs.value[id] = el);
+}
+/**
+ * 设置选项卡组件引用
+ * @param el 组件实例
+ * @param id 组件标识
+ */
+function setTabsItemRef(el: any, id: string) {
+  el && (tabsItemRefs.value[id] = el);
+}
+/**
+ * 设置拖拽组件引用
+ * @param el 组件实例
+ * @param id 组件标识
+ */
+function setDraggableRef(el: any, id: string) {
+  el && (draggableRefs.value[id] = el);
+}
 
 /**
  * 生成随机ID
+ * @param prefix ID前缀
+ * @returns 随机ID字符串
+ * @description 生成带前缀的随机ID
  */
-const generateRandomId = (prefix: string = "page") => `${prefix}_${Date.now()}_${Math.floor(Math.random() * 1000)}`;
+function generateRandomId(prefix: string = "page") {
+  return `${prefix}_${Date.now()}_${Math.floor(Math.random() * 1000)}`;
+}
 
+/**
+ * 提供编辑表格列弹窗方法
+ * @description 注入编辑表格列弹窗打开方法
+ */
 provide(
   "openEditTableColDialog",
   computed(() => editTableColDialogRef?.value?.openEditTableColDialog)
 );
+/**
+ * 提供编辑表单项弹窗方法
+ * @description 注入编辑表单项弹窗打开方法
+ */
 provide(
   "openEditFormItemDialog",
   computed(() => editFormItemDialogRef?.value?.openEditFormItemDialog)
 );
+/**
+ * 提供可见性弹窗方法
+ * @description 注入可见性弹窗打开方法
+ */
 provide(
   "openVisibleDialog",
   computed(() => visibleDialogRef?.value?.openVisibleDialog)
 );
+/**
+ * 提供编辑操作弹窗方法
+ * @description 注入编辑操作弹窗打开方法
+ */
 provide(
   "openEditOperationDialog",
   computed(() => editOperationDialogRef?.value?.openEditOperationDialog)
 );
+/**
+ * 提供编辑项目基础信息方法
+ * @description 注入编辑项目基础信息弹窗打开方法
+ */
 provide("openEditItemBaseDialog", (config: PaPlaygroundItem) => {
   editItemBaseDialogRef.value?.open(config);
 });
+/**
+ * 提供表格列快捷编辑方法
+ * @description 注入表格列快捷编辑弹窗打开方法
+ */
 provide("openEditTableColQuickDialog", (tableId: string, config: PaStructureType.Table[], options: Record<string, string>) => {
   editTableColQuickDialogRef.value?.openEditDialog(
     tableId,
@@ -496,6 +745,10 @@ provide("openEditTableColQuickDialog", (tableId: string, config: PaStructureType
     options
   );
 });
+/**
+ * 提供表单项快捷编辑方法
+ * @description 注入表单项快捷编辑弹窗打开方法
+ */
 provide("openEditFormItemQuickDialog", (formId: string, config: PaStructureType.Form[], options: Record<string, string>) => {
   editFormItemQuickDialogRef.value?.openEditDialog(
     formId,
@@ -503,6 +756,10 @@ provide("openEditFormItemQuickDialog", (formId: string, config: PaStructureType.
     options
   );
 });
+/**
+ * 提供选项卡项快捷编辑方法
+ * @description 注入选项卡项快捷编辑弹窗打开方法
+ */
 provide(
   "openEditTabsItemQuickDialog",
   (
@@ -520,6 +777,7 @@ provide(
 
 /**
  * 使用SVG相关的hooks
+ * @description 初始化 SVG 拖拽和缩放功能
  */
 const {
   scale,
@@ -537,37 +795,59 @@ const {
 } = useSvgHooks(lockScroll, inValue);
 
 /**
+ * 拖拽索引
+ * @type Ref
+ * @description 当前拖拽项的索引
+ */
+const draggedIndex = ref(-1);
+
+/**
  * 处理编辑表格列提交
+ * @param tableId 表格ID
+ * @param data 表格列数据
+ * @param options 选项配置
  */
 const handleEditTableColSubmit = (tableId: string, data: PaStructureType.Table, options: Record<string, string>) =>
   tableRefs.value[tableId].updateCol(data, options);
 
 /**
  * 处理编辑表单项提交
+ * @param formId 表单ID
+ * @param data 表单项数据
+ * @param options 选项配置
  */
 const handleEditFormItemSubmit = (formId: string, data: PaStructureType.Form, options: Record<string, string>) =>
   formRefs.value[formId].updateItem(data, options);
 
 /**
  * 处理编辑表格列快速提交
+ * @param tableId 表格ID
+ * @param data 表格列数据数组
+ * @param options 选项配置
  */
 const handleEditTableColQuickSubmit = (tableId: string, data: PaStructureType.Table[], options: Record<string, string>) =>
   tableRefs.value[tableId].updateItemAll(data, options);
 
 /**
  * 处理编辑表单项快速提交
+ * @param formId 表单ID
+ * @param data 表单项数据数组
+ * @param options 选项配置
  */
 const handleEditFormItemQuickSubmit = (formId: string, data: PaStructureType.Form[], options: Record<string, string>) =>
   formRefs.value[formId].updateItemAll(data, options);
 
 /**
  * 处理编辑选项卡项快速提交
+ * @param tableId 选项卡ID
+ * @param data 选项卡项数据数组
  */
 const handleEditTabsItemQuickSubmit = (tableId: string, data: PaStructureType.Form[]) =>
   tabsItemRefs.value[tableId].updateItemAll(data);
 
 /**
  * 保存基础配置
+ * @description 获取当前 SVG 变换并输出配置数据
  */
 function saveBaseConfig() {
   const position = getSvgTransform();
@@ -578,35 +858,23 @@ function saveBaseConfig() {
 
 /**
  * 创建页面
+ * @description 在画布中创建新页面
  */
 function handleCreatePage() {
-  /**
-   * 生成随机ID
-   */ 和名称;
   const id = generateRandomId();
   const name = `页面`;
-
-  /**
-   * 计算新表格的位置（错开排列）
-   */
   const x = inValue.value.pagesConfigs.length * 200 + 10;
   const y = Math.floor(inValue.value.pagesConfigs.length + 1) * 200;
-
-  /**
-   * 添加到表格列表
-   */
   inValue.value.pagesConfigs.push({ pageId: id, name, x, y, itemConfigs: [] });
 }
 
 /**
  * 创建表格
+ * @param index 页面索引
+ * @description 在指定页面中创建表格组件
  */
 function handleCreateTable(index: number) {
-  /**
-   * 添加到表格列表
-   */
   const itemId = generateRandomId("table");
-
   inValue.value.pagesConfigs[index].itemConfigs.push({
     itemId,
     width: 0,
@@ -618,10 +886,6 @@ function handleCreateTable(index: number) {
     exOptions: {},
     sourceTable: ""
   });
-
-  /**
-   * 延迟创建表格，确保组件已经渲染
-   */
   setTimeout(() => {
     const tableComponent = tableRefs.value[itemId];
     if (tableComponent) tableComponent.createTable();
@@ -630,15 +894,11 @@ function handleCreateTable(index: number) {
 
 /**
  * 创建表单
+ * @param index 页面索引
+ * @description 在指定页面中创建表单组件
  */
 function handleCreateForm(index: number) {
-  /**
-   * 生成随机ID
-   */ 和名称;
   const itemId = generateRandomId("form");
-  /**
-   * 添加到表单列表
-   */
   inValue.value.pagesConfigs[index].itemConfigs.push({
     itemId,
     width: 0,
@@ -654,15 +914,11 @@ function handleCreateForm(index: number) {
 
 /**
  * 创建选项卡
+ * @param index 页面索引
+ * @description 在指定页面中创建选项卡组件
  */
 function handleCreateTabs(index: number) {
-  /**
-   * 生成随机ID
-   */ 和名称;
   const itemId = generateRandomId("tabs");
-  /**
-   * 添加到选项卡列表
-   */
   inValue.value.pagesConfigs[index].itemConfigs.push({
     itemId,
     width: 0,
@@ -677,7 +933,9 @@ function handleCreateTabs(index: number) {
 }
 
 /**
- * @description 删除元素
+ * 删除元素
+ * @param itemId 元素ID
+ * @description 删除指定元素
  */
 function handleDeleteItem(itemId: string) {
   inValue.value.pagesConfigs.forEach(page => {
@@ -687,7 +945,10 @@ function handleDeleteItem(itemId: string) {
 }
 
 /**
- * @description 处理按钮提交
+ * 处理按钮提交
+ * @param editId 编辑ID
+ * @param data 按钮配置数据
+ * @description 处理编辑操作按钮提交
  */
 function handleEditOperationSubmit(editId: string, data: PaPlaygroundPageButtonType[]) {
   inValue.value.pagesConfigs.forEach(page => {
@@ -701,66 +962,75 @@ function handleEditOperationSubmit(editId: string, data: PaPlaygroundPageButtonT
 
 /**
  * 点击元素移动到数组最后面
+ * @param index 页面索引
+ * @description 将点击的页面移动到数组最后面以显示在最上层
  */
 function handleClickItem(index: number) {
-  /**
-   * 将点击的表格或表单移动到数组最后面
-   */
   if (index >= 0 && index < inValue.value.pagesConfigs.length) {
     const item = inValue.value.pagesConfigs.splice(index, 1)[0];
     inValue.value.pagesConfigs.push(item);
   }
 }
 
-const handleEditItemBaseSubmit = (data: PaPlaygroundItem) => {
+/**
+ * 处理编辑项目基础信息提交
+ * @param data 项目基础信息数据
+ * @description 处理编辑项目基础信息弹窗提交
+ */
+function handleEditItemBaseSubmit(data: PaPlaygroundItem) {
   const page = inValue.value.pagesConfigs.find(item => item.itemConfigs.find(config => config.itemId === data.itemId));
   const item = page?.itemConfigs.find(config => config.itemId === data.itemId);
-
   if (item) {
     item.title = data.title;
     item.actionApi = data.actionApi;
     item.sourceTable = data.sourceTable;
     item.otherProps = data.otherProps;
-
     if (item.itemId && item.type == "table") {
       tableRefs.value[item.itemId].handleRefresh();
     } else if (item.itemId && item.type == "form") {
       formRefs.value[item.itemId].handleRefresh();
     }
   }
-};
+}
 
 /**
  * 处理模拟场
+ * @description 打开模拟场（使用模拟数据）
  */
-
-const handleEnablePlayground = async () => {
+async function handleEnablePlayground() {
   useMock.value = true;
   simulatedFieldVisibleRef.value?.openVisibleDialog();
-};
+}
 
-const handleEnableTraining = async () => {
+/**
+ * 处理训练场
+ * @description 打开训练场（使用真实接口）
+ */
+async function handleEnableTraining() {
   useMock.value = false;
   simulatedFieldVisibleRef.value?.openVisibleDialog();
-};
-
-const draggedIndex = ref(-1);
+}
 
 /**
  * 拖拽开始
+ * @param event 拖拽事件
+ * @param index 拖拽项索引
+ * @description 处理拖拽开始事件
  */
-const handleDragStart = (event: DragEvent, index: number) => {
+function handleDragStart(event: DragEvent, index: number) {
   event.stopPropagation();
   event.dataTransfer?.setData("text/plain", index.toString());
   (event.target as HTMLElement).style.opacity = "0.5";
   (event.target as HTMLElement).classList.add("dragging");
   draggedIndex.value = index;
-};
+}
 
 /**
  * 拖拽悬停
+ * @param event 拖拽事件
+ * @description 处理拖拽悬停事件
  */
-const handleDragOver = (event: DragEvent) => {
+function handleDragOver(event: DragEvent) {
   event.preventDefault();
   event.stopPropagation();
   const items = document.querySelectorAll(".glass-container");
@@ -768,42 +1038,52 @@ const handleDragOver = (event: DragEvent) => {
   if (event.currentTarget) {
     (event.currentTarget as HTMLElement).classList.add("dragover");
   }
-};
+}
 
 /**
  * 拖拽进入
+ * @param event 拖拽事件
+ * @description 处理拖拽进入事件
  */
-const handleDragEnter = (event: DragEvent) => {
+function handleDragEnter(event: DragEvent) {
   event.preventDefault();
   event.stopPropagation();
-};
+}
 
 /**
  * 拖拽离开
+ * @param event 拖拽事件
+ * @description 处理拖拽离开事件
  */
-const handleDragLeave = (event: DragEvent) => {
+function handleDragLeave(event: DragEvent) {
   event.stopPropagation();
   if (event.currentTarget) {
     (event.currentTarget as HTMLElement).classList.remove("dragover");
   }
-};
+}
 
 /**
  * 拖拽结束
+ * @param event 拖拽事件
+ * @description 处理拖拽结束事件
  */
-const handleDragEnd = (event: DragEvent) => {
+function handleDragEnd(event: DragEvent) {
   event.stopPropagation();
   (event.target as HTMLElement).style.opacity = "1";
   (event.target as HTMLElement).classList.remove("dragging");
   const items = document.querySelectorAll(".glass-container");
   items.forEach(item => item.classList.remove("dragover"));
   draggedIndex.value = -1;
-};
+}
 
 /**
- * 拖拽结束
+ * 拖拽放置
+ * @param event 拖拽事件
+ * @param pageIndex 页面索引
+ * @param targetIndex 目标位置索引
+ * @description 处理拖拽放置事件，重新排序元素
  */
-const handleDrop = (event: DragEvent, pageIndex: number, targetIndex: number) => {
+function handleDrop(event: DragEvent, pageIndex: number, targetIndex: number) {
   event.preventDefault();
   event.stopPropagation();
 
@@ -815,15 +1095,12 @@ const handleDrop = (event: DragEvent, pageIndex: number, targetIndex: number) =>
     inValue.value.pagesConfigs[pageIndex].itemConfigs = newArray;
   }
 
-  /**
-   * 重置拖拽状态
-   */
   (event.target as HTMLElement).style.opacity = "1";
   (event.target as HTMLElement).classList.remove("dragging");
   const items = document.querySelectorAll(".glass-container");
   items.forEach(item => item.classList.remove("dragover"));
   draggedIndex.value = -1;
-};
+}
 
 onMounted(() => {
   const DB_NAME = "DB_" + inValue.value.id;
@@ -856,111 +1133,4 @@ watch(
 
 <style lang="scss">
 @use "./index.scss";
-
-.pa-playground {
-  --el-border-color-light: var(--pa-color-border);
-  width: 100%;
-  height: 100%;
-  position: relative;
-
-  .fixed-button {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    z-index: 100;
-    display: flex;
-    align-items: center;
-  }
-
-  .svg-container {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    cursor: grab;
-
-    &:active {
-      cursor: grabbing;
-    }
-
-    .svg-background {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-image: radial-gradient(
-        var(--el-border-color-light) var(--svg-background-font),
-        rgba(69, 69, 69, 0) var(--svg-background-font)
-      );
-      background-size: var(--svg-background-size) var(--svg-background-size);
-      background-position: center;
-      pointer-events: none;
-    }
-
-    .svg-content {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      overflow: visible;
-    }
-  }
-
-  .glass-container {
-    width: 100%;
-    height: 100%;
-    box-sizing: border-box;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(3px);
-    -webkit-backdrop-filter: blur(3px);
-    border-radius: 8px;
-    border: 1px solid var(--pa-color-primary);
-  }
-
-  .glass-container.table {
-    border: 1px solid var(--pa-color-purple);
-  }
-
-  .glass-container.form {
-    border: 1px solid var(--pa-color-pink);
-  }
-
-  .glass-container.tabs {
-    border: 1px solid var(--pa-color-orange);
-  }
-
-  .draggable-btn {
-    width: calc(50% - 7px) !important;
-    box-sizing: border-box;
-    margin: 0 !important;
-    text-align: center;
-    font-size: var(--pa-size-font);
-    cursor: move;
-    color: var(--pa-button-color);
-    border: 1px solid var(--pa-button-color3, var(--pa-button-color));
-    border-radius: var(--pa-size-radius, 3px);
-    transition: var(--pa-animation-time, 0.2s);
-    background: rgba(255, 255, 255, 0.1) !important;
-    backdrop-filter: blur(3px);
-    -webkit-backdrop-filter: blur(3px);
-    &:hover {
-      background-color: var(--pa-color-warning-light-9) !important;
-      color: var(--pa-color-warning) !important;
-      border: 1px solid var(--pa-color-warning);
-    }
-  }
-
-  .draggable-btn._del {
-    margin-left: 7px !important;
-    width: 50% !important;
-    background-color: var(--pa-color-danger-light-9);
-    color: var(--pa-color-danger);
-    border: 1px solid var(--pa-color-danger);
-    &:hover {
-      background: rgba(223, 20, 20, 0.1) !important;
-      color: var(--pa-color-danger) !important;
-      border: 1px solid var(--pa-color-danger) !important;
-    }
-  }
-}
 </style>

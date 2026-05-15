@@ -1,22 +1,25 @@
 /**
+ * 模块导入
+ * @description 导入 Vue 类型定义
+ */
+import type { App } from "vue";
+/**
+ * 模块导入
  * @description Playground 主组件
  */
 import PaPlayground from "./pa-playground.vue";
 /**
+ * 模块导入
  * @description Playground 可见性组件
  */
 import PaPlaygroundVisible from "./pa-playground-visible.vue";
-import PaPlaygroundVisible from "./pa-playground-visible.vue";
 
 /**
- * @description 安装 Playground 组件到 Vue 应用
+ * 安装 Playground 组件到 Vue 应用
  * @param app Vue 应用实例
- */ function install(app: {
-  GlobalState: any;
-  _context: { components: Record<string, unknown> };
-  component: (name: string, comp: unknown) => void;
-}): void {
-  if (!app.GlobalState) app.GlobalState = {};
+ * @description 注册 PaPlayground 和 PaPlaygroundVisible 组件
+ */
+function install(app: App): void {
   if (!app._context.components["PaPlayground"]) {
     app.component("PaPlayground", PaPlayground);
     app.component("PaPlaygroundVisible", PaPlaygroundVisible);
@@ -24,8 +27,9 @@ import PaPlaygroundVisible from "./pa-playground-visible.vue";
 }
 
 /**
- * @description 组件名称
+ * 组件名称
  * @type string
+ * @description 组件名称
  */
 const name = "PaPlayground";
 

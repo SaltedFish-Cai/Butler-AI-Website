@@ -191,7 +191,15 @@
 </template>
 
 <script lang="tsx" setup>
+/**
+ * 模块导入
+ * @description 导入 Vue 响应式 API
+ */
 import { ComputedRef, computed, inject, nextTick, ref, useTemplateRef } from "vue";
+/**
+ * 模块导入
+ * @description 导入 Playground 类型定义
+ */
 import {
   MInterfaceConfig,
   PaPlaygroundType,
@@ -201,22 +209,81 @@ import {
   MOptionsType,
   PaPlaygroundActionFunctionType
 } from "./types";
+/**
+ * 模块导入
+ * @description 导入反馈组件
+ */
 import { M_Message, M_MessageBox } from "../feedback";
+/**
+ * 模块导入
+ * @description 导入 Playground 可见性组件
+ */
 import PaPlaygroundVisible from "./pa-playground-visible.vue";
+/**
+ * 模块导入
+ * @description 导入字典查询工具
+ */
 import useDictionariesAll from "../tools/dictionaries-all";
+/**
+ * 模块导入
+ * @description 导入全局配置类型
+ */
 import { PancakeGlobalConfigType } from "../pa-manager/types";
+/**
+ * 模块导入
+ * @description 导入 Pancake 类型定义
+ */
 import { PaOptionType, PaStructureType } from "PancakeType";
+/**
+ * 模块导入
+ * @description 导入 IndexDB 数据操作方法
+ */
 import { deleteDataByKey, getAllData, queryData, storeData, updateData } from "../indexDB/indexDB";
+/**
+ * 模块导入
+ * @description 导入页面按钮类型
+ */
 import { PaPlaygroundPageButtonType } from "./components/types";
+/**
+ * 模块导入
+ * @description 导入字典类型
+ */
 import { dictType } from "../tools/type";
-
+/**
+ * 模块导入
+ * @description 导入空值判断工具
+ */
 import isNil from "../tools/is-nil";
 
+/**
+ * 全局配置
+ * @type ComputedRef
+ * @description 注入全局配置
+ */
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
+/**
+ * 语言设置
+ * @type ComputedRef
+ * @description 当前语言设置
+ */
 const language = computed(() => PancakeGlobalConfig.value?.language?.value || "zh-CN");
+/**
+ * 页面点击按钮配置
+ * @type Ref
+ * @description 当前页面点击的按钮配置
+ */
 const pageClickButtonConfig = ref<PaPlaygroundPageButtonType>();
+/**
+ * 查找下一页标识
+ * @type Ref
+ * @description 是否查找下一页
+ */
 const findNextPage = ref<boolean>(false);
 
+/**
+ * 组件属性
+ * @description 模拟场可见性组件属性
+ */
 const props = withDefaults(
   defineProps<{
     id?: string;
@@ -240,31 +307,86 @@ const props = withDefaults(
   { useMock: true, useToPage: false }
 );
 
+/**
+ * 扩展选项计算值
+ * @type Ref
+ * @description 计算后的扩展选项数据
+ */
 const exOptionsComputed = ref<PaOptionType.Default>({});
 
+/**
+ * 组件事件
+ * @description 模拟场可见性组件事件定义
+ */
 const emits = defineEmits<{
   closed: [];
   "action-before": [data: { buttonInfo: any; data: any }];
   "visible-before": [data: any];
 }>();
 
-const setStructure = (
+/**
+ * 设置结构
+ * @param structure 结构配置数组
+ * @returns 过滤后的结构配置数组
+ * @description 根据可见性条件过滤结构配置
+ */
+function setStructure(
   structure: PaStructureType.Form[] | PaStructureType.Table[]
-): PaStructureType.Form[] | PaStructureType.Table[] => {
+): PaStructureType.Form[] | PaStructureType.Table[] {
   return structure.filter(item => (props.visibleBefore ? props.visibleBefore?.(item) : item)) as
     | PaStructureType.Form[]
     | PaStructureType.Table[];
-};
+}
 
+/**
+ * 可见性状态
+ * @type Ref
+ * @description 弹窗可见性
+ */
 const visible = ref(false);
+/**
+ * 首页索引配置
+ * @type Ref
+ * @description 当前首页索引配置
+ */
 const homeIndexConfig = ref<PaPlaygroundPagesType>();
+/**
+ * 可见性弹窗引用
+ * @type TemplateRef
+ */
 const visibleDialogRef = useTemplateRef("visibleDialogRef");
+/**
+ * 弹窗配置
+ * @type Ref
+ * @description 弹窗配置数据
+ */
 const dialogConfig = ref<PaPlaygroundPageButtonType>();
 
+/**
+ * 项目引用映射
+ * @type Ref
+ * @description 存储组件实例与页面配置的映射关系
+ */
 const ItemRefs = ref<Record<string, { el: any; page: PaPlaygroundItem }>>({});
+/**
+ * 设置组件引用
+ * @param el 组件实例
+ * @param page 页面配置项
+ */
 const setRef = (el: any, page: PaPlaygroundItem) => el && (ItemRefs.value[page.itemId] = { el, page });
+/**
+ * 传输数据
+ * @type Ref
+ * @description 跨页面传输的数据
+ */
 const transmitData = ref<Record<string, any>>({});
 
+/**
+ * 查找插槽名称
+ * @param actionButtons 操作按钮列表
+ * @returns 不重复的插槽名称列表
+ * @description 获取所有操作按钮的不重复插槽名称
+ */
 function findSlotName(actionButtons) {
   const slotNameList: string[] = [];
   for (const item of actionButtons || []) {
@@ -276,6 +398,10 @@ function findSlotName(actionButtons) {
 }
 
 /**
+ * 打开模拟字段可见性弹窗
+ * @param _transmitData 传输数据
+ * @param _homeIndexConfig 首页索引配置
+ * @param _clickButtonConfig 点击按钮配置
  * @description 打开模拟字段可见性弹窗
  */
 function openVisibleDialog(_transmitData?: Record<string, any>, _homeIndexConfig?, _clickButtonConfig?) {
@@ -315,7 +441,9 @@ if (props.useToPage) {
 }
 
 /**
- * @description 设置模拟字段可见性选项
+ * 设置模拟字段可见性选项
+ * @param itemConfigs 项目配置列表
+ * @description 设置模拟字段可见性选项映射
  */
 function setExOptionsMaps(itemConfigs: PaPlaygroundItem[]) {
   const exOptionsData = {};
@@ -356,6 +484,11 @@ function setExOptionsMaps(itemConfigs: PaPlaygroundItem[]) {
   }
 }
 
+/**
+ * 加载选项数据
+ * @param params 字典查询参数列表
+ * @description 根据字典参数异步加载选项数据
+ */
 async function loadOptions(params: dictType[]) {
   const options = await useDictionariesAll(params);
 
@@ -368,6 +501,10 @@ async function loadOptions(params: dictType[]) {
   exOptionsComputed.value = { ...exOptionsComputed.value, ...options };
 }
 
+/**
+ * 刷新数据
+ * @description 刷新所有表格组件的数据
+ */
 function refreshData() {
   for (const key in ItemRefs.value) {
     if (ItemRefs.value[key].page.type == "table") {
@@ -376,12 +513,19 @@ function refreshData() {
   }
 }
 
+/**
+ * 处理关闭
+ * @description 关闭弹窗时刷新数据
+ */
 function handleClose() {
   if (pageClickButtonConfig.value && pageClickButtonConfig.value.refreshByDialogClose) refreshData();
 }
 
 /**
- * @description 按钮点击处理
+ * 按钮点击处理
+ * @param item 按钮配置
+ * @param data 行数据与页面配置
+ * @description 处理按钮点击事件，支持弹窗、保存、删除和自定义操作
  */
 async function handleButtonSubmit(item: PaPlaygroundPageButtonType, data: { row?: any; page?: PaPlaygroundItem }) {
   emits("action-before", { buttonInfo: item, data });
@@ -457,7 +601,11 @@ async function handleButtonSubmit(item: PaPlaygroundPageButtonType, data: { row?
 }
 
 /**
- * @description 获取表格数据
+ * 获取表格数据
+ * @param actionApi 接口标识
+ * @param query 查询参数
+ * @returns 表格数据
+ * @description 根据接口配置获取表格数据
  */
 async function getTableList(actionApi: string, query: Record<string, string>) {
   const findApi = props.interfaceConfigs.find(item => item.id === actionApi);
@@ -473,7 +621,8 @@ async function getTableList(actionApi: string, query: Record<string, string>) {
 }
 
 /**
- * @description 获取详情数据，存在id时调用
+ * 获取详情数据
+ * @description 获取详情数据，存在 ID 时调用
  */
 async function getDetailById() {
   for (const key in ItemRefs.value) {
@@ -501,6 +650,13 @@ async function getDetailById() {
   }
 }
 
+/**
+ * 从数据库获取数据
+ * @param findApi 接口配置
+ * @param query 查询参数
+ * @returns 查询结果
+ * @description 从 IndexDB 或真实接口获取数据
+ */
 async function GetDataByDB(findApi: MInterfaceConfig, query: Record<string, string>) {
   if (!props.useMock && props.requestFunction) {
     return props.requestFunction(findApi, query);
@@ -512,6 +668,13 @@ async function GetDataByDB(findApi: MInterfaceConfig, query: Record<string, stri
   return { Data: { TotalCount: dataArray.length, List: dataArray }, Code: 200 };
 }
 
+/**
+ * 从数据库获取详情
+ * @param findApi 接口配置
+ * @param query 查询参数
+ * @returns 详情数据
+ * @description 根据 ID 从 IndexDB 获取详情数据
+ */
 async function GetDetailByDBToId(findApi: MInterfaceConfig, query: Record<string, string>) {
   const DB_NAME = "DB_" + props.id;
   const STORE_NAME = "DB_" + props.id + "_API_" + findApi.dataStructure;
@@ -521,7 +684,11 @@ async function GetDetailByDBToId(findApi: MInterfaceConfig, query: Record<string
 }
 
 /**
- * @description 保存数据到数据库
+ * 保存数据到数据库
+ * @param findApi 接口配置
+ * @param formData 表单数据
+ * @param item 按钮配置
+ * @description 保存数据到 IndexDB 或调用真实接口
  */
 async function SaveDataToDB(findApi: MInterfaceConfig, formData: Record<string, string>, item: PaPlaygroundPageButtonType) {
   if (!props.useMock && props.requestFunction) {
@@ -556,7 +723,11 @@ async function SaveDataToDB(findApi: MInterfaceConfig, formData: Record<string, 
 }
 
 /**
- * @description 删除数据到数据库
+ * 删除数据到数据库
+ * @param findApi 接口配置
+ * @param query 查询参数
+ * @param item 按钮配置
+ * @description 从 IndexDB 删除数据或调用真实接口
  */
 async function DeleteDataToDB(findApi: MInterfaceConfig, query: Record<string, string>, item: PaPlaygroundPageButtonType) {
   M_MessageBox.delete({
@@ -583,9 +754,12 @@ async function DeleteDataToDB(findApi: MInterfaceConfig, query: Record<string, s
   });
 }
 
+/**
+ * 暴露方法
+ * @description 暴露打开可见性弹窗方法
+ */
 defineExpose({
   openVisibleDialog
 });
 </script>
 
-<style lang="scss" scoped></style>
