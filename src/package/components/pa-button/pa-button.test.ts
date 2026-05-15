@@ -4,7 +4,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { mount } from "@vue/test-utils";
 import { nextTick, defineComponent, h } from "vue";
-import type { ComputedRef } from "vue";
 
 // Mock pa-icon component
 const PaIconMock = defineComponent({
@@ -23,10 +22,8 @@ const PaIconMock = defineComponent({
 
 // Mock PancakeGlobalConfig
 const mockPancakeGlobalConfig = {
-  value: {
-    language: { value: "zh-CN" }
-  }
-} as ComputedRef<{ language: { value: string } }>;
+  language: { value: "zh-CN", package: {} }
+};
 
 // Mock M_MessageBox
 vi.mock("../feedback", () => ({
@@ -91,7 +88,7 @@ describe("pa-button 组件测试", () => {
     });
 
     it("多语言 text en-US 环境", async () => {
-      const enConfig = { value: { language: { value: "en-US" } } } as ComputedRef<{ language: { value: string } }>;
+      const enConfig = { language: { value: "en-US", package: {} } };
       const { default: PaButton } = await import("./pa-button.vue");
       const wrapper = mount(PaButton, {
         props: { text: { "zh-CN": "提交", "en-US": "Submit" } },
@@ -406,54 +403,48 @@ describe("pa-button 组件测试", () => {
     });
 
     // 覆盖 lines 208, 217, 226: onConfirm 回调函数
-    it("deleteClick 的 onConfirm 回调包含正确的 emit 调用 (line 208)", async () => {
+    it("deleteClick 的 onConfirm 回调包含正确的 emit 调用", async () => {
       const wrapper = await mountButton({ "onDelete-click": () => {} });
       const vm = wrapper.vm as any;
 
-      // 获取 confirmConfig
-      const config = vm.confirmConfig;
+      const config = vm.getConfirmConfig();
       expect(config).not.toBeNull();
       expect(config.type).toBe("danger");
       expect(config.onConfirm).toBeDefined();
       expect(typeof config.onConfirm).toBe("function");
     });
 
-    it("submitClick 的 onConfirm 回调包含正确的 emit 调用 (line 217)", async () => {
+    it("submitClick 的 onConfirm 回调包含正确的 emit 调用", async () => {
       const wrapper = await mountButton({ "onSubmit-click": () => {} });
       const vm = wrapper.vm as any;
 
-      // 获取 confirmConfig
-      const config = vm.confirmConfig;
+      const config = vm.getConfirmConfig();
       expect(config).not.toBeNull();
       expect(config.type).toBe("warning");
       expect(config.onConfirm).toBeDefined();
       expect(typeof config.onConfirm).toBe("function");
 
-      // 执行 onConfirm 回调以覆盖 line 217
       config.onConfirm();
     });
 
-    it("confirmClick 的 onConfirm 回调包含正确的 emit 调用 (line 226)", async () => {
+    it("confirmClick 的 onConfirm 回调包含正确的 emit 调用", async () => {
       const wrapper = await mountButton({ "onConfirm-click": () => {} });
       const vm = wrapper.vm as any;
 
-      // 获取 confirmConfig
-      const config = vm.confirmConfig;
+      const config = vm.getConfirmConfig();
       expect(config).not.toBeNull();
       expect(config.type).toBe("success");
       expect(config.onConfirm).toBeDefined();
       expect(typeof config.onConfirm).toBe("function");
 
-      // 执行 onConfirm 回调以覆盖 line 226
       config.onConfirm();
     });
 
-    it("confirmConfig 返回 null 当没有监听任何确认事件", async () => {
+    it("getConfirmConfig 返回 null 当没有监听任何确认事件", async () => {
       const wrapper = await mountButton({ debounced: false });
       const vm = wrapper.vm as any;
 
-      // 获取 confirmConfig - 应该是 null
-      const config = vm.confirmConfig;
+      const config = vm.getConfirmConfig();
       expect(config).toBeNull();
     });
 
@@ -461,11 +452,9 @@ describe("pa-button 组件测试", () => {
       const wrapper = await mountButton({ "onDelete-click": () => {} });
       const vm = wrapper.vm as any;
 
-      // 获取 confirmConfig 并执行 onConfirm
-      const config = vm.confirmConfig;
+      const config = vm.getConfirmConfig();
       config.onConfirm();
 
-      // 验证 deleteClick 事件被触发
       expect(wrapper.emitted("deleteClick")).toBeTruthy();
     });
   });

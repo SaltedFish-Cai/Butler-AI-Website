@@ -14,7 +14,7 @@
 
 <script lang="ts">
 /**
- * 按钮内置样式映射
+ * **按钮内置样式映射**
  * @description 预设按钮样式类型对应的图标和类型配置
  */
 const IS_MAP: Record<string, { iconName?: string; type?: string }> = {
@@ -46,38 +46,38 @@ const IS_MAP: Record<string, { iconName?: string; type?: string }> = {
 
 <script lang="ts" setup>
 /**
- * 模块导入
+ * **模块导入**
  * @description 导入 Vue 组合式 API
  */
 import { ref, computed, useSlots, nextTick, inject, onUnmounted, getCurrentInstance } from "vue";
 /**
- * 模块导入
+ * **模块导入**
  * @description 导入组件类型定义
  */
 import type { ComponentProps, ComponentEmits } from "./types";
 /**
- * 模块导入
+ * **模块导入**
  * @description 导入消息弹窗组件
  */
 import { M_MessageBox } from "../feedback";
 /**
- * 模块导入
+ * **模块导入**
  * @description 导入图标组件
  */
 import paIcon from "../pa-icon/pa-icon.vue";
 /**
- * 模块导入
+ * **模块导入**
  * @description 导入全局配置类型定义
  */
 import type { PancakeGlobalConfigType } from "../pa-manager/types";
 /**
- * 模块导入
+ * **模块导入**
  * @description 导入防抖函数
  */
 import debounce from "../tools/debounce";
 /**
- * 组件属性
- * @type {ComponentProps}
+ * **组件属性**
+ * @type `ComponentProps`
  * @description 组件的属性对象，包含 text、size、type 等
  */
 const props = withDefaults(defineProps<ComponentProps>(), {
@@ -90,46 +90,40 @@ const props = withDefaults(defineProps<ComponentProps>(), {
   useStop: true
 });
 /**
- * 组件事件定义
+ * **组件事件定义**
  * @description 定义组件可触发的事件列表
  */
 const emit = defineEmits<ComponentEmits>();
 /**
- * 插槽
+ * **插槽**
  * @description 获取组件插槽
  */
 const slots = useSlots();
 /**
- * 全局配置注入
- * @type {PancakeGlobalConfigType}
+ * **全局配置注入**
+ * @type `PancakeGlobalConfigType`
  * @description 从父组件注入的全局配置对象，包含语言设置等
  */
 const PancakeGlobalConfig = inject<PancakeGlobalConfigType>("PancakeGlobalConfig", {});
 /**
- * 当前语言值
- * @type {ReturnType<typeof computed>}
- * @description 获取当前语言标识，如 zh-CN 或 en-US
- */
-const languageValue = computed(() => PancakeGlobalConfig?.language?.value || "zh-CN");
-
-/**
- * 显示文本
- * @type {ReturnType<typeof computed>}
+ * **显示文本**
+ * @returns `string` 显示文字
  * @description 根据 text 类型返回对应的显示文字
  */
 const displayText = computed(() => {
   if (typeof props.text === "string") return props.text;
-  return props.text?.[languageValue.value] ?? "";
+  const lang = PancakeGlobalConfig?.language?.value || "zh-CN";
+  return props.text?.[lang] ?? "";
 });
 /**
- * 是否有内容
- * @type {ReturnType<typeof computed>}
+ * **是否有内容**
+ * @returns `boolean` 是否存在内容
  * @description 判断插槽或 text 是否存在内容
  */
 const hasContent = computed(() => !!slots.default || !!props.text);
 /**
- * 当前图标名称
- * @type {ReturnType<typeof computed>}
+ * **当前图标名称**
+ * @returns `string` 当前图标名称
  * @description 根据 iconName 和 is 属性计算当前图标名称
  */
 const currentIconName = computed(() => {
@@ -138,8 +132,8 @@ const currentIconName = computed(() => {
   return "finger_press_line";
 });
 /**
- * 当前类型
- * @type {ReturnType<typeof computed>}
+ * **当前类型**
+ * @returns `string` 当前按钮样式类型
  * @description 根据 type 和 is 属性计算当前按钮样式类型
  */
 const currentType = computed(() => {
@@ -148,17 +142,28 @@ const currentType = computed(() => {
   return "default";
 });
 /**
- * 是否显示左侧图标
- * @type {ReturnType<typeof computed>}
- * @description 判断是否需要显示左侧图标
+ * **加载状态**
+ * @returns `boolean` 按钮的自动 loading 状态
+ * @description 按钮的自动 loading 状态
+ */
+const isLoading = ref(false);
+/**
+ * **是否显示左侧图标**
+ * @returns `boolean` 是否显示左侧图标
+ * @description 判断是否需要显示左侧图标（包含 loading 状态判断）
  */
 const showLeftIcon = computed(
   () => props.iconPosition === "left" && !props.loading && !isLoading.value && props.useFont && !!currentIconName.value
 );
+/**
+ * **是否显示右侧图标**
+ * @returns `boolean` 是否显示右侧图标
+ * @description 判断是否需要显示右侧图标
+ */
 const showRightIcon = computed(() => props.iconPosition === "right" && props.useFont && !!currentIconName.value);
 /**
- * 按钮类名
- * @type {ReturnType<typeof computed>}
+ * **按钮类名**
+ * @returns `Array<string>` 按钮的完整类名列表
  * @description 计算按钮的完整类名列表
  */
 const buttonClasses = computed(() => [
@@ -173,21 +178,32 @@ const buttonClasses = computed(() => [
   props.size
 ]);
 /**
- * 加载状态
- * @type {ReturnType<typeof ref>}
- * @description 按钮的自动 loading 状态
- */
-const isLoading = ref(false);
-/**
- * 组件实例
+ * **组件实例**
  * @description 在 setup 阶段捕获的组件实例，用于访问 vnode.props
  */
 const instance = getCurrentInstance();
 /**
- * 检查是否有指定事件的监听器
- * @param {string} camelKey - 驼峰格式 key，如 onDeleteClick
- * @param {string} kebabKey - kebab 格式 key，如 onDelete-click
- * @returns {boolean} 是否有外部监听
+ * **MutationObserver 引用**
+ * @type `MutationObserver` | `null`
+ * @description 用于监听 DOM 变化的 observer 实例
+ */
+let observer: MutationObserver | null = null;
+/**
+ * **安全锁定时器引用**
+ * @type `ReturnType<typeof setTimeout>` | `null`
+ * @description 防止 loading 状态永久卡住的超时定时器
+ */
+let safeLockTimer: ReturnType<typeof setTimeout> | null = null;
+/**
+ * **防抖点击函数**
+ * @description 内联防抖包装的点击处理函数
+ */
+const debouncedClick = debounce(realClick, props.debouncedTime);
+/**
+ * **检查是否有指定事件的监听器**
+ * @param `camelKey` `string` 驼峰格式 key，如 onDeleteClick
+ * @param `kebabKey` `string` kebab 格式 key，如 onDelete-click
+ * @returns `boolean` 是否有外部监听
  * @description 检查 vnode props 中是否有指定事件的监听器
  */
 function hasListener(camelKey: string, kebabKey: string): boolean {
@@ -195,11 +211,11 @@ function hasListener(camelKey: string, kebabKey: string): boolean {
   return !!(vnodeProps[camelKey] || vnodeProps[kebabKey]);
 }
 /**
- * 确认弹窗配置
- * @type {ReturnType<typeof computed>}
- * @description 根据监听的事件类型缓存对应的确认弹窗配置
+ * **获取确认弹窗配置**
+ * @returns `object` | `null` 确认弹窗配置对象
+ * @description 根据监听的事件类型获取对应的确认弹窗配置（仅在点击时调用，避免 computed 无效重算）
  */
-const confirmConfig = computed(() => {
+function getConfirmConfig() {
   if (hasListener("onDeleteClick", "onDelete-click")) {
     return {
       title: { "en-US": "Notice", "zh-CN": "注意" },
@@ -228,26 +244,9 @@ const confirmConfig = computed(() => {
     };
   }
   return null;
-});
+}
 /**
- * MutationObserver 引用
- * @type {MutationObserver | null}
- * @description 用于监听 DOM 变化的 observer 实例
- */
-let observer: MutationObserver | null = null;
-/**
- * 安全锁定时器引用
- * @type {ReturnType<typeof setTimeout> | null}
- * @description 防止 loading 状态永久卡住的超时定时器
- */
-let safeLockTimer: ReturnType<typeof setTimeout> | null = null;
-/**
- * 防抖点击函数
- * @description 内联防抖包装的点击处理函数
- */
-const debouncedClick = debounce(realClick, props.debouncedTime);
-/**
- * 清理 MutationObserver 和定时器
+ * **清理 MutationObserver 和定时器**
  * @description 断开 observer 连接并清除定时器
  */
 function cleanupObserver() {
@@ -259,25 +258,22 @@ function cleanupObserver() {
   }
 }
 /**
- * 实际点击处理
- * @param {MouseEvent} event - 鼠标点击事件对象
- * @returns {void}
+ * **实际点击处理**
+ * @param `event` `MouseEvent` 鼠标点击事件对象
+ * @returns `void`
  * @description 触发 click 事件并处理 loading 状态
  */
 function realClick(event: MouseEvent) {
   emit("click", event);
   if (!props.loadingBy || typeof window === "undefined") return;
-
   nextTick(() => {
     const EL = props.loadingBy && window.document.querySelector(props.loadingBy);
     if (!EL) return;
-
     isLoading.value = true;
     safeLockTimer = setTimeout(() => {
       isLoading.value = false;
       cleanupObserver();
     }, 15 * 60 * 1000);
-
     observer = new window.MutationObserver(() => {
       const target = window.document.querySelector(props.loadingBy!);
       if (!target) {
@@ -290,21 +286,19 @@ function realClick(event: MouseEvent) {
   });
 }
 /**
- * 按钮点击事件处理
- * @param {MouseEvent} event - 鼠标点击事件对象
- * @returns {void}
+ * **按钮点击事件处理**
+ * @param `event` `MouseEvent` 鼠标点击事件对象
+ * @returns `void`
  * @description 处理按钮点击事件，包括确认弹窗、防抖、loading 状态等
  */
 function btnClick(event: MouseEvent) {
   if (props.useStop) event.stopPropagation();
   if (props.disabled) return;
-
-  const activeConfirmConfig = props.confirmConfig || confirmConfig.value;
+  const activeConfirmConfig = props.confirmConfig || getConfirmConfig();
   if (activeConfirmConfig) {
     M_MessageBox.confirm(activeConfirmConfig);
     return;
   }
-
   if (props.debounced && props.debouncedTime) {
     debouncedClick(event);
   } else {
@@ -312,7 +306,7 @@ function btnClick(event: MouseEvent) {
   }
 }
 /**
- * 组件卸载时清理
+ * **组件卸载时清理**
  * @description 断开 MutationObserver 并重置加载状态
  */
 onUnmounted(() => {

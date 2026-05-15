@@ -1,4 +1,3 @@
-// 按钮颜色主题 Mixin - 减少重复代码
 @mixin button-type($var-color, $var-hover, $var-bg) {
   --pa-button-color: var(#{$var-color});
   --pa-button-color2: var(#{$var-bg});
