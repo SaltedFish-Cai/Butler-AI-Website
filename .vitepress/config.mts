@@ -268,15 +268,10 @@ export default {
       port: 7107,
       open: true,
       cors: true,
+      allowedHosts: [".natappfree.cc", ".frontend-m.online", ".trycloudflare.com"],
       // Load proxy configuration from .env.development
     },
-    configureServer(server) {
-      server.middlewares.use((req, res, next) => {
-        // 绕过 host 检查，允许内网穿透域名访问
-        delete req.headers.host;
-        next();
-      });
-    },
+
     resolve: {
       alias: {
         public: resolve(__dirname, "../public"),
