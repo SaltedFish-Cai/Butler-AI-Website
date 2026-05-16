@@ -267,7 +267,8 @@ export default {
       host: "0.0.0.0",
       port: 7107,
       open: true,
-      cors: true
+      cors: true,
+      allowedHosts: true
       // Load proxy configuration from .env.development
     },
     resolve: {
