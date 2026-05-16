@@ -238,6 +238,9 @@ export default {
   },
   vite: {
     // Vite 配置选项
+    server: {
+      allowedHosts: true
+    },
     plugins: [
       vueJsx(),
       AutoImport({
