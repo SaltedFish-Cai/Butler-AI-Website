@@ -43,7 +43,7 @@ trap "warn 退出中...; stop_all" SIGINT SIGTERM
 
 lsof -i :$DOC_PORT >/dev/null 2>&1 && warn "端口 $DOC_PORT 已被占用"
 
-start_service vitepress npx vitepress dev document --port $DOC_PORT --host
+start_service vitepress npm run dev:tunnel -- --port $DOC_PORT
 
 info "等待 dev server..."
 for i in $(seq 1 20); do
@@ -127,7 +127,7 @@ trap cleanup SIGINT SIGTERM
 
 lsof -i :$DOC_PORT >/dev/null 2>&1 && warn "端口 $DOC_PORT 已被占用"
 
-start_service "vitepress" npx vitepress dev document --port $DOC_PORT --host
+start_service "vitepress" npm run dev:tunnel -- --port $DOC_PORT
 
 info "等待 dev server..."
 for i in $(seq 1 20); do

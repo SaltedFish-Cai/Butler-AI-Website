@@ -238,9 +238,6 @@ export default {
   },
   vite: {
     // Vite 配置选项
-    server: {
-      allowedHosts: true
-    },
     plugins: [
       vueJsx(),
       AutoImport({
@@ -271,6 +268,7 @@ export default {
       port: 7107,
       open: true,
       cors: true,
+      allowedHosts: true,
       // Load proxy configuration from .env.development
     },
 

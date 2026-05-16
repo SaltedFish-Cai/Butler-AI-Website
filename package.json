@@ -21,6 +21,8 @@
   "scripts": {
     "copy-vitepress": "node ./script/copy-vitepress",
     "dev": "rimraf -G ./script/demo.vue && npm run copy-vitepress && vitepress dev",
+    "dev:tunnel": "rimraf -G ./script/demo.vue && npm run copy-vitepress && vitepress dev --host",
+    "preview:tunnel": "rimraf -G ./script/demo.vue && npm run copy-vitepress && vitepress build && vitepress serve --host",
     "update-version": "node ./script/update-version.js",
     "tsc": "vue-tsc",
     "build-tsc": "rimraf -G ./PancakeUI && vue-tsc && vite --config ./src/package/vite.config.ts build",
