@@ -268,7 +268,7 @@ export default {
       port: 7107,
       open: true,
       cors: true,
-      allowedHosts: ["dev.frontend-m.online", "na6f2e54.natappfree.cc", "f2fe6e5a.natappfree.cc"],
+      allowedHosts: true,
       // Load proxy configuration from .env.development
     },
 
