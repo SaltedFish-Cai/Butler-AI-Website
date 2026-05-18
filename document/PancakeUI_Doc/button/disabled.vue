@@ -1,17 +1,13 @@
 <template>
-  <div class="mb-4">
-    <pa-button disabled :plain="false" type="primary">Primary</pa-button>
-    <pa-button disabled :plain="false" type="success">Success</pa-button>
-    <pa-button disabled :plain="false" type="info">Info</pa-button>
-    <pa-button disabled :plain="false" type="warning">Warning</pa-button>
-    <pa-button disabled :plain="false" type="danger">Danger</pa-button>
-  </div>
+  <pa-row>
+    <pa-col v-for="item in type" :key="item">
+      <pa-button disabled :usePlain="false" :type="item">{{ item }}</pa-button>
+    </pa-col>
+  </pa-row>
 </template>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import { ref } from "vue";
 
-<style>
-.mb-4 {
-  margin-bottom: 1rem;
-}
-</style>
+const type = ref(["primary", "success", "info", "warning", "danger"] as const);
+</script>

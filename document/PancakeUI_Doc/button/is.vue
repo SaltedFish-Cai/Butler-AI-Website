@@ -32,9 +32,8 @@ const isMap = ref([
   "ok",
   "cancel",
   "more",
-  "delete",
-  "default"
-]);
+  "delete"
+] as const);
 </script>
 
 <style></style>

@@ -1,29 +1,23 @@
 <template>
-  <div class="mb-size">
-    <pa-button :usePlain="false" type="primary">Primary</pa-button>
-    <pa-button :usePlain="false" type="success">Success</pa-button>
-    <pa-button :usePlain="false" type="info">Info</pa-button>
-    <pa-button :usePlain="false" type="warning">Warning</pa-button>
-    <pa-button :usePlain="false" type="danger">Danger</pa-button>
-  </div>
+  <pa-row>
+    <pa-col v-for="item in type" :key="item">
+      <pa-button :usePlain="false" :type="item">{{ item }}</pa-button>
+    </pa-col>
+    <br />
+    <pa-col v-for="item in type" :key="item">
+      <pa-button :type="item">{{ item }}</pa-button>
+    </pa-col>
 
-  <div class="mb-size">
-    <pa-button type="primary">Primary</pa-button>
-    <pa-button type="success">Success</pa-button>
-    <pa-button type="info">Info</pa-button>
-    <pa-button type="warning">Warning</pa-button>
-    <pa-button type="danger">Danger</pa-button>
-  </div>
-
-  <div>
-    <pa-button type="primary" />
-    <pa-button type="success" />
-    <pa-button type="info" />
-    <pa-button type="warning" />
-    <pa-button type="danger" />
-  </div>
+    <pa-col v-for="item in type" :key="item">
+      <pa-button :type="item"></pa-button>
+    </pa-col>
+  </pa-row>
 </template>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import { ref } from "vue";
+
+const type = ref(["primary", "success", "info", "warning", "danger"] as const);
+</script>
 
 <style></style>

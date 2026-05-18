@@ -1,8 +1,13 @@
 <template>
-  <el-row>
-    <pa-button :debounced="false" @click="debouncedClick">非防抖按钮</pa-button>
-    <pa-button @click="debouncedClick">防抖按钮</pa-button>
-  </el-row>
+  <pa-row>
+    <pa-col>
+      <pa-button :debounced="false" @click="debouncedClick">非防抖按钮</pa-button>
+    </pa-col>
+
+    <pa-col>
+      <pa-button @click="debouncedClick">防抖按钮</pa-button>
+    </pa-col>
+  </pa-row>
 </template>
 
 <script lang="ts" setup>
