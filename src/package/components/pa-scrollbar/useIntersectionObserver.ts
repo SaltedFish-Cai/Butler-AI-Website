@@ -62,6 +62,7 @@ export function useIntersectionObserver(target: Element, options: IntersectionOb
 }
 /**
  * IntersectionObserver结果类型
+ * @type ReturnType<typeof useIntersectionObserver>
  * @description IntersectionObserver返回结果类型
  */
 export type IntersectionObserverResult = ReturnType<typeof useIntersectionObserver>;

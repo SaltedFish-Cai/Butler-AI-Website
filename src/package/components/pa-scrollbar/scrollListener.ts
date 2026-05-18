@@ -10,6 +10,8 @@ import { debounce, throttle } from "lodash-es";
 const MAX_THUMB_SIZE = 60;
 /**
  * 滚动数据接口
+ * @type interface
+ * @description 滚动信息的数据结构
  */
 export interface ScrollInfoData {
   scrollTop: number;
@@ -24,6 +26,8 @@ export interface ScrollInfoData {
 }
 /**
  * 滚动监听器配置
+ * @type interface
+ * @description 滚动监听器的配置选项
  */
 export interface ScrollListenerOptions {
   debounceTime?: number;
@@ -32,6 +36,11 @@ export interface ScrollListenerOptions {
   defaultScrollHorizontalThumb: number;
   defaultScrollVerticalThumb: number;
 }
+/**
+ * 滚动状态信息
+ * @type interface
+ * @description 滚动监听返回的状态信息
+ */
 export interface ScrollUserInfo {
   horizontalThumb: number;
   verticalThumb: number;
@@ -42,6 +51,8 @@ export interface ScrollUserInfo {
 }
 /**
  * 尺寸变化数据接口
+ * @type interface
+ * @description 尺寸变化事件的数据结构
  */
 export interface ResizeData {
   width: number;
@@ -49,7 +60,9 @@ export interface ResizeData {
   element: HTMLElement;
 }
 /**
- * 滚动监听器类 - 用于监听指定元素的滚动状态
+ * 滚动监听器类
+ * @type class
+ * @description 用于监听指定元素的滚动状态
  */
 export class ScrollListener {
   private listeners: Map<
@@ -72,7 +85,8 @@ export class ScrollListener {
 
   /**
    * 构造函数
-   * @param options 配置选项
+   * @param options - 配置选项
+   * @description 创建滚动监听器实例
    */
   constructor(options: ScrollListenerOptions = { defaultScrollHorizontalThumb: 0, defaultScrollVerticalThumb: 0 }) {
     this.options = { ...this.options, ...options };
@@ -80,6 +94,10 @@ export class ScrollListener {
 
   /**
    * 更新滚动条状态
+   * @param element - 要更新的 DOM 元素
+   * @param parentBoxRef - 父容器引用
+   * @returns 更新后的滚动状态信息
+   * @description 更新指定元素的滚动条状态和尺寸
    */
   public update(element: HTMLElement, parentBoxRef: HTMLElement | undefined): ScrollUserInfo {
     // 为每个已注册的元素重新初始化滚动位置
@@ -109,15 +127,15 @@ export class ScrollListener {
       useVertical
     };
   }
+  /**
+   * 重新初始化滚动监听器
+   * @description 重置所有元素的上次滚动位置记录并重新初始化
+   */
   public reinitialize(): void {
-    // 重置所有元素的上次滚动位置记录
     this.lastScrollPositions.clear();
-
-    // 为每个已注册的元素重新初始化滚动位置
     this.listeners.forEach(listenerInfo => {
       const { element } = listenerInfo;
       if (element instanceof HTMLElement) {
-        // 重新初始化元素的上次滚动位置
         this.lastScrollPositions.set(element, {
           scrollTop: element.scrollTop,
           scrollLeft: element.scrollLeft
@@ -127,10 +145,12 @@ export class ScrollListener {
   }
   /**
    * 添加元素滚动监听器
-   * @param id 监听器唯一标识
-   * @param element 要监听的DOM元素
-   * @param handler 滚动处理函数
-   * @param options 配置选项（可选）
+   * @param id - 监听器唯一标识
+   * @param element - 要监听的 DOM 元素
+   * @param handler - 滚动处理函数
+   * @param directlyHandler - 直接滚动处理函数
+   * @param options - 配置选项
+   * @description 为指定元素添加滚动监听
    */
   public addElementScrollListener(
     id: string,
@@ -139,14 +159,11 @@ export class ScrollListener {
     directlyHandler: (data: { scrollTop: number; scrollLeft: number; scrollData: ScrollInfoData }) => void,
     options: Partial<ScrollListenerOptions> = {}
   ): void {
-    // 检查元素是否有效
     if (!element || !(element instanceof HTMLElement)) {
       console.warn("Invalid element provided for scroll listening");
       return;
     }
-
     const debounceTime = options.debounceTime || this.options.debounceTime;
-    // 创建防抖处理函数
     const debouncedHandler = throttle(
       (data: ScrollInfoData) => {
         handler(data);
@@ -154,19 +171,14 @@ export class ScrollListener {
       debounceTime,
       { trailing: true }
     );
-
-    // 初始化元素的上次滚动位置
     if (!this.lastScrollPositions.has(element)) {
       this.lastScrollPositions.set(element, {
         scrollTop: element.scrollTop,
         scrollLeft: element.scrollLeft
       });
     }
-
-    // 添加滚动事件监听器
     const scrollHandler = this.createScrollHandler(element, debouncedHandler, directlyHandler);
     element.addEventListener("scroll", scrollHandler);
-    // 存储监听器信息
     this.listeners.set(id, {
       handler,
       debouncedHandler,
@@ -174,11 +186,13 @@ export class ScrollListener {
       scrollHandler
     });
   }
-
   /**
    * 创建滚动处理函数
-   * @param element 监听的元素
-   * @param debouncedHandler 防抖处理函数
+   * @param element - 监听的元素
+   * @param debouncedHandler - 防抖处理函数
+   * @param directlyHandler - 直接处理函数
+   * @returns 滚动事件处理函数
+   * @description 创建元素的滚动事件处理函数
    */
   private createScrollHandler(
     element: HTMLElement,
@@ -191,10 +205,11 @@ export class ScrollListener {
       directlyHandler({ scrollTop: element.scrollTop, scrollLeft: element.scrollLeft, scrollData });
     };
   }
-
   /**
    * 获取元素滚动数据
-   * @param element 要获取滚动数据的元素
+   * @param element - 要获取滚动数据的元素
+   * @returns 元素的滚动信息数据
+   * @description 获取指定元素的滚动位置和方向等数据
    */
   private getScrollData(element: HTMLElement): ScrollInfoData {
     const scrollTop = element.scrollTop;
@@ -203,30 +218,20 @@ export class ScrollListener {
     const clientWidth = element.clientWidth;
     const scrollHeight = element.scrollHeight;
     const scrollWidth = element.scrollWidth;
-
-    // 获取上次滚动位置
     const lastPosition = this.lastScrollPositions.get(element) || { scrollTop, scrollLeft };
-
-    // 计算滚动方向
     let scrollDirectionY: "down" | "none" | "up" = "none";
     let scrollDirectionX: "left" | "none" | "right" = "none";
-
     if (scrollTop > lastPosition.scrollTop) {
       scrollDirectionY = "down";
     } else if (scrollTop < lastPosition.scrollTop) {
       scrollDirectionY = "up";
     }
-
     if (scrollLeft > lastPosition.scrollLeft) {
       scrollDirectionX = "right";
     } else if (scrollLeft < lastPosition.scrollLeft) {
       scrollDirectionX = "left";
     }
-
-    // 更新上次滚动位置
     this.lastScrollPositions.set(element, { scrollTop, scrollLeft });
-
-    // 判断是否到达边界（增加10px的容差）
     const isAtTop = scrollTop <= 10;
     const isAtBottom = scrollTop + clientHeight >= scrollHeight - 10;
     const isAtLeft = scrollLeft <= 10;
@@ -243,42 +248,36 @@ export class ScrollListener {
       element
     };
   }
-
   /**
    * 移除指定的元素滚动监听器
-   * @param id 监听器唯一标识
+   * @param id - 监听器唯一标识
+   * @description 移除指定 ID 的滚动监听器
    */
   public removeElementScrollListener(id: string): void {
     const listenerInfo = this.listeners.get(id);
     if (listenerInfo) {
       const { element, scrollHandler } = listenerInfo;
       element.removeEventListener("scroll", scrollHandler);
-
-      // 移除所有与该元素相关的滚动事件监听器
-      // 注意：这里我们需要更精确地移除，但由于JavaScript的限制，我们只能这样处理
-      // 实际项目中可能需要优化此部分
       const newListeners = new Map(this.listeners);
       newListeners.delete(id);
       this.listeners = newListeners;
-
-      // 如果没有其他监听器使用该元素，则清理上次滚动位置记录
       let hasOtherListeners = false;
       this.listeners.forEach(info => {
         if (info.element === element) {
           hasOtherListeners = true;
         }
       });
-
       if (!hasOtherListeners) {
         this.lastScrollPositions.delete(element);
       }
     }
   }
-
   /**
    * 手动设置指定元素的滚动位置
-   * @param element 要设置滚动位置的DOM元素
-   * @param options 滚动位置选项
+   * @param element - 要设置滚动位置的 DOM 元素
+   * @param options - 滚动位置选项
+   * @returns void
+   * @description 手动设置指定元素的滚动位置
    */
   public setElementScrollPosition(
     element: HTMLElement,
@@ -291,7 +290,6 @@ export class ScrollListener {
       offsetY?: number;
     }
   ): void {
-    // 检查元素是否有效
     if (!element || !(element instanceof HTMLElement)) {
       console.warn("Invalid element provided for scroll position setting");
       if (options.callback) {
@@ -299,73 +297,47 @@ export class ScrollListener {
       }
       return;
     }
-
-    // 提取偏移量，默认值为0
     const offsetX = options.offsetX || 0;
     const offsetY = options.offsetY || 0;
-
-    // 获取当前滚动位置
     const currentScrollTop = element.scrollTop;
     const currentScrollLeft = element.scrollLeft;
-
-    // 使用新的位置或保持当前位置
     const targetScrollTop = options.scrollTop !== undefined ? options.scrollTop : currentScrollTop;
     const targetScrollLeft = options.scrollLeft !== undefined ? options.scrollLeft : currentScrollLeft;
-
-    // 判断是否需要滚动（目标位置与当前位置相同）
     const shouldScroll = targetScrollTop !== currentScrollTop || targetScrollLeft !== currentScrollLeft;
-    // 如果不需要滚动，直接调用回调
     if (!shouldScroll && options.callback) {
       options.callback();
       return;
     }
-
-    // 更新滚动位置
     if (options.behavior === "smooth" && "scrollTo" in element) {
-      // 使用平滑滚动
-      // 对于平滑滚动，我们需要监听滚动事件以检测滚动是否完成
-
-      // 设置一个超时，以防滚动事件没有正确触发
       const scrollTimeout = setTimeout(() => {
         element.removeEventListener("scroll", scrollHandler);
         if (options.callback) {
           options.callback();
         }
-      }, 2000); // 2秒超时
-
+      }, 2000);
       const handleScrollEnd = () => {
-        // 检测滚动是否已经到达目标位置（考虑到可能的舍入误差，使用一个小的容差值）
         const isAtTargetPosition =
           element.scrollTop == 0 ||
           element.scrollLeft == 0 ||
           (Math.abs(element.scrollTop - offsetY - targetScrollTop) < 1 &&
             Math.abs(element.scrollLeft - offsetX - targetScrollLeft) < 1);
         if (isAtTargetPosition) {
-          // 移除滚动事件监听器
           element.removeEventListener("scroll", scrollHandler);
-          // 调用回调函数
           if (options.callback) {
             options.callback();
           }
           clearTimeout(scrollTimeout);
         }
       };
-
-      // 使用防抖来避免频繁检查
       const scrollHandler = debounce(handleScrollEnd, 5, { trailing: true });
-      // 添加滚动事件监听器
       element.addEventListener("scroll", scrollHandler);
       handleScrollEnd();
-
       setTimeout(() => {
-        // 执行平滑滚动
         element.scrollTo({
           top: targetScrollTop,
           left: targetScrollLeft,
           behavior: "smooth"
         });
-
-        // 更新上次滚动位置记录
         if (this.lastScrollPositions.has(element)) {
           this.lastScrollPositions.set(element, {
             scrollTop: targetScrollTop,
@@ -374,32 +346,27 @@ export class ScrollListener {
         }
       }, 0);
     } else {
-      // 直接设置滚动位置（瞬间滚动）
       element.scrollTop = targetScrollTop;
       element.scrollLeft = targetScrollLeft;
-
-      // 更新上次滚动位置记录
       if (this.lastScrollPositions.has(element)) {
         this.lastScrollPositions.set(element, {
           scrollTop: targetScrollTop,
           scrollLeft: targetScrollLeft
         });
       }
-
-      // 对于瞬间滚动，立即调用回调
       if (options.callback) {
         options.callback();
       }
     }
   }
-
   /**
    * 开始拖拽滑块以变更滚动值
-   * @param element 要拖拽的滑块元素
-   * @param targetElement 要滚动的目标元素
-   * @param direction 拖拽方向 ('horizontal' | 'vertical')
-   * @param options 拖拽配置选项
-   * @returns 包含stop方法的对象，用于停止拖拽监听
+   * @param element - 要拖拽的滑块元素
+   * @param targetElement - 要滚动的目标元素
+   * @param direction - 拖拽方向
+   * @param options - 拖拽配置选项
+   * @returns 包含 stop 方法的对象，用于停止拖拽监听
+   * @description 开始拖拽滑块以变更滚动值
    */
   public startDrag(
     element: HTMLElement,
@@ -411,7 +378,6 @@ export class ScrollListener {
       onDragEnd?: () => void;
     } = {}
   ): { stop: () => void } {
-    // 检查元素是否有效
     if (!element || !(element instanceof HTMLElement) || !targetElement || !(targetElement instanceof HTMLElement)) {
       console.warn("Invalid elements provided for drag operation");
       return {
@@ -420,49 +386,34 @@ export class ScrollListener {
         }
       };
     }
-
     let isDragging = false;
     let startClientPos = 0;
     let startScrollPos = 0;
-
-    // 鼠标按下事件处理
     const handleMouseDown = (e: MouseEvent) => {
       e.preventDefault();
       isDragging = true;
       startClientPos = direction === "vertical" ? e.clientY : e.clientX;
       startScrollPos = direction === "vertical" ? targetElement.scrollTop : targetElement.scrollLeft;
-
       if (options.onDragStart) {
         options.onDragStart();
       }
-
-      // 添加全局事件监听
       document.addEventListener("mousemove", handleMouseMove);
       document.addEventListener("mouseup", handleMouseUp);
     };
-
-    // 鼠标移动事件处理
     const handleMouseMove = (e: MouseEvent) => {
       if (!isDragging) return;
-
       const clientPos = direction === "vertical" ? e.clientY : e.clientX;
       const delta = clientPos - startClientPos;
-
       const targetSize = direction === "vertical" ? targetElement.clientHeight : targetElement.clientWidth;
       const contentSize = direction === "vertical" ? targetElement.scrollHeight : targetElement.scrollWidth;
       const maxScroll = contentSize - targetSize;
-
-      // 计算新的滚动位置
       const newScrollPos = startScrollPos + (delta * contentSize) / targetSize;
       const clampedScrollPos = Math.max(0, Math.min(maxScroll, newScrollPos));
-
       if (direction === "vertical") {
         targetElement.scrollTop = clampedScrollPos;
       } else {
         targetElement.scrollLeft = clampedScrollPos;
       }
-
-      // 更新上次滚动位置记录
       if (this.lastScrollPositions.has(targetElement)) {
         const current = this.lastScrollPositions.get(targetElement)!;
         this.lastScrollPositions.set(targetElement, {
@@ -470,70 +421,56 @@ export class ScrollListener {
           scrollLeft: direction === "horizontal" ? clampedScrollPos : current.scrollLeft
         });
       }
-
       if (options.onDragMove) {
         options.onDragMove();
       }
     };
-
-    // 鼠标释放事件处理
     const handleMouseUp = () => {
       if (!isDragging) return;
-
       isDragging = false;
-
       if (options.onDragEnd) {
         options.onDragEnd();
       }
-
-      // 移除全局事件监听
       document.removeEventListener("mousemove", handleMouseMove);
       document.removeEventListener("mouseup", handleMouseUp);
     };
-
-    // 添加鼠标按下事件监听
     element.addEventListener("mousedown", handleMouseDown);
-
-    // 停止拖拽监听的方法
     const stop = () => {
       isDragging = false;
       element.removeEventListener("mousedown", handleMouseDown);
       document.removeEventListener("mousemove", handleMouseMove);
       document.removeEventListener("mouseup", handleMouseUp);
     };
-
     return { stop };
   }
-
   /**
    * 移除所有滚动监听器
+   * @description 清除所有已注册的滚动监听器
    */
   public removeAllListeners(): void {
     this.listeners.clear();
     this.lastScrollPositions.clear();
   }
-
   /**
    * 销毁监听器
+   * @description 销毁滚动监听器实例，清除所有监听器和观察器
    */
   public destroy(): void {
     this.removeAllListeners();
-    // 清除所有尺寸观察器
     this.resizeObservers.forEach(observer => {
       observer.disconnect();
     });
     this.resizeObservers.clear();
   }
-
   /**
    * 监听元素尺寸变化
-   * @param id 观察器唯一标识
-   * @param element 要观察的DOM元素
-   * @param handler 尺寸变化处理函数
-   * @returns 包含stop方法的对象，用于停止观察
+   * @param id - 观察器唯一标识
+   * @param element - 要观察的 DOM 元素
+   * @param handler - 尺寸变化处理函数
+   * @returns 包含 stop 方法的对象，用于停止观察
+   * @description 使用 ResizeObserver 监听元素尺寸变化
    */
   public observeElementResize(id: string, element: HTMLElement, handler: (data: ResizeData) => void): { stop: () => void } {
-    // 检查元素是否有效
     if (!element || !(element instanceof HTMLElement)) {
       console.warn("Invalid element provided for resize observation");
       return {
@@ -542,8 +479,6 @@ export class ScrollListener {
         }
       };
     }
-
-    // 使用ResizeObserver监听元素尺寸变化
     if ("ResizeObserver" in window) {
       const resizeObserver = new ResizeObserver(entries => {
         for (const entry of entries) {
@@ -555,20 +490,14 @@ export class ScrollListener {
           });
         }
       });
-
-      // 开始观察元素
       resizeObserver.observe(element);
       this.resizeObservers.set(id, resizeObserver);
-
-      // 初始触发一次回调，提供当前尺寸
       const rect = element.getBoundingClientRect();
       handler({
         width: rect.width,
         height: rect.height,
         element
       });
-
-      // 返回停止观察的方法
       return {
         stop: () => {
           resizeObserver.unobserve(element);
@@ -577,18 +506,13 @@ export class ScrollListener {
         }
       };
     } else {
-      // 降级方案：使用轮询方式检测尺寸变化
       console.warn("ResizeObserver is not supported. Using fallback method.");
-
       let lastWidth = element.offsetWidth;
       let lastHeight = element.offsetHeight;
       let pollingInterval: number | null = null;
-
-      // 定期检查元素尺寸
       pollingInterval = (window as Window & typeof globalThis).setInterval(() => {
         const currentWidth = element.offsetWidth;
         const currentHeight = element.offsetHeight;
-
         if (currentWidth !== lastWidth || currentHeight !== lastHeight) {
           handler({
             width: currentWidth,
@@ -598,9 +522,7 @@ export class ScrollListener {
           lastWidth = currentWidth;
           lastHeight = currentHeight;
         }
-      }, 200); // 每200毫秒检查一次
-
-      // 返回停止观察的方法
+      }, 200);
       return {
         stop: () => {
           if (pollingInterval !== null) {
@@ -613,10 +535,12 @@ export class ScrollListener {
 }
 /**
  * 监听指定元素滚动的便捷函数
- * @param element 要监听的DOM元素
- * @param handler 滚动处理函数
- * @param options 配置选项
- * @returns 包含remove方法的对象，用于移除监听
+ * @param element - 要监听的 DOM 元素
+ * @param handler - 滚动处理函数
+ * @param directlyHandler - 直接滚动处理函数
+ * @param options - 配置选项
+ * @returns 包含 listener、remove、update 等方法的对象
+ * @description 监听指定元素滚动的便捷函数
  */
 export function listenElementScroll(
   element: HTMLElement,
@@ -653,19 +577,21 @@ export function listenElementScroll(
 }
 /**
  * 监听多个指定元素的滚动状态
- * @param elements 要监听的DOM元素数组
- * @param handler 滚动处理函数
- * @param options 配置选项
- * @returns 包含remove方法的对象，用于移除所有监听
+ * @param elements - 要监听的 DOM 元素数组
+ * @param handler - 滚动处理函数
+ * @param directlyHandler - 直接滚动处理函数
+ * @param options - 配置选项
+ * @returns 包含 remove 方法的对象，用于移除所有监听
+ * @description 监听多个指定元素的滚动状态
  */
 export function listenMultipleElementsScroll(
-  elements: HTMLElement[],
+  elements: Array<HTMLElement>,
   handler: (data: ScrollInfoData) => void,
   directlyHandler: (data: { scrollTop: number; scrollLeft: number }) => void,
   options: ScrollListenerOptions = { defaultScrollHorizontalThumb: 0, defaultScrollVerticalThumb: 0 }
 ): { remove: () => void } {
   const listener = new ScrollListener(options);
-  const ids: string[] = [];
+  const ids: Array<string> = [];
 
   elements.forEach((element, index) => {
     if (element instanceof HTMLElement) {
@@ -685,9 +611,10 @@ export function listenMultipleElementsScroll(
 }
 /**
  * 检查元素是否在视口中
- * @param element 要检查的元素
- * @param options IntersectionObserver选项
- * @returns 包含isInViewport状态和停止观察方法的对象
+ * @param element - 要检查的元素
+ * @param options - IntersectionObserver 选项
+ * @returns 包含 isInViewport 状态和停止观察方法的对象
+ * @description 检查指定元素是否在视口中
  */
 export function isElementInViewport(
   element: HTMLElement,
@@ -704,7 +631,6 @@ export function isElementInViewport(
 
     observer.observe(element);
   } else {
-    // 降级处理：使用getBoundingClientRect判断
     const rect = element.getBoundingClientRect();
     const win: Window & typeof globalThis = window;
     const doc = document.documentElement;
@@ -725,12 +651,18 @@ export function isElementInViewport(
     }
   };
 }
-// 创建全局滚动监听器实例
+/**
+ * 全局滚动监听器实例
+ * @type ScrollListener
+ * @description 创建全局滚动监听器实例
+ */
 export const scrollListener = new ScrollListener();
 /**
- * 手动设置指定元素的滚动位置的便捷函数
- * @param element 要设置滚动位置的DOM元素
- * @param options 滚动位置选项
+ * 手动设置指定元素的滚动位置
+ * @param element - 要设置滚动位置的 DOM 元素
+ * @param options - 滚动位置选项
+ * @returns void
+ * @description 手动设置指定元素的滚动位置的便捷函数
  */
 export function setElementScrollPosition(
   element: HTMLElement,
@@ -743,10 +675,8 @@ export function setElementScrollPosition(
     offsetY?: number;
   }
 ): void {
-  // 检查元素是否有效
   if (!element || !(element instanceof HTMLElement)) {
     console.warn("Invalid element provided for scroll position setting");
-    // 如果有回调函数，即使元素无效也要调用
     if (options.callback) {
       options.callback();
     }
@@ -757,11 +687,12 @@ export function setElementScrollPosition(
 }
 /**
  * 开始拖拽滑块以变更滚动值的便捷函数
- * @param element 要拖拽的滑块元素
- * @param targetElement 要滚动的目标元素
- * @param direction 拖拽方向 ('horizontal' | 'vertical')
- * @param options 拖拽配置选项
- * @returns 包含stop方法的对象，用于停止拖拽监听
+ * @param element - 要拖拽的滑块元素
+ * @param targetElement - 要滚动的目标元素
+ * @param direction - 拖拽方向
+ * @param options - 拖拽配置选项
+ * @returns 包含 stop 方法的对象，用于停止拖拽监听
+ * @description 开始拖拽滑块以变更滚动值的便捷函数
  */
 export function startDrag(
   element: HTMLElement,
@@ -773,7 +704,6 @@ export function startDrag(
     onDragEnd?: () => void;
   } = {}
 ): { stop: () => void } {
-  // 检查元素是否有效
   if (!element || !(element instanceof HTMLElement) || !targetElement || !(targetElement instanceof HTMLElement)) {
     console.warn("Invalid elements provided for drag operation");
     return {
@@ -788,12 +718,12 @@ export function startDrag(
 }
 /**
  * 监听元素尺寸变化的便捷函数
- * @param element 要观察的DOM元素
- * @param handler 尺寸变化处理函数
- * @returns 包含stop方法的对象，用于停止观察
+ * @param element - 要观察的 DOM 元素
+ * @param handler - 尺寸变化处理函数
+ * @returns 包含 stop 方法的对象，用于停止观察
+ * @description 监听元素尺寸变化的便捷函数
  */
 export function observeElementResize(element: HTMLElement, handler: (data: ResizeData) => void): { stop: () => void } {
-  // 检查元素是否有效
   if (!element || !(element instanceof HTMLElement)) {
     console.warn("Invalid element provided for resize observation");
     return {
@@ -807,4 +737,8 @@ export function observeElementResize(element: HTMLElement, handler: (data: Resiz
   const id = `resize-observe-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
   return listener.observeElementResize(id, element, handler);
 }
+/**
+ * 模块导出
+ * @description 导出默认的滚动监听器实例
+ */
 export default scrollListener;

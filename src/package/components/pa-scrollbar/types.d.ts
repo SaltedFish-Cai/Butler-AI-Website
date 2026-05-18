@@ -157,7 +157,7 @@ export type ComponentEmits = {
    * 渲染结束事件
    * @description 滚动条渲染结束时触发
    */
-  (e: "renderEnd", data: RenderEndData): void;
+  (e: "renderEnd", data: ComponentRenderEndData): void;
   /**
    * 水平尺寸变化事件
    * @description 滚动条水平尺寸变化时触发
@@ -172,7 +172,7 @@ export type ComponentEmits = {
    * 滚动事件
    * @description 滚动条滚动时触发（存在节流延迟）
    */
-  (e: "scroll", data: ScrollDataType): void;
+  (e: "scroll", data: ComponentScrollDataType): void;
   /**
    * 滚动结束事件
    * @param value - 是否结束
@@ -207,12 +207,12 @@ export type ComponentEmits = {
    * 直接滚动事件
    * @description 滚动条直接滚动时触发（无节流延迟）
    */
-  (e: "directlyScroll", data: DirectlyScrollData): void;
+  (e: "directlyScroll", data: ComponentDirectlyScrollData): void;
   /**
    * 子元素变化事件
    * @description 滚动条子元素变化时触发
    */
-  (e: "scrollChildChange", data: ScrollChildChangeData): void;
+  (e: "scrollChildChange", data: ComponentScrollChildChangeData): void;
   /**
    * 直接滚动结束事件
    * @param value - 是否结束
@@ -243,7 +243,7 @@ export type ComponentEmits = {
  * @type object
  * @description 滚动条数据结构
  */
-export type ScrollDataType = {
+export type ComponentScrollDataType = {
   scrollTop: number;
   scrollLeft: number;
 };
@@ -252,7 +252,7 @@ export type ScrollDataType = {
  * @type object
  * @description 渲染结束时返回的数据结构
  */
-export type RenderEndData = {
+export type ComponentRenderEndData = {
   bodyWidth: number;
   bodyHeight: number;
 };
@@ -261,7 +261,7 @@ export type RenderEndData = {
  * @type object
  * @description 直接滚动事件的数据结构
  */
-export type DirectlyScrollData = ScrollInfoData & {
+export type ComponentDirectlyScrollData = ScrollInfoData & {
   scrollTop: number;
   scrollLeft: number;
   scrollDirectionY: number;
@@ -272,7 +272,7 @@ export type DirectlyScrollData = ScrollInfoData & {
  * @type object
  * @description 子元素变化事件的数据结构
  */
-export type ScrollChildChangeData = {
+export type ComponentScrollChildChangeData = {
   bodyWidth: number;
   bodyHeight: number;
   useScrollX: boolean;

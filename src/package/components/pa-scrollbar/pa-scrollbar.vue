@@ -67,7 +67,7 @@ import { randChar } from "../tools/rand-char";
  * 模块导入
  * @description 导入组件类型定义
  */
-import { ComponentProps, ComponentEmits, DirectlyScrollData } from "./types";
+import { ComponentProps, ComponentEmits, ComponentDirectlyScrollData } from "./types";
 /**
  * 模块导入
  * @description 导入滚动监听相关工具
@@ -251,124 +251,6 @@ const isIntersectingList = ref(
   [] as unknown as Ref<{ isIntersecting: Ref<boolean>; stopObserving: () => void; el: HTMLElement }[]>
 );
 /**
- * 组件挂载生命周期
- * @description 初始化滚动监听
- */
-onMounted(() => {
-  nextTick(() => {
-    const {
-      listener: listenerVal,
-      bodyHeight,
-      bodyWidth,
-      remove,
-      update,
-      useHorizontal: useHorizontalValue,
-      useVertical: useVerticalValue
-    } = listenElementScroll(
-      scrollbarBodyRef.value,
-      scrollData => {
-        if (!useVertical.value && !useHorizontal.value) {
-          return;
-        }
-        emits("scroll", { scrollTop: scrollData.scrollTop, scrollLeft: scrollData.scrollLeft });
-        if (scrollData.isAtBottom) {
-          isScrollEnd.value = true;
-          emits("scrollEnd", true);
-        } else {
-          isScrollEnd.value = false;
-          emits("scrollEnd", false);
-        }
-        if (scrollData.isAtTop) {
-          emits("scrollStart", true);
-        } else {
-          emits("scrollStart", false);
-        }
-        if (scrollData.isAtLeft) {
-          emits("scrollLeft", true);
-        } else {
-          emits("scrollLeft", false);
-        }
-        if (scrollData.isAtRight) {
-          emits("scrollRight", true);
-        } else {
-          emits("scrollRight", false);
-        }
-        if (
-          Object.keys((typeof window !== "undefined" && window.PancakeGlobalConfig?.PopoverList) || {}).length &&
-          prop.useClosePopover
-        ) {
-          Object.values((typeof window !== "undefined" && window.PancakeGlobalConfig.PopoverList) || {}).forEach((item: any) =>
-            item?.()
-          );
-        }
-      },
-      ({ scrollTop, scrollLeft, scrollData }) => {
-        scrollVerticalValue.value = scrollTop;
-        scrollHorizontalValue.value = scrollLeft;
-        const scrollVerticalThumbValue = prop.defaultScrollVerticalThumb + scrollTop * _verticalThumbScale;
-        const scrollHorizontalThumbValue = prop.defaultScrollHorizontalThumb + scrollLeft * _horizontalThumbScale;
-        horizontalThumbRef.value &&
-          (horizontalThumbRef.value.style.transform = `translateX(${scrollHorizontalThumbValue}px) translateZ(1px)`);
-        verticalThumbRef.value &&
-          (verticalThumbRef.value.style.transform = `translateY(${scrollVerticalThumbValue}px) translateZ(1px)`);
-        scrollVerticalThumb.value = scrollVerticalThumbValue;
-        scrollHorizontalThumb.value = scrollHorizontalThumbValue;
-        const scrollDirectionY = scrollTop > scrollVerticalThumbValue ? "down" : "up";
-        const scrollDirectionX = scrollLeft > scrollHorizontalThumbValue ? "right" : "left";
-        if (scrollData.isAtBottom) {
-          emits("directlyScrollEnd", true);
-        } else {
-          emits("directlyScrollEnd", false);
-        }
-        if (scrollData.isAtTop) {
-          emits("directlyScrollStart", true);
-        } else {
-          emits("directlyScrollStart", false);
-        }
-        if (scrollData.isAtLeft) {
-          emits("directlyScrollLeft", true);
-        } else {
-          emits("directlyScrollLeft", false);
-        }
-        if (scrollData.isAtRight) {
-          emits("directlyScrollRight", true);
-        } else {
-          emits("directlyScrollRight", false);
-        }
-        const _data = { ...scrollData, scrollTop, scrollLeft, scrollDirectionY, scrollDirectionX } as DirectlyScrollData;
-        emits("directlyScroll", _data);
-      },
-      {
-        debounceTime: 80,
-        defaultScrollHorizontalThumb: prop.defaultScrollHorizontalThumb,
-        defaultScrollVerticalThumb: prop.defaultScrollVerticalThumb
-      }
-    );
-    listener.value = listenerVal;
-    useHorizontal.value = useHorizontalValue;
-    useVertical.value = useVerticalValue;
-    updateListen = update;
-    nextTick(() => {
-      debounceSetUpdate();
-    });
-    const { stop } = observeElementResize(scrollbarBodyContentRef.value, () => {
-      nextTick(() => {
-        debounceSetUpdate();
-      });
-    });
-    removeListen = () => {
-      stop();
-      remove();
-    };
-    nextTick(() => {
-      emits("renderEnd", { bodyWidth, bodyHeight });
-      if (prop.intersectClassName) {
-        createObserver(prop.intersectClassName);
-      }
-    });
-  });
-});
-/**
  * 创建观察器
  * @param intersectClassName - 监听元素的类名
  * @description 创建交叉观察器监听指定元素
@@ -478,12 +360,6 @@ function resetObserver() {
   if (prop.intersectClassName) createObserver(prop.intersectClassName);
 }
 /**
- * 防抖更新函数
- * @type Function
- * @description 防抖处理后的更新函数
- */
-const debounceSetUpdate = debounce(setUpdate, 110);
-/**
  * 更新滚动状态
  * @description 更新滚动条状态和尺寸
  */
@@ -539,6 +415,130 @@ function setUpdate() {
   }
 }
 /**
+ * 防抖更新函数
+ * @type Function
+ * @description 防抖处理后的更新函数
+ */
+const debounceSetUpdate = debounce(setUpdate, 110);
+/**
+ * 组件挂载生命周期
+ * @description 初始化滚动监听
+ */
+onMounted(() => {
+  nextTick(() => {
+    const {
+      listener: listenerVal,
+      bodyHeight,
+      bodyWidth,
+      remove,
+      update,
+      useHorizontal: useHorizontalValue,
+      useVertical: useVerticalValue
+    } = listenElementScroll(
+      scrollbarBodyRef.value,
+      scrollData => {
+        if (!useVertical.value && !useHorizontal.value) {
+          return;
+        }
+        emits("scroll", { scrollTop: scrollData.scrollTop, scrollLeft: scrollData.scrollLeft });
+        if (scrollData.isAtBottom) {
+          isScrollEnd.value = true;
+          emits("scrollEnd", true);
+        } else {
+          isScrollEnd.value = false;
+          emits("scrollEnd", false);
+        }
+        if (scrollData.isAtTop) {
+          emits("scrollStart", true);
+        } else {
+          emits("scrollStart", false);
+        }
+        if (scrollData.isAtLeft) {
+          emits("scrollLeft", true);
+        } else {
+          emits("scrollLeft", false);
+        }
+        if (scrollData.isAtRight) {
+          emits("scrollRight", true);
+        } else {
+          emits("scrollRight", false);
+        }
+        if (
+          Object.keys((typeof window !== "undefined" && window.PancakeGlobalConfig?.PopoverList) || {}).length &&
+          prop.useClosePopover
+        ) {
+          Object.values((typeof window !== "undefined" && window.PancakeGlobalConfig.PopoverList) || {}).forEach((item: any) =>
+            item?.()
+          );
+        }
+      },
+      ({ scrollTop, scrollLeft, scrollData }) => {
+        scrollVerticalValue.value = scrollTop;
+        scrollHorizontalValue.value = scrollLeft;
+        const scrollVerticalThumbValue = prop.defaultScrollVerticalThumb + scrollTop * _verticalThumbScale;
+        const scrollHorizontalThumbValue = prop.defaultScrollHorizontalThumb + scrollLeft * _horizontalThumbScale;
+        horizontalThumbRef.value &&
+          (horizontalThumbRef.value.style.transform = `translateX(${scrollHorizontalThumbValue}px) translateZ(1px)`);
+        verticalThumbRef.value &&
+          (verticalThumbRef.value.style.transform = `translateY(${scrollVerticalThumbValue}px) translateZ(1px)`);
+        scrollVerticalThumb.value = scrollVerticalThumbValue;
+        scrollHorizontalThumb.value = scrollHorizontalThumbValue;
+        const scrollDirectionY = scrollTop > scrollVerticalThumbValue ? "down" : "up";
+        const scrollDirectionX = scrollLeft > scrollHorizontalThumbValue ? "right" : "left";
+        if (scrollData.isAtBottom) {
+          emits("directlyScrollEnd", true);
+        } else {
+          emits("directlyScrollEnd", false);
+        }
+        if (scrollData.isAtTop) {
+          emits("directlyScrollStart", true);
+        } else {
+          emits("directlyScrollStart", false);
+        }
+        if (scrollData.isAtLeft) {
+          emits("directlyScrollLeft", true);
+        } else {
+          emits("directlyScrollLeft", false);
+        }
+        if (scrollData.isAtRight) {
+          emits("directlyScrollRight", true);
+        } else {
+          emits("directlyScrollRight", false);
+        }
+        const _data = { ...scrollData, scrollTop, scrollLeft, scrollDirectionY, scrollDirectionX } as ComponentDirectlyScrollData;
+        emits("directlyScroll", _data);
+      },
+      {
+        debounceTime: 80,
+        defaultScrollHorizontalThumb: prop.defaultScrollHorizontalThumb,
+        defaultScrollVerticalThumb: prop.defaultScrollVerticalThumb
+      }
+    );
+    listener.value = listenerVal;
+    useHorizontal.value = useHorizontalValue;
+    useVertical.value = useVerticalValue;
+    updateListen = update;
+    nextTick(() => {
+      debounceSetUpdate();
+    });
+    const { stop } = observeElementResize(scrollbarBodyContentRef.value, () => {
+      nextTick(() => {
+        debounceSetUpdate();
+      });
+    });
+    removeListen = () => {
+      stop();
+      remove();
+    };
+    nextTick(() => {
+      emits("renderEnd", { bodyWidth, bodyHeight });
+      if (prop.intersectClassName) {
+        createObserver(prop.intersectClassName);
+      }
+    });
+  });
+});
+/**
  * 组件卸载前生命周期
  * @description 清理监听器和控制器
  */
@@ -572,22 +572,26 @@ watch(
  */
 const showBackTop = computed(() => scrollVerticalValue.value > 10);
 /**
- * 顶部阴影样式（避免模板内联表达式）
+ * 顶部阴影样式
+ * @description 计算顶部阴影的透明度样式（避免模板内联表达式）
  */
 const scrollTopShadowStyle = computed(() => ({ opacity: scrollVerticalThumb.value > 5 ? "1" : "0" }));
 /**
- * 底部阴影样式（避免模板内联表达式）
+ * 底部阴影样式
+ * @description 计算底部阴影的透明度样式（避免模板内联表达式）
  */
 const scrollEndShadowStyle = computed(() => ({ opacity: isScrollEnd.value ? "0" : "1" }));
 /**
- * 返回顶部按钮样式（避免模板内联表达式）
+ * 返回顶部按钮样式
+ * @description 计算返回顶部按钮的透明度与位置样式（避免模板内联表达式）
  */
 const backTopStyle = computed(() => ({
   opacity: showBackTop.value ? "1" : "0",
   right: showBackTop.value ? "24px" : "-20px"
 }));
 /**
- * 内边距类名（缓存 includes('all') 结果，避免重复调用）
+ * 内边距类名
+ * @description 计算内边距类名列表（缓存 includes('all') 结果，避免重复调用）
  */
 const paddingContentClasses = computed(() => {
   const padding = prop.padding;
@@ -601,7 +605,8 @@ const paddingContentClasses = computed(() => {
   };
 });
 /**
- * 内边距边框 CSS 变量（缓存 includes('all') 结果，避免重复调用）
+ * 内边距边框 CSS 变量
+ * @description 计算内边距边框的 CSS 变量值（缓存 includes('all') 结果，避免重复调用）
  */
 const paddingBorderVars = computed(() => {
   const padding = prop.padding;
@@ -616,7 +621,8 @@ const paddingBorderVars = computed(() => {
   };
 });
 /**
- * 根元素样式（合并 style prop 与 paddingWidth，避免模板展开对象）
+ * 根元素样式
+ * @description 计算根元素样式（合并 style prop 与 paddingWidth，避免模板展开对象）
  */
 const rootStyle = computed(() => {
   const pw = prop.paddingWidth;
