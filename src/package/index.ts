@@ -25,15 +25,7 @@ import { GlobalState } from "./components/store/type";
 
 // _Function install
 const install = function (app, options: GlobalState) {
-  const {
-    themeColor = "#2a3e48",
-    isDark = false,
-    requestHeader,
-    tableConfig = {},
-    formConfig = {},
-    size = "default",
-    apiBaseUrl = ""
-  } = options;
+  const { themeColor = "#2a3e48", isDark = false, requestHeader, tableConfig = {}, formConfig = {}, size = "default", apiBaseUrl = "" } = options;
   const { info, error, warning, success, msg } = Log();
 
   if (inBrowser) {

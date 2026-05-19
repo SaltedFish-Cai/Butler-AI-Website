@@ -1,11 +1,5 @@
 <template>
-  <pa-dialog
-    v-model="visible"
-    :title="{ 'zh-CN': '页面配置', 'en-US': 'Page Config' }"
-    :padding="['all']"
-    :closeOnClickModal="false"
-    size="s"
-  >
+  <pa-dialog v-model="visible" :title="{ 'zh-CN': '页面配置', 'en-US': 'Page Config' }" :padding="['all']" :closeOnClickModal="false" size="s">
     <pa-form id="pa-playground_base" ref="formRef" :structure="config" :data="editBaseData" :ex-span="1"> </pa-form>
 
     <template #footer>
@@ -40,9 +34,7 @@ const emit = defineEmits<{
 const editIndex = ref(-1);
 const visible = ref(false);
 
-const config = ref<PaStructureType.Form[]>([
-  { label: { "en-US": "Project Name", "zh-CN": "页面名称" }, prop: "name", type: "input" }
-]);
+const config = ref<PaStructureType.Form[]>([{ label: { "en-US": "Project Name", "zh-CN": "页面名称" }, prop: "name", type: "input" }]);
 
 /**
  * # 打开编辑表格列弹窗

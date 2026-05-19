@@ -13,14 +13,7 @@
   <template v-if="inRenderEnd && visible">
     <teleport :to="teleportTo || 'body'">
       <transition name="mo-animation-fadeIn">
-        <div
-          v-show="visible"
-          :id="id"
-          :class="['pa-popover', props.popoverClass]"
-          :style="{ ...popoverStyle, zIndex: zIndex }"
-          @mouseenter="handlePopoverEnter"
-          @mouseleave="handlePopoverLeave"
-        >
+        <div v-show="visible" :id="id" :class="['pa-popover', props.popoverClass]" :style="{ ...popoverStyle, zIndex: zIndex }" @mouseenter="handlePopoverEnter" @mouseleave="handlePopoverLeave">
           <div class="pa-popover-content" ref="popoverRef" :class="contentClassName" :style="popoverContentStyle">
             <slot />
           </div>
@@ -460,11 +453,8 @@ function hidePopover(): void {
  */
 function handleGlobalClick(event: MouseEvent): void {
   if (!visible.value) return;
-  const isClickOnReference =
-    popoverReferenceRef.value &&
-    (popoverReferenceRef.value === event.target || popoverReferenceRef.value.contains(event.target as Node));
-  const isClickOnPopover =
-    popoverRef.value && (popoverRef.value === event.target || popoverRef.value.contains(event.target as Node));
+  const isClickOnReference = popoverReferenceRef.value && (popoverReferenceRef.value === event.target || popoverReferenceRef.value.contains(event.target as Node));
+  const isClickOnPopover = popoverRef.value && (popoverRef.value === event.target || popoverRef.value.contains(event.target as Node));
   if (isClickOnReference || isClickOnPopover) {
     return;
   }

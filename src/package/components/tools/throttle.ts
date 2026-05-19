@@ -6,11 +6,7 @@
  * @returns 节流后的函数
  * @description trailing 模式节流实现
  */
-function throttle(
-  fn: (...args: unknown[]) => void,
-  wait: number,
-  options?: { trailing?: boolean }
-): (...args: unknown[]) => void {
+function throttle(fn: (...args: unknown[]) => void, wait: number, options?: { trailing?: boolean }): (...args: unknown[]) => void {
   let lastTime = 0;
   let timer: ReturnType<typeof setTimeout> | null = null;
   const trailing = options?.trailing ?? true;

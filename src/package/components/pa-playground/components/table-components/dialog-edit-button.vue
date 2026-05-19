@@ -1,18 +1,6 @@
 <template>
-  <pa-dialog
-    v-model="OperationVisible"
-    :title="{ 'zh-CN': '按钮配置', 'en-US': 'Button Configuration' }"
-    :padding="['all']"
-    :closeOnClickModal="false"
-    size="max"
-  >
-    <m-quick-table
-      ref="visibleTableRef"
-      :tableConfig="tableConfig"
-      :tableData="tableData"
-      :exOptions="{}"
-      @update="data => (tableData = data)"
-    >
+  <pa-dialog v-model="OperationVisible" :title="{ 'zh-CN': '按钮配置', 'en-US': 'Button Configuration' }" :padding="['all']" :closeOnClickModal="false" size="max">
+    <m-quick-table ref="visibleTableRef" :tableConfig="tableConfig" :tableData="tableData" :exOptions="{}" @update="data => (tableData = data)">
       <template #Header>
         <pa-button is="add" @click="addOperation" :debounced="false" :text="{ 'zh-CN': '新增按钮', 'en-US': 'Add Button' }" />
       </template>
@@ -57,12 +45,7 @@
       <template #is="{ data, index }">
         <!-- 样式配置 -->
         <template v-if="data.styleType === 'Built'">
-          <pa-select
-            v-model="data.is"
-            :exOptions="isOptions"
-            @change="({ value }) => isChange(value, index)"
-            createUseChange
-          ></pa-select>
+          <pa-select v-model="data.is" :exOptions="isOptions" @change="({ value }) => isChange(value, index)" createUseChange></pa-select>
         </template>
         <template v-if="data.styleType === 'Custom'">
           <pa-select-icon v-model="data.icon"></pa-select-icon>
@@ -78,23 +61,14 @@
             :title="language === 'zh-CN' ? '英文文本' : 'English Text'"
             :placeholder="{ 'zh-CN': '请输入英文文本', 'en-US': 'Please input English text' }"
           ></pa-input>
-          <pa-select
-            class="mt-size"
-            v-model="data.type"
-            :title="language === 'zh-CN' ? '按钮类型' : 'Button Type'"
-            :exOptions="typeOptions"
-          ></pa-select>
+          <pa-select class="mt-size" v-model="data.type" :title="language === 'zh-CN' ? '按钮类型' : 'Button Type'" :exOptions="typeOptions"></pa-select>
         </template>
       </template>
 
       <template #actionType="{ data }">
         <!-- 按钮功能 -->
         <div class="flex-col">
-          <pa-cascader
-            v-model="data.actionType"
-            :exOptions="[...actionOptions, ...(actionFunction as any)]"
-            :title="language === 'zh-CN' ? '按钮功能' : 'Button Function'"
-          />
+          <pa-cascader v-model="data.actionType" :exOptions="[...actionOptions, ...(actionFunction as any)]" :title="language === 'zh-CN' ? '按钮功能' : 'Button Function'" />
 
           <pa-select
             v-if="data.actionType === 'delete' || data.actionType === 'dialog'"
@@ -205,13 +179,8 @@
           </template>
 
           <template v-if="actionFunction?.find?.(i => i.value === data.actionType)">
-            <template
-              v-for="dependency in actionFunction?.find?.(i => i.value === data.actionType)?.executionDependencies || []"
-              :key="dependency.key"
-            >
-              <template
-                v-if="!dependency.showByKey || (dependency.showByKey && dependency.showByValue === data[dependency.showByKey])"
-              >
+            <template v-for="dependency in actionFunction?.find?.(i => i.value === data.actionType)?.executionDependencies || []" :key="dependency.key">
+              <template v-if="!dependency.showByKey || (dependency.showByKey && dependency.showByValue === data[dependency.showByKey])">
                 <pa-input
                   v-if="dependency.type === 'input'"
                   class="mt-size"
@@ -373,9 +342,7 @@ const isOptions = [
 const actionKeyOptions = ref<PaOptionType.SelectList>([]);
 
 const itemOptions = computed(() => {
-  return props.playgroundItems
-    .filter(item => item.pageId !== editId.value)
-    .map(item => ({ label: item.name, value: item.pageId }));
+  return props.playgroundItems.filter(item => item.pageId !== editId.value).map(item => ({ label: item.name, value: item.pageId }));
 });
 
 const dialogSizeOptions = [
@@ -438,8 +405,7 @@ function openEditOperationDialog(edit_id: string, config: PaPlaygroundPageButton
     item.itemConfigs.forEach(config => {
       if (config.itemId === edit_id) {
         const StructuresData = props.dataStructures.find(Structures => Structures.id === config.sourceTable);
-        actionKeyOptions.value =
-          StructuresData?.config.map(item => ({ label: `${item.description || "--"} ( ${item.prop} )`, value: item.prop })) || [];
+        actionKeyOptions.value = StructuresData?.config.map(item => ({ label: `${item.description || "--"} ( ${item.prop} )`, value: item.prop })) || [];
       }
     });
   });

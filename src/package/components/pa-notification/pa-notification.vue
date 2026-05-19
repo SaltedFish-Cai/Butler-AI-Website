@@ -1,13 +1,6 @@
 <template>
   <transition name="mo-animation-fade" @after-enter="handleAfterEnter" @after-leave="handleAfterLeave">
-    <div
-      v-show="visible"
-      :id="id"
-      :class="['pa-notification', type ? `${type}` : '', customClass]"
-      :style="styles"
-      role="alert"
-      @click="handleClick"
-    >
+    <div v-show="visible" :id="id" :class="['pa-notification', type ? `${type}` : '', customClass]" :style="styles" role="alert" @click="handleClick">
       <div class="pa-notification_header mb-size">
         <div class="flex-center-start">
           <pa-icon class="pa-notification__icon mr-size" name="warning_line" />
@@ -65,18 +58,7 @@ const languagePackage = languageMap[language]?.message || languageMap["zh-CN"]?.
  * 解构选项
  * @description 从 props.options 中解构配置项
  */
-const {
-  type,
-  customClass = "",
-  dangerouslyUseHTMLString = false,
-  onClick,
-  onClose,
-  icon,
-  offset = 0,
-  position = "top-right",
-  duration = 3000,
-  zIndex = 2050
-} = props.options;
+const { type, customClass = "", dangerouslyUseHTMLString = false, onClick, onClose, icon, offset = 0, position = "top-right", duration = 3000, zIndex = 2050 } = props.options;
 /**
  * 标题
  * @description 通知标题，支持多语言，默认值来自语言包

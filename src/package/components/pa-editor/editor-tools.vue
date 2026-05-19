@@ -16,10 +16,7 @@
       >
         <template #reference>
           <button
-            :class="[
-              tool.command == 'unorderedLst' || tool.command == 'backColor' || tool.command == 'createLink' ? 'ml15' : '',
-              tool.isActive ? 'active' : ''
-            ]"
+            :class="[tool.command == 'unorderedLst' || tool.command == 'backColor' || tool.command == 'createLink' ? 'ml15' : '', tool.isActive ? 'active' : '']"
             :title="tool.title"
             :disabled="isSourceCodeMode != 'edit'"
             :style="
@@ -37,26 +34,11 @@
             <pa-icon v-else :name="tool.icon"></pa-icon>
           </button>
         </template>
-        <pa-color-box
-          v-if="tool.command == 'foreColor'"
-          v-model="tool.foreColor"
-          @change="value => throttleExecuteCommand(tool.command, value)"
-          :presetColors="presetColors"
-        ></pa-color-box>
-        <pa-color-box
-          v-else-if="tool.command == 'backColor'"
-          v-model="tool.backColor"
-          @change="value => throttleExecuteCommand(tool.command, value)"
-          :presetColors="presetColors"
-        ></pa-color-box>
+        <pa-color-box v-if="tool.command == 'foreColor'" v-model="tool.foreColor" @change="value => throttleExecuteCommand(tool.command, value)" :presetColors="presetColors"></pa-color-box>
+        <pa-color-box v-else-if="tool.command == 'backColor'" v-model="tool.backColor" @change="value => throttleExecuteCommand(tool.command, value)" :presetColors="presetColors"></pa-color-box>
 
         <div class="pa-editor-toolbar_input" v-else-if="tool.command == 'createLink'">
-          <input
-            v-model="tool.linkString"
-            placeholder="请输入链接"
-            @mousedown="executeCommand(tool.command, true)"
-            @blur="executeCommand(tool.command, false)"
-          />
+          <input v-model="tool.linkString" placeholder="请输入链接" @mousedown="executeCommand(tool.command, true)" @blur="executeCommand(tool.command, false)" />
           <div
             @click="
               executeCommand('confirmLink', tool.linkString);
@@ -89,25 +71,14 @@
               {{ child.title }}
             </button>
 
-            <button
-              v-else
-              :class="{ active: child.isActive }"
-              :disabled="isSourceCodeMode != 'edit'"
-              @click="executeCommand(child.command, child.value)"
-              :title="child.title"
-            >
+            <button v-else :class="{ active: child.isActive }" :disabled="isSourceCodeMode != 'edit'" @click="executeCommand(child.command, child.value)" :title="child.title">
               <pa-icon :name="child.icon"></pa-icon>
             </button>
           </template>
         </div>
       </pa-popover>
 
-      <button
-        v-else-if="tool.command == 'insertImage'"
-        :title="tool.title"
-        class="file_upload-btn"
-        :disabled="isSourceCodeMode != 'edit'"
-      >
+      <button v-else-if="tool.command == 'insertImage'" :title="tool.title" class="file_upload-btn" :disabled="isSourceCodeMode != 'edit'">
         <pa-icon :name="tool.icon"></pa-icon>
         <input
           ref="fileInput"
@@ -123,22 +94,14 @@
       <button
         v-else
         :class="[
-          tool.command == 'bold' ||
-          tool.command == 'justifyLeft' ||
-          tool.command == 'unorderedLst' ||
-          tool.command == 'undo' ||
-          tool.command == 'sourceCode' ||
-          tool.command == 'removeFormat'
+          tool.command == 'bold' || tool.command == 'justifyLeft' || tool.command == 'unorderedLst' || tool.command == 'undo' || tool.command == 'sourceCode' || tool.command == 'removeFormat'
             ? 'ml15'
             : '',
           tool.isActive ? 'active' : ''
         ]"
         @click="executeCommand(tool.command, tool.value)"
         :title="tool.title"
-        :disabled="
-          (isSourceCodeMode == 'code' && tool.command != 'sourceCode') ||
-          (isSourceCodeMode == 'visible' && tool.command != 'visible')
-        "
+        :disabled="(isSourceCodeMode == 'code' && tool.command != 'sourceCode') || (isSourceCodeMode == 'visible' && tool.command != 'visible')"
       >
         <pa-icon :name="tool.icon"></pa-icon>
       </button>
@@ -335,20 +298,7 @@ const executeCommand = (command: string, value?: any) => {
   /**
    * @description 确保编辑器存在并获得焦点
    */
-  if (
-    !editorRef.value &&
-    ![
-      "sourceCode",
-      "insertTable",
-      "insertTableRow",
-      "insertTableColumn",
-      "deleteTableRow",
-      "deleteTableColumn",
-      "undo",
-      "redo"
-    ].includes(command)
-  )
-    return;
+  if (!editorRef.value && !["sourceCode", "insertTable", "insertTableRow", "insertTableColumn", "deleteTableRow", "deleteTableColumn", "undo", "redo"].includes(command)) return;
   editorRef.value?.focus?.();
   console.log("++++++++++> command:", command);
   /**

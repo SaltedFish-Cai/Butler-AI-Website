@@ -6,11 +6,7 @@ import { GetTableDictionaries, GetSystemDictionaries } from "./dictionaries-fn";
 import { MOptionType } from "MTypes";
 
 // #Function 字典方法入口
-async function dictionaries(
-  type: "system" | "table",
-  key: string[],
-  params?: systemParamsType | tableParamsType[]
-): Promise<MOptionType.Select[]> {
+async function dictionaries(type: "system" | "table", key: string[], params?: systemParamsType | tableParamsType[]): Promise<MOptionType.Select[]> {
   const useGlobalState = globalState();
   const { cloneDeep } = lodashPkg;
 

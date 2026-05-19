@@ -176,8 +176,7 @@ const PaSwitchMock = defineComponent({
     disabled: { type: Boolean, default: false }
   },
   emits: ["update:modelValue"],
-  template:
-    '<button class="pa-switch" :disabled="disabled" @click="$emit(\'update:modelValue\', !modelValue)">{{ modelValue }}</button>'
+  template: '<button class="pa-switch" :disabled="disabled" @click="$emit(\'update:modelValue\', !modelValue)">{{ modelValue }}</button>'
 });
 
 // Mock PaCheckboxItem

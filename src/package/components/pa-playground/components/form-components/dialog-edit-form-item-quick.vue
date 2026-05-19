@@ -1,18 +1,6 @@
 <template>
-  <pa-dialog
-    v-model="OperationVisible"
-    :title="{ 'zh-CN': '快捷编辑表单列', 'en-US': 'Quick Edit Form Item Column' }"
-    :padding="['all']"
-    :closeOnClickModal="false"
-    size="l"
-  >
-    <m-quick-table
-      ref="visibleTableRef"
-      :tableConfig="tableConfig"
-      :tableData="formData"
-      :exOptions="{}"
-      @update="data => (formData = data)"
-    >
+  <pa-dialog v-model="OperationVisible" :title="{ 'zh-CN': '快捷编辑表单列', 'en-US': 'Quick Edit Form Item Column' }" :padding="['all']" :closeOnClickModal="false" size="l">
+    <m-quick-table ref="visibleTableRef" :tableConfig="tableConfig" :tableData="formData" :exOptions="{}" @update="data => (formData = data)">
       <template #label="{ data }">
         <pa-input
           v-model="(data.label as object)['zh-CN']"
@@ -29,13 +17,7 @@
         ></pa-input>
       </template>
 
-      <template #prop="{ data }">
-        <pa-input
-          display
-          v-model="data.prop"
-          :placeholder="{ 'zh-CN': '请输入列Key', 'en-US': 'Please input column key' }"
-        ></pa-input
-      ></template>
+      <template #prop="{ data }"> <pa-input display v-model="data.prop" :placeholder="{ 'zh-CN': '请输入列Key', 'en-US': 'Please input column key' }"></pa-input></template>
 
       <template #cellConfig="{ data }">
         <pa-cascader v-model="data.type" :exOptions="cellMapConfig" :title="{ 'zh-CN': '类型', 'en-US': 'Type' }"></pa-cascader>
@@ -46,11 +28,7 @@
             exOptionsMap &&
             data.prop &&
             data.type &&
-            (data.type.includes('select') ||
-              data.type.includes('cascader') ||
-              data.type.includes('switch') ||
-              data.type.includes('radio') ||
-              data.type.includes('checkbox'))
+            (data.type.includes('select') || data.type.includes('cascader') || data.type.includes('switch') || data.type.includes('radio') || data.type.includes('checkbox'))
           "
           :title="{ 'zh-CN': '来源', 'en-US': 'Source' }"
           v-model="data['exOptionsById']"

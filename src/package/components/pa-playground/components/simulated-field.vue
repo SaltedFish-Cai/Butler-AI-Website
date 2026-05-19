@@ -1,41 +1,14 @@
 <template>
-  <pa-dialog
-    v-model="visible"
-    :title="{ 'en-US': 'Simulated Field Management', 'zh-CN': '模拟场管理' }"
-    :padding="['top', 'bottom']"
-    size="m"
-  >
+  <pa-dialog v-model="visible" :title="{ 'en-US': 'Simulated Field Management', 'zh-CN': '模拟场管理' }" :padding="['top', 'bottom']" size="m">
     <pa-tabs v-model="activeName">
       <!-- 模拟接口 -->
-      <pa-tabs-item
-        label="{ 'zh-CN': '模拟接口', 'en-US': 'Simulated Interface' }"
-        name="Interface"
-        class="card_style"
-        :padding="['top', 'left', 'right']"
-        :scroll="false"
-      >
-        <simulated-interface
-          :id="props.id"
-          :playground-items="playgroundItems"
-          :interface-configs="interfaceConfigs"
-          :data-structures="dataStructures"
-        ></simulated-interface>
+      <pa-tabs-item label="{ 'zh-CN': '模拟接口', 'en-US': 'Simulated Interface' }" name="Interface" class="card_style" :padding="['top', 'left', 'right']" :scroll="false">
+        <simulated-interface :id="props.id" :playground-items="playgroundItems" :interface-configs="interfaceConfigs" :data-structures="dataStructures"></simulated-interface>
       </pa-tabs-item>
 
       <!-- 数据管理 -->
-      <pa-tabs-item
-        label="{ 'zh-CN': '数据管理', 'en-US': 'Data Management' }"
-        name="Data"
-        class="card_style"
-        :padding="['top', 'left', 'right']"
-        :scroll="false"
-      >
-        <data-management
-          :id="props.id"
-          :playground-items="playgroundItems"
-          :interface-configs="interfaceConfigs"
-          :data-structures="dataStructures"
-        ></data-management>
+      <pa-tabs-item label="{ 'zh-CN': '数据管理', 'en-US': 'Data Management' }" name="Data" class="card_style" :padding="['top', 'left', 'right']" :scroll="false">
+        <data-management :id="props.id" :playground-items="playgroundItems" :interface-configs="interfaceConfigs" :data-structures="dataStructures"></data-management>
       </pa-tabs-item>
 
       <template #HeaderRight>

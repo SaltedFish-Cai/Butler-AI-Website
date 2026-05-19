@@ -1,11 +1,5 @@
 <template>
-  <div
-    v-if="!display"
-    class="pa-transfer"
-    ref="selectRef"
-    :class="[props.class, { 'is-disabled': props.disabled }]"
-    :style="rootStyle"
-  >
+  <div v-if="!display" class="pa-transfer" ref="selectRef" :class="[props.class, { 'is-disabled': props.disabled }]" :style="rootStyle">
     <div class="pa-transfer-select-box">
       <div class="pa-transfer-select-box_title">
         <div class="flex-center">
@@ -25,37 +19,17 @@
           <pa-empty
             v-if="searchAllSelectList.length === 0"
             :style="emptyStyle"
-            :message="
-              searchAll.length
-                ? { 'zh-CN': '无匹配数据', 'en-US': 'No match data' }
-                : { 'zh-CN': '无更多数据', 'en-US': 'No more data' }
-            "
+            :message="searchAll.length ? { 'zh-CN': '无匹配数据', 'en-US': 'No match data' } : { 'zh-CN': '无更多数据', 'en-US': 'No more data' }"
           ></pa-empty>
-          <div
-            v-else
-            v-for="(item, index) in searchAllSelectList"
-            :key="String(item.value)"
-            class="pa-transfer-option"
-            @click="handleOptionClick(item, 'left', index)"
-          >
-            <pa-checkbox-item :disabled="props.disabled" :isChecked="item.value ? awaitSelectList.includes(item.value) : false">{{
-              item.label
-            }}</pa-checkbox-item>
+          <div v-else v-for="(item, index) in searchAllSelectList" :key="String(item.value)" class="pa-transfer-option" @click="handleOptionClick(item, 'left', index)">
+            <pa-checkbox-item :disabled="props.disabled" :isChecked="item.value ? awaitSelectList.includes(item.value) : false">{{ item.label }}</pa-checkbox-item>
           </div>
         </pa-scrollbar>
       </div>
     </div>
     <div class="pa-transfer-transfer">
-      <pa-button
-        icon-name="left_line"
-        :disabled="props.disabled || awaitSelectedList.length === 0"
-        @click="handleTransferClick('left')"
-      ></pa-button>
-      <pa-button
-        icon-name="right_line"
-        :disabled="props.disabled || awaitSelectList.length === 0"
-        @click="handleTransferClick('right')"
-      ></pa-button>
+      <pa-button icon-name="left_line" :disabled="props.disabled || awaitSelectedList.length === 0" @click="handleTransferClick('left')"></pa-button>
+      <pa-button icon-name="right_line" :disabled="props.disabled || awaitSelectList.length === 0" @click="handleTransferClick('right')"></pa-button>
     </div>
     <div class="pa-transfer-select-box">
       <div class="pa-transfer-select-box_title">
@@ -69,35 +43,17 @@
           ></pa-checkbox-item>
           {{ languagePackage["selected"] }}
         </div>
-        <pa-input
-          v-if="useSearch"
-          style="width: 1px; flex: 1"
-          class="ml-size"
-          :disabled="props.disabled"
-          v-model="searchSelected"
-        />
+        <pa-input v-if="useSearch" style="width: 1px; flex: 1" class="ml-size" :disabled="props.disabled" v-model="searchSelected" />
       </div>
       <div class="pa-transfer-select-box_options">
         <pa-scrollbar :useBackTop="false" :useScrollX="false" :padding="['top', 'bottom']">
           <pa-empty
             v-if="filterSelectedList.length === 0"
             :style="emptyStyle"
-            :message="
-              searchSelected.length
-                ? { 'zh-CN': '无匹配数据', 'en-US': 'No match data' }
-                : { 'zh-CN': '无更多数据', 'en-US': 'No more data' }
-            "
+            :message="searchSelected.length ? { 'zh-CN': '无匹配数据', 'en-US': 'No match data' } : { 'zh-CN': '无更多数据', 'en-US': 'No more data' }"
           ></pa-empty>
-          <div
-            v-else
-            v-for="(item, index) in filterSelectedList"
-            :key="String(item.value)"
-            class="pa-transfer-option"
-            @click="handleOptionClick(item, 'right', index)"
-          >
-            <pa-checkbox-item :disabled="props.disabled" :isChecked="awaitSelectedList.includes(item.value)">{{
-              item.label
-            }}</pa-checkbox-item>
+          <div v-else v-for="(item, index) in filterSelectedList" :key="String(item.value)" class="pa-transfer-option" @click="handleOptionClick(item, 'right', index)">
+            <pa-checkbox-item :disabled="props.disabled" :isChecked="awaitSelectedList.includes(item.value)">{{ item.label }}</pa-checkbox-item>
           </div>
         </pa-scrollbar>
       </div>
@@ -411,10 +367,7 @@ function handleTransferClick(direction: string): void {
     awaitSelectedList.value = [];
     searchSelected.value = "";
   } else if (direction === "right") {
-    selectedList.value = [
-      ...selectedList.value,
-      ...awaitSelectList.value.map(item => ({ value: item, label: findDataSelect(item, exOptionsList.value) }))
-    ];
+    selectedList.value = [...selectedList.value, ...awaitSelectList.value.map(item => ({ value: item, label: findDataSelect(item, exOptionsList.value) }))];
     searchAll.value = "";
     awaitSelectList.value = [];
   }

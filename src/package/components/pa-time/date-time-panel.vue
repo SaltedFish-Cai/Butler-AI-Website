@@ -2,12 +2,7 @@
   <div class="m-date-picker-panel">
     <!-- 快捷选项 -->
     <div v-if="shortcuts && shortcuts.length > 0" class="m-date-picker-shortcuts">
-      <div
-        v-for="(shortcut, index) in shortcuts"
-        :key="index"
-        class="m-date-picker-shortcut-item"
-        @click="handleShortcutClick(shortcut)"
-      >
+      <div v-for="(shortcut, index) in shortcuts" :key="index" class="m-date-picker-shortcut-item" @click="handleShortcutClick(shortcut)">
         {{ shortcut.text }}
       </div>
     </div>
@@ -34,12 +29,7 @@
               </thead>
               <tbody>
                 <tr v-for="(week, weekIndex) in startMonthWeeks" :key="weekIndex">
-                  <td
-                    v-for="(day, dayIndex) in week"
-                    :key="dayIndex"
-                    :class="getDayClass(day, 'start')"
-                    @click="selectRangeDate(day, 'start')"
-                  >
+                  <td v-for="(day, dayIndex) in week" :key="dayIndex" :class="getDayClass(day, 'start')" @click="selectRangeDate(day, 'start')">
                     {{ day ? day.date() : "" }}
                   </td>
                 </tr>
@@ -71,12 +61,7 @@
               </thead>
               <tbody>
                 <tr v-for="(week, weekIndex) in endMonthWeeks" :key="weekIndex">
-                  <td
-                    v-for="(day, dayIndex) in week"
-                    :key="dayIndex"
-                    :class="getDayClass(day, 'end')"
-                    @click="selectRangeDate(day, 'end')"
-                  >
+                  <td v-for="(day, dayIndex) in week" :key="dayIndex" :class="getDayClass(day, 'end')" @click="selectRangeDate(day, 'end')">
                     {{ day ? day.date() : "" }}
                   </td>
                 </tr>
@@ -349,23 +334,13 @@ function getDayClass(day: dayjs.Dayjs | null, panel?: "end" | "start"): string[]
    * @description 根据范围或单选模式添加选中状态类
    */
   if (isRange.value) {
-    if (
-      selectedRange.value[0] &&
-      day.isSame(selectedRange.value[0], "day") &&
-      selectedRange.value[1] &&
-      day.isSame(selectedRange.value[1], "day")
-    ) {
+    if (selectedRange.value[0] && day.isSame(selectedRange.value[0], "day") && selectedRange.value[1] && day.isSame(selectedRange.value[1], "day")) {
       classes.push("selected-start selected-end");
     } else if (selectedRange.value[0] && day.isSame(selectedRange.value[0], "day")) {
       classes.push("selected-start");
     } else if (selectedRange.value[1] && day.isSame(selectedRange.value[1], "day")) {
       classes.push("selected-end");
-    } else if (
-      selectedRange.value[0] &&
-      selectedRange.value[1] &&
-      day.isAfter(selectedRange.value[0]) &&
-      day.isBefore(selectedRange.value[1])
-    ) {
+    } else if (selectedRange.value[0] && selectedRange.value[1] && day.isAfter(selectedRange.value[0]) && day.isBefore(selectedRange.value[1])) {
       classes.push("in-range");
     }
   } else if (selectedDate.value && day.isSame(selectedDate.value, "day")) {
@@ -544,10 +519,7 @@ function prevYear(panel?: "end" | "start"): void {
   if (panel === "start") {
     startPanelDate.value = startPanelDate.value.subtract(1, "year");
   } else if (panel === "end") {
-    endPanelDate.value =
-      endPanelDate.value.subtract(1, "year").unix() >= startPanelDate.value.unix()
-        ? endPanelDate.value.subtract(1, "year")
-        : startPanelDate.value;
+    endPanelDate.value = endPanelDate.value.subtract(1, "year").unix() >= startPanelDate.value.unix() ? endPanelDate.value.subtract(1, "year") : startPanelDate.value;
   } else {
     currentDate.value = currentDate.value.subtract(1, "year");
   }
@@ -561,10 +533,7 @@ function prevYear(panel?: "end" | "start"): void {
  */
 function nextYear(panel?: "end" | "start"): void {
   if (panel === "start") {
-    startPanelDate.value =
-      startPanelDate.value.add(1, "year").unix() <= endPanelDate.value.unix()
-        ? startPanelDate.value.add(1, "year")
-        : endPanelDate.value;
+    startPanelDate.value = startPanelDate.value.add(1, "year").unix() <= endPanelDate.value.unix() ? startPanelDate.value.add(1, "year") : endPanelDate.value;
   } else if (panel === "end") {
     endPanelDate.value = endPanelDate.value.add(1, "year");
   } else {
@@ -582,10 +551,7 @@ function prevMonth(panel?: "end" | "start") {
   if (panel === "start") {
     startPanelDate.value = startPanelDate.value.subtract(1, "month");
   } else if (panel === "end") {
-    endPanelDate.value =
-      endPanelDate.value.subtract(1, "month").unix() >= startPanelDate.value.unix()
-        ? endPanelDate.value.subtract(1, "month")
-        : startPanelDate.value;
+    endPanelDate.value = endPanelDate.value.subtract(1, "month").unix() >= startPanelDate.value.unix() ? endPanelDate.value.subtract(1, "month") : startPanelDate.value;
   } else {
     currentDate.value = currentDate.value.subtract(1, "month");
   }
@@ -599,10 +565,7 @@ function prevMonth(panel?: "end" | "start") {
  */
 function nextMonth(panel?: "end" | "start"): void {
   if (panel === "start") {
-    startPanelDate.value = startPanelDate.value =
-      startPanelDate.value.add(1, "month").unix() <= endPanelDate.value.unix()
-        ? startPanelDate.value.add(1, "month")
-        : endPanelDate.value;
+    startPanelDate.value = startPanelDate.value = startPanelDate.value.add(1, "month").unix() <= endPanelDate.value.unix() ? startPanelDate.value.add(1, "month") : endPanelDate.value;
   } else if (panel === "end") {
     endPanelDate.value = endPanelDate.value.add(1, "month");
   } else {

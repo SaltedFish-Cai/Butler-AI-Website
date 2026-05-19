@@ -55,15 +55,11 @@ export function left90(id: string, type: number): void {
     if (type === 1) {
       styleObject["--rotate-Z"] = Number(styleObject["--rotate-Z"]?.replace(/(px|deg)/g, "") || 0) + 90 + "deg";
       styleObject["--rotate-Index"] =
-        (Number(styleObject["--rotate-Index"]?.replace(/(px|deg)/g, "") || 1) + 1 > 4
-          ? 1
-          : Number(styleObject["--rotate-Index"]?.replace(/(px|deg)/g, "") || 1) + 1) + "px";
+        (Number(styleObject["--rotate-Index"]?.replace(/(px|deg)/g, "") || 1) + 1 > 4 ? 1 : Number(styleObject["--rotate-Index"]?.replace(/(px|deg)/g, "") || 1) + 1) + "px";
     } else if (type === 2) {
       styleObject["--rotate-Z"] = Number(styleObject["--rotate-Z"]?.replace(/(px|deg)/g, "") || 0) - 90 + "deg";
       styleObject["--rotate-Index"] =
-        (Number(styleObject["--rotate-Index"]?.replace(/(px|deg)/g, "") || 1) + 1 > 4
-          ? 1
-          : Number(styleObject["--rotate-Index"]?.replace(/(px|deg)/g, "") || 1) + 1) + "px";
+        (Number(styleObject["--rotate-Index"]?.replace(/(px|deg)/g, "") || 1) + 1 > 4 ? 1 : Number(styleObject["--rotate-Index"]?.replace(/(px|deg)/g, "") || 1) + 1) + "px";
     } else if (type === 3) {
       styleObject["--rotate-Y"] = Number(styleObject["--rotate-Y"]?.replace(/(px|deg)/g, "") || 0) - 180 + "deg";
     } else if (type === 4) {
@@ -109,9 +105,7 @@ export function leftAll90(id: string): void {
       const styleObject = convertStyleStringToObject(style);
       styleObject["--rotate-Z"] = Number(styleObject["--rotate-Z"]?.replace(/(px|deg)/g, "") || 0) + 90 + "deg";
       styleObject["--rotate-Index"] =
-        (Number(styleObject["--rotate-Index"]?.replace(/(px|deg)/g, "") || 1) + 1 > 4
-          ? 1
-          : Number(styleObject["--rotate-Index"]?.replace(/(px|deg)/g, "") || 1) + 1) + "px";
+        (Number(styleObject["--rotate-Index"]?.replace(/(px|deg)/g, "") || 1) + 1 > 4 ? 1 : Number(styleObject["--rotate-Index"]?.replace(/(px|deg)/g, "") || 1) + 1) + "px";
       item.setAttribute("style", objectToStyleString(styleObject));
     }
   }

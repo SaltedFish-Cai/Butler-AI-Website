@@ -161,12 +161,7 @@ export type ComponentProps = {
    * @default `undefined`
    * @description 当表单单元素数据发生变化时触发
    */
-  onFormCellChange?: (params: {
-    prop: string;
-    value: Array<number | string> | number | string;
-    oldValue: Array<number | string> | number | string;
-    option: PaOptionType.Select;
-  }) => void;
+  onFormCellChange?: (params: { prop: string; value: Array<number | string> | number | string; oldValue: Array<number | string> | number | string; option: PaOptionType.Select }) => void;
   /**
    * **表单数据变化回调**
    * @type `(data: Record<string, any>) => void` | `undefined`
@@ -354,8 +349,7 @@ export type PaFormChildType = ComponentItemProps & StrictUnion<OtherType | PaCel
  * @type `object`
  * @description 表单结构的完整类型定义，包含分组、标签页等能力
  */
-export type PaFormItemType = ComponentItemProps &
-  StrictUnion<GroupType | OtherType | PaCellType | TabsType | (PaTransferType & { type: "transfer" })>;
+export type PaFormItemType = ComponentItemProps & StrictUnion<GroupType | OtherType | PaCellType | TabsType | (PaTransferType & { type: "transfer" })>;
 
 /**
  * **扩展多配置类型**
@@ -601,22 +595,7 @@ export interface FormItemRule {
    * @default `undefined`
    * @description 验证规则类型
    */
-  type?:
-    | "any"
-    | "array"
-    | "boolean"
-    | "date"
-    | "email"
-    | "enum"
-    | "float"
-    | "hex"
-    | "integer"
-    | "method"
-    | "number"
-    | "object"
-    | "regexp"
-    | "string"
-    | "url";
+  type?: "any" | "array" | "boolean" | "date" | "email" | "enum" | "float" | "hex" | "integer" | "method" | "number" | "object" | "regexp" | "string" | "url";
   /**
    * **是否必填**
    * @type `boolean` | `undefined`

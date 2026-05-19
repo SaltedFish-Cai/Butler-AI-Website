@@ -1,13 +1,7 @@
 <template>
   <pa-overlay :modelValue="state.visible" @click-overlay="closeOnClickModal && closeMenu()" class="flex-center">
     <transition name="mo-animation-fade">
-      <div
-        class="pa-dialog"
-        :class="[state.fullscreen ? 'pa-dialog_full' : '']"
-        ref="DialogRef"
-        v-if="state.visible"
-        :style="dialogStyle"
-      >
+      <div class="pa-dialog" :class="[state.fullscreen ? 'pa-dialog_full' : '']" ref="DialogRef" v-if="state.visible" :style="dialogStyle">
         <div class="pa-dialog-content">
           <div class="pa-dialog-content_header">
             <slot name="header">
@@ -37,13 +31,7 @@
             </div>
           </div>
           <div class="pa-dialog-content_body" ref="ScrollbarRef">
-            <pa-scrollbar
-              v-if="scroll"
-              pa-dialog-content_body
-              :useScrollX="useScrollX"
-              @scroll-child-change="scrollChildChange"
-              :parentBoxRef="ScrollbarRef"
-            >
+            <pa-scrollbar v-if="scroll" pa-dialog-content_body :useScrollX="useScrollX" @scroll-child-change="scrollChildChange" :parentBoxRef="ScrollbarRef">
               <div class="dialog__body flex-col" ref="ScrollbarBodyRef" :class="paddingClasses">
                 <template v-if="keepAlive"> <slot></slot> </template>
               </div>

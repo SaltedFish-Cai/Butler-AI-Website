@@ -3,13 +3,7 @@
     <div v-if="visible" class="pa-message-box__overlay" :style="overlayStyles">
       <div class="pa-message-box__overlay_mo" :style="overlayStyles" @click="handleClose"></div>
       <transition name="mo-animation-fadeIn">
-        <div
-          v-show="visible"
-          :id="id"
-          :class="['pa-message-box', type ? `${type}` : '', customClass]"
-          :style="overlayStyles"
-          role="alert"
-        >
+        <div v-show="visible" :id="id" :class="['pa-message-box', type ? `${type}` : '', customClass]" :style="overlayStyles" role="alert">
           <div class="pa-message-box_header mb-size">
             <div class="flex-center-start">
               <pa-icon class="pa-message-box__icon mr-size" name="warning_line"></pa-icon>
@@ -19,29 +13,13 @@
             </div>
             <pa-icon class="pa-message-box__closeBtn" @click="handleClose" name="close_line"></pa-icon>
           </div>
-          <div
-            v-if="dangerouslyUseHTMLString"
-            class="pa-message-box__content"
-            v-html="dangerouslyUseHTMLString ? message : ''"
-          ></div>
+          <div v-if="dangerouslyUseHTMLString" class="pa-message-box__content" v-html="dangerouslyUseHTMLString ? message : ''"></div>
           <div v-else class="pa-message-box__content">{{ typeof message === "string" ? message : message?.[language] }}</div>
           <div class="pa-message-box__footer">
-            <pa-button
-              is="cancel"
-              :iconName="cancelButtonIcon"
-              :type="isType === 'confirm' ? 'default' : 'primary'"
-              @click="handleClose"
-            >
+            <pa-button is="cancel" :iconName="cancelButtonIcon" :type="isType === 'confirm' ? 'default' : 'primary'" @click="handleClose">
               {{ cancelButtonText }}
             </pa-button>
-            <pa-button
-              :iconName="confirmButtonIcon"
-              v-if="isType === 'confirm'"
-              :type="type"
-              font="check_circle_line"
-              is="submit"
-              @click="handleClick"
-            >
+            <pa-button :iconName="confirmButtonIcon" v-if="isType === 'confirm'" :type="type" font="check_circle_line" is="submit" @click="handleClick">
               {{ confirmButtonText }}
             </pa-button>
           </div>

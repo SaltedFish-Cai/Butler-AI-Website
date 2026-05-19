@@ -30,10 +30,7 @@
     </div>
   </div>
 
-  <div
-    v-if="(alwaysContrast && !isNil(contrastData)) || (!isNil(contrastData) && !isEqual(inValue, contrastData))"
-    :class="['pa-contrast-style']"
-  >
+  <div v-if="(alwaysContrast && !isNil(contrastData)) || (!isNil(contrastData) && !isEqual(inValue, contrastData))" :class="['pa-contrast-style']">
     <slot name="exContrast"></slot>
     <template v-if="$slots.exContrast"> ( {{ findData(contrastData || inValue) || "--" }} ) </template>
     <template v-else>{{ findData(contrastData || inValue) || "--" }}</template>

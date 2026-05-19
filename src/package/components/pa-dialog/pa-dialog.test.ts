@@ -27,11 +27,7 @@ const PaOverlayMock = defineComponent({
   },
   emits: ["click-overlay", "update:modelValue"],
   setup(props, { slots }) {
-    return () =>
-      h("div", { class: ["pa-overlay-mock", props.class] }, [
-        h("div", { class: "pa-overlay-content", onClick: () => {} }),
-        slots.default?.()
-      ]);
+    return () => h("div", { class: ["pa-overlay-mock", props.class] }, [h("div", { class: "pa-overlay-content", onClick: () => {} }), slots.default?.()]);
   }
 });
 

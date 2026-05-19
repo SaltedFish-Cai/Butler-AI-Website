@@ -149,10 +149,7 @@ export const useValidateHooks = (
    */
   function validateRule(rule: FormItemRule, value: any, prop: string): Promise<void> {
     return new Promise((resolve, reject) => {
-      if (
-        rule.required &&
-        (value === undefined || value === null || value === "" || (Array.isArray(value) && value.length === 0))
-      ) {
+      if (rule.required && (value === undefined || value === null || value === "" || (Array.isArray(value) && value.length === 0))) {
         reject(rule.message || `${prop} is required`);
         return;
       }

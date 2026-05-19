@@ -15,14 +15,7 @@
   }
 }
 .m-scrollbar:has(> .is-horizontal .el-scrollbar__thumb[style*="width"]),
-.table_body:has(
-    > .el-table
-      > .el-table__inner-wrapper
-      > .el-table__body-wrapper
-      > .el-scrollbar
-      > .is-horizontal
-      .el-scrollbar__thumb[style*="width"]
-  ) {
+.table_body:has(> .el-table > .el-table__inner-wrapper > .el-table__body-wrapper > .el-scrollbar > .is-horizontal .el-scrollbar__thumb[style*="width"]) {
   padding-bottom: calc(var(--pa-size-height, 14.1px) / 2) !important;
   box-sizing: border-box;
 
@@ -42,14 +35,7 @@
 }
 
 .m-scrollbar:has(> .is-vertical .el-scrollbar__thumb[style*="height"]),
-.table_body:has(
-    > .el-table
-      > .el-table__inner-wrapper
-      > .el-table__body-wrapper
-      > .el-scrollbar
-      > .is-vertical
-      .el-scrollbar__thumb[style*="height"]
-  ) {
+.table_body:has(> .el-table > .el-table__inner-wrapper > .el-table__body-wrapper > .el-scrollbar > .is-vertical .el-scrollbar__thumb[style*="height"]) {
   // --m-scroll-padding: 10px;
   padding-right: calc(var(--pa-size-height, 14.1px) / 2) !important;
   box-sizing: border-box;
@@ -94,14 +80,7 @@
   }
 }
 
-.table_body:has(
-    > .el-table
-      > .el-table__inner-wrapper
-      > .el-table__body-wrapper
-      > .el-scrollbar
-      > .is-vertical
-      .el-scrollbar__thumb[style*="height"]
-  ) {
+.table_body:has(> .el-table > .el-table__inner-wrapper > .el-table__body-wrapper > .el-scrollbar > .is-vertical .el-scrollbar__thumb[style*="height"]) {
   > .el-table > .el-table__inner-wrapper > .el-table__body-wrapper > .el-scrollbar > .is-vertical {
     &::before {
       content: "";
@@ -116,14 +95,7 @@
   }
 }
 
-.table_body:has(
-    > .el-table
-      > .el-table__inner-wrapper
-      > .el-table__body-wrapper
-      > .el-scrollbar
-      > .is-vertical
-      .el-scrollbar__thumb[style*="height"]
-  ) {
+.table_body:has(> .el-table > .el-table__inner-wrapper > .el-table__body-wrapper > .el-scrollbar > .is-vertical .el-scrollbar__thumb[style*="height"]) {
   > .el-table > .el-table__inner-wrapper > .el-table__body-wrapper > .el-scrollbar > .is-vertical {
     top: var(--m-table-scroll-y-top, 32px);
     height: calc(100% - var(--m-table-scroll-y-top, 32px));

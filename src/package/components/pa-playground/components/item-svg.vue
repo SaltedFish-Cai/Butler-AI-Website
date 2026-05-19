@@ -8,8 +8,7 @@
         :class="[baseConfig?.type || '']"
         :style="{
           '--pa-color-primary': baseConfig?.type === 'table' ? '#6244cf' : baseConfig?.type === 'form' ? '#b344cf' : '#d76c09',
-          '--pa-color-primary-light-9':
-            baseConfig?.type === 'table' ? '#e8e2ff' : baseConfig?.type === 'form' ? '#f0e0f4' : '#fce8d6',
+          '--pa-color-primary-light-9': baseConfig?.type === 'table' ? '#e8e2ff' : baseConfig?.type === 'form' ? '#f0e0f4' : '#fce8d6',
           '--pa-color-page_bg': baseConfig?.type === 'table' ? '#e8e2ff' : baseConfig?.type === 'form' ? '#f0e0f4' : '#fce8d6'
         }"
         :id="itemId + '_glass'"
@@ -25,12 +24,7 @@
       >
         <div xmlns="http://www.w3.org/1999/xhtml" class="flex-center-between">
           <div v-if="baseConfig" class="flex-center-start">
-            <m-title
-              v-if="baseConfig.title?.[language]"
-              class="mr-size"
-              :line="false"
-              style="display: inline-block; padding-top: 0"
-            >
+            <m-title v-if="baseConfig.title?.[language]" class="mr-size" :line="false" style="display: inline-block; padding-top: 0">
               {{ baseConfig.title[language] }}
             </m-title>
             <pa-button
@@ -215,15 +209,9 @@ const dataStructures = computed(() => props.dataStructures);
 
 const openEditItemBaseDialog = inject("openEditItemBaseDialog") as Ref<(baseConfig: PaPlaygroundItem) => void>;
 
-const openEditFormItemQuickDialog = inject("openEditFormItemQuickDialog") as Ref<
-  (tableId: string, config: PaStructureType.Form[], options: Record<string, string>) => void
->;
-const openEditTabsItemQuickDialog = inject("openEditTabsItemQuickDialog") as Ref<
-  (tableId: string, config: PaStructureType.Form[], options: Record<string, string>) => void
->;
-const openEditTableColQuickDialog = inject("openEditTableColQuickDialog") as Ref<
-  (tableId: string, tableConfig: PaStructureType.Table[], exOptions: Record<string, string>) => void
->;
+const openEditFormItemQuickDialog = inject("openEditFormItemQuickDialog") as Ref<(tableId: string, config: PaStructureType.Form[], options: Record<string, string>) => void>;
+const openEditTabsItemQuickDialog = inject("openEditTabsItemQuickDialog") as Ref<(tableId: string, config: PaStructureType.Form[], options: Record<string, string>) => void>;
+const openEditTableColQuickDialog = inject("openEditTableColQuickDialog") as Ref<(tableId: string, tableConfig: PaStructureType.Table[], exOptions: Record<string, string>) => void>;
 const openEditOperationDialog = inject("openEditOperationDialog") as Ref<(tableId: string, editOperation: any) => void>;
 
 /**

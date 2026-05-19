@@ -1,22 +1,10 @@
 <template>
-  <pa-dialog
-    v-model="OperationVisible"
-    :title="{ 'zh-CN': '快捷编辑选项卡项', 'en-US': 'Quick Edit Tabs Item' }"
-    :padding="['all']"
-    :closeOnClickModal="false"
-    size="l"
-  >
+  <pa-dialog v-model="OperationVisible" :title="{ 'zh-CN': '快捷编辑选项卡项', 'en-US': 'Quick Edit Tabs Item' }" :padding="['all']" :closeOnClickModal="false" size="l">
     <pa-button is="add" @click="handleAddTabsItem" :debounced="false">
       {{ language === "zh-CN" ? "保存选项卡项" : "Save Tabs Item" }}
     </pa-button>
 
-    <m-quick-table
-      ref="visibleTableRef"
-      :tableConfig="tableConfig"
-      :tableData="formData"
-      :exOptions="{}"
-      @update="data => (formData = data)"
-    >
+    <m-quick-table ref="visibleTableRef" :tableConfig="tableConfig" :tableData="formData" :exOptions="{}" @update="data => (formData = data)">
       <template #label="{ data }">
         <pa-input
           v-model="(data.label as object)['zh-CN']"
@@ -31,25 +19,14 @@
         ></pa-input>
       </template>
 
-      <template #prop="{ data }">
-        <pa-input v-model="data.prop" :placeholder="{ 'zh-CN': '请输入列Key', 'en-US': 'Please input column key' }"></pa-input
-      ></template>
+      <template #prop="{ data }"> <pa-input v-model="data.prop" :placeholder="{ 'zh-CN': '请输入列Key', 'en-US': 'Please input column key' }"></pa-input></template>
 
       <template #page="{ data }">
-        <pa-select
-          v-model="data.page"
-          :placeholder="{ 'zh-CN': '请选择选项卡页面', 'en-US': 'Please select tabs page' }"
-          :exOptions="exOptionsComputed?.['page']"
-        ></pa-select
+        <pa-select v-model="data.page" :placeholder="{ 'zh-CN': '请选择选项卡页面', 'en-US': 'Please select tabs page' }" :exOptions="exOptionsComputed?.['page']"></pa-select
       ></template>
 
       <template #padding="{ data }">
-        <pa-select
-          v-model="data.padding"
-          type="multiple-select"
-          :placeholder="{ 'zh-CN': '请选择内边距', 'en-US': 'Please select padding' }"
-          :exOptions="exOptionsComputed?.['padding']"
-        ></pa-select
+        <pa-select v-model="data.padding" type="multiple-select" :placeholder="{ 'zh-CN': '请选择内边距', 'en-US': 'Please select padding' }" :exOptions="exOptionsComputed?.['padding']"></pa-select
       ></template>
 
       <template #scroll="{ data }">
@@ -156,11 +133,7 @@ const handleOperationSubmit = () => {
   OperationVisible.value = false;
 };
 
-function openEditDialog(
-  formId: string,
-  config: Array<PaStructureType.Form & { scroll: number; padding: string[] }>,
-  options: Record<string, string>
-) {
+function openEditDialog(formId: string, config: Array<PaStructureType.Form & { scroll: number; padding: string[] }>, options: Record<string, string>) {
   editId.value = formId;
   formData.value = cloneDeep(config);
   exOptions.value = { ...exOptions.value, ...cloneDeep(options) };

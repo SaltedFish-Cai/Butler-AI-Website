@@ -15,14 +15,7 @@
           <div class="upload-title">将文件拖到此处，或 <span class="light-text">点击上传</span></div>
         </div>
 
-        <input
-          ref="fileInput"
-          type="file"
-          :multiple="fileMultiple ? fileMultiple > 1 : false"
-          :accept="accept"
-          class="upload-input"
-          @change="(event: Event) => handleDrop('change', event)"
-        />
+        <input ref="fileInput" type="file" :multiple="fileMultiple ? fileMultiple > 1 : false" :accept="accept" class="upload-input" @change="(event: Event) => handleDrop('change', event)" />
       </div>
     </slot>
 
@@ -310,9 +303,7 @@ const handleClick = (): void => {
  */
 const handleDrop = (type: string, event: DragEvent | Event): void => {
   isDragging.value = false;
-  const files: Array<File> = Array.from(
-    type === "drop" ? (event as DragEvent).dataTransfer?.files ?? [] : ((event as Event).target as HTMLInputElement).files ?? []
-  );
+  const files: Array<File> = Array.from(type === "drop" ? (event as DragEvent).dataTransfer?.files ?? [] : ((event as Event).target as HTMLInputElement).files ?? []);
   if (fileMultiple.value && fileMultiple.value == 1) {
     const file = files[0];
     uploadFilesList.value = [{ name: file.name, size: file.size, type: file.type, status: "wait", file }];
@@ -374,12 +365,7 @@ const beforeUpload = (fileList: Array<{ name: string; size: number; type: string
     const size = files.size;
 
     const _excludeType = excludeType.value.split(",");
-    if (
-      !!excludeType.value &&
-      _excludeType &&
-      _excludeType.length &&
-      _excludeType.indexOf(fileExcludeText ? type : String(ext)) > -1
-    ) {
+    if (!!excludeType.value && _excludeType && _excludeType.length && _excludeType.indexOf(fileExcludeText ? type : String(ext)) > -1) {
       M_Message.danger({
         message: `${languagePackage.value["noCanUploaded"]}${_excludeType.join(" ")}${languagePackage.value["typeFile"]}`
       });

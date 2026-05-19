@@ -1,25 +1,9 @@
 <template>
-  <section
-    :id="id"
-    class="pa-scrollbar"
-    :class="[prop.class, prop.styleMode === 'color' ? 'color-scrollbar' : '']"
-    :style="rootStyle"
-  >
+  <section :id="id" class="pa-scrollbar" :class="[prop.class, prop.styleMode === 'color' ? 'color-scrollbar' : '']" :style="rootStyle">
     <div class="pa-scrollbar-content">
       <div v-if="useShadow" class="is-scroll-top" :style="scrollTopShadowStyle"></div>
-      <div
-        :id="id + '_scrollbar_body'"
-        class="scrollbar-body"
-        :class="{ 'scrollbar-body-y': prop.useScrollY, 'scrollbar-body-x': prop.useScrollX }"
-        :style="contentStyle"
-        ref="scrollbarBodyRef"
-      >
-        <div
-          class="scrollbar-body-content"
-          :class="paddingContentClasses"
-          :style="paddingBorderVars"
-          ref="scrollbarBodyContentRef"
-        >
+      <div :id="id + '_scrollbar_body'" class="scrollbar-body" :class="{ 'scrollbar-body-y': prop.useScrollY, 'scrollbar-body-x': prop.useScrollX }" :style="contentStyle" ref="scrollbarBodyRef">
+        <div class="scrollbar-body-content" :class="paddingContentClasses" :style="paddingBorderVars" ref="scrollbarBodyContentRef">
           <div v-if="border?.includes('top') || border?.includes('all')" class="pa-border_top"></div>
           <div v-if="border?.includes('left') || border?.includes('all')" class="pa-border_left"></div>
           <div v-if="border?.includes('bottom') || border?.includes('all')" class="pa-border_bottom"></div>
@@ -39,13 +23,7 @@
     <div v-if="useHorizontal && prop.useScrollX && prop.showThumb" class="scrollbar__bar is-horizontal">
       <div class="scrollbar__thumb" ref="horizontalThumbRef" :style="{ width: horizontalThumb + 'px' }"></div>
     </div>
-    <pa-icon
-      v-if="useBackTop && prop.useScrollY"
-      :style="backTopStyle"
-      name="arow_to_up_line"
-      class="pa-scrollbar-back-top m-hand"
-      @click="setScrollTop(0)"
-    />
+    <pa-icon v-if="useBackTop && prop.useScrollY" :style="backTopStyle" name="arow_to_up_line" class="pa-scrollbar-back-top m-hand" @click="setScrollTop(0)" />
     <div v-if="$slots['footer']" class="pa-scrollbar-content_footer">
       <slot name="footer" />
     </div>
@@ -247,9 +225,7 @@ const scrollBodyHeight = ref(0);
  * @type Ref<Array<{ isIntersecting: Ref<boolean>; stopObserving: () => void; el: HTMLElement }>>
  * @description 交叉观察器列表
  */
-const isIntersectingList = ref(
-  [] as unknown as Ref<{ isIntersecting: Ref<boolean>; stopObserving: () => void; el: HTMLElement }[]>
-);
+const isIntersectingList = ref([] as unknown as Ref<{ isIntersecting: Ref<boolean>; stopObserving: () => void; el: HTMLElement }[]>);
 /**
  * 创建观察器
  * @param intersectClassName - 监听元素的类名
@@ -289,12 +265,7 @@ function closeObserver() {
  * @param options - 偏移选项
  * @description 设置滚动条的水平位置
  */
-function setScrollLeft(
-  value: number,
-  callback?: () => void,
-  behavior: ScrollBehavior = "smooth",
-  { offsetX = 0, offsetY = 0 } = {}
-) {
+function setScrollLeft(value: number, callback?: () => void, behavior: ScrollBehavior = "smooth", { offsetX = 0, offsetY = 0 } = {}) {
   listener.value.setElementScrollPosition(scrollbarBodyRef.value, { scrollLeft: value, behavior, callback, offsetX, offsetY });
 }
 /**
@@ -305,12 +276,7 @@ function setScrollLeft(
  * @param options - 偏移选项
  * @description 设置滚动条的垂直位置
  */
-function setScrollTop(
-  value: number,
-  callback?: () => void,
-  behavior: ScrollBehavior = "smooth",
-  { offsetX = 0, offsetY = 0 } = {}
-) {
+function setScrollTop(value: number, callback?: () => void, behavior: ScrollBehavior = "smooth", { offsetX = 0, offsetY = 0 } = {}) {
   listener.value.setElementScrollPosition(scrollbarBodyRef.value, { scrollTop: value, behavior, callback, offsetX, offsetY });
 }
 /**
@@ -395,10 +361,7 @@ function setUpdate() {
       if (_scrollbarBodyRef && _scrollbarBodyRef.scrollWidth > _scrollbarBodyRef.clientWidth) {
         emits("scrollRight", false);
       }
-      if (
-        (_scrollbarBodyRef && _scrollbarBodyRef.scrollHeight > _scrollbarBodyRef.clientHeight) ||
-        (prop.parentBoxRef && prop.parentBoxRef?.clientHeight < _scrollbarBodyRef.scrollHeight)
-      ) {
+      if ((_scrollbarBodyRef && _scrollbarBodyRef.scrollHeight > _scrollbarBodyRef.clientHeight) || (prop.parentBoxRef && prop.parentBoxRef?.clientHeight < _scrollbarBodyRef.scrollHeight)) {
         isScrollEnd.value = false;
       } else {
         isScrollEnd.value = true;
@@ -463,13 +426,8 @@ onMounted(() => {
         } else {
           emits("scrollRight", false);
         }
-        if (
-          Object.keys((typeof window !== "undefined" && window.PancakeGlobalConfig?.PopoverList) || {}).length &&
-          prop.useClosePopover
-        ) {
-          Object.values((typeof window !== "undefined" && window.PancakeGlobalConfig.PopoverList) || {}).forEach((item: any) =>
-            item?.()
-          );
+        if (Object.keys((typeof window !== "undefined" && window.PancakeGlobalConfig?.PopoverList) || {}).length && prop.useClosePopover) {
+          Object.values((typeof window !== "undefined" && window.PancakeGlobalConfig.PopoverList) || {}).forEach((item: any) => item?.());
         }
       },
       ({ scrollTop, scrollLeft, scrollData }) => {
@@ -477,10 +435,8 @@ onMounted(() => {
         scrollHorizontalValue.value = scrollLeft;
         const scrollVerticalThumbValue = prop.defaultScrollVerticalThumb + scrollTop * _verticalThumbScale;
         const scrollHorizontalThumbValue = prop.defaultScrollHorizontalThumb + scrollLeft * _horizontalThumbScale;
-        horizontalThumbRef.value &&
-          (horizontalThumbRef.value.style.transform = `translateX(${scrollHorizontalThumbValue}px) translateZ(1px)`);
-        verticalThumbRef.value &&
-          (verticalThumbRef.value.style.transform = `translateY(${scrollVerticalThumbValue}px) translateZ(1px)`);
+        horizontalThumbRef.value && (horizontalThumbRef.value.style.transform = `translateX(${scrollHorizontalThumbValue}px) translateZ(1px)`);
+        verticalThumbRef.value && (verticalThumbRef.value.style.transform = `translateY(${scrollVerticalThumbValue}px) translateZ(1px)`);
         scrollVerticalThumb.value = scrollVerticalThumbValue;
         scrollHorizontalThumb.value = scrollHorizontalThumbValue;
         const scrollDirectionY = scrollTop > scrollVerticalThumbValue ? "down" : "up";

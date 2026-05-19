@@ -5,14 +5,8 @@
         class="table_body_label"
         :class="[
           isRowIndex(item) ? 'table_body_label_index' : '',
-          item.fixed == 'left'
-            ? 'sticky-left border-right'
-            : item.fixed == 'right'
-            ? 'sticky-right border-right'
-            : 'border-right',
-          (!item.width && !setCellWidthIng) || (useAverageWidth == 1 && !item.baseWidth && item.prop != 'operation')
-            ? 'table_body_label_flex'
-            : '',
+          item.fixed == 'left' ? 'sticky-left border-right' : item.fixed == 'right' ? 'sticky-right border-right' : 'border-right',
+          (!item.width && !setCellWidthIng) || (useAverageWidth == 1 && !item.baseWidth && item.prop != 'operation') ? 'table_body_label_flex' : '',
           item.lastLeftFixed ? 'last-left-fixed' : '',
           item.lastRightFixed ? 'last-right-fixed' : ''
         ]"
@@ -84,11 +78,7 @@
           </Operation>
 
           <template v-else-if="item.cellConfig && item.cellConfig.type != 'text'">
-            <div
-              v-if="item.cellConfig.display && item?.cellConfig.type != 'file'"
-              :key="'cellConfig-' + item.prop + '-' + row.rowIndex"
-              :style="{ whiteSpace: setCellWidthIng ? 'nowrap' : 'wrap' }"
-            >
+            <div v-if="item.cellConfig.display && item?.cellConfig.type != 'file'" :key="'cellConfig-' + item.prop + '-' + row.rowIndex" :style="{ whiteSpace: setCellWidthIng ? 'nowrap' : 'wrap' }">
               {{ setCellDisplayValue(row, String(item.prop), item.cellConfig) || "--" }}
             </div>
 
@@ -193,10 +183,7 @@
             <!-- cascader -->
             <pa-cascader
               v-else-if="
-                item.cellConfig.type == 'cascader' ||
-                item.cellConfig.type == 'cascader-check' ||
-                item.cellConfig.type == 'multiple-cascader' ||
-                item.cellConfig.type == 'multiple-cascader-check'
+                item.cellConfig.type == 'cascader' || item.cellConfig.type == 'cascader-check' || item.cellConfig.type == 'multiple-cascader' || item.cellConfig.type == 'multiple-cascader-check'
               "
               v-model="row[String(item.prop)]"
               :type="item.cellConfig.type"
@@ -405,10 +392,7 @@ const languagePackage = inject("languagePackage") as Record<string, string>;
  * 选择变化处理
  * @description 注入行选择变化处理方法
  */
-const handleSelectChange = inject("handleSelectChange") as (params: {
-  row: PaTableUseType.PaTableInDataType;
-  parentRow?: PaTableUseType.PaTableInDataType;
-}) => void;
+const handleSelectChange = inject("handleSelectChange") as (params: { row: PaTableUseType.PaTableInDataType; parentRow?: PaTableUseType.PaTableInDataType }) => void;
 /**
  * 单元格鼠标移入处理
  * @description 注入鼠标移入事件处理函数

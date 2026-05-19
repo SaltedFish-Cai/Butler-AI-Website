@@ -91,13 +91,7 @@ export type CellItemType =
   | (MRadioType & { prop?: string; type: "radio"; options?: PaOptionType.SelectList })
   | (MSelectType & {
       prop?: string;
-      type:
-        | "multiple-online-select"
-        | "multiple-request-select"
-        | "multiple-select"
-        | "online-select"
-        | "request-select"
-        | "select";
+      type: "multiple-online-select" | "multiple-request-select" | "multiple-select" | "online-select" | "request-select" | "select";
       displayProp?: string;
       requestBy?: string;
       options?: PaOptionType.SelectList;

@@ -9,14 +9,7 @@
           <div class="pa-color-preview-text">{{ currentColor }}</div>
         </div>
       </template>
-      <pa-color-box
-        v-model="currentColor"
-        :preset-colors="props.presetColors"
-        :use-alpha="props.useAlpha"
-        :use-input="props.useInput"
-        @change="handleChange"
-      >
-      </pa-color-box>
+      <pa-color-box v-model="currentColor" :preset-colors="props.presetColors" :use-alpha="props.useAlpha" :use-input="props.useInput" @change="handleChange"> </pa-color-box>
     </pa-popover>
   </div>
 </template>

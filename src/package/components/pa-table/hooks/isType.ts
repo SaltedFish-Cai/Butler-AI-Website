@@ -9,18 +9,7 @@ import { ComponentItemProps } from "../types";
  * @returns 是否为选择类型
  */
 export function isSelectType(row: any, display: any) {
-  const arr = [
-    "tag",
-    "select",
-    "multiple-select",
-    "switch",
-    "checkbox",
-    "radio",
-    "cascader",
-    "cascader-check",
-    "multiple-cascader-check",
-    "multiple-cascader"
-  ];
+  const arr = ["tag", "select", "multiple-select", "switch", "checkbox", "radio", "cascader", "cascader-check", "multiple-cascader-check", "multiple-cascader"];
   const type = row.filterType || row.cellConfig?.type;
   const _display = row.cellConfig?.display || display || !!row.filterType;
   let isTrue = arr.indexOf(type) > -1 && _display == true;

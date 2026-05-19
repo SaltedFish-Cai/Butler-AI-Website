@@ -35,12 +35,7 @@ import debounce from "../tools/debounce";
  * @param editorRef - 编辑器引用
  * @returns 文件上传相关方法
  */
-export function useUpFileHooks(
-  props: ComponentProps,
-  fileInput: Ref<any>,
-  PancakeGlobalConfig: ComputedRef<PancakeGlobalConfigType>,
-  editorRef: Ref<any>
-) {
+export function useUpFileHooks(props: ComponentProps, fileInput: Ref<any>, PancakeGlobalConfig: ComputedRef<PancakeGlobalConfigType>, editorRef: Ref<any>) {
   /**
    * @description 上传中状态
    */

@@ -152,9 +152,7 @@ const isLoading = ref(false);
  * @returns `boolean` 是否显示左侧图标
  * @description 判断是否需要显示左侧图标（包含 loading 状态判断）
  */
-const showLeftIcon = computed(
-  () => props.iconPosition === "left" && !props.loading && !isLoading.value && props.useFont && !!currentIconName.value
-);
+const showLeftIcon = computed(() => props.iconPosition === "left" && !props.loading && !isLoading.value && props.useFont && !!currentIconName.value);
 /**
  * **是否显示右侧图标**
  * @returns `boolean` 是否显示右侧图标

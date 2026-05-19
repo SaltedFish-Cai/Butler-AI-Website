@@ -27,11 +27,7 @@ const PaPopoverMock = {
   name: "PaPopover",
   props: ["popoverWidth", "stopPropagation", "disabled"],
   setup(props, { slots }) {
-    return () =>
-      h("div", { class: "pa-popover-mock" }, [
-        slots.reference ? slots.reference() : null,
-        slots.default ? slots.default() : null
-      ]);
+    return () => h("div", { class: "pa-popover-mock" }, [slots.reference ? slots.reference() : null, slots.default ? slots.default() : null]);
   }
 };
 

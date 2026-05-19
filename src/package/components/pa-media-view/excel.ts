@@ -84,12 +84,7 @@ export function getMergedCellArr(worksheet: Record<string, any>, tableEnd: strin
  * @returns { row: number, col: number }
  * @description 获取指定单元格的合并尺寸
  */
-export function getMergedCells(
-  worksheet: Record<string, any>,
-  configDataArrWidthMap: Record<string, number>,
-  key: string,
-  tableEnd: string
-): { row: number; col: number } {
+export function getMergedCells(worksheet: Record<string, any>, configDataArrWidthMap: Record<string, number>, key: string, tableEnd: string): { row: number; col: number } {
   const CELL_HEIGHT = 30;
   const KEY = key.replace(/\d/g, "");
 

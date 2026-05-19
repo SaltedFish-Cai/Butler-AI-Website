@@ -23,21 +23,9 @@
           ></pa-select>
 
           <div v-else-if="isTimeType(scope.row, display)" class="flex-center">
-            <pa-time
-              v-model="scope.row.searchCriteria[0]"
-              type="date-picker"
-              :placeholder="languagePackage['startTime']"
-              :disabledDateFn="time => disabledStart(time)"
-              teleport-in-container
-            />
+            <pa-time v-model="scope.row.searchCriteria[0]" type="date-picker" :placeholder="languagePackage['startTime']" :disabledDateFn="time => disabledStart(time)" teleport-in-container />
             <div class="ml5 mr5">/</div>
-            <pa-time
-              v-model="scope.row.searchCriteria[1]"
-              type="date-picker"
-              :placeholder="languagePackage['endTime']"
-              :disabledDateFn="time => disabledEnd(time)"
-              teleport-in-container
-            />
+            <pa-time v-model="scope.row.searchCriteria[1]" type="date-picker" :placeholder="languagePackage['endTime']" :disabledDateFn="time => disabledEnd(time)" teleport-in-container />
           </div>
 
           <!-- 数字/文本 -->
@@ -66,11 +54,7 @@
 
         <!-- 固定 -->
         <template #fixed="scope">
-          <div
-            :class="['change_btn', scope.row.fixed == undefined ? '' : 'icon_highlight']"
-            @click="changeFixed(scope.row)"
-            :title="languagePackage?.['clickChangeFixedState']"
-          >
+          <div :class="['change_btn', scope.row.fixed == undefined ? '' : 'icon_highlight']" @click="changeFixed(scope.row)" :title="languagePackage?.['clickChangeFixedState']">
             <pa-icon name="pin_line" :class="['mr5']" />
             <span>{{ setFixed(scope.row) }}</span>
           </div></template
@@ -78,11 +62,7 @@
 
         <!-- 显示状态 -->
         <template #isShow="scope">
-          <div
-            :class="['change_btn', scope.row.isShow ? '' : 'icon_highlight--hide']"
-            @click="setView(scope.row)"
-            :title="languagePackage?.['clickChangeVisibleState']"
-          >
+          <div :class="['change_btn', scope.row.isShow ? '' : 'icon_highlight--hide']" @click="setView(scope.row)" :title="languagePackage?.['clickChangeVisibleState']">
             <pa-icon class="mr5" :name="scope.row.isShow ? 'eye_line' : 'eye_close_line'"></pa-icon>
             <span>{{ scope.row.isShow ? languagePackage?.["visible"] : languagePackage?.["hide"] }}</span>
           </div>
@@ -138,9 +118,7 @@ const emit = defineEmits(["saveAndFilter", "closeDrawer", "openSeniorFilter", "h
 const props = withDefaults(defineProps<SettingPropsType>(), {});
 
 const settingColumnsData = computed(() => {
-  const arr = props.tableStructure.filter(
-    item => item.type != "index" && item.type != "selection" && item.type != "row" && item.prop != "operation"
-  );
+  const arr = props.tableStructure.filter(item => item.type != "index" && item.type != "selection" && item.type != "row" && item.prop != "operation");
   const dataObject: any = {};
   props.tableQuery.Filter &&
     props.tableQuery.Filter.forEach(item => {
@@ -275,14 +253,7 @@ async function FetchSaveAndFilter() {
       });
     }
 
-    if (
-      element.isShow &&
-      element?.filterType == "time" &&
-      element.searchCriteria &&
-      element.searchCriteria[0] &&
-      element.searchCriteria[1] &&
-      element.searchCriteria[0] > element.searchCriteria[1]
-    ) {
+    if (element.isShow && element?.filterType == "time" && element.searchCriteria && element.searchCriteria[0] && element.searchCriteria[1] && element.searchCriteria[0] > element.searchCriteria[1]) {
       return M_Message.danger(element.label + ` ${languagePackage.value?.["errorMessage"]}`);
     }
 

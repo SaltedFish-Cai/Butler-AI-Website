@@ -1,11 +1,5 @@
 <template>
-  <div
-    v-if="showContextMenu"
-    ref="contextMenuRef"
-    class="table-context-menu"
-    :style="{ left: contextMenuPosition.x + 'px', top: contextMenuPosition.y + 'px' }"
-    @mousedown.prevent
-  >
+  <div v-if="showContextMenu" ref="contextMenuRef" class="table-context-menu" :style="{ left: contextMenuPosition.x + 'px', top: contextMenuPosition.y + 'px' }" @mousedown.prevent>
     <div class="menu-item" @click="executeTableCommand('insertTableRow', { position: 'above' })">
       <pa-icon name="to-top"></pa-icon>
       <span>在上方插入行</span>

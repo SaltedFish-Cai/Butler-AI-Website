@@ -27,19 +27,8 @@
           <template v-for="(item, index) in page.actionButtons" :key="'btn_' + index">
             <template v-if="item.useType == slotName">
               <template v-if="!item?.authorization?.length || visibleBefore?.(item)">
-                <pa-button
-                  v-if="item.styleType == 'Built'"
-                  :is="item.is"
-                  :text="item.isText"
-                  @click="handleButtonSubmit(item, { row, page })"
-                />
-                <pa-button
-                  v-else
-                  :type="item.type"
-                  :iconName="item.icon"
-                  :text="item.text"
-                  @click="handleButtonSubmit(item, { row, page })"
-                />
+                <pa-button v-if="item.styleType == 'Built'" :is="item.is" :text="item.isText" @click="handleButtonSubmit(item, { row, page })" />
+                <pa-button v-else :type="item.type" :iconName="item.icon" :text="item.text" @click="handleButtonSubmit(item, { row, page })" />
               </template>
             </template>
           </template>
@@ -47,14 +36,7 @@
       </pa-table>
 
       <pa-tabs id="visibleTabs" v-if="page.type === 'tabs'" align="edge">
-        <pa-tabs-item
-          v-for="tab in setStructure(page.structure) as any"
-          :key="tab.prop"
-          :label="tab.label as string"
-          :name="tab.prop as string"
-          :scroll="!!tab.scroll"
-          :padding="tab.padding"
-        >
+        <pa-tabs-item v-for="tab in setStructure(page.structure) as any" :key="tab.prop" :label="tab.label as string" :name="tab.prop as string" :scroll="!!tab.scroll" :padding="tab.padding">
           <pa-playground-visible
             :id="tab.itemId"
             :ex-transmit-data="tab.transmitData"
@@ -78,11 +60,7 @@
   <pa-dialog
     v-else
     v-model="visible"
-    :title="
-      dialogConfig?.dialogTitle?.['zh-CN'] && dialogConfig?.dialogTitle?.['en-US']
-        ? dialogConfig?.dialogTitle
-        : { 'en-US': 'Simulated Field', 'zh-CN': '模拟场' }
-    "
+    :title="dialogConfig?.dialogTitle?.['zh-CN'] && dialogConfig?.dialogTitle?.['en-US'] ? dialogConfig?.dialogTitle : { 'en-US': 'Simulated Field', 'zh-CN': '模拟场' }"
     :sub-title="dialogConfig?.dialogSubTitle ? transmitData?.[dialogConfig?.dialogSubTitle] : ''"
     :padding="['all']"
     :size="dialogConfig?.dialogSize || 'full'"
@@ -117,19 +95,8 @@
           <template v-for="(item, index) in page.actionButtons" :key="'btn_' + index">
             <template v-if="item.useType == slotName">
               <template v-if="!item?.authorization?.length || visibleBefore?.(item)">
-                <pa-button
-                  v-if="item.styleType == 'Built'"
-                  :is="item.is"
-                  :text="item.isText"
-                  @click="handleButtonSubmit(item, { row, page })"
-                />
-                <pa-button
-                  v-else
-                  :type="item.type"
-                  :iconName="item.icon"
-                  :text="item.text"
-                  @click="handleButtonSubmit(item, { row, page })"
-                />
+                <pa-button v-if="item.styleType == 'Built'" :is="item.is" :text="item.isText" @click="handleButtonSubmit(item, { row, page })" />
+                <pa-button v-else :type="item.type" :iconName="item.icon" :text="item.text" @click="handleButtonSubmit(item, { row, page })" />
               </template>
             </template>
           </template>
@@ -137,14 +104,7 @@
       </pa-table>
 
       <pa-tabs id="visibleTabs" v-if="page.type === 'tabs'" align="edge">
-        <pa-tabs-item
-          v-for="tab in setStructure(page.structure) as any"
-          :key="tab.prop"
-          :label="tab.label as string"
-          :name="tab.prop as string"
-          :scroll="!!tab.scroll"
-          :padding="tab.padding"
-        >
+        <pa-tabs-item v-for="tab in setStructure(page.structure) as any" :key="tab.prop" :label="tab.label as string" :name="tab.prop as string" :scroll="!!tab.scroll" :padding="tab.padding">
           <pa-playground-visible
             :id="tab.itemId"
             :ex-transmit-data="tab.transmitData"
@@ -200,15 +160,7 @@ import { ComputedRef, computed, inject, nextTick, ref, useTemplateRef } from "vu
  * 模块导入
  * @description 导入 Playground 类型定义
  */
-import {
-  MInterfaceConfig,
-  PaPlaygroundType,
-  PaPlaygroundPagesType,
-  MStructureType,
-  PaPlaygroundItem,
-  MOptionsType,
-  PaPlaygroundActionFunctionType
-} from "./types";
+import { MInterfaceConfig, PaPlaygroundType, PaPlaygroundPagesType, MStructureType, PaPlaygroundItem, MOptionsType, PaPlaygroundActionFunctionType } from "./types";
 /**
  * 模块导入
  * @description 导入反馈组件
@@ -330,12 +282,8 @@ const emits = defineEmits<{
  * @returns 过滤后的结构配置数组
  * @description 根据可见性条件过滤结构配置
  */
-function setStructure(
-  structure: PaStructureType.Form[] | PaStructureType.Table[]
-): PaStructureType.Form[] | PaStructureType.Table[] {
-  return structure.filter(item => (props.visibleBefore ? props.visibleBefore?.(item) : item)) as
-    | PaStructureType.Form[]
-    | PaStructureType.Table[];
+function setStructure(structure: PaStructureType.Form[] | PaStructureType.Table[]): PaStructureType.Form[] | PaStructureType.Table[] {
+  return structure.filter(item => (props.visibleBefore ? props.visibleBefore?.(item) : item)) as PaStructureType.Form[] | PaStructureType.Table[];
 }
 
 /**
@@ -416,9 +364,7 @@ function openVisibleDialog(_transmitData?: Record<string, any>, _homeIndexConfig
   }
   const adminIndex = props.baseConfig.adminIndex;
   if (!adminIndex || props.baseConfig.pagesConfigs.findIndex(item => item.pageId === adminIndex) < 0) {
-    M_Message.danger(
-      language === "en-US" ? "Home index is not set, please set it in the base information" : "首页索引未设置，请前往基础信息设置"
-    );
+    M_Message.danger(language === "en-US" ? "Home index is not set, please set it in the base information" : "首页索引未设置，请前往基础信息设置");
     return;
   } else {
     homeIndexConfig.value = props.baseConfig.pagesConfigs.find(item => item.pageId === adminIndex);
@@ -548,10 +494,9 @@ async function handleButtonSubmit(item: PaPlaygroundPageButtonType, data: { row?
       visibleDialogRef?.value?.openVisibleDialog(_transmitData, homeIndexConfig, item);
     });
   } else if (item.actionType == "save") {
-
-  /**
-   * @description save 类型处理
-   */
+    /**
+     * @description save 类型处理
+     */
     for (const key in ItemRefs.value) {
       if (ItemRefs.value[key].page.type == "form") {
         const query = await ItemRefs.value[key].el?.getSubmitForm();
@@ -569,10 +514,9 @@ async function handleButtonSubmit(item: PaPlaygroundPageButtonType, data: { row?
       }
     }
   } else if (item.actionType == "delete") {
-
-  /**
-   * @description delete 类型处理
-   */
+    /**
+     * @description delete 类型处理
+     */
     const findApi = props.interfaceConfigs.find(api => api.id === item.actionApiId);
     const query = {};
     if (item.transmitData && findApi) {
@@ -584,10 +528,9 @@ async function handleButtonSubmit(item: PaPlaygroundPageButtonType, data: { row?
       DeleteDataToDB(findApi, query, item);
     }
   } else if (props.actionFunction?.length) {
-
-  /**
-   * @description actionFunction 类型处理
-   */
+    /**
+     * @description actionFunction 类型处理
+     */
     const findItem = props.actionFunction.find(act => act.value === item.actionType);
     if (findItem) {
       const outData = {};
@@ -762,4 +705,3 @@ defineExpose({
   openVisibleDialog
 });
 </script>
-

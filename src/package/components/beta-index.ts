@@ -69,15 +69,7 @@ function installPackage() {
 const Component = {
   install: async (app, options: GlobalState) => {
     installPackage();
-    const {
-      themeColor = "#2a3e48",
-      isDark = false,
-      requestHeader,
-      tableConfig = {},
-      formConfig = {},
-      size = "default",
-      apiBaseUrl = ""
-    } = options;
+    const { themeColor = "#2a3e48", isDark = false, requestHeader, tableConfig = {}, formConfig = {}, size = "default", apiBaseUrl = "" } = options;
     const { info, error, warning, success, msg } = Log();
     window.log = { info, error, warning, success, msg };
     window.toLocaleString = toLocaleString;

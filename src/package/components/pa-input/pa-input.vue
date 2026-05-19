@@ -7,11 +7,7 @@
         </div>
 
         <div class="pa-input-textarea" :class="[isFocus ? 'is-focus' : '']">
-          <div
-            v-if="!isFocus"
-            class="pa-input-textarea-inner display-ellipsis"
-            :class="{ placeholder: !inValue || inValue?.length === 0 }"
-          >
+          <div v-if="!isFocus" class="pa-input-textarea-inner display-ellipsis" :class="{ placeholder: !inValue || inValue?.length === 0 }">
             {{ inValue || computedPlaceholder }}
           </div>
 
@@ -35,17 +31,10 @@
           />
 
           <div v-if="isFocus && maxLength" class="flex-end clean-box">
-            <div v-if="maxLength" class="pa-input-word-limit">
-              {{ inValue?.length || 0 }}{{ maxLength ? " / " + maxLength : "" }}
-            </div>
+            <div v-if="maxLength" class="pa-input-word-limit">{{ inValue?.length || 0 }}{{ maxLength ? " / " + maxLength : "" }}</div>
           </div>
 
-          <pa-icon
-            v-else-if="!disabled && clearable && inValue && !isFocus"
-            name="close_circle_line"
-            class="clear-icon"
-            @click="clearInput"
-          />
+          <pa-icon v-else-if="!disabled && clearable && inValue && !isFocus" name="close_circle_line" class="clear-icon" @click="clearInput" />
         </div>
       </div>
     </div>
@@ -62,10 +51,7 @@
     </div>
   </div>
 
-  <div
-    v-if="(alwaysContrast && !isNil(contrastData)) || (!isNil(contrastData) && !isEqual(inValue, contrastData))"
-    :class="['pa-contrast-style']"
-  >
+  <div v-if="(alwaysContrast && !isNil(contrastData)) || (!isNil(contrastData) && !isEqual(inValue, contrastData))" :class="['pa-contrast-style']">
     <slot name="exContrast"></slot>
     <template v-if="$slots.exContrast"> ( {{ contrastData || "--" }} ) </template>
     <template v-else>{{ contrastData || "--" }}</template>
@@ -148,9 +134,7 @@ const languagePackage = computed(() => {
  * @description 根据语言设置计算显示的占位符文本
  */
 const computedPlaceholder: ComputedRef<string> = computed(() => {
-  return typeof props.placeholder === "object"
-    ? props.placeholder[languageValue.value] || languagePackage.value[`inputPlaceholder`]
-    : props.placeholder || languagePackage.value[`inputPlaceholder`];
+  return typeof props.placeholder === "object" ? props.placeholder[languageValue.value] || languagePackage.value[`inputPlaceholder`] : props.placeholder || languagePackage.value[`inputPlaceholder`];
 });
 /**
  * 组件属性

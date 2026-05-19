@@ -29,12 +29,7 @@ type SelectChangeStateType = {
  * @param getTableList - 获取表格数据方法
  * @returns 选择相关方法和状态
  */
-export const useSelectHooks = (
-  props: ComponentProps,
-  state: PaTableUseType.TableStateType,
-  emits: any,
-  getTableList: () => void
-) => {
+export const useSelectHooks = (props: ComponentProps, state: PaTableUseType.TableStateType, emits: any, getTableList: () => void) => {
   const isBrowser = typeof window !== "undefined";
   /**
    * 全选状态
@@ -160,8 +155,7 @@ export const useSelectHooks = (
             const _end = Math.max(lastSelectIsChildren.value, row.renderIndex);
             for (let index = _start; index <= _end; index++) {
               const element = flatTableData?.[start]?.children?.[index];
-              if (element)
-                handleSingeSelectChange({ row: element, parentRow: flatTableData[start], status: lastSelectedIndexStatus.value });
+              if (element) handleSingeSelectChange({ row: element, parentRow: flatTableData[start], status: lastSelectedIndexStatus.value });
             }
           }
         }

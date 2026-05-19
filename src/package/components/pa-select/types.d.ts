@@ -11,13 +11,7 @@ import { PaOptionType, LanguagePackageType } from "../manager-type";
  * 选择器类型
  * @description 选择器组件支持的类型
  */
-export type ComponentType =
-  | "multiple-online-select"
-  | "multiple-request-select"
-  | "multiple-select"
-  | "online-select"
-  | "request-select"
-  | "select";
+export type ComponentType = "multiple-online-select" | "multiple-request-select" | "multiple-select" | "online-select" | "request-select" | "select";
 /**
  * 组件属性定义
  * @description 选择器组件的属性类型

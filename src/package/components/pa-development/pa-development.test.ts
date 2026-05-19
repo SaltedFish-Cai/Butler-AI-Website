@@ -70,28 +70,19 @@ describe("pa-development 组件测试", () => {
   // ==================== menu 状态 ====================
   describe("2. menu 状态", () => {
     it("初始 menu.visible 为 false", async () => {
-      const wrapper = await mountDevelopment(
-        { id: "test-id" },
-        { PancakeGlobalConfig: createMockPancakeGlobalConfig("development") }
-      );
+      const wrapper = await mountDevelopment({ id: "test-id" }, { PancakeGlobalConfig: createMockPancakeGlobalConfig("development") });
       const vm = wrapper.vm as any;
       expect(vm.menu.visible).toBe(false);
     });
 
     it("初始 menu top 为 -100%", async () => {
-      const wrapper = await mountDevelopment(
-        { id: "test-id" },
-        { PancakeGlobalConfig: createMockPancakeGlobalConfig("development") }
-      );
+      const wrapper = await mountDevelopment({ id: "test-id" }, { PancakeGlobalConfig: createMockPancakeGlobalConfig("development") });
       const vm = wrapper.vm as any;
       expect(vm.menu.top).toBe("-100%");
     });
 
     it("初始 menu left 为 -100%", async () => {
-      const wrapper = await mountDevelopment(
-        { id: "test-id" },
-        { PancakeGlobalConfig: createMockPancakeGlobalConfig("development") }
-      );
+      const wrapper = await mountDevelopment({ id: "test-id" }, { PancakeGlobalConfig: createMockPancakeGlobalConfig("development") });
       const vm = wrapper.vm as any;
       expect(vm.menu.left).toBe("-100%");
     });
@@ -100,10 +91,7 @@ describe("pa-development 组件测试", () => {
   // ==================== props ====================
   describe("3. props", () => {
     it("接受 id prop", async () => {
-      const wrapper = await mountDevelopment(
-        { id: "my-component-id" },
-        { PancakeGlobalConfig: createMockPancakeGlobalConfig("development") }
-      );
+      const wrapper = await mountDevelopment({ id: "my-component-id" }, { PancakeGlobalConfig: createMockPancakeGlobalConfig("development") });
       expect((wrapper.props() as any).id).toBe("my-component-id");
     });
   });
@@ -111,10 +99,7 @@ describe("pa-development 组件测试", () => {
   // ==================== 环境检查 ====================
   describe("4. 环境检查", () => {
     it("开发环境下 PancakeGlobalConfig 被注入", async () => {
-      const wrapper = await mountDevelopment(
-        { id: "test-id" },
-        { PancakeGlobalConfig: createMockPancakeGlobalConfig("development") }
-      );
+      const wrapper = await mountDevelopment({ id: "test-id" }, { PancakeGlobalConfig: createMockPancakeGlobalConfig("development") });
       const vm = wrapper.vm as any;
       expect(vm.PancakeGlobalConfig).toBeDefined();
     });
@@ -132,38 +117,26 @@ describe("pa-development 组件测试", () => {
   // ==================== 暴露方法 ====================
   describe("6. 组件实例属性", () => {
     it("menu 对象可访问", async () => {
-      const wrapper = await mountDevelopment(
-        { id: "test-id" },
-        { PancakeGlobalConfig: createMockPancakeGlobalConfig("development") }
-      );
+      const wrapper = await mountDevelopment({ id: "test-id" }, { PancakeGlobalConfig: createMockPancakeGlobalConfig("development") });
       const vm = wrapper.vm as any;
       expect(vm.menu).toBeDefined();
       expect(vm.menu.visible).toBe(false);
     });
 
     it("copyInfo 方法可访问", async () => {
-      const wrapper = await mountDevelopment(
-        { id: "test-id" },
-        { PancakeGlobalConfig: createMockPancakeGlobalConfig("development") }
-      );
+      const wrapper = await mountDevelopment({ id: "test-id" }, { PancakeGlobalConfig: createMockPancakeGlobalConfig("development") });
       const vm = wrapper.vm as any;
       expect(typeof vm.copyInfo).toBe("function");
     });
 
     it("copyUrl 方法可访问", async () => {
-      const wrapper = await mountDevelopment(
-        { id: "test-id" },
-        { PancakeGlobalConfig: createMockPancakeGlobalConfig("development") }
-      );
+      const wrapper = await mountDevelopment({ id: "test-id" }, { PancakeGlobalConfig: createMockPancakeGlobalConfig("development") });
       const vm = wrapper.vm as any;
       expect(typeof vm.copyUrl).toBe("function");
     });
 
     it("onContextMenu 方法可访问", async () => {
-      const wrapper = await mountDevelopment(
-        { id: "test-id" },
-        { PancakeGlobalConfig: createMockPancakeGlobalConfig("development") }
-      );
+      const wrapper = await mountDevelopment({ id: "test-id" }, { PancakeGlobalConfig: createMockPancakeGlobalConfig("development") });
       const vm = wrapper.vm as any;
       expect(typeof vm.onContextMenu).toBe("function");
     });

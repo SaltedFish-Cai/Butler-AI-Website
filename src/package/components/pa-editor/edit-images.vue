@@ -1,11 +1,5 @@
 <template>
-  <div
-    v-if="showContextMenu"
-    ref="contextMenuRef"
-    class="image-context-menu"
-    :style="{ left: contextMenuPosition.x + 'px', top: contextMenuPosition.y + 'px' }"
-    @mousedown.prevent
-  >
+  <div v-if="showContextMenu" ref="contextMenuRef" class="image-context-menu" :style="{ left: contextMenuPosition.x + 'px', top: contextMenuPosition.y + 'px' }" @mousedown.prevent>
     <div class="menu-item" @click="executeImageCommand('imageResize', '50%')">
       <pa-icon name="desktop"></pa-icon>
       <span>调整为窗口大小</span>

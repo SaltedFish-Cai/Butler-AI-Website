@@ -1,49 +1,19 @@
 <template>
-  <pa-dialog
-    v-model="visible"
-    :title="{ 'zh-CN': '接口管理', 'en-US': 'Interface Management' }"
-    :padding="['all']"
-    :closeOnClickModal="false"
-    @closed="handleClose"
-    size="l"
-  >
+  <pa-dialog v-model="visible" :title="{ 'zh-CN': '接口管理', 'en-US': 'Interface Management' }" :padding="['all']" :closeOnClickModal="false" @closed="handleClose" size="l">
     <m-quick-table ref="tableRef" :tableConfig="tableConfig" :tableData="inEditData" :ex-options="exOptions">
       <template #Header>
         <pa-button is="add" @click="handleAdd" :text="{ 'zh-CN': '新建接口', 'en-US': 'New Interface' }" />
       </template>
 
       <template #operation="{ data }">
-        <pa-button
-          is="edit"
-          @click="handleEdit(data as MInterfaceConfig)"
-          :text="{ 'zh-CN': '编辑接口', 'en-US': 'Edit Interface' }"
-        />
-        <pa-button
-          is="delete"
-          @click="handleDelete(data as MInterfaceConfig)"
-          :text="{ 'zh-CN': '删除接口', 'en-US': 'Delete Interface' }"
-        />
+        <pa-button is="edit" @click="handleEdit(data as MInterfaceConfig)" :text="{ 'zh-CN': '编辑接口', 'en-US': 'Edit Interface' }" />
+        <pa-button is="delete" @click="handleDelete(data as MInterfaceConfig)" :text="{ 'zh-CN': '删除接口', 'en-US': 'Delete Interface' }" />
       </template>
     </m-quick-table>
   </pa-dialog>
 
-  <pa-dialog
-    v-model="editVisible"
-    :title="{ 'zh-CN': '接口编辑', 'en-US': 'Interface Edit' }"
-    :padding="['all']"
-    :closeOnClickModal="false"
-    size="s"
-  >
-    <pa-form
-      id="pa-playground_base"
-      ref="formRef"
-      :structure="formConfig"
-      :data="inEditDataItem"
-      :ex-span="1"
-      :ex-options="exOptions"
-      @form-cell-change="handleFormCellChange"
-    >
-    </pa-form>
+  <pa-dialog v-model="editVisible" :title="{ 'zh-CN': '接口编辑', 'en-US': 'Interface Edit' }" :padding="['all']" :closeOnClickModal="false" size="s">
+    <pa-form id="pa-playground_base" ref="formRef" :structure="formConfig" :data="inEditDataItem" :ex-span="1" :ex-options="exOptions" @form-cell-change="handleFormCellChange"> </pa-form>
 
     <template #footer>
       <pa-button is="save" @click="handleSubmit" :text="{ 'zh-CN': '保存配置', 'en-US': 'Save Config' }" />

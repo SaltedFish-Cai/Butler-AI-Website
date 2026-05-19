@@ -15,8 +15,7 @@
           <div class="pa-tag-text_content">
             {{ getLabel(item.label) }}
           </div>
-          <pa-icon v-if="!props.disabled" name="close_circle_line" class="pa-tag-text_close" @click.stop="removeTag(item)">
-          </pa-icon>
+          <pa-icon v-if="!props.disabled" name="close_circle_line" class="pa-tag-text_close" @click.stop="removeTag(item)"> </pa-icon>
         </div>
       </div>
     </pa-popover>

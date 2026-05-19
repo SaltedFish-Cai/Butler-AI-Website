@@ -1,20 +1,6 @@
 <template>
-  <pa-dialog
-    v-model="visible"
-    :title="{ 'zh-CN': '项目配置', 'en-US': 'Project Config' }"
-    :padding="['all']"
-    :closeOnClickModal="false"
-    size="s"
-  >
-    <pa-form
-      id="pa-playground_base"
-      ref="formRef"
-      :structure="config"
-      :data="props.editBaseData"
-      :ex-span="1"
-      :ex-options="exOptions"
-    >
-    </pa-form>
+  <pa-dialog v-model="visible" :title="{ 'zh-CN': '项目配置', 'en-US': 'Project Config' }" :padding="['all']" :closeOnClickModal="false" size="s">
+    <pa-form id="pa-playground_base" ref="formRef" :structure="config" :data="props.editBaseData" :ex-span="1" :ex-options="exOptions"> </pa-form>
 
     <template #footer>
       <pa-button is="save" @click="handleSubmit" :text="{ 'zh-CN': '保存配置', 'en-US': 'Save Config' }" />

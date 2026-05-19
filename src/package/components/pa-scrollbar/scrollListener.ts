@@ -317,10 +317,7 @@ export class ScrollListener {
       }, 2000);
       const handleScrollEnd = () => {
         const isAtTargetPosition =
-          element.scrollTop == 0 ||
-          element.scrollLeft == 0 ||
-          (Math.abs(element.scrollTop - offsetY - targetScrollTop) < 1 &&
-            Math.abs(element.scrollLeft - offsetX - targetScrollLeft) < 1);
+          element.scrollTop == 0 || element.scrollLeft == 0 || (Math.abs(element.scrollTop - offsetY - targetScrollTop) < 1 && Math.abs(element.scrollLeft - offsetX - targetScrollLeft) < 1);
         if (isAtTargetPosition) {
           element.removeEventListener("scroll", scrollHandler);
           if (options.callback) {
@@ -616,10 +613,7 @@ export function listenMultipleElementsScroll(
  * @returns 包含 isInViewport 状态和停止观察方法的对象
  * @description 检查指定元素是否在视口中
  */
-export function isElementInViewport(
-  element: HTMLElement,
-  options: IntersectionObserverInit = {}
-): { isInViewport: boolean; stopObserving: () => void } {
+export function isElementInViewport(element: HTMLElement, options: IntersectionObserverInit = {}): { isInViewport: boolean; stopObserving: () => void } {
   let isInViewport = false;
   let observer: IntersectionObserver | null = null;
 
@@ -634,11 +628,7 @@ export function isElementInViewport(
     const rect = element.getBoundingClientRect();
     const win: Window & typeof globalThis = window;
     const doc = document.documentElement;
-    isInViewport =
-      rect.top >= 0 &&
-      rect.left >= 0 &&
-      rect.bottom <= (win.innerHeight || doc.clientHeight) &&
-      rect.right <= (win.innerWidth || doc.clientWidth);
+    isInViewport = rect.top >= 0 && rect.left >= 0 && rect.bottom <= (win.innerHeight || doc.clientHeight) && rect.right <= (win.innerWidth || doc.clientWidth);
   }
 
   return {

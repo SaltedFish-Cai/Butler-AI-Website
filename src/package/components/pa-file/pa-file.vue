@@ -81,24 +81,14 @@
         <template v-for="(file, index) in inValue" :key="file.FileId">
           <pa-media-view-item v-if="file.FileUrl" :filePath="file.FileUrl" :file="file">
             <div>{{ file?.OriginalName || file?.FileName }}</div>
-            <pa-icon
-              v-if="!display && !disabled"
-              :title="languagePackage['del']"
-              class="file-item-box__del-hand ml-size"
-              name="close_circle_line"
-              @click="removeFile(index)"
-            />
+            <pa-icon v-if="!display && !disabled" :title="languagePackage['del']" class="file-item-box__del-hand ml-size" name="close_circle_line" @click="removeFile(index)" />
           </pa-media-view-item>
         </template>
       </template>
       <div v-else-if="!inValue?.length && display" class="tips-box">{{ languagePackage["noFile"] }}</div>
     </div>
 
-    <div
-      class="file-item-box"
-      :class="['pa-contrast-style']"
-      v-if="(alwaysContrast && contrastData?.length) || (contrastData?.length && eq(inValue, contrastData))"
-    >
+    <div class="file-item-box" :class="['pa-contrast-style']" v-if="(alwaysContrast && contrastData?.length) || (contrastData?.length && eq(inValue, contrastData))">
       <template v-if="contrastData.length">
         <template v-for="file in contrastData" :key="file.FileId">
           <pa-media-view-item v-if="file.FileUrl" :filePath="file.FileUrl" :file="file">
@@ -265,9 +255,7 @@ const languagePackage = computed(() => {
 const computedPlaceholder: ComputedRef<string> = computed(() => {
   const language = PancakeGlobalConfig.value?.language?.value || "zh-CN";
 
-  return typeof props.placeholder === "object"
-    ? props.placeholder[language] || languagePackage.value[`uploadText`]
-    : props.placeholder || languagePackage.value[`uploadText`];
+  return typeof props.placeholder === "object" ? props.placeholder[language] || languagePackage.value[`uploadText`] : props.placeholder || languagePackage.value[`uploadText`];
 });
 /**
  * 上传配置数据

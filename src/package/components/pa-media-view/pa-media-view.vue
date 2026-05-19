@@ -14,40 +14,22 @@
     @closed="show = false"
   >
     <div class="pa-media-view-dialog">
-      <div
-        style="position: relative; display: flex; transition: all var(--pa-animation-time, 0.2s) ease"
-        :style="{ flex: processVisible ? '0 0 300px' : '0 0 0', width: processVisible ? '' : '0' }"
-      >
+      <div style="position: relative; display: flex; transition: all var(--pa-animation-time, 0.2s) ease" :style="{ flex: processVisible ? '0 0 300px' : '0 0 0', width: processVisible ? '' : '0' }">
         <div class="file-menu_box" :style="{ flex: processVisible ? '0 0 300px' : '0 0 0' }">
           <pa-scrollbar class="file-menu" always :useScrollX="false">
-            <div
-              v-for="(item, index) in fileList"
-              :key="item.filePath"
-              class="file-menu_item pa-hand"
-              :class="[index == viewIndex ? 'file-menu_item_action' : '']"
-              @click="changeIndex(index)"
-            >
+            <div v-for="(item, index) in fileList" :key="item.filePath" class="file-menu_item pa-hand" :class="[index == viewIndex ? 'file-menu_item_action' : '']" @click="changeIndex(index)">
               {{ item.fileName }}
             </div>
           </pa-scrollbar>
         </div>
-        <div
-          class="media-open-process pa-hand"
-          :class="[!processVisible ? '' : 'media-close-process']"
-          @click="processVisible = !processVisible"
-        >
+        <div class="media-open-process pa-hand" :class="[!processVisible ? '' : 'media-close-process']" @click="processVisible = !processVisible">
           <pa-icon :name="!processVisible ? 'circle_arrow_right_line' : 'circle_arrow_left_line'"></pa-icon>
           {{ !processVisible ? languagePackage["expand"] : languagePackage["collapse"] }}
         </div>
       </div>
       <div class="pa-media-page-body" v-if="show">
         <imageView v-if="fileType == 'image'" :filePath="fileList[viewIndex]?.filePath" v-model="zoomIndex"></imageView>
-        <pdfView
-          v-else-if="fileType == 'pdf'"
-          :filePath="fileList[viewIndex]?.filePath"
-          :zoom="zoomIndex"
-          ref="pdfViewRef"
-        ></pdfView>
+        <pdfView v-else-if="fileType == 'pdf'" :filePath="fileList[viewIndex]?.filePath" :zoom="zoomIndex" ref="pdfViewRef"></pdfView>
         <excel-view v-else-if="fileType == 'excel'" :filePath="fileList[viewIndex]?.filePath" :zoom="zoomIndex"></excel-view>
         <word-view v-if="fileType == 'word'" :filePath="fileList[viewIndex]?.filePath" :zoom="zoomIndex"></word-view>
         <textView v-else-if="fileType == 'text'" :filePath="fileList[viewIndex]?.filePath" :zoom="zoomIndex"></textView>
@@ -71,12 +53,7 @@
           <pa-icon class="mr5" name="reset_line"></pa-icon><span style="font-size: 12px">{{ languagePackage["rotateTip"] }}</span>
         </div>
         <pa-icon name="minus_circle_line" class="pa-hand" @click="handleMouseWheel({ deltaY: 1 })"></pa-icon>
-        <div
-          style="font-size: 14px; width: 42px; text-align: center"
-          class="pl5 ml5 mr5 pa-hand-scroll"
-          @mousewheel="handleMouseWheel"
-          :title="languagePackage['zoomTip']"
-        >
+        <div style="font-size: 14px; width: 42px; text-align: center" class="pl5 ml5 mr5 pa-hand-scroll" @mousewheel="handleMouseWheel" :title="languagePackage['zoomTip']">
           {{ (zoomIndex * 100).toFixed(0) }}%
         </div>
         <pa-icon name="add_circle_line" class="pa-hand" @click="handleMouseWheel({ deltaY: -1 })"></pa-icon>

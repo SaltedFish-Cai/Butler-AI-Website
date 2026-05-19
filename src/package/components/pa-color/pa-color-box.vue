@@ -13,35 +13,19 @@
       </div>
 
       <div class="pa-color-picker-alpha-area" v-if="props.useAlpha">
-        <div
-          class="pa-color-picker-alpha-area-gradient"
-          :style="{ backgroundColor: currentColorWithoutAlpha }"
-          @mousedown="onAlphaAreaMouseDown"
-        ></div>
+        <div class="pa-color-picker-alpha-area-gradient" :style="{ backgroundColor: currentColorWithoutAlpha }" @mousedown="onAlphaAreaMouseDown"></div>
         <div class="pa-color-picker-alpha-area-pointer" :style="{ left: `${100 - alpha * 100}%` }"></div>
       </div>
     </div>
 
     <div class="pa-color-picker-inputs">
       <div class="pa-color-picker-inputs-group" v-if="props.useInput">
-        <input
-          type="text"
-          class="pa-color-picker-inputs-input"
-          v-model="hexInput"
-          @input="onHexInputChange"
-          placeholder="#000000"
-        />
+        <input type="text" class="pa-color-picker-inputs-input" v-model="hexInput" @input="onHexInputChange" placeholder="#000000" />
       </div>
     </div>
 
     <div class="pa-color-picker-presets" v-if="presetColors && presetColors.length > 0">
-      <button
-        class="pa-color-picker-presets-preset"
-        v-for="(color, index) in presetColors"
-        :key="index"
-        :style="{ backgroundColor: color }"
-        @click="selectPresetColor(color)"
-      ></button>
+      <button class="pa-color-picker-presets-preset" v-for="(color, index) in presetColors" :key="index" :style="{ backgroundColor: color }" @click="selectPresetColor(color)"></button>
     </div>
   </div>
 </template>

@@ -27,9 +27,7 @@ export const useSortHooks = (state: any, getTableList: any) => {
   function handleColSetting({ Filter }: { Filter: any; Col?: any }) {
     for (let index = 0; index < Filter.length; index++) {
       const element = Filter[index];
-      state.tableQuery.AdvancedFilter = state.tableQuery.AdvancedFilter.filter(
-        (item: any) => item.fieldName != element.fieldName
-      );
+      state.tableQuery.AdvancedFilter = state.tableQuery.AdvancedFilter.filter((item: any) => item.fieldName != element.fieldName);
     }
     getTableList({ Filter });
   }

@@ -1,20 +1,6 @@
 <template>
-  <pa-dialog
-    v-model="visible"
-    :title="{ 'zh-CN': '组件配置', 'en-US': 'Component Config' }"
-    :padding="['all']"
-    :closeOnClickModal="false"
-    size="s"
-  >
-    <pa-form
-      id="pa-playground_base"
-      ref="formRef"
-      :structure="itemBaseConfig"
-      :data="editItemData"
-      :ex-span="1"
-      :ex-options="exOptions"
-      @form-data-change="data => (editItemData = data)"
-    >
+  <pa-dialog v-model="visible" :title="{ 'zh-CN': '组件配置', 'en-US': 'Component Config' }" :padding="['all']" :closeOnClickModal="false" size="s">
+    <pa-form id="pa-playground_base" ref="formRef" :structure="itemBaseConfig" :data="editItemData" :ex-span="1" :ex-options="exOptions" @form-data-change="data => (editItemData = data)">
       <template #title="{ data }">
         <pa-input
           v-model="data.title['zh-CN']"
@@ -97,12 +83,7 @@ const itemBaseConfig = computed<PaStructureType.Form[]>(() => {
         ]
       : [];
   const tableConfig: PaStructureType.Form[] = editItemData.value.type == "table" ? [] : [];
-  return [
-    ...baseConfig,
-    { label: { "en-US": "Title", "zh-CN": "标题" }, prop: "title", type: "slot", rules: [{ required: false }] },
-    ...formConfig,
-    ...tableConfig
-  ];
+  return [...baseConfig, { label: { "en-US": "Title", "zh-CN": "标题" }, prop: "title", type: "slot", rules: [{ required: false }] }, ...formConfig, ...tableConfig];
 });
 
 /**

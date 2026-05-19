@@ -8,34 +8,7 @@
 function random(prefix = "", randomLength = 8) {
   const nameArr = [
     [1, 2, 3, 4, 5, 6, 7, 8, 9, 0],
-    [
-      "a",
-      "b",
-      "c",
-      "d",
-      "e",
-      "f",
-      "g",
-      "h",
-      "i",
-      "g",
-      "k",
-      "l",
-      "m",
-      "n",
-      "o",
-      "p",
-      "q",
-      "r",
-      "s",
-      "t",
-      "u",
-      "v",
-      "w",
-      "x",
-      "y",
-      "z"
-    ]
+    ["a", "b", "c", "d", "e", "f", "g", "h", "i", "g", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
   ];
   let name = prefix;
   for (let i = 0; i < randomLength; i++) {

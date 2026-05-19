@@ -13,12 +13,7 @@
     >
       <template v-if="renderList.length > 0">
         <template v-for="item in renderList" :key="item.__key">
-          <div
-            v-if="item.__type === 'more'"
-            class="pa-scrollbar-more"
-            :id="`${id}-more-${item.__page}`"
-            :data-name="`more-${item.__page}`"
-          ></div>
+          <div v-if="item.__type === 'more'" class="pa-scrollbar-more" :id="`${id}-more-${item.__page}`" :data-name="`more-${item.__page}`"></div>
           <slot v-else :row="item.__data" />
         </template>
       </template>

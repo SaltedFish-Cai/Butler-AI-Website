@@ -75,9 +75,7 @@ const style = computed(() => {
   return {
     "--col-span-value": span,
     flex: `0 0 ${(100 / span).toFixed(2)}%`,
-    maxWidth: hasGutter
-      ? `calc(calc(100% - ${(span - 1) * value * 2}px) / var(--col-span-value))`
-      : `calc(calc(100% - ${span - 1} * var(--pa-size-padding)) / var(--col-span-value))`,
+    maxWidth: hasGutter ? `calc(calc(100% - ${(span - 1) * value * 2}px) / var(--col-span-value))` : `calc(calc(100% - ${span - 1} * var(--pa-size-padding)) / var(--col-span-value))`,
     marginLeft: hasGutter ? `${value}px` : "calc(var(--pa-size-padding) / 2)",
     marginRight: hasGutter ? `${value}px` : "calc(var(--pa-size-padding) / 2)"
   };

@@ -62,12 +62,8 @@ class MessageBoxManagerImpl implements MessageBoxManager {
       ...options,
       title: typeof options.title === "string" ? options.title : options.title?.[languageKey] || "",
       message: typeof options.message === "string" ? options.message : options.message?.[languageKey] || "",
-      confirmButtonText:
-        typeof options.confirmButtonText === "string"
-          ? options.confirmButtonText
-          : options.confirmButtonText?.[languageKey] || "",
-      cancelButtonText:
-        typeof options.cancelButtonText === "string" ? options.cancelButtonText : options.cancelButtonText?.[languageKey] || "",
+      confirmButtonText: typeof options.confirmButtonText === "string" ? options.confirmButtonText : options.confirmButtonText?.[languageKey] || "",
+      cancelButtonText: typeof options.cancelButtonText === "string" ? options.cancelButtonText : options.cancelButtonText?.[languageKey] || "",
       zIndex: options.zIndex || this.zIndex++,
       position: "center"
     };

@@ -23,17 +23,7 @@ import cloneDeep from "../../tools/clone-deep";
 export const useStateHooks = (
   props: ComponentProps,
   emits,
-  {
-    isScrollHeaderIng,
-    language,
-    languagePackage,
-    bodyRef,
-    contentRef,
-    mScrollbarListRef,
-    isIntersectingList,
-    isInViewList,
-    infiniteScroll
-  }
+  { isScrollHeaderIng, language, languagePackage, bodyRef, contentRef, mScrollbarListRef, isIntersectingList, isInViewList, infiniteScroll }
 ) => {
   const { listenCellInView, listenCellChildChange, clearListen } = useObserverHooks(props, {
     mScrollbarListRef,
@@ -141,10 +131,7 @@ export const useStateHooks = (
    * @description 解析并设置单元格的校验规则
    */
   function setRule(item: PaFormChildType) {
-    const baseRules =
-      item.display || item.disabled
-        ? []
-        : [{ required: true, message: languagePackage.value["requiredMessage"], trigger: "blur" }];
+    const baseRules = item.display || item.disabled ? [] : [{ required: true, message: languagePackage.value["requiredMessage"], trigger: "blur" }];
     let _rules = baseRules;
     if (item.rules && Array.isArray(item.rules)) {
       let isRequired = true;
@@ -156,10 +143,7 @@ export const useStateHooks = (
           trigger: "blur",
           required: item.required || true,
           ...item,
-          message:
-            typeof item.message == "string"
-              ? item.message
-              : item.message?.[language?.value || "zh-CN"] || languagePackage.value["requiredMessage"]
+          message: typeof item.message == "string" ? item.message : item.message?.[language?.value || "zh-CN"] || languagePackage.value["requiredMessage"]
         };
         return data;
       });
@@ -280,8 +264,7 @@ export const useStateHooks = (
           }
         }, 0)}`;
         sums[index] =
-          Number(sums[index])?.toLocaleString("zh", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) +
-          (!isNil(column?.unitText) ? column?.unitText : props?.summaryConfig?.unitText);
+          Number(sums[index])?.toLocaleString("zh", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + (!isNil(column?.unitText) ? column?.unitText : props?.summaryConfig?.unitText);
       } else {
         sums[index] = exText;
       }
@@ -355,10 +338,7 @@ export const useStateHooks = (
 
     const _pageNum = (exQuery.Page?.PageNum || 1) - 1 <= 0 ? 0 : (exQuery.Page?.PageNum || 1) - 1;
     // @ 如果数据加载结束或者当前页数据已经存在，则不再请求数据
-    if (
-      state.tableLoadEndStatus ||
-      (state.tableData?.length && state.tableData[_pageNum]?.length && state.tableData[_pageNum][1].type != "empty")
-    ) {
+    if (state.tableLoadEndStatus || (state.tableData?.length && state.tableData[_pageNum]?.length && state.tableData[_pageNum][1].type != "empty")) {
       if (props.useSummary && !props.usePagination) debounceGetSummary();
       typeof window !== "undefined" && window.developLog.log("当前页数据已经存在", _pageNum, "info");
 
@@ -406,9 +386,7 @@ export const useStateHooks = (
     if (Code == 200) {
       const { List, TotalCount } = Data;
       _data = props.usePagination ? List : Data;
-      const ar: PaTableUseType.dataType = [
-        { renderIndex: -1, parentRenderIndex: -1, rowIndex: -1, type: "more", name: String(_pageNum) }
-      ];
+      const ar: PaTableUseType.dataType = [{ renderIndex: -1, parentRenderIndex: -1, rowIndex: -1, type: "more", name: String(_pageNum) }];
 
       _data.forEach(item => {
         index++;
@@ -480,9 +458,7 @@ export const useStateHooks = (
       if (infiniteScroll.value) {
         const up_pageNum = _pageNum - 1 >= 0 ? _pageNum - 1 : 0;
         if (!state.tableData[up_pageNum]?.length) {
-          state.tableData[up_pageNum] = [
-            { renderIndex: -1, parentRenderIndex: -1, rowIndex: -1, type: "more", name: String(up_pageNum) }
-          ];
+          state.tableData[up_pageNum] = [{ renderIndex: -1, parentRenderIndex: -1, rowIndex: -1, type: "more", name: String(up_pageNum) }];
           const emptyArr = Array.from({ length: 15 });
           // const _emptyMoreIndex = Math.round(emptyArr.length / 2);
           emptyArr.forEach(() => {
@@ -554,8 +530,7 @@ export const useStateHooks = (
           item.width = setWidthToString(maxIndexNumber);
           return;
         }
-        const operation_item =
-          typeof window !== "undefined" && window.document?.querySelectorAll(`#${props.id} .find_cell_${item.prop}`);
+        const operation_item = typeof window !== "undefined" && window.document?.querySelectorAll(`#${props.id} .find_cell_${item.prop}`);
         let useWidth = 0;
 
         if (operation_item && operation_item.length > 0) {

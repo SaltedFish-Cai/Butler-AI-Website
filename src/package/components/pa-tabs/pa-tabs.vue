@@ -14,53 +14,17 @@
         <div v-if="$slots['HeaderLeft']" style="margin-right: calc(var(--pa-size-padding, 10px) / 2)">
           <slot name="HeaderLeft"></slot>
         </div>
-        <pa-icon
-          v-if="useScrollY > 0 && (mode === 'portrait' || mode === 'slider')"
-          :class="['icons', 'top-icon', headerScroll === 0 ? 'disabled' : '']"
-          name="up_small_fill"
-          @click="minusScroll"
-        />
-        <pa-icon
-          v-else-if="useScrollX > 0"
-          :class="['icons', 'left-icon', headerScroll === 0 ? 'disabled' : '']"
-          name="left_small"
-          @click="minusScroll"
-        />
+        <pa-icon v-if="useScrollY > 0 && (mode === 'portrait' || mode === 'slider')" :class="['icons', 'top-icon', headerScroll === 0 ? 'disabled' : '']" name="up_small_fill" @click="minusScroll" />
+        <pa-icon v-else-if="useScrollX > 0" :class="['icons', 'left-icon', headerScroll === 0 ? 'disabled' : '']" name="left_small" @click="minusScroll" />
 
-        <div
-          class="pa-tabs-title-list"
-          :id="tabsId + '-tab-titles'"
-          ref="tabsTitleRef"
-          @mouseenter="handleMouseEnter"
-          @mouseleave="handleMouseLeave"
-        >
-          <div
-            :id="'pa-tabs-box_' + tabsId"
-            class="pa-tabs-box"
-            :class="[mode === 'portrait' || mode === 'slider' ? 'flex-col' : '']"
-            :style="{ '--tab-header-scroll': '-' + headerScroll + 'px' }"
-          >
-            <title-item
-              :slots="slotsTitle"
-              :activeName="activeName"
-              :changeTabs="changeTabs"
-              :portrait="mode === 'portrait' || mode === 'slider'"
-            ></title-item>
+        <div class="pa-tabs-title-list" :id="tabsId + '-tab-titles'" ref="tabsTitleRef" @mouseenter="handleMouseEnter" @mouseleave="handleMouseLeave">
+          <div :id="'pa-tabs-box_' + tabsId" class="pa-tabs-box" :class="[mode === 'portrait' || mode === 'slider' ? 'flex-col' : '']" :style="{ '--tab-header-scroll': '-' + headerScroll + 'px' }">
+            <title-item :slots="slotsTitle" :activeName="activeName" :changeTabs="changeTabs" :portrait="mode === 'portrait' || mode === 'slider'"></title-item>
           </div>
         </div>
 
-        <pa-icon
-          v-if="useScrollY > 0 && (mode === 'portrait' || mode === 'slider')"
-          :class="['icons', 'down-icon', headerScrollEnd ? 'disabled' : '']"
-          name="down_small"
-          @click="addScroll"
-        />
-        <pa-icon
-          v-else-if="useScrollX > 0"
-          :class="['icons', 'right-icon', headerScrollEnd ? 'disabled' : '']"
-          name="right_small_fill"
-          @click="addScroll"
-        />
+        <pa-icon v-if="useScrollY > 0 && (mode === 'portrait' || mode === 'slider')" :class="['icons', 'down-icon', headerScrollEnd ? 'disabled' : '']" name="down_small" @click="addScroll" />
+        <pa-icon v-else-if="useScrollX > 0" :class="['icons', 'right-icon', headerScrollEnd ? 'disabled' : '']" name="right_small_fill" @click="addScroll" />
 
         <div v-if="$slots['HeaderRight']" class="ml5"><slot name="HeaderRight"></slot></div>
       </div>
@@ -77,11 +41,7 @@
       <div v-else class="pa-tabs-scroll">
         <slot name="afterLabel"></slot>
 
-        <div
-          :id="tabsId + '-tab-contents'"
-          class="pa-tabs-contents"
-          :style="{ position: 'relative', left: `-${visibleMode == 'visible' ? slotIndex : 0}00%` }"
-        >
+        <div :id="tabsId + '-tab-contents'" class="pa-tabs-contents" :style="{ position: 'relative', left: `-${visibleMode == 'visible' ? slotIndex : 0}00%` }">
           <slot></slot>
         </div>
       </div>
@@ -521,8 +481,7 @@ function setLabelPosition(): void {
     clearTimeout(labelPositionTimer);
   }
   labelPositionTimer = setTimeout(() => {
-    const el: HTMLElement | null =
-      typeof window !== "undefined" ? window.document?.querySelector(`.pa-tabs-title_action_${tabsId.value}`) : null;
+    const el: HTMLElement | null = typeof window !== "undefined" ? window.document?.querySelector(`.pa-tabs-title_action_${tabsId.value}`) : null;
     if (el) {
       const { width } = el.getBoundingClientRect();
       useLabelLeft.value = el.offsetLeft + 1;

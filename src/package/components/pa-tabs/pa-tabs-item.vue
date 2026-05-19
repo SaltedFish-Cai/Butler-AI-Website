@@ -1,11 +1,5 @@
 <template>
-  <div
-    :data-name="name"
-    :data-label="label"
-    class="pa-tabs-item flex-col"
-    :class="[tabsContext.activeName === name ? 'active' : '', useBorder ? 'use-border' : '']"
-    ref="ScrollbarRef"
-  >
+  <div :data-name="name" :data-label="label" class="pa-tabs-item flex-col" :class="[tabsContext.activeName === name ? 'active' : '', useBorder ? 'use-border' : '']" ref="ScrollbarRef">
     <slot name="before"></slot>
     <div class="pa-tabs-item_body" v-if="init">
       <pa-scrollbar v-if="scroll && tabsContext.mode !== 'slider'" ref="scrollbarRef" :useScrollX="useScrollX" :padding="padding">

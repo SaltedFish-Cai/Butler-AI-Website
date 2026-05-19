@@ -2,12 +2,7 @@
   <div class="m-year-month-picker-panel">
     <!-- 快捷选项 -->
     <div v-if="shortcuts && shortcuts.length > 0" class="m-year-month-picker-shortcuts">
-      <div
-        v-for="(shortcut, index) in shortcuts"
-        :key="index"
-        class="m-year-month-picker-shortcut-item"
-        @click="handleShortcutClick(shortcut)"
-      >
+      <div v-for="(shortcut, index) in shortcuts" :key="index" class="m-year-month-picker-shortcut-item" @click="handleShortcutClick(shortcut)">
         {{ shortcut.text }}
       </div>
     </div>
@@ -21,9 +16,7 @@
             <button v-if="isYear" @click="prevYear('start')" class="m-year-month-picker-header-btn">«</button>
             <button v-else @click="prevMouth('start')" class="m-year-month-picker-header-btn">«</button>
             <span class="m-year-month-picker-header-label">{{ getYearRangeLabel(startPanelDate, "start") }}</span>
-            <button v-if="!isYear" @click="nextMouth('start')" :disabled="isSameYear" class="m-year-month-picker-header-btn">
-              »
-            </button>
+            <button v-if="!isYear" @click="nextMouth('start')" :disabled="isSameYear" class="m-year-month-picker-header-btn">»</button>
             <button v-else @click="nextYear('start')" :disabled="isSameYear" class="m-year-month-picker-header-btn">»</button>
           </div>
 
@@ -36,12 +29,7 @@
 
           <!-- 月份选择网格 -->
           <div v-else class="m-month-picker-grid" @wheel="e => handleWheel(e, 'month', 'start')">
-            <div
-              v-for="month in months"
-              :key="month.value"
-              :class="getMonthClass(month.value, 'start')"
-              @click="selectMonth(month.value, 'start')"
-            >
+            <div v-for="month in months" :key="month.value" :class="getMonthClass(month.value, 'start')" @click="selectMonth(month.value, 'start')">
               {{ month.text }}
             </div>
           </div>
@@ -49,9 +37,7 @@
 
         <div class="m-year-month-picker-range-side">
           <div class="m-year-month-picker-header">
-            <button v-if="isYear" @click="prevYear('end')" :disabled="isSameYear" class="m-year-month-picker-header-btn">
-              «
-            </button>
+            <button v-if="isYear" @click="prevYear('end')" :disabled="isSameYear" class="m-year-month-picker-header-btn">«</button>
             <button v-else @click="prevMouth('end')" :disabled="isSameYear" class="m-year-month-picker-header-btn">«</button>
             <span class="m-year-month-picker-header-label">{{ getYearRangeLabel(endPanelDate, "end") }}</span>
             <button v-if="!isYear" @click="nextMouth('end')" class="m-year-month-picker-header-btn">»</button>
@@ -67,12 +53,7 @@
 
           <!-- 月份选择网格 -->
           <div v-else class="m-month-picker-grid" @wheel="e => handleWheel(e, 'month', 'end')">
-            <div
-              v-for="month in months"
-              :key="month.value"
-              :class="getMonthClass(month.value, 'end')"
-              @click="selectMonth(month.value, 'end')"
-            >
+            <div v-for="month in months" :key="month.value" :class="getMonthClass(month.value, 'end')" @click="selectMonth(month.value, 'end')">
               {{ month.text }}
             </div>
           </div>
@@ -372,12 +353,7 @@ function selectYear(year: number, position?: "end" | "start"): void {
  * @description 处理月份选择
  */
 function selectMonth(month: number, position?: "end" | "start"): void {
-  const year =
-    isRange.value && position
-      ? position === "start"
-        ? selectedRangeYears.value[0]
-        : selectedRangeYears.value[1]
-      : selectedYear.value;
+  const year = isRange.value && position ? (position === "start" ? selectedRangeYears.value[0] : selectedRangeYears.value[1]) : selectedYear.value;
 
   if (year === null) return;
 
@@ -391,11 +367,7 @@ function selectMonth(month: number, position?: "end" | "start"): void {
 
   if (isRange.value && position) {
     if (position === "start") {
-      if (
-        selectedRangeMonths.value[1] &&
-        selectedRangeYears.value[0] == selectedRangeYears.value[1] &&
-        month > selectedRangeMonths.value[1]
-      ) {
+      if (selectedRangeMonths.value[1] && selectedRangeYears.value[0] == selectedRangeYears.value[1] && month > selectedRangeMonths.value[1]) {
         selectedRangeYears.value[0] = startPanelDate.value.year();
         selectedRangeMonths.value[0] = month;
         selectedRangeYears.value[1] = startPanelDate.value.year();
@@ -406,11 +378,7 @@ function selectMonth(month: number, position?: "end" | "start"): void {
         startPanelDate.value = startPanelDate.value.month(month - 1);
       }
     } else {
-      if (
-        selectedRangeMonths.value[0] &&
-        selectedRangeYears.value[0] == selectedRangeYears.value[1] &&
-        month < selectedRangeMonths.value[0]
-      ) {
+      if (selectedRangeMonths.value[0] && selectedRangeYears.value[0] == selectedRangeYears.value[1] && month < selectedRangeMonths.value[0]) {
         selectedRangeYears.value[0] = startPanelDate.value.year();
         selectedRangeMonths.value[0] = month;
         selectedRangeYears.value[1] = startPanelDate.value.year();
@@ -452,23 +420,13 @@ function getYearClass(year: number, position?: "end" | "start"): string[] {
   }
 
   if (isRange.value && position) {
-    if (
-      selectedRangeYears.value[0] &&
-      year == selectedRangeYears.value[0] &&
-      selectedRangeYears.value[1] &&
-      year == selectedRangeYears.value[1]
-    ) {
+    if (selectedRangeYears.value[0] && year == selectedRangeYears.value[0] && selectedRangeYears.value[1] && year == selectedRangeYears.value[1]) {
       classes.push("selected-start selected-end");
     } else if (selectedRangeYears.value[0] === year) {
       classes.push("selected-start");
     } else if (selectedRangeYears.value[1] === year) {
       classes.push("selected-end");
-    } else if (
-      selectedRangeYears.value[0] &&
-      selectedRangeYears.value[1] &&
-      year > selectedRangeYears.value[0] &&
-      year < selectedRangeYears.value[1]
-    ) {
+    } else if (selectedRangeYears.value[0] && selectedRangeYears.value[1] && year > selectedRangeYears.value[0] && year < selectedRangeYears.value[1]) {
       classes.push("in-range");
     }
   } else if (selectedYear.value === year) {
@@ -485,12 +443,7 @@ function getYearClass(year: number, position?: "end" | "start"): string[] {
 function getMonthClass(month: number, position?: "end" | "start"): string[] {
   const classes: string[] = ["month-cell"];
 
-  const year =
-    isRange.value && position
-      ? position === "start"
-        ? selectedRangeYears.value[0]
-        : selectedRangeYears.value[1]
-      : selectedYear.value;
+  const year = isRange.value && position ? (position === "start" ? selectedRangeYears.value[0] : selectedRangeYears.value[1]) : selectedYear.value;
   if (year === null) return classes;
 
   const date = dayjs()
@@ -511,24 +464,11 @@ function getMonthClass(month: number, position?: "end" | "start"): string[] {
   }
 
   if (isRange.value && position) {
-    if (
-      _selectedYears[0] == _selectedYears[1] &&
-      _selectedYears[0] == _selectedYears[1] &&
-      month == _selectedMonths[0] &&
-      month == _selectedMonths[1]
-    ) {
+    if (_selectedYears[0] == _selectedYears[1] && _selectedYears[0] == _selectedYears[1] && month == _selectedMonths[0] && month == _selectedMonths[1]) {
       classes.push("selected-start selected-end");
-    } else if (
-      position === "start" &&
-      ((_startPanelYear === _selectedYears[0] && _selectedMonths[0] === month) ||
-        (_startPanelYear === _selectedYears[1] && _selectedMonths[1] === month))
-    ) {
+    } else if (position === "start" && ((_startPanelYear === _selectedYears[0] && _selectedMonths[0] === month) || (_startPanelYear === _selectedYears[1] && _selectedMonths[1] === month))) {
       classes.push(_startPanelYear === _selectedYears[1] && _selectedMonths[1] === month ? "selected-end" : "selected-start");
-    } else if (
-      position === "end" &&
-      ((_endPanelYear === _selectedYears[1] && _selectedMonths[1] === month) ||
-        (_endPanelYear === _selectedYears[0] && _selectedMonths[0] === month))
-    ) {
+    } else if (position === "end" && ((_endPanelYear === _selectedYears[1] && _selectedMonths[1] === month) || (_endPanelYear === _selectedYears[0] && _selectedMonths[0] === month))) {
       classes.push(_endPanelYear === _selectedYears[0] && _selectedMonths[0] === month ? "selected-start" : "selected-end");
     } else if (
       _selectedYears[0] &&
@@ -540,17 +480,11 @@ function getMonthClass(month: number, position?: "end" | "start"): string[] {
         (position === "start" &&
           ((_selectedYears[0] != _selectedYears[1] && _startPanelYear == _selectedYears[0] && month >= _selectedMonths[0]) ||
             (_selectedYears[0] != _selectedYears[1] && _startPanelYear == _selectedYears[1] && month <= _selectedMonths[1]) ||
-            (_startPanelYear == _selectedYears[0] &&
-              _selectedYears[0] == _selectedYears[1] &&
-              month <= _selectedMonths[1] &&
-              month >= _selectedMonths[0]))) ||
+            (_startPanelYear == _selectedYears[0] && _selectedYears[0] == _selectedYears[1] && month <= _selectedMonths[1] && month >= _selectedMonths[0]))) ||
         (position === "end" &&
           ((_selectedYears[0] != _selectedYears[1] && _endPanelYear == _selectedYears[1] && month <= _selectedMonths[1]) ||
             (_selectedYears[0] != _selectedYears[1] && _endPanelYear == _selectedYears[0] && month >= _selectedMonths[0]) ||
-            (_endPanelYear == _selectedYears[1] &&
-              _selectedYears[0] == _selectedYears[1] &&
-              month <= _selectedMonths[1] &&
-              month >= _selectedMonths[0]))))
+            (_endPanelYear == _selectedYears[1] && _selectedYears[0] == _selectedYears[1] && month <= _selectedMonths[1] && month >= _selectedMonths[0]))))
     ) {
       classes.push("in-range");
     }

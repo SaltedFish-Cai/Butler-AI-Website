@@ -1,14 +1,6 @@
 <template>
   <div class="pa-timer" ref="timerRef" :class="[props.class, { 'is-disabled': props.disabled }]" :style="{ ...props.style }">
-    <pa-popover
-      ref="popoverRef"
-      @change="handlePopoverChange"
-      :disabled="props.disabled"
-      :popoverWidth="240"
-      class="pa-timer-popover"
-      :teleportTo="timerRef"
-      :targetClose="false"
-    >
+    <pa-popover ref="popoverRef" @change="handlePopoverChange" :disabled="props.disabled" :popoverWidth="240" class="pa-timer-popover" :teleportTo="timerRef" :targetClose="false">
       <template #reference>
         <!-- 时间输入框 -->
         <div class="pa-timer-input" :class="[isFocus ? 'is-focus' : '']">
@@ -69,12 +61,7 @@
             <div class="pa-timer-time-column">
               <div class="pa-timer-time-title">时</div>
               <div class="pa-timer-time-list">
-                <div
-                  v-for="h in 24"
-                  :key="h"
-                  :class="['pa-timer-time-item', { selected: hours === formatTimeUnit(h - 1) }]"
-                  @click="selectHour(h - 1)"
-                >
+                <div v-for="h in 24" :key="h" :class="['pa-timer-time-item', { selected: hours === formatTimeUnit(h - 1) }]" @click="selectHour(h - 1)">
                   {{ formatTimeUnit(h - 1) }}
                 </div>
               </div>
@@ -82,12 +69,7 @@
             <div class="pa-timer-time-column">
               <div class="pa-timer-time-title">分</div>
               <div class="pa-timer-time-list">
-                <div
-                  v-for="m in 60"
-                  :key="m"
-                  :class="['pa-timer-time-item', { selected: minutes === formatTimeUnit(m - 1) }]"
-                  @click="selectMinute(m - 1)"
-                >
+                <div v-for="m in 60" :key="m" :class="['pa-timer-time-item', { selected: minutes === formatTimeUnit(m - 1) }]" @click="selectMinute(m - 1)">
                   {{ formatTimeUnit(m - 1) }}
                 </div>
               </div>
@@ -95,12 +77,7 @@
             <div class="pa-timer-time-column">
               <div class="pa-timer-time-title">秒</div>
               <div class="pa-timer-time-list">
-                <div
-                  v-for="s in 60"
-                  :key="s"
-                  :class="['pa-timer-time-item', { selected: seconds === formatTimeUnit(s - 1) }]"
-                  @click="selectSecond(s - 1)"
-                >
+                <div v-for="s in 60" :key="s" :class="['pa-timer-time-item', { selected: seconds === formatTimeUnit(s - 1) }]" @click="selectSecond(s - 1)">
                   {{ formatTimeUnit(s - 1) }}
                 </div>
               </div>
@@ -111,9 +88,7 @@
           <pa-button @click="setCurrentTime('start')" is="go" type="default" icon-name="clock-circle" size="small">
             {{ languagePackage["start"] }}
           </pa-button>
-          <pa-button @click="setCurrentTime('current')" is="go" type="default" icon-name="clock-circle" size="small">
-            >{{ languagePackage["current"] }}
-          </pa-button>
+          <pa-button @click="setCurrentTime('current')" is="go" type="default" icon-name="clock-circle" size="small"> >{{ languagePackage["current"] }} </pa-button>
           <pa-button @click="setCurrentTime('end')" is="go" type="default" icon-name="clock-circle" size="small">
             {{ languagePackage["end"] }}
           </pa-button>
@@ -164,9 +139,7 @@ const languageValue = computed(() => {
  * @description 当前语言的文本配置
  */
 const languagePackage = computed(() => {
-  return languageValue.value === "zh-CN"
-    ? { start: "开始", end: "结束", current: "当前" }
-    : { start: "Start", end: "End", current: "Current" };
+  return languageValue.value === "zh-CN" ? { start: "开始", end: "结束", current: "当前" } : { start: "Start", end: "End", current: "Current" };
 });
 /**
  * 组件事件类型

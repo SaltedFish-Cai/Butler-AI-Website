@@ -1,13 +1,6 @@
 <template>
   <transition name="mo-animation-fadeUp" @after-enter="handleAfterEnter" @after-leave="handleAfterLeave">
-    <div
-      v-show="visible"
-      :id="id"
-      :class="['pa-message', type || '', customClass]"
-      :style="styles"
-      role="alert"
-      @click="handleClick"
-    >
+    <div v-show="visible" :id="id" :class="['pa-message', type || '', customClass]" :style="styles" role="alert" @click="handleClick">
       <div class="pa-message_header">
         <div class="flex-center-start">
           <pa-icon class="pa-message__icon mr-size" name="warning_line"></pa-icon>
@@ -53,18 +46,7 @@ const props = defineProps<{
  * 解构选项
  * @description 从 props.options 中解构配置项
  */
-const {
-  message,
-  type,
-  duration = 3000,
-  customClass = "",
-  offset = 0,
-  dangerouslyUseHTMLString = false,
-  onClick,
-  onClose,
-  zIndex = 2050,
-  closeOnPressEscape = true
-} = props.options;
+const { message, type, duration = 3000, customClass = "", offset = 0, dangerouslyUseHTMLString = false, onClick, onClose, zIndex = 2050, closeOnPressEscape = true } = props.options;
 /**
  * 可见状态
  * @description 控制消息的显示与隐藏

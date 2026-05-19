@@ -1,55 +1,21 @@
 <template>
-  <pa-dialog
-    v-model="visible"
-    :title="{ 'zh-CN': '表结构管理', 'en-US': 'Data Structure Management' }"
-    :padding="['all']"
-    :closeOnClickModal="false"
-    @closed="handleClose"
-  >
+  <pa-dialog v-model="visible" :title="{ 'zh-CN': '表结构管理', 'en-US': 'Data Structure Management' }" :padding="['all']" :closeOnClickModal="false" @closed="handleClose">
     <m-quick-table ref="visibleTableRef" :tableData="inEditData" :tableConfig="tableConfig" :ex-options="exOptions">
       <template #Header>
         <pa-button is="add" @click="handleAdd" :text="{ 'zh-CN': '新建表', 'en-US': 'New Structure' }" />
       </template>
 
       <template #operation="{ data }">
-        <pa-button
-          is="edit"
-          @click="handleEdit(data as MStructureType)"
-          :text="{ 'zh-CN': '编辑表', 'en-US': 'Edit Structure' }"
-        />
-        <pa-button
-          is="delete"
-          @click="handleDelete(data as MStructureType)"
-          :text="{ 'zh-CN': '删除表', 'en-US': 'Delete Structure' }"
-        />
+        <pa-button is="edit" @click="handleEdit(data as MStructureType)" :text="{ 'zh-CN': '编辑表', 'en-US': 'Edit Structure' }" />
+        <pa-button is="delete" @click="handleDelete(data as MStructureType)" :text="{ 'zh-CN': '删除表', 'en-US': 'Delete Structure' }" />
       </template>
     </m-quick-table>
   </pa-dialog>
 
-  <pa-dialog
-    v-model="editVisible"
-    :title="{ 'zh-CN': '表结构编辑', 'en-US': 'Data Structure Edit' }"
-    :padding="['all']"
-    :closeOnClickModal="false"
-    size="l"
-  >
-    <pa-form
-      id="pa-playground_base"
-      ref="formRef"
-      :structure="formConfig"
-      :data="inEditDataItem"
-      :ex-span="1"
-      :ex-options="exOptions"
-    >
-    </pa-form>
+  <pa-dialog v-model="editVisible" :title="{ 'zh-CN': '表结构编辑', 'en-US': 'Data Structure Edit' }" :padding="['all']" :closeOnClickModal="false" size="l">
+    <pa-form id="pa-playground_base" ref="formRef" :structure="formConfig" :data="inEditDataItem" :ex-span="1" :ex-options="exOptions"> </pa-form>
 
-    <m-quick-table
-      ref="editTableRef"
-      :tableData="inEditDataItem.config"
-      :tableConfig="editTableConfig"
-      :ex-options="exOptions"
-      class="mt-size"
-    >
+    <m-quick-table ref="editTableRef" :tableData="inEditDataItem.config" :tableConfig="editTableConfig" :ex-options="exOptions" class="mt-size">
       <template #Header>
         <pa-button
           is="add"
@@ -67,36 +33,18 @@
         />
         <!-- 上传属性JSON -->
         <pa-button-group is="default" class="ml-size">
-          <pa-button
-            is="upload"
-            @click="triggerFileUpload"
-            :debounced="false"
-            :text="{ 'zh-CN': '上传JSON', 'en-US': 'Upload JSON' }"
-          />
-          <pa-button
-            is="download"
-            @click="generateJsonExample"
-            :debounced="false"
-            :text="{ 'zh-CN': 'JSON示例', 'en-US': 'JSON Example' }"
-          />
+          <pa-button is="upload" @click="triggerFileUpload" :debounced="false" :text="{ 'zh-CN': '上传JSON', 'en-US': 'Upload JSON' }" />
+          <pa-button is="download" @click="generateJsonExample" :debounced="false" :text="{ 'zh-CN': 'JSON示例', 'en-US': 'JSON Example' }" />
         </pa-button-group>
         <input type="file" ref="fileInput" style="display: none" accept=".json" @change="handleFileUpload" />
       </template>
 
       <template #indexKey="{ data }">
-        <pa-radio-item
-          :isChecked="inEditDataItem.indexKey == data.id"
-          @click="inEditDataItem.indexKey = data.id"
-          v-model="inEditDataItem.indexKey"
-        ></pa-radio-item
+        <pa-radio-item :isChecked="inEditDataItem.indexKey == data.id" @click="inEditDataItem.indexKey = data.id" v-model="inEditDataItem.indexKey"></pa-radio-item
       ></template>
 
       <template #prop="{ data }">
-        <pa-input
-          :title="languageValue === 'zh-CN' ? '属性名' : 'Property Name'"
-          v-model="data.prop"
-          :placeholder="{ 'zh-CN': '请输入属性名', 'en-US': 'Please input property prop' }"
-        ></pa-input>
+        <pa-input :title="languageValue === 'zh-CN' ? '属性名' : 'Property Name'" v-model="data.prop" :placeholder="{ 'zh-CN': '请输入属性名', 'en-US': 'Please input property prop' }"></pa-input>
       </template>
 
       <template #description="{ data }">
@@ -138,11 +86,7 @@
       </template>
 
       <template #operation="{ data }">
-        <pa-button
-          is="delete"
-          @click="handleDeleteProp(data as MStructureTypeItem)"
-          :text="{ 'zh-CN': '删除属性', 'en-US': 'Delete Property' }"
-        />
+        <pa-button is="delete" @click="handleDeleteProp(data as MStructureTypeItem)" :text="{ 'zh-CN': '删除属性', 'en-US': 'Delete Property' }" />
       </template>
     </m-quick-table>
 
@@ -178,9 +122,7 @@ const props = withDefaults(
 const inEditData = ref<MStructureType[]>([]);
 const inEditDataItem = ref<MStructureType>({} as MStructureType);
 
-const formConfig = ref<PaStructureType.Form[]>([
-  { label: { "zh-CN": "表描述", "en-US": "Table Description" }, prop: "description", type: "input" }
-]);
+const formConfig = ref<PaStructureType.Form[]>([{ label: { "zh-CN": "表描述", "en-US": "Table Description" }, prop: "description", type: "input" }]);
 
 const tableConfig = ref<PaStructureType.Table[]>([
   { label: { "zh-CN": "数据结构ID", "en-US": "Data Structure ID" }, prop: "id" },
@@ -395,17 +337,11 @@ const handleFileUpload = (event: Event) => {
 
         M_Message.success(languageValue.value === "zh-CN" ? "JSON文件上传成功" : "JSON file uploaded successfully");
       } else {
-        M_Message.danger(
-          languageValue.value === "zh-CN"
-            ? "JSON文件格式不正确，应包含属性数组"
-            : "JSON file format is incorrect, should contain an array of properties"
-        );
+        M_Message.danger(languageValue.value === "zh-CN" ? "JSON文件格式不正确，应包含属性数组" : "JSON file format is incorrect, should contain an array of properties");
       }
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : String(error);
-      M_Message.danger(
-        languageValue.value === "zh-CN" ? `JSON文件解析失败: ${errorMessage}` : `JSON file parsing failed: ${errorMessage}`
-      );
+      M_Message.danger(languageValue.value === "zh-CN" ? `JSON文件解析失败: ${errorMessage}` : `JSON file parsing failed: ${errorMessage}`);
       console.error("JSON解析错误:", error);
     }
   };

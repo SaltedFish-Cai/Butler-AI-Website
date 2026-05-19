@@ -53,57 +53,53 @@ export const useFilterHooks = (props: any, state: any, language: any) => {
    * @returns 筛选数据
    */
   function handleQueryChange() {
-    const mapData = state.tableQuery?.Filter?.map(
-      (item: { fieldLabel: string; fieldValue: string; fieldName: string; conditionalType: 1 | 6 }) => {
-        if (item.conditionalType == 6) {
-          const array = item.fieldValue
-            .split(",")
-            .map((item: string) => (item == "true" ? true : item == "false" ? false : item));
-          const data: any = {
-            relationshipGroup: [] as Record<string, boolean | number | string | null>[],
+    const mapData = state.tableQuery?.Filter?.map((item: { fieldLabel: string; fieldValue: string; fieldName: string; conditionalType: 1 | 6 }) => {
+      if (item.conditionalType == 6) {
+        const array = item.fieldValue.split(",").map((item: string) => (item == "true" ? true : item == "false" ? false : item));
+        const data: any = {
+          relationshipGroup: [] as Record<string, boolean | number | string | null>[],
+          conditionalType: item.conditionalType,
+          label: item.fieldLabel,
+          value: item.fieldValue,
+          relValue: item.fieldValue,
+          props: item.fieldName
+        };
+        for (let index = 0; index < array.length; index++) {
+          const element = array[index];
+          let value: any = { text: element };
+          const exOptions = props.exOptions[item.fieldName];
+          if (exOptions) {
+            const exValue = exOptions.find((item: any) => item.value == element);
+            value = { text: typeof exValue?.label === "object" ? exValue?.label[language.value] : exValue?.label };
+          }
+          data.relationshipGroup.push({
             conditionalType: item.conditionalType,
             label: item.fieldLabel,
-            value: item.fieldValue,
-            relValue: item.fieldValue,
+            value: value?.text,
+            relValue: element,
             props: item.fieldName
-          };
-          for (let index = 0; index < array.length; index++) {
-            const element = array[index];
-            let value: any = { text: element };
-            const exOptions = props.exOptions[item.fieldName];
-            if (exOptions) {
-              const exValue = exOptions.find((item: any) => item.value == element);
-              value = { text: typeof exValue?.label === "object" ? exValue?.label[language.value] : exValue?.label };
-            }
-            data.relationshipGroup.push({
+          });
+        }
+        return data;
+      } else {
+        return {
+          relationshipGroup: [
+            {
               conditionalType: item.conditionalType,
               label: item.fieldLabel,
-              value: value?.text,
-              relValue: element,
+              value: item.fieldValue,
+              relValue: item.fieldValue,
               props: item.fieldName
-            });
-          }
-          return data;
-        } else {
-          return {
-            relationshipGroup: [
-              {
-                conditionalType: item.conditionalType,
-                label: item.fieldLabel,
-                value: item.fieldValue,
-                relValue: item.fieldValue,
-                props: item.fieldName
-              }
-            ],
-            conditionalType: item.conditionalType,
-            label: item.fieldLabel,
-            value: item.fieldValue,
-            relValue: item.fieldValue,
-            props: item.fieldName
-          };
-        }
+            }
+          ],
+          conditionalType: item.conditionalType,
+          label: item.fieldLabel,
+          value: item.fieldValue,
+          relValue: item.fieldValue,
+          props: item.fieldName
+        };
       }
-    )
+    })
       .flat(1)
       .filter((data: any) => data);
     return mapData;

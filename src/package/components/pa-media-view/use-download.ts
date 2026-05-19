@@ -74,16 +74,11 @@ export const useGetBlob = async (config = { downloadHose: "", requestHeader: {} 
  * @returns Promise<void>
  * @description 根据文件路径下载文件，支持自定义文件名
  */
-export const useDownload = async (
-  config = { downloadHose: "", requestHeader: {} },
-  path: string,
-  exFileName?: string
-): Promise<void> => {
+export const useDownload = async (config = { downloadHose: "", requestHeader: {} }, path: string, exFileName?: string): Promise<void> => {
   const megNotify: any = M_Notification({
     title: "温馨提示",
     dangerouslyUseHTMLString: true,
-    message:
-      "<div class='download-message'><span class='pa-icon_font icon-loading_line'></span>如果数据庞大会导致下载缓慢，请您耐心等待！</div>",
+    message: "<div class='download-message'><span class='pa-icon_font icon-loading_line'></span>如果数据庞大会导致下载缓慢，请您耐心等待！</div>",
     type: "info",
     duration: 0,
     customClass: "download-message-info"

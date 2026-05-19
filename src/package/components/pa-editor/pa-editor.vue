@@ -13,14 +13,7 @@
       @source-code-mode-change="value => (isSourceCodeMode = value)"
     >
     </editor-tools>
-    <pa-scrollbar
-      useShadow
-      style="flex: 1"
-      :useScrollX="false"
-      :contentStyle="
-        isSourceCodeMode == 'code' ? { background: isDarkTheme ? 'var(--pa-color-dark-bg)' : 'var(--pa-color-white)' } : {}
-      "
-    >
+    <pa-scrollbar useShadow style="flex: 1" :useScrollX="false" :contentStyle="isSourceCodeMode == 'code' ? { background: isDarkTheme ? 'var(--pa-color-dark-bg)' : 'var(--pa-color-white)' } : {}">
       <div v-if="isSourceCodeMode == 'visible'" v-html="editorRef?.innerHTML"></div>
       <div
         :id="'editor-content'"
@@ -33,11 +26,7 @@
         @paste="onPaste"
         @contextmenu.prevent="handleContextMenu"
       ></div>
-      <div
-        v-show="isSourceCodeMode == 'code'"
-        class="source-code-container"
-        :class="[isDarkTheme ? 'github-dark dark-theme' : 'github light-theme']"
-      >
+      <div v-show="isSourceCodeMode == 'code'" class="source-code-container" :class="[isDarkTheme ? 'github-dark dark-theme' : 'github light-theme']">
         <div class="line-numbers" ref="lineNumbersRef"></div>
         <div class="source-code-editor-container" ref="sourceCodeEditorContainerRef" @scroll="onSourceCodeScroll">
           <div class="source-code-overlay" ref="sourceCodeOverlayRef"></div>
@@ -260,12 +249,7 @@ function toggleFullscreen(): void {
  * @description 处理全屏变化事件
  */
 function handleFullscreenChange(): void {
-  isFullscreen.value = !!(
-    document.fullscreenElement ||
-    (document as any).webkitFullscreenElement ||
-    (document as any).mozFullScreenElement ||
-    (document as any).msFullscreenElement
-  );
+  isFullscreen.value = !!(document.fullscreenElement || (document as any).webkitFullscreenElement || (document as any).mozFullScreenElement || (document as any).msFullscreenElement);
 }
 
 /**
@@ -363,14 +347,7 @@ function updateWordCountInSourceMode(): void {
   updateLineNumbers();
 }
 
-const { wordCount, isToolActive, findFontSize } = useToolsHooks(
-  ID.value,
-  isSourceCodeMode,
-  editorRef,
-  sourceCodeRef,
-  lineNumbersRef,
-  sourceCodeEditorContainerRef
-);
+const { wordCount, isToolActive, findFontSize } = useToolsHooks(ID.value, isSourceCodeMode, editorRef, sourceCodeRef, lineNumbersRef, sourceCodeEditorContainerRef);
 
 provide("provideEditorRef", editorRef);
 provide("provideSourceCodeRef", sourceCodeRef);

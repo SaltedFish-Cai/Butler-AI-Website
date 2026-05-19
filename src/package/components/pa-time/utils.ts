@@ -107,10 +107,7 @@ export function convertValue(type: MDatePickerType, date: dayjs.Dayjs | string):
     const _data: Array<string> = date.toString().split("-");
     date = _data[0] + "-" + _data[1] + "-01";
   }
-  if (
-    (type == "time-picker" && (typeof date === "string" || typeof date === "number")) ||
-    (type == "time-picker-group" && (typeof date === "string" || typeof date === "number"))
-  ) {
+  if ((type == "time-picker" && (typeof date === "string" || typeof date === "number")) || (type == "time-picker-group" && (typeof date === "string" || typeof date === "number"))) {
     const _data: Array<string> = date.toString().split(" ");
     date = "2025-01-01 " + _data[_data.length - 1];
   }

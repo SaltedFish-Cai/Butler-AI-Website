@@ -1,14 +1,6 @@
 <template>
   <pa-dialog v-model="visible" :title="{ 'en-US': 'Preview', 'zh-CN': '预览' }" :padding="['all']" :scroll="false">
-    <pa-table
-      id="visibleTable"
-      v-if="visibleType === 'table'"
-      ref="visibleTableRef"
-      :structure="tableConfig"
-      :request-api="getTableList"
-      :exOptions="exOptions"
-    >
-    </pa-table>
+    <pa-table id="visibleTable" v-if="visibleType === 'table'" ref="visibleTableRef" :structure="tableConfig" :request-api="getTableList" :exOptions="exOptions"> </pa-table>
 
     <pa-form id="visibleForm" v-if="visibleType === 'form'" ref="visibleFormRef" :structure="formConfig" :exOptions="exOptions" />
   </pa-dialog>
@@ -26,11 +18,7 @@ const tableConfig = ref<PaStructureType.Table[]>([]);
 const formConfig = ref<PaStructureType.Form[]>([]);
 const exOptions = ref<PaOptionType.Default>();
 
-function openVisibleDialog(
-  type: "form" | "table",
-  config: PaStructureType.Form[] | PaStructureType.Table[],
-  options?: PaOptionType.Default
-) {
+function openVisibleDialog(type: "form" | "table", config: PaStructureType.Form[] | PaStructureType.Table[], options?: PaOptionType.Default) {
   visibleType.value = type;
   if (type === "table") {
     tableConfig.value = config as PaStructureType.Table[];

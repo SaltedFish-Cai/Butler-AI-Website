@@ -16,11 +16,7 @@
       </div>
       <div class="pa-switch-inner">
         <div class="pa-switch-thumb" :style="iconStyle">
-          <pa-icon
-            style="display: flex"
-            v-if="options.activeIcon || options.inActiveIcon"
-            :name="inValue == options.activeValue ? options.activeIcon : options.inActiveIcon"
-          ></pa-icon>
+          <pa-icon style="display: flex" v-if="options.activeIcon || options.inActiveIcon" :name="inValue == options.activeValue ? options.activeIcon : options.inActiveIcon"></pa-icon>
         </div>
       </div>
       <div class="pa-switch-text pa-switch-text-active">
@@ -40,10 +36,7 @@
     </div>
   </div>
 
-  <div
-    v-if="(alwaysContrast && !isNil(contrastData)) || (!isNil(contrastData) && !isEqual(inValue, contrastData))"
-    :class="['pa-contrast-style']"
-  >
+  <div v-if="(alwaysContrast && !isNil(contrastData)) || (!isNil(contrastData) && !isEqual(inValue, contrastData))" :class="['pa-contrast-style']">
     <slot name="exContrast"></slot>
     <template v-if="$slots.exContrast"> ( {{ findData(contrastData, options) || "--" }} ) </template>
     <template v-else>{{ findData(contrastData, options) || "--" }}</template>
@@ -185,12 +178,8 @@ const options = computed((): PaOptionType.Switch => {
   const _opt = changeType(typeIs, {
     activeValue,
     inActiveValue,
-    activeText:
-      typeof activeText == "string" ? activeText : (activeText && activeText[languageValue.value]) || defaultTexts.activeText,
-    inActiveText:
-      typeof inActiveText == "string"
-        ? inActiveText
-        : (inActiveText && inActiveText[languageValue.value]) || defaultTexts.inActiveText,
+    activeText: typeof activeText == "string" ? activeText : (activeText && activeText[languageValue.value]) || defaultTexts.activeText,
+    inActiveText: typeof inActiveText == "string" ? inActiveText : (inActiveText && inActiveText[languageValue.value]) || defaultTexts.inActiveText,
     activeIcon: props.activeIcon,
     inActiveIcon: props.inActiveIcon
   });

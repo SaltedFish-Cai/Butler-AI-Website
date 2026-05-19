@@ -3,61 +3,22 @@
     <!-- 固定的创建表格按钮 -->
     <div class="fixed-button">
       <pa-button-group :type="'primary' as const" class="mr-size">
-        <pa-button
-          icon-name="star_line"
-          @click="editBaseDialogRef?.open"
-          :text="{ 'zh-CN': '基础信息', 'en-US': 'Base Config' }"
-        />
-        <pa-button
-          icon-name="grid_adaptive_line"
-          @click="dataStructureManagementDialogRef?.open"
-          :text="{ 'zh-CN': '表结构管理', 'en-US': 'Data Structure Config' }"
-        />
-        <pa-button
-          icon-name="route_line"
-          @click="interfaceManagementDialogRef?.open"
-          :text="{ 'zh-CN': '接口管理', 'en-US': 'Interface Config' }"
-        />
-        <pa-button
-          icon-name="category_list_line"
-          @click="optionManagementDialogRef?.open"
-          :text="{ 'zh-CN': '选项管理', 'en-US': 'Option Config' }"
-        />
+        <pa-button icon-name="star_line" @click="editBaseDialogRef?.open" :text="{ 'zh-CN': '基础信息', 'en-US': 'Base Config' }" />
+        <pa-button icon-name="grid_adaptive_line" @click="dataStructureManagementDialogRef?.open" :text="{ 'zh-CN': '表结构管理', 'en-US': 'Data Structure Config' }" />
+        <pa-button icon-name="route_line" @click="interfaceManagementDialogRef?.open" :text="{ 'zh-CN': '接口管理', 'en-US': 'Interface Config' }" />
+        <pa-button icon-name="category_list_line" @click="optionManagementDialogRef?.open" :text="{ 'zh-CN': '选项管理', 'en-US': 'Option Config' }" />
       </pa-button-group>
 
-      <pa-button
-        class="mr-size"
-        is="add"
-        type="success"
-        @click="handleCreatePage"
-        :text="{ 'zh-CN': '创建页面', 'en-US': 'Create Page' }"
-      />
+      <pa-button class="mr-size" is="add" type="success" @click="handleCreatePage" :text="{ 'zh-CN': '创建页面', 'en-US': 'Create Page' }" />
 
       <pa-button-group type="warning" class="mr-size">
-        <pa-button
-          type="warning"
-          icon-name="report_data_line"
-          @click="handleEnablePlayground"
-          :text="{ 'zh-CN': '模拟场', 'en-US': 'Enable Playground' }"
-        />
-        <pa-button
-          type="warning"
-          icon-name="report_data_line"
-          @click="handleEnableTraining"
-          :text="{ 'zh-CN': '训练场', 'en-US': 'Enable Trainingground' }"
-        />
+        <pa-button type="warning" icon-name="report_data_line" @click="handleEnablePlayground" :text="{ 'zh-CN': '模拟场', 'en-US': 'Enable Playground' }" />
+        <pa-button type="warning" icon-name="report_data_line" @click="handleEnableTraining" :text="{ 'zh-CN': '训练场', 'en-US': 'Enable Trainingground' }" />
         <pa-button is="save" type="warning" @click="saveBaseConfig" :text="{ 'zh-CN': '保存', 'en-US': 'Save' }" />
       </pa-button-group>
     </div>
 
-    <div
-      class="svg-container"
-      @wheel="handleWheel"
-      @mousedown="handleMouseDown"
-      @mousemove="handleMouseMove"
-      @mouseup="handleMouseUp"
-      @mouseleave="handleMouseUp"
-    >
+    <div class="svg-container" @wheel="handleWheel" @mousedown="handleMouseDown" @mousemove="handleMouseMove" @mouseup="handleMouseUp" @mouseleave="handleMouseUp">
       <div class="svg-background" :style="backgroundStyle"></div>
       <svg ref="svgRef" class="svg-content" id="SvgContent" style="overflow: visible">
         <g :transform="transform as string">
@@ -73,55 +34,23 @@
             :ref="el => setDraggableRef(el, page.pageId)"
             @click="handleClickItem(index)"
           >
-            <foreignObject
-              x="0"
-              y="calc(0px - (var(--pa-size-height) + var(--pa-size-padding) / 2) * 2)"
-              :width="200"
-              :height="30"
-              @mousedown="handleClickItem(index)"
-            >
+            <foreignObject x="0" y="calc(0px - (var(--pa-size-height) + var(--pa-size-padding) / 2) * 2)" :width="200" :height="30" @mousedown="handleClickItem(index)">
               <pa-button is="add" icon-name="setting_line" @click="editPageBaseDialogRef?.open(index)">
                 {{ page.name }}
               </pa-button>
             </foreignObject>
 
             <!-- 创建表格/创建表单/创建选项卡按钮 -->
-            <foreignObject
-              x="0"
-              y="calc(0px - (var(--pa-size-height) + var(--pa-size-padding) / 2) * 1)"
-              :width="320"
-              :height="30"
-              @mousedown="handleClickItem(index)"
-            >
+            <foreignObject x="0" y="calc(0px - (var(--pa-size-height) + var(--pa-size-padding) / 2) * 1)" :width="320" :height="30" @mousedown="handleClickItem(index)">
               <pa-button-group type="success">
-                <pa-button
-                  is="add"
-                  type="success"
-                  @click="handleCreateTable(index)"
-                  :text="{ 'zh-CN': '创建表格', 'en-US': 'Create Table' }"
-                />
-                <pa-button
-                  is="add"
-                  type="success"
-                  @click="handleCreateForm(index)"
-                  :text="{ 'zh-CN': '创建表单', 'en-US': 'Create Form' }"
-                />
-                <pa-button
-                  is="add"
-                  type="success"
-                  @click="handleCreateTabs(index)"
-                  :text="{ 'zh-CN': '创建选项卡', 'en-US': 'Create Tabs' }"
-                />
+                <pa-button is="add" type="success" @click="handleCreateTable(index)" :text="{ 'zh-CN': '创建表格', 'en-US': 'Create Table' }" />
+                <pa-button is="add" type="success" @click="handleCreateForm(index)" :text="{ 'zh-CN': '创建表单', 'en-US': 'Create Form' }" />
+                <pa-button is="add" type="success" @click="handleCreateTabs(index)" :text="{ 'zh-CN': '创建选项卡', 'en-US': 'Create Tabs' }" />
               </pa-button-group>
             </foreignObject>
 
             <!-- 删除按钮 -->
-            <foreignObject
-              :x="320"
-              y="calc(0px - (var(--pa-size-height) + var(--pa-size-padding) / 2) * 1)"
-              :width="200"
-              :height="40"
-            >
+            <foreignObject :x="320" y="calc(0px - (var(--pa-size-height) + var(--pa-size-padding) / 2) * 1)" :width="200" :height="40">
               <pa-button
                 class="draggable-btn"
                 type="warning"
@@ -131,38 +60,18 @@
                 @click="handleClickItem(index)"
                 @mousedown="draggableRefs[page.pageId]?.handleMouseDown"
               />
-              <pa-button
-                class="draggable-btn _del"
-                type="default"
-                iconName="recycle_line"
-                :debounced="false"
-                :text="{ 'zh-CN': '删除', 'en-US': 'Delete' }"
-                @click="handleDeletePage(index)"
-              />
+              <pa-button class="draggable-btn _del" type="default" iconName="recycle_line" :debounced="false" :text="{ 'zh-CN': '删除', 'en-US': 'Delete' }" @click="handleDeletePage(index)" />
             </foreignObject>
 
             <template v-if="page.itemConfigs.length">
               <template v-for="(item, itemIndex) in page.itemConfigs" :key="item.itemId">
                 <m-item-svg
-                  :ref="
-                    el =>
-                      item.type === 'form'
-                        ? setFormRef(el, item.itemId)
-                        : item.type === 'table'
-                        ? setTableRef(el, item.itemId)
-                        : setTabsItemRef(el, item.itemId)
-                  "
+                  :ref="el => (item.type === 'form' ? setFormRef(el, item.itemId) : item.type === 'table' ? setTableRef(el, item.itemId) : setTabsItemRef(el, item.itemId))"
                   @lock-scroll="lockScroll = $event"
                   @delete-form="handleDeleteItem"
                   @handle-click-item="handleClickItem(index)"
                   :position="{ x: page.x, y: page.y }"
-                  :pageY="
-                    itemIndex != 0
-                      ? page.itemConfigs
-                          .filter((item, index) => index < itemIndex)
-                          .reduce((acc, cur) => acc + (cur.height || 0), 0)
-                      : 0
-                  "
+                  :pageY="itemIndex != 0 ? page.itemConfigs.filter((item, index) => index < itemIndex).reduce((acc, cur) => acc + (cur.height || 0), 0) : 0"
                   :pageId="page.pageId"
                   :pageIndex="index"
                   :itemId="item.itemId"
@@ -174,11 +83,7 @@
                   @update-form-config="data => (inValue.pagesConfigs[index].itemConfigs[itemIndex].structure = data)"
                   @update-button-config="data => (inValue.pagesConfigs[index].itemConfigs[itemIndex].actionButtons = data)"
                   @update-ex-options-config="data => (inValue.pagesConfigs[index].itemConfigs[itemIndex].exOptions = data)"
-                  @update-page-size="
-                    data => (
-                      (page.itemConfigs[itemIndex].width = data.width), (page.itemConfigs[itemIndex].height = data.height + 20)
-                    )
-                  "
+                  @update-page-size="data => ((page.itemConfigs[itemIndex].width = data.width), (page.itemConfigs[itemIndex].height = data.height + 20))"
                   @handle-drag-start="handleDragStart"
                   @handle-drag-over="handleDragOver"
                   @handle-drag-enter="handleDragEnter"
@@ -212,11 +117,7 @@
       :authorizationFunction="props.authorizationFunction"
       @handle-edit-table-col-quick-submit="handleEditTableColQuickSubmit"
     >
-      <template
-        v-for="item in props.authorizationFunction"
-        :key="'dialog-edit-table-col-quick_' + item.prop"
-        #[item.prop]="{ data }"
-      >
+      <template v-for="item in props.authorizationFunction" :key="'dialog-edit-table-col-quick_' + item.prop" #[item.prop]="{ data }">
         <slot :name="item.prop" :data="data"></slot>
       </template>
     </dialog-edit-table-col-quick>
@@ -238,12 +139,7 @@
     </dialog-edit-button>
 
     <!-- 编辑表单项弹窗 -->
-    <dialog-edit-form-item
-      ref="editFormItemDialogRef"
-      @handle-edit-form-item-submit="handleEditFormItemSubmit"
-      :exOptionsMaps="inValue.exOptions"
-      :edit-item="editFormItemData"
-    />
+    <dialog-edit-form-item ref="editFormItemDialogRef" @handle-edit-form-item-submit="handleEditFormItemSubmit" :exOptionsMaps="inValue.exOptions" :edit-item="editFormItemData" />
     <!-- 编辑表单项快捷弹窗 -->
     <dialog-edit-form-item-quick
       ref="editFormItemQuickDialogRef"
@@ -280,20 +176,10 @@
       :interfaceConfigs="inValue.interfaceConfigs"
     />
 
-    <dialog-edit-page-base-config
-      ref="editPageBaseDialogRef"
-      @submit="data => (inValue.pagesConfigs[data.index].name = data.name)"
-      :playground-items="inValue.pagesConfigs"
-    />
+    <dialog-edit-page-base-config ref="editPageBaseDialogRef" @submit="data => (inValue.pagesConfigs[data.index].name = data.name)" :playground-items="inValue.pagesConfigs" />
 
     <!-- 模拟场配置弹窗（未显示） -->
-    <m-simulated-field
-      ref="simulatedFieldRef"
-      :id="inValue.id"
-      :playground-items="inValue.pagesConfigs"
-      :interfaceConfigs="inValue.interfaceConfigs"
-      :data-structures="inValue.dataStructures"
-    />
+    <m-simulated-field ref="simulatedFieldRef" :id="inValue.id" :playground-items="inValue.pagesConfigs" :interfaceConfigs="inValue.interfaceConfigs" :data-structures="inValue.dataStructures" />
 
     <!-- 模拟场弹窗 -->
     <pa-playground-visible
@@ -313,12 +199,7 @@
     />
 
     <!-- 项目信息配置 -->
-    <dialog-edit-base-config
-      ref="editBaseDialogRef"
-      :edit-base-data="inValue"
-      @submit="data => (inValue = data)"
-      :playground-items="inValue.pagesConfigs"
-    />
+    <dialog-edit-base-config ref="editBaseDialogRef" :edit-base-data="inValue" @submit="data => (inValue = data)" :playground-items="inValue.pagesConfigs" />
 
     <dialog-interface-management
       ref="interfaceManagementDialogRef"
@@ -333,20 +214,12 @@
       :authorizationFunction="props.authorizationFunction"
       @submit="data => (inValue.dataStructures = data)"
     >
-      <template
-        v-for="item in props.authorizationFunction"
-        :key="'dialog-data-structure-management_' + item.prop"
-        #[item.prop]="{ data }"
-      >
+      <template v-for="item in props.authorizationFunction" :key="'dialog-data-structure-management_' + item.prop" #[item.prop]="{ data }">
         <slot :name="item.prop" :data="data"></slot>
       </template>
     </dialog-data-structure-management>
 
-    <dialog-option-management
-      ref="optionManagementDialogRef"
-      :edit-base-data="inValue.exOptions"
-      @submit="data => (inValue.exOptions = data)"
-    />
+    <dialog-option-management ref="optionManagementDialogRef" :edit-base-data="inValue.exOptions" @submit="data => (inValue.exOptions = data)" />
   </div>
 </template>
 
@@ -760,39 +633,22 @@ provide("openEditFormItemQuickDialog", (formId: string, config: PaStructureType.
  * 提供选项卡项快捷编辑方法
  * @description 注入选项卡项快捷编辑弹窗打开方法
  */
-provide(
-  "openEditTabsItemQuickDialog",
-  (
-    tableId: string,
-    config: Array<PaStructureType.Form & { scroll: number; padding: string[] }>,
-    options: Record<string, string>
-  ) => {
-    editTabsItemQuickDialogRef.value?.openEditDialog(
-      tableId,
-      config.map(item => ({ ...item })),
-      options
-    );
-  }
-);
+provide("openEditTabsItemQuickDialog", (tableId: string, config: Array<PaStructureType.Form & { scroll: number; padding: string[] }>, options: Record<string, string>) => {
+  editTabsItemQuickDialogRef.value?.openEditDialog(
+    tableId,
+    config.map(item => ({ ...item })),
+    options
+  );
+});
 
 /**
  * 使用SVG相关的hooks
  * @description 初始化 SVG 拖拽和缩放功能
  */
-const {
-  scale,
-  translateX,
-  translateY,
-  transform,
-  backgroundStyle,
-  handleWheel,
-  handleMouseDown,
-  handleMouseMove,
-  handleMouseUp,
-  getSvgTransform,
-  updateAdminConfig,
-  handleDeletePage
-} = useSvgHooks(lockScroll, inValue);
+const { scale, translateX, translateY, transform, backgroundStyle, handleWheel, handleMouseDown, handleMouseMove, handleMouseUp, getSvgTransform, updateAdminConfig, handleDeletePage } = useSvgHooks(
+  lockScroll,
+  inValue
+);
 
 /**
  * 拖拽索引
@@ -807,8 +663,7 @@ const draggedIndex = ref(-1);
  * @param data 表格列数据
  * @param options 选项配置
  */
-const handleEditTableColSubmit = (tableId: string, data: PaStructureType.Table, options: Record<string, string>) =>
-  tableRefs.value[tableId].updateCol(data, options);
+const handleEditTableColSubmit = (tableId: string, data: PaStructureType.Table, options: Record<string, string>) => tableRefs.value[tableId].updateCol(data, options);
 
 /**
  * 处理编辑表单项提交
@@ -816,8 +671,7 @@ const handleEditTableColSubmit = (tableId: string, data: PaStructureType.Table, 
  * @param data 表单项数据
  * @param options 选项配置
  */
-const handleEditFormItemSubmit = (formId: string, data: PaStructureType.Form, options: Record<string, string>) =>
-  formRefs.value[formId].updateItem(data, options);
+const handleEditFormItemSubmit = (formId: string, data: PaStructureType.Form, options: Record<string, string>) => formRefs.value[formId].updateItem(data, options);
 
 /**
  * 处理编辑表格列快速提交
@@ -825,8 +679,7 @@ const handleEditFormItemSubmit = (formId: string, data: PaStructureType.Form, op
  * @param data 表格列数据数组
  * @param options 选项配置
  */
-const handleEditTableColQuickSubmit = (tableId: string, data: PaStructureType.Table[], options: Record<string, string>) =>
-  tableRefs.value[tableId].updateItemAll(data, options);
+const handleEditTableColQuickSubmit = (tableId: string, data: PaStructureType.Table[], options: Record<string, string>) => tableRefs.value[tableId].updateItemAll(data, options);
 
 /**
  * 处理编辑表单项快速提交
@@ -834,16 +687,14 @@ const handleEditTableColQuickSubmit = (tableId: string, data: PaStructureType.Ta
  * @param data 表单项数据数组
  * @param options 选项配置
  */
-const handleEditFormItemQuickSubmit = (formId: string, data: PaStructureType.Form[], options: Record<string, string>) =>
-  formRefs.value[formId].updateItemAll(data, options);
+const handleEditFormItemQuickSubmit = (formId: string, data: PaStructureType.Form[], options: Record<string, string>) => formRefs.value[formId].updateItemAll(data, options);
 
 /**
  * 处理编辑选项卡项快速提交
  * @param tableId 选项卡ID
  * @param data 选项卡项数据数组
  */
-const handleEditTabsItemQuickSubmit = (tableId: string, data: PaStructureType.Form[]) =>
-  tabsItemRefs.value[tableId].updateItemAll(data);
+const handleEditTabsItemQuickSubmit = (tableId: string, data: PaStructureType.Form[]) => tabsItemRefs.value[tableId].updateItemAll(data);
 
 /**
  * 保存基础配置

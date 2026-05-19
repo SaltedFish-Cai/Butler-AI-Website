@@ -79,13 +79,7 @@
       ></pa-number>
 
       <!-- input -->
-      <pa-input
-        v-else
-        v-model="state.searchValue"
-        :placeholder="languagePackage['inputPlaceholder']"
-        @enter="FetchSaveAndFilter"
-        style="width: 100%; min-width: 210px"
-      />
+      <pa-input v-else v-model="state.searchValue" :placeholder="languagePackage['inputPlaceholder']" @enter="FetchSaveAndFilter" style="width: 100%; min-width: 210px" />
 
       <!-- button -->
       <pa-button class="ml-size" style="flex: 0 0 89px" is="search" @click="FetchSaveAndFilter">
@@ -285,9 +279,7 @@ watch(
   () => props.data,
   value => {
     if (value?.fieldValue && String(value?.fieldValue)?.length) {
-      state.searchValue = Array.isArray(value.fieldValue)
-        ? value.fieldValue.map(item => (item == "true" ? true : item == "false" ? false : item))
-        : value.fieldValue;
+      state.searchValue = Array.isArray(value.fieldValue) ? value.fieldValue.map(item => (item == "true" ? true : item == "false" ? false : item)) : value.fieldValue;
     } else {
       state.searchValue = isTimeType(props.item, true) ? [] : "";
     }

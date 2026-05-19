@@ -1,19 +1,6 @@
 <template>
-  <pa-dialog
-    v-model="visible"
-    :title="{ 'zh-CN': '编辑表单列', 'en-US': 'Edit Table Column' }"
-    :padding="['all']"
-    :closeOnClickModal="false"
-    size="s"
-  >
-    <pa-form
-      id="pa-playground-form_base"
-      ref="formRef"
-      :structure="config"
-      :ex-span="1"
-      :ex-options="exOptionsComputed"
-      @form-data-change="data => (formData = data)"
-    >
+  <pa-dialog v-model="visible" :title="{ 'zh-CN': '编辑表单列', 'en-US': 'Edit Table Column' }" :padding="['all']" :closeOnClickModal="false" size="s">
+    <pa-form id="pa-playground-form_base" ref="formRef" :structure="config" :ex-span="1" :ex-options="exOptionsComputed" @form-data-change="data => (formData = data)">
       <template #label="scope">
         <template v-if="scope.data.label">
           <pa-input
@@ -44,15 +31,7 @@ import { computed, ComputedRef, inject, ref, useTemplateRef } from "vue";
 import { PaStructureType } from "PancakeType";
 
 import { editFormColConfig, editOtherFormItemConfig } from "../../configs/form-config";
-import {
-  inputConfig,
-  numberConfig,
-  selectConfig,
-  cascaderConfig,
-  radioConfig,
-  checkboxConfig,
-  switchConfig
-} from "../../configs/cell-config";
+import { inputConfig, numberConfig, selectConfig, cascaderConfig, radioConfig, checkboxConfig, switchConfig } from "../../configs/cell-config";
 import { PancakeGlobalConfigType } from "../../../pa-manager/types";
 import { MOptionsType } from "../../type";
 

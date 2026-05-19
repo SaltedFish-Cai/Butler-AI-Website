@@ -1,19 +1,6 @@
 <template>
-  <pa-dialog
-    v-model="visible"
-    :title="{ 'zh-CN': '编辑表格列', 'en-US': 'Edit Table Column' }"
-    :padding="['all']"
-    :closeOnClickModal="false"
-    size="s"
-  >
-    <pa-form
-      id="pa-playground-form_base"
-      ref="formRef"
-      :structure="config"
-      :ex-span="1"
-      :ex-options="exOptionsComputed"
-      @form-data-change="data => (formData = data)"
-    >
+  <pa-dialog v-model="visible" :title="{ 'zh-CN': '编辑表格列', 'en-US': 'Edit Table Column' }" :padding="['all']" :closeOnClickModal="false" size="s">
+    <pa-form id="pa-playground-form_base" ref="formRef" :structure="config" :ex-span="1" :ex-options="exOptionsComputed" @form-data-change="data => (formData = data)">
       <template #label="scope">
         <template v-if="scope.data.label">
           <pa-input
@@ -44,15 +31,7 @@ import { computed, ComputedRef, inject, ref, useTemplateRef } from "vue";
 import { PaStructureType, PaOptionType } from "PancakeType";
 
 import { editTableColConfig, editOtherTableColConfig, filterType, exOptionsById } from "../../configs/table-config";
-import {
-  inputConfig,
-  numberConfig,
-  selectConfig,
-  cascaderConfig,
-  radioConfig,
-  checkboxConfig,
-  switchConfig
-} from "../../configs/cell-config";
+import { inputConfig, numberConfig, selectConfig, cascaderConfig, radioConfig, checkboxConfig, switchConfig } from "../../configs/cell-config";
 import { PancakeGlobalConfigType } from "../../../pa-manager/types";
 import { MOptionsType } from "../../type";
 
@@ -67,9 +46,7 @@ const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<Pan
 const language = computed(() => PancakeGlobalConfig.value?.language?.value || "zh-CN");
 
 const formRef = useTemplateRef("formRef");
-const formData = ref<PaStructureType.Table & { cellType?: string; exOptions?: PaOptionType.SelectList | PaOptionType.Switch }>(
-  {}
-);
+const formData = ref<PaStructureType.Table & { cellType?: string; exOptions?: PaOptionType.SelectList | PaOptionType.Switch }>({});
 const editId = ref("");
 
 // @ options

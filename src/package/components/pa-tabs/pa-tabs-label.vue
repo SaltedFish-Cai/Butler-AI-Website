@@ -84,10 +84,7 @@ const RenderTableColumn = (slots: any): JSX.Element => {
    * @description 根据是否激活状态返回对应的类名
    */
   const className = (props: any): string => {
-    const name =
-      props?.name == _props.activeName
-        ? `pa-tabs-title _action pa-tabs-title_action_${tabsContext.value.tabsId}`
-        : "pa-tabs-title";
+    const name = props?.name == _props.activeName ? `pa-tabs-title _action pa-tabs-title_action_${tabsContext.value.tabsId}` : "pa-tabs-title";
     return name;
   };
   if (!_slots) return <></>;

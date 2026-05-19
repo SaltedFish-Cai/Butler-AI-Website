@@ -10,21 +10,8 @@
     </template>
   </m-quick-table>
 
-  <pa-dialog
-    v-model="optionsVisible"
-    :title="{ 'zh-CN': '编辑数据', 'en-US': 'Edit Data' }"
-    :padding="['all']"
-    :closeOnClickModal="false"
-  >
-    <pa-table
-      id="data-management-table"
-      ref="visibleTableRef2"
-      :structure="tableConfig2"
-      :request-api="getTableList2"
-      :exOptions="exOptionsTable2"
-      :use-pagination="false"
-    >
-    </pa-table>
+  <pa-dialog v-model="optionsVisible" :title="{ 'zh-CN': '编辑数据', 'en-US': 'Edit Data' }" :padding="['all']" :closeOnClickModal="false">
+    <pa-table id="data-management-table" ref="visibleTableRef2" :structure="tableConfig2" :request-api="getTableList2" :exOptions="exOptionsTable2" :use-pagination="false"> </pa-table>
   </pa-dialog>
 </template>
 

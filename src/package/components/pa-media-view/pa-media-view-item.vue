@@ -11,13 +11,7 @@
       {{ languagePackage["download"] }}
     </div>
   </div>
-  <pa-dialog
-    v-model="visible"
-    :subTitle="file?.OriginalName || file?.FileName"
-    :title="languagePackage['fileDetail']"
-    size="max"
-    :scroll="false"
-  >
+  <pa-dialog v-model="visible" :subTitle="file?.OriginalName || file?.FileName" :title="languagePackage['fileDetail']" size="max" :scroll="false">
     <div class="pa-media-page-body">
       <imageView v-if="fileType == 'image'" :filePath="filePath" v-model="zoomIndex" ref="viewRef"></imageView>
       <pdfView v-else-if="fileType == 'pdf'" :filePath="filePath" :zoom="zoomIndex" ref="viewRef"></pdfView>
@@ -39,12 +33,7 @@
           <span style="font-size: 12px">{{ languagePackage["rotate"] }}</span>
         </div>
         <pa-icon name="minus_circle_line" class="pa-hand" @click="handleMouseWheel({ deltaY: 1 })"></pa-icon>
-        <div
-          style="font-size: 14px; width: 42px; text-align: center"
-          class="pl5 ml5 mr5 pa-hand-scroll"
-          @mousewheel="handleMouseWheel"
-          :title="languagePackage['zoom']"
-        >
+        <div style="font-size: 14px; width: 42px; text-align: center" class="pl5 ml5 mr5 pa-hand-scroll" @mousewheel="handleMouseWheel" :title="languagePackage['zoom']">
           {{ (zoomIndex * 100).toFixed(0) }}%
         </div>
         <pa-icon name="add_circle_line" class="pa-hand" @click="handleMouseWheel({ deltaY: -1 })"></pa-icon>
@@ -236,8 +225,7 @@ function downFile(): void {
     requestHeader: PancakeGlobalConfig.value?.requestHeader,
     downloadHose: PancakeGlobalConfig.value?.file_config?.downloadHose || ""
   };
-  if (props.filePath)
-    useDownload(config, props.filePath, props.fileName || props?.file?.OriginalName || props?.file?.FileName || "文件");
+  if (props.filePath) useDownload(config, props.filePath, props.fileName || props?.file?.OriginalName || props?.file?.FileName || "文件");
 }
 /**
  * @description 监听缩放比例变化，同步缩放因子

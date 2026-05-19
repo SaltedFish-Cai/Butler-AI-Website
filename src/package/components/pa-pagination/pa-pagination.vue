@@ -14,47 +14,21 @@
       >
       </pa-select>
     </div>
-    <button
-      class="m-pagination-btn m-pagination-prev"
-      :disabled="internalCurrentPage <= 1"
-      @click="goToPage(internalCurrentPage - 1)"
-    >
+    <button class="m-pagination-btn m-pagination-prev" :disabled="internalCurrentPage <= 1" @click="goToPage(internalCurrentPage - 1)">
       <pa-icon name="left_line"></pa-icon>
     </button>
     <template v-if="showPager">
-      <button
-        v-if="showFirstPage"
-        class="m-pagination-btn"
-        :class="{ 'is-active': internalCurrentPage == 1 }"
-        @click="goToPage(1)"
-      >
-        1
-      </button>
+      <button v-if="showFirstPage" class="m-pagination-btn" :class="{ 'is-active': internalCurrentPage == 1 }" @click="goToPage(1)">1</button>
       <span v-if="showPrevMore" class="m-pagination-more" @click="jumpPrevMore"> ••• </span>
-      <button
-        v-for="page in pagerPages"
-        :key="page"
-        class="m-pagination-btn"
-        :class="{ 'is-active': internalCurrentPage == page }"
-        @click="goToPage(page)"
-      >
+      <button v-for="page in pagerPages" :key="page" class="m-pagination-btn" :class="{ 'is-active': internalCurrentPage == page }" @click="goToPage(page)">
         {{ page }}
       </button>
       <span v-if="showNextMore" class="m-pagination-more" @click="jumpNextMore"> ••• </span>
-      <button
-        v-if="showLastPage"
-        class="m-pagination-btn"
-        :class="{ 'is-active': internalCurrentPage == pageCount }"
-        @click="goToPage(pageCount)"
-      >
+      <button v-if="showLastPage" class="m-pagination-btn" :class="{ 'is-active': internalCurrentPage == pageCount }" @click="goToPage(pageCount)">
         {{ pageCount }}
       </button>
     </template>
-    <button
-      class="m-pagination-btn m-pagination-next"
-      :disabled="internalCurrentPage >= pageCount"
-      @click="goToPage(internalCurrentPage + 1)"
-    >
+    <button class="m-pagination-btn m-pagination-next" :disabled="internalCurrentPage >= pageCount" @click="goToPage(internalCurrentPage + 1)">
       <pa-icon name="right_line"></pa-icon>
     </button>
     <div v-if="showJumper" class="m-pagination-jumper">

@@ -372,9 +372,7 @@
       min-height: calc(var(--scroll-body-height) - var(--pa-size-padding, 10px) * 2 - 4em);
     }
   }
-  &:has(> .pa-scrollbar-content > .scrollbar-body > .scrollbar__bar.is-horizontal):has(
-      > .pa-scrollbar-content > .scrollbar-body > .scrollbar-body-content > .pa-table_body_summary
-    ) {
+  &:has(> .pa-scrollbar-content > .scrollbar-body > .scrollbar__bar.is-horizontal):has(> .pa-scrollbar-content > .scrollbar-body > .scrollbar-body-content > .pa-table_body_summary) {
     > .pa-scrollbar-content > .scrollbar-body > .scrollbar-body-content > .light-is-scroll-end {
       font-size: var(--pa-size-font, 16px);
       height: calc(var(--pa-size-padding, 10px) + 2em + var(--pa-size-height, 14.1px) / 2);

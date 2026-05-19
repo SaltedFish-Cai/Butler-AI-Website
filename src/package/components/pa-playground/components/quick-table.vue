@@ -1,10 +1,5 @@
 <template>
-  <div
-    class="m-playground-dialog-container"
-    :class="[props.class]"
-    :style="{ ...props.style, overflow: useScroll ? 'auto' : 'hidden' }"
-    :id="id"
-  >
+  <div class="m-playground-dialog-container" :class="[props.class]" :style="{ ...props.style, overflow: useScroll ? 'auto' : 'hidden' }" :id="id">
     <div class="m-playground-dialog-content" :class="{ scroll: useScroll }">
       <div class="m-playground-dialog-header">
         <slot name="Header"></slot>

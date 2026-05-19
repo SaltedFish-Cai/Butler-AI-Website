@@ -36,7 +36,7 @@
     "update-git": "git rm -r --cached . && git add .",
     "serve": "node ./script/vitepress/bin/vitepress.js serve",
     "release": "node script/release && rimraf -G ./script/src",
-    "lint:eslint-d": "eslint src/**/*{.ts,.vue}",
+    "lint:eslint-d": "eslint 'src/**/*.{ts,vue}'",
     "lint:eslint": "eslint --fix --ext .ts,.vue ./src",
     "lint:lint-staged": "lint-staged",
     "prepare": "husky install",
@@ -50,7 +50,8 @@
     "e2e:headed": "playwright test --headed",
     "e2e:ui": "playwright test --ui",
     "e2e:debug": "playwright test --debug",
-    "e2e:dev": "npm run dev & sleep 10 && playwright test"
+    "e2e:dev": "npm run dev & sleep 10 && playwright test",
+    "prettier": "prettier --write 'src/package/**/*.{ts,vue,scss,d.ts}'"
   },
   "keywords": [],
   "devDependencies": {

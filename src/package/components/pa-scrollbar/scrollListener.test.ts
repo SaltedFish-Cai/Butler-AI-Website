@@ -2,15 +2,7 @@
  * scrollListener.ts 单元测试
  */
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import {
-  ScrollListener,
-  listenElementScroll,
-  listenMultipleElementsScroll,
-  isElementInViewport,
-  setElementScrollPosition,
-  startDrag,
-  observeElementResize
-} from "./scrollListener";
+import { ScrollListener, listenElementScroll, listenMultipleElementsScroll, isElementInViewport, setElementScrollPosition, startDrag, observeElementResize } from "./scrollListener";
 
 // Helper: 创建模拟 DOM 元素，用 defineProperty 设置只读属性
 function createMockElement(overrides: Record<string, any> = {}): HTMLElement {

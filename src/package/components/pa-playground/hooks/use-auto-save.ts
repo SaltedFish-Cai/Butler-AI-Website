@@ -32,11 +32,7 @@ interface UseAutoSaveOptions {
  * @param options 配置选项
  * @returns 自动保存相关状态和方法
  */
-export function useAutoSave(
-  data: Ref<Record<string, any>>,
-  saveFn: string | ((data: Record<string, any>) => Promise<void> | void),
-  options: UseAutoSaveOptions = {}
-) {
+export function useAutoSave(data: Ref<Record<string, any>>, saveFn: string | ((data: Record<string, any>) => Promise<void> | void), options: UseAutoSaveOptions = {}) {
   const { delay = 800, immediate = false, sessionKey } = options;
 
   /**

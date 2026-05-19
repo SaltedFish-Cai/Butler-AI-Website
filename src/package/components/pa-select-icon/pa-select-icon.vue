@@ -1,18 +1,6 @@
 <template>
-  <div
-    v-if="!display"
-    class="pa-select-icon"
-    :class="[props.class, { 'is-disabled': props.disabled }]"
-    :style="props.style"
-    ref="selectRef"
-  >
-    <pa-popover
-      ref="popoverRef"
-      :disabled="props.disabled"
-      :popover-width="520"
-      :teleport-to="teleportInContainer ? selectRef : 'body'"
-      :closeByScroll="false"
-    >
+  <div v-if="!display" class="pa-select-icon" :class="[props.class, { 'is-disabled': props.disabled }]" :style="props.style" ref="selectRef">
+    <pa-popover ref="popoverRef" :disabled="props.disabled" :popover-width="520" :teleport-to="teleportInContainer ? selectRef : 'body'" :closeByScroll="false">
       <template #reference>
         <div class="flex-center-start">
           <div v-if="title" :style="{ width: titleWidth }" class="pa-cell-label">
@@ -26,12 +14,7 @@
         <pa-tabs-item v-for="its in Config" :key="its.name" :label="`${its.title}(${its.icons.length})`" :name="its.name" scroll>
           <div class="pa-select-icon_popover">
             <template v-for="icon in its.icons" :key="icon.value">
-              <pa-icon
-                class="pop_icon"
-                :class="[icon.value == selectItem ? 'selected' : '']"
-                :name="icon.value"
-                @click="selectedIcon(icon.value)"
-              />
+              <pa-icon class="pop_icon" :class="[icon.value == selectItem ? 'selected' : '']" :name="icon.value" @click="selectedIcon(icon.value)" />
             </template>
           </div>
         </pa-tabs-item>
@@ -53,10 +36,7 @@
     </div>
   </div>
 
-  <div
-    v-if="(alwaysContrast && !isNil(contrastData)) || (!isNil(contrastData) && !isEqual(selectItem, contrastData))"
-    :class="['pa-contrast-style']"
-  >
+  <div v-if="(alwaysContrast && !isNil(contrastData)) || (!isNil(contrastData) && !isEqual(selectItem, contrastData))" :class="['pa-contrast-style']">
     <slot name="exContrast"></slot>
     <template v-if="$slots.exContrast"> ( <pa-icon :name="contrastData" class="pa-select-icon_select-icon" /> ) </template>
     <template v-else>
@@ -166,9 +146,7 @@ const languagePackage = computed(() => {
  * @description 计算输入框的占位符文本
  */
 const inputPlaceholder = computed(() => {
-  return typeof props.placeholder === "object"
-    ? props.placeholder[languageValue.value] || languagePackage.value[`clickChangeIcon`]
-    : props.placeholder || languagePackage.value[`clickChangeIcon`];
+  return typeof props.placeholder === "object" ? props.placeholder[languageValue.value] || languagePackage.value[`clickChangeIcon`] : props.placeholder || languagePackage.value[`clickChangeIcon`];
 });
 /**
  * 设置图标选项

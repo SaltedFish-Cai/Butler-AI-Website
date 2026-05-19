@@ -113,9 +113,7 @@ export type PancakeGlobal = {
    */
   table_config?: {
     groupAdvancedQueryApi?: ApiType | { FilterLinkNextType: Array<ConditionalType> };
-    advancedQueryApi?:
-      | ApiType
-      | { ConditionalType: Array<ConditionalType>; SqlJoinType: Array<ConditionalType>; LineConditional: Array<ConditionalType> };
+    advancedQueryApi?: ApiType | { ConditionalType: Array<ConditionalType>; SqlJoinType: Array<ConditionalType>; LineConditional: Array<ConditionalType> };
     useSeniorFilter?: boolean;
     infiniteScroll?: boolean;
   };

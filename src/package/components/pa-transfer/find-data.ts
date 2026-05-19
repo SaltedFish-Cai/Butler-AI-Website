@@ -14,10 +14,7 @@ import type { PaOptionType } from "../manager-type";
  * @returns string 对应的标签字符串
  * @description 根据 value 在选项列表中查找对应的 label
  */
-export function findData(
-  data: Array<boolean | number | string> | boolean | number | string,
-  options: PaOptionType.SelectList
-): string {
+export function findData(data: Array<boolean | number | string> | boolean | number | string, options: PaOptionType.SelectList): string {
   if (!options || !options.length) return "--";
   const optionsMap = new Map<string, PaOptionType.Select>();
   for (let index = 0; index < options.length; index++) {

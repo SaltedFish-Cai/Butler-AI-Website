@@ -1,9 +1,5 @@
 // # 随机字符串
-export function randChar(
-  length = 8,
-  characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
-  prefix = "M_"
-) {
+export function randChar(length = 8, characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", prefix = "M_") {
   const charactersArr = characters.split(""); //分割字符。charactersArr
   let result = prefix; //返回的结果。
   while (result.length < length) {

@@ -16,21 +16,8 @@
     </template>
   </m-quick-table>
 
-  <pa-dialog
-    v-model="optionsVisible"
-    :title="{ 'zh-CN': '编辑数据', 'en-US': 'Edit Data' }"
-    :padding="['all']"
-    :closeOnClickModal="false"
-    size="s"
-  >
-    <pa-form
-      id="data-management-form"
-      ref="formRef"
-      :structure="formConfig"
-      :exOptions="editId ? exTableOptions : exOptions"
-      :ex-span="1"
-      @form-cell-change="cellChange"
-    />
+  <pa-dialog v-model="optionsVisible" :title="{ 'zh-CN': '编辑数据', 'en-US': 'Edit Data' }" :padding="['all']" :closeOnClickModal="false" size="s">
+    <pa-form id="data-management-form" ref="formRef" :structure="formConfig" :exOptions="editId ? exTableOptions : exOptions" :ex-span="1" @form-cell-change="cellChange" />
 
     <template #footer>
       <pa-button is="save" @click="handleSubmit">
@@ -94,9 +81,7 @@ const formConfig = computed<PaStructureType.Form[]>(() => {
 });
 
 const formRef = useTemplateRef("formRef");
-const interfaceConfigsOptions = ref(
-  props.interfaceConfigs.map(item => ({ label: `${item.name} (${item.apiUrl})`, value: item.id }))
-);
+const interfaceConfigsOptions = ref(props.interfaceConfigs.map(item => ({ label: `${item.name} (${item.apiUrl})`, value: item.id })));
 
 const exOptions = ref<PaOptionType.Default>({
   apiUrlId: [],
@@ -223,9 +208,7 @@ async function getTableList() {
 }
 
 function setApiUrlId() {
-  const outData = interfaceConfigsOptions.value.filter(
-    item => tableData.value.findIndex(data => data.apiUrlId === item.value) === -1
-  );
+  const outData = interfaceConfigsOptions.value.filter(item => tableData.value.findIndex(data => data.apiUrlId === item.value) === -1);
   return outData;
 }
 onMounted(() => {

@@ -1,14 +1,5 @@
 <template>
-  <div
-    v-if="
-      extraProps.useToolButton ||
-      $slots['HeaderLeft'] ||
-      $slots['HeaderCenter'] ||
-      $slots['ToolButton'] ||
-      $slots['ToolButtonInline']
-    "
-    class="table-flex table-flex-header"
-  >
+  <div v-if="extraProps.useToolButton || $slots['HeaderLeft'] || $slots['HeaderCenter'] || $slots['ToolButton'] || $slots['ToolButtonInline']" class="table-flex table-flex-header">
     <div class="table-flex-lf">
       <slot name="HeaderLeft" />
     </div>
@@ -23,12 +14,8 @@
           <pa-button v-if="extraProps.exportApi" is="export" @click="extraProps.exportApi">
             {{ languagePackage["export"] }}
           </pa-button>
-          <pa-button font="reset_line" type="default" @click="refreshTable({ Page: {} })"
-            >{{ languagePackage["refresh"] }}
-          </pa-button>
-          <pa-button font="filter_line" :use-plain="false" type="primary" @click="() => configRef?.changeColSetting(true)"
-            >{{ languagePackage["filter"] }}
-          </pa-button>
+          <pa-button font="reset_line" type="default" @click="refreshTable({ Page: {} })">{{ languagePackage["refresh"] }} </pa-button>
+          <pa-button font="filter_line" :use-plain="false" type="primary" @click="() => configRef?.changeColSetting(true)">{{ languagePackage["filter"] }} </pa-button>
         </div>
       </slot>
     </div>
@@ -41,10 +28,7 @@
       <span class="icon_highlight mr5">#{{ Number(index) + 1 }}</span>
       <span>{{ item.label }} :</span>
 
-      <template
-        v-for="(relationshipItem, relationshipIndex) in item.relationshipGroup"
-        :key="'relationshipItem' + relationshipIndex"
-      >
+      <template v-for="(relationshipItem, relationshipIndex) in item.relationshipGroup" :key="'relationshipItem' + relationshipIndex">
         <!-- :style="{
                 backgroundColor: relationshipItem?.tagStyle?.bgColor,
                 color:
@@ -75,10 +59,7 @@
       <span class="icon_highlight mr5">#{{ Number(index) + 1 }}</span>
       <span>{{ item.label }} :</span>
 
-      <template
-        v-for="(relationshipItem, relationshipIndex) in item.relationshipGroup"
-        :key="'relationshipItem' + relationshipIndex"
-      >
+      <template v-for="(relationshipItem, relationshipIndex) in item.relationshipGroup" :key="'relationshipItem' + relationshipIndex">
         <span class="flex-center query_item_box">
           <template v-for="(groupItem, groupItemIndex) in relationshipItem.group" :key="groupItem.key">
             <span class="query_item_text flex-center">
@@ -112,13 +93,7 @@
   />
 
   <!-- 表配置 -->
-  <ConfigSetting
-    :tableStructure="tableStructure"
-    ref="configRef"
-    :id="extraProps.id"
-    :table-query="tableQuery"
-    :display="extraProps.display"
-  />
+  <ConfigSetting :tableStructure="tableStructure" ref="configRef" :id="extraProps.id" :table-query="tableQuery" :display="extraProps.display" />
 </template>
 
 <script setup lang="ts" name="LightTableFilter">
@@ -147,18 +122,9 @@ const refreshTable = inject("refreshTable") as (
   }
 ) => Promise<void>;
 
-const {
-  Query,
-  AdvancedQuery,
-  handleSeniorSetting,
-  handleRemoveQ,
-  handleRemoveSenior,
-  handleCleanAllQuery,
-  handleCleanAllSeniorQuery
-} = useFilterHooks(props.extraProps, props.state, language);
+const { Query, AdvancedQuery, handleSeniorSetting, handleRemoveQ, handleRemoveSenior, handleCleanAllQuery, handleCleanAllSeniorQuery } = useFilterHooks(props.extraProps, props.state, language);
 
-const { seniorFilterOptions, seniorFilterData, openSeniorFilter, setConditionalType, setRelationshipGroupLinkType } =
-  useSeniorFilterHooks();
+const { seniorFilterOptions, seniorFilterData, openSeniorFilter, setConditionalType, setRelationshipGroupLinkType } = useSeniorFilterHooks();
 
 const languagePackage = inject("languagePackage") as Record<string, string>;
 

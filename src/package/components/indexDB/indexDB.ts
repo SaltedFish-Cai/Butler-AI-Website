@@ -196,12 +196,7 @@ export const updateData = async (DB_NAME: string, STORE_NAME: string, key: strin
 };
 
 // 根据指定键值对查询对应数据
-export const queryData = async (
-  DB_NAME: string,
-  STORE_NAME: string,
-  query: Record<string, any>,
-  isFuzzy: boolean = false
-): Promise<any[]> => {
+export const queryData = async (DB_NAME: string, STORE_NAME: string, query: Record<string, any>, isFuzzy: boolean = false): Promise<any[]> => {
   const db = await openDB(DB_NAME, STORE_NAME);
   return new Promise((resolve, reject) => {
     const transaction = db.transaction(STORE_NAME, "readonly");

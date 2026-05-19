@@ -1,11 +1,5 @@
 <template>
-  <div
-    class="pa-radio-item"
-    :class="[props.class, { 'is-disabled': props.disabled }, { 'is-checked': isChecked }]"
-    ref="selectRef"
-    :style="props.style"
-    @click="changeEvent"
-  >
+  <div class="pa-radio-item" :class="[props.class, { 'is-disabled': props.disabled }, { 'is-checked': isChecked }]" ref="selectRef" :style="props.style" @click="changeEvent">
     <div class="pa-radio-item-input-inner">
       <div class="pa-radio-item-input">
         <transition name="mo-animation-fade" mode="out-in">

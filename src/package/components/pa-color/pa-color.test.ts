@@ -11,11 +11,7 @@ const PaPopoverMock = defineComponent({
   props: ["disabled", "autoWidth"],
   emits: ["change"],
   setup(props, { slots }) {
-    return () =>
-      h("div", { class: "pa-popover-mock" }, [
-        h("div", { class: "pa-popover-reference" }, slots.reference?.()),
-        h("div", { class: "pa-popover-content" }, slots.default?.())
-      ]);
+    return () => h("div", { class: "pa-popover-mock" }, [h("div", { class: "pa-popover-reference" }, slots.reference?.()), h("div", { class: "pa-popover-content" }, slots.default?.())]);
   }
 });
 

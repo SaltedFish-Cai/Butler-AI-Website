@@ -575,18 +575,7 @@ export type ComponentTypeProps = "index" | "radio" | "row" | "selection";
  * @description 搜索类型
  * @type {string}
  */
-export type ComponentSearchType =
-  | "cascader"
-  | "date-picker"
-  | "input-number"
-  | "input"
-  | "select"
-  | "select"
-  | "slider"
-  | "switch"
-  | "time-picker"
-  | "time-select"
-  | "tree-select";
+export type ComponentSearchType = "cascader" | "date-picker" | "input-number" | "input" | "select" | "select" | "slider" | "switch" | "time-picker" | "time-select" | "tree-select";
 
 /**
  * @description 单元格配置类型

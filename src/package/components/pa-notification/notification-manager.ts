@@ -110,9 +110,7 @@ class NotificationManagerImpl implements NotificationManager {
   }
 
   getOffset(position: string): number {
-    const samePositionNotifications = this.notifications.filter(
-      notification => notification.options.position === position
-    );
+    const samePositionNotifications = this.notifications.filter(notification => notification.options.position === position);
     if (this.notifications.length === 1 || samePositionNotifications.length === 0) {
       return BASE_OFFSET;
     }

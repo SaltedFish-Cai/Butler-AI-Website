@@ -3,10 +3,7 @@
     <span class="pa-table-cell_header-span">
       <slot :name="item.prop + 'Header'">
         <span class="cell_text drag-el" :style="{ cursor: !item.fixed ? 'move' : 'default' }">
-          <span
-            :class="['find-class-' + item.prop, item?.cellConfig?.required && !item?.cellConfig?.display ? 'is_required' : '']"
-            >{{ item.label }}</span
-          >
+          <span :class="['find-class-' + item.prop, item?.cellConfig?.required && !item?.cellConfig?.display ? 'is_required' : '']">{{ item.label }}</span>
         </span>
       </slot>
       <span class="cell_text_after"></span>
@@ -16,47 +13,18 @@
     <div v-if="item.useSort != false" class="flex-center-between flex1 pa-table-sort-box">
       <div
         class="m-hand"
-        :class="[
-          props.useOrderPropName == item.prop && orderString != null
-            ? 'flex-col light-table-order-box light-order-box-act'
-            : 'flex-col light-table-order-box'
-        ]"
+        :class="[props.useOrderPropName == item.prop && orderString != null ? 'flex-col light-table-order-box light-order-box-act' : 'flex-col light-table-order-box']"
         @click="handleTableOrder(item)"
       >
-        <pa-icon
-          :class="[
-            props.useOrderPropName == item.prop && orderString == 'ascending'
-              ? 'order-icon flex-center order-act'
-              : 'order-icon flex-center'
-          ]"
-          name="up_small_fill"
-        />
-        <pa-icon
-          :class="[
-            props.useOrderPropName == item.prop && orderString == 'descending'
-              ? 'order-icon flex-center order-act'
-              : 'order-icon flex-center'
-          ]"
-          name="down_small"
-        />
+        <pa-icon :class="[props.useOrderPropName == item.prop && orderString == 'ascending' ? 'order-icon flex-center order-act' : 'order-icon flex-center']" name="up_small_fill" />
+        <pa-icon :class="[props.useOrderPropName == item.prop && orderString == 'descending' ? 'order-icon flex-center order-act' : 'order-icon flex-center']" name="down_small" />
       </div>
     </div>
 
     <!-- @handle-remove-query="handleRemoveQ" -->
-    <Filter
-      v-if="item.useFilter != false"
-      :id="props.id"
-      ref="columnFilter"
-      :item="item"
-      :data="filterValue"
-      @open-senior-filter="openSeniorFilter"
-      @save-and-filter="saveAndFilter"
-    >
+    <Filter v-if="item.useFilter != false" :id="props.id" ref="columnFilter" :item="item" :data="filterValue" @open-senior-filter="openSeniorFilter" @save-and-filter="saveAndFilter">
       <div class="pa-table-filter-box" :class="[setIconAction(item.prop) ? 'pa-table-filter-box-act' : '']">
-        <pa-icon
-          :class="[setIconAction(item.prop) ? 'filter-icon flex-center filter-act' : 'filter-icon flex-center']"
-          name="Filter"
-        />
+        <pa-icon :class="[setIconAction(item.prop) ? 'filter-icon flex-center filter-act' : 'filter-icon flex-center']" name="Filter" />
       </div>
       <template v-for="slot in Object.keys($slots).filter(item => item != 'default')" #[slot]="scope">
         <template v-if="slot.indexOf('header-option-') > -1 || slot.indexOf('header-tag-') > -1">
@@ -66,9 +34,7 @@
 
       <template #exBtn v-if="isUseCellConfig(item) && item.useSeniorFilter != false && useGlobalSeniorFilter">
         <div class="flex-center mt-size">
-          <pa-button font="mortarboard_line" @click="openSeniorFilter(item)"
-            >{{ languagePackage["useAdvancedSearch"] }}
-          </pa-button>
+          <pa-button font="mortarboard_line" @click="openSeniorFilter(item)">{{ languagePackage["useAdvancedSearch"] }} </pa-button>
         </div>
       </template>
     </Filter>
