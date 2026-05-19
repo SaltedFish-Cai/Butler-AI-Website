@@ -2,12 +2,7 @@
   <div
     class="pa-form-item"
     :id="`pa-form-item--${prop}`"
-    :class="[
-      props.class,
-      { 'is-required': isRequired },
-      useLabelPosition ? `pa-form-item--${useLabelPosition}` : '',
-      injectFormContext.errorsMessage[prop] ? 'is-error' : ''
-    ]"
+    :class="[props.class, { 'is-required': isRequired }, useLabelPosition ? `pa-form-item--${useLabelPosition}` : '', injectFormContext.errorsMessage[prop] ? 'is-error' : '']"
     :style="{ ...props.style }"
   >
     <label v-if="label || $slots.label" class="pa-form-item__label" :for="prop" :style="labelStyle">

@@ -1,23 +1,16 @@
 <template>
-  <pa-form-control
-    ref="formRef"
-    :model="formData"
-    :rules="formRules"
-    label-width="100px"
-    label-position="left"
-    @submit="handleSubmit"
-  >
-    <pa-form-item label="姓名" prop="name">
+  <form-control ref="formRef" :model="formData" :rules="formRules" label-width="100px" label-position="left" @submit="handleSubmit">
+    <form-item label="姓名" prop="name">
       <input v-model="formData.name" placeholder="请输入姓名" />
-    </pa-form-item>
-    <pa-form-item label="年龄" prop="age">
+    </form-item>
+    <form-item label="年龄" prop="age">
       <input v-model.number="formData.age" type="number" placeholder="请输入年龄" />
-    </pa-form-item>
-    <pa-form-item>
+    </form-item>
+    <form-item>
       <button @click="submitForm">提交</button>
       <button @click="resetForm">重置</button>
-    </pa-form-item>
-  </pa-form-control>
+    </form-item>
+  </form-control>
 </template>
 
 <script setup>

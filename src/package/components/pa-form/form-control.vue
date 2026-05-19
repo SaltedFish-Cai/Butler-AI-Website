@@ -110,7 +110,7 @@ emit("setRef", { validate });
  * @description 计算组件的类名列表
  */
 const className = computed(() => {
-  const classes = ["pa-form-control"];
+  const classes = ["form-control"];
   if (props.class) {
     classes.push(props.class);
   }
@@ -536,7 +536,7 @@ defineExpose({
 </script>
 
 <style lang="scss">
-.pa-form-control {
+.form-control {
   width: 100%;
   box-sizing: border-box;
 

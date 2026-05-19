@@ -1,6 +1,6 @@
 <template>
   <template v-if="item.type == 'tabs-form' && item.prop">
-    <pa-form-item :prop="item.prop">
+    <form-item v-bind="item">
       <!-- label（已注释） -->
       <pa-tabs
         v-if="injectConfigContext.data[String(item.prop)]?.length || !injectConfigContext.display"
@@ -65,14 +65,7 @@
 
           <!-- form -->
           <section class="tabs-form-body flat-style">
-            <pa-form-control
-              :id="id + '-tabs-form'"
-              :model="tab"
-              @set-ref="el => setRuleTabsFormRef(el, tab)"
-              :rules="rules?.[String(item.prop)] || {}"
-              inTabsForm
-              @validation-states="validateTabsForm"
-            >
+            <form-control :id="id + '-tabs-form'" :model="tab" @set-ref="el => setRuleTabsFormRef(el, tab)" :rules="rules?.[String(item.prop)] || {}" inTabsForm @validation-states="validateTabsForm">
               <!-- v-show 防闪烁 -->
               <!-- v-show="stepsIndex == tab.name" -->
               <section class="tabs-form-item" v-for="tabGroupItem in item.inMultipleConfig" :key="tabGroupItem.unitName">
@@ -99,7 +92,7 @@
                   </template>
                 </pa-row>
               </section>
-            </pa-form-control>
+            </form-control>
           </section>
         </pa-tabs-item>
 
@@ -120,7 +113,7 @@
 
           <!-- form -->
           <section class="tabs-form-body flat-style">
-            <pa-form-control :id="id + '-tabs-form'" :model="tab" inTabsForm @validation-states="validateTabsForm">
+            <form-control :id="id + '-tabs-form'" :model="tab" inTabsForm @validation-states="validateTabsForm">
               <section class="tabs-form-item deleted" v-for="tabGroupItem in item.inMultipleConfig" :key="tabGroupItem.unitName">
                 <!-- 标题 -->
                 <template v-if="tabGroupItem.unitName != 'default'">
@@ -151,7 +144,7 @@
                   </template>
                 </pa-row>
               </section>
-            </pa-form-control>
+            </form-control>
           </section>
         </pa-tabs-item>
       </pa-tabs>
@@ -159,7 +152,7 @@
       <div v-else class="pa-display-style">
         {{ injectConfigContext.languagePackage["empty"] }}
       </div>
-    </pa-form-item>
+    </form-item>
   </template>
 </template>
 
@@ -183,7 +176,7 @@ import formItem from "../form-basics-element.vue";
  *
  * @description 表单控制器组件
  */
-import paFormControl from "../pa-form-control.vue";
+import formControl from "../form-control.vue";
 /**
  *
  * @description 表单类型定义

@@ -9,16 +9,6 @@ import type { App } from "vue";
  * @description 导入 PaForm 表单组件
  */
 import PaForm from "./pa-form.vue";
-/**
- * **模块导入**
- * @description 导入 PaFormControl 表单控制器组件
- */
-import PaFormControl from "./pa-form-control.vue";
-/**
- * **模块导入**
- * @description 导入 PaFormItem 表单项组件
- */
-import PaFormItem from "./pa-form-item.vue";
 
 /**
  * **组件注册函数**
@@ -28,8 +18,6 @@ import PaFormItem from "./pa-form-item.vue";
 function install(app: App): void {
   if (!app._context.components["PaForm"]) {
     app.component("PaForm", PaForm);
-    app.component("PaFormControl", PaFormControl);
-    app.component("PaFormItem", PaFormItem);
   }
 }
 
