@@ -1,12 +1,12 @@
 <template>
-  <div ref="RefLabelContainer" :class="['pa-form_label']" v-if="label">
+  <div ref="RefLabelContainer" :class="['form_label']" v-if="label">
     <div ref="RefLabel" :class="['label_text', 'form_label_text']" :title="label">
       {{ label }}
     </div>
 
     <pa-popover v-if="tip" trigger="hover" :teleport-to="RefLabelContainer" placement="top">
       <template #reference>
-        <pa-icon name="question_line" class="pa-form-title_label-icon"></pa-icon>
+        <pa-icon name="question_line" class="form-title_label-icon"></pa-icon>
       </template>
       <div>{{ tip }}</div>
     </pa-popover>
@@ -47,7 +47,7 @@ const RefLabelContainer = ref();
   color: var(--pa-title-color);
   word-break: break-all;
 }
-.pa-form_label {
+.form_label {
   display: flex;
   justify-content: flex-start;
   color: var(--dms-page-text-color);

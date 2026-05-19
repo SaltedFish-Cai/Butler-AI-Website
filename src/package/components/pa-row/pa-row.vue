@@ -33,7 +33,7 @@ const props = withDefaults(defineProps<ComponentProps>(), {
  * 计算类名
  * @description 根据属性计算组件类名
  */
-const classes = computed(() => ["pa-row", `pa-row--${props.justify}`, `pa-row--align-${props.align}`]);
+const classes = computed(() => ["pa-row", `${props.justify}`, `align-${props.align}`]);
 /**
  * 计算栅格间隔值
  * @description 计算实际的栅格间隔值（数字直接除2，字符串提取数字后除2，无效返回0）

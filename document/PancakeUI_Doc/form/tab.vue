@@ -3,16 +3,7 @@
 
   <code-view v-model:html="formData"> </code-view>
 
-  <pa-form
-    id="tab-from-demo"
-    ref="proForm"
-    :structure="formConfig"
-    :ex-options="exOptions"
-    :span="2"
-    :label-width="100"
-    :data="baseFormData"
-    :contrastData="contrastData"
-  />
+  <pa-form id="tab-from-demo" ref="proForm" :structure="formConfig" :ex-options="exOptions" :span="2" :label-width="100" :data="baseFormData" :contrastData="contrastData" />
 
   <div class="flex-center">
     <pa-button is="submit" @click="submitForm">提交Form</pa-button>

@@ -1,27 +1,27 @@
 <template>
   <div
-    class="pa-form-item"
-    :id="`pa-form-item--${prop}`"
-    :class="[props.class, { 'is-required': isRequired }, useLabelPosition ? `pa-form-item--${useLabelPosition}` : '', injectFormContext.errorsMessage[prop] ? 'is-error' : '']"
+    class="form-item"
+    :id="`form-item--${prop}`"
+    :class="[props.class, { 'is-required': isRequired }, useLabelPosition ? `form-item--${useLabelPosition}` : '', injectFormContext.errorsMessage[prop] ? 'is-error' : '']"
     :style="{ ...props.style }"
   >
-    <label v-if="label || $slots.label" class="pa-form-item__label" :for="prop" :style="labelStyle">
+    <label v-if="label || $slots.label" class="form-item__label" :for="prop" :style="labelStyle">
       <slot name="label">
         <template v-if="label">{{ label }}</template>
       </slot>
-      <span v-if="isRequired" class="pa-form-item__require" :class="{ 'is-required': true }"></span>
+      <span v-if="isRequired" class="form-item__require" :class="{ 'is-required': true }"></span>
     </label>
 
-    <div class="pa-form-item__content" :style="contentStyle">
+    <div class="form-item__content" :style="contentStyle">
       <slot></slot>
 
       <!-- 错误提示 -->
-      <div v-if="injectFormContext.errorsMessage[prop]" class="pa-form-item__error" :role="'alert'">
+      <div v-if="injectFormContext.errorsMessage[prop]" class="form-item__error" :role="'alert'">
         {{ injectFormContext.errorsMessage[prop] }}
       </div>
 
       <!-- 帮助信息 -->
-      <div v-if="help" class="pa-form-item__help">{{ help }}</div>
+      <div v-if="help" class="form-item__help">{{ help }}</div>
     </div>
   </div>
 </template>
@@ -157,7 +157,7 @@ provide("elFormItem", {
 </script>
 
 <style lang="scss">
-.pa-form-item {
+.form-item {
   display: flex;
   align-items: flex-start;
   position: relative;
@@ -188,7 +188,7 @@ provide("elFormItem", {
         max-width: 100% !important;
         margin: 0 !important;
         padding: 0 !important;
-        > .pa-form-item {
+        > .form-item {
           padding: 0 !important;
         }
       }
@@ -200,12 +200,12 @@ provide("elFormItem", {
     font-size: calc(var(--pa-size-font, 13px) - 2px);
   }
   &--left {
-    .pa-form-item__label {
+    .form-item__label {
       transform: translateY(calc(var(--pa-size-padding, 10px) / 3));
     }
   }
   &--right {
-    .pa-form-item__label {
+    .form-item__label {
       justify-content: flex-end !important;
       transform: translateY(calc(var(--pa-size-padding, 10px) / 2.5));
     }
@@ -217,18 +217,18 @@ provide("elFormItem", {
     justify-content: flex-start;
   }
 
-  &--top .pa-form-item__content {
+  &--top .form-item__content {
     margin-left: 0;
   }
 }
 
-.pa-form-item:has(.pa-form-item__error) {
+.form-item:has(.form-item__error) {
   background-color: var(--pa-color-warning-light-7);
   border-radius: 3px;
 }
 
-.pa-form-item.is-required {
-  > .pa-form-item__label {
+.form-item.is-required {
+  > .form-item__label {
     &::before {
       content: "*";
       color: var(--pa-color-danger);
@@ -237,7 +237,7 @@ provide("elFormItem", {
   }
 }
 
-.pa-form-item:has(> .pa-form-item__content > .pa-form-tabs) {
+.form-item:has(> .form-item__content > .pa-form-tabs) {
   padding: 0;
 }
 </style>

@@ -1,7 +1,10 @@
 <template>
-  <template v-if="item.prop">
-    <!-- other-item -->
-    <pa-col :xs="colSize" :sm="colSize" :md="colSize" :lg="colSize" :xl="colSize" :span="item.exSpan">
+  <template v-if="item?.prop">
+    <template v-if="item.type == 'tabs-form'">
+      <slot></slot>
+    </template>
+
+    <pa-col v-else :xs="colSize" :sm="colSize" :md="colSize" :lg="colSize" :xl="colSize" :span="item.exSpan">
       <form-item :prop="Array.isArray(item.prop) ? item.prop.join('-') : item.prop" :class="[item.exStyles?.class || '']" :style="item.exStyles?.style || {}">
         <!-- label -->
         <template #label v-if="computedLabel && !injectConfigContext.noLabel && !noLabel">
@@ -325,7 +328,6 @@
             </div>
           </template>
         </section>
-
         <div class="cell-slots" v-if="$slots[`cell-${item.prop}`]">
           <slot :name="'cell-' + item.prop" v-bind="{ data: injectConfigContext.data, item: item }"></slot>
         </div>
@@ -337,7 +339,7 @@
     </pa-col>
   </template>
   <!-- null -->
-  <pa-col v-else-if="item.type == 'null'" :xs="colSize" :sm="colSize" :md="colSize" :lg="colSize" :xl="colSize"> </pa-col>
+  <pa-col v-else-if="item?.type == 'null'" :xs="colSize" :sm="colSize" :md="colSize" :lg="colSize" :xl="colSize"> </pa-col>
 </template>
 
 <script lang="ts" setup>
@@ -487,7 +489,7 @@ const setSmallLabel = (arrayData: any[]): any[] => {
 };
 
 onMounted(async () => {
-  if (props.item.type == "address") {
+  if (props.item?.type == "address") {
     const res = await GetSystemAddressMap();
     addressMap.value = setSmallLabel(res || []);
   }
@@ -507,17 +509,17 @@ function setSpanStyle(span?: 1 | 2 | 3 | 4, baseSpanSize = 4) {
     2: [2, 1, 1, 1],
     1: [1, 1, 1, 1]
   };
-
-  let data = 24 / baseSpanSize;
-  if (maxSpanList[data]) {
+  console.log("++++++++++> baseSpanSize:", baseSpanSize);
+  let data;
+  if (maxSpanList[baseSpanSize]) {
     if (span == 1) {
-      data = maxSpanList[data][0];
+      data = maxSpanList[baseSpanSize][0];
     } else if (span == 2) {
-      data = maxSpanList[data][1];
+      data = maxSpanList[baseSpanSize][1];
     } else if (span == 3) {
-      data = maxSpanList[data][2];
+      data = maxSpanList[baseSpanSize][2];
     } else if (span == 4) {
-      data = maxSpanList[data][3];
+      data = maxSpanList[baseSpanSize][3];
     }
   }
   return data;
@@ -531,9 +533,7 @@ const colSize = computed(() => {
   const _injectConfigContext = injectConfigContext.value;
   const _prop = Array.isArray(props.item.prop) ? props.item.prop.join("-") : String(props.item.prop);
   if (props.noLabel) return 1;
-
   const data = _prop && props.item.exSpan ? setSpanStyle(props.item.exSpan, _injectConfigContext.baseSpanSize) : _injectConfigContext.baseSpanSize;
-
   return data;
 });
 

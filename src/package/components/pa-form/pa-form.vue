@@ -10,7 +10,7 @@
                 <div ref="RefUnitContainer">{{ itemConfigs.unitName }}</div>
                 <pa-popover v-if="itemConfigs.unitTip" trigger="hover" :teleport-to="RefUnitContainer" placement="top">
                   <template #reference>
-                    <pa-icon name="question_line" class="pa-form-title_label-icon"></pa-icon>
+                    <pa-icon name="question_line" class="form-title_label-icon"></pa-icon>
                   </template>
                   <div>{{ itemConfigs.unitTip }}</div>
                 </pa-popover>
@@ -188,7 +188,7 @@ const RefUnitContainer = ref();
  * @type `Ref<number>`
  * @description 基础的栅格分栏大小
  */
-const baseSpanSize = ref(6);
+const baseSpanSize = ref(4);
 /**
  * **分项分栏大小映射**
  * @type `Ref<Record<string, number>>`
@@ -665,11 +665,11 @@ function initConfig() {
           });
         }
       });
-
       // 过滤掉已不存在的 configs
       for (const g of configItem.inMultipleConfig) {
         g.configs = g.configs.filter(c => propsArr.includes(c.prop));
       }
+      console.log("++++++++++> configItem:", configItem);
     }
 
     // --- 将 item 分配到对应的主分组中 ---
@@ -696,6 +696,7 @@ function initConfig() {
 
   // 一次性替换 inMultipleConfig 全部内容
   inMultipleConfig.length = 0;
+  console.log("++++++++++> newMultipleConfig:", newMultipleConfig);
   for (const mc of newMultipleConfig) {
     inMultipleConfig.push(mc);
   }

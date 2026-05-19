@@ -24,7 +24,8 @@ setTimeout(() => {
     { label: "Input1", tip: "Tip Message", prop: "Input1", type: "input", maxLength: 100, exSpan: 1 },
     { label: "Input2", prop: "Input2", type: "input", rules: [{ required: false }] },
     { label: "Select1", prop: "Select1", type: "select", clearable: false },
-    { label: "Time", prop: "Time", type: "date-picker-group" }
+    { label: "Time", prop: "Time1", type: "date-picker-group" },
+    { label: "Time", prop: "Time2", type: "date-picker-group" }
   ];
 }, 1000);
 

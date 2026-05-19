@@ -1,6 +1,6 @@
 <template>
   <template v-if="item.type == 'tabs-form' && item.prop">
-    <form-item v-bind="item">
+    <form-item :id="'tabs-form_' + id" :item="{ ...item, label: '', exSpan: 1 }">
       <!-- label（已注释） -->
       <pa-tabs
         v-if="injectConfigContext.data[String(item.prop)]?.length || !injectConfigContext.display"
@@ -75,7 +75,7 @@
                     {{ tabGroupItem.unitName }}
                     <pa-popover v-if="tabGroupItem.unitTip" placement="right">
                       <template #reference>
-                        <pa-icon name="question_line" class="pa-form-title_label-icon"></pa-icon>
+                        <pa-icon name="question_line" class="form-title_label-icon"></pa-icon>
                       </template>
                       {{ tabGroupItem.unitTip }}
                     </pa-popover>
@@ -120,7 +120,7 @@
                   <pa-title>
                     {{ tabGroupItem.unitName }}
                     <el-tooltip v-if="tabGroupItem.unitTip" :content="tabGroupItem.unitTip" placement="right">
-                      <pa-icon name="question_line" class="pa-form-title_label-icon"></pa-icon>
+                      <pa-icon name="question_line" class="form-title_label-icon"></pa-icon>
                     </el-tooltip>
                   </pa-title>
                 </template>

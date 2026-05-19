@@ -1,7 +1,7 @@
 <template>
   <div v-if="!display" class="pa-transfer" ref="selectRef" :class="[props.class, { 'is-disabled': props.disabled }]" :style="rootStyle">
-    <div class="pa-transfer-select-box">
-      <div class="pa-transfer-select-box_title">
+    <div class="transfer-select-box">
+      <div class="transfer-select-box_title">
         <div class="flex-center">
           <pa-checkbox-item
             isOption
@@ -14,8 +14,8 @@
         </div>
         <pa-input v-if="useSearch" style="width: 1px; flex: 1" class="ml-size" :disabled="props.disabled" v-model="searchAll" />
       </div>
-      <div class="pa-transfer-select-box_options">
-        <pa-scrollbar :useBackTop="false" :useScrollX="false" :padding="['top', 'bottom']">
+      <div class="transfer-select-box_options">
+        <pa-scrollbar :useBackTop="false" :useScrollX="false" :padding="['top', 'bottom']" paddingWidth="calc(var(--pa-size-padding, 10px) / 2)">
           <pa-empty
             v-if="searchAllSelectList.length === 0"
             :style="emptyStyle"
@@ -31,8 +31,8 @@
       <pa-button icon-name="left_line" :disabled="props.disabled || awaitSelectedList.length === 0" @click="handleTransferClick('left')"></pa-button>
       <pa-button icon-name="right_line" :disabled="props.disabled || awaitSelectList.length === 0" @click="handleTransferClick('right')"></pa-button>
     </div>
-    <div class="pa-transfer-select-box">
-      <div class="pa-transfer-select-box_title">
+    <div class="transfer-select-box">
+      <div class="transfer-select-box_title">
         <div class="flex-center">
           <pa-checkbox-item
             isOption
@@ -45,8 +45,8 @@
         </div>
         <pa-input v-if="useSearch" style="width: 1px; flex: 1" class="ml-size" :disabled="props.disabled" v-model="searchSelected" />
       </div>
-      <div class="pa-transfer-select-box_options">
-        <pa-scrollbar :useBackTop="false" :useScrollX="false" :padding="['top', 'bottom']">
+      <div class="transfer-select-box_options">
+        <pa-scrollbar :useBackTop="false" :useScrollX="false" :padding="['top', 'bottom']" paddingWidth="calc(var(--pa-size-padding, 10px) / 2)">
           <pa-empty
             v-if="filterSelectedList.length === 0"
             :style="emptyStyle"

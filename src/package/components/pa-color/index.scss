@@ -86,12 +86,12 @@
 }
 
 .pa-color-picker {
-  &-main {
+  .color-picker-main {
     min-width: 180px;
     margin-bottom: var(--pa-size-padding);
   }
 
-  &-color-area {
+  .color-picker-color-area {
     position: relative;
     width: 100%;
     height: 150px;
@@ -129,7 +129,7 @@
     }
   }
 
-  &-hue-area {
+  .color-picker-hue-area {
     position: relative;
     width: 100%;
     height: 12px;
@@ -158,7 +158,7 @@
     }
   }
 
-  &-alpha-area {
+  .color-picker-alpha-area {
     position: relative;
     width: 100%;
     height: 12px;
@@ -178,7 +178,7 @@
     }
   }
 
-  &-inputs {
+  .color-picker-inputs {
     &-group {
       margin-bottom: 8px;
 
@@ -203,7 +203,7 @@
     }
   }
 
-  &-presets {
+  .color-picker-presets {
     margin-top: var(--pa-size-padding);
     display: flex;
     flex-wrap: wrap;

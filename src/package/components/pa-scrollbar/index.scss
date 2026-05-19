@@ -38,19 +38,19 @@
     }
 
     .scrollbar-body-content.padding-top {
-      padding-top: var(--pa-size-padding, 10px);
+      padding-top: var(--pa-size-padding_use, var(--pa-size-padding, 10px));
     }
 
     .scrollbar-body-content.padding-left {
-      padding-left: var(--pa-size-padding, 10px);
+      padding-left: var(--pa-size-padding_use, var(--pa-size-padding, 10px));
     }
 
     .scrollbar-body-content.padding-bottom {
-      padding-bottom: var(--pa-size-padding, 10px);
+      padding-bottom: var(--pa-size-padding_use, var(--pa-size-padding, 10px));
     }
 
     .scrollbar-body-content.padding-right {
-      padding-right: var(--pa-size-padding, 10px);
+      padding-right: var(--pa-size-padding_use, var(--pa-size-padding, 10px));
     }
   }
 
