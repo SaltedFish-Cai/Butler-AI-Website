@@ -124,14 +124,8 @@ const className = computed(() => {
  */
 const styles = computed(() => {
   const styleObj = { ...props.style };
-  if (
-    injectConfigContext.value.labelWidth !== undefined &&
-    (injectConfigContext.value.labelPosition === "left" || injectConfigContext.value.labelPosition === "right")
-  ) {
-    styleObj["--pa-form-label-width"] =
-      typeof injectConfigContext.value.labelWidth === "number"
-        ? `${injectConfigContext.value.labelWidth}px`
-        : injectConfigContext.value.labelWidth;
+  if (injectConfigContext.value.labelWidth !== undefined && (injectConfigContext.value.labelPosition === "left" || injectConfigContext.value.labelPosition === "right")) {
+    styleObj["--pa-form-label-width"] = typeof injectConfigContext.value.labelWidth === "number" ? `${injectConfigContext.value.labelWidth}px` : injectConfigContext.value.labelWidth;
   }
   return styleObj;
 });
@@ -307,10 +301,7 @@ async function validateFieldInTabsForm(prop: string, value: string): Promise<{ v
  */
 function validateRule(rule: FormItemRule, value: any, prop: string): Promise<void> {
   return new Promise((resolve, reject) => {
-    if (
-      rule.required &&
-      (value === undefined || value === null || value === "" || (Array.isArray(value) && value.length === 0))
-    ) {
+    if (rule.required && (value === undefined || value === null || value === "" || (Array.isArray(value) && value.length === 0))) {
       reject(rule.message || `${prop} is required`);
       return;
     }

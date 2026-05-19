@@ -3,14 +3,7 @@
 
   <code-view v-model:html="formData"> </code-view>
 
-  <pa-form
-    id="base-from-demo"
-    ref="proForm"
-    :structure="formConfig"
-    :ex-options="exOptions"
-    :max-span="3"
-    @form-cell-change="handleCellChange"
-  />
+  <pa-form id="base-from-demo" ref="proForm" :structure="formConfig" :ex-options="exOptions" :max-span="3" @form-cell-change="handleCellChange" />
 
   <div class="flex-center mt-size">
     <pa-button is="submit" @click="submitForm">提交Form</pa-button>

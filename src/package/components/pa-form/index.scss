@@ -1,6 +1,6 @@
 .pa-form {
   width: calc(100%);
-  overflow-x: hidden;
+  overflow: hidden;
 
   .pa-form-title_label-icon {
     margin-left: calc(var(--pa-size-padding, 10px) / 2);
@@ -97,4 +97,3 @@
     padding: calc(var(--pa-size-padding, 10px) / 2);
   }
 }
-
