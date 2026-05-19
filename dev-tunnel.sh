@@ -52,6 +52,7 @@ for i in $(seq 1 20); do
 done
 
 command -v cloudflared >/dev/null && [ -f ~/.cloudflared/config.yml ] && start_service cloudflared cloudflared tunnel run butler-web
+command -v cloudflared >/dev/null && [ -f ~/.cloudflared/config-butler-local.yml ] && start_service cloudflared-local cloudflared tunnel --config ~/.cloudflared/config-butler-local.yml run
 
 sleep 3
 
@@ -59,6 +60,7 @@ echo ""
 echo "🥸 PancakeUI Dev + Tunnel"
 echo "📖 本地: http://localhost:$DOC_PORT"
 echo "🌐 CF:   https://dev.frontend-m.online"
+echo "🌐 本地: https://local.frontend-m.online"
 echo "🛑 停止: ./dev-tunnel.sh stop"
 echo ""
 

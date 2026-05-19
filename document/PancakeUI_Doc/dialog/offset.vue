@@ -1,8 +1,10 @@
 <template>
-  <pa-button is="go" @click="visible1 = true">offsetX:300</pa-button>
-  <pa-button is="go" @click="visible2 = true">offsetY:300</pa-button>
-  <pa-button is="go" @click="visible3 = true">offsetX:20%</pa-button>
-  <pa-button is="go" @click="visible4 = true">offsetY:20%</pa-button>
+  <pa-row>
+    <pa-col><pa-button is="go" @click="visible1 = true">offsetX:300</pa-button></pa-col>
+    <pa-col><pa-button is="go" @click="visible2 = true">offsetY:300</pa-button></pa-col>
+    <pa-col><pa-button is="go" @click="visible3 = true">offsetX:20%</pa-button></pa-col>
+    <pa-col><pa-button is="go" @click="visible4 = true">offsetY:20%</pa-button></pa-col>
+  </pa-row>
 
   <pa-dialog v-model="visible1" title="offsetX设置" offsetX="300"> offsetX:300 </pa-dialog>
   <pa-dialog v-model="visible2" title="offsetY设置" offsetY="300"> offsetY:300 </pa-dialog>

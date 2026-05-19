@@ -1,9 +1,11 @@
 <template>
-  <pa-button is="go" @click="visible1 = true">显示弹窗 max</pa-button>
-  <pa-button is="go" @click="visible2 = true">显示弹窗 s</pa-button>
-  <pa-button is="go" @click="visible3 = true">显示弹窗 m</pa-button>
-  <pa-button is="go" @click="visible4 = true">显示弹窗 l</pa-button>
-  <pa-button is="go" @click="visible5 = true">自定义宽度</pa-button>
+  <pa-row>
+    <pa-col><pa-button is="go" @click="visible1 = true">显示弹窗 max</pa-button></pa-col>
+    <pa-col><pa-button is="go" @click="visible2 = true">显示弹窗 s</pa-button></pa-col>
+    <pa-col><pa-button is="go" @click="visible3 = true">显示弹窗 m</pa-button></pa-col>
+    <pa-col><pa-button is="go" @click="visible4 = true">显示弹窗 l</pa-button></pa-col>
+    <pa-col><pa-button is="go" @click="visible5 = true">自定义宽度</pa-button></pa-col>
+  </pa-row>
 
   <pa-dialog v-model="visible1" height="default" title="Size：max" size="max"> 页面宽度95% /高度95% </pa-dialog>
   <pa-dialog v-model="visible2" height="default" title="Size：s" size="s"> 页面宽度30%/高度70% </pa-dialog>

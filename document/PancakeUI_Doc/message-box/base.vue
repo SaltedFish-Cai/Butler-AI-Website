@@ -1,7 +1,9 @@
 <template>
-  <pa-button @click="clickConfirm" type="success">快捷 Confirm</pa-button>
-  <pa-button @click="clickDelete" type="danger">快捷 Delete</pa-button>
-  <pa-button @click="clickCustomConfirm" type="info">快捷 Custom Confirm</pa-button>
+  <pa-row>
+    <pa-col><pa-button @click="clickConfirm" type="success">快捷 Confirm</pa-button></pa-col>
+    <pa-col><pa-button @click="clickDelete" type="danger">快捷 Delete</pa-button></pa-col>
+    <pa-col><pa-button @click="clickCustomConfirm" type="info">快捷 Custom Confirm</pa-button></pa-col>
+  </pa-row>
 </template>
 
 <script lang="ts" setup>
