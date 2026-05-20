@@ -114,4 +114,4 @@ export namespace PaRefType {
   export type Table = PaTableType;
 }
 
-export type PancakeUIType = PaManagerType;
+export type PancakeGlobalType = PaManagerType;

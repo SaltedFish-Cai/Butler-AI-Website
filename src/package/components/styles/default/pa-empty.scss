@@ -1,0 +1,34 @@
+.pa-empty {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  font-size: var(--pa-size-font, 13px);
+
+  .pa-empty_icon {
+    font-size: 60px;
+    transform: translate(3px, -5px);
+  }
+
+  .pa-empty_message {
+    max-width: 75%;
+    text-align: center;
+    line-height: 1.2em;
+  }
+
+  .pa-empty_inner {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 133px;
+    height: 133px;
+    margin: 35px auto 27px;
+    background: var(--pa-color-bg);
+    border-radius: 50%;
+    color: var(--pa-color-info-light-1);
+    font-size: var(--pa-size-font, 13px);
+  }
+}

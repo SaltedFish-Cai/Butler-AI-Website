@@ -1,0 +1,26 @@
+@use "../../pa-icon/iconfont/iconfont.css";
+
+.pa-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(var(--pa-size-font) + 1px);
+  font-style: normal;
+  line-height: 1;
+}
+
+.pa-icon__font {
+  position: relative;
+  z-index: 0;
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  font-size: inherit;
+}
+
+.pa-icon__font--gradient {
+  background-image: var(--pa-icon-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}

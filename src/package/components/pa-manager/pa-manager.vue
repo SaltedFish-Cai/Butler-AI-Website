@@ -211,9 +211,9 @@ watch(
 </script>
 
 <style lang="scss">
-@use "../styles/index.scss";
 @use "../styles/pt-size.scss";
 @use "../styles/flex.scss";
 @use "../styles/theme.scss";
 @use "../styles/animation.scss";
+@use "../styles/default/index.scss";
 </style>

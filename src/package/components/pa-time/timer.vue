@@ -690,7 +690,7 @@ watch(
   }
   &:has(> .pa-popover-reference > .is-focus) {
     border-color: var(--pa-color-primary);
-    box-shadow: var(--pa-shadow-color);
+    box-shadow: var(--pa-color-shadow);
     outline: 0;
   }
 }

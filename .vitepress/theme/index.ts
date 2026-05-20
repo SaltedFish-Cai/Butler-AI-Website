@@ -105,7 +105,7 @@ export default {
     app.component("demo", demo);
 
     app.component("NavLinks", NavLinks);
-    
+
     // 注册首页装饰组件
     app.component("HomeDecorations", HomeDecorations);
 

@@ -443,7 +443,7 @@ defineExpose({
   background-color: var(--pa-color-bg);
   border: 1px solid var(--pa-color-border);
   border-radius: var(--pa-size-radius, 3px);
-  box-shadow: var(--pa-shadow-color);
+  box-shadow: var(--pa-color-shadow);
   overflow: hidden;
   z-index: 1000;
 }

@@ -262,7 +262,7 @@ defineExpose({ openEditDialog });
     cursor: pointer;
     color: var(--pa-color-primary);
     border-color: var(--pa-color-primary);
-    box-shadow: var(--pa-shadow-color);
+    box-shadow: var(--pa-color-shadow);
   }
 }
 </style>

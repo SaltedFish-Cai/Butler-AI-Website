@@ -1,0 +1,161 @@
+@use "../animation.scss";
+
+.pa-dialog {
+  transition: var(--pa-animation-time, 0.2s);
+  height: 100%;
+  max-height: calc(100vh - var(--pa-size-padding) * 2);
+  z-index: 1;
+
+  .pa-dialog-content {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    margin-top: var(--pa-dialog-offset-y);
+    margin-left: var(--pa-dialog-offset-x);
+    box-shadow: 0 12px 32px 4px rgb(0 0 0 / 4%), 0 8px 20px rgb(0 0 0 / 8%);
+    background-color: var(--pa-color-bg);
+    border-radius: var(--pa-size-radius, 3px);
+    overflow: hidden;
+    transition: var(--pa-animation-time, 0.2s);
+    max-height: calc(100vh - var(--pa-size-padding, 10px) * 2);
+
+    .pa-dialog-content_header {
+      position: relative;
+      padding: 0 !important;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 0;
+      font-size: calc(var(--pa-size-font) + 2px) !important;
+      font-weight: bold;
+      color: var(--pa-color-font);
+      border-bottom: 1px solid var(--pa-color-border);
+
+      .title_body {
+        padding: calc(var(--pa-size-padding)) !important;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: calc(var(--pa-size-font) + 1px);
+
+        .is_title_body {
+          font-size: calc(var(--pa-size-font) + 1px);
+        }
+
+        .sub_title_body {
+          position: absolute;
+          left: 50%;
+          transform: translateX(-50%);
+          font-size: calc(var(--pa-size-font, 13px) + 1px);
+        }
+      }
+
+      .pa-dialog-content_header_close {
+        position: relative;
+        width: calc(var(--pa-size-font, 13px) * 1.5 + var(--pa-size-padding, 10px) * 2);
+        height: -webkit-fill-available;
+        height: -moz-available;
+        height: stretch;
+        background-color: var(--pa-color-danger-light-4);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: var(--pa-color-white);
+        font-size: calc(var(--pa-size-font, 13px) + 3px);
+        transition: var(--pa-animation-time, 0.2s);
+
+        &:hover {
+          cursor: pointer;
+          background-color: var(--pa-color-danger);
+        }
+      }
+    }
+
+    .pa-dialog-content_body {
+      height: 100%;
+      overflow: hidden;
+
+      .dialog__body {
+        width: 100%;
+        height: 100%;
+        box-sizing: border-box;
+      }
+
+      .dialog__body.padding-top {
+        padding-top: calc(var(--pa-size-padding, 10px)) !important;
+      }
+
+      .dialog__body.padding-left {
+        padding-left: calc(var(--pa-size-padding, 10px)) !important;
+      }
+
+      .dialog__body.padding-bottom {
+        padding-bottom: calc(var(--pa-size-padding, 10px)) !important;
+      }
+
+      .dialog__body.padding-right {
+        padding-right: calc(var(--pa-size-padding, 10px)) !important;
+      }
+    }
+  }
+
+  .full_icon {
+    display: flex !important;
+    width: calc(var(--pa-size-height) - 9px);
+    height: calc(var(--pa-size-height) - 9px);
+    color: var(--pa-color-info-light-3);
+    border: 1px solid;
+    border-radius: var(--pa-size-radius, 3px);
+    transition: var(--pa-animation-time, 0.2s);
+
+    &:hover {
+      color: var(--pa-color-primary);
+    }
+  }
+
+  .pa-dialog-content_footer {
+    position: relative;
+    padding: calc(var(--pa-size-padding, 10px) / 1.5) !important;
+    border-top: 1px solid var(--pa-color-border);
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &:has(.pa-dialog-content_footer_left),
+    &:has(.pa-dialog-content_footer_right) {
+      justify-content: space-between;
+
+      .pa-dialog-content_footer_center {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+    }
+
+    .pa-dialog-content_footer_left,
+    .pa-dialog-content_footer_right {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: var(--pa-size-height);
+    }
+  }
+}
+
+.pa-dialog_full {
+  height: 100% !important;
+  width: 100% !important;
+  max-height: 100% !important;
+  margin: 0 !important;
+  border-radius: 0 !important;
+
+  > .pa-dialog-content {
+    max-height: 100% !important;
+    border-radius: 0px !important;
+  }
+}

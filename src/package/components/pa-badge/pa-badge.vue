@@ -41,7 +41,3 @@ const showVal = computed(() => {
   return props.value;
 });
 </script>
-
-<style lang="scss">
-@use "./index.scss";
-</style>

@@ -5,7 +5,7 @@ import { useData } from "../composables/data";
 import { useSidebar } from "../composables/sidebar";
 import VPDocAside from "./VPDocAside.vue";
 import VPDocFooter from "./VPDocFooter.vue";
-import { PancakeUIType } from "PancakeType";
+import { PancakeGlobalType } from "PancakeType";
 import { advancedQueryApi, groupAdvancedQueryApi } from "public/file/mock-api";
 const { theme } = useData();
 
@@ -37,7 +37,7 @@ const PancakeUIConfig = ref({
     downloadHose: Host + "/UploadFile/getfile?filepath=",
     compareKey: "FileId"
   }
-} as PancakeUIType);
+} as PancakeGlobalType);
 
 onMounted(() => {
   const classList = (typeof window !== "undefined" && window.document?.documentElement.classList) || null;

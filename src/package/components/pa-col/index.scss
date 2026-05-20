@@ -1,16 +1,1 @@
-.pa-col {
-  position: relative;
-  min-height: 1px;
-  box-sizing: border-box;
-  float: left;
-
-  @for $i from 1 through 24 {
-    &:nth-child(#{$i}n + 1 of [style*="--col-span-value: #{$i}"]) {
-      margin-left: 0 !important;
-    }
-
-    &:nth-child(#{$i}n of [style*="--col-span-value: #{$i}"]) {
-      margin-right: 0 !important;
-    }
-  }
-}
+@use "../styles/default/pa-col.scss";

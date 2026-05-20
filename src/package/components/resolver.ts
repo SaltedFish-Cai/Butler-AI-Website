@@ -14,7 +14,7 @@ function kebabCase(key) {
 function resolveComponent$1(name, options) {
   if (options.exclude && name.match(options.exclude)) return;
   console.log("+++++1+++++> name:", name);
-  if (!name.match(/^Sa[A-Z]/)) return;
+  if (!name.match(/^Pa[A-Z]/)) return;
 
   const partialName = kebabCase(name.slice(0));
   let partialNameItem = `${partialName}`;
