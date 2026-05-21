@@ -61,7 +61,7 @@ const getPaAnagerGlobalZIndex = () => {
 const props = withDefaults(defineProps<ComponentProps>(), {});
 
 const useGlobalState = globalState();
-const PancakeUIConfigs = window.localStorage.getItem("Pancake-UI-global-configs");
+const PancakeUIConfigs = window.localStorage.getItem("ui-global-configs");
 
 /**
  * 全局配置状态
@@ -75,10 +75,8 @@ const state = reactive({
   isDark: props.isDark,
   titleStyle: props.titleStyle,
   iconFont: props.iconFont,
-  language: {
-    value: props.language || "zh-CN",
-    package: languageMap[props.language || "zh-CN"]
-  },
+  language: props.language || "zh-CN",
+  languagePackage: languageMap[props.language || "zh-CN"],
   table_config: props.table_config,
   address_config: props.address_config,
   file_config: props.file_config,
