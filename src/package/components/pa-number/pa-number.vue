@@ -160,7 +160,7 @@ let oldValue: number | string = props.modelValue || "";
  * @description 当前选中的语言
  */
 const languageValue = computed<string>(() => {
-  return PancakeGlobalConfig.value?.language?.value || "zh-CN";
+  return PancakeGlobalConfig.value?.language || "zh-CN";
 });
 /**
  * 语言包

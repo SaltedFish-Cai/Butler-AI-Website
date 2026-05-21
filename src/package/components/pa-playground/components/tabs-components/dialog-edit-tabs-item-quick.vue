@@ -76,7 +76,7 @@ const exOptionsComputed = computed(() => {
 });
 
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
-const language = computed(() => PancakeGlobalConfig.value?.language?.value || "zh-CN");
+const language = computed(() => PancakeGlobalConfig.value?.language || "zh-CN");
 const visibleTableRef = useTemplateRef("visibleTableRef");
 
 const tableConfig = ref<PaStructureType.Table[]>([

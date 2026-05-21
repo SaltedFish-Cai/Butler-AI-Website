@@ -112,7 +112,7 @@ const PancakeGlobalConfig = inject<PancakeGlobalConfigType>("PancakeGlobalConfig
  */
 const displayText = computed(() => {
   if (typeof props.text === "string") return props.text;
-  const lang = PancakeGlobalConfig?.language?.value || "zh-CN";
+  const lang = PancakeGlobalConfig?.language || "zh-CN";
   return props.text?.[lang] ?? "";
 });
 /**

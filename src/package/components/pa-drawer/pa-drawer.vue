@@ -109,7 +109,7 @@ const positionMap = {
  * @type ComputedRef<string>
  * @description 当前使用的语言
  */
-const language = computed(() => PancakeGlobalConfig.value?.language?.value || "zh-CN");
+const language = computed(() => PancakeGlobalConfig.value?.language || "zh-CN");
 /**
  * 抽屉弹窗样式类
  * @type ComputedRef<string>
@@ -153,7 +153,7 @@ const displayTitle = computed(() => (typeof props.title === "string" ? props.tit
  * @type ComputedRef<string>
  * @description 根据语言返回对应的副标题文本
  */
-const displaySubTitle = computed(() => (typeof props.subTitle === "string" ? props.subTitle : props.subTitle[language.value]));
+const displaySubTitle = computed(() => (typeof props.subTitle === "string" ? props.subTitle : props.subTitle?.[language.value]));
 /**
  * 关闭抽屉弹窗
  * @description 关闭抽屉弹窗并触发相关事件

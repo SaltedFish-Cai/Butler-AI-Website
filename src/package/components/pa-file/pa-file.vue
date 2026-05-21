@@ -195,7 +195,7 @@ const ajaxFileList: Array<Record<string, string>> = [];
  * @description 当前选中的语言
  */
 const languageValue = computed(() => {
-  return PancakeGlobalConfig.value?.language?.value || "zh-CN";
+  return PancakeGlobalConfig.value?.language || "zh-CN";
 });
 /**
  * 语言包计算属性
@@ -253,7 +253,7 @@ const languagePackage = computed(() => {
  * @description 根据语言和属性设置返回上传按钮的占位符文本
  */
 const computedPlaceholder: ComputedRef<string> = computed(() => {
-  const language = PancakeGlobalConfig.value?.language?.value || "zh-CN";
+  const language = PancakeGlobalConfig.value?.language || "zh-CN";
 
   return typeof props.placeholder === "object" ? props.placeholder[language] || languagePackage.value[`uploadText`] : props.placeholder || languagePackage.value[`uploadText`];
 });

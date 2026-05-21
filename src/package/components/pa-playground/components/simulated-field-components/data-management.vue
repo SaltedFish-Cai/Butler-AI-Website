@@ -25,7 +25,7 @@ import { M_Message } from "../../../feedback";
 import MQuickTable from "../quick-table.vue";
 
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
-const language = PancakeGlobalConfig.value?.language?.value || "zh-CN";
+const language = PancakeGlobalConfig.value?.language || "zh-CN";
 
 const props = withDefaults(
   defineProps<{

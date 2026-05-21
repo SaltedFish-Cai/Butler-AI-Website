@@ -241,7 +241,7 @@ let oldValue: Array<string> | string = "";
  * @description 当前选中的语言
  */
 const languageValue = computed(() => {
-  return PancakeGlobalConfig.value?.language?.value || "zh-CN";
+  return PancakeGlobalConfig.value?.language || "zh-CN";
 });
 
 /**

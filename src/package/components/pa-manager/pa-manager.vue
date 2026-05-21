@@ -43,6 +43,8 @@ import { createLog } from "../utils/develop-log";
  */
 import isNil from "../tools/is-nil";
 
+import { useBaseStore as globalState } from "../store/index";
+
 /**
  * 全局 Z 索引获取方法
  * @description 提供全局 Z 索引获取方法给子组件使用
@@ -58,6 +60,9 @@ const getPaAnagerGlobalZIndex = () => {
  */
 const props = withDefaults(defineProps<ComponentProps>(), {});
 
+const useGlobalState = globalState();
+const PancakeUIConfigs = window.localStorage.getItem("Pancake-UI-global-configs");
+
 /**
  * 全局配置状态
  * @type PancakeGlobalConfigType
@@ -68,6 +73,8 @@ const state = reactive({
   themeColor: props.themeColor,
   size: props.size || "default",
   isDark: props.isDark,
+  titleStyle: props.titleStyle,
+  iconFont: props.iconFont,
   language: {
     value: props.language || "zh-CN",
     package: languageMap[props.language || "zh-CN"]
@@ -75,8 +82,13 @@ const state = reactive({
   table_config: props.table_config,
   address_config: props.address_config,
   file_config: props.file_config,
-  requestHeader: props.requestHeader
+  requestHeader: props.requestHeader,
+  ...(PancakeUIConfigs ? useGlobalState.$state : {})
 } as PancakeGlobalConfigType);
+
+if (!PancakeUIConfigs) {
+  useGlobalState.setGlobalConfig(props);
+}
 
 /**
  * 全局配置注入
@@ -86,7 +98,7 @@ provide(
   "PancakeGlobalConfig",
   computed(() => {
     if (typeof window !== "undefined") {
-      window.PancakeGlobalConfig = { ...state, language: (state?.language?.value || "zh-CN") as any };
+      window.PancakeGlobalConfig = state;
     }
     return state;
   })
@@ -131,10 +143,8 @@ function setPaManagerSize(size: "default" | "large" | "small"): void {
  * @description 更新语言配置和对应的语言包
  */
 function setPaManagerLanguage(language: "en-US" | "zh-CN"): void {
-  state.language = {
-    value: language,
-    package: languageMap[language]
-  };
+  console.log("+++123123+++++++> language:", language);
+  state.language = language;
 }
 
 /**
@@ -154,8 +164,8 @@ function setPaManagerTableInfiniteScroll(value: Record<string, unknown>): void {
  * @returns void
  * @description 根据类型调用对应的配置方法
  */
-function setPaManagerConfig(type: keyof PancakeGlobalConfigType & {}, config: unknown): void {
-  if (type == "language") setPaManagerLanguage(config as "en-US" | "zh-CN");
+function setPaManagerConfig(type: keyof PancakeGlobalConfigType & {}, config: PancakeGlobalConfigType): void {
+  if (type == "language") setPaManagerLanguage(config.language as "en-US" | "zh-CN");
   else if (type == "themeColor" || type == "isDark") {
     const configObj = config as { themeColor?: string; isDark?: boolean };
     setPaManagerThemeColor(configObj.themeColor, configObj.isDark);
@@ -163,6 +173,7 @@ function setPaManagerConfig(type: keyof PancakeGlobalConfigType & {}, config: un
     const configObj = config as { size?: "default" | "large" | "small" };
     setPaManagerSize(configObj.size!);
   } else if (type == "table_config") setPaManagerTableInfiniteScroll(config as Record<string, unknown>);
+  useGlobalState.setGlobalConfig(config);
 }
 
 /**
@@ -189,25 +200,6 @@ onMounted(() => {
     window.developLog = createLog(props.env || "product");
   }
 });
-
-/**
- * Props 同步监听
- * @description 监听 props 变化并同步更新全局配置状态
- */
-watch(
-  () => props,
-  newVal => {
-    Object.assign(state, newVal);
-    state.language = {
-      value: newVal.language || "zh-CN",
-      package: languageMap[newVal.language || "zh-CN"]
-    };
-  },
-  {
-    immediate: true,
-    deep: true
-  }
-);
 </script>
 
 <style lang="scss">

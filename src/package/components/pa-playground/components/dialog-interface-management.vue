@@ -31,7 +31,7 @@ import MQuickTable from "./quick-table.vue";
 
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 const languageValue = computed(() => {
-  return PancakeGlobalConfig.value?.language?.value || "zh-CN";
+  return PancakeGlobalConfig.value?.language || "zh-CN";
 });
 
 const tableRef = useTemplateRef("tableRef");

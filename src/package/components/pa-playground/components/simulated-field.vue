@@ -29,7 +29,7 @@ import { PancakeGlobalConfigType } from "../../pa-manager/types";
 import { clearAllData } from "../../indexDB/indexDB";
 
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
-const language = PancakeGlobalConfig.value?.language?.value || "zh-CN";
+const language = PancakeGlobalConfig.value?.language || "zh-CN";
 
 const props = withDefaults(
   defineProps<{

@@ -58,7 +58,7 @@ const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<Pan
  * @description 当前语言设置
  */
 const language = computed(() => {
-  return PancakeGlobalConfig.value?.language?.value || "zh-CN";
+  return PancakeGlobalConfig.value?.language || "zh-CN";
 });
 
 /**

@@ -247,7 +247,7 @@ import { M_MessageBox } from "../../../feedback";
 import cloneDeep from "../../../tools/clone-deep";
 
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
-const language = computed(() => PancakeGlobalConfig.value?.language?.value || "zh-CN");
+const language = computed(() => PancakeGlobalConfig.value?.language || "zh-CN");
 const editOperationDialogRef = useTemplateRef("editOperationDialogRef");
 
 type EditButtonType = {

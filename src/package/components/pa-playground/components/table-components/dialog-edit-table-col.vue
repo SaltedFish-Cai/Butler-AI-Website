@@ -43,7 +43,7 @@ const props = defineProps<{
 }>();
 
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
-const language = computed(() => PancakeGlobalConfig.value?.language?.value || "zh-CN");
+const language = computed(() => PancakeGlobalConfig.value?.language || "zh-CN");
 
 const formRef = useTemplateRef("formRef");
 const formData = ref<PaStructureType.Table & { cellType?: string; exOptions?: PaOptionType.SelectList | PaOptionType.Switch }>({});

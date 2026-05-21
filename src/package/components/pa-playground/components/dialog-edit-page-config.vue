@@ -36,7 +36,7 @@ const emit = defineEmits<{
 }>();
 
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
-const language = PancakeGlobalConfig.value?.language?.value || "zh-CN";
+const language = PancakeGlobalConfig.value?.language || "zh-CN";
 
 const visible = ref(false);
 const editItemData = ref<PaPlaygroundItem>({} as PaPlaygroundItem);

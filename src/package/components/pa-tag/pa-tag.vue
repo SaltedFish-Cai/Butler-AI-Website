@@ -62,7 +62,7 @@ const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<Pan
  * @type ComputedRef<string>
  * @description 当前语言标识，在 getLabel 中使用
  */
-const language = computed(() => PancakeGlobalConfig.value?.language?.value || DEFAULT_LANGUAGE);
+const language = computed(() => PancakeGlobalConfig.value?.language || DEFAULT_LANGUAGE);
 /**
  * 组件属性
  * @type ComponentProps

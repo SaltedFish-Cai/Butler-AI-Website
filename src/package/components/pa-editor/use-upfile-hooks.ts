@@ -62,7 +62,7 @@ export function useUpFileHooks(props: ComponentProps, fileInput: Ref<any>, Panca
    * @description 当前选中的语言
    */
   const languageValue = computed(() => {
-    return PancakeGlobalConfig.value?.language?.value || "zh-CN";
+    return PancakeGlobalConfig.value?.language || "zh-CN";
   });
   /**
    * 语言包计算属性

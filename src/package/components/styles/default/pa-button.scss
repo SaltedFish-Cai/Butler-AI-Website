@@ -7,6 +7,7 @@
 
   &:hover {
     background-color: var(#{$var-hover});
+    box-shadow: var(--pa-color-shadow);
   }
 }
 
@@ -178,7 +179,11 @@
 .pa-button-group {
   display: inline-flex;
   overflow: hidden;
-
+  border-radius: var(--pa-size-radius, 3px);
+  transition: var(--pa-animation-time, 0.2s);
+  &:hover {
+    box-shadow: var(--pa-color-shadow);
+  }
   > .pa-button {
     border: none;
     margin: 0;
@@ -188,6 +193,7 @@
 
     &:hover {
       z-index: 1;
+      box-shadow: none;
     }
   }
 

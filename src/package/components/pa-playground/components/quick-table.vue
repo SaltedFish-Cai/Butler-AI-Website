@@ -75,7 +75,7 @@ import { PancakeGlobalConfigType } from "../../pa-manager/types";
 const id = ref("table_" + new Date().getTime().toString());
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 const languageValue = computed(() => {
-  return PancakeGlobalConfig.value?.language?.value || "zh-CN";
+  return PancakeGlobalConfig.value?.language || "zh-CN";
 });
 
 const operationStyle = ref("");

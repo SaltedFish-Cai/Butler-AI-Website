@@ -60,7 +60,7 @@ export interface GlobalState {
    * @description 语言包字典数据
    * */
   languagePackage?: {
-    [key: string]: { [key: string]: string };
+    [key: "en-US" | "zh-CN"]: { [key: string]: string };
   };
 
   /**
@@ -104,4 +104,20 @@ export interface GlobalState {
    * @default false
    * */
   isPrint?: boolean;
+
+  /**
+   * 标题样式
+   * @type "default" | "horizontal" | "vertical" | undefined
+   * @default 'default'
+   * @description 当设置该值时，会自定义标题样式
+   */
+  titleStyle?: "default" | "horizontal" | "vertical";
+
+  /**
+   * 图标字体
+   * @type "butler-iconfont" | "pa-iconfont" | undefined
+   * @default 'pa-iconfont'
+   * @description 当设置该值时，会自定义图标字体
+   */
+  iconFont?: "butler-iconfont" | "pa-iconfont";
 }

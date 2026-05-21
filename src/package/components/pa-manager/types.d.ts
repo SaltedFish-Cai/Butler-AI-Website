@@ -106,6 +106,13 @@ export type PancakeGlobal = {
    */
   titleStyle?: "default" | "horizontal" | "vertical";
   /**
+   * 图标字体
+   * @type "butler-iconfont" | "pa-iconfont" | undefined
+   * @default 'pa-iconfont'
+   * @description 当设置该值时，会自定义图标字体
+   */
+  iconFont?: "butler-iconfont" | "pa-iconfont";
+  /**
    * 表格配置
    * @type object | undefined
    * @default undefined
@@ -186,8 +193,12 @@ export type PancakeGlobalConfigType = PancakeGlobal & {
    * @default undefined
    * @description 语言的值和对应的语言包
    */
-  language?: {
-    value: LanguageKey;
-    package: Record<string, Record<string, string>>;
-  };
+  language?: LanguageKey;
+
+  /**
+   * @type Record<LanguageKey, Record<string, string>> | undefined
+   * @default undefined
+   * @description 语言包的映射关系
+   */
+  languagePackage?: Record<LanguageKey, Record<string, string>>;
 };

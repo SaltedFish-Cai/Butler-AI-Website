@@ -67,7 +67,7 @@ const props = defineProps<{
 }>();
 
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
-const language = computed(() => PancakeGlobalConfig.value?.language?.value || "zh-CN");
+const language = computed(() => PancakeGlobalConfig.value?.language || "zh-CN");
 
 const tableConfig = ref<PaStructureType.Table[]>([
   { prop: "label", label: { "en-US": "Column Name", "zh-CN": "列名" }, width: "300px" },

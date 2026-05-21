@@ -15,12 +15,12 @@
     margin: 0;
     margin-top: var(--pa-dialog-offset-y);
     margin-left: var(--pa-dialog-offset-x);
-    box-shadow: 0 12px 32px 4px rgb(0 0 0 / 4%), 0 8px 20px rgb(0 0 0 / 8%);
     background-color: var(--pa-color-bg);
     border-radius: var(--pa-size-radius, 3px);
     overflow: hidden;
     transition: var(--pa-animation-time, 0.2s);
     max-height: calc(100vh - var(--pa-size-padding, 10px) * 2);
+    box-shadow: var(--pa-color-shadow);
 
     .pa-dialog-content_header {
       position: relative;
@@ -32,7 +32,6 @@
       font-size: calc(var(--pa-size-font) + 2px) !important;
       font-weight: bold;
       color: var(--pa-color-font);
-      border-bottom: 1px solid var(--pa-color-border);
 
       .title_body {
         padding: calc(var(--pa-size-padding)) !important;
@@ -55,21 +54,19 @@
       }
 
       .pa-dialog-content_header_close {
+        --pa-size-font: 23px;
         position: relative;
-        width: calc(var(--pa-size-font, 13px) * 1.5 + var(--pa-size-padding, 10px) * 2);
-        height: -webkit-fill-available;
-        height: -moz-available;
-        height: stretch;
-        background-color: var(--pa-color-danger-light-4);
         display: flex;
         justify-content: center;
         align-items: center;
-        color: var(--pa-color-white);
-        font-size: calc(var(--pa-size-font, 13px) + 3px);
+        color: var(--pa-color-danger);
         transition: var(--pa-animation-time, 0.2s);
-
+        margin-right: calc(var(--pa-size-padding, 10px));
+        border-radius: 50%;
+        padding: calc(var(--pa-size-padding, 10px) / 4);
         &:hover {
           cursor: pointer;
+          color: var(--pa-color-white);
           background-color: var(--pa-color-danger);
         }
       }

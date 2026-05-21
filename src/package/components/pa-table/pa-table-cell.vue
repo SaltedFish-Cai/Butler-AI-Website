@@ -434,7 +434,7 @@ function setCellDisplayValue(row: PaTableUseType.PaTableInDataType, prop: string
     return keepDecimalPlaces(row[prop], cellConfig.precision);
   } else if (type == "switch") {
     const _exOptions = exOptions.value[prop];
-    return findDataWidthSwitch(row[prop], _exOptions, PancakeGlobalConfig.value?.language?.value);
+    return findDataWidthSwitch(row[prop], _exOptions, PancakeGlobalConfig.value?.language);
   } else if (
     type == "radio" ||
     type == "checkbox" ||

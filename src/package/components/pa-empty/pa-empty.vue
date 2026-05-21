@@ -50,7 +50,7 @@ const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<Pan
  */
 const messageText = computed(() => {
   if (typeof props.message === "string") return props.message;
-  const lang = PancakeGlobalConfig.value?.language?.value || DEFAULT_LANG;
+  const lang = PancakeGlobalConfig.value?.language || DEFAULT_LANG;
   return props.message?.[lang] || "暂无数据";
 });
 </script>

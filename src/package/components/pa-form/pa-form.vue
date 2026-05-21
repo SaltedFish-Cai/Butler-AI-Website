@@ -232,7 +232,7 @@ const injectSetScrollToIntersect = inject("setScrollToIntersect") as (el: Elemen
  * @type `ComputedRef<string>`
  * @description 当前选中的语言标识
  */
-const languageValue = computed(() => PancakeGlobalConfig.value?.language?.value || "zh-CN");
+const languageValue = computed(() => PancakeGlobalConfig.value?.language || "zh-CN");
 /**
  * **语言包**
  * @type `ComputedRef<Record<string, string>>`
@@ -306,7 +306,7 @@ const configContext: Ref<ConfigContextType> = ref({
   alwaysContrast: computed(() => props.alwaysContrast),
   display: computed(() => props.display),
   languagePackage: computed(() => languagePackage.value),
-  language: computed(() => PancakeGlobalConfig.value?.language?.value || "zh-CN"),
+  language: computed(() => PancakeGlobalConfig.value?.language || "zh-CN"),
   exOptions: computed(() => props.exOptions),
   exDependent: computed(() => props.exDependent),
   exCellDependent: computed(() => props.exCellDependent),
@@ -455,7 +455,7 @@ function setRule(item: PaFormChildType | PaFormItemType, type = "default", optio
         trigger: "blur",
         required: item.required || true,
         ...item,
-        message: typeof item.message == "string" ? item.message : item.message?.[PancakeGlobalConfig.value?.language?.value || "zh-CN"] || configContext.value.languagePackage["requiredMessage"]
+        message: typeof item.message == "string" ? item.message : item.message?.[PancakeGlobalConfig.value?.language || "zh-CN"] || configContext.value.languagePackage["requiredMessage"]
       };
       return data;
     });
@@ -507,7 +507,7 @@ function initConfig() {
   // --- 第一步：收集分组键 ---
   const propsArr: (string[] | string | undefined)[] = [];
   for (const item of inConfig.value) {
-    const _groupName = typeof item.unitName == "object" ? item.unitName?.[PancakeGlobalConfig.value?.language?.value || "zh-CN"] : item.unitName || "default";
+    const _groupName = typeof item.unitName == "object" ? item.unitName?.[PancakeGlobalConfig.value?.language || "zh-CN"] : item.unitName || "default";
     if (!baseInMultipleConfigKeys.includes(_groupName)) {
       baseInMultipleConfigKeys.push(_groupName);
     }
@@ -542,7 +542,7 @@ function initConfig() {
   const _useRequired = props.useRequired;
   const _disabled = props.disabled;
   const _display = props.display;
-  const _language = PancakeGlobalConfig.value?.language?.value || "zh-CN";
+  const _language = PancakeGlobalConfig.value?.language || "zh-CN";
   const _requiredMessage = configContext.value.languagePackage["requiredMessage"];
 
   for (let idx = 0; idx < inConfig.value.length; idx++) {

@@ -35,7 +35,7 @@ import type { PancakeGlobalConfigType } from "../pa-manager/types";
  * @type `ComponentProps`
  * @description 组件的属性对象，包含 name、tip 等
  */
-const props = withDefaults(defineProps<ComponentProps>(), { name: "magic_line", fontFamily: "pa-iconfont" as const });
+const props = withDefaults(defineProps<ComponentProps>(), { name: "magic_line" });
 /**
  * **全局配置注入**
  * @type `ComputedRef<PancakeGlobalConfigType>`
@@ -54,8 +54,8 @@ let butlerFontLoaded = false;
  * @description 根据 fontFamily 和 fontColor 计算图标元素的类名
  */
 const iconClasses = computed(() => {
-  const prefix = props.fontFamily === "pa-iconfont" ? "icon" : "butler";
-  const base = ["pa-icon__font", `${prefix}-${props.name}`];
+  const prefix = (props.fontFamily || PancakeGlobalConfig.value?.iconFont || "pa-iconfont") === "pa-iconfont" ? "icon" : "butler";
+  const base = ["pa-icon__font", props.name.indexOf("butler-") > -1 ? props.name : `${prefix}-${props.name}`];
   if (props.fontColor?.length) base.push("pa-icon__font--gradient");
   return base;
 });
@@ -65,8 +65,8 @@ const iconClasses = computed(() => {
  * @description 图标容器的行内样式，合并自定义样式和字体设置
  */
 const iconStyle = computed(() => {
-  if (!props.style) return { fontFamily: props.fontFamily };
-  return { ...props.style, fontFamily: props.fontFamily };
+  if (!props.style) return { fontFamily: props.fontFamily || PancakeGlobalConfig.value?.iconFont || "pa-iconfont" };
+  return { ...props.style, fontFamily: props.fontFamily || PancakeGlobalConfig.value?.iconFont || "pa-iconfont" };
 });
 /**
  * **图标字体样式**
@@ -84,7 +84,7 @@ const iconFontStyle = computed(() => {
  */
 const tipText = computed(() => {
   if (typeof props.tip === "string") return props.tip;
-  const languageValue = PancakeGlobalConfig.value?.language?.value || "zh-CN";
+  const languageValue = PancakeGlobalConfig.value?.language || "zh-CN";
   return props.tip?.[languageValue] ?? "";
 });
 /**
@@ -93,7 +93,7 @@ const tipText = computed(() => {
  * @description 仅在 fontFamily 为 butler-iconfont 时按需加载，减少初始包体积
  */
 function loadButlerFont(): void {
-  if (butlerFontLoaded || props.fontFamily !== "butler-iconfont") return;
+  if (butlerFontLoaded || (props.fontFamily || PancakeGlobalConfig.value?.iconFont) !== "butler-iconfont") return;
   butlerFontLoaded = true;
   const link = document.createElement("link");
   link.rel = "stylesheet";

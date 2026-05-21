@@ -491,7 +491,7 @@ const parentScrollbarRef = inject("parentScrollbarRef");
  * @type ComputedRef<string>
  * @description 当前选中的语言
  */
-const languageValue = computed(() => PancakeGlobalConfig.value?.language?.value || "zh-CN");
+const languageValue = computed(() => PancakeGlobalConfig.value?.language || "zh-CN");
 /**
  * 语言包
  * @type ComputedRef
@@ -647,7 +647,7 @@ const languagePackage = computed(() => {
  * @type ComputedRef<string>
  * @description 当前语言标识
  */
-const language = computed(() => PancakeGlobalConfig.value?.language?.value || "zh-CN");
+const language = computed(() => PancakeGlobalConfig.value?.language || "zh-CN");
 /**
  * 无限滚动
  * @type ComputedRef<boolean>
@@ -759,7 +759,7 @@ provide(
 );
 provide(
   "language",
-  computed(() => PancakeGlobalConfig.value?.language?.value || "zh-CN")
+  computed(() => PancakeGlobalConfig.value?.language || "zh-CN")
 );
 provide(
   "exOptions",

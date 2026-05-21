@@ -5,7 +5,7 @@ import inBrowser from "../tools/inBrowser";
 const piniaPersistConfig = (key: string, paths?: string[]) => {
   const persist: PersistedStateOptions = {
     key,
-    storage: inBrowser ? window.sessionStorage : undefined,
+    storage: inBrowser ? window.localStorage : undefined,
     // storage: sessionStorage,
     paths
   };
