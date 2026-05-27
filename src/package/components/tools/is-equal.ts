@@ -6,6 +6,8 @@
  * @description 简单的值相等判断，将值转为字符串后比较
  */
 function isEqual(value: unknown, other: unknown): boolean {
-  return String(value) === String(other);
+  const _val = typeof value === "object" ? JSON.stringify(value) : String(value);
+  const _other = typeof other === "object" ? JSON.stringify(other) : String(other);
+  return _val === _other;
 }
 export default isEqual;
