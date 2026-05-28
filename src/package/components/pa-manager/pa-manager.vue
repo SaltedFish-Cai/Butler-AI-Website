@@ -16,7 +16,7 @@ let globalZIndex = 2000;
  * 模块导入
  * @description 导入 Vue 核心响应式 API
  */
-import { provide, reactive, computed, watch, onMounted } from "vue";
+import { provide, reactive, computed, onMounted } from "vue";
 /**
  * 模块导入
  * @description 导入主题颜色设置工具

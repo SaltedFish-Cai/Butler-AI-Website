@@ -32,6 +32,7 @@
       font-size: calc(var(--pa-size-font) + 2px) !important;
       font-weight: bold;
       color: var(--pa-color-font);
+      border-bottom: 1px solid var(--pa-color-border);
 
       .title_body {
         padding: calc(var(--pa-size-padding)) !important;
@@ -116,7 +117,7 @@
 
   .pa-dialog-content_footer {
     position: relative;
-    padding: calc(var(--pa-size-padding, 10px) / 1.5) !important;
+    padding: var(--pa-size-padding, 10px) !important;
     border-top: 1px solid var(--pa-color-border);
     text-align: center;
     display: flex;

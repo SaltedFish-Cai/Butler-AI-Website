@@ -23,8 +23,8 @@
 
   .pa-switch-inner {
     position: relative;
-    width: calc(var(--pa-size-height) * 0.9 * 2);
-    height: calc(var(--pa-size-height) * 0.9);
+    width: calc(var(--pa-size-height) * 0.9 * 1.8);
+    height: calc(var(--pa-size-height) * 0.8);
     border-radius: calc(var(--pa-size-height) * 0.9);
     border: 1px solid var(--pa-color-border);
     display: flex;
@@ -36,8 +36,8 @@
   }
 
   .pa-switch-thumb {
-    width: calc(var(--pa-size-height) * 0.7);
-    height: calc(var(--pa-size-height) * 0.7);
+    width: calc(var(--pa-size-height) * 0.6);
+    height: calc(var(--pa-size-height) * 0.6);
     border-radius: 50%;
     background-color: var(--pa-color-bg);
   }

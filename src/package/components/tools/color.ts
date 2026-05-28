@@ -33,13 +33,31 @@ export function rgbToHex(r: any, g: any, b: any) {
   return `#${hexs.join("")}`;
 }
 
+function parseRgba(color: string): { r: number; g: number; b: number; a: number } | null {
+  const match = color.match(/^rgba\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*,\s*([\d.]+)\s*\)$/);
+  if (!match) return null;
+  return { r: Number(match[1]), g: Number(match[2]), b: Number(match[3]), a: Number(match[4]) };
+}
+
+function formatRgba(r: number, g: number, b: number, a: number): string {
+  return `rgba(${r}, ${g}, ${b}, ${a})`;
+}
+
 /**
  * @description 加深颜色值
- * @param {String} color 颜色值字符串
+ * @param {String} color 颜色值字符串（支持 hex 或 rgba 格式）
  * @param {Number} level 加深的程度，限0-1之间
  * @returns {String} 返回处理后的颜色值
  */
 export function getDarkColor(color: string, level: number): string {
+  const parsed = parseRgba(color);
+  if (parsed) {
+    const r = Math.round(20.5 * level + parsed.r * (1 - level));
+    const g = Math.round(20.5 * level + parsed.g * (1 - level));
+    const b = Math.round(20.5 * level + parsed.b * (1 - level));
+    return formatRgba(r, g, b, parsed.a);
+  }
+
   const reg = /^\#?[0-9A-Fa-f]{6}$/;
   if (!reg.test(color)) {
     console.error("输入错误的hex颜色值");
@@ -52,11 +70,19 @@ export function getDarkColor(color: string, level: number): string {
 
 /**
  * @description 变浅颜色值
- * @param {String} color 颜色值字符串
+ * @param {String} color 颜色值字符串（支持 hex 或 rgba 格式）
  * @param {Number} level 加深的程度，限0-1之间
  * @returns {String} 返回处理后的颜色值
  */
 export function getLightColor(color: string, level: number): string {
+  const parsed = parseRgba(color);
+  if (parsed) {
+    const r = Math.round(255 * level + parsed.r * (1 - level));
+    const g = Math.round(255 * level + parsed.g * (1 - level));
+    const b = Math.round(255 * level + parsed.b * (1 - level));
+    return formatRgba(r, g, b, parsed.a);
+  }
+
   const reg = /^\#?[0-9A-Fa-f]{6}$/;
   if (!reg.test(color)) {
     console.error("输入错误的hex颜色值");

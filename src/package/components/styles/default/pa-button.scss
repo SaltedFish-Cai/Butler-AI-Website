@@ -8,6 +8,7 @@
   &:hover {
     background-color: var(#{$var-hover});
     box-shadow: var(--pa-color-shadow);
+    transform: translateY(-2px);
   }
 }
 
@@ -23,9 +24,10 @@
   font-size: calc(var(--pa-size-font)) !important;
   border-radius: var(--pa-size-radius, 3px);
   border: 1px solid;
-  padding: calc(var(--pa-size-padding) / 2) calc(var(--pa-size-padding) + 0px);
+  padding: calc(var(--pa-size-padding) / 2) calc(var(--pa-size-padding) + 5px);
   user-select: none;
   box-sizing: border-box;
+  transition: var(--pa-animation-time, 0.2s);
 
   .pa-button_icon {
     margin-right: calc(var(--pa-size-padding) / 2);
@@ -78,7 +80,7 @@
     border-color: var(--pa-color-border);
 
     &:hover {
-      color: var(--pa-color-primary);
+      color: var(--pa-color-white);
       border-color: var(--pa-color-primary);
     }
   }
@@ -100,7 +102,7 @@
 
     font-size: var(--pa-size-font-sm) !important;
     line-height: var(--pa-size-height-sm) !important;
-    padding: calc(var(--pa-size-padding-sm) / 5) calc(var(--pa-size-padding-sm) / 1.2) !important;
+    padding: calc(var(--pa-size-padding-sm) / 5) calc(var(--pa-size-padding-sm) / 0.7) !important;
   }
 }
 
@@ -194,6 +196,7 @@
     &:hover {
       z-index: 1;
       box-shadow: none;
+      transform: translateY(0px);
     }
   }
 

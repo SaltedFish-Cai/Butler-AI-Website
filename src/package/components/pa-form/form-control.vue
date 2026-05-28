@@ -223,8 +223,6 @@ function initFormData() {
  * @description 验证所有字段并返回验证结果
  */
 async function validate(): Promise<{ valid: boolean; errors?: Record<string, string> }> {
-  const _formData = cloneDeep(props.model);
-
   const validations: Promise<void>[] = [];
   errorsMessage.value = {};
   formContext.rulesKeys.forEach(prop => {

@@ -11,7 +11,7 @@ export const useBaseStore = defineStore({
     themeColor: "#2a3e48",
     isDark: false,
     titleStyle: "default",
-    iconFont: "pa-iconfont",
+    iconFont: "butler-iconfont",
     requestHeader: {},
     tableConfig: {},
     formConfig: {},

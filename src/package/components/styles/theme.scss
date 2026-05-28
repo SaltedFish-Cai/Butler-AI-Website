@@ -123,14 +123,15 @@
   --pa-color-font: #1d1d1d;
   --pa-color-send-font: #606266;
   --pa-color-bg: #ffffff;
+  --pa-color-bg-opacity: rgba(255, 255, 255, 0.8);
   --pa-color-cell-bg: #f9f8fd;
   --pa-color-send-bg: #f5f7fa;
   --pa-color-border: #dcdfe6;
   --pa-color-hover: #c0c4cc;
   --pa-color-scrollbar: #e4e7ed;
 
-  --pa-color-shadow: 0px 4px 5px 0px rgba(0, 0, 0, 0.35);
-  --pa-color-shadow-active: inset 0px 4px 3px 0px rgba(0, 0, 0, 0.35);
+  --pa-color-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.35);
+  --pa-color-shadow-active: inset 0px 2px 3px 0px rgba(0, 0, 0, 0.35);
 }
 
 // DARK
@@ -143,6 +144,7 @@
   --pa-color-font: #bdbdc0;
   --pa-color-send-font: #bdbdc0;
   --pa-color-bg: #282828;
+  --pa-color-bg-opacity: rgba(0, 0, 0, 0.7); 
   --pa-color-cell-bg: #f9f8fd;
   --pa-color-send-bg: #191919;
   --pa-color-border: #4c4d4f;
