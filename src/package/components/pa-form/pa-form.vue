@@ -115,6 +115,7 @@ import isEqual from "../tools/is-equal";
  * @description 导入防抖工具函数
  */
 import debounce from "../tools/debounce";
+import isNil from "../tools/is-nil";
 
 /**
  * **组件属性**
@@ -122,6 +123,7 @@ import debounce from "../tools/debounce";
  */
 const props = withDefaults(defineProps<ComponentProps>(), {
   id: randChar(),
+  value: () => ({}),
   contrastData: () => ({}),
   useRequired: true,
   noLabel: false,
@@ -205,7 +207,7 @@ const baseItemSpanSize = {} as Record<string, number>;
  * @type `Ref<FormDataType>`
  * @description 表单的当前数据
  */
-const formData: Ref<FormDataType> = ref(cloneDeep(props.data) || {});
+const formData: Ref<FormDataType> = ref(props.data ? cloneDeep(props.data) : props.modelValue ? props.modelValue : {});
 /**
  * **配置项映射**
  * @description 表单配置项的映射存储
@@ -960,6 +962,16 @@ watch(
     emit("onFormStateChange", data);
   }
 );
+
+if (isNil(props.modelValue)) {
+  watch(
+    () => props.modelValue,
+    value => {
+      emit("update:modelValue", value);
+    },
+    { deep: true }
+  );
+}
 </script>
 
 <style lang="scss">

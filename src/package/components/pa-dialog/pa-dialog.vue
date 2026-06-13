@@ -81,7 +81,7 @@ const props = withDefaults(defineProps<ComponentProps>(), {
   keepAlive: true,
   title: "标题",
   useFull: true,
-  closeOnClickModal: true,
+  closeOnClickModal: false,
   closeOnPressEscape: true,
   titleAlign: "left",
   scroll: true

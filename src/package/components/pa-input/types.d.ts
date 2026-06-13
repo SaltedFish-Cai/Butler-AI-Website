@@ -95,6 +95,13 @@ export type ComponentProps = {
    */
   maxLength?: number | string;
   /**
+   * 最大显示行数
+   * @type number | undefined
+   * @default undefined
+   * @description 设置文本域最大显示行数，超出显示滚动条。仅 type 为 textarea 时生效
+   */
+  maxRows?: number;
+  /**
    * 显示清除按钮
    * @type boolean | undefined
    * @default true

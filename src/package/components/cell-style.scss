@@ -54,7 +54,7 @@
 .pa-cell-label {
   padding-right: calc(var(--pa-size-padding, 10px) / 2);
   margin-right: calc(var(--pa-size-padding, 10px) / 2);
-  font-size: calc(var(--pa-size-font, 16px) - 1px);
+  font-size: calc(var(--pa-size-font, 16px) - 2px);
   color: var(--pa-color-font);
   border-right: 1px solid var(--pa-color-border);
   overflow: hidden;
@@ -63,4 +63,5 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  line-height: calc(var(--pa-size-height) - var(--pa-size-height) / 4);
 }

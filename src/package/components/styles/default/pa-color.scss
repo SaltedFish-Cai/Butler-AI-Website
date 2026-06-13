@@ -34,9 +34,10 @@
   &-preview {
     display: flex;
     align-items: center;
-    padding: calc(var(--pa-size-padding) / 2) var(--pa-size-padding);
+    padding: calc(var(--pa-size-padding) / 3) calc(var(--pa-size-padding) / 1.2);
     border: 1px solid var(--pa-color-border);
     border-radius: var(--pa-size-radius);
+    background-color: var(--pa-color-bg);
     cursor: pointer;
     transition: all 0.3s ease;
 
@@ -51,9 +52,9 @@
     }
 
     &-color {
-      width: 20px;
-      height: 20px;
-      border-radius: 4px;
+      width: calc(var(--pa-size-height) - var(--pa-size-height) / 4 - 2px);
+      height: calc(var(--pa-size-height) - var(--pa-size-height) / 4 - 2px);
+      border-radius: var(--pa-size-radius);
       margin-right: 8px;
       position: relative;
       overflow: hidden;
@@ -70,7 +71,7 @@
     }
 
     &-text {
-      font-size: 12px;
+      font-size: var(--pa-size-font);
       color: var(--pa-color-font);
       white-space: nowrap;
     }
@@ -82,6 +83,9 @@
         box-shadow: none;
       }
     }
+  }
+  > .pa-popover-reference {
+    width: 100%;
   }
 }
 

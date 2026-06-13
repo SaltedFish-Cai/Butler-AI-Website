@@ -27,6 +27,13 @@ export interface GlobalState {
   isDark?: boolean;
 
   /**
+   * **代码编辑器主题**
+   * @type "light" | "dark"
+   * @default "light"
+   * */
+  coderEditorTheme?: "light" | "dark";
+
+  /**
    * **请求头**
    * @type objectType
    * */

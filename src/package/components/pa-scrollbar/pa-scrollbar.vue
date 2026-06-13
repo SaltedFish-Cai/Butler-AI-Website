@@ -17,10 +17,10 @@
       </div>
       <div v-if="useShadow" class="is-scroll-end" :style="scrollEndShadowStyle"></div>
     </div>
-    <div v-if="useVertical && prop.useScrollY && prop.showThumb" class="scrollbar__bar is-vertical">
+    <div v-if="useVertical && prop.useScrollY && prop.showThumb" class="scrollbar__bar is-vertical" :class="[useHiddenThumb ? 'hidden-thumb' : '']">
       <div class="scrollbar__thumb" ref="verticalThumbRef" :style="{ height: verticalThumb + 'px' }"></div>
     </div>
-    <div v-if="useHorizontal && prop.useScrollX && prop.showThumb" class="scrollbar__bar is-horizontal">
+    <div v-if="useHorizontal && prop.useScrollX && prop.showThumb" class="scrollbar__bar is-horizontal" :class="[useHiddenThumb ? 'hidden-thumb' : '']">
       <div class="scrollbar__thumb" ref="horizontalThumbRef" :style="{ width: horizontalThumb + 'px' }"></div>
     </div>
     <pa-icon v-if="useBackTop && prop.useScrollY" :style="backTopStyle" name="arow_to_up_line" class="pa-scrollbar-back-top m-hand" @click="setScrollTop(0)" />
@@ -98,6 +98,7 @@ const prop = withDefaults(defineProps<ComponentProps>(), {
   styleMode: "default",
   defaultScrollHorizontalThumb: 0,
   defaultScrollVerticalThumb: 0,
+  useHiddenThumb: true,
   paddingWidth: "var(--pa-size-padding, 10px)"
 });
 /**

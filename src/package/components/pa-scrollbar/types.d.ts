@@ -70,6 +70,13 @@ export type ComponentProps = {
    */
   showThumb?: boolean;
   /**
+   * 是否使用隐藏式滚动条
+   * @type boolean | undefined
+   * @default true
+   * @description 是否使用隐藏式滚动条
+   */
+  useHiddenThumb?: boolean;
+  /**
    * 自定义内容样式
    * @type Record<string, string> | undefined
    * @default undefined

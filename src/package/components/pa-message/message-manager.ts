@@ -24,7 +24,7 @@ class MessageManagerTypeImpl implements MessageManagerType {
    * 基础层级
    * @description 消息的基础 z-index 值
    */
-  zIndex = 2050;
+  zIndex = 3050;
 
   add(options: MessageOptions): MessageInstance {
     const id = `Message_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;

@@ -162,7 +162,8 @@ provide("elFormItem", {
   align-items: flex-start;
   position: relative;
   width: 100%;
-  padding: calc(var(--pa-size-padding, 10px) / 4) calc(var(--pa-size-padding, 10px) / 4);
+  // 表单项内边距,不知道有啥用
+  // padding: calc(var(--pa-size-padding, 10px) / 4) calc(var(--pa-size-padding, 10px) / 4);
   box-sizing: border-box;
   transition: 0.2s;
 

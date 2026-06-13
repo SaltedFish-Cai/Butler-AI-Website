@@ -1,5 +1,8 @@
 <template>
-  <button :id="id" type="button" :disabled="disabled" :class="buttonClasses" :style="props.style" @click="btnClick">
+  <button :id="id" type="button" :disabled="disabled || isLoading" :class="buttonClasses" :style="props.style" @click="btnClick">
+    <div v-if="isLoading" class="pa-button_icon">
+      <pa-icon name="butler-reset_line" class="pa-button_loading" />
+    </div>
     <slot name="icon">
       <pa-icon v-if="showLeftIcon" :name="currentIconName" :class="hasContent ? 'mr-btn pa-button_icon' : ''" />
     </slot>
@@ -146,7 +149,7 @@ const currentType = computed(() => {
  * @returns `boolean` 按钮的自动 loading 状态
  * @description 按钮的自动 loading 状态
  */
-const isLoading = ref(false);
+const isLoading = computed(() => props.loading || false);
 /**
  * **是否显示左侧图标**
  * @returns `boolean` 是否显示左侧图标

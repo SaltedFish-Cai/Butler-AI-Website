@@ -10,6 +10,7 @@ export const useBaseStore = defineStore({
   state: (): GlobalState & toolsState => ({
     themeColor: "#2a3e48",
     isDark: false,
+    coderEditorTheme: "light",
     titleStyle: "default",
     iconFont: "butler-iconfont",
     requestHeader: {},
@@ -155,6 +156,7 @@ export const useBaseStore = defineStore({
       this.titleStyle = _config.titleStyle;
       this.iconFont = _config.iconFont;
       this.isDark = _config.isDark;
+      this.coderEditorTheme = _config.coderEditorTheme || "light";
       this.requestHeader = _config.requestHeader;
       this.language = _config.language;
       this.languagePackage = _config.languagePackage;

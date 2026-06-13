@@ -8,7 +8,6 @@
   &:hover {
     background-color: var(#{$var-hover});
     box-shadow: var(--pa-color-shadow);
-    transform: translateY(-2px);
   }
 }
 
@@ -18,7 +17,7 @@
   align-items: center;
   width: max-content;
   overflow: hidden;
-  line-height: calc(var(--pa-size-height) - var(--pa-size-padding) - 2px);
+  line-height: 1.2em;
   white-space: nowrap;
   text-overflow: ellipsis;
   font-size: calc(var(--pa-size-font)) !important;
@@ -251,4 +250,10 @@
       border-color: var(--pa-color-success);
     }
   }
+}
+
+.pa-button_loading {
+  animation: loadings 1s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
 }

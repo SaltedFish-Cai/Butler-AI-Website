@@ -94,9 +94,14 @@
         line-height: calc(var(--pa-size-height, 24px) - var(--pa-size-height, 24px) / 4);
         resize: none;
         background: none;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
 
         &::placeholder {
           color: var(--pa-color-info-light-4);
+        }
+        &::-webkit-scrollbar {
+          display: none;
         }
       }
       .not-focus {

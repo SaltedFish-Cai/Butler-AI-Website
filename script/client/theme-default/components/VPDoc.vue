@@ -18,12 +18,14 @@ const Host = "";
 
 const PancakeUIConfig = ref({
   env: "local",
+  themeColor: "#27A552",
   language: "zh-CN",
   size: "default",
   isDark: false,
   baseHost: "",
   requestHeader: { Authorization: "", Version: "01010101" },
-  titleStyle: "horizontal",
+  titleStyle: "vertical",
+  iconFont: "butler-iconfont",
   table_config: {
     groupAdvancedQueryApi: groupAdvancedQueryApi,
     advancedQueryApi: advancedQueryApi,

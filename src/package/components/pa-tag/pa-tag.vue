@@ -6,6 +6,9 @@
       </div>
       <pa-icon v-if="!props.disabled" name="close_circle_line" class="pa-tag-text_close" @click.stop="removeTag(item)"> </pa-icon>
     </div>
+    <div v-if="props.useAddTag" class="pa-tag-text pa-tag-add">
+      <input type="text" v-model="addTagInput" :placeholder="resolvedAddTagPlaceholder" @keydown.enter="handleAddTag" />
+    </div>
     <pa-popover ref="popoverRef" v-if="hideValue.length" :popoverWidth="popoverWidth" stopPropagation>
       <template #reference>
         <div class="pa-tag-text pa-tag-collapse-count">+{{ hideValue.length }}</div>
@@ -68,7 +71,7 @@ const language = computed(() => PancakeGlobalConfig.value?.language || DEFAULT_L
  * @type ComponentProps
  * @description 组件的属性对象
  */
-const props = withDefaults(defineProps<ComponentProps>(), { useCollapse: true });
+const props = withDefaults(defineProps<ComponentProps>(), { useCollapse: true, useAddTag: false });
 /**
  * 组件事件定义
  * @description 定义组件可触发的事件
@@ -114,6 +117,12 @@ const hideValue = ref<Array<TagType>>([]);
  */
 const isOpacity = ref(0);
 /**
+ * 添加标签输入
+ * @type ReturnType<typeof ref>
+ * @description 添加标签输入框绑定值
+ */
+const addTagInput = ref("");
+/**
  * 获取标签显示文本
  * @param label - 标签文本或语言包
  * @returns 格式化后的标签文本
@@ -134,6 +143,26 @@ function getLabel(label: TagType["label"]): string {
 function removeTag(data: TagType) {
   emits("removeTag", data);
 }
+/**
+ * 处理添加标签
+ * @description 输入框回车时触发 addTag 事件，并清空输入
+ */
+function handleAddTag() {
+  const val = addTagInput.value.trim();
+  if (val) {
+    emits("addTag", val);
+    addTagInput.value = "";
+  }
+}
+/**
+ * 添加标签占位文本
+ * @type ComputedRef<string>
+ * @description 解析后的添加标签输入框占位文本（支持多语言）
+ */
+const resolvedAddTagPlaceholder = computed(() => {
+  if (props.addTagPlaceholder) return getLabel(props.addTagPlaceholder);
+  return "输入后回车添加";
+});
 /**
  * 初始化弹窗显示
  * @description 计算标签溢出，设置折叠显示

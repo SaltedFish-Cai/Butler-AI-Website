@@ -104,7 +104,7 @@
   // V2
   --pa-size-font: 16px;
   --pa-size-height: 30px;
-  --pa-size-padding: 10px;
+  --pa-size-padding: 15px;
   --pa-size-radius: 12px;
 
   --pa-size-font-base: 16px;
@@ -144,10 +144,10 @@
   --pa-color-font: #bdbdc0;
   --pa-color-send-font: #bdbdc0;
   --pa-color-bg: #282828;
-  --pa-color-bg-opacity: rgba(0, 0, 0, 0.7); 
+  --pa-color-bg-opacity: rgba(0, 0, 0, 0.7);
   --pa-color-cell-bg: #f9f8fd;
   --pa-color-send-bg: #191919;
-  --pa-color-border: #4c4d4f;
+  --pa-color-border: #404040;
   --pa-color-hover: #6c6e72;
   --pa-color-scrollbar: #414243;
 }
@@ -156,7 +156,7 @@
 .pa-content.large {
   --pa-size-font: 18px;
   --pa-size-height: 34px;
-  --pa-size-padding: 12px;
+  --pa-size-padding: 18px;
   --pa-size-radius: 16px;
 }
 
@@ -164,6 +164,6 @@
 .pa-content.small {
   --pa-size-font: 14px;
   --pa-size-height: 26px;
-  --pa-size-padding: 8px;
+  --pa-size-padding: 12px;
   --pa-size-radius: 8px;
 }

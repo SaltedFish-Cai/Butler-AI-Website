@@ -59,6 +59,13 @@ export type ComponentProps = {
    */
   data?: FormDataType;
   /**
+   * **双向绑定外置默认数据**
+   * @type [`FormDataType`](#formdatatype) | `undefined`
+   * @default `undefined`
+   * @description 当设置该值时，会使用该值作为默认数据
+   */
+  modelValue?: FormDataType;
+  /**
    * **对比数据**
    * @type `Record<string, any>` | `undefined`
    * @default `undefined`
@@ -198,6 +205,13 @@ export type ComponentEmits = {
    * @description 表单状态发生变化时触发
    */
   (e: "onFormStateChange", data: string): void;
+  /**
+   * **更新modelValue事件**
+   * @param `data` `FormDataType | undefined` 表单数据
+   * @returns `void`
+   * @description 表单数据发生变化时触发
+   */
+  (e: "update:modelValue", data: FormDataType | undefined): void;
 };
 
 /**

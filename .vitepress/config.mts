@@ -268,7 +268,7 @@ export default {
       port: 7107,
       open: true,
       cors: true,
-      allowedHosts: true,
+      allowedHosts: true
       // Load proxy configuration from .env.development
     },
 
@@ -289,7 +289,7 @@ export default {
     ["meta", { name: "algolia-site-verification", content: "601BD5B794ABD061" }],
     ["script", { src: "https://unpkg.com/@algolia/sitesearch@latest/dist/search.min.js" }],
     ["link", { rel: "stylesheet", href: "https://unpkg.com/@algolia/sitesearch@latest/dist/search.min.css" }],
-    ["link", { rel: "stylesheet", href: "//at.alicdn.com/t/c/font_5170441_xk4mtf9s81.css" }],
+    ["link", { rel: "stylesheet", href: "//at.alicdn.com/t/c/font_5170441_62kk6xilm4d.css" }],
 
     ["script", { src: "https://cdn.jsdelivr.net/npm/@docsearch/js@4" }],
     ["link", { rel: "stylesheet", href: "https://cdn.jsdelivr.net/npm/@docsearch/css@4" }]

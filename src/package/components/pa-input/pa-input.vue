@@ -14,7 +14,6 @@
           <textarea
             ref="textareaRef"
             class="pa-input-textarea-inner textarea"
-            style="overflow: hidden"
             :class="[isFocus ? 'is-focus' : 'not-focus']"
             v-model="inValue as string"
             :name="id"
@@ -207,6 +206,9 @@ function handleFocus() {
  */
 function handleBlur() {
   isFocus.value = false;
+  if (textareaRef.value) {
+    textareaRef.value.style.overflowY = "";
+  }
   emits("blur");
 }
 /**
@@ -228,7 +230,19 @@ function adjustTextareaHeight() {
   textareaRef.value.style.height = "auto";
   const contentHeight = textareaRef.value.scrollHeight;
   const minHeight = parseInt(getComputedStyle(textareaRef.value).minHeight) || 0;
-  const _val = Math.max(contentHeight, minHeight);
+  let _val = Math.max(contentHeight, minHeight);
+
+  if (props.maxRows) {
+    const lineHeight = parseInt(getComputedStyle(textareaRef.value).lineHeight) || 18;
+    const maxHeight = lineHeight * props.maxRows;
+    if (_val > maxHeight) {
+      _val = maxHeight;
+      textareaRef.value.style.overflowY = "auto";
+    } else {
+      textareaRef.value.style.overflowY = "hidden";
+    }
+  }
+
   textareaRef.value.style.height = _val > 30 ? _val + "px" : "auto";
   textareaRef.value.scrollTop = scrollTop;
 }

@@ -889,20 +889,20 @@ watch(
 .year-cell.selected-start,
 .month-cell.selected-start {
   border-radius: 0;
-  border-top-left-radius: calc(var(--pa-size-padding) * 2);
-  border-bottom-left-radius: calc(var(--pa-size-padding) * 2);
+  border-top-left-radius: var(--pa-size-padding);
+  border-bottom-left-radius: var(--pa-size-padding);
 }
 
 .year-cell.selected-end,
 .month-cell.selected-end {
   border-radius: 0;
-  border-top-right-radius: calc(var(--pa-size-padding) * 2);
-  border-bottom-right-radius: calc(var(--pa-size-padding) * 2);
+  border-top-right-radius: var(--pa-size-padding);
+  border-bottom-right-radius: var(--pa-size-padding);
 }
 
 .year-cell.selected-start.selected-end,
 .month-cell.selected-start.selected-end {
-  border-radius: calc(var(--pa-size-padding) * 2);
+  border-radius: var(--pa-size-padding);
 }
 
 .m-year-month-picker-footer {

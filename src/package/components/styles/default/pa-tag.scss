@@ -9,13 +9,13 @@
   .pa-tag-text {
     display: flex;
     padding: 1px calc(var(--pa-size-padding, 10px) / 2);
-    margin: 2px;
-    border-radius: calc(var(--pa-size-radius, 3px) / 1.4);
+    margin: calc(var(--pa-size-padding, 10px) / 4);
+    border-radius: calc(var(--pa-size-radius, 3px) * 0.8);
     line-height: normal;
     justify-content: center;
     align-items: center;
     background-color: var(--pa-color-info-light-8);
-    color: var(--pa-color-info);
+    color: var(--pa-color-font);
     font-size: calc(var(--pa-size-font, 13px) - 1px);
     overflow: hidden;
     width: max-content;
@@ -49,6 +49,34 @@
   &-count {
     width: auto;
     flex: none;
+  }
+}
+
+.pa-tag-add {
+  border: 1px dashed var(--pa-color-info-light-4) !important;
+  background-color: transparent !important;
+  cursor: text;
+
+  input {
+    width: 100%;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    color: var(--pa-color-font);
+    font-size: var(--pa-size-font, 13px);
+    font-family: inherit;
+
+    &::placeholder {
+      color: var(--pa-color-info-light-4);
+    }
+  }
+
+  &:hover {
+    border-color: var(--pa-color-primary) !important;
+  }
+
+  &:focus-within {
+    border-color: var(--pa-color-primary) !important;
   }
 }
 

@@ -41,6 +41,7 @@ export const PancakeUISidebar = [
       { text: "Checkbox 多选框", link: "/document/PancakeUI_Doc/checkbox/readme", iconName: "checkbox" },
       { text: "Switch 开关", link: "/document/PancakeUI_Doc/switch/readme", iconName: "switch" },
       { text: "Time 时间", link: "/document/PancakeUI_Doc/time/readme", iconName: "time" },
+      { text: "Slider 滑块", link: "/document/PancakeUI_Doc/slider/readme", iconName: "slider" },
       { text: "File 文件", link: "/document/PancakeUI_Doc/file/readme", iconName: "file" }
     ]
   },
@@ -48,6 +49,7 @@ export const PancakeUISidebar = [
     text: "数据展示",
     items: [
       { text: "Table 表格", link: "/document/PancakeUI_Doc/table/readme", iconName: "table" },
+      { text: "EasyTable 简易表格", link: "/document/PancakeUI_Doc/easy-table/readme", iconName: "table" },
       { text: "Pagination 分页", link: "/document/PancakeUI_Doc/pagination/readme", iconName: "pagination" },
       { text: "Transfer 穿梭框", link: "/document/PancakeUI_Doc/transfer/readme", iconName: "transfer" },
       { text: "Media 媒体展示", link: "/document/PancakeUI_Doc/media-visible/readme", iconName: "image" }
@@ -55,7 +57,10 @@ export const PancakeUISidebar = [
   },
   {
     text: "导航组件",
-    items: [{ text: "Tabs 选项卡", link: "/document/PancakeUI_Doc/tabs/readme", iconName: "tab" }]
+    items: [
+      { text: "Tabs 选项卡", link: "/document/PancakeUI_Doc/tabs/readme", iconName: "tab" },
+      { text: "Accordion 手风琴", link: "/document/PancakeUI_Doc/accordion/readme", iconName: "tree-select" }
+    ]
   },
   {
     text: "反馈组件",
@@ -74,7 +79,8 @@ export const PancakeUISidebar = [
     items: [
       { text: "Form 表单", link: "/document/PancakeUI_Doc/form/readme", iconName: "form" },
       { text: "Playground 可视化配置面板-New🌟", link: "/document/PancakeUI_Doc/playground/readme", iconName: "table-form3" },
-      { text: "Editor 编辑器-New🌟", link: "/document/PancakeUI_Doc/editor/readme", iconName: "editor" }
+      { text: "Editor 编辑器-New🌟", link: "/document/PancakeUI_Doc/editor/readme", iconName: "editor" },
+      { text: "CoderEditor 代码编辑器", link: "/document/PancakeUI_Doc/coder-editor/readme", iconName: "editor" }
     ]
   }
 ];

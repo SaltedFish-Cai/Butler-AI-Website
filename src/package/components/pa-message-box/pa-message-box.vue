@@ -159,6 +159,9 @@ function handleKeyDown(e: KeyboardEvent): void {
   if (e.key === "Escape" && escapeMap[escapeMap.length - 1] === props.id) {
     handleClose();
   }
+  if (e.key === "Enter" && isType === "confirm") {
+    handleClick();
+  }
 }
 /**
  * 组件挂载

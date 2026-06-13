@@ -81,6 +81,20 @@ export type ComponentProps = {
    * @description 是否禁用标签删除功能
    */
   disabled?: boolean;
+  /**
+   * 启用添加标签
+   * @type boolean | undefined
+   * @default false
+   * @description 是否启用添加标签输入框
+   */
+  useAddTag?: boolean;
+  /**
+   * 添加标签占位文本
+   * @type LanguagePackageType | string | undefined
+   * @default "输入后回车添加"
+   * @description 添加标签输入框的占位提示文本，支持多语言对象
+   */
+  addTagPlaceholder?: LanguagePackageType | string;
 };
 /**
  * 组件事件定义
@@ -94,4 +108,10 @@ export type ComponentEmits = {
    * @returns void
    */
   (e: "removeTag", data: TagType): void;
+  /**
+   * 添加标签事件
+   * @param value - 标签名称
+   * @returns void
+   */
+  (e: "addTag", value: string): void;
 };
