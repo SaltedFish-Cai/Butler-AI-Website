@@ -1,7 +1,8 @@
 <template>
   <section :id="id" class="pa-scrollbar" :class="[prop.class, prop.styleMode === 'color' ? 'color-scrollbar' : '']" :style="rootStyle">
-    <div class="pa-scrollbar-content">
+    <div class="pa-scrollbar-content" ref="scrollbarContentRef">
       <div v-if="useShadow" class="is-scroll-top" :style="scrollTopShadowStyle"></div>
+      <div v-if="useShadow" class="is-scroll-left" :style="scrollLeftShadowStyle"></div>
       <div :id="id + '_scrollbar_body'" class="scrollbar-body" :class="{ 'scrollbar-body-y': prop.useScrollY, 'scrollbar-body-x': prop.useScrollX }" :style="contentStyle" ref="scrollbarBodyRef">
         <div class="scrollbar-body-content" :class="paddingContentClasses" :style="paddingBorderVars" ref="scrollbarBodyContentRef">
           <div v-if="border?.includes('top') || border?.includes('all')" class="pa-border_top"></div>
@@ -16,6 +17,7 @@
         </div>
       </div>
       <div v-if="useShadow" class="is-scroll-end" :style="scrollEndShadowStyle"></div>
+      <div v-if="useShadow" class="is-scroll-right" :style="scrollRightShadowStyle"></div>
     </div>
     <div v-if="useVertical && prop.useScrollY && prop.showThumb" class="scrollbar__bar is-vertical" :class="[useHiddenThumb ? 'hidden-thumb' : '']">
       <div class="scrollbar__thumb" ref="verticalThumbRef" :style="{ height: verticalThumb + 'px' }"></div>
@@ -82,6 +84,12 @@ const scrollbarBodyRef = ref();
  * @type Ref<HTMLElement | undefined>
  * @description 滚动条内容 DOM 引用
  */
+const scrollbarContentRef = ref();
+/**
+ * 滚动条内容引用
+ * @type Ref<HTMLElement | undefined>
+ * @description 滚动条内容 DOM 引用
+ */
 const scrollbarBodyContentRef = ref();
 /**
  * 组件属性
@@ -137,6 +145,12 @@ const scrollHorizontalValue = ref(0);
  * @description 标识是否已滚动到底部
  */
 const isScrollEnd = ref(true);
+/**
+ * 是否滚动到右侧
+ * @type Ref<boolean>
+ * @description 标识是否已滚动到右侧
+ */
+const isScrollRight = ref(true);
 /**
  * 移除监听函数
  * @type Function | undefined
@@ -367,6 +381,11 @@ function setUpdate() {
       } else {
         isScrollEnd.value = true;
       }
+      if ((_scrollbarBodyRef && _scrollbarBodyRef.scrollWidth > _scrollbarBodyRef.clientWidth) || (prop.parentBoxRef && prop.parentBoxRef?.clientWidth < _scrollbarBodyRef.scrollWidth)) {
+        isScrollRight.value = false;
+      } else {
+        isScrollRight.value = true;
+      }
       if (_scrollbarBodyRef) {
         emits("scrollChildChange", {
           bodyWidth: _scrollbarBodyRef.clientWidth,
@@ -423,8 +442,10 @@ onMounted(() => {
           emits("scrollLeft", false);
         }
         if (scrollData.isAtRight) {
+          isScrollRight.value = true;
           emits("scrollRight", true);
         } else {
+          isScrollRight.value = false;
           emits("scrollRight", false);
         }
         if (Object.keys((typeof window !== "undefined" && window.PancakeGlobalConfig?.PopoverList) || {}).length && prop.useClosePopover) {
@@ -534,10 +555,26 @@ const showBackTop = computed(() => scrollVerticalValue.value > 10);
  */
 const scrollTopShadowStyle = computed(() => ({ opacity: scrollVerticalThumb.value > 5 ? "1" : "0" }));
 /**
+ * 左侧阴影样式
+ * @description 计算左侧阴影的透明度样式（避免模板内联表达式）
+ */
+const scrollLeftShadowStyle = computed(() => {
+  const data = { opacity: scrollHorizontalThumb.value > 5 ? "1" : "0", "--scrollbar-content": (scrollbarContentRef.value?.clientHeight || 0) + "px" };
+  return data;
+});
+/**
  * 底部阴影样式
  * @description 计算底部阴影的透明度样式（避免模板内联表达式）
  */
 const scrollEndShadowStyle = computed(() => ({ opacity: isScrollEnd.value ? "0" : "1" }));
+/**
+ * 右侧阴影样式
+ * @description 计算右侧阴影的透明度样式（避免模板内联表达式）
+ */
+const scrollRightShadowStyle = computed(() => {
+  const data = { opacity: isScrollRight.value ? "0" : "1", "--scrollbar-content": (scrollbarContentRef.value?.clientHeight || 0) + "px" };
+  return data;
+});
 /**
  * 返回顶部按钮样式
  * @description 计算返回顶部按钮的透明度与位置样式（避免模板内联表达式）
