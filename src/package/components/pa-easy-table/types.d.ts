@@ -72,11 +72,6 @@ export interface ColumnDef {
    */
   label: string;
   /**
-   * 列宽
-   * @type string | undefined
-   */
-  width?: string;
-  /**
    * 自定义插槽名
    * @type string | undefined
    */

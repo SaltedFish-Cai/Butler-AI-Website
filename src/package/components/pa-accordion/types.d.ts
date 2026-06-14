@@ -17,6 +17,23 @@ export type PaAccordionProps = {
    * @type Record<string, string> | undefined
    */
   style?: Record<string, string>;
+  /**
+   * 单展开模式
+   * @type boolean | undefined
+   * @default false
+   * @description 开启后同一时间只允许展开一个面板
+   */
+  singleExpand?: boolean;
+};
+
+/**
+ * 手风琴上下文类型
+ * @description 用于 provide/inject 通信
+ */
+export type PaAccordionContext = {
+  singleExpand: boolean;
+  activeItemId: import("vue").Ref<string>;
+  setActiveItemId: (id: string) => void;
 };
 
 /**

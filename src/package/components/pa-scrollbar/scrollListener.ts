@@ -115,8 +115,8 @@ export class ScrollListener {
     const horizontalThumb = _h < MAX_THUMB_SIZE ? MAX_THUMB_SIZE : _h;
     const verticalThumb = _v < MAX_THUMB_SIZE ? MAX_THUMB_SIZE : _v;
 
-    const useHorizontal = scrollWidth - _clientWidth > 2;
-    const useVertical = scrollHeight - _clientHeight > 2;
+    const useHorizontal = scrollWidth - _clientWidth > 10;
+    const useVertical = scrollHeight - _clientHeight > 10;
 
     return {
       horizontalThumb,

@@ -14,17 +14,21 @@
   </div>
 </template>
 
+<script lang="ts">
+let itemIdCounter = 0;
+</script>
+
 <script lang="ts" setup>
 /**
  * 模块导入
  * @description 导入 Vue 组合式 API
  */
-import { computed } from "vue";
+import { computed, inject, watch } from "vue";
 /**
  * 模块导入
  * @description 导入组件类型定义
  */
-import type { PaAccordionItemProps, PaAccordionItemEmits } from "./types";
+import type { PaAccordionItemProps, PaAccordionItemEmits, PaAccordionContext } from "./types";
 
 const props = withDefaults(defineProps<PaAccordionItemProps>(), {
   expanded: false,
@@ -39,6 +43,24 @@ const isExpanded = computed({
   get: () => props.expanded,
   set: (val: boolean) => emit("update:expanded", val)
 });
+
+const accordionCtx = inject<PaAccordionContext>("accordion");
+const itemId = `pa-accordion-item-${++itemIdCounter}`;
+if (accordionCtx?.singleExpand) {
+  watch(isExpanded, val => {
+    if (val) {
+      accordionCtx.setActiveItemId(itemId);
+    } else if (accordionCtx.activeItemId.value === itemId) {
+      accordionCtx.setActiveItemId("");
+    }
+  });
+
+  watch(accordionCtx.activeItemId, newId => {
+    if (newId && newId !== itemId && isExpanded.value) {
+      isExpanded.value = false;
+    }
+  });
+}
 /**
  * 内边距样式类
  * @type ComputedRef<Record<string, boolean>>

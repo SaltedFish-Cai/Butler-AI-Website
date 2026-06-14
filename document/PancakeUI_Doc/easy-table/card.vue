@@ -4,9 +4,9 @@
 
 <script lang="ts" setup>
 const columns = [
-  { key: "name", label: "姓名", width: "1fr" },
-  { key: "age", label: "年龄", width: "80px" },
-  { key: "city", label: "城市", width: "1fr" }
+  { key: "name", label: "姓名" },
+  { key: "age", label: "年龄" },
+  { key: "city", label: "城市" }
 ];
 
 const data = [

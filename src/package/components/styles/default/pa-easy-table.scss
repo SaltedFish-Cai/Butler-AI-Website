@@ -5,6 +5,11 @@
   overflow: hidden;
   position: relative;
   box-sizing: border-box;
+
+  &--x-scroll {
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
 }
 
 .pa-easy-table__title {
@@ -38,8 +43,14 @@
   color: var(--pa-color-send-font, #606266);
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  overflow: hidden;
 }
-
+.pa-easy-table__row-wrapper {
+  position: relative;
+  overflow: hidden;
+  width: fit-content;
+  box-sizing: border-box;
+}
 .pa-easy-table__row--data {
   padding: 14px 12px;
   margin-bottom: 5px;
@@ -49,6 +60,8 @@
   transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.2s ease;
   cursor: pointer;
   will-change: transform;
+  width: fit-content;
+  box-sizing: border-box;
 
   &::before,
   &::after {
@@ -58,9 +71,10 @@
     top: 50%;
     left: 0;
     transform: translate(-75%, -50%);
+    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.2s ease;
     width: 20px;
     height: 20px;
-    background: var(--pa-color-bg-opacity);
+    background: var(--pa-color-bg);
     border-radius: 50%;
     border: 1px solid var(--pa-color-border, #dcdfe6);
   }
@@ -77,12 +91,13 @@
 }
 
 .pa-easy-table__cell {
-  display: flex;
-  align-items: center;
   font-size: var(--pa-size-font);
   color: var(--pa-color-font, #1d1d1d);
   min-width: 0;
-  flex-wrap: wrap;
+  // flex-wrap: wrap;
+  // overflow: hidden;
+  // text-overflow: ellipsis;
+  // white-space: nowrap;
 }
 
 .pa-easy-table__cell--header {

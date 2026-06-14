@@ -20,6 +20,12 @@
 
 <demo src="./header.vue"></demo>
 
+## 单展开模式
+
+设置 `single-expand` 属性开启单展开模式，同一时间只允许展开一个面板。
+
+<demo src="./single-expand.vue"></demo>
+
 ## ComponentProps
 
 ### PaAccordionProps
@@ -29,6 +35,7 @@
 | id | 组件唯一标识 | `string` | - |
 | class | 自定义类名 | `Array<string>` `string` | - |
 | style | 自定义样式 | `Record<string, string>` | - |
+| singleExpand | 单展开模式，同一时间只允许展开一个面板 | `boolean` | `false` |
 
 ### PaAccordionItemProps
 

@@ -1,7 +1,7 @@
 <template>
-  <div :id="props.id" class="pa-easy-table" :class="[props.class, card ? 'card' : 'pa-easy-table--table']" :style="props.style">
+  <div :id="props.id" class="pa-easy-table" :class="[props.class, card ? 'card' : 'pa-easy-table--table', overflowX ? 'pa-easy-table--x-scroll' : '']" :style="props.style">
     <div class="pa-easy-table__table">
-      <div class="pa-easy-table__row pa-easy-table__row--header" :style="{ gridTemplateColumns: gridTemplate }">
+      <div ref="headerRef" class="pa-easy-table__row pa-easy-table__row--header" :style="{ gridTemplateColumns: gridTemplate }">
         <div v-for="col in columns" :key="col.key" class="pa-easy-table__cell pa-easy-table__cell--header">
           {{ col.label }}
         </div>
@@ -9,7 +9,7 @@
 
       <pa-empty v-if="data.length === 0" style="--pa-color-bg: transparent" />
 
-      <pa-scrollbar v-else :useScrollX="false" @directlyScroll="onDirectlyScroll" @scrollChildChange="onScrollChildChange" :padding="['top', 'bottom']">
+      <pa-scrollbar v-else @directly-scroll="onDirectlyScroll" @scroll-child-change="onScrollChildChange" :paddingWidth="5" :padding="['top', 'bottom']">
         <div class="pa-easy-table__virtual-space" :style="{ height: virtualTotalHeight + 'px' }">
           <div
             v-for="item in visibleItems"
@@ -51,7 +51,7 @@
  * 模块导入
  * @description 导入 Vue 组合式 API
  */
-import { ref, computed, onBeforeUnmount, nextTick } from "vue";
+import { ref, computed, watch, onMounted, onBeforeUnmount, nextTick } from "vue";
 /**
  * 模块导入
  * @description 导入组件类型定义
@@ -67,7 +67,7 @@ interface VirtualItem {
   data: Record<string, any>;
   index: number;
   top: number;
-  key: string | number;
+  key: number | string;
 }
 
 /**
@@ -98,7 +98,7 @@ const emit = defineEmits<{
 /**
  * 当前悬停行 key
  */
-const hoveredRow = ref<string | number | null>(null);
+const hoveredRow = ref<number | string | null>(null);
 /**
  * 滚动位置
  */
@@ -110,7 +110,7 @@ const bodyHeight = ref(0);
 /**
  * 已进入动画的行 key 集合
  */
-const enteredKeys = new Set<string | number>();
+const enteredKeys = new Set<number | string>();
 
 const OVERSCAN = 5;
 const ROW_GAP = 5;
@@ -119,7 +119,7 @@ const rowHeightMap = new Map<number, number>();
 const rowRefs = new Map<number, HTMLElement>();
 const resizeObservers = new Map<number, ResizeObserver>();
 let measureScheduled = false;
-let pendingMeasureIndices = new Set<number>();
+const pendingMeasureIndices = new Set<number>();
 
 /**
  * 调度测量
@@ -186,7 +186,108 @@ function getActualHeight(index: number): number {
 
 const triggerUpdate = ref(0);
 
-const gridTemplate = computed(() => props.columns.map(c => c.width || "1fr").join(" "));
+const columnWidths = ref<number[]>([]);
+const overflowX = ref(false);
+const headerRef = ref<HTMLElement | null>(null);
+let measuring = false;
+
+const gridTemplate = computed(() => {
+  if (props.columns.length === 0) return "";
+  const cw = columnWidths.value;
+  if (cw.length === props.columns.length) {
+    return cw.map(w => `${w}px`).join(" ");
+  }
+  return props.columns.map(() => "auto").join(" ");
+});
+
+function measureColumns() {
+  if (measuring) return;
+  measuring = true;
+  const header = headerRef.value;
+  const table = header?.closest(".pa-easy-table") as HTMLElement | null;
+  if (!header || !table) {
+    measuring = false;
+    return;
+  }
+
+  columnWidths.value = [];
+
+  nextTick(() => {
+    const cells = header.querySelectorAll(".pa-easy-table__cell--header");
+    const widths: number[] = [];
+    cells.forEach((el, i) => {
+      widths[i] = (el as HTMLElement).scrollWidth;
+    });
+
+    const rows = table.querySelectorAll(".pa-easy-table__row--data");
+    rows.forEach(row => {
+      const rowCells = row.querySelectorAll(".pa-easy-table__cell");
+      rowCells.forEach((cell, i) => {
+        if (i < widths.length) {
+          widths[i] = Math.max(widths[i], (cell as HTMLElement).scrollWidth);
+        }
+      });
+    });
+
+    // Measure max content width across ALL data rows (including virtualized)
+    if (props.data.length > 0 && props.columns.length > 0) {
+      const el = document.createElement("span");
+      el.style.cssText = "position: fixed; left: -9999px; top: 0; visibility: hidden; white-space: nowrap;";
+      const src = header.querySelector(".pa-easy-table__cell--header");
+      if (src) el.style.font = getComputedStyle(src).font;
+      document.body.appendChild(el);
+
+      props.columns.forEach((col, i) => {
+        let longest = "";
+        for (const row of props.data) {
+          const val = row[col.key];
+          if (val == null) continue;
+          const text = Array.isArray(val) ? val.join(", ") : String(val);
+          if (text.length > longest.length) longest = text;
+        }
+        if (longest) {
+          el.textContent = longest;
+          const w = el.offsetWidth + 28;
+          if (w > widths[i]) widths[i] = w;
+        }
+      });
+
+      document.body.removeChild(el);
+    }
+
+    if (widths.length > 0 && widths.every(w => w > 0)) {
+      const gapTotal = (props.columns.length - 1) * 12;
+      const totalWidth = widths.reduce((s, w) => s + w, 0) + gapTotal;
+      const containerWidth = table.clientWidth;
+
+      if (totalWidth <= containerWidth) {
+        columnWidths.value = widths.map(w => Math.floor((w * (containerWidth - gapTotal)) / (totalWidth - gapTotal)));
+        overflowX.value = false;
+      } else {
+        columnWidths.value = widths;
+        overflowX.value = true;
+      }
+    } else {
+      columnWidths.value = [];
+      overflowX.value = false;
+    }
+
+    measuring = false;
+  });
+}
+
+let resizeObserver: ResizeObserver | null = null;
+
+onMounted(() => {
+  measureColumns();
+  const table = headerRef.value?.closest(".pa-easy-table") as HTMLElement | null;
+  if (table) {
+    resizeObserver = new ResizeObserver(() => measureColumns());
+    resizeObserver.observe(table);
+  }
+});
+
+watch(() => props.data, measureColumns);
 
 const accumulatedTops = computed(() => {
   triggerUpdate.value;
@@ -267,7 +368,7 @@ const visibleItems = computed<VirtualItem[]>(() => {
  * @param index - 行索引
  * @returns 行唯一标识
  */
-function getRowKey(row: Record<string, any>, index: number): string | number {
+function getRowKey(row: Record<string, any>, index: number): number | string {
   return row.id ?? row.key ?? index;
 }
 
@@ -275,8 +376,9 @@ function getRowKey(row: Record<string, any>, index: number): string | number {
  * 处理直接滚动
  * @param data - 滚动数据
  */
-function onDirectlyScroll(data: { scrollTop: number }) {
+function onDirectlyScroll(data: { scrollTop: number; scrollLeft: number }) {
   scrollTop.value = data.scrollTop;
+  if (headerRef.value?.scrollLeft != null) headerRef.value.scrollLeft = data.scrollLeft;
 }
 
 /**
@@ -292,6 +394,7 @@ function onScrollChildChange(data: { bodyHeight: number }) {
  * @description 清理 ResizeObserver 和行引用
  */
 onBeforeUnmount(() => {
+  resizeObserver?.disconnect();
   for (const obs of resizeObservers.values()) {
     obs.disconnect();
   }
