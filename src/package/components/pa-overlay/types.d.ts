@@ -48,6 +48,13 @@ export type ComponentProps = {
    */
   useBlock?: boolean;
   /**
+   * 是否对背景应用模糊效果
+   * @type boolean
+   * @default false
+   * @description 开启后会在遮罩上应用 backdrop-filter: blur(3px)，会带来额外性能开销
+   */
+  blur?: boolean;
+  /**
    * 目标挂载元素
    * @type HTMLElement | undefined
    * @default undefined

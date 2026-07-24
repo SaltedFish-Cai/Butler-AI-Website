@@ -37,7 +37,7 @@
 }
 
 .pa-easy-table__row--header {
-  padding: 8px 12px;
+  padding: calc(var(--pa-size-padding) * 0.6) var(--pa-size-padding);
   font-size: 11px;
   font-weight: 600;
   color: var(--pa-color-send-font, #606266);
@@ -52,12 +52,14 @@
   box-sizing: border-box;
 }
 .pa-easy-table__row--data {
-  padding: 14px 12px;
+  padding: calc(var(--pa-size-padding) * 0.6) 15px;
   margin-bottom: 5px;
   background: var(--pa-color-send-bg, #f5f7fa);
   border: 1px solid var(--pa-color-border, #dcdfe6);
   border-radius: var(--pa-size-radius);
-  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.2s ease;
+  transition:
+    transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1),
+    border-color 0.2s ease;
   cursor: pointer;
   will-change: transform;
   width: fit-content;
@@ -71,10 +73,12 @@
     top: 50%;
     left: 0;
     transform: translate(-75%, -50%);
-    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.2s ease;
+    transition:
+      transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1),
+      border-color 0.2s ease;
     width: 20px;
     height: 20px;
-    background: var(--pa-color-bg);
+    background: var(--pa-color-bg, #f5f7fa);
     border-radius: 50%;
     border: 1px solid var(--pa-color-border, #dcdfe6);
   }
@@ -91,6 +95,10 @@
 }
 
 .pa-easy-table__cell {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: var(--pa-size-padding_small);
   font-size: var(--pa-size-font);
   color: var(--pa-color-font, #1d1d1d);
   min-width: 0;
@@ -107,7 +115,11 @@
 .pa-easy-table__cell-more-content {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: var(--pa-size-padding_small);
+  > .pa-button {
+    margin-left: 0;
+    margin-right: 0;
+  }
 }
 
 .pa-easy-table.card {
@@ -130,12 +142,12 @@
   from {
     opacity: 0;
     transform: translateY(20px) scale(0.98);
-    filter: blur(4px);
+    // filter: blur(4px);
   }
   to {
     opacity: 1;
     transform: translateY(0) scale(1);
-    filter: blur(0);
+    // filter: blur(0);
   }
 }
 

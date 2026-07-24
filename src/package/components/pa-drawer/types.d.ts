@@ -110,6 +110,13 @@ export type ComponentProps = {
    * @description 设置抽屉弹窗的显示位置
    */
   position?: "bottom" | "left" | "right" | "top";
+  /**
+   * 遮罩层是否使用背景模糊
+   * @type boolean
+   * @default false
+   * @description 开启后遮罩层会对背景应用 backdrop-filter: blur
+   */
+  overlayBlur?: boolean;
 };
 /**
  * 组件事件类型

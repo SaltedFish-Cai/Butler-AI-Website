@@ -60,11 +60,11 @@ export type ComponentProps = {
   message?: LanguagePackageType | string;
   /**
    * 弹窗类型
-   * @type 'confirm' | undefined
+   * @type 'confirm' | 'message' | undefined
    * @default undefined
    * @description 是否为确认弹窗
    */
-  isType?: "confirm";
+  isType?: "confirm" | "message";
   /**
    * 消息类型
    * @type MessageBoxType | undefined

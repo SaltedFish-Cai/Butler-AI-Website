@@ -11,19 +11,19 @@
       >
         <div class="flex-center-start">
           <pa-checkbox-item v-if="(isMultiple && isCheck) || (isMultiple && !item.children?.length)" :isChecked="equalData(item.value, inValue)" class="mr-size">
-            <slot name="optionLabel" :scope="item">
+            <slot name="optionLabel" :option="item">
               {{ typeof item.label === "object" ? item.label[languageValue] || item.label["zh-CN"] : item.label }}
             </slot>
             <template v-if="item.children?.length">({{ item.children.length }})</template></pa-checkbox-item
           >
           <pa-radio-item v-else-if="isCheck" :isChecked="equalData(item.value, inValue)" class="mr-size">
-            <slot name="optionLabel" :scope="item">
+            <slot name="optionLabel" :option="item">
               {{ typeof item.label === "object" ? item.label[languageValue] || item.label["zh-CN"] : item.label }}
             </slot>
             <template v-if="item.children?.length">({{ item.children.length }})</template></pa-radio-item
           >
           <template v-else>
-            <slot name="optionLabel" :scope="item">
+            <slot name="optionLabel" :option="item">
               {{ typeof item.label === "object" ? item.label[languageValue] || item.label["zh-CN"] : item.label }}
             </slot>
             <template v-if="item.children?.length">({{ item.children.length }})</template>
@@ -37,7 +37,7 @@
   <template v-if="childExOptions.length">
     <pa-cascader-option :exOptions="childExOptions" :inValue="inValue" :isMultiple="isMultiple" :isCheck="isCheck" :optionsHeight="optionsHeight">
       <template #optionLabel="item">
-        <slot name="optionLabel" :scope="item"></slot>
+        <slot name="optionLabel" :option="item"></slot>
       </template>
     </pa-cascader-option>
   </template>
@@ -224,5 +224,5 @@ watch(
 </script>
 
 <style lang="scss">
-@use "./index.scss";
+@use "../styles/default/pa-cascader.scss";
 </style>

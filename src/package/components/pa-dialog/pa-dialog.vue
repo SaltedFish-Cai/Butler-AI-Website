@@ -1,8 +1,12 @@
 <template>
-  <pa-overlay :modelValue="state.visible" @click-overlay="closeOnClickModal && closeMenu()" class="flex-center">
+  <pa-overlay :modelValue="state.visible" @click-overlay="closeOnClickModal && closeMenu()" class="flex-center" :blur="overlayBlur">
     <transition name="mo-animation-fade">
       <div class="pa-dialog" :class="[state.fullscreen ? 'pa-dialog_full' : '']" ref="DialogRef" v-if="state.visible" :style="dialogStyle">
-        <div class="pa-dialog-content">
+        <div class="pa-dialog-content" :class="[$slots['background'] ? 'pa-dialog-content_body_background' : '']">
+          <div class="pa-dialog-content_body_background">
+            <slot name="background" />
+          </div>
+
           <div class="pa-dialog-content_header">
             <slot name="header">
               <div class="title_body">
@@ -30,8 +34,9 @@
               <pa-icon name="close_line" class="flex-center" />
             </div>
           </div>
+
           <div class="pa-dialog-content_body" ref="ScrollbarRef">
-            <pa-scrollbar v-if="scroll" pa-dialog-content_body :useScrollX="useScrollX" @scroll-child-change="scrollChildChange" :parentBoxRef="ScrollbarRef">
+            <pa-scrollbar v-if="scroll" :useScrollX="useScrollX" @scroll-child-change="scrollChildChange" :parentBoxRef="ScrollbarRef">
               <div class="dialog__body flex-col" ref="ScrollbarBodyRef" :class="paddingClasses">
                 <template v-if="keepAlive"> <slot></slot> </template>
               </div>
@@ -40,6 +45,7 @@
               <template v-if="keepAlive"> <slot></slot> </template>
             </div>
           </div>
+
           <div v-if="$slots['footer'] || $slots['footerLeft'] || $slots['footerRight']" class="pa-dialog-content_footer">
             <div v-if="$slots['footerLeft'] || $slots['footerRight']" class="pa-dialog-content_footer_left">
               <slot name="footerLeft" />
@@ -84,7 +90,8 @@ const props = withDefaults(defineProps<ComponentProps>(), {
   closeOnClickModal: false,
   closeOnPressEscape: true,
   titleAlign: "left",
-  scroll: true
+  scroll: true,
+  overlayBlur: false
 });
 /**
  * 组件事件定义
@@ -188,7 +195,7 @@ const setHeight = computed(() => {
   };
   let data = heightMap[props.size] || "70%";
   if (props.height && props.height !== "auto") {
-    data = isNumber(props.height) ? props.height + "px" : props.scroll === false ? "" : props.height;
+    data = isNumber(props.height) ? props.height + "px" : props.scroll === false ? "" : String(props.height);
   }
   if (props.height === "auto" && props.scroll) {
     data = "max-content";
@@ -275,14 +282,14 @@ onMounted(() => {
   nextTick(() => {
     scrollChildChange();
   });
-  props.closeOnPressEscape && document.addEventListener("keydown", handleKeyDown);
+  document.addEventListener("keydown", handleKeyDown);
 });
 /**
  * 组件卸载生命周期
- * @description 清理事件监听器
+ * @description 清理事件监听器（无条件移除，避免 closeOnPressEscape 中途变化导致泄漏）
  */
 onUnmounted(() => {
-  props.closeOnPressEscape && document.removeEventListener("keydown", handleKeyDown);
+  document.removeEventListener("keydown", handleKeyDown);
 });
 
 defineExpose({ ScrollbarRef: ScrollbarRef });

@@ -72,6 +72,45 @@ function setLabel(label: Record<string, string> | string): string | undefined {
  * @returns JSX.Element 虚拟节点
  * @description 渲染标签页标题内容
  */
+let dragIndex: number | null = null;
+
+function handleDragStart(event: DragEvent, index: number): void {
+  dragIndex = index;
+  if (event.dataTransfer) {
+    event.dataTransfer.effectAllowed = "move";
+    event.dataTransfer.setData("text/plain", String(index));
+  }
+  (event.target as HTMLElement)?.classList?.add("dragging");
+}
+
+function handleDragOver(event: DragEvent, index: number): void {
+  if (dragIndex === null) return;
+  event.preventDefault();
+  if (event.dataTransfer) {
+    event.dataTransfer.dropEffect = "move";
+  }
+  // 移除所有 dragover
+  document.querySelectorAll(".pa-tabs-title.dragover").forEach(el => el.classList.remove("dragover"));
+  if (dragIndex !== index) {
+    (event.currentTarget as HTMLElement)?.classList?.add("dragover");
+  }
+}
+
+function handleDrop(event: DragEvent, index: number): void {
+  event.preventDefault();
+  document.querySelectorAll(".pa-tabs-title.dragover").forEach(el => el.classList.remove("dragover"));
+  if (dragIndex !== null && dragIndex !== index && _props.onDragReorder) {
+    _props.onDragReorder(dragIndex, index);
+  }
+  dragIndex = null;
+}
+
+function handleDragEnd(event: DragEvent): void {
+  (event.target as HTMLElement)?.classList?.remove("dragging");
+  document.querySelectorAll(".pa-tabs-title.dragover").forEach(el => el.classList.remove("dragover"));
+  dragIndex = null;
+}
+
 const RenderTableColumn = (slots: any): JSX.Element => {
   const _slots: any[] = [];
   for (const key in slots) {
@@ -93,7 +132,15 @@ const RenderTableColumn = (slots: any): JSX.Element => {
       {_slots.map(({ props, children }, index) => {
         const name = props?.name;
         return (
-          <div class={className(props)} onClick={() => _props.changeTabs && _props.changeTabs(name, index)}>
+          <div
+            class={className(props)}
+            onClick={() => _props.changeTabs && _props.changeTabs(name, index)}
+            draggable={!!_props.onDragReorder}
+            onDragstart={(e: DragEvent) => handleDragStart(e, index)}
+            onDragover={(e: DragEvent) => handleDragOver(e, index)}
+            onDrop={(e: DragEvent) => handleDrop(e, index)}
+            onDragend={handleDragEnd}
+          >
             {name && children.label ? "" : <pa-icon class="mr3" name={props?.icon ? props?.icon : "grid_adaptive_line"} />}
             {name && children.label ? children.label(props) : setLabel(props?.label)}
           </div>

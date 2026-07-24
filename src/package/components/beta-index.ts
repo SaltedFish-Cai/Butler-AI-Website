@@ -4,7 +4,6 @@ import { GlobalState } from "./store/type";
 import Log from "./tools/log";
 import { useBaseStore as globalState } from "./store/index";
 import { setThemeColor } from "./tools/color";
-import { useBaseStore as tableBaseStore } from "./m-table/hooks/store";
 import toLocaleString from "./tools/toLocaleString";
 
 import "./styles/index.scss";
@@ -93,7 +92,6 @@ const Component = {
     setThemeColor(themeColor, isDark);
 
     if (!window.MGlobalState) window.MGlobalState = globalState;
-    if (!window.MTableState) window.MTableState = tableBaseStore;
 
     const data = { themeColor, isDark, requestHeader, tableConfig, formConfig, size, apiBaseUrl, globalZIndex: 3000 };
     useGlobalState.setGlobalConfig(data);

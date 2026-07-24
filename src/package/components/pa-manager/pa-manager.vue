@@ -103,6 +103,7 @@ provide(
 );
 
 provide("getPaAnagerGlobalZIndex", getPaAnagerGlobalZIndex);
+window.getPaAnagerGlobalZIndex = getPaAnagerGlobalZIndex;
 
 setThemeColor(state.themeColor, state.isDark || false);
 
@@ -194,7 +195,7 @@ defineExpose({
 onMounted(() => {
   if (typeof window !== "undefined") {
     window.globalZIndex = window.globalZIndex || 1000;
-    window.PancakeGlobalConfig = { ...state, language: (state?.language?.value || "zh-CN") as any };
+    window.PancakeGlobalConfig = { ...state, language: (state?.language || "zh-CN") as any };
     window.developLog = createLog(props.env || "product");
   }
 });

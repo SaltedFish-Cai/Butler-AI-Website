@@ -81,4 +81,9 @@ export interface ColumnDef {
    * @type number | undefined
    */
   maxChild?: number;
+  /**
+   * 列宽度（px），未设置时自动测量
+   * @type number | undefined
+   */
+  width?: number;
 }

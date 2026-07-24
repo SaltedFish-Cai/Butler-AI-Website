@@ -173,7 +173,6 @@ const languageValue = computed(() => {
 const options = computed((): PaOptionType.Switch => {
   const typeIs = typeof inValue.value;
   const { activeValue = 1, inActiveValue = 0, activeText, inActiveText } = props.exOptions || props;
-
   const defaultTexts = getDefaultTexts(languageValue.value);
   const _opt = changeType(typeIs, {
     activeValue,
@@ -260,7 +259,7 @@ watch(
   data => {
     inValue.value = !isNil(data) ? data : options.value.inActiveValue;
     oldValue = !isNil(data) ? data || "" : options.value.inActiveValue || "";
-    emits("update:modelValue", !isNil(data) ? data || "" : options.value.inActiveValue || "");
+    // emits("update:modelValue", !isNil(data) ? data || "" : options.value.inActiveValue || "");
   },
   { immediate: true }
 );

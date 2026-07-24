@@ -69,4 +69,16 @@ MessageBox.delete = function (options: MessageBoxOptions | string): MessageBoxIn
   }
   return MessageBox({ ...DELETE_BASE_OPTIONS, ...options, isType: "confirm" });
 };
+/**
+ * 删除方法
+ * @param options - 删除配置或字符串消息
+ * @returns 消息框实例
+ * @description 显示删除确认消息框
+ */
+MessageBox.alert = function (options: MessageBoxOptions | string): MessageBoxInstance {
+  if (typeof options === "string") {
+    return MessageBox({ ...DELETE_BASE_OPTIONS, message: options, isType: "message" });
+  }
+  return MessageBox({ ...DELETE_BASE_OPTIONS, ...options, isType: "message" });
+};
 export default MessageBox;

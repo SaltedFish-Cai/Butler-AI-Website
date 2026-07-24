@@ -19,7 +19,7 @@
 
         <div class="pa-tabs-title-list" :id="tabsId + '-tab-titles'" ref="tabsTitleRef" @mouseenter="handleMouseEnter" @mouseleave="handleMouseLeave">
           <div :id="'pa-tabs-box_' + tabsId" class="pa-tabs-box" :class="[mode === 'portrait' || mode === 'slider' ? 'flex-col' : '']" :style="{ '--tab-header-scroll': '-' + headerScroll + 'px' }">
-            <title-item :slots="slotsTitle" :activeName="activeName" :changeTabs="changeTabs" :portrait="mode === 'portrait' || mode === 'slider'"></title-item>
+            <title-item :slots="slotsTitle" :activeName="activeName" :changeTabs="changeTabs" :portrait="mode === 'portrait' || mode === 'slider'" :onDragReorder="handleLabelDragReorder"></title-item>
           </div>
         </div>
 
@@ -84,6 +84,11 @@ import inBrowser from "../tools/inBrowser";
 import { getElementPosition } from "../utils/getElementPosition";
 /**
  * 模块导入
+ * @description 导入全局状态
+ */
+import { useBaseStore } from "../store/index";
+/**
+ * 模块导入
  * @description 导入防抖函数工具
  */
 import debounce from "../tools/debounce";
@@ -104,7 +109,12 @@ const props = withDefaults(defineProps<ComponentProps>(), {
  * @type {string}
  * @description 生成组件唯一标识
  */
-const randId = String(randChar());
+const randId = String(props.id || randChar());
+/**
+ * 全局状态
+ * @description 用于缓存 label 顺序
+ */
+const baseStore = props.cacheLabel ? useBaseStore() : null;
 /**
  * 标签页容器引用
  * @type {Ref<HTMLElement | undefined>}
@@ -141,6 +151,12 @@ const slotsTitle = ref([] as Array<Record<string, Record<string, string>>>);
  * @description 当前激活的标签页索引
  */
 const slotIndex = ref(0);
+/**
+ * 原始 DOM 顺序
+ * @type {string[]}
+ * @description 记录 tab-item 在 DOM 中的原始 name 顺序（不受缓存重排影响），用于内容面板位移计算
+ */
+const domOrder: string[] = [];
 /**
  * 标签页 ID
  * @type {Ref<string>}
@@ -264,6 +280,83 @@ provide("initTitle", () => {
   _debounceTitle();
 });
 /**
+ * 获取缓存 key
+ * @returns string | null
+ * @description 缓存 label 顺序的 store key，格式为 `tabs-cache:{id}`
+ */
+function getCacheKey(): string | null {
+  if (!props.cacheLabel || !props.id) return null;
+  return `tabs-cache:${props.id}`;
+}
+
+/**
+ * 应用 label 顺序缓存
+ * @param arr - 当前 slotsTitle 数据
+ * @returns void
+ * @description 根据缓存重新排序 arr，缓存项在前、剩余传入项在后、缓存中不存在于传入的项不显示
+ */
+function applyLabelCache(arr: any[]): void {
+  const cacheKey = getCacheKey();
+  if (!cacheKey || !baseStore) return;
+  const cached = baseStore.tabsCache[cacheKey];
+  if (!cached?.length) {
+    // 无缓存时初始化
+    baseStore.setTabsCache(
+      cacheKey,
+      arr.map(item => item?.props?.name)
+    );
+    return;
+  }
+  // 按缓存顺序重排：先显示缓存中存在且在传入数组中的 label，再将剩余传入 label 追加到最后
+  const arrByName = new Map<string, any>();
+  const unnamedItems: any[] = [];
+  for (const item of arr) {
+    const name = item?.props?.name;
+    if (name != null) arrByName.set(String(name), item);
+    else unnamedItems.push(item);
+  }
+  const ordered: any[] = [];
+  const remaining: any[] = [];
+  for (const cachedName of cached) {
+    if (arrByName.has(cachedName)) {
+      ordered.push(arrByName.get(cachedName));
+      arrByName.delete(cachedName);
+    }
+  }
+  for (const [, item] of arrByName) {
+    remaining.push(item);
+  }
+  arr.splice(0, arr.length, ...ordered, ...remaining, ...unnamedItems);
+}
+
+/**
+ * 处理 label 拖动排序
+ * @param fromIndex - 拖动的起始索引
+ * @param toIndex - 放置的目标索引
+ * @returns void
+ * @description 更新 slotsTitle 顺序，保存缓存并触发事件
+ */
+function handleLabelDragReorder(fromIndex: number, toIndex: number): void {
+  const arr = [...slotsTitle.value];
+  const [moved] = arr.splice(fromIndex, 1);
+  arr.splice(toIndex, 0, moved);
+  slotsTitle.value = arr;
+  // 保存缓存
+  const cacheKey = getCacheKey();
+  if (cacheKey && baseStore) {
+    const names = arr.map(item => item?.props?.name);
+    baseStore.setTabsCache(cacheKey, names);
+  }
+  emit("labelDragEnd", arr.map(item => item?.props?.name));
+  // 重新计算激活项 — slotIndex 基于 DOM 顺序
+  const _name = props.modelValue || activeName.value;
+  const domIndex = _name ? domOrder.indexOf(String(_name)) : -1;
+  slotIndex.value = domIndex >= 0 ? domIndex : 0;
+  setTabItemPosition();
+  setLabelPosition();
+}
+
+/**
  * 变更 Tab
  * @param name - 标签页标识
  * @param index - 标签页索引
@@ -272,7 +365,9 @@ provide("initTitle", () => {
  * @description 切换当前激活的标签页
  */
 function changeTabs(name: string, index: number, scrollToIntersect = true): void {
-  slotIndex.value = index;
+  // slotIndex 使用 DOM 顺序，而非 slotsTitle 索引（缓存可能重排过 slotsTitle）
+  const domIndex = name != null ? domOrder.indexOf(String(name)) : -1;
+  slotIndex.value = domIndex >= 0 ? domIndex : index;
   activeName.value = name;
   emit("update:modelValue", name);
   emit("tabChange", { name, index });
@@ -350,9 +445,19 @@ function createSlotData(Mandatory = false): void {
     setChild(slots.value);
     if (arr.length != slotsTitle.value.length || Mandatory) {
       slotsTitle.value = arr;
+      // 保存原始 DOM 顺序（在缓存重排之前）
+      domOrder.length = 0;
+      for (const item of arr) {
+        const name = item?.props?.name;
+        if (name != null) domOrder.push(String(name));
+      }
+      // 应用 label 顺序缓存
+      applyLabelCache(slotsTitle.value);
       const _index = slotsTitle.value.findIndex(item => item?.props?.name == props.modelValue);
-      slotIndex.value = _index < 0 ? 0 : _index;
-      const name = slotsTitle.value[slotIndex.value]?.props?.name;
+      const name = slotsTitle.value[_index < 0 ? 0 : _index]?.props?.name;
+      // slotIndex 基于 DOM 顺序（内容面板位移），而非缓存重排后的 slotsTitle 顺序
+      const domIndex = name != null ? domOrder.indexOf(String(name)) : -1;
+      slotIndex.value = domIndex >= 0 ? domIndex : (_index < 0 ? 0 : _index);
       activeName.value = name;
       emit("update:modelValue", name);
       _debounce();
@@ -514,6 +619,9 @@ function handleWheel(event: WheelEvent): void {
  * @description 初始化组件状态
  */
 onMounted(() => {
+  if (props.cacheLabel && !props.id) {
+    console.warn("[PaTabs] cacheLabel 为 true 时必须传入 id prop，否则缓存无法持久化");
+  }
   createSlotData();
   const defaultValue = props.modelValue;
   observer?.disconnect();
@@ -548,9 +656,9 @@ watch(
   (data: string | undefined) => {
     nextTick(() => {
       activeName.value = data || "";
-      if (slotsTitle.value) {
-        const index = slotsTitle.value.findIndex(item => item?.props?.name == props.modelValue);
-        slotIndex.value = index;
+      if (data && domOrder.length) {
+        const domIndex = domOrder.indexOf(data);
+        slotIndex.value = domIndex >= 0 ? domIndex : 0;
       }
       setLabelPosition();
     });

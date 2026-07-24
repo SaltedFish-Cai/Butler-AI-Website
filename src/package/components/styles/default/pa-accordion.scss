@@ -8,9 +8,9 @@
 .pa-accordion-item {
   border: 1px solid var(--pa-color-border, #dcdfe6);
   border-radius: var(--pa-size-radius, 8px);
-  overflow: hidden;
   background: var(--pa-color-bg, #fff);
   transition: var(--pa-animation-time, 0.2s);
+  position: relative;
 }
 
 .pa-accordion-item--disabled {
@@ -21,6 +21,9 @@
 }
 
 .pa-accordion-item__header {
+  position: sticky;
+  top: 0;
+  left: 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -31,9 +34,15 @@
   user-select: none;
   transition: var(--pa-animation-time, 0.2s);
   cursor: pointer;
+  z-index: 10;
+
+  border-top-left-radius: var(--pa-size-radius, 8px);
+  border-top-right-radius: var(--pa-size-radius, 8px);
 
   &:hover {
     background: var(--pa-color-send-bg, #f0f2f5);
+    border-bottom-left-radius: var(--pa-size-radius);
+    border-bottom-right-radius: var(--pa-size-radius);
   }
 
   &:focus-visible {
@@ -48,11 +57,30 @@
   }
 }
 
+/* 粘性 sentinel：不可见哨兵，IntersectionObserver 检测滚动出视野 */
+.pa-accordion-item__sticky-sentinel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 1px;
+  pointer-events: none;
+  opacity: 0;
+}
+
+/* header 粘在顶部时由 IntersectionObserver 切换该 class */
+.pa-accordion-item--header-stuck .pa-accordion-item__header {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
 .pa-accordion-item--expanded {
   border-color: var(--pa-color-primary);
   > .pa-accordion-item__header {
     border-bottom: 1px solid var(--pa-color-border, #dcdfe6);
     background: var(--pa-color-send-bg, #f8f9fa);
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
   }
 }
 

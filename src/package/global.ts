@@ -6,18 +6,6 @@ import { useBaseStore as GlobalStateType } from "./components/store/index";
 
 /**
  * **模块导入**
- * @description 导入表格全局状态管理 Store
- * */
-import { useBaseStore as TableBaseStoreType } from "./components/pa-table/hooks/store";
-
-/**
- * **模块导入**
- * @description 导入表格全局状态类型定义
- * */
-import { GlobalState } from "./components/pa-table/type";
-
-/**
- * **模块导入**
  * @description 导入国际化时间格式化工具
  * */
 import toLocaleString from "./components/tools/toLocaleString";
@@ -26,7 +14,7 @@ import toLocaleString from "./components/tools/toLocaleString";
  * **模块导入**
  * @description 导入 Pancake 全局配置类型定义
  * */
-import { PancakeGlobalConfigType } from "./components/pa-manager/type";
+import { PancakeGlobalConfigType } from "./components/pa-manager/types";
 
 declare module "vue" {
   interface GlobalComponents {}
@@ -69,6 +57,7 @@ declare global {
     wangEditor: any;
     MTableSortableData: {};
     globalZIndex: number;
+    getPaAnagerGlobalZIndex: () => number;
     PancakeGlobalConfig: PancakeGlobalConfigType & {
       language: languageKey;
       escapeMap?: string[];
@@ -78,7 +67,6 @@ declare global {
     };
     setManagerTheme: (themeColor: string, isDark: boolean) => void;
     setManagerThemeDark: (val: any) => void;
-    setManagerTableGlobalConfig: (config: GlobalState) => void;
     getManagerTableGlobalConfig: () => {
       isKeepAliveTableWidth: boolean;
       isAutoTableWidth: boolean;
@@ -87,9 +75,6 @@ declare global {
     };
     MGlobalState: {
       (): ReturnType<typeof GlobalStateType>;
-    };
-    MTableState: {
-      (): ReturnType<typeof TableBaseStoreType>;
     };
     toLocaleString: typeof toLocaleString;
 

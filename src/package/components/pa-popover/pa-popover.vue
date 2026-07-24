@@ -415,6 +415,7 @@ function showPopover(): void {
   const position = getElementPosition(popoverReferenceRef.value);
   if (position) {
     visible.value = true;
+    zIndex.value = getPaAnagerGlobalZIndex();
     emits("change", true);
     nextTick(() => {
       calculatePosition();

@@ -80,11 +80,11 @@ provide("parentScrollbarRef", scrollbarRef);
  * 标签页上下文
  * @description 注入标签页父组件提供的上下文
  */
-const tabsContext = inject("TabsContext") as {
+const tabsContext = inject("TabsContext") as ComputedRef<{
   mode: "default" | "portrait" | "slider" | "sticky";
   tabsId: string;
   activeName: string;
-};
+}>;
 /**
  * 初始化标题函数
  * @type any
@@ -163,6 +163,16 @@ watch(
   [() => props.name, () => props.label],
   () => {
     initTitle();
+  },
+  { immediate: true }
+);
+
+watch(
+  () => tabsContext.value.activeName,
+  newVal => {
+    if (newVal === props.name) {
+      init.value = true;
+    }
   },
   { immediate: true }
 );

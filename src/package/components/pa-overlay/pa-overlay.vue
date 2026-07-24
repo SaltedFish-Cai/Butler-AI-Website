@@ -1,7 +1,7 @@
 <template>
   <teleport :to="teleportTo || 'body'">
     <transition name="mo-dialog-overlay-fade">
-      <div v-show="visible" class="pa-overlay" :class="props.class" :style="{ ...props.style, zIndex: zIndex }">
+      <div v-show="visible" class="pa-overlay" :class="[props.class, { 'pa-overlay--blur': props.blur }]" :style="{ ...props.style, zIndex: zIndex }">
         <div class="pa-overlay-content" :style="{ opacity: useBlock ? 1 : 0 }" @click="handleOverlayClick" />
         <slot />
       </div>
@@ -25,7 +25,8 @@ import type { ComponentProps, ComponentEmits } from "./types";
  * @description 定义组件的 props
  */
 const props = withDefaults(defineProps<ComponentProps>(), {
-  useBlock: true
+  useBlock: true,
+  blur: false
 });
 /**
  * 组件事件定义
@@ -36,7 +37,7 @@ const emits = defineEmits<ComponentEmits>();
  * 全局层级获取函数
  * @description 从父组件注入的全局层级管理函数
  */
-const getPaAnagerGlobalZIndex = inject("getPaAnagerGlobalZIndex") as () => number;
+const getPaAnagerGlobalZIndex = window.getPaAnagerGlobalZIndex;
 /**
  * 遮罩层层级
  * @description 当前遮罩层的 z-index 值
@@ -77,6 +78,9 @@ watch(
   () => props.modelValue,
   value => {
     visible.value = value;
+    if (value) {
+      zIndex.value = getPaAnagerGlobalZIndex();
+    }
   },
   { immediate: true }
 );

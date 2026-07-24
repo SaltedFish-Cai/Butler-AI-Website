@@ -226,7 +226,6 @@
     box-sizing: border-box;
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(3px);
-    -webkit-backdrop-filter: blur(3px);
     border-radius: 8px;
     border: 1px solid var(--pa-color-primary);
   }
@@ -256,7 +255,6 @@
     transition: var(--pa-animation-time, 0.2s);
     background: rgba(255, 255, 255, 0.1) !important;
     backdrop-filter: blur(3px);
-    -webkit-backdrop-filter: blur(3px);
     &:hover {
       background-color: var(--pa-color-warning-light-9) !important;
       color: var(--pa-color-warning) !important;

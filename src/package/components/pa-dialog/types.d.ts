@@ -149,6 +149,13 @@ export type ComponentProps = {
    * @description 设置弹窗内容的内边距方向
    */
   padding?: Array<"all" | "bottom" | "left" | "right" | "top">;
+  /**
+   * 遮罩层是否使用背景模糊
+   * @type boolean
+   * @default false
+   * @description 开启后遮罩层会对背景应用 backdrop-filter: blur
+   */
+  overlayBlur?: boolean;
 };
 /**
  * 组件事件类型

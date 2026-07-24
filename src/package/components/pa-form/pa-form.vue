@@ -32,7 +32,7 @@
                 <!-- 标准表格 -->
                 <formItem v-else :id="id" :item="item">
                   <template v-for="slot in slotKeys" #[slot]="scope" :key="slot">
-                    <slot :name="slot" :config="item" :data="scope.data"></slot>
+                    <slot :name="slot" :config="item" :data="scope.data" :option="(scope as any).option"></slot>
                   </template>
                 </formItem>
               </template>
@@ -507,31 +507,34 @@ function initConfig() {
   // 这里只准备数据
 
   // --- 第一步：收集分组键 ---
-  const propsArr: (string[] | string | undefined)[] = [];
+  // const propsArr: (string[] | string | undefined)[] = [];
   for (const item of inConfig.value) {
     const _groupName = typeof item.unitName == "object" ? item.unitName?.[PancakeGlobalConfig.value?.language || "zh-CN"] : item.unitName || "default";
     if (!baseInMultipleConfigKeys.includes(_groupName)) {
       baseInMultipleConfigKeys.push(_groupName);
     }
     item.unitName = _groupName;
-    propsArr.push(item.prop);
-  }
+    //   propsArr.push(item.prop);
+    // }
 
-  // --- 第二步：用普通 Map 缓存已存在的配置数据 ---
-  const existingConfigMap = new Map<string, PaFormItemType[]>();
-  for (const mc of inMultipleConfig) {
-    const key = mc.unitName as string;
-    if (baseInMultipleConfigKeys.includes(key)) {
-      const filtered = mc.configs.filter(c => propsArr.includes(c.prop));
-      existingConfigMap.set(key, filtered);
-    }
+    // // --- 第二步：用普通 Map 缓存已存在的配置数据 ---
+    // const existingConfigMap = new Map<string, PaFormItemType[]>();
+    // for (const mc of inMultipleConfig) {
+    //   const key = mc.unitName as string;
+    //   if (baseInMultipleConfigKeys.includes(key)) {
+    //     const filtered = mc.configs.filter(c => propsArr.includes(c.prop));
+    //     existingConfigMap.set(key, filtered);
+    //   }
   }
 
   // --- 第三步：构建完整的多配置列表（普通非响应式对象） ---
+  // 注意：configs 初始化为空数组，后续按 inConfig 迭代顺序 push，
+  // 确保与外部传入的 props.structure 顺序一致，不继承旧缓存中的位置。
   const newMultipleConfig: MultipleConfigType[] = baseInMultipleConfigKeys.map(key => ({
     unitName: key,
     unitTip: "",
-    configs: existingConfigMap.get(key) || []
+    // configs: existingConfigMap.get(key) || []
+    configs: []
   }));
 
   // --- 第四步：处理每个表单项，内联规则生成和分组分配 ---
@@ -675,16 +678,19 @@ function initConfig() {
     }
 
     // --- 将 item 分配到对应的主分组中 ---
+    // 注意：按 inConfig 迭代顺序 push，确保与 props.structure 顺序一致。
+    // 不通过 findIndex 查找缓存位置覆盖，因为缓存可能携带旧渲染的排列顺序。
     const unitName = (item.unitName as string) || "default";
     const groupIndex = baseInMultipleConfigKeys.indexOf(unitName);
     if (groupIndex >= 0) {
-      const configs = newMultipleConfig[groupIndex].configs;
-      const existingIdx = configs.findIndex(c => String(c.prop) === String(item.prop));
-      if (existingIdx >= 0) {
-        configs[existingIdx] = item;
-      } else {
-        configs.push(item);
-      }
+      // const configs = newMultipleConfig[groupIndex].configs;
+      // const existingIdx = configs.findIndex(c => String(c.prop) === String(item.prop));
+      // if (existingIdx >= 0) {
+      //   configs[existingIdx] = item;
+      // } else {
+      //   configs.push(item);
+      // }
+      newMultipleConfig[groupIndex].configs.push(item);
     }
   }
 

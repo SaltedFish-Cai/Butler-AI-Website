@@ -24,7 +24,8 @@ export const useBaseStore = defineStore({
     language: "zh-CN",
     languagePackage: {},
     globalZIndex: 3000,
-    isPrint: false
+    isPrint: false,
+    tabsCache: {}
   }),
   getters: {
     /**
@@ -248,6 +249,15 @@ export const useBaseStore = defineStore({
      * */
     cleanDictionary() {
       this.dictionaryData = {};
+    },
+
+    /**
+     * **设置 Tabs 标签顺序缓存**
+     * @param key 缓存 key（格式：`tabs-cache:{id}`）
+     * @param order 标签 name 的有序数组
+     */
+    setTabsCache(key: string, order: string[]) {
+      this.tabsCache[key] = order;
     }
   },
   persist: piniaPersistConfig("ui-global-configs")

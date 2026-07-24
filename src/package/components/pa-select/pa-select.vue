@@ -30,6 +30,7 @@
               @focus="handleFocus"
               @blur="handleBlur"
               @input="handleInput"
+              @keydown="handleKeydown"
             />
             <pa-icon v-if="inValue && clearable" name="close_circle_line" class="clear-icon" @click="clearInput" />
             <pa-icon :class="!isFocus ? 'down-icon' : 'down-icon up-icon'" name="down_line"></pa-icon>
@@ -39,20 +40,25 @@
 
       <div class="pa-select-options" style="max-height: 230px" ref="optionsRef" v-if="!props.disabled && filterOptionsList.length > 0">
         <pa-scrollbar :useBackTop="false" :useShadow="false" :style="{ height: optionsHeight }" :useClosePopover="false">
+          <slot name="optionLabelBefore"></slot>
           <div
-            v-for="item in filterOptionsList"
+            v-for="(item, index) in filterOptionsList"
             :key="String(item.value)"
             class="pa-select-option"
-            :class="[equalData(item.value, inValue) ? 'is-active' : '']"
-            @mouseover="awaitSelecting = true"
-            @mouseleave="awaitSelecting = false"
+            :class="[equalData(item.value, inValue) ? 'is-active' : '', keyboardActiveIndex === index ? 'is-keyboard-active' : '']"
+            @mouseover="handleOptionHover(index)"
+            @mouseleave="
+              awaitSelecting = false;
+              keyboardActiveIndex = -1;
+            "
             @click="handleOptionClick(item)"
           >
-            <slot name="optionLabel" :scope="item">
+            <slot name="optionLabel" :option="item">
               {{ typeof item.label === "object" ? item.label[languageValue] || item.label["zh-CN"] : item.label }}
             </slot>
             <pa-icon name="check_line" class="check-icon"></pa-icon>
           </div>
+          <slot name="optionLabelAfter"></slot>
         </pa-scrollbar>
       </div>
       <div v-else-if="exOptionsList.length" class="pa-select-no-data">{{ languagePackage["empytFind"] }}</div>
@@ -197,6 +203,12 @@ const waitTag = ref(false);
  */
 const awaitSelecting = ref(false);
 /**
+ * 键盘导航激活索引
+ * @type number
+ * @description 键盘上下键当前高亮的选项索引，-1 表示无高亮
+ */
+const keyboardActiveIndex = ref(-1);
+/**
  * 选项列表高度
  * @type string
  * @description 选项列表的动态高度
@@ -204,10 +216,10 @@ const awaitSelecting = ref(false);
 const optionsHeight = ref("auto");
 /**
  * 扩展选项列表
- * @type Array<any>
+ * @type Array<PaOptionType.Select>
  * @description 处理后的选项列表
  */
-const exOptionsList = ref([]);
+const exOptionsList = ref<PaOptionType.Select[]>([]);
 /**
  * 过滤值
  * @type string
@@ -385,6 +397,7 @@ function handlePopoverChange(data) {
   if (!data) {
     isFocus.value = false;
     filterValue.value = "";
+    keyboardActiveIndex.value = -1;
   } else {
     inputRef.value.focus();
     optionsHeight.value = "auto";
@@ -393,6 +406,7 @@ function handlePopoverChange(data) {
         const position = getElementPosition(optionsRef.value);
         optionsHeight.value = ((position?.height && Number(position?.height)) || 0) + "px";
       }
+      scrollToActiveOption();
     }, 100);
   }
 }
@@ -421,6 +435,65 @@ function handleOptionClick(item) {
   emits("update:modelValue", inValue.value);
   emits("change", { value: inValue.value, oldValue, option: item });
   oldValue = inValue.value;
+}
+/**
+ * 滚动到键盘激活的选项
+ * @description 将键盘高亮的选项滚动到可见区域
+ */
+function scrollToActiveOption() {
+  nextTick(() => {
+    const options = optionsRef.value?.querySelectorAll(".pa-select-option");
+    if (options && options[keyboardActiveIndex.value]) {
+      options[keyboardActiveIndex.value].scrollIntoView({ block: "nearest" });
+    }
+  });
+}
+/**
+ * 处理键盘导航事件
+ * @description 支持上下箭头选择选项，回车确认选项
+ */
+function handleKeydown(e: KeyboardEvent) {
+  if (!isFocus.value) return;
+  const maxIndex = filterOptionsList.value.length - 1;
+  switch (e.key) {
+    case "ArrowDown":
+      e.preventDefault();
+      if (keyboardActiveIndex.value < maxIndex) {
+        keyboardActiveIndex.value++;
+      } else {
+        keyboardActiveIndex.value = 0;
+      }
+      awaitSelecting.value = false;
+      scrollToActiveOption();
+      break;
+    case "ArrowUp":
+      e.preventDefault();
+      if (keyboardActiveIndex.value > 0) {
+        keyboardActiveIndex.value--;
+      } else {
+        keyboardActiveIndex.value = maxIndex;
+      }
+      awaitSelecting.value = false;
+      scrollToActiveOption();
+      break;
+    case "Enter":
+      e.preventDefault();
+      if (keyboardActiveIndex.value >= 0 && keyboardActiveIndex.value <= maxIndex) {
+        const item = filterOptionsList.value[keyboardActiveIndex.value];
+        if (item) {
+          handleOptionClick(item);
+        }
+      }
+      break;
+  }
+}
+/**
+ * 处理选项悬停事件
+ * @description 鼠标悬停时同步更新键盘导航索引，避免鼠标与键盘高亮冲突
+ */
+function handleOptionHover(index: number) {
+  awaitSelecting.value = true;
+  keyboardActiveIndex.value = index;
 }
 /**
  * 处理标签移除事件
@@ -516,6 +589,23 @@ watch(
   },
   { immediate: true, deep: true }
 );
+/**
+ * 监听过滤选项列表变化
+ * @description 当选项列表因搜索过滤变化时，确保键盘导航索引不越界
+ */
+watch(
+  () => filterOptionsList.value.length,
+  () => {
+    if (keyboardActiveIndex.value >= filterOptionsList.value.length) {
+      keyboardActiveIndex.value = filterOptionsList.value.length > 0 ? filterOptionsList.value.length - 1 : -1;
+    }
+  }
+);
+
+defineExpose({
+  closeDropdown: () => popoverRef.value?.hidePopover(),
+  openDropdown: () => popoverRef.value?.showPopover(),
+});
 </script>
 
 <style lang="scss">

@@ -45,11 +45,6 @@ const install = function (app, options: GlobalState) {
       app.component(name, defineAsyncComponent(components[path]));
     }
 
-    // if (!app.GlobalState) app.GlobalState = {};
-    // if (!app.MTools) app.MTools = {};
-    // if (!app.GlobalState.MGlobalState) app.GlobalState.MGlobalState = globalState;
-    // if (!app.GlobalState.MTableState) app.GlobalState.MTableState = tableBaseStore;
-
     if (inBrowser) {
       if (!window.setManagerTheme) window.setManagerTheme = setThemeColor;
       const setManagerThemeDark = val => setThemeColor(themeColor, val);
@@ -65,10 +60,7 @@ const install = function (app, options: GlobalState) {
   }
 };
 
-export default {
-  name: "PancakeUI",
-  install
-};
+export default { name: "PancakeUI", install };
 
 export {};
 

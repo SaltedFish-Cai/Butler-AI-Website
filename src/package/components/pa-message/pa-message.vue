@@ -145,27 +145,25 @@ onMounted(() => {
     visible.value = true;
   }, 10);
   if (!window.PancakeGlobalConfig.escapeMap) window.PancakeGlobalConfig.escapeMap = [];
+  document.addEventListener("keydown", handleKeyDown);
   if (closeOnPressEscape) {
-    document.addEventListener("keydown", handleKeyDown);
     window.PancakeGlobalConfig.escapeMap.push(props.id);
   }
 });
 /**
  * 组件卸载前
- * @description 清理定时器和事件监听
+ * @description 清理定时器和事件监听（监听器无条件移除，避免 closeOnPressEscape 中途变化导致泄漏）
  */
 onBeforeUnmount(() => {
   if (timer.value) {
     clearTimeout(timer.value);
     timer.value = null;
   }
-  if (closeOnPressEscape) {
-    document.removeEventListener("keydown", handleKeyDown);
-    const map = window.PancakeGlobalConfig?.escapeMap;
-    if (map) {
-      const idx = map.indexOf(props.id);
-      if (idx !== -1) map.splice(idx, 1);
-    }
+  document.removeEventListener("keydown", handleKeyDown);
+  const map = window.PancakeGlobalConfig?.escapeMap;
+  if (map) {
+    const idx = map.indexOf(props.id);
+    if (idx !== -1) map.splice(idx, 1);
   }
 });
 /**

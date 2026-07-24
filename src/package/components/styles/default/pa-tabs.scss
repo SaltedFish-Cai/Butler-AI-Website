@@ -300,7 +300,7 @@
             border-top-left-radius: var(--pa-size-radius, 3px);
             border-top-right-radius: var(--pa-size-radius, 3px);
             background-color: var(--pa-color-scrollbar);
-            border: 1px solid var(--pa-color-scrollbar);
+            border: 2px solid var(--pa-color-scrollbar);
             border-bottom: none;
             box-sizing: border-box;
 
@@ -448,7 +448,7 @@
             line-height: 1.4em;
             min-height: calc(var(--pa-size-height, 30px));
             box-sizing: border-box;
-          }
+           }
           > .pa-tabs-title._action {
             border-radius: var(--pa-size-radius, 3px);
           }
@@ -548,4 +548,25 @@
 
 .mode-portrait .pa-tabs {
   height: auto;
+}
+
+/* drag-and-drop 排序 */
+.pa-tabs-title[draggable="true"] {
+  cursor: grab;
+  user-select: none;
+}
+.pa-tabs-title[draggable="true"]:hover {
+  cursor: grab;
+}
+.pa-tabs-title[draggable="true"]:active {
+  cursor: grabbing;
+}
+.pa-tabs-title.dragging {
+  opacity: 0.5;
+  transform: scale(1.02);
+  background-color: var(--pa-color-primary-light-8);
+}
+.pa-tabs-title.dragover {
+  border: 2px dashed var(--pa-color-primary) !important;
+  background-color: var(--pa-color-primary-light-8);
 }

@@ -6,9 +6,9 @@
     <slot name="icon">
       <pa-icon v-if="showLeftIcon" :name="currentIconName" :class="hasContent ? 'mr-btn pa-button_icon' : ''" />
     </slot>
-    <div v-if="hasContent" class="pa-button_text">
+    <div v-if="hasContent && useText" class="pa-button_text">
       <slot>
-        <template v-if="text">{{ displayText }}</template>
+        <template v-if="text || is">{{ displayText }}</template>
       </slot>
     </div>
     <pa-icon v-if="showRightIcon" :name="currentIconName" class="pa-button_ml pa-button_icon" />
@@ -20,30 +20,32 @@
  * **按钮内置样式映射**
  * @description 预设按钮样式类型对应的图标和类型配置
  */
-const IS_MAP: Record<string, { iconName?: string; type?: string }> = {
-  search: { iconName: "search_line" },
-  view: { iconName: "document_query_line", type: "default" },
-  add: { iconName: "add_circle_line", type: "success" },
-  edit: { iconName: "edit_line" },
-  check: { iconName: "subscribed" },
-  save: { iconName: "save_line" },
-  submit: { iconName: "share_forward_line" },
-  upload: { iconName: "upload_line", type: "default" },
-  download: { iconName: "download_line", type: "default" },
-  remove: { iconName: "stop", type: "danger" },
-  trash: { iconName: "trash_line", type: "danger" },
-  refresh: { iconName: "refresh_line", type: "warning" },
-  go: { iconName: "navigation_line" },
-  file: { iconName: "attachment_line", type: "default" },
-  time: { iconName: "time_line", type: "default" },
-  switch: { iconName: "switch_horizontal_line", type: "warning" },
-  sync: { iconName: "refresh_arrows_line" },
-  import: { iconName: "file_download_line", type: "default" },
-  export: { iconName: "file_upload_line", type: "default" },
-  ok: { iconName: "check_circle_line", type: "success" },
-  cancel: { iconName: "close_circle_line", type: "warning" },
-  more: { iconName: "version_line", type: "warning" },
-  delete: { iconName: "delete_back_line", type: "danger" }
+const IS_MAP: Record<string, { iconName?: string; type?: string; text?: LanguagePackageType }> = {
+  search: { iconName: "search_line", text: { "en-US": "Search", "zh-CN": "搜索" } },
+  view: { iconName: "document_query_line", type: "default", text: { "en-US": "View", "zh-CN": "查看" } },
+  add: { iconName: "add_circle_line", type: "success", text: { "en-US": "Add", "zh-CN": "添加" } },
+  edit: { iconName: "edit_line", text: { "en-US": "Edit", "zh-CN": "编辑" } },
+  check: { iconName: "subscribed", text: { "en-US": "Check", "zh-CN": "检查" } },
+  save: { iconName: "save_line", type: "success", text: { "en-US": "Save", "zh-CN": "保存" } },
+  submit: { iconName: "share_forward_line", text: { "en-US": "Submit", "zh-CN": "提交" } },
+  upload: { iconName: "upload_line", type: "default", text: { "en-US": "Upload", "zh-CN": "上传" } },
+  download: { iconName: "download_line", type: "default", text: { "en-US": "Download", "zh-CN": "下载" } },
+  remove: { iconName: "stop", type: "danger", text: { "en-US": "Remove", "zh-CN": "删除" } },
+  trash: { iconName: "trash_line", type: "danger", text: { "en-US": "Trash", "zh-CN": "清空" } },
+  refresh: { iconName: "refresh_line", type: "warning", text: { "en-US": "Refresh", "zh-CN": "刷新" } },
+  go: { iconName: "navigation_line", text: { "en-US": "Go", "zh-CN": "前往" } },
+  file: { iconName: "attachment_line", type: "default", text: { "en-US": "File", "zh-CN": "文件" } },
+  time: { iconName: "time_line", type: "default", text: { "en-US": "Time", "zh-CN": "时间" } },
+  switch: { iconName: "switch_horizontal_line", type: "warning", text: { "en-US": "Switch", "zh-CN": "切换" } },
+  sync: { iconName: "refresh_arrows_line", type: "warning", text: { "en-US": "Sync", "zh-CN": "同步" } },
+  import: { iconName: "file_download_line", type: "default", text: { "en-US": "Import", "zh-CN": "导入" } },
+  export: { iconName: "file_upload_line", type: "default", text: { "en-US": "Export", "zh-CN": "导出" } },
+  ok: { iconName: "check_circle_line", type: "success", text: { "en-US": "OK", "zh-CN": "确认" } },
+  cancel: { iconName: "close_circle_line", type: "default", text: { "en-US": "Cancel", "zh-CN": "取消" } },
+  more: { iconName: "version_line", type: "warning", text: { "en-US": "More", "zh-CN": "更多" } },
+  delete: { iconName: "delete_back_line", type: "danger", text: { "en-US": "Delete", "zh-CN": "删除" } },
+  copy: { iconName: "copy_line", type: "warning", text: { "en-US": "Copy", "zh-CN": "复制" } },
+  close: { iconName: "close_line", type: "warning", text: { "en-US": "Close", "zh-CN": "关闭" } }
 };
 </script>
 
@@ -52,7 +54,7 @@ const IS_MAP: Record<string, { iconName?: string; type?: string }> = {
  * **模块导入**
  * @description 导入 Vue 组合式 API
  */
-import { ref, computed, useSlots, nextTick, inject, onUnmounted, getCurrentInstance } from "vue";
+import { computed, useSlots, nextTick, inject, onUnmounted, getCurrentInstance, ref, watch } from "vue";
 /**
  * **模块导入**
  * @description 导入组件类型定义
@@ -78,6 +80,7 @@ import type { PancakeGlobalConfigType } from "../pa-manager/types";
  * @description 导入防抖函数
  */
 import debounce from "../tools/debounce";
+import { LanguagePackageType } from "../manager-type";
 /**
  * **组件属性**
  * @type `ComponentProps`
@@ -88,7 +91,8 @@ const props = withDefaults(defineProps<ComponentProps>(), {
   debounced: true,
   debouncedTime: 300,
   iconPosition: "left",
-  useFont: true,
+  useIcon: true,
+  useText: true,
   usePlain: true,
   useStop: true
 });
@@ -116,14 +120,14 @@ const PancakeGlobalConfig = inject<PancakeGlobalConfigType>("PancakeGlobalConfig
 const displayText = computed(() => {
   if (typeof props.text === "string") return props.text;
   const lang = PancakeGlobalConfig?.language || "zh-CN";
-  return props.text?.[lang] ?? "";
+  return (props.text?.[lang] ?? (props.is && IS_MAP[props.is]?.text?.[lang]) ?? "") || "";
 });
 /**
  * **是否有内容**
  * @returns `boolean` 是否存在内容
  * @description 判断插槽或 text 是否存在内容
  */
-const hasContent = computed(() => !!slots.default || !!props.text);
+const hasContent = computed(() => !!slots.default || !!props.text || !!props.is);
 /**
  * **当前图标名称**
  * @returns `string` 当前图标名称
@@ -149,19 +153,19 @@ const currentType = computed(() => {
  * @returns `boolean` 按钮的自动 loading 状态
  * @description 按钮的自动 loading 状态
  */
-const isLoading = computed(() => props.loading || false);
+const isLoading = ref(props.loading || false);
 /**
  * **是否显示左侧图标**
  * @returns `boolean` 是否显示左侧图标
  * @description 判断是否需要显示左侧图标（包含 loading 状态判断）
  */
-const showLeftIcon = computed(() => props.iconPosition === "left" && !props.loading && !isLoading.value && props.useFont && !!currentIconName.value);
+const showLeftIcon = computed(() => props.iconPosition === "left" && !props.loading && !isLoading.value && props.useIcon && !!currentIconName.value);
 /**
  * **是否显示右侧图标**
  * @returns `boolean` 是否显示右侧图标
  * @description 判断是否需要显示右侧图标
  */
-const showRightIcon = computed(() => props.iconPosition === "right" && props.useFont && !!currentIconName.value);
+const showRightIcon = computed(() => props.iconPosition === "right" && props.useIcon && !!currentIconName.value);
 /**
  * **按钮类名**
  * @returns `Array<string>` 按钮的完整类名列表
@@ -314,8 +318,15 @@ onUnmounted(() => {
   cleanupObserver();
   isLoading.value = false;
 });
+
+watch(
+  () => props.loading,
+  newVal => {
+    isLoading.value = newVal || false;
+  }
+);
 </script>
 
 <style lang="scss">
-@use "./index.scss";
+@use "../styles/default/pa-button.scss";
 </style>

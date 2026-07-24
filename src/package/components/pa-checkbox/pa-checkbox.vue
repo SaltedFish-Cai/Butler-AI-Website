@@ -13,7 +13,7 @@
       isOption
       @change="
         ({ value }) => {
-          changeEvent({ value: value || '', option: item });
+          changeEvent({ value: value, option: item });
         }
       "
     ></pa-checkbox-item>
@@ -123,8 +123,8 @@ const languageValue = computed(() => {
  * @returns `void`
  * @description 处理复选框选中状态变更
  */
-function changeEvent({ value, option }: { value: boolean | number | string; option: any }): void {
-  if (props.disabled) return;
+function changeEvent({ value, option }: { value: boolean | number | string | undefined; option: any }): void {
+  if (props.disabled || !value) return;
   if (inValue?.value?.includes(value)) {
     inValue.value = inValue.value.filter(item => item !== value);
   } else {
@@ -165,6 +165,7 @@ watch(
 watch(
   () => props.exOptions,
   data => {
+    console.log(data);
     exOptionsList.value = data || [];
   },
   { immediate: true, deep: true }

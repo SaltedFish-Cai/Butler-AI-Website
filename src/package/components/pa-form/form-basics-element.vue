@@ -88,8 +88,8 @@
               :alwaysContrast="injectConfigContext.alwaysContrast"
               @change="valueChange"
             >
-              <template #optionLabel="scope">
-                <slot :name="`option-${item.prop}`" :scope="scope"></slot>
+              <template #optionLabel="{ option }">
+                <slot :name="`option-${item.prop}`" :option="option"></slot>
               </template>
               <template #exDisplay v-if="$slots.exDisplay"> <slot name="exDisplay"></slot> </template>
               <template #exContrast v-if="$slots.exContrast"> <slot name="exContrast"></slot> </template>
@@ -114,8 +114,8 @@
               :alwaysContrast="injectConfigContext.alwaysContrast"
               @change="valueChange"
             >
-              <template #optionLabel="scope">
-                <slot :name="`option-${item.prop}`" :scope="scope"></slot>
+              <template #optionLabel="{ option }">
+                <slot :name="`option-${item.prop}`" :option="option"></slot>
               </template>
               <template #exDisplay v-if="$slots.exDisplay"> <slot name="exDisplay"></slot> </template>
               <template #exContrast v-if="$slots.exContrast"> <slot name="exContrast"></slot> </template>
@@ -423,8 +423,8 @@ const computedValue = computed({
     const data = !isNil(props.exData)
       ? props.exData
       : props.tabsProps && !isNil(props.tabsIndex)
-      ? injectConfigContext.value.data[props.tabsProps][Number(props.tabsIndex)][String(props.item.prop)]
-      : injectConfigContext.value.data[String(props.item.prop)];
+        ? injectConfigContext.value.data[props.tabsProps][Number(props.tabsIndex)][String(props.item.prop)]
+        : injectConfigContext.value.data[String(props.item.prop)];
     return data;
   },
   set: value => {

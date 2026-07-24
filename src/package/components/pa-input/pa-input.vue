@@ -6,12 +6,34 @@
           {{ typeof title === "string" ? title : title[languageValue] }}
         </div>
 
-        <div class="pa-input-textarea" :class="[isFocus ? 'is-focus' : '']">
-          <div v-if="!isFocus" class="pa-input-textarea-inner display-ellipsis" :class="{ placeholder: !inValue || inValue?.length === 0 }">
-            {{ inValue || computedPlaceholder }}
+        <div class="pa-input-textarea" :class="[isFocus ? 'is-focus' : '', type == 'textarea' ? 'is_textarea' : '']">
+          <div v-if="!isFocus && type != 'password'" class="pa-input-textarea-inner" :class="{ placeholder: !inValue || inValue?.length === 0, 'display-ellipsis': type !== 'textarea' }">
+            <span v-if="type !== 'textarea'">{{ inValue || computedPlaceholder }}</span>
+            <pre v-else>{{ inValue || computedPlaceholder }}</pre>
           </div>
 
+          <input
+            v-if="type === 'password'"
+            ref="textareaRef"
+            class="pa-input-textarea-inner"
+            :class="[isFocus ? 'is-focus' : 'not-focus']"
+            v-model="inValue as string"
+            :name="id"
+            type="password"
+            :rows="isFocus ? 1 : 1"
+            @focus="handleFocus"
+            @blur="handleBlur"
+            @input="handleInput"
+            @change="handleChange"
+            @keydown="handleEnter"
+            :disabled="disabled"
+            autocomplete="off"
+            :placeholder="computedPlaceholder"
+            :maxlength="maxLength"
+          />
+
           <textarea
+            v-else
             ref="textareaRef"
             class="pa-input-textarea-inner textarea"
             :class="[isFocus ? 'is-focus' : 'not-focus']"
@@ -226,6 +248,7 @@ function clearInput() {
  */
 function adjustTextareaHeight() {
   if (!textareaRef.value) return;
+
   const scrollTop = textareaRef.value.scrollTop;
   textareaRef.value.style.height = "auto";
   const contentHeight = textareaRef.value.scrollHeight;

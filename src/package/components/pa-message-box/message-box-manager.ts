@@ -99,17 +99,25 @@ class MessageBoxManagerImpl implements MessageBoxManager {
 
   close(id: string, forceClose: boolean = false): void {
     const index = this.notifications.findIndex(notification => notification.id === id);
-    if (index !== -1) {
-      const instance = this.notifications[index];
-      if (instance.vm.$el && instance.vm.$el.parentNode) {
-        instance.vm.$el.parentNode.removeChild(instance.vm.$el);
+    if (index === -1) return;
+
+    const instance = this.notifications[index];
+    // 清理 CustomEvent 监听器
+    const cleanupEvent = (event: CustomEvent) => {
+      if (event.detail.id === id) {
+        window.removeEventListener("notification-closed", cleanupEvent as EventListener);
       }
-      instance.vm.$.appContext.app.unmount();
-      if (!forceClose) {
-        this.notifications.splice(index, 1);
-      }
-      document.getElementById(`m-message-box-container-${id}`)?.remove();
+    };
+    window.removeEventListener("notification-closed", cleanupEvent as EventListener);
+
+    if (instance.vm.$el && instance.vm.$el.parentNode) {
+      instance.vm.$el.parentNode.removeChild(instance.vm.$el);
     }
+    instance.vm.$.appContext.app.unmount();
+    if (!forceClose) {
+      this.notifications.splice(index, 1);
+    }
+    document.getElementById(`m-message-box-container-${id}`)?.remove();
   }
 
   closeAll(): void {

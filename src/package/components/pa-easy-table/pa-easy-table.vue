@@ -1,15 +1,13 @@
 <template>
-  <div :id="props.id" class="pa-easy-table" :class="[props.class, card ? 'card' : 'pa-easy-table--table', overflowX ? 'pa-easy-table--x-scroll' : '']" :style="props.style">
+  <div :id="ID" class="pa-easy-table" :class="[props.class, card ? 'card' : 'pa-easy-table--table', overflowX ? 'pa-easy-table--x-scroll' : '']" :style="props.style">
     <div class="pa-easy-table__table">
       <div ref="headerRef" class="pa-easy-table__row pa-easy-table__row--header" :style="{ gridTemplateColumns: gridTemplate }">
         <div v-for="col in columns" :key="col.key" class="pa-easy-table__cell pa-easy-table__cell--header">
-          {{ col.label }}
+          <div class="pa-easy-table__cell--header_inner">{{ col.label }}</div>
         </div>
       </div>
-
       <pa-empty v-if="data.length === 0" style="--pa-color-bg: transparent" />
-
-      <pa-scrollbar v-else @directly-scroll="onDirectlyScroll" @scroll-child-change="onScrollChildChange" :paddingWidth="5" :padding="['top', 'bottom']">
+      <pa-scrollbar v-else @directly-scroll="onDirectlyScroll" @scroll-child-change="onScrollChildChange" :paddingWidth="5" :padding="['top', 'bottom']" :overflowX="overflowX">
         <div class="pa-easy-table__virtual-space" :style="{ height: virtualTotalHeight + 'px' }">
           <div
             v-for="item in visibleItems"
@@ -25,16 +23,18 @@
           >
             <div class="pa-easy-table__row pa-easy-table__row--data" :class="{ 'pa-easy-table__row--hovered': hoveredRow === item.key }" :style="{ gridTemplateColumns: gridTemplate }">
               <div v-for="col in columns" :key="col.key" class="pa-easy-table__cell">
-                <PaEasyTableMaxChild v-if="col.maxChild" :max="col.maxChild">
-                  <slot :name="col.slot || col.key" :row="item.data" :value="item.data[col.key]" :index="item.index">
-                    {{ item.data[col.key] }}
-                  </slot>
-                </PaEasyTableMaxChild>
-                <template v-else>
-                  <slot :name="col.slot || col.key" :row="item.data" :value="item.data[col.key]" :index="item.index">
-                    {{ item.data[col.key] }}
-                  </slot>
-                </template>
+                <div class="pa-easy-table__cell_inner" :style="{ whiteSpace: gridTemplate_Init ? '' : 'nowrap', width: gridTemplate_Init ? '100%' : '' }">
+                  <PaEasyTableMaxChild v-if="col.maxChild" :max="col.maxChild">
+                    <slot :name="col.slot || col.key" :row="item.data" :value="item.data[col.key]" :index="item.index">
+                      {{ item.data[col.key] }}
+                    </slot>
+                  </PaEasyTableMaxChild>
+                  <template v-else>
+                    <slot :name="col.slot || col.key" :row="item.data" :value="item.data[col.key]" :index="item.index">
+                      {{ item.data[col.key] }}
+                    </slot>
+                  </template>
+                </div>
               </div>
             </div>
           </div>
@@ -111,7 +111,7 @@ const bodyHeight = ref(0);
  * 已进入动画的行 key 集合
  */
 const enteredKeys = new Set<number | string>();
-
+const ID = ref(props.id || "pa-easy-table" + Date.now());
 const OVERSCAN = 5;
 const ROW_GAP = 5;
 
@@ -200,11 +200,15 @@ const gridTemplate = computed(() => {
   return props.columns.map(() => "auto").join(" ");
 });
 
+const gridTemplate_Init = computed(() => {
+  return gridTemplate.value.indexOf("px") > -1;
+});
+
 function measureColumns() {
   if (measuring) return;
   measuring = true;
   const header = headerRef.value;
-  const table = header?.closest(".pa-easy-table") as HTMLElement | null;
+  const table = header?.closest(`#${ID.value}`) as HTMLElement | null;
   if (!header || !table) {
     measuring = false;
     return;
@@ -213,55 +217,56 @@ function measureColumns() {
   columnWidths.value = [];
 
   nextTick(() => {
-    const cells = header.querySelectorAll(".pa-easy-table__cell--header");
-    const widths: number[] = [];
+    const cells = header.querySelectorAll(`#${ID.value} .pa-easy-table__cell--header_inner`);
+    let widths: number[] = [];
     cells.forEach((el, i) => {
-      widths[i] = (el as HTMLElement).scrollWidth;
+      widths[i] = (el as HTMLElement).clientWidth;
     });
 
-    const rows = table.querySelectorAll(".pa-easy-table__row--data");
+    const rows = table.querySelectorAll(`#${ID.value} .pa-easy-table__row--data`);
     rows.forEach(row => {
-      const rowCells = row.querySelectorAll(".pa-easy-table__cell");
+      const rowCells = row.querySelectorAll(`#${ID.value} .pa-easy-table__cell_inner`);
       rowCells.forEach((cell, i) => {
         if (i < widths.length) {
-          widths[i] = Math.max(widths[i], (cell as HTMLElement).scrollWidth);
+          widths[i] = Math.max(widths[i], (cell as HTMLElement).clientWidth);
         }
       });
     });
 
-    // Measure max content width across ALL data rows (including virtualized)
-    if (props.data.length > 0 && props.columns.length > 0) {
-      const el = document.createElement("span");
-      el.style.cssText = "position: fixed; left: -9999px; top: 0; visibility: hidden; white-space: nowrap;";
-      const src = header.querySelector(".pa-easy-table__cell--header");
-      if (src) el.style.font = getComputedStyle(src).font;
-      document.body.appendChild(el);
-
-      props.columns.forEach((col, i) => {
-        let longest = "";
-        for (const row of props.data) {
-          const val = row[col.key];
-          if (val == null) continue;
-          const text = Array.isArray(val) ? val.join(", ") : String(val);
-          if (text.length > longest.length) longest = text;
-        }
-        if (longest) {
-          el.textContent = longest;
-          const w = el.offsetWidth + 28;
-          if (w > widths[i]) widths[i] = w;
-        }
-      });
-
-      document.body.removeChild(el);
-    }
+    // 应用用户设置的固定宽度（仅接受正数值，单位为 px）
+    props.columns.forEach((col, i) => {
+      if (typeof col.width === "number" && col.width > 0 && widths[i] !== undefined) {
+        widths[i] = col.width;
+      }
+    });
 
     if (widths.length > 0 && widths.every(w => w > 0)) {
       const gapTotal = (props.columns.length - 1) * 12;
       const totalWidth = widths.reduce((s, w) => s + w, 0) + gapTotal;
       const containerWidth = table.clientWidth;
-
       if (totalWidth <= containerWidth) {
-        columnWidths.value = widths.map(w => Math.floor((w * (containerWidth - gapTotal)) / (totalWidth - gapTotal)));
+        const _gapTotal = gapTotal + 32;
+        const flexIndices = props.columns.map((_, i) => i).filter(i => typeof props.columns[i].width !== "number");
+        const flexCount = flexIndices.length;
+        if (flexCount > 0 && flexCount < props.columns.length) {
+          // 部分列固定宽度：剩余空间分配给非固定列
+          const flexWidthsSum = flexIndices.reduce((s, i) => s + widths[i], 0);
+          const fixedWidthsSum = widths.reduce((s, w) => s + w, 0) - flexWidthsSum;
+          const remaining = containerWidth - _gapTotal - fixedWidthsSum;
+          flexIndices.forEach(i => {
+            widths[i] = Math.floor((widths[i] * remaining) / flexWidthsSum);
+          });
+        } else if (flexCount === 0) {
+          // 全设了固定宽度：直接使用，不做缩放
+        } else {
+          const _containerWidth = containerWidth - _gapTotal;
+          const _totalWidth = totalWidth - gapTotal;
+          // 全未设宽度：保持原有等比分配逻辑
+          widths = widths.map(w => {
+            return Math.floor((w * _containerWidth) / _totalWidth);
+          });
+        }
+        columnWidths.value = widths;
         overflowX.value = false;
       } else {
         columnWidths.value = widths;
@@ -271,7 +276,6 @@ function measureColumns() {
       columnWidths.value = [];
       overflowX.value = false;
     }
-
     measuring = false;
   });
 }
@@ -280,7 +284,7 @@ let resizeObserver: ResizeObserver | null = null;
 
 onMounted(() => {
   measureColumns();
-  const table = headerRef.value?.closest(".pa-easy-table") as HTMLElement | null;
+  const table = headerRef.value?.closest(`#${ID.value}`) as HTMLElement | null;
   if (table) {
     resizeObserver = new ResizeObserver(() => measureColumns());
     resizeObserver.observe(table);

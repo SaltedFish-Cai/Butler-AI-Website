@@ -70,7 +70,7 @@ import EditorTools from "./editor-tools.vue";
 import { randChar } from "../tools/rand-char";
 import { useToolsHooks } from "./use-tools-hooks";
 import * as prettier from "prettier/standalone";
-import * as prettierHtmlParser from "prettier/parser-html";
+import prettierHtmlParser from "prettier/plugins/html";
 import hljs from "highlight.js";
 import debounce from "../tools/debounce";
 

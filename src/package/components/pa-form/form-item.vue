@@ -182,6 +182,8 @@ provide("elFormItem", {
 
   &__content {
     width: 100%;
+    padding: 0 4px;
+    box-sizing: border-box;
     font-size: var(--pa-size-font, 13px);
     color: var(--pa-color-font);
     .m-form-group-item {

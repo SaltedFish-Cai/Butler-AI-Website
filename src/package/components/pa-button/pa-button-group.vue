@@ -25,5 +25,5 @@ const props = withDefaults(
 </script>
 
 <style lang="scss">
-@use "./index.scss";
+@use "../styles/default/pa-button.scss";
 </style>

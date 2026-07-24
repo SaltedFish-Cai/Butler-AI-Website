@@ -1,5 +1,5 @@
 <template>
-  <pa-overlay :modelValue="state.visible" @click-overlay="closeOnClickModal && closeMenu()" :class="positionClass">
+  <pa-overlay :modelValue="state.visible" @click-overlay="closeOnClickModal && closeMenu()" :class="positionClass" :blur="overlayBlur">
     <transition :name="transitionName">
       <div v-if="state.visible" class="pa-drawer">
         <div class="pa-drawer-content" :class="position" :style="contentStyle">
@@ -77,7 +77,8 @@ const props = withDefaults(defineProps<ComponentProps>(), {
   useScrollX: false,
   closeOnClickModal: true,
   closeOnPressEscape: true,
-  position: "right"
+  position: "right",
+  overlayBlur: false
 });
 /**
  * 组件事件定义

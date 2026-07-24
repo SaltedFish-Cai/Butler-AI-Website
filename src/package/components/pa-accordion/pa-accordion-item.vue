@@ -1,5 +1,6 @@
 <template>
-  <div class="pa-accordion-item" :class="{ 'pa-accordion-item--expanded': isExpanded, 'pa-accordion-item--disabled': disabled }">
+  <div ref="rootEl" class="pa-accordion-item" :class="{ 'pa-accordion-item--expanded': isExpanded, 'pa-accordion-item--disabled': disabled, 'pa-accordion-item--header-stuck': isHeaderStuck }">
+    <div class="pa-accordion-item__sticky-sentinel" ref="sentinelEl"></div>
     <div class="pa-accordion-item__header" @click="handleHeaderClick" role="button" :tabindex="disabled ? -1 : 0" @keydown.enter="handleHeaderClick">
       <div class="pa-accordion-item__header_content">
         <slot name="header" :expanded="isExpanded" :toggle="toggleExpanded">节点</slot>
@@ -23,7 +24,7 @@ let itemIdCounter = 0;
  * 模块导入
  * @description 导入 Vue 组合式 API
  */
-import { computed, inject, watch } from "vue";
+import { computed, inject, onMounted, onUnmounted, ref, watch } from "vue";
 /**
  * 模块导入
  * @description 导入组件类型定义
@@ -73,6 +74,32 @@ const paddingClasses = computed(() => ({
   "padding-right": props.padding?.includes("right") || props.padding?.includes("all")
 }));
 /**
+ * 根元素 ref，用于 IntersectionObserver 检测 sticky 吸顶
+ */
+const rootEl = ref<HTMLElement | null>(null);
+/**
+ * 哨兵元素 ref，溢出时 header 处于吸顶状态
+ */
+const sentinelEl = ref<HTMLElement | null>(null);
+/**
+ * header 是否吸顶
+ */
+const isHeaderStuck = ref(false);
+
+onMounted(() => {
+  if (!rootEl.value || !sentinelEl.value) return;
+  accordionCtx?.registerSentinel(sentinelEl.value, stuck => {
+    isHeaderStuck.value = stuck;
+  });
+});
+
+onUnmounted(() => {
+  if (sentinelEl.value) {
+    accordionCtx?.unregisterSentinel(sentinelEl.value);
+  }
+});
+
+/**
  * 切换展开状态
  */
 function toggleExpanded() {
@@ -92,5 +119,5 @@ function handleHeaderClick(event) {
 </script>
 
 <style lang="scss">
-@use "./index.scss";
+@use "../styles/default/pa-accordion.scss";
 </style>

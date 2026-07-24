@@ -108,6 +108,13 @@ export type ComponentProps = {
    * @description 当设置该值为 `true` 时，使用滚动阴影
    */
   useShadow?: boolean;
+  /**
+   * 是否开启 label 顺序缓存
+   * @type boolean | undefined
+   * @default undefined
+   * @description 开启时 label 拖动顺序将通过 `id` prop 缓存到 store 中。开启时必须传入 `id` prop
+   */
+  cacheLabel?: boolean;
 };
 export type ComponentEmits = {
   /**
@@ -123,6 +130,12 @@ export type ComponentEmits = {
    * @returns void
    */
   (e: "tabChange", { name: string, index: number }): void;
+  /**
+   * 标签拖动排序结束事件
+   * @param labels - 排序后的 label name 数组
+   * @returns void
+   */
+  (e: "labelDragEnd", labels: string[]): void;
 };
 export type ComponentItemProps = {
   /**
@@ -211,4 +224,10 @@ export type ComponentLabelProps = {
    * @description 当为 `true` 时，标签页以纵向布局显示
    */
   portrait?: boolean;
+  /**
+   * 标签拖动排序回调
+   * @type ((fromIndex: number, toIndex: number) => void) | undefined
+   * @description 当标签被拖动排序时触发
+   */
+  onDragReorder?: (fromIndex: number, toIndex: number) => void;
 };

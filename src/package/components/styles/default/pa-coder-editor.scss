@@ -18,7 +18,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: var(--pa-size-padding, 6px);
+  padding: calc(var(--pa-size-padding, 6px) / 2) var(--pa-size-padding, 6px);
   border-bottom: 1px solid var(--pa-color-border, #dcdfe6);
   background: var(--pa-color-send-bg, #f5f7fa);
   flex-shrink: 0;
@@ -67,8 +67,8 @@
     border-color: #444;
 
     &:hover {
-      border-color: #409eff;
-      color: #409eff;
+      border-color: var(--pa-color-primary, #409eff);
+      color: var(--pa-color-primary, #409eff);
     }
   }
 }
@@ -133,9 +133,21 @@
     background: #252526;
     border-color: #454545;
     color: #888;
+    &:hover {
+      border-color: var(--pa-color-primary, #409eff);
+      color: var(--pa-color-primary, #409eff);
+    }
   }
 
   .pa-select-input-inner {
     color: #888;
+  }
+  .pa-coder-editor__format-btn {
+    color: #888;
+    border-color: #454545;
+    &:hover {
+      border-color: var(--pa-color-primary, #409eff);
+      color: var(--pa-color-primary, #409eff);
+    }
   }
 }

@@ -4,19 +4,10 @@
     <div class="in_title_label">表列宽缓存：<el-switch v-model="globalConfig.isKeepAliveTableWidth" /></div>
     <div class="in_title_label">表列宽自动列宽： <el-switch v-model="globalConfig.isAutoTableWidth" /></div>
     <div class="in_title_label">表格文本一键复制： <el-switch v-model="globalConfig.isTableTextCopy" /></div>
-    <div class="in_title_label">
-      表缩放： <el-input-number v-model="globalConfig.tableGlobalZoom" :min="1" size="small" :max="100" :controls="false" />
-    </div>
+    <div class="in_title_label">表缩放： <el-input-number v-model="globalConfig.tableGlobalZoom" :min="1" size="small" :max="100" :controls="false" /></div>
   </div>
 
-  <m-table
-    id="set-config-table-demo"
-    ref="proTable"
-    flat
-    :structure="tableConfig"
-    :request-api="getTableList"
-    :ex-options="exOptions"
-  >
+  <m-table id="set-config-table-demo" ref="proTable" flat :structure="tableConfig" :request-api="getTableList" :ex-options="exOptions">
     <template #operation>
       <pa-button is="edit"> 编辑 </pa-button>
     </template>
@@ -71,17 +62,6 @@ async function getTableList(params: any) {
     Code: 200
   };
 }
-
-watch(
-  () => globalConfig.value,
-  data => {
-    const _window: any = window;
-    _window.setManagerTableGlobalConfig(data);
-
-    // proTable.value.setGlobalConfig(data);
-  },
-  { deep: true }
-);
 </script>
 
 <style scoped lang="scss">

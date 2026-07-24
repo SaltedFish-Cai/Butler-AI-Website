@@ -6,14 +6,14 @@
   &:hover {
     cursor: pointer;
   }
-  &::before {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    content: "";
-    display: block;
-    z-index: 210;
-  }
+  // &::before {
+  //   position: absolute;
+  //   width: 100%;
+  //   height: 100%;
+  //   content: "";
+  //   display: block;
+  //   z-index: 210;
+  // }
 }
 .pa-popover-reference.is-click {
   &::before {
@@ -26,7 +26,8 @@
 
 .pa-popover-reference + .pa-button,
 .pa-button + .pa-popover-reference {
-  margin: 0 calc(var(--pa-size-padding, 10px) / 4);
+  display: inline-block;
+  margin: 0 var(--pa-size-padding_small);
   &:last-child {
     margin-right: 0;
   }

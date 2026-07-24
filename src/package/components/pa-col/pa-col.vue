@@ -105,10 +105,10 @@ const classes = computed(() => {
     const offset = typeof responsive === "number" ? 0 : responsive.offset;
     if (offset && offset > 0) cls.push(`pa-col-${bp}-offset-${offset}`);
   }
-  return cls;
+  return [...cls, typeof props.class === "string" ? props.class : props.class && props.class.join(" ")];
 });
 </script>
 
-<style lang="scss" scoped>
-@use "./index.scss";
+<style lang="scss">
+@use "../styles/default/pa-col.scss";
 </style>

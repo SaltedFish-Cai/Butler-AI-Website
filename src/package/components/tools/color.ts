@@ -128,4 +128,12 @@ export function setThemeColor(themeColor?: string, isDark?: boolean) {
     const primaryColor = isDark ? `${getDarkColor(THEME_COLOR, i / 10)}` : `${getLightColor(THEME_COLOR, i / 10)}`;
     style?.setProperty(`--pa-color-primary-light-${i}`, primaryColor);
   }
+
+  for (let i = 1; i <= 9; i++) {
+    const rgb = hexToRgb(THEME_COLOR);
+    if (rgb) {
+      const opacityColor = `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, ${(i / 10).toFixed(1)})`;
+      style?.setProperty(`--pa-color-primary-opacity-${i}`, opacityColor);
+    }
+  }
 }

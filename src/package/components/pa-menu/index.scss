@@ -1,0 +1,166 @@
+/* ─── Menu ─────────────────────────────────── */
+
+.pa-menu {
+  position: relative;
+  z-index: 2000;
+  min-width: 140px;
+  border: 1px solid var(--pa-color-border-opacity-1, #e4e7ed);
+  border-radius: var(--pa-size-radius, 8px);
+  background-color: var(--pa-color-bg-opacity, #fff);
+}
+
+/* ─── Point (指示点) ──────────────────────────── */
+
+.pa-menu--point-tl::after,
+.pa-menu--point-tr::after,
+.pa-menu--point-bl::after,
+.pa-menu--point-br::after {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: var(--pa-color-primary, #fff);
+  border: 1px solid var(--pa-color-primary, #e4e7ed);
+  border-radius: 50%;
+  z-index: 1;
+}
+
+.pa-menu--point-tl::after {
+  top: -5px;
+  left: -5px;
+}
+
+.pa-menu--point-tr::after {
+  top: -5px;
+  right: -5px;
+}
+
+.pa-menu--point-bl::after {
+  bottom: -5px;
+  left: -5px;
+}
+
+.pa-menu--point-br::after {
+  bottom: -5px;
+  right: -5px;
+}
+
+.pa-menu__content {
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--pa-size-radius, 8px);
+
+  overflow: hidden;
+}
+
+/* ─── Backdrop ────────────────────────────── */
+
+.pa-menu__backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1999;
+  background: transparent;
+}
+
+/* ─── Transition ──────────────────────────── */
+
+.pa-menu-fade-enter-active,
+.pa-menu-fade-leave-active {
+  transition:
+    opacity 0.15s ease,
+    transform 0.15s ease;
+}
+
+.pa-menu-fade-enter-from,
+.pa-menu-fade-leave-to {
+  opacity: 0;
+  transform: scale(0.95);
+}
+
+/* ─── Menu Item ────────────────────────────── */
+
+.pa-menu-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 8px 16px;
+  font-size: 13px;
+  color: var(--pa-color-font, #333);
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.15s;
+
+  &:hover {
+    background-color: var(--pa-color-primary-light-7, #f0f5ff);
+  }
+}
+
+.pa-menu-item--danger {
+  color: var(--pa-color-danger, #a41515);
+
+  &:hover {
+    background-color: var(--pa-color-danger-light-7, #fff3f3);
+  }
+}
+
+.pa-menu-item--disabled {
+  color: var(--pa-color-font-disabled, #c0c4cc);
+  cursor: not-allowed;
+
+  &:hover {
+    background-color: transparent;
+  }
+}
+
+/* ─── Icon ──────────────────────────────────── */
+
+.pa-menu-item__icon {
+  flex-shrink: 0;
+  margin-right: 8px;
+  font-size: 16px;
+}
+
+/* ─── Label ─────────────────────────────────── */
+
+.pa-menu-item__label {
+  flex: 1;
+  white-space: nowrap;
+}
+
+/* ─── Arrow (子菜单箭头) ────────────────────── */
+
+.pa-menu-item__arrow {
+  flex-shrink: 0;
+  margin-left: auto;
+  padding-left: 12px;
+  font-size: 10px;
+  color: var(--pa-color-font-secondary, #909399);
+  transition: color 0.15s;
+}
+
+.pa-menu-item:hover .pa-menu-item__arrow {
+  color: var(--pa-color-font, #333);
+}
+
+/* ─── Divider ──────────────────────────────── */
+
+.pa-menu-item__divider {
+  position: absolute;
+  top: 0;
+  left: 8px;
+  right: 8px;
+  height: 1px;
+  background: var(--pa-color-border-opacity-1, #e4e7ed);
+}
+
+/* ─── Submenu (子菜单面板) ──────────────────── */
+
+.pa-menu__submenu {
+  z-index: 2001;
+  min-width: 140px;
+  border: 1px solid var(--pa-color-border-opacity-1, #e4e7ed);
+  border-radius: var(--pa-size-radius, 8px);
+  background-color: var(--pa-color-bg-opacity, #fff);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+  margin-left: var(--pa-size-padding_small);
+}

@@ -1,4 +1,4 @@
-@mixin button-type($var-color, $var-hover, $var-bg) {
+@mixin button-type($var-color, $var-hover, $var-bg, $var-shadow) {
   --pa-button-color: var(#{$var-color});
   --pa-button-color2: var(#{$var-bg});
   background-color: var(#{$var-color});
@@ -7,7 +7,7 @@
 
   &:hover {
     background-color: var(#{$var-hover});
-    box-shadow: var(--pa-color-shadow);
+    box-shadow: 0px 0px 5px 3px var(#{$var-shadow});
   }
 }
 
@@ -49,31 +49,31 @@
   }
 
   &.primary {
-    @include button-type(--pa-color-primary, --pa-color-primary-light-3, --pa-color-primary-light-9);
+    @include button-type(--pa-color-primary, --pa-color-primary-light-3, --pa-color-primary-light-9, --pa-color-primary-light-3);
   }
 
   &.warning {
-    @include button-type(--pa-color-warning, --pa-color-warning-light-3, --pa-color-warning-light-9);
+    @include button-type(--pa-color-warning, --pa-color-warning-light-3, --pa-color-warning-light-9, --pa-color-warning-light-3);
   }
 
   &.danger {
-    @include button-type(--pa-color-danger, --pa-color-danger-light-3, --pa-color-danger-light-9);
+    @include button-type(--pa-color-danger, --pa-color-danger-light-3, --pa-color-danger-light-9, --pa-color-danger-light-3);
   }
 
   &.info {
-    @include button-type(--pa-color-info, --pa-color-info-light-3, --pa-color-info-light-9);
+    @include button-type(--pa-color-info, --pa-color-info-light-3, --pa-color-info-light-9, --pa-color-info-light-3);
   }
 
   &.success {
-    @include button-type(--pa-color-success, --pa-color-success-light-3, --pa-color-success-light-9);
+    @include button-type(--pa-color-success, --pa-color-success-light-3, --pa-color-success-light-9, --pa-color-success-light-3);
   }
 
   &.default {
     --pa-button-color2: var(--pa-color-bg);
     --pa-button-color: var(--pa-color-font);
-    --pa-button-color5: var(--pa-color-bg);
+    --pa-button-color5: var(--pa-color-send-bg);
     --pa-button-color3: var(--pa-color-border);
-    --pa-button-color4: var(--pa-color-primary);
+    --pa-button-color4: var(--pa-color-hover);
     background-color: var(--pa-color-bg);
     color: var(--pa-color-font);
     border-color: var(--pa-color-border);
@@ -85,13 +85,13 @@
   }
 
   &.small {
-    --pa-size-font-sm: calc(var(--pa-size-font) - 2px);
-    --pa-size-height-sm: calc(var(--pa-size-height) - 10px);
-    --pa-size-padding-sm: calc(var(--pa-size-padding) / 1.8);
+    --pa-size-font-sm: var(--pa-size-font);
+    --pa-size-height-sm: calc(var(--pa-size-height) * 0.65);
+    --pa-size-padding-sm: calc(var(--pa-size-padding) * 0.7);
 
     font-size: var(--pa-size-font-sm) !important;
     line-height: var(--pa-size-height-sm) !important;
-    padding: calc(var(--pa-size-padding-sm) / 3) calc(var(--pa-size-padding-sm) / 1.2) !important;
+    padding: calc(var(--pa-size-padding-sm) / 2) calc(var(--pa-size-padding-sm) + 5px);
   }
 
   &.large {
@@ -123,7 +123,7 @@
 
 .pa-button.disabled {
   background-color: var(--pa-color-send-bg) !important;
-  border-color: var(--pa-color-info-light-7) !important;
+  border-color: var(--pa-color-info-light-3) !important;
   color: var(--pa-color-info-light-1) !important;
   cursor: not-allowed;
 
@@ -143,25 +143,20 @@
 }
 
 .pa-button.use-line {
+  position: relative;
   background: none !important;
   border: none !important;
   padding: 0;
   line-height: 1.3em;
   border-radius: 0;
   height: 1.4em;
+  opacity: 0.7;
+  transition: opacity var(--pa-animation-time, 0.2s);
 
   &:hover {
     color: var(--pa-button-color) !important;
-
-    &::after {
-      position: absolute;
-      bottom: 0;
-      content: "";
-      display: block;
-      width: 100%;
-      height: 1px;
-      background-color: var(--pa-button-color);
-    }
+    opacity: 1;
+    box-shadow: none;
   }
 }
 
@@ -182,6 +177,7 @@
   overflow: hidden;
   border-radius: var(--pa-size-radius, 3px);
   transition: var(--pa-animation-time, 0.2s);
+  border-bottom-right-radius: 0;
   &:hover {
     box-shadow: var(--pa-color-shadow);
   }

@@ -1,32 +1,29 @@
 <template>
-  <transition name="mo-animation-fadeIn" @after-leave="handleAfterLeave">
-    <div v-if="visible" class="pa-message-box__overlay" :style="overlayStyles">
-      <div class="pa-message-box__overlay_mo" :style="overlayStyles" @click="handleClose"></div>
-      <transition name="mo-animation-fadeIn">
-        <div v-show="visible" :id="id" :class="['pa-message-box', type ? `${type}` : '', customClass]" :style="overlayStyles" role="alert">
-          <div class="pa-message-box_header mb-size">
-            <div class="flex-center-start">
-              <pa-icon class="pa-message-box__icon mr-size" name="warning_line"></pa-icon>
-              <div class="pa-message-box__title">
-                {{ typeof title === "string" ? title : title?.[language] || languagePackage["notificationTitle"] }}
-              </div>
-            </div>
-            <pa-icon class="pa-message-box__closeBtn" @click="handleClose" name="close_line"></pa-icon>
-          </div>
-          <div v-if="dangerouslyUseHTMLString" class="pa-message-box__content" v-html="dangerouslyUseHTMLString ? message : ''"></div>
-          <div v-else class="pa-message-box__content">{{ typeof message === "string" ? message : message?.[language] }}</div>
-          <div class="pa-message-box__footer">
-            <pa-button is="cancel" :iconName="cancelButtonIcon" :type="isType === 'confirm' ? 'default' : 'primary'" @click="handleClose">
-              {{ cancelButtonText }}
-            </pa-button>
-            <pa-button :iconName="confirmButtonIcon" v-if="isType === 'confirm'" :type="type" font="check_circle_line" is="submit" @click="handleClick">
-              {{ confirmButtonText }}
-            </pa-button>
+  <pa-overlay v-if="visible" :model-value="visible" @click-overlay="handleClose">
+    <div :id="id" :class="['pa-message-box', type ? `${type}` : '', customClass]" :style="overlayStyles" role="alert">
+      <div class="pa-message-box_header mb-size">
+        <div class="flex-center-start">
+          <pa-icon class="pa-message-box__icon mr-size" name="warning_line"></pa-icon>
+          <div class="pa-message-box__title">
+            {{ typeof title === "string" ? title : title?.[language] || languagePackage["notificationTitle"] }}
           </div>
         </div>
-      </transition>
+        <pa-icon class="pa-message-box__closeBtn" @click="handleClose" name="close_line"></pa-icon>
+      </div>
+      <slot name="content">
+        <div v-if="dangerouslyUseHTMLString" class="pa-message-box__content" v-html="dangerouslyUseHTMLString ? message : ''"></div>
+        <div v-else class="pa-message-box__content">{{ typeof message === "string" ? message : message?.[language] }}</div>
+      </slot>
+      <div class="pa-message-box__footer">
+        <pa-button is="cancel" :iconName="cancelButtonIcon" :type="isType === 'confirm' ? 'default' : 'primary'" @click="handleClose">
+          {{ cancelButtonText }}
+        </pa-button>
+        <pa-button :iconName="confirmButtonIcon" v-if="isType === 'confirm'" :type="type" font="check_circle_line" is="submit" @click="handleClick">
+          {{ confirmButtonText }}
+        </pa-button>
+      </div>
     </div>
-  </transition>
+  </pa-overlay>
 </template>
 
 <script lang="ts" setup>
@@ -50,6 +47,11 @@ import PaIcon from "../pa-icon/pa-icon.vue";
  * @description 导入按钮组件
  */
 import PaButton from "../pa-button/pa-button.vue";
+/**
+ * 模块导入
+ * @description 导入遮罩层组件
+ */
+import PaOverlay from "../pa-overlay/pa-overlay.vue";
 /**
  * 模块导入
  * @description 导入语言包
@@ -136,18 +138,23 @@ const handleAfterLeave = (): void => {
  * @returns void
  * @description 点击确认按钮时触发回调并关闭
  */
-const handleClick = (): void => {
-  onConfirm?.();
-  visible.value = false;
+const handleClick = async (): void => {
+  const back = await onConfirm?.();
+  console.log(back);
+  if (!back) {
+    visible.value = false;
+    handleAfterLeave();
+  }
 };
 /**
  * 关闭处理
  * @returns void
- * @description 关闭消息框并触发回调
+ * @description 关闭消息框并触发清理
  */
 const handleClose = (): void => {
   onClose?.();
   visible.value = false;
+  handleAfterLeave();
 };
 /**
  * ESC键处理
@@ -168,27 +175,28 @@ function handleKeyDown(e: KeyboardEvent): void {
  * @description 初始化消息框显示和事件监听
  */
 onMounted(() => {
+  if (props.visible !== undefined && props.visible != null) {
+    return;
+  }
   setTimeout(() => {
     visible.value = true;
   }, 10);
   if (!window.PancakeGlobalConfig.escapeMap) window.PancakeGlobalConfig.escapeMap = [];
+  document.addEventListener("keydown", handleKeyDown);
   if (closeOnPressEscape) {
-    document.addEventListener("keydown", handleKeyDown);
     window.PancakeGlobalConfig.escapeMap.push(props.id);
   }
 });
 /**
  * 组件卸载
- * @description 清理事件监听
+ * @description 清理事件监听（无条件移除，避免 closeOnPressEscape 中途变化导致泄漏）
  */
 onBeforeUnmount(() => {
-  if (closeOnPressEscape) {
-    document.removeEventListener("keydown", handleKeyDown);
-    const map = window.PancakeGlobalConfig?.escapeMap;
-    if (map) {
-      const idx = map.indexOf(props.id);
-      if (idx !== -1) map.splice(idx, 1);
-    }
+  document.removeEventListener("keydown", handleKeyDown);
+  const map = window.PancakeGlobalConfig?.escapeMap;
+  if (map) {
+    const idx = map.indexOf(props.id);
+    if (idx !== -1) map.splice(idx, 1);
   }
 });
 /**
@@ -196,6 +204,9 @@ onBeforeUnmount(() => {
  * @description 暴露给父组件的方法
  */
 defineExpose({
+  open: () => {
+    visible.value = true;
+  },
   close: handleClose
 });
 </script>

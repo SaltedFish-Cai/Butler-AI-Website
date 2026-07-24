@@ -34,6 +34,8 @@ export type PaAccordionContext = {
   singleExpand: boolean;
   activeItemId: import("vue").Ref<string>;
   setActiveItemId: (id: string) => void;
+  registerSentinel: (el: HTMLElement, onStuckChange: (stuck: boolean) => void) => void;
+  unregisterSentinel: (el: HTMLElement) => void;
 };
 
 /**

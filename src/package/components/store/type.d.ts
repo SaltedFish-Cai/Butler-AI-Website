@@ -4,6 +4,8 @@ export interface toolsState {
   };
   // dictionaryTimeout: number;
   dictionaryMaxTime: number;
+  /** Tabs label 顺序缓存 — key 为 `tabs-cache:{id}`，值为 label name 有序数组 */
+  tabsCache: Record<string, string[]>;
 }
 
 export interface apiType {
@@ -31,7 +33,7 @@ export interface GlobalState {
    * @type "light" | "dark"
    * @default "light"
    * */
-  coderEditorTheme?: "light" | "dark";
+  coderEditorTheme?: "dark" | "light";
 
   /**
    * **请求头**

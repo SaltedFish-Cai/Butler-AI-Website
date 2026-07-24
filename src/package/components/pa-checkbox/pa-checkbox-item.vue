@@ -6,6 +6,16 @@
     :style="props.style"
     @click="changeEvent"
   >
+    <input
+      type="checkbox"
+      class="pa-checkbox-item__native"
+      :checked="isChecked"
+      :indeterminate="isIndeterminate"
+      :disabled="props.disabled"
+      tabindex="0"
+      @keydown.space.prevent="changeEvent"
+      @keydown.enter.prevent="changeEvent"
+    >
     <div class="pa-checkbox-item-input-inner">
       <div class="pa-checkbox-item-input">
         <pa-icon v-if="isChecked" name="check_line"></pa-icon>
@@ -107,7 +117,7 @@ let oldValue: boolean | number | string = "";
  */
 function changeEvent(): undefined | void {
   if (props.disabled || (!isNil(props.isChecked) && !props.isOption) || (!props.isOption && props.isIndeterminate)) return;
-  const _data: any = props.isOption ? props.value !== props.value : inValue.value == props.value ? "false" : props.value;
+  const _data: any = props.isOption ? props.value : inValue.value == props.value ? "false" : props.value;
   inValue.value = _data;
   if (props.disabled) return;
   emits("update:modelValue", inValue.value);
@@ -116,18 +126,20 @@ function changeEvent(): undefined | void {
   return;
 }
 
-/**
- * **监听 modelValue 变化**
- * @description 同步外部传入的值到内部状态
- */
-watch(
-  () => props.modelValue,
-  data => {
-    inValue.value = data || "";
-    oldValue = data || "";
-  },
-  { immediate: true, deep: true }
-);
+if (!props.isOption) {
+  /**
+   * **监听 modelValue 变化**
+   * @description 同步外部传入的值到内部状态
+   */
+  watch(
+    () => props.modelValue,
+    data => {
+      inValue.value = data || "";
+      oldValue = data || "";
+    },
+    { immediate: true, deep: true }
+  );
+}
 </script>
 
 <style lang="scss">

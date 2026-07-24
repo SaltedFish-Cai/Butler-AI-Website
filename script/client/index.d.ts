@@ -26,12 +26,12 @@ interface Router {
   /**
    * Called before the route changes. Return `false` to cancel the navigation.
    */
-  onBeforeRouteChange?: (to: string) => Awaitable<void | boolean>;
+  onBeforeRouteChange?: (to: string) => Awaitable<boolean | void>;
   /**
    * Called before the page component is loaded (after the history state is
    * updated). Return `false` to cancel the navigation.
    */
-  onBeforePageLoad?: (to: string) => Awaitable<void | boolean>;
+  onBeforePageLoad?: (to: string) => Awaitable<boolean | void>;
   /**
    * Called after the route changes.
    */
@@ -152,7 +152,7 @@ declare const Content: vue.DefineComponent<
     }>
   >,
   {
-    as: string | Record<string, any>;
+    as: Record<string, any> | string;
   },
   {}
 >;
@@ -161,7 +161,6 @@ declare global {
   interface Window {
     setManagerTheme: (themeColor: string, isDark: boolean) => void;
     setManagerThemeDark: (val: any) => void;
-    setManagerTableGlobalConfig: (config: GlobalState) => void;
     getManagerTableGlobalConfig: () => {
       isKeepAliveTableWidth: boolean;
       isAutoTableWidth: boolean;
@@ -170,7 +169,6 @@ declare global {
     };
 
     MGlobalState: typeof globalState;
-    MTableState: typeof tableBaseStore;
   }
 }
 

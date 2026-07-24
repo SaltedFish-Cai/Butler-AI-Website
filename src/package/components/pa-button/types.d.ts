@@ -21,6 +21,8 @@ export type ButtonTypeV2Is =
   | "add"
   | "cancel"
   | "check"
+  | "close"
+  | "copy"
   | "delete"
   | "download"
   | "edit"
@@ -165,7 +167,15 @@ export type ComponentProps = {
    * @default `true`
    * @description 当设置该值为 `true` 时，会使用Icon
    */
-  useFont?: boolean;
+  useIcon?: boolean;
+
+  /**
+   * **是否使用文本**
+   * @type `boolean` | `undefined`
+   * @default `true`
+   * @description 当设置该值为 `true` 时，会使用文本
+   */
+  useText?: boolean;
 
   /**
    * **是否使用下划线按钮**

@@ -74,16 +74,26 @@ class MessageManagerTypeImpl implements MessageManagerType {
 
   close(id: string): void {
     const index = this.Messages.findIndex(Message => Message.id === id);
-    if (index !== -1) {
-      const instance = this.Messages[index];
-      if (instance.vm.$el && instance.vm.$el.parentNode) {
-        instance.vm.$el.parentNode.removeChild(instance.vm.$el);
+    if (index === -1) return;
+
+    const instance = this.Messages[index];
+    // 清理 CustomEvent 监听器，避免泄漏
+    const cleanupEvent = (event: CustomEvent) => {
+      if (event.detail.id === id) {
+        window.removeEventListener("Message-closed", cleanupEvent as EventListener);
       }
-      instance.vm.$.appContext.app.unmount();
-      this.Messages.splice(index, 1);
-      this.repositionMessages();
-      document.getElementById(`m-message-container-${id}`)?.remove();
+    };
+    if (typeof window !== "undefined") {
+      window.removeEventListener("Message-closed", cleanupEvent as EventListener);
     }
+
+    if (instance.vm.$el && instance.vm.$el.parentNode) {
+      instance.vm.$el.parentNode.removeChild(instance.vm.$el);
+    }
+    instance.vm.$.appContext.app.unmount();
+    this.Messages.splice(index, 1);
+    this.repositionMessages();
+    document.getElementById(`m-message-container-${id}`)?.remove();
   }
 
   closeAll(): void {
@@ -130,8 +140,12 @@ class MessageManagerTypeImpl implements MessageManagerType {
     });
     Object.keys(MessagesByPosition).forEach(position => {
       const Messages = MessagesByPosition[position];
-      let offset = 20;
-      Messages.forEach(Message => {
+      let offset = 0;
+      Messages.forEach((Message) => {
+        const msgOffset = Message.options.offset;
+        if (msgOffset != null && msgOffset > offset) {
+          offset = msgOffset;
+        }
         Message.vm.$el.style.top = `${offset}px`;
         const el = Message.vm.$el;
         if (el) {

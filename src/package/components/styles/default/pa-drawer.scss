@@ -26,7 +26,7 @@
       color: var(--pa-color-font);
       border-bottom: 1px solid var(--pa-color-border);
       .title_body {
-        padding: calc(var(--pa-size-padding, 10px)) !important;
+        padding: 0 var(--pa-size-padding, 10px) !important;
         width: 100%;
         display: flex;
         justify-content: space-between;
@@ -34,7 +34,7 @@
         height: calc(var(--pa-size-font, 13px) * 1.5);
         font-size: calc(var(--pa-size-font, 13px) + 1px);
         .is_title_body {
-          font-size: calc(var(--pa-size-font) * 1.2);
+          font-size: var(--pa-size-font_large);
         }
         .sub_title_body {
           position: absolute;
@@ -46,8 +46,8 @@
 
       .pa-drawer-content_header_close {
         position: relative;
-        width: calc(var(--pa-size-font, 13px) * 1.5 + var(--pa-size-padding, 10px) * 2);
-        height: calc(var(--pa-size-font, 13px) * 1.5 + var(--pa-size-padding, 10px) * 2);
+        width: calc(var(--pa-size-font, 13px) + var(--pa-size-padding, 10px) * 2);
+        height: calc(var(--pa-size-font, 13px) + var(--pa-size-padding, 10px) * 2);
         background-color: var(--pa-color-danger-light-4);
         display: flex;
         justify-content: center;
@@ -129,7 +129,7 @@
   }
 
   .pa-drawer-content_footer {
-    padding: var(--pa-size-padding, 10px) !important;
+    padding: calc(var(--pa-size-padding, 10px) / 2) var(--pa-size-padding, 10px) !important;
     border-top: 1px solid var(--pa-color-border);
     text-align: center;
     display: flex;

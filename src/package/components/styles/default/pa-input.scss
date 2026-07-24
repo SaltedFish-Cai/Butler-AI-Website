@@ -103,6 +103,11 @@
         &::-webkit-scrollbar {
           display: none;
         }
+        > pre {
+          margin: 0;
+          white-space: pre-wrap;
+          word-wrap: break-word;
+        }
       }
       .not-focus {
         height: calc(var(--pa-size-height, 24px) - var(--pa-size-height, 24px) / 4) !important;
@@ -125,6 +130,7 @@
         overflow: hidden;
         text-overflow: ellipsis;
       }
+
       .pa-input-textarea-inner.display-ellipsis.placeholder {
         color: var(--pa-color-info-light-4);
       }
@@ -154,6 +160,17 @@
       .pa-input-textarea-inner {
         min-height: calc(var(--pa-size-height, 24px) - var(--pa-size-height, 24px) / 4);
         transition: var(--pa-animation-time, 0.2s);
+      }
+    }
+
+    .pa-input-textarea.is_textarea {
+      .pa-input-textarea-inner {
+        transition: none;
+      }
+      .clear-icon {
+        position: absolute;
+        right: 0;
+        top: calc(50% - 9px);
       }
     }
 

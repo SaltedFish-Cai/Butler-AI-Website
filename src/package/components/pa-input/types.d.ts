@@ -47,11 +47,12 @@ export type ComponentProps = {
   modelValue?: number | string;
   /**
    * 输入框类型
-   * @type 'input' | 'text' | 'textarea' | undefined
+   * @type 'input' | 'text' | 'textarea' | 'password' | undefined
+   * @default undefined
    * @default textarea
-   * @description 输入框类型，可选值为 `input`、`text`、`textarea`
+   * @description 输入框类型，可选值为 `input`、`text`、`textarea`、`password`
    */
-  type?: "input" | "text" | "textarea";
+  type?: "input" | "text" | "textarea" | "password";
   /**
    * 表单项标签
    * @type LanguagePackageType | string | undefined

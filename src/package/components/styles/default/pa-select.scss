@@ -142,12 +142,6 @@
     .check-icon {
       display: none;
     }
-
-    &:hover {
-      color: var(--pa-color-primary);
-      cursor: pointer;
-      background-color: var(--pa-color-send-bg);
-    }
   }
 
   .pa-select-option.is-active {
@@ -157,6 +151,11 @@
     .check-icon {
       display: block;
     }
+  }
+
+  .pa-select-option.is-keyboard-active {
+    background-color: var(--pa-color-send-bg);
+    color: var(--pa-color-primary);
   }
 
   > .pa-scrollbar > .pa-scrollbar-content > .scrollbar-body > .scrollbar-body-content {

@@ -47,13 +47,13 @@
             :exOptionsList="exOptionsList"
             :optionsHeight="optionsHeight"
           >
-            <template #optionLabel="item">
-              <slot name="optionLabel" :scope="item"></slot>
+            <template #optionLabel="option">
+              <slot name="optionLabel" :option="option"></slot>
             </template>
           </pa-cascader-option>
           <pa-cascader-option v-else :exOptions="filterOptionsList" :inValue="inValue" :isMultiple="isMultiple" :isCheck="isCheck" :optionsHeight="optionsHeight">
-            <template #optionLabel="item">
-              <slot name="optionLabel" :scope="item"></slot>
+            <template #optionLabel="option">
+              <slot name="optionLabel" :option="option"></slot>
             </template>
           </pa-cascader-option>
         </div>
@@ -571,6 +571,6 @@ watch(
 </script>
 
 <style lang="scss">
-@use "./index.scss";
+@use "../styles/default/pa-cascader.scss";
 @use "../cell-style.scss";
 </style>
