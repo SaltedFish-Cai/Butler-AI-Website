@@ -41,6 +41,11 @@ import type { ComponentEmits, ComponentProps } from "./types";
  */
 import { getElementPosition } from "../utils/getElementPosition";
 /**
+ * 模块导入
+ * @description 导入渲染 ID 生成工具
+ */
+import useRenderId from "../tools/render-id";
+/**
  * 位置偏移常量
  * @description 弹窗与参考元素之间的像素偏移
  */
@@ -50,11 +55,6 @@ const OFFSET = 9;
  * @description 弹窗距离视口边界的最小安全距离
  */
 const SAFE_DISTANCE = 10;
-/**
- * ID 计数器
- * @description 用于生成唯一 ID 的递增计数器
- */
-let idCounter = 0;
 /**
  * 组件属性
  * @type ComponentProps
@@ -82,7 +82,7 @@ const emits = defineEmits<ComponentEmits>();
  * @type Ref<string>
  * @description 弹窗的唯一标识符
  */
-const id = ref(`popover-${++idCounter}`);
+const id = ref((props.id ? props.id + "_" : "") + "pa-popover_" + useRenderId());
 /**
  * 渲染结束标识
  * @type Ref<boolean>

@@ -1,5 +1,5 @@
 <template>
-  <div :id="id" class="pa-slider" :class="[props.class, { 'is-disabled': disabled, 'is-range': range }]" :style="props.style">
+  <div :id="randId" class="pa-slider" :class="[props.class, { 'is-disabled': disabled, 'is-range': range }]" :style="props.style">
     <div ref="runwayRef" class="pa-slider__runway" @mousedown.prevent="onRunwayClick">
       <div v-for="m in parsedMarks" :key="m.value" class="pa-slider__stop" :style="{ left: m.position + '%' }">
         <div class="pa-slider__marks-dot" :class="{ 'pa-slider__marks-dot--active': m.isActive }" />
@@ -33,6 +33,7 @@
 <script lang="ts" setup>
 import { ref, computed, watch, type Ref } from "vue";
 import type { ComponentProps, ComponentEmits } from "./types";
+import useRenderId from "../tools/render-id";
 
 const props = withDefaults(defineProps<ComponentProps>(), {
   min: 0,
@@ -43,6 +44,8 @@ const props = withDefaults(defineProps<ComponentProps>(), {
   disabled: false
 });
 const emits = defineEmits<ComponentEmits>();
+
+const randId = ref((props.id ? props.id + "_" : "") + "pa-slider_" + useRenderId());
 
 type MarkItem = {
   value: number;

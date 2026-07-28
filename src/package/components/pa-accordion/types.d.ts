@@ -36,6 +36,7 @@ export type PaAccordionContext = {
   setActiveItemId: (id: string) => void;
   registerSentinel: (el: HTMLElement, onStuckChange: (stuck: boolean) => void) => void;
   unregisterSentinel: (el: HTMLElement) => void;
+  randId: string;
 };
 
 /**

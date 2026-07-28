@@ -1,10 +1,11 @@
 <template>
-  <div class="pa-file" :class="[props.class, { 'is-disabled': props.disabled }]" :style="props.style">
+  <div :id="randId" class="pa-file" :class="[props.class, { 'is-disabled': props.disabled }]" :style="props.style">
     <div class="flex-center-start" v-if="!display" style="flex-wrap: wrap">
       <div class="flex-center-start" style="width: 1px; flex: 1">
         <slot name="reference-before"></slot>
         <pa-button-group>
           <pa-button
+            :id="randId + '_upload'"
             :title="languagePackage['uploadText']"
             class="pa-file_upload-btn"
             position="left"
@@ -30,7 +31,7 @@
             />
           </pa-button>
 
-          <pa-button v-if="downloadTemplate" is="download" :disabled="disabled" @click="downloadTemplate">
+          <pa-button :id="randId + '_download'" v-if="downloadTemplate" is="download" :disabled="disabled" @click="downloadTemplate">
             {{ languagePackage["downloadTemplate"] }}
           </pa-button>
         </pa-button-group>
@@ -38,6 +39,7 @@
 
       <pa-button
         v-if="inValue?.length && !display"
+        :id="randId + '_clean'"
         :title="languagePackage['clearAddedFiles']"
         style="--pa-size-font: 14px; --pa-size-height: 28px"
         class="btn-width ml-size"
@@ -134,6 +136,7 @@ import { PancakeGlobalConfigType } from "../pa-manager/types";
 import isEqual from "../tools/is-equal";
 import isNil from "../tools/is-nil";
 import debounce from "../tools/debounce";
+import useRenderId from "../tools/render-id";
 
 /**
  * 全局配置注入
@@ -147,6 +150,8 @@ const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<Pan
  * @description 定义 PaFile 组件的接收属性
  */
 const props = withDefaults(defineProps<ComponentProps>(), {});
+const randId = ref((props.id ? props.id + "_" : "") + "pa-dialog_" + useRenderId());
+
 /**
  * 组件事件定义
  * @type ComponentEmits
@@ -512,16 +517,13 @@ function actionRequest(ajaxFileList: Array<{ filename: string; file: File }>): v
  * 清空所有文件
  * @description 弹出确认框，用户确认后清空已上传的文件列表
  */
-const cleanFiles = (): void =>
-  M_MessageBox.confirm({
-    title: languagePackage.value["tip"],
-    message: `${languagePackage.value["isDel"]}`,
-    type: "warning",
-    confirmButtonText: languagePackage.value["enterDel"],
+const cleanFiles = (): void => {
+  M_MessageBox.delete({
     onConfirm: () => {
       if (inValue.value) inValue.value.length = 0;
     }
   });
+};
 /**
  * 删除指定文件
  * @param index - 要删除的文件索引

@@ -1,5 +1,5 @@
 <template>
-  <div class="pa-badge">
+  <div class="pa-badge" :id="randId">
     <slot></slot>
     <template v-if="useShow || showVal || useDot">
       <div v-if="useDot || !showVal" class="pa-badge__dot"></div>
@@ -13,18 +13,22 @@
  * **模块导入**
  * @description 导入 Vue 组合式 API
  */
-import { computed } from "vue";
+import { computed, ref } from "vue";
 /**
  * **模块导入**
  * @description 导入组件类型定义
  */
 import type { ComponentProps } from "./types";
+import useRenderId from "../tools/render-id";
 /**
  * **组件属性**
  * @type `ComponentProps`
  * @description 组件的属性对象
  */
 const props = withDefaults(defineProps<ComponentProps>(), {});
+
+const randId = ref((props.id ? props.id + "_" : "") + "pa-badge_" + useRenderId());
+
 /**
  * **显示值**
  * @returns `number` | `string` 显示值

@@ -2,7 +2,7 @@
   <pa-development :id="randId">
     <template v-if="initialization == 1">
       <div class="pa-form" :class="[props.class]" :style="{ ...props.style }">
-        <form-control :id="randId || 'default'" ref="FormControlRef" :rules="useRequired ? baseRulesMap['default'] : undefined" :model="formData">
+        <form-control :id="randId + '_form'" ref="FormControlRef" :rules="useRequired ? baseRulesMap['default'] : undefined" :model="formData">
           <template v-for="(itemConfigs, itemConfigsIndex) in inMultipleConfig" :key="itemConfigs.unitName">
             <!-- Group组标题 -->
             <template v-if="itemConfigs.unitName != 'default'">
@@ -22,7 +22,7 @@
               <template v-for="item in itemConfigs.configs" :key="String(item.prop)">
                 <!-- tabs 表 -->
                 <pa-col v-if="item.type == 'tabs-form'" :xs="1" :sm="1" :md="1" :lg="1" :xl="1">
-                  <tabsItem :id="randId" @set-ref="refBody => setRuleTabsFormRef(refBody, item.prop as string)" :item="item" :rules="baseRulesMap">
+                  <tabsItem :id="randId + '_tabs_' + item.prop as string" @set-ref="refBody => setRuleTabsFormRef(refBody, item.prop as string)" :item="item" :rules="baseRulesMap">
                     <template v-for="slot in slotKeys" #[slot]="scope" :key="slot">
                       <slot :name="slot" v-bind="scope"></slot>
                     </template>
@@ -30,7 +30,7 @@
                 </pa-col>
 
                 <!-- 标准表格 -->
-                <formItem v-else :id="randId" :item="item">
+                <formItem v-else :id="randId + '_form_' + item.prop as string" :item="item">
                   <template v-for="slot in slotKeys" #[slot]="scope" :key="slot">
                     <slot :name="slot" :config="item" :data="scope.data" :option="(scope as any).option"></slot>
                   </template>

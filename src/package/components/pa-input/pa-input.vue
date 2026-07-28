@@ -1,6 +1,6 @@
 <template>
   <template v-if="!display">
-    <div class="pa-input" :style="props.style" :class="props.class">
+    <div :id="randId" class="pa-input" :style="props.style" :class="props.class">
       <div class="pa-input_body" :class="[{ 'is-disabled': disabled }, { 'is-focus': isFocus }]" @click="textareaRef.focus()">
         <div v-if="title" :style="{ width: titleWidth }" class="pa-cell-label">
           {{ typeof title === "string" ? title : title[languageValue] }}
@@ -14,6 +14,7 @@
 
           <input
             v-if="type === 'password'"
+            :id="randId + '_input'"
             ref="textareaRef"
             class="pa-input-textarea-inner"
             :class="[isFocus ? 'is-focus' : 'not-focus']"
@@ -34,6 +35,7 @@
 
           <textarea
             v-else
+            :id="randId + '_input'"
             ref="textareaRef"
             class="pa-input-textarea-inner textarea"
             :class="[isFocus ? 'is-focus' : 'not-focus']"
@@ -55,7 +57,7 @@
             <div v-if="maxLength" class="pa-input-word-limit">{{ inValue?.length || 0 }}{{ maxLength ? " / " + maxLength : "" }}</div>
           </div>
 
-          <pa-icon v-else-if="!disabled && clearable && inValue && !isFocus" name="close_circle_line" class="clear-icon" @click="clearInput" />
+          <pa-icon :id="randId + '_clear'" v-else-if="!disabled && clearable && inValue && !isFocus" name="close_circle_line" class="clear-icon" @click="clearInput" />
         </div>
       </div>
     </div>
@@ -109,6 +111,7 @@ import isEqual from "../tools/is-equal";
  * @description 导入空值判断函数
  */
 import isNil from "../tools/is-nil";
+import useRenderId from "../tools/render-id";
 /**
  * 全局配置注入
  * @type ComputedRef<PancakeGlobalConfigType>
@@ -166,6 +169,12 @@ const props = withDefaults(defineProps<ComponentProps>(), {
   type: "textarea",
   clearable: true
 });
+/**
+ * 组件唯一标识
+ * @type string
+ * @description 用于唯一标识组件的字符串
+ */
+const randId = ref((props.id ? props.id + "_" : "") + "pa-form_" + useRenderId());
 /**
  * 组件事件定义
  * @description 定义组件可触发的事件

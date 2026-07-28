@@ -61,7 +61,7 @@ import { ref, reactive, onMounted, onBeforeUnmount, nextTick, computed, inject, 
  * 随机字符生成工具
  * @description 导入随机字符生成函数
  */
-import { randChar } from "../tools/rand-char";
+import useRenderId from "../tools/render-id";
 /**
  * 滚动列表组件 Props 类型
  * @description 导入组件 Props 类型定义
@@ -159,7 +159,7 @@ const emit = defineEmits<ComponentEmits>();
  * 组件唯一标识
  * @description 组件唯一标识
  */
-const id = ref(randChar());
+const id = ref((props.id ? props.id + "_" : "") + "pa-scrollbar-list_" + useRenderId());
 /**
  * 滚动条组件引用
  * @description pa-scrollbar 子组件引用

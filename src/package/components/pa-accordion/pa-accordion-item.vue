@@ -1,5 +1,10 @@
 <template>
-  <div ref="rootEl" class="pa-accordion-item" :class="{ 'pa-accordion-item--expanded': isExpanded, 'pa-accordion-item--disabled': disabled, 'pa-accordion-item--header-stuck': isHeaderStuck }">
+  <div
+    ref="rootEl"
+    :id="accordionCtx?.randId + '_' + itemIdCounter"
+    class="pa-accordion-item"
+    :class="{ 'pa-accordion-item--expanded': isExpanded, 'pa-accordion-item--disabled': disabled, 'pa-accordion-item--header-stuck': isHeaderStuck }"
+  >
     <div class="pa-accordion-item__sticky-sentinel" ref="sentinelEl"></div>
     <div class="pa-accordion-item__header" @click="handleHeaderClick" role="button" :tabindex="disabled ? -1 : 0" @keydown.enter="handleHeaderClick">
       <div class="pa-accordion-item__header_content">

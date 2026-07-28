@@ -1,9 +1,10 @@
 <template>
-  <div v-if="!display" class="pa-radio" :class="[props.class]" ref="selectRef" :style="props.style" :disabled="props.disabled">
+  <div v-if="!display" :id="randId" class="pa-radio" :class="[props.class]" ref="selectRef" :style="props.style" :disabled="props.disabled">
     <div v-if="title" :style="titleWidthStyle" class="pa-cell-label">
       {{ typeof title === "string" ? title : title[languageValue] }}
     </div>
     <pa-radio-item
+      :id="randId"
       v-for="item in exOptionsList"
       :key="String(item.value)"
       :label="item.label"
@@ -73,6 +74,7 @@ import isNil from "../tools/is-nil";
  * @description 导入 lodash isEqual 工具函数
  */
 import isEqual from "../tools/is-equal";
+import useRenderId from "../tools/render-id";
 /**
  * 全局配置注入
  * @type ComputedRef<PancakeGlobalConfigType>
@@ -85,6 +87,12 @@ const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<Pan
  * @description 组件的属性对象
  */
 const props = withDefaults(defineProps<ComponentProps>(), {});
+/**
+ * **随机 ID**
+ * @type `string`
+ * @description 用于唯一标识组件的随机 ID
+ */
+const randId = ref((props.id ? props.id + "_" : "") + "pa-radio_" + useRenderId());
 /**
  * 组件事件定义
  * @description 定义组件可触发的事件

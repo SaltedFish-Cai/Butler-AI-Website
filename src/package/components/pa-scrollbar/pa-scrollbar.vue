@@ -42,7 +42,7 @@ import { ref, Ref, onMounted, onBeforeUnmount, nextTick, watch, provide, compute
  * 模块导入
  * @description 导入随机字符生成工具
  */
-import { randChar } from "../tools/rand-char";
+import useRenderId from "../tools/render-id";
 /**
  * 模块导入
  * @description 导入组件类型定义
@@ -116,7 +116,7 @@ const prop = withDefaults(defineProps<ComponentProps>(), {
  * @type Ref<string>
  * @description 组件的唯一标识
  */
-const id = ref(randChar());
+const id = ref((prop.id ? prop.id + "_" : "") + "pa-scrollbar_" + useRenderId());
 /**
  * 垂直滑块引用
  * @type Ref<HTMLElement | undefined>

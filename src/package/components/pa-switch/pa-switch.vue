@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="!display"
-    :id="id"
+    :id="randId"
     class="pa-switch"
     :class="[inValue == options.activeValue ? 'pa-switch-active' : '', props.class, { 'is-disabled': props.disabled }]"
     :style="props.style"
@@ -89,6 +89,8 @@ import { computed, inject, ref, watch, type Ref, type ComputedRef } from "vue";
  */
 import { ComponentProps, ComponentEmits } from "./types";
 
+import useRenderId from "../tools/render-id";
+
 /**
  * 模块导入
  * @description 导入选项类型定义
@@ -142,6 +144,8 @@ const props = withDefaults(defineProps<ComponentProps>(), {
  * @description 定义组件可触发的事件
  */
 const emits = defineEmits<ComponentEmits>();
+
+const randId = ref((props.id ? props.id + "_" : "") + "pa-switch_" + useRenderId());
 
 /**
  * 当前值

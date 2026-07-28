@@ -1,7 +1,7 @@
 <template>
   <pa-overlay :modelValue="state.visible" @click-overlay="closeOnClickModal && closeMenu()" :class="positionClass" :blur="overlayBlur">
     <transition :name="transitionName">
-      <div v-if="state.visible" class="pa-drawer">
+      <div v-if="state.visible" :id="randId" class="pa-drawer">
         <div class="pa-drawer-content" :class="position" :style="contentStyle">
           <div class="pa-drawer-content_header">
             <slot name="header">
@@ -20,7 +20,7 @@
                 </div>
               </div>
             </slot>
-            <div class="pa-drawer-content_header_close">
+            <div :id="randId + '_close'" class="pa-drawer-content_header_close">
               <pa-icon name="close_line" class="flex-center" @click="closeMenu" />
             </div>
           </div>
@@ -48,7 +48,7 @@
  * 模块导入
  * @description 导入 Vue 组合式 API
  */
-import { reactive, watch, onMounted, onUnmounted, computed, inject, type ComputedRef } from "vue";
+import { reactive, watch, onMounted, onUnmounted, computed, inject, type ComputedRef, ref } from "vue";
 /**
  * 模块导入
  * @description 导入组件类型定义
@@ -59,6 +59,7 @@ import { ComponentProps, ComponentEmits } from "./types";
  * @description 导入全局配置类型
  */
 import { PancakeGlobalConfigType } from "../pa-manager/types";
+import useRenderId from "../tools/render-id";
 /**
  * 全局配置
  * @type ComputedRef<PancakeGlobalConfigType>
@@ -80,6 +81,12 @@ const props = withDefaults(defineProps<ComponentProps>(), {
   position: "right",
   overlayBlur: false
 });
+/**
+ * 随机 ID
+ * @type {string}
+ * @description 生成组件唯一标识
+ */
+const randId = ref((props.id ? props.id + "_" : "") + "pa-drawer_" + useRenderId());
 /**
  * 组件事件定义
  * @type ComponentEmits

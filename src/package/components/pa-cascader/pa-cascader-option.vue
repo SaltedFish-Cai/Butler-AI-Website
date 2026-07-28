@@ -3,6 +3,7 @@
     <pa-scrollbar :useBackTop="false" :useShadow="false" :style="optionsHeight ? { height: optionsHeight } : {}">
       <div
         v-for="item in exOptions"
+        :id="id + '_option-' + String(item.value) + '-' + level"
         :key="String(item.value)"
         class="pa-cascader-option"
         :class="[equalData(item.value, activeValue) || equalData(item.value, inValue) ? 'is-active' : '', { 'is-filter': isFilter }]"
@@ -35,7 +36,7 @@
     </pa-scrollbar>
   </div>
   <template v-if="childExOptions.length">
-    <pa-cascader-option :exOptions="childExOptions" :inValue="inValue" :isMultiple="isMultiple" :isCheck="isCheck" :optionsHeight="optionsHeight">
+    <pa-cascader-option :id="id" :level="Number(level) + 1" :exOptions="childExOptions" :inValue="inValue" :isMultiple="isMultiple" :isCheck="isCheck" :optionsHeight="optionsHeight">
       <template #optionLabel="item">
         <slot name="optionLabel" :option="item"></slot>
       </template>
@@ -88,6 +89,19 @@ const injectHandleOptionClick: any = inject("handleOptionClick");
  */
 const props = withDefaults(
   defineProps<{
+    /**
+     * **组件ID**
+     * @type `string` | `undefined`
+     * @default `undefined`
+     * @description 组件的唯一标识符
+     */
+    id: string;
+    /**
+     * **当前层级**
+     * @type `number`
+     * @description 当前层级
+     */
+    level: number;
     /**
      * **是否选中**
      * @type `boolean`

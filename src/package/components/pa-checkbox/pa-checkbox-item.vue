@@ -1,5 +1,6 @@
 <template>
   <div
+    :id="randId + '_' + props.value"
     class="pa-checkbox-item"
     :class="[props.class, { 'is-disabled': props.disabled }, { 'is-checked': isChecked }, { 'is-indeterminate': isIndeterminate }]"
     ref="selectRef"
@@ -7,6 +8,7 @@
     @click="changeEvent"
   >
     <input
+      :id="randId + '_' + props.value + '_input'"
       type="checkbox"
       class="pa-checkbox-item__native"
       :checked="isChecked"
@@ -16,7 +18,7 @@
       @keydown.space.prevent="changeEvent"
       @keydown.enter.prevent="changeEvent"
     />
-    <div class="pa-checkbox-item-input-inner">
+    <div :id="randId + '_' + props.value + '_input-inner'" class="pa-checkbox-item-input-inner">
       <div class="pa-checkbox-item-input">
         <pa-icon v-if="isChecked" name="check_line"></pa-icon>
         <pa-icon v-else-if="isIndeterminate" name="minus1"></pa-icon>
@@ -52,6 +54,7 @@ import type { PancakeGlobalConfigType } from "../pa-manager/types";
  * @description 导入 lodash isNil 工具函数
  */
 import isNil from "../tools/is-nil";
+import useRenderId from "../tools/render-id";
 
 /**
  * **组件属性**
@@ -59,6 +62,13 @@ import isNil from "../tools/is-nil";
  * @description 组件的属性对象
  */
 const props = withDefaults(defineProps<ComponentItemProps & { isOption?: boolean }>(), { value: "", isChecked: undefined });
+
+/**
+ * **随机 ID**
+ * @type `string`
+ * @description 用于唯一标识组件的随机 ID
+ */
+const randId = ref((props.id ? props.id + "_" : "") + "pa-checkbox-item_" + useRenderId());
 
 /**
  * **全局配置注入**

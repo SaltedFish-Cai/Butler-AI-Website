@@ -10,7 +10,7 @@
       :closeByScroll="false"
     >
       <template #reference>
-        <div class="pa-cascader-content">
+        <div class="pa-cascader-content" :id="randId">
           <div v-if="title" :style="{ width: titleWidth }" class="pa-cell-label">
             {{ typeof title === "string" ? title : title[languageValue] }}
           </div>
@@ -20,6 +20,7 @@
             </template>
             <input
               v-if="waitTag"
+              :id="randId + '_input'"
               class="pa-cascader-input-inner"
               :value="inputValue"
               :placeholder="inputPlaceholder"
@@ -38,6 +39,7 @@
       <div class="pa-cascader-options" ref="optionsRef" v-if="!props.disabled && filterOptionsList.length > 0">
         <div class="pa-cascader-options-group">
           <pa-cascader-option
+            :id="randId"
             v-if="!filterValue"
             :exOptions="exOptionsList"
             :inValue="inValue"
@@ -46,12 +48,13 @@
             :flatExOptions="flatExOptions"
             :exOptionsList="exOptionsList"
             :optionsHeight="optionsHeight"
+            :level="0"
           >
             <template #optionLabel="option">
               <slot name="optionLabel" :option="option"></slot>
             </template>
           </pa-cascader-option>
-          <pa-cascader-option v-else :exOptions="filterOptionsList" :inValue="inValue" :isMultiple="isMultiple" :isCheck="isCheck" :optionsHeight="optionsHeight">
+          <pa-cascader-option :id="randId" v-else :exOptions="filterOptionsList" :inValue="inValue" :isMultiple="isMultiple" :isCheck="isCheck" :optionsHeight="optionsHeight" :level="0">
             <template #optionLabel="option">
               <slot name="optionLabel" :option="option"></slot>
             </template>
@@ -132,6 +135,7 @@ import isEqual from "../tools/is-equal";
  * @description 导入 cloneDeep 深拷贝工具
  */
 import cloneDeep from "../tools/clone-deep";
+import useRenderId from "../tools/render-id";
 /**
  * **全局配置注入**
  * @type `ComputedRef<PancakeGlobalConfigType>`
@@ -148,6 +152,9 @@ const props = withDefaults(defineProps<ComponentProps>(), {
   clearable: true,
   useTextByLink: true
 });
+
+const randId = ref((props.id ? props.id + "_" : "") + "pa-cascader_" + useRenderId());
+
 /**
  * **组件事件定义**
  * @description 定义组件可触发的事件

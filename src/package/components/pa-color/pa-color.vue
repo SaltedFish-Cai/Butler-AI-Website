@@ -1,5 +1,5 @@
 <template>
-  <div :id="props.id" :class="['pa-color', { 'pa-color-disabled': props.disabled }]" :style="props.style">
+  <div :id="randId" :class="['pa-color', { 'pa-color-disabled': props.disabled }]" :style="props.style">
     <pa-popover ref="popoverRef" :disabled="props.disabled" autoWidth @change="togglePicker">
       <template #reference>
         <div class="pa-color-preview" :class="{ 'pa-color-preview-active': isPickerOpen, disabled: props.disabled }">
@@ -30,6 +30,7 @@ import { isHexColor } from "./color-utils";
  * @description 导入组件 Props 和 Emits 类型
  */
 import { ComponentProps, ComponentEmits } from "./types";
+import useRenderId from "../tools/render-id";
 
 /**
  * 组件属性
@@ -37,6 +38,12 @@ import { ComponentProps, ComponentEmits } from "./types";
  * @description 组件的属性对象
  */
 const props = withDefaults(defineProps<ComponentProps>(), { useAlpha: true, useInput: true });
+/**
+ * **随机 ID**
+ * @type `string`
+ * @description 用于唯一标识组件的随机 ID
+ */
+const randId = ref((props.id ? props.id + "_" : "") + "pa-color_" + useRenderId());
 /**
  * 组件事件定义
  * @description 定义组件可触发的事件

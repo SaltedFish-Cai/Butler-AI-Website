@@ -1,11 +1,11 @@
 <template>
-  <pa-development :id="id">
+  <pa-development :id="randId">
     <div
       class="pa-table"
       ref="scrollBarList"
       :class="[props.class, isShiftPressed ? 'pa-table_shirft' : '', useSticky ? 'pa-table_sticky' : '', !isLeft ? 'pa-table_scroll_left' : '', !isRight ? 'pa-table_scroll_right' : '']"
       :style="{ ...props.style, '--pa-table-footer-height': footerHeight + 'px' }"
-      :id="props.id"
+      :id="randId"
     >
       <div class="pa-table_body_header_box" ref="headerBoxRef">
         <mTableV2Filter ref="filterRef" :tableStructure="tableStructure" :tableQuery="state.tableQuery" :extraProps="props" :state="state">
@@ -60,7 +60,7 @@
 
                     <headerItem
                       v-else
-                      :id="id"
+                      :id="randId"
                       :useOrderPropName="state.useOrderPropName"
                       :setCellWidthIng="state.setCellWidthIng"
                       :tableQuery="state.tableQuery"
@@ -174,7 +174,7 @@
               <template v-for="(item, index) in showTableList" :key="index">
                 <div class="pa-table_body_content_rows" :style="{ opacity: state.flatTableData.length > 0 ? 1 : 0 }">
                   <template v-for="row in item" :key="row[rowKey]">
-                    <div v-if="row.type == 'more'" class="m-scrollbar-more" :class="{ 'm-scrollbar-more_ing': state.listenCellInViewIng }" :id="`${id}-more-${row.name}`">
+                    <div v-if="row.type == 'more'" class="m-scrollbar-more" :class="{ 'm-scrollbar-more_ing': state.listenCellInViewIng }" :id="`${randId}-more-${row.name}`">
                       <!-- PageNum:{{ state.PageNum }} ,type:{{ row.type }} ,index:{{ index }} -->
                     </div>
                     <template v-if="row.type != 'more' && index + 1 <= Number(state.PageNum) + 2 && index + 1 >= Number(state.PageNum) - 3">
@@ -402,6 +402,11 @@ import { useValidateHooks } from "./hooks/use-validate-hooks";
 import { PancakeGlobalConfigType } from "../pa-manager/types";
 /**
  * 模块导入
+ * @description 导入渲染 ID 生成工具
+ */
+import useRenderId from "../tools/render-id";
+/**
+ * 模块导入
  * @description 导入数组分割工具
  */
 import { splitArray } from "../utils/arraySplit";
@@ -554,13 +559,6 @@ const useStickyViewIn = ref(false);
  */
 const parentScrollbarRef = inject("parentScrollbarRef");
 /**
- * 当前语言值
- * @type ComputedRef<string>
- * @description 当前选中的语言
- */
-const languageValue = computed(() => PancakeGlobalConfig.value?.language || "zh-CN");
-
-/**
  * 语言
  * @type ComputedRef<string>
  * @description 当前语言标识
@@ -646,6 +644,8 @@ const injectSetScrollToIntersect = inject("setScrollToIntersect", () => {
  * 校验钩子
  * @description 初始化表格校验相关钩子
  */
+const randId = ref((props.id ? props.id + "_" : "") + "pa-table_" + useRenderId());
+
 const { getSubmitTableList, validateField } = useValidateHooks(props, state.inRules, state.tableData, injectSetScrollToIntersect, mScrollbarListRef, getTableData);
 /**
  * 显示表格列表
@@ -1031,7 +1031,7 @@ watch(
   debounce(newVal => {
     const filterList = newVal.filter(item => item.isIntersecting);
     const showItem = filterList[filterList.length - 1];
-    const showIndex = showItem?.el?.id.split(props.id + "-more-")[1] || -1;
+    const showIndex = showItem?.el?.id.split(randId.value + "-more-")[1] || -1;
     const showIndexNumber = Number(showIndex);
     if (showIndexNumber == -1 || state.tableLoadStatus) return;
     if (state.maxPage != 0 && showIndexNumber + 1 >= state.maxPage) return;
@@ -1067,7 +1067,7 @@ watch(
       // 计算需要加载的下一页页码
       const loadedCount = virtualFlatData.value.length;
       const nextPage = Math.ceil(loadedCount / state.pageable.PageSize) + 1;
-      const maxPage = Math.ceil(state.pageable.total / state.pageable.PageSize);
+      // const maxPage = Math.ceil(state.pageable.total / state.pageable.PageSize);
       if (state.maxPage != 0 && nextPage > state.maxPage) return;
       if (state.tableData[nextPage - 1]?.length) return; // 该页已加载
       getTableList({ Page: { PageNum: nextPage } });

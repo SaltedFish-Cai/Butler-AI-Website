@@ -1,6 +1,14 @@
 <template>
-  <div class="pa-radio-item" :class="[props.class, { 'is-disabled': props.disabled }, { 'is-checked': isChecked }]" ref="selectRef" :style="props.style" @click="changeEvent">
+  <div
+    :id="randId + '_' + props.value"
+    class="pa-radio-item"
+    :class="[props.class, { 'is-disabled': props.disabled }, { 'is-checked': isChecked }]"
+    ref="selectRef"
+    :style="props.style"
+    @click="changeEvent"
+  >
     <input
+      :id="randId + '_' + props.value + '_input'"
       type="radio"
       class="pa-radio-item__native"
       :checked="isChecked"
@@ -8,8 +16,8 @@
       tabindex="0"
       @keydown.space.prevent="changeEvent"
       @keydown.enter.prevent="changeEvent"
-    >
-    <div class="pa-radio-item-input-inner">
+    />
+    <div :id="randId + '_' + props.value + '_input-inner'" class="pa-radio-item-input-inner">
       <div class="pa-radio-item-input">
         <transition name="mo-animation-fade" mode="out-in">
           <div v-if="isChecked" class="pa-radio-item-input-checked"></div>
@@ -46,6 +54,7 @@ import { PancakeGlobalConfigType } from "../pa-manager/types";
  * @description 导入 lodash isNil 工具函数
  */
 import isNil from "../tools/is-nil";
+import useRenderId from "../tools/render-id";
 
 /**
  * 组件属性
@@ -53,6 +62,13 @@ import isNil from "../tools/is-nil";
  * @description 组件的属性对象
  */
 const props = withDefaults(defineProps<ComponentItemProps>(), { isChecked: undefined });
+
+/**
+ * **随机 ID**
+ * @type `string`
+ * @description 用于唯一标识组件的随机 ID
+ */
+const randId = ref((props.id ? props.id + "_" : "") + "pa-radio-item_" + useRenderId());
 
 /**
  * 全局配置注入

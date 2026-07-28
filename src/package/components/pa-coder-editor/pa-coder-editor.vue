@@ -1,5 +1,5 @@
 <template>
-  <div :class="['pa-coder-editor', 'pa-coder-editor--' + currentTheme, props.class]" :style="[props.style, { height: props.height, minHeight: props.minHeight }]">
+  <div :id="randId" :class="['pa-coder-editor', 'pa-coder-editor--' + currentTheme, props.class]" :style="[props.style, { height: props.height, minHeight: props.minHeight }]">
     <!-- Toolbar -->
     <div v-if="props.showToolbar" class="pa-coder-editor__toolbar">
       <div class="pa-coder-editor__toolbar-left">
@@ -56,6 +56,7 @@ import { ComponentProps, ComponentEmits, CoderEditorLanguage, CoderEditorTheme }
  * @description 导入 store
  */
 import { useBaseStore } from "../store";
+import useRenderId from "../tools/render-id";
 
 /**
  * 语言与 CodeMirror 扩展映射
@@ -97,7 +98,12 @@ const props = withDefaults(defineProps<ComponentProps>(), {
   tabSize: 2,
   indentWithSpaces: true
 });
-
+/**
+ * **随机 ID**
+ * @type `string`
+ * @description 用于唯一标识组件的随机 ID
+ */
+const randId = ref((props.id ? props.id + "_" : "") + "pa-coder-editor_" + useRenderId());
 /**
  * 组件事件
  */

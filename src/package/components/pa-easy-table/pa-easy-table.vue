@@ -1,5 +1,5 @@
 <template>
-  <div :id="ID" class="pa-easy-table" :class="[props.class, card ? 'card' : 'pa-easy-table--table', overflowX ? 'pa-easy-table--x-scroll' : '']" :style="props.style">
+  <div :id="randId" class="pa-easy-table" :class="[props.class, card ? 'card' : 'pa-easy-table--table', overflowX ? 'pa-easy-table--x-scroll' : '']" :style="props.style">
     <div class="pa-easy-table__table">
       <div ref="headerRef" class="pa-easy-table__row pa-easy-table__row--header" :style="{ gridTemplateColumns: gridTemplate }">
         <div v-for="col in columns" :key="col.key" class="pa-easy-table__cell pa-easy-table__cell--header">
@@ -62,6 +62,7 @@ import type { ColumnDef } from "./types";
  * @description 导入 PaEasyTableMaxChild 组件
  */
 import PaEasyTableMaxChild from "./pa-easy-table-max-child";
+import useRenderId from "../tools/render-id";
 
 interface VirtualItem {
   data: Record<string, any>;
@@ -111,7 +112,7 @@ const bodyHeight = ref(0);
  * 已进入动画的行 key 集合
  */
 const enteredKeys = new Set<number | string>();
-const ID = ref(props.id || "pa-easy-table" + Date.now());
+const randId = ref((props.id ? props.id + "_" : "") + "pa-easy-table_" + useRenderId());
 const OVERSCAN = 5;
 const ROW_GAP = 5;
 
@@ -208,7 +209,7 @@ function measureColumns() {
   if (measuring) return;
   measuring = true;
   const header = headerRef.value;
-  const table = header?.closest(`#${ID.value}`) as HTMLElement | null;
+  const table = header?.closest(`#${randId.value}`) as HTMLElement | null;
   if (!header || !table) {
     measuring = false;
     return;
@@ -217,15 +218,15 @@ function measureColumns() {
   columnWidths.value = [];
 
   nextTick(() => {
-    const cells = header.querySelectorAll(`#${ID.value} .pa-easy-table__cell--header_inner`);
+    const cells = header.querySelectorAll(`#${randId.value} .pa-easy-table__cell--header_inner`);
     let widths: number[] = [];
     cells.forEach((el, i) => {
       widths[i] = (el as HTMLElement).clientWidth;
     });
 
-    const rows = table.querySelectorAll(`#${ID.value} .pa-easy-table__row--data`);
+    const rows = table.querySelectorAll(`#${randId.value} .pa-easy-table__row--data`);
     rows.forEach(row => {
-      const rowCells = row.querySelectorAll(`#${ID.value} .pa-easy-table__cell_inner`);
+      const rowCells = row.querySelectorAll(`#${randId.value} .pa-easy-table__cell_inner`);
       rowCells.forEach((cell, i) => {
         if (i < widths.length) {
           widths[i] = Math.max(widths[i], (cell as HTMLElement).clientWidth);
@@ -284,7 +285,7 @@ let resizeObserver: ResizeObserver | null = null;
 
 onMounted(() => {
   measureColumns();
-  const table = headerRef.value?.closest(`#${ID.value}`) as HTMLElement | null;
+  const table = headerRef.value?.closest(`#${randId.value}`) as HTMLElement | null;
   if (table) {
     resizeObserver = new ResizeObserver(() => measureColumns());
     resizeObserver.observe(table);

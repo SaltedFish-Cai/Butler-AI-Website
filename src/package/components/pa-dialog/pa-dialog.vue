@@ -30,7 +30,7 @@
                 </div>
               </div>
             </slot>
-            <div class="pa-dialog-content_header_close" @click="closeMenu">
+            <div :id="randId + '_close'" class="pa-dialog-content_header_close" @click="closeMenu">
               <pa-icon name="close_line" class="flex-center" />
             </div>
           </div>

@@ -6,12 +6,12 @@
 /**
  * 编辑器支持的语言类型
  */
-export type CoderEditorLanguage = "html" | "vue" | "javascript" | "typescript" | "json" | "css";
+export type CoderEditorLanguage = "css" | "html" | "javascript" | "json" | "typescript" | "vue";
 
 /**
  * 编辑器主题模式
  */
-export type CoderEditorTheme = "light" | "dark";
+export type CoderEditorTheme = "dark" | "light";
 
 /**
  * 组件属性定义

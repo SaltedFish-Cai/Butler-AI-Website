@@ -1,9 +1,9 @@
 <template>
-  <div :id="ID" class="pa-editor" :style="{ ...props.style }" :class="[props.class]">
+  <div :id="randId" class="pa-editor" :style="{ ...props.style }" :class="[props.class]">
     <editor-tools
       ref="editorToolsRef"
       :isSourceCodeMode="isSourceCodeMode"
-      v-bind="{ ...props, id: ID }"
+      v-bind="{ ...props, id: randId }"
       :isToolActive="isToolActive"
       :findFontSize="findFontSize"
       :autoFormatCode="autoFormatCode"
@@ -56,7 +56,7 @@
       <div></div>
       <span class="word-count">{{ wordCount }} 字</span>
     </div>
-    <edit-image :id="ID" ref="editImageRef"></edit-image>
+    <edit-image :id="randId" ref="editImageRef"></edit-image>
     <edit-table ref="editTableRef"></edit-table>
   </div>
 </template>
@@ -67,12 +67,12 @@ import type { ComponentProps, ComponentEmits } from "./types";
 import EditImage from "./edit-images.vue";
 import EditTable from "./edit-table.vue";
 import EditorTools from "./editor-tools.vue";
-import { randChar } from "../tools/rand-char";
 import { useToolsHooks } from "./use-tools-hooks";
 import * as prettier from "prettier/standalone";
 import prettierHtmlParser from "prettier/parser-html";
 import hljs from "highlight.js";
 import debounce from "../tools/debounce";
+import useRenderId from "../tools/render-id";
 
 /**
  * @description 组件 props 定义
@@ -82,7 +82,7 @@ const props = withDefaults(defineProps<ComponentProps>(), {});
 /**
  * @description 编辑器唯一 ID
  */
-const ID = ref(props.id || randChar(6));
+const randId = ref((props.id ? props.id + "_" : "") + "pa-editor_" + useRenderId());
 
 /**
  * @description 图片编辑组件引用
@@ -219,7 +219,7 @@ let savedCursorRange: Range | null = null;
  * @description 切换全屏功能
  */
 function toggleFullscreen(): void {
-  const editorElement: any = document.getElementById(ID.value);
+  const editorElement: any = document.getElementById(randId.value);
   if (!editorElement) return;
   if (!isFullscreen.value) {
     if (editorElement.requestFullscreen) {
@@ -347,7 +347,7 @@ function updateWordCountInSourceMode(): void {
   updateLineNumbers();
 }
 
-const { wordCount, isToolActive, findFontSize } = useToolsHooks(ID.value, isSourceCodeMode, editorRef, sourceCodeRef, lineNumbersRef, sourceCodeEditorContainerRef);
+const { wordCount, isToolActive, findFontSize } = useToolsHooks(randId.value, isSourceCodeMode, editorRef, sourceCodeRef, lineNumbersRef, sourceCodeEditorContainerRef);
 
 provide("provideEditorRef", editorRef);
 provide("provideSourceCodeRef", sourceCodeRef);

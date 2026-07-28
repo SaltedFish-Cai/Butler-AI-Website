@@ -1,5 +1,5 @@
 <template>
-  <div ref="rootEl" class="pa-accordion">
+  <div ref="rootEl" :id="randId" class="pa-accordion">
     <slot />
   </div>
 </template>
@@ -15,6 +15,7 @@ import { provide, ref, onMounted, onUnmounted } from "vue";
  * @description 导入组件类型定义
  */
 import type { PaAccordionProps, PaAccordionContext } from "./types";
+import useRenderId from "../tools/render-id";
 
 const props = withDefaults(defineProps<PaAccordionProps>(), {
   singleExpand: false
@@ -22,6 +23,8 @@ const props = withDefaults(defineProps<PaAccordionProps>(), {
 
 const rootEl = ref<HTMLElement | null>(null);
 const activeItemId = ref("");
+
+const randId = ref((props.id ? props.id + "_" : "") + "pa-accordion_" + useRenderId());
 
 function setActiveItemId(id: string) {
   activeItemId.value = id;
@@ -64,7 +67,8 @@ provide<PaAccordionContext>("accordion", {
   activeItemId,
   setActiveItemId,
   registerSentinel,
-  unregisterSentinel
+  unregisterSentinel,
+  randId: randId.value
 });
 </script>
 
