@@ -137,7 +137,7 @@
   <pa-playground-visible
     v-if="findNextPage"
     ref="visibleDialogRef"
-    :id="props.id"
+    :id="randId"
     :base-config="props.baseConfig"
     :playground-items="props.playgroundItems"
     :interfaceConfigs="props.interfaceConfigs"
@@ -206,6 +206,7 @@ import { dictType } from "../tools/type";
  * @description 导入空值判断工具
  */
 import isNil from "../tools/is-nil";
+import useRenderId from "../tools/render-id";
 
 /**
  * 全局配置
@@ -258,6 +259,7 @@ const props = withDefaults(
   }>(),
   { useMock: true, useToPage: false }
 );
+const randId = ref((props.id ? props.id + "_" : "") + "pa-playground-visible_" + useRenderId());
 
 /**
  * 扩展选项计算值
@@ -364,7 +366,7 @@ function openVisibleDialog(_transmitData?: Record<string, any>, _homeIndexConfig
   }
   const adminIndex = props.baseConfig.adminIndex;
   if (!adminIndex || props.baseConfig.pagesConfigs.findIndex(item => item.pageId === adminIndex) < 0) {
-    M_Message.danger(language === "en-US" ? "Home index is not set, please set it in the base information" : "首页索引未设置，请前往基础信息设置");
+    M_Message.danger(language.value === "en-US" ? "Home index is not set, please set it in the base information" : "首页索引未设置，请前往基础信息设置");
     return;
   } else {
     homeIndexConfig.value = props.baseConfig.pagesConfigs.find(item => item.pageId === adminIndex);
@@ -484,7 +486,7 @@ async function handleButtonSubmit(item: PaPlaygroundPageButtonType, data: { row?
     findNextPage.value = !isNil(homeIndexConfig);
     pageClickButtonConfig.value = item;
     if (!findNextPage.value) {
-      return M_Message.danger(language === "zh-CN" ? "页面不存在" : "Next page is not set please in the information");
+      return M_Message.danger(language.value === "zh-CN" ? "页面不存在" : "Next page is not set please in the information");
     }
     nextTick(() => {
       const _transmitData = {};
@@ -646,14 +648,14 @@ async function SaveDataToDB(findApi: MInterfaceConfig, formData: Record<string, 
   const STORE_NAME = "DB_" + props.id + "_API_" + findApi.dataStructure;
   const dataStructure = props.dataStructures.find(item => item.id === findApi.dataStructure);
   const indexKeyObj = dataStructure?.config.find(item => item.id === dataStructure.indexKey);
-  if (!indexKeyObj) return M_Message.danger(language === "en-US" ? "Save data to DB failed" : "保存数据到数据库失败(1)");
+  if (!indexKeyObj) return M_Message.danger(language.value === "en-US" ? "Save data to DB failed" : "保存数据到数据库失败(1)");
   try {
     if (transmitData.value && dataStructure?.indexKey && formData[dataStructure.indexKey]) {
       await updateData(DB_NAME, STORE_NAME, indexKeyObj.prop, formData[dataStructure.indexKey], { ...formData });
-      M_Message.success(language === "en-US" ? "Update data to DB success" : "更新数据到数据库成功");
+      M_Message.success(language.value === "en-US" ? "Update data to DB success" : "更新数据到数据库成功");
     } else {
       await storeData(DB_NAME, STORE_NAME, { ...formData, [indexKeyObj.prop]: new Date().getTime() });
-      M_Message.success(language === "en-US" ? "Save data to DB success" : "保存数据到数据库成功");
+      M_Message.success(language.value === "en-US" ? "Save data to DB success" : "保存数据到数据库成功");
     }
 
     if (item.closeBySave) {
@@ -661,7 +663,7 @@ async function SaveDataToDB(findApi: MInterfaceConfig, formData: Record<string, 
       if (item.refreshByDialogClose) emits("closed");
     }
   } catch (error) {
-    M_Message.danger(language === "en-US" ? "Save data to DB failed" : "保存数据到数据库失败(2)");
+    M_Message.danger(language.value === "en-US" ? "Save data to DB failed" : "保存数据到数据库失败(2)");
   }
 }
 
@@ -688,10 +690,10 @@ async function DeleteDataToDB(findApi: MInterfaceConfig, query: Record<string, s
         const key = Object.keys(query)[0];
         const value = query[key];
         await deleteDataByKey(DB_NAME, STORE_NAME, key, value);
-        M_Message.success(language === "en-US" ? "Delete data success" : "删除数据成功");
+        M_Message.success(language.value === "en-US" ? "Delete data success" : "删除数据成功");
         if (item.refreshByDialogClose) refreshData();
       } catch (error) {
-        M_Message.danger(language === "en-US" ? "Delete data failed" : "删除数据失败");
+        M_Message.danger(language.value === "en-US" ? "Delete data failed" : "删除数据失败");
       }
     }
   });

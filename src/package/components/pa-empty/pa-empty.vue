@@ -1,5 +1,5 @@
 <template>
-  <div class="pa-empty">
+  <div :id="randId" class="pa-empty">
     <div class="pa-empty_inner" :class="props.class" :style="props.style">
       <pa-icon class="pa-empty_icon" :name="props.icon" />
       <div class="pa-empty_message">{{ messageText }}</div>
@@ -12,7 +12,7 @@
  * 模块导入
  * @description 导入 Vue 组合式 API
  */
-import { computed, inject, ComputedRef } from "vue";
+import { computed, inject, ref, ComputedRef } from "vue";
 /**
  * 模块导入
  * @description 导入组件类型定义
@@ -23,6 +23,7 @@ import type { ComponentProps } from "./types";
  * @description 导入全局配置类型定义
  */
 import type { PancakeGlobalConfigType } from "../pa-manager/types";
+import useRenderId from "../tools/render-id";
 /**
  * 默认语言标识
  * @description 当未获取到全局配置语言时的默认值
@@ -37,6 +38,7 @@ const props = withDefaults(defineProps<ComponentProps>(), {
   icon: "folder_open_line",
   message: "暂无数据"
 });
+const randId = ref((props.id ? props.id + "_" : "") + "pa-empty_" + useRenderId());
 /**
  * 全局配置注入
  * @type ComputedRef<PancakeGlobalConfigType>

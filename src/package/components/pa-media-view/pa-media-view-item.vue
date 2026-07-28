@@ -21,7 +21,7 @@
     </div>
     <template #footer>
       <div class="flex-center" style="position: relative">
-        <pa-button :id="id + '-download'" is="download" type="primary" @click="downFile">
+        <pa-button :id="randId + '_download'" is="download" type="primary" @click="downFile">
           {{ languagePackage["download"] }}
         </pa-button>
       </div>
@@ -103,6 +103,7 @@ import { PancakeGlobalConfigType } from "../pa-manager/types";
  * @description 消息反馈组件
  */
 import { M_Message } from "../feedback";
+import useRenderId from "../tools/render-id";
 /**
  * 全局配置注入
  * @description 全局配置注入
@@ -133,6 +134,7 @@ const viewRef = useTemplateRef("viewRef");
  * @description 组件 Props
  */
 const props = withDefaults(defineProps<ComponentItemProps>(), {});
+const randId = ref((props.id ? props.id + "_" : "") + "pa-media-view-item_" + useRenderId());
 /**
  * 当前语言值
  * @type ComputedRef<string>

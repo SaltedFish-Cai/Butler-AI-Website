@@ -1,18 +1,20 @@
 <template>
-  <span class="pa-language" :class="props.class" :style="props.style">{{ displayText }}</span>
+  <span :id="randId" class="pa-language" :class="props.class" :style="props.style">{{ displayText }}</span>
 </template>
 
 <script lang="ts" setup>
-import { computed, inject } from "vue";
+import { computed, inject, ref } from "vue";
 import type { ComputedRef } from "vue";
 import type { ComponentProps } from "./types";
 import type { PancakeGlobalConfigType } from "../pa-manager/types";
+import useRenderId from "../tools/render-id";
 
 const DEFAULT_LANG = "zh-CN";
 
 const props = withDefaults(defineProps<ComponentProps>(), {
   text: () => ({ "zh-CN": "", "en-US": "" })
 });
+const randId = ref((props.id ? props.id + "_" : "") + "pa-language_" + useRenderId());
 
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 

@@ -1,7 +1,7 @@
 <template>
   <teleport :to="teleportTo || 'body'">
     <transition name="mo-dialog-overlay-fade">
-      <div v-show="visible" class="pa-overlay" :class="[props.class, { 'pa-overlay--blur': props.blur }]" :style="{ ...props.style, zIndex: zIndex }">
+      <div :id="randId" v-show="visible" class="pa-overlay" :class="[props.class, { 'pa-overlay--blur': props.blur }]" :style="{ ...props.style, zIndex: zIndex }">
         <div class="pa-overlay-content" :style="{ opacity: useBlock ? 1 : 0 }" @click="handleOverlayClick" />
         <slot />
       </div>
@@ -20,6 +20,7 @@ import { ref, watch, inject } from "vue";
  * @description 导入组件类型定义
  */
 import type { ComponentProps, ComponentEmits } from "./types";
+import useRenderId from "../tools/render-id";
 /**
  * 组件属性定义
  * @description 定义组件的 props
@@ -33,6 +34,7 @@ const props = withDefaults(defineProps<ComponentProps>(), {
  * @description 定义组件的 emits
  */
 const emits = defineEmits<ComponentEmits>();
+const randId = ref((props.id ? props.id + "_" : "") + "pa-overlay_" + useRenderId());
 /**
  * 全局层级获取函数
  * @description 从父组件注入的全局层级管理函数

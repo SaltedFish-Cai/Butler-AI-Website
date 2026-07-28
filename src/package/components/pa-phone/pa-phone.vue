@@ -1,5 +1,5 @@
 <template>
-  <div ref="rootRef" :class="['pa-phone', `pa-phone--${model}`]">
+  <div :id="randId" ref="rootRef" :class="['pa-phone', `pa-phone--${model}`]">
     <div class="pa-phone__scaled" :style="scaledStyle">
       <div class="pa-phone__bezel" :style="[bezelStyle, { transform: `scale(${autoScale})`, transformOrigin: '0 0' }]">
         <div class="pa-phone__screen" :style="screenStyle">
@@ -111,6 +111,7 @@ import * as Vue from "vue";
 import { useRoute, useRouter } from "vue-router";
 import type { PhoneModel, DeviceSpec } from "./types";
 import { apiFetch } from "./api";
+import useRenderId from "../tools/render-id";
 
 // WorkshopComponent 类型定义（轻量内联，避免耦合 workshop 模块）
 interface WorkshopComponent {
@@ -148,6 +149,8 @@ const props = withDefaults(
     sfcContext?: Record<string, unknown>;
     // SFC 刷新键：变化时强制重新编译（即使 sfcSource 未变），用于同页面 _route_id 变化
     sfcRefreshKey?: number;
+    /** 组件唯一标识 */
+    id?: string;
   }>(),
   {
     model: "14-pro",
@@ -176,6 +179,12 @@ const emit = defineEmits<{
   workshopMove: [fromIndex: number, toIndex: number];
   contextmenu: [event: MouseEvent, target: HTMLElement];
 }>();
+
+/**
+ * render-id
+ * @description 组件唯一标识
+ */
+const randId = ref((props.id ? props.id + "_" : "") + "pa-phone_" + useRenderId());
 
 // ─── SFC 源码编译（支持流式渲染） ──────────────────────
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="pa-title" :class="[props.class, styleMode.model, paddingClasses]" :style="props.style">
+  <div :id="randId" class="pa-title" :class="[props.class, styleMode.model, paddingClasses]" :style="props.style">
     <div class="pa-title_box">
       <div class="pa-title_text">
         <slot />
@@ -32,12 +32,17 @@ const DEFAULT_LINE_CONFIG = { padding: [0, 0, 0, 5] as [number, number, number, 
  * 模块导入
  * @description 导入 Vue 组合式 API
  */
-import { computed, ComputedRef, inject } from "vue";
+import { computed, ComputedRef, inject, ref } from "vue";
 /**
  * 模块导入
  * @description 导入组件类型定义
  */
 import type { ComponentProps } from "./types";
+/**
+ * 模块导入
+ * @description 导入 render-id 工具函数
+ */
+import useRenderId from "../tools/render-id";
 /**
  * 模块导入
  * @description 导入分割线组件类型定义（用于变量类型注解）
@@ -62,6 +67,11 @@ const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<Pan
 const props = withDefaults(defineProps<ComponentProps>(), {
   tipsPosition: "bottom"
 });
+/**
+ * render-id
+ * @description 组件唯一标识
+ */
+const randId = ref((props.id ? props.id + "_" : "") + "pa-title_" + useRenderId());
 defineExpose();
 /**
  * padding class 计算（合并为单个 computed，减少 Vue 依赖追踪节点）

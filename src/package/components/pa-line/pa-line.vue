@@ -1,5 +1,5 @@
 <template>
-  <div class="pa-line" :class="props.class" :style="lineStyle">
+  <div :id="randId" class="pa-line" :class="props.class" :style="lineStyle">
     <div v-if="$slots['default']" class="ml-size mr-size">
       <slot />
     </div>
@@ -16,7 +16,8 @@ import type { ComponentProps } from "./types";
  * 模块导入
  * @description 导入 vue 的 computed API
  */
-import { computed } from "vue";
+import { computed, ref } from "vue";
+import useRenderId from "../tools/render-id";
 /**
  * 组件属性
  * @type ComponentProps
@@ -29,6 +30,7 @@ const props = withDefaults(defineProps<ComponentProps>(), {
   borderColor: "var(--pa-color-primary-light-6)",
   borderStyle: "solid"
 });
+const randId = ref((props.id ? props.id + "_" : "") + "pa-line_" + useRenderId());
 /**
  * 样式数值转 CSS 字符串
  * @description 判断 padding 值是否为数字，数字自动添加 px 后缀

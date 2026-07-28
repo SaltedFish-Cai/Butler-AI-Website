@@ -1,49 +1,30 @@
 <template>
-  <div class="pa-ai-chat" :style="{ width: `${FORM_WIDTH}px`, height: `${FORM_HEIGHT}px` }">
-    <div
-      ref="wrapperRef"
-      class="pa-ai-chat__panel"
-      :class="{ 'pa-ai-chat__panel--open': showForm }"
-    >
+  <div :id="randId" class="pa-ai-chat" :style="{ width: `${FORM_WIDTH}px`, height: `${FORM_HEIGHT}px` }">
+    <div ref="wrapperRef" class="pa-ai-chat__panel" :class="{ 'pa-ai-chat__panel--open': showForm }">
       <!-- Dock bar (固定在底部) -->
       <footer class="pa-ai-chat__dock">
         <div class="pa-ai-chat__dock-inner">
           <div class="pa-ai-chat__dock-left">
             <Transition name="pa-ai-chat-fade" mode="out-in">
               <div v-if="!showForm" key="orb" class="pa-ai-chat__dock-orb">
-                <div
-                  class="color-orb"
-                  :style="orbStyle24"
-                />
+                <div class="color-orb" :style="orbStyle24" />
               </div>
               <span v-else key="blank" class="pa-ai-chat__dock-blank" />
             </Transition>
           </div>
-          <button
-            type="button"
-            class="pa-ai-chat__ask-btn"
-            @click="triggerOpen"
-          >
+          <button type="button" class="pa-ai-chat__ask-btn" @click="triggerOpen">
             <span class="pa-ai-chat__ask-text">Ask AI</span>
           </button>
         </div>
       </footer>
 
       <!-- 输入表单（绝对定位覆盖面板） -->
-      <form
-        class="pa-ai-chat__form"
-        :class="{ 'pa-ai-chat__form--visible': showForm }"
-        :style="{ pointerEvents: showForm ? 'all' : 'none' }"
-        @submit.prevent="handleSubmit"
-      >
+      <form class="pa-ai-chat__form" :class="{ 'pa-ai-chat__form--visible': showForm }" :style="{ pointerEvents: showForm ? 'all' : 'none' }" @submit.prevent="handleSubmit">
         <Transition name="pa-ai-chat-fade">
           <div v-if="showForm" key="form-body" class="pa-ai-chat__form-body">
             <div class="pa-ai-chat__form-header">
               <div class="pa-ai-chat__form-orb">
-                <div
-                  class="color-orb"
-                  :style="orbStyle24"
-                />
+                <div class="color-orb" :style="orbStyle24" />
               </div>
               <span class="pa-ai-chat__form-title">AI Input</span>
               <div class="pa-ai-chat__form-shortcut">
@@ -53,15 +34,7 @@
                 </button>
               </div>
             </div>
-            <textarea
-              ref="textareaRef"
-              class="pa-ai-chat__textarea"
-              placeholder="Ask me anything..."
-              name="message"
-              required
-              :spellcheck="false"
-              @keydown="handleKeys"
-            />
+            <textarea ref="textareaRef" class="pa-ai-chat__textarea" placeholder="Ask me anything..." name="message" required :spellcheck="false" @keydown="handleKeys" />
           </div>
         </Transition>
       </form>
@@ -71,6 +44,10 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted, provide, nextTick } from "vue";
+import useRenderId from "../tools/render-id";
+
+const props = defineProps<{ id?: string }>();
+const randId = ref((props.id ? props.id + "_" : "") + "pa-ai-chat_" + useRenderId());
 
 // ─── Constants ───────────────────────────────────────────────────────
 
@@ -104,7 +81,7 @@ const orbStyle24 = computed(() => {
     "--contrast": String(Math.max(dimValue * 0.008, 1.5)),
     "--dot": `${Math.max(dimValue * 0.008, 0.1)}px`,
     "--shadow": `${Math.max(dimValue * 0.008, 2)}px`,
-    "--mask": "25%",
+    "--mask": "25%"
   } as Record<string, string>;
 });
 
@@ -166,7 +143,7 @@ provide("pa-ai-chat", {
   showForm,
   successFlag,
   triggerOpen,
-  triggerClose,
+  triggerClose
 });
 </script>
 
@@ -192,9 +169,7 @@ provide("pa-ai-chat", {
   border-radius: 20px;
   border: 1px solid var(--pa-color-border, rgba(255, 255, 255, 0.1));
   background: var(--pa-color-bg, #282828);
-  transition: width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
-              height 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
-              border-radius 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), height 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), border-radius 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
 
   &--open {
     width: 360px;
@@ -405,54 +380,19 @@ provide("pa-ai-chat", {
   }
 
   &::before {
-    background:
-      conic-gradient(
-        from calc(var(--angle) * 2) at 25% 70%,
-        var(--accent3),
-        transparent 20% 80%,
-        var(--accent3)
-      ),
-      conic-gradient(
-        from calc(var(--angle) * 2) at 45% 75%,
-        var(--accent2),
-        transparent 30% 60%,
-        var(--accent2)
-      ),
-      conic-gradient(
-        from calc(var(--angle) * -3) at 80% 20%,
-        var(--accent1),
-        transparent 40% 60%,
-        var(--accent1)
-      ),
-      conic-gradient(
-        from calc(var(--angle) * 2) at 15% 5%,
-        var(--accent2),
-        transparent 10% 90%,
-        var(--accent2)
-      ),
-      conic-gradient(
-        from calc(var(--angle) * 1) at 20% 80%,
-        var(--accent1),
-        transparent 10% 90%,
-        var(--accent1)
-      ),
-      conic-gradient(
-        from calc(var(--angle) * -2) at 85% 10%,
-        var(--accent3),
-        transparent 20% 80%,
-        var(--accent3)
-      );
+    background: conic-gradient(from calc(var(--angle) * 2) at 25% 70%, var(--accent3), transparent 20% 80%, var(--accent3)),
+      conic-gradient(from calc(var(--angle) * 2) at 45% 75%, var(--accent2), transparent 30% 60%, var(--accent2)),
+      conic-gradient(from calc(var(--angle) * -3) at 80% 20%, var(--accent1), transparent 40% 60%, var(--accent1)),
+      conic-gradient(from calc(var(--angle) * 2) at 15% 5%, var(--accent2), transparent 10% 90%, var(--accent2)),
+      conic-gradient(from calc(var(--angle) * 1) at 20% 80%, var(--accent1), transparent 10% 90%, var(--accent1)),
+      conic-gradient(from calc(var(--angle) * -2) at 85% 10%, var(--accent3), transparent 20% 80%, var(--accent3));
     box-shadow: inset var(--base) 0 0 var(--shadow) calc(var(--shadow) * 0.2);
     filter: blur(var(--blur)) contrast(var(--contrast));
     animation: pa-ai-chat-spin var(--spin-duration) linear infinite;
   }
 
   &::after {
-    background-image: radial-gradient(
-      circle at center,
-      var(--base) var(--dot),
-      transparent var(--dot)
-    );
+    background-image: radial-gradient(circle at center, var(--base) var(--dot), transparent var(--dot));
     background-size: calc(var(--dot) * 2) calc(var(--dot) * 2);
     backdrop-filter: blur(calc(var(--blur) * 2)) contrast(calc(var(--contrast) * 2));
     mix-blend-mode: overlay;

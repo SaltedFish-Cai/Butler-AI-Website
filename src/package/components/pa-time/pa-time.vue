@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!display" class="pa-time" ref="selectRef" :class="[props.class, { 'is-disabled': props.disabled }]" :style="props.style">
+  <div v-if="!display" :id="randId" class="pa-time" ref="selectRef" :class="[props.class, { 'is-disabled': props.disabled }]" :style="props.style">
     <pa-popover
       ref="popoverRef"
       @change="handlePopoverChange"
@@ -58,7 +58,7 @@
     </pa-popover>
   </div>
 
-  <div v-else class="pa-display-style" :class="props.class" :style="props.style">
+  <div v-else :id="randId" class="pa-display-style" :class="props.class" :style="props.style">
     <div v-if="title" :style="{ width: titleWidth }" class="pa-cell-label">
       {{ typeof title === "string" ? title : title[languageValue] }}
     </div>
@@ -69,7 +69,7 @@
     </div>
   </div>
 
-  <div v-if="(alwaysContrast && !isNil(contrastData)) || (!isNil(contrastData) && !isEqual(inValue, contrastData))" :class="['pa-contrast-style']">
+  <div v-if="(alwaysContrast && !isNil(contrastData)) || (!isNil(contrastData) && !isEqual(inValue, contrastData))" :id="randId" :class="['pa-contrast-style']">
     <slot name="exContrast"></slot>
     <template v-if="$slots.exContrast"> ( {{ findData(contrastData) || "--" }} ) </template>
     <template v-else>{{ findData(contrastData) || "--" }}</template>
@@ -83,6 +83,11 @@
  */
 import { ref, computed, watch, inject, type Ref, type ComputedRef } from "vue";
 
+/**
+ * 模块导入
+ * @description 导入 render-id 工具函数
+ */
+import useRenderId from "../tools/render-id";
 /**
  * 模块导入
  * @description 导入组件类型定义
@@ -176,6 +181,11 @@ const props = withDefaults(defineProps<ComponentProps>(), {
  * @description 定义组件可触发的事件
  */
 const emits = defineEmits<ComponentEmits>();
+/**
+ * render-id
+ * @description 组件唯一标识
+ */
+const randId = ref((props.id ? props.id + "_" : "") + "pa-time_" + useRenderId());
 
 /**
  * 是否为范围选择

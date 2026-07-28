@@ -1,5 +1,5 @@
 <template>
-  <div ref="containerRef" class="ai-siri" :class="{ 'ai-siri--done': !loading }">
+  <div :id="randId" ref="containerRef" class="ai-siri" :class="{ 'ai-siri--done': !loading }">
     <canvas ref="canvasRef" class="ai-siri__canvas" :style="canvasStyle" />
 
     <div class="ai-siri__overlay">
@@ -14,8 +14,9 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted, watch } from "vue";
+import useRenderId from "../tools/render-id";
 
-export type SiriWaveVariant = "wave" | "fluid-dots";
+export type SiriWaveVariant = "fluid-dots" | "wave";
 
 const props = withDefaults(
   defineProps<{
@@ -27,6 +28,8 @@ const props = withDefaults(
     renderScale?: number;
     dark?: boolean;
     color?: string;
+    /** 组件唯一标识 */
+    id?: string;
   }>(),
   {
     loading: true,
@@ -36,6 +39,12 @@ const props = withDefaults(
     renderScale: 0.75
   }
 );
+
+/**
+ * render-id
+ * @description 组件唯一标识
+ */
+const randId = ref((props.id ? props.id + "_" : "") + "pa-ai-siri_" + useRenderId());
 
 const containerRef = ref<HTMLElement | null>(null);
 const canvasRef = ref<HTMLCanvasElement | null>(null);

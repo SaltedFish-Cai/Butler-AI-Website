@@ -1,5 +1,5 @@
 <template>
-  <div ref="containerRef" class="ai-loading" :class="{ 'ai-loading--done': !loading }">
+  <div :id="randId" ref="containerRef" class="ai-loading" :class="{ 'ai-loading--done': !loading }">
     <canvas ref="canvasRef" class="ai-loading__canvas" />
 
     <div class="ai-loading__overlay">
@@ -18,6 +18,7 @@
 <script setup lang="ts">
 import { ref, watch, onMounted, onUnmounted } from "vue";
 import * as THREE from "three";
+import useRenderId from "../tools/render-id";
 
 const props = withDefaults(
   defineProps<{
@@ -33,6 +34,8 @@ const props = withDefaults(
     lineColor?: string;
     /** 扫描线亮度倍率 */
     lineIntensity?: number;
+    /** 组件唯一标识 */
+    id?: string;
   }>(),
   {
     subtext: "",
@@ -42,6 +45,12 @@ const props = withDefaults(
     lineIntensity: 1.0
   }
 );
+
+/**
+ * render-id
+ * @description 组件唯一标识
+ */
+const randId = ref((props.id ? props.id + "_" : "") + "pa-ai-loading_" + useRenderId());
 
 const containerRef = ref<HTMLElement | null>(null);
 const canvasRef = ref<HTMLCanvasElement | null>(null);
@@ -253,9 +262,12 @@ onMounted(() => {
   themeObserver.observe(document.documentElement, { attributes: true });
 
   // bgColor / lineColor prop 变化时也更新主题色
-  watch(() => [props.bgColor, props.lineColor], () => {
-    updateThemeColors();
-  });
+  watch(
+    () => [props.bgColor, props.lineColor],
+    () => {
+      updateThemeColors();
+    }
+  );
 });
 
 onUnmounted(() => {

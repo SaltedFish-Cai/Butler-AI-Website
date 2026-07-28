@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!display" class="pa-number" :class="[props.class, { 'is-disabled': props.disabled }]" :style="props.style">
+  <div :id="randId" v-if="!display" class="pa-number" :class="[props.class, { 'is-disabled': props.disabled }]" :style="props.style">
     <div v-if="title" :style="{ width: titleWidth }" class="pa-cell-label">
       {{ typeof title === "string" ? title : title[languageValue] }}
     </div>
@@ -78,6 +78,7 @@ import isEqual from "../tools/is-equal";
  * @description 导入 isNil 工具函数
  */
 import isNil from "../tools/is-nil";
+import useRenderId from "../tools/render-id";
 /**
  * 全局配置注入
  * @type ComputedRef<PancakeGlobalConfigType>
@@ -100,6 +101,7 @@ const props = withDefaults(defineProps<ComponentProps>(), {
  * @description 定义组件可触发的事件
  */
 const emits = defineEmits<ComponentEmits>();
+const randId = ref((props.id ? props.id + "_" : "") + "pa-number_" + useRenderId());
 /**
  * 输入框引用
  * @type any

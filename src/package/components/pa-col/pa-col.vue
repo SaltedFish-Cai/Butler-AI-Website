@@ -1,5 +1,5 @@
 <template>
-  <div :style="style" :class="classes">
+  <div :id="randId" :style="style" :class="classes">
     <slot></slot>
   </div>
 </template>
@@ -15,6 +15,7 @@ import { computed, inject, ref, type Ref } from "vue";
  * @description 导入 PaCol 类型定义
  */
 import type { BreakPoint, ComponentProps } from "./types";
+import useRenderId from "../tools/render-id";
 /**
  * **组件属性**
  * @type `ComponentProps`
@@ -28,6 +29,7 @@ const props = withDefaults(defineProps<ComponentProps>(), {
   lg: undefined,
   xl: undefined
 });
+const randId = ref((props.id ? props.id + "_" : "") + "pa-col_" + useRenderId());
 /**
  * **注入断点信息**
  * @type `Ref<BreakPoint>`

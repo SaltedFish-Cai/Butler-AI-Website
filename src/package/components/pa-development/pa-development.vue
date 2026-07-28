@@ -1,6 +1,6 @@
 <template>
   <teleport to="body" v-if="menu.visible">
-    <div class="pa-development">
+    <div :id="randId" class="pa-development">
       <div class="menu_hide" @click="menu.visible = false" @contextmenu.prevent="menu.visible = false"></div>
       <div class="card content-menu" :style="{ top: menu.top, left: menu.left }">
         <div class="content-menu_item" @click="copyInfo">
@@ -22,7 +22,7 @@
  * Vue 核心响应式 API
  * @description Vue 核心响应式 API
  */
-import { reactive, inject, ComputedRef, onMounted, nextTick, onBeforeUnmount } from "vue";
+import { reactive, inject, ref, ComputedRef, onMounted, nextTick, onBeforeUnmount } from "vue";
 /**
  * 开发工具组件 Props 类型
  * @description 开发工具组件 Props 类型
@@ -38,11 +38,13 @@ import { PancakeGlobalConfigType } from "../pa-manager/types";
  * @description 消息反馈组件
  */
 import { M_Message } from "../feedback";
+import useRenderId from "../tools/render-id";
 /**
  * 组件 Props
  * @description 组件 Props
  */
 const props = withDefaults(defineProps<ComponentProps>(), { id: "" });
+const randId = ref((props.id ? props.id + "_" : "") + "pa-development_" + useRenderId());
 /**
  * 全局配置注入
  * @description 全局配置注入

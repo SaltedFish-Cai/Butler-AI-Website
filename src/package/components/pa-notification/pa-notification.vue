@@ -1,6 +1,6 @@
 <template>
   <transition name="mo-animation-fade" @after-enter="handleAfterEnter" @after-leave="handleAfterLeave">
-    <div v-show="visible" :id="id" :class="['pa-notification', type ? `${type}` : '', customClass]" :style="styles" role="alert" @click="handleClick">
+    <div v-show="visible" :id="randId" :class="['pa-notification', type ? `${type}` : '', customClass]" :style="styles" role="alert" @click="handleClick">
       <div class="pa-notification_header mb-size">
         <div class="flex-center-start">
           <pa-icon class="pa-notification__icon mr-size" name="warning_line" />
@@ -21,6 +21,7 @@
  * @description 导入 Vue 响应式 API
  */
 import { ref, computed, onMounted, onBeforeUnmount } from "vue";
+import useRenderId from "../tools/render-id";
 /**
  * 模块导入
  * @description 导入通知配置类型
@@ -44,6 +45,7 @@ const props = defineProps<{
   id: string;
   options: NotificationOptions;
 }>();
+const randId = ref(props.id || "pa-notification_" + useRenderId());
 /**
  * 当前语言
  * @description 获取全局配置的语言设置

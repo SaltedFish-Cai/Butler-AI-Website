@@ -2,7 +2,7 @@
   <Teleport to="body">
     <div v-if="props.visible" class="pa-menu__backdrop" @click="handleClose" @contextmenu.prevent="handleBackdropContextmenu"></div>
     <Transition name="pa-menu-fade">
-      <div v-if="props.visible" ref="menuRef" class="pa-menu" :class="[pointClass, props.class]" :style="[menuStyle, props.style]">
+      <div v-if="props.visible" :id="randId" ref="menuRef" class="pa-menu" :class="[pointClass, props.class]" :style="[menuStyle, props.style]">
         <div class="pa-menu__content">
           <slot />
         </div>
@@ -22,6 +22,11 @@ import { computed, nextTick, onMounted, onUnmounted, ref, watch, provide } from 
  * @description 导入组件类型定义
  */
 import { ComponentProps, ComponentEmits, MenuContext, MenuGroupContext, MenuItemConfig } from "./types";
+/**
+ * 模块导入
+ * @description 导入 render-id 工具函数
+ */
+import useRenderId from "../tools/render-id";
 
 /**
  * 组件属性
@@ -39,6 +44,11 @@ const props = withDefaults(defineProps<ComponentProps>(), {
  * @description 定义组件可触发的事件
  */
 const emit = defineEmits<ComponentEmits>();
+/**
+ * render-id
+ * @description 组件唯一标识
+ */
+const randId = ref((props.id ? props.id + "_" : "") + "pa-menu_" + useRenderId());
 
 /**
  * 菜单元素引用

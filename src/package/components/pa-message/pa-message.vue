@@ -1,6 +1,6 @@
 <template>
   <transition name="mo-animation-fadeUp" @after-enter="handleAfterEnter" @after-leave="handleAfterLeave">
-    <div v-show="visible" :id="id" :class="['pa-message', type || '', customClass]" :style="styles" role="alert" @click="handleClick">
+    <div v-show="visible" :id="randId" :class="['pa-message', type || '', customClass]" :style="styles" role="alert" @click="handleClick">
       <div class="pa-message_header">
         <div class="flex-center-start">
           <pa-icon class="pa-message__icon mr-size" name="warning_line"></pa-icon>
@@ -19,6 +19,7 @@
  * @description 导入 Vue 响应式 API
  */
 import { ref, computed, onMounted, onBeforeUnmount } from "vue";
+import useRenderId from "../tools/render-id";
 /**
  * 模块导入
  * @description 导入消息配置类型
@@ -42,6 +43,7 @@ const props = defineProps<{
   id: string;
   options: MessageOptions;
 }>();
+const randId = ref(props.id || "pa-message_" + useRenderId());
 /**
  * 解构选项
  * @description 从 props.options 中解构配置项

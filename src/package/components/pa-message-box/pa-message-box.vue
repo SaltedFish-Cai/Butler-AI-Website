@@ -1,6 +1,6 @@
 <template>
   <pa-overlay v-if="visible" :model-value="visible" @click-overlay="handleClose">
-    <div :id="id" :class="['pa-message-box', type ? `${type}` : '', customClass]" :style="overlayStyles" role="alert">
+    <div :id="randId" :class="['pa-message-box', type ? `${type}` : '', customClass]" :style="overlayStyles" role="alert">
       <div class="pa-message-box_header mb-size">
         <div class="flex-center-start">
           <pa-icon class="pa-message-box__icon mr-size" name="warning_line"></pa-icon>
@@ -32,6 +32,7 @@
  * @description 导入 Vue 响应式 API
  */
 import { ref, computed, onMounted, onBeforeUnmount } from "vue";
+import useRenderId from "../tools/render-id";
 /**
  * 模块导入
  * @description 导入消息框配置类型
@@ -65,6 +66,7 @@ const props = defineProps<{
   id: string;
   options: MessageBoxOptions;
 }>();
+const randId = ref(props.id || "pa-message-box_" + useRenderId());
 /**
  * 获取语言键
  * @returns 语言键值

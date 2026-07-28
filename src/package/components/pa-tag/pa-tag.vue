@@ -1,5 +1,5 @@
 <template>
-  <div class="pa-tag" ref="tagRef" :class="[props.useCollapse ? 'pa-tag-collapse' : '', props.class]" :style="mergedStyle">
+  <div :id="randId" class="pa-tag" ref="tagRef" :class="[props.useCollapse ? 'pa-tag-collapse' : '', props.class]" :style="mergedStyle">
     <div class="pa-tag-text" v-for="item in inValue" :key="String(item.value)">
       <div class="pa-tag-text_content">
         {{ getLabel(item.label) }}
@@ -46,6 +46,11 @@ import { onMounted, ref, watch, nextTick, inject, computed, ComputedRef } from "
 import { ComponentProps, ComponentEmits, TagType } from "./types";
 /**
  * 模块导入
+ * @description 导入 render-id 工具函数
+ */
+import useRenderId from "../tools/render-id";
+/**
+ * 模块导入
  * @description 导入元素位置计算工具函数
  */
 import { getElementPosition } from "../utils/getElementPosition";
@@ -72,6 +77,11 @@ const language = computed(() => PancakeGlobalConfig.value?.language || DEFAULT_L
  * @description 组件的属性对象
  */
 const props = withDefaults(defineProps<ComponentProps>(), { useCollapse: true, useAddTag: false });
+/**
+ * render-id
+ * @description 组件唯一标识
+ */
+const randId = ref((props.id ? props.id + "_" : "") + "pa-tag_" + useRenderId());
 /**
  * 组件事件定义
  * @description 定义组件可触发的事件

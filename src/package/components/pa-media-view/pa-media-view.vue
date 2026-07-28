@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!hideBtn" class="flex pa-hand">
+  <div :id="randId" v-if="!hideBtn" class="flex pa-hand">
     <slot>
       <pa-button is="view" @click="openFile">{{ languagePackage["filePreview"] }}</pa-button>
     </slot>
@@ -113,6 +113,7 @@ import textView from "./text-view.vue";
  * @description 全局配置类型
  */
 import { PancakeGlobalConfigType } from "../pa-manager/types";
+import useRenderId from "../tools/render-id";
 /**
  * 对话框是否可见
  * @description 对话框是否可见
@@ -155,6 +156,7 @@ const pdfViewRef = useTemplateRef("pdfViewRef");
 const props = withDefaults(defineProps<ComponentProps>(), {
   hideBtn: false
 });
+const randId = ref((props.id ? props.id + "_" : "") + "pa-media-view_" + useRenderId());
 /**
  * 全局配置注入
  * @description 全局配置注入

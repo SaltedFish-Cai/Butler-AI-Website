@@ -1,5 +1,5 @@
 <template>
-  <div class="pa-file-custom">
+  <div :id="randId" class="pa-file-custom">
     <slot name="reference">
       <div
         class="upload-area"
@@ -86,6 +86,7 @@ import { M_Message } from "../feedback";
  * @description Ajax 上传函数导入
  */
 import { ajaxUpload } from "./ajax";
+import useRenderId from "../tools/render-id";
 
 /**
  * 全局配置注入
@@ -105,6 +106,7 @@ const props = withDefaults(defineProps<ComponentProps>(), {});
  * @description 定义 PaFileCustom 组件可触发的事件
  */
 const emits = defineEmits<ComponentEmits>();
+const randId = ref((props.id ? props.id + "_" : "") + "pa-file-custom_" + useRenderId());
 /**
  * 文件输入框引用
  * @type Ref<HTMLInputElement | null>

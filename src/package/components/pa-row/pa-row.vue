@@ -1,5 +1,5 @@
 <template>
-  <div :class="classes" :style="style">
+  <div :id="randId" :class="classes" :style="style">
     <slot></slot>
   </div>
 </template>
@@ -21,6 +21,11 @@ import debounce from "../tools/debounce";
  */
 import type { ComponentProps } from "./types";
 /**
+ * 模块导入
+ * @description 导入 render-id 工具函数
+ */
+import useRenderId from "../tools/render-id";
+/**
  * 组件属性
  * @type ComponentProps
  * @description 组件的属性对象
@@ -29,6 +34,11 @@ const props = withDefaults(defineProps<ComponentProps>(), {
   justify: "start",
   align: "top"
 });
+/**
+ * render-id
+ * @description 组件唯一标识
+ */
+const randId = ref((props.id ? props.id + "_" : "") + "pa-row_" + useRenderId());
 /**
  * 计算类名
  * @description 根据属性计算组件类名

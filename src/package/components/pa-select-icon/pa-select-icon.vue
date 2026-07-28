@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!display" class="pa-select-icon" :class="[props.class, { 'is-disabled': props.disabled }]" :style="props.style" ref="selectRef">
+  <div v-if="!display" :id="randId" class="pa-select-icon" :class="[props.class, { 'is-disabled': props.disabled }]" :style="props.style" ref="selectRef">
     <pa-popover ref="popoverRef" :disabled="props.disabled" :popover-width="520" :teleport-to="teleportInContainer ? selectRef : 'body'" :closeByScroll="false">
       <template #reference>
         <div class="flex-center-start">
@@ -22,7 +22,7 @@
     </pa-popover>
   </div>
 
-  <div v-else class="pa-display-style" :class="[props.class]" :style="props.style">
+  <div v-else :id="randId" class="pa-display-style" :class="[props.class]" :style="props.style">
     <div v-if="title" :style="{ width: titleWidth }" class="pa-cell-label">
       {{ typeof title === "string" ? title : title[languageValue] }}
     </div>
@@ -36,7 +36,7 @@
     </div>
   </div>
 
-  <div v-if="(alwaysContrast && !isNil(contrastData)) || (!isNil(contrastData) && !isEqual(selectItem, contrastData))" :class="['pa-contrast-style']">
+  <div v-if="(alwaysContrast && !isNil(contrastData)) || (!isNil(contrastData) && !isEqual(selectItem, contrastData))" :id="randId" :class="['pa-contrast-style']">
     <slot name="exContrast"></slot>
     <template v-if="$slots.exContrast"> ( <pa-icon :name="contrastData" class="pa-select-icon_select-icon" /> ) </template>
     <template v-else>
@@ -56,6 +56,11 @@ import { ref, computed, watch, inject, type ComputedRef } from "vue";
  * @description 导入组件类型定义
  */
 import type { ComponentProps, ComponentEmits } from "./types";
+/**
+ * 模块导入
+ * @description 导入 render-id 工具函数
+ */
+import useRenderId from "../tools/render-id";
 /**
  * 模块导入
  * @description 导入图标配置数据
@@ -100,6 +105,11 @@ const props = defineProps<ComponentProps>();
  * @description 定义组件可触发的事件
  */
 const emits = defineEmits<ComponentEmits>();
+/**
+ * render-id
+ * @description 组件唯一标识
+ */
+const randId = ref((props.id ? props.id + "_" : "") + "pa-select-icon_" + useRenderId());
 /**
  * 选择器容器引用
  * @type any

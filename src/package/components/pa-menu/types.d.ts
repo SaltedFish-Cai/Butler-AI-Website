@@ -67,6 +67,13 @@ export type MenuItemConfig = {
  */
 export type ComponentProps = {
   /**
+   * 组件唯一标识
+   * @type string | undefined
+   * @default undefined
+   * @description 当设置该值时，会作为组件的唯一标识
+   */
+  id?: string;
+  /**
    * 是否可见
    * @type boolean
    * @default false

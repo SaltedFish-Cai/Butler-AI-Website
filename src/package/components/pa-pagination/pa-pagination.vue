@@ -1,5 +1,5 @@
 <template>
-  <div class="pa-pagination" :class="[props.class, { 'is-disabled': props.disabled }]" :style="props.style || {}">
+  <div :id="randId" class="pa-pagination" :class="[props.class, { 'is-disabled': props.disabled }]" :style="props.style || {}">
     <span v-if="showTotal" class="m-pagination-total">
       {{ languagePackage?.total }} <span>{{ total }}</span> {{ languagePackage?.records2 }}
     </span>
@@ -64,6 +64,11 @@ import { ref, computed, watch, inject, ComputedRef } from "vue";
 import { ComponentProps, ComponentEmits } from "./types";
 /**
  * 模块导入
+ * @description 导入 render-id 工具函数
+ */
+import useRenderId from "../tools/render-id";
+/**
+ * 模块导入
  * @description 导入全局配置类型
  */
 import { PancakeGlobalConfigType } from "../pa-manager/types";
@@ -112,6 +117,11 @@ const emit = defineEmits<ComponentEmits>();
  * @description 注入全局配置对象
  */
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
+/**
+ * render-id
+ * @description 组件唯一标识
+ */
+const randId = ref((props.id ? props.id + "_" : "") + "pa-pagination_" + useRenderId());
 /**
  * 语言值
  * @type ComputedRef<string>

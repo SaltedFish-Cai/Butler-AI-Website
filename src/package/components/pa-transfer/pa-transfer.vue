@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!display" class="pa-transfer" ref="selectRef" :class="[props.class, { 'is-disabled': props.disabled }]" :style="rootStyle">
+  <div v-if="!display" :id="randId" class="pa-transfer" ref="selectRef" :class="[props.class, { 'is-disabled': props.disabled }]" :style="rootStyle">
     <div class="transfer-select-box">
       <div class="transfer-select-box_title">
         <div class="flex-center">
@@ -59,7 +59,7 @@
       </div>
     </div>
   </div>
-  <div v-else class="pa-display-style">
+  <div v-else :id="randId" class="pa-display-style">
     <slot name="exDisplay"></slot>
     <template v-if="exOptionsList?.length || displayValue">
       <template v-if="$slots.exDisplay"> ( {{ findData(selectedList.map(item => item.value)) || "--" }} )</template>
@@ -67,7 +67,7 @@
     </template>
     <div v-else>--</div>
   </div>
-  <div v-if="useContrast" :class="['pa-contrast-style']">
+  <div v-if="useContrast" :id="randId" :class="['pa-contrast-style']">
     <div v-if="exOptionsList?.length">
       <slot name="exContrast"></slot>
       <template v-if="$slots.exContrast"> ( {{ findData(contrastData || []) || "--" }} )</template>
@@ -118,6 +118,11 @@ import isNil from "../tools/is-nil";
  */
 import isEqual from "../tools/is-equal";
 /**
+ * 模块导入
+ * @description 导入 render-id 工具函数
+ */
+import useRenderId from "../tools/render-id";
+/**
  * 语言包映射
  * @description 穿梭框组件的语言文本映射表
  */
@@ -139,6 +144,11 @@ const props = withDefaults(defineProps<ComponentProps>(), {
  * @description 组件的 emits 定义
  */
 const emits = defineEmits<ComponentEmits>();
+/**
+ * render-id
+ * @description 组件唯一标识
+ */
+const randId = ref((props.id ? props.id + "_" : "") + "pa-transfer_" + useRenderId());
 /**
  * 全局配置注入
  * @type ComputedRef<PancakeGlobalConfigType>
