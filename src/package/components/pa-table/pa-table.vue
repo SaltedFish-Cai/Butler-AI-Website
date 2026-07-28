@@ -529,6 +529,7 @@ const props = withDefaults(defineProps<ComponentProps>(), {
   summaryConfig: () => ({ sumText: "合计", unitText: "" }),
   useSticky: false
 });
+const randId = ref((props.id ? props.id + "_" : "") + "pa-table_" + useRenderId());
 /**
  * 组件事件
  * @description 组件的 emits 定义
@@ -594,7 +595,7 @@ const {
   listenCellInView,
   listenCellChildChange,
   clearListen
-} = useStateHooks(props, emits, {
+} = useStateHooks({ ...props, id: randId.value }, emits, {
   isScrollHeaderIng,
   language,
   bodyRef,
@@ -644,7 +645,6 @@ const injectSetScrollToIntersect = inject("setScrollToIntersect", () => {
  * 校验钩子
  * @description 初始化表格校验相关钩子
  */
-const randId = ref((props.id ? props.id + "_" : "") + "pa-table_" + useRenderId());
 
 const { getSubmitTableList, validateField } = useValidateHooks(props, state.inRules, state.tableData, injectSetScrollToIntersect, mScrollbarListRef, getTableData);
 /**
