@@ -47,7 +47,8 @@
       .pa-drawer-content_header_close {
         position: relative;
         width: calc(var(--pa-size-font, 13px) + var(--pa-size-padding, 10px) * 2);
-        height: calc(var(--pa-size-font, 13px) + var(--pa-size-padding, 10px) * 2);
+        height: 100%;
+        min-height: calc(var(--pa-size-font, 13px) + var(--pa-size-padding, 10px) * 2);
         background-color: var(--pa-color-danger-light-4);
         display: flex;
         justify-content: center;
