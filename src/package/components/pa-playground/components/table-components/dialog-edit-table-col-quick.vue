@@ -1,6 +1,18 @@
 <template>
-  <pa-dialog v-model="OperationVisible" :title="{ 'zh-CN': '快捷编辑表格列', 'en-US': 'Quick Edit Table Column' }" :padding="['all']" :closeOnClickModal="false" size="max">
-    <m-quick-table ref="visibleTableRef" :tableConfig="tableConfig" :tableData="tableData" :exOptions="{}" @update="data => (tableData = data)">
+  <pa-dialog
+    v-model="OperationVisible"
+    :title="{ 'zh-CN': '快捷编辑表格列', 'en-US': 'Quick Edit Table Column' }"
+    :padding="['all']"
+    :closeOnClickModal="false"
+    size="max"
+  >
+    <m-quick-table
+      ref="visibleTableRef"
+      :tableConfig="tableConfig"
+      :tableData="tableData"
+      :exOptions="{}"
+      @update="data => (tableData = data)"
+    >
       <template #label="{ data }">
         <pa-input
           v-model="(data.label as object)['zh-CN']"
@@ -15,10 +27,20 @@
         ></pa-input>
       </template>
 
-      <template #prop="{ data }"> <pa-input display v-model="data.prop" :placeholder="{ 'zh-CN': '请输入列Key', 'en-US': 'Please input column key' }"></pa-input></template>
+      <template #prop="{ data }">
+        <pa-input
+          display
+          v-model="data.prop"
+          :placeholder="{ 'zh-CN': '请输入列Key', 'en-US': 'Please input column key' }"
+        ></pa-input
+      ></template>
 
       <template #cellConfig="{ data }">
-        <pa-cascader v-model="(data.cellConfig || {}).type" :exOptions="cellMapConfig" :title="{ 'zh-CN': '类型', 'en-US': 'Type' }"></pa-cascader>
+        <pa-cascader
+          v-model="(data.cellConfig || {}).type"
+          :exOptions="cellMapConfig"
+          :title="{ 'zh-CN': '类型', 'en-US': 'Type' }"
+        ></pa-cascader>
 
         <pa-select
           class="mt-size"
@@ -39,8 +61,18 @@
       </template>
 
       <template #useFilter="{ data }">
-        <pa-select v-model="data.useFilter" :exOptions="exOptionsComputed['useFilter']" :title="{ 'zh-CN': '使用筛选', 'en-US': 'Use Filter' }"></pa-select>
-        <pa-select class="mt-size" v-if="data.useFilter" v-model="data.filterType" :exOptions="exOptionsComputed['filterType']" :title="{ 'zh-CN': '筛选类型', 'en-US': 'Filter Type' }"></pa-select>
+        <pa-select
+          v-model="data.useFilter"
+          :exOptions="exOptionsComputed['useFilter']"
+          :title="{ 'zh-CN': '使用筛选', 'en-US': 'Use Filter' }"
+        ></pa-select>
+        <pa-select
+          class="mt-size"
+          v-if="data.useFilter"
+          v-model="data.filterType"
+          :exOptions="exOptionsComputed['filterType']"
+          :title="{ 'zh-CN': '筛选类型', 'en-US': 'Filter Type' }"
+        ></pa-select>
 
         <pa-select
           class="mt-size"
@@ -57,8 +89,19 @@
 
       <template #operation="{ data, index }">
         <div class="flex-col">
-          <pa-button class="mb-size" is="edit" @click="handleMoreOperation(data, index)" :text="{ 'zh-CN': '更多', 'en-US': 'More' }" />
-          <pa-button style="margin-left: 0" type="danger" is="delete" @click="removeOperation(index)" :text="{ 'zh-CN': '删除', 'en-US': 'Delete' }" />
+          <pa-button
+            class="mb-size"
+            is="edit"
+            @click="handleMoreOperation(data, index)"
+            :text="{ 'zh-CN': '更多', 'en-US': 'More' }"
+          />
+          <pa-button
+            style="margin-left: 0"
+            type="danger"
+            is="delete"
+            @click="removeOperation(index)"
+            :text="{ 'zh-CN': '删除', 'en-US': 'Delete' }"
+          />
         </div>
       </template>
     </m-quick-table>
@@ -68,8 +111,21 @@
     </template>
   </pa-dialog>
 
-  <pa-dialog v-model="OperationMoreVisible" :title="{ 'zh-CN': '编辑列详情', 'en-US': 'Edit Column Details' }" :padding="['all']" :closeOnClickModal="false" size="s">
-    <pa-form id="pa-playground-form_base" ref="formRef" :structure="config" :ex-span="1" :ex-options="exOptionsComputed" @form-data-change="data => (formData = data)">
+  <pa-dialog
+    v-model="OperationMoreVisible"
+    :title="{ 'zh-CN': '编辑列详情', 'en-US': 'Edit Column Details' }"
+    :padding="['all']"
+    :closeOnClickModal="false"
+    size="s"
+  >
+    <pa-form
+      id="pa-playground-form_base"
+      ref="formRef"
+      :structure="config"
+      :ex-span="1"
+      :ex-options="exOptionsComputed"
+      @form-data-change="data => (formData = data)"
+    >
       <template #label="scope">
         <template v-if="scope.data.label">
           <pa-input
@@ -100,10 +156,18 @@ import { computed, ComputedRef, inject, ref, useTemplateRef } from "vue";
 import { PancakeGlobalConfigType } from "../../../pa-manager/types";
 import { PaStructureType } from "PancakeType";
 import { cellMapConfig } from "../../configs/cell-config";
-import { MOptionsType } from "../../type";
+import { MOptionsType } from "../../types";
 import MQuickTable from "../quick-table.vue";
 
-import { inputConfig, numberConfig, selectConfig, cascaderConfig, radioConfig, checkboxConfig, switchConfig } from "../../configs/cell-config";
+import {
+  inputConfig,
+  numberConfig,
+  selectConfig,
+  cascaderConfig,
+  radioConfig,
+  checkboxConfig,
+  switchConfig
+} from "../../configs/cell-config";
 import { editTableColConfig, editOtherTableColConfig, filterType, exOptionsById } from "../../configs/table-config";
 
 import cloneDeep from "../../../tools/clone-deep";
@@ -126,7 +190,9 @@ const formRef = useTemplateRef("formRef");
 
 // @ options
 const exOptions = ref<Record<string, string>>({});
-const exOptionsMap = computed(() => props.exOptionsMaps.filter(item => !item.id.includes("use-")).map(item => ({ label: item.description, value: item.id })));
+const exOptionsMap = computed(() =>
+  props.exOptionsMaps.filter(item => !item.id.includes("use-")).map(item => ({ label: item.description, value: item.id }))
+);
 const tableUseOptions = { useFilter: "use-yes-no", filterType: "use-filter-type", fixed: "use-fixed" };
 const exOptionsComputed = computed(() => {
   const exOptionsData = {};
@@ -227,7 +293,7 @@ const handleMoreOperation = (row, index) => {
   OperationMoreIndex.value = index;
   const _editCol = { ...row, cellType: row.cellConfig?.type || "text" };
   setTimeout(() => {
-    formRef.value?.changeData_All(_editCol);
+    formRef.value?.changeDataAll(_editCol);
   }, 100);
 };
 

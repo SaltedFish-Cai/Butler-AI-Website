@@ -19,7 +19,12 @@
       </footer>
 
       <!-- 输入表单（绝对定位覆盖面板） -->
-      <form class="pa-ai-chat__form" :class="{ 'pa-ai-chat__form--visible': showForm }" :style="{ pointerEvents: showForm ? 'all' : 'none' }" @submit.prevent="handleSubmit">
+      <form
+        class="pa-ai-chat__form"
+        :class="{ 'pa-ai-chat__form--visible': showForm }"
+        :style="{ pointerEvents: showForm ? 'all' : 'none' }"
+        @submit.prevent="handleSubmit"
+      >
         <Transition name="pa-ai-chat-fade">
           <div v-if="showForm" key="form-body" class="pa-ai-chat__form-body">
             <div class="pa-ai-chat__form-header">
@@ -34,7 +39,15 @@
                 </button>
               </div>
             </div>
-            <textarea ref="textareaRef" class="pa-ai-chat__textarea" placeholder="Ask me anything..." name="message" required :spellcheck="false" @keydown="handleKeys" />
+            <textarea
+              ref="textareaRef"
+              class="pa-ai-chat__textarea"
+              placeholder="Ask me anything..."
+              name="message"
+              required
+              :spellcheck="false"
+              @keydown="handleKeys"
+            />
           </div>
         </Transition>
       </form>
@@ -169,7 +182,8 @@ provide("pa-ai-chat", {
   border-radius: 20px;
   border: 1px solid var(--pa-color-border, rgba(255, 255, 255, 0.1));
   background: var(--pa-color-bg, #282828);
-  transition: width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), height 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), border-radius 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), height 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+    border-radius 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
 
   &--open {
     width: 360px;

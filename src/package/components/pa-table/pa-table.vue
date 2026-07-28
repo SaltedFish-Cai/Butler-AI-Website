@@ -3,12 +3,24 @@
     <div
       class="pa-table"
       ref="scrollBarList"
-      :class="[props.class, isShiftPressed ? 'pa-table_shirft' : '', useSticky ? 'pa-table_sticky' : '', !isLeft ? 'pa-table_scroll_left' : '', !isRight ? 'pa-table_scroll_right' : '']"
+      :class="[
+        props.class,
+        isShiftPressed ? 'pa-table_shirft' : '',
+        useSticky ? 'pa-table_sticky' : '',
+        !isLeft ? 'pa-table_scroll_left' : '',
+        !isRight ? 'pa-table_scroll_right' : ''
+      ]"
       :style="{ ...props.style, '--pa-table-footer-height': footerHeight + 'px' }"
       :id="randId"
     >
       <div class="pa-table_body_header_box" ref="headerBoxRef">
-        <mTableV2Filter ref="filterRef" :tableStructure="tableStructure" :tableQuery="state.tableQuery" :extraProps="props" :state="state">
+        <mTableV2Filter
+          ref="filterRef"
+          :tableStructure="tableStructure"
+          :tableQuery="state.tableQuery"
+          :extraProps="props"
+          :state="state"
+        >
           <template v-for="slot in Object.keys($slots)" #[slot]="scope">
             <slot :name="slot" v-bind="scope"></slot>
           </template>
@@ -24,10 +36,17 @@
                     class="pa-table_body_header_label"
                     :class="[
                       isRowIndex(item) ? 'pa-table_body_header_label_index' : '',
-                      item.fixed == 'left' ? 'sticky-left border-right' : item.fixed == 'right' ? 'sticky-right border-right' : 'border-right',
+                      item.fixed == 'left'
+                        ? 'sticky-left border-right'
+                        : item.fixed == 'right'
+                        ? 'sticky-right border-right'
+                        : 'border-right',
                       item.lastLeftFixed ? 'last-left-fixed' : '',
                       item.lastRightFixed ? 'last-right-fixed' : '',
-                      (!item.width && !state.setCellWidthIng) || (state.useAverageWidth == 1 && !item.baseWidth && item.prop != 'operation') ? 'pa-table_body_header_label_flex' : ''
+                      (!item.width && !state.setCellWidthIng) ||
+                      (state.useAverageWidth == 1 && !item.baseWidth && item.prop != 'operation')
+                        ? 'pa-table_body_header_label_flex'
+                        : ''
                     ]"
                     :style="{
                       '--pa-table-sticky': item.fixedValue,
@@ -44,7 +63,12 @@
                   >
                     <template v-if="item.type == 'index'"> # </template>
                     <template v-else-if="item.type == 'selection'">
-                      <pa-checkbox-item v-if="!state.showSelectList" :is-checked="isTableSelectAll" :is-indeterminate="selectedRowsLength > 0" @change="handleSelectAllStatus" />
+                      <pa-checkbox-item
+                        v-if="!state.showSelectList"
+                        :is-checked="isTableSelectAll"
+                        :is-indeterminate="selectedRowsLength > 0"
+                        @change="handleSelectAllStatus"
+                      />
                     </template>
                     <template v-else-if="item.type == 'radio'"></template>
                     <template v-else-if="item.type == 'row'">
@@ -89,11 +113,21 @@
 
       <!-- body -->
       <div class="pa-table_body" ref="bodyRef">
-        <div v-if="state.tableLoadingSize != 100" class="pa-table_body_loading" :style="{ width: state.tableLoadingSize + '%' }"></div>
+        <div
+          v-if="state.tableLoadingSize != 100"
+          class="pa-table_body_loading"
+          :style="{ width: state.tableLoadingSize + '%' }"
+        ></div>
         <div v-if="state.flatTableData.length == 0 && state.tableLoadingSize != 100" class="pa-table_body_first_loading">
           <m-icon class="loading_font" name="loading_line"></m-icon>
         </div>
-        <pa-scrollbar ref="mScrollbarListRef" :useScrollY="!useSticky" @scroll-child-change="handleScrollChildChange" :onDirectlyScroll="directlyScroll" :showThumbX="false">
+        <pa-scrollbar
+          ref="mScrollbarListRef"
+          :useScrollY="!useSticky"
+          @scroll-child-change="handleScrollChildChange"
+          :onDirectlyScroll="directlyScroll"
+          :showThumbX="false"
+        >
           <!-- content -->
           <div
             class="pa-table_body_content"
@@ -112,8 +146,16 @@
               class="pa-table__virtual-space"
               :style="{ height: virtualTotalHeight + 'px', position: 'relative', minHeight: '100%' }"
             >
-              <div v-for="vi in visibleItems" :key="vi.key" :ref="el => measureRow(el, vi.index)" :style="{ position: 'absolute', top: vi.top + 'px', left: 0, right: 0, zIndex: 1 }">
-                <div class="pa-table_body_content_cell" :class="[vi.row.isOpenChild && (useChildren || useExpand) ? 'open-child' : '']">
+              <div
+                v-for="vi in visibleItems"
+                :key="vi.key"
+                :ref="el => measureRow(el, vi.index)"
+                :style="{ position: 'absolute', top: vi.top + 'px', left: 0, right: 0, zIndex: 1 }"
+              >
+                <div
+                  class="pa-table_body_content_cell"
+                  :class="[vi.row.isOpenChild && (useChildren || useExpand) ? 'open-child' : '']"
+                >
                   <mLightTableCell
                     :structure="tableStructure"
                     :row="vi.row"
@@ -174,13 +216,29 @@
               <template v-for="(item, index) in showTableList" :key="index">
                 <div class="pa-table_body_content_rows" :style="{ opacity: state.flatTableData.length > 0 ? 1 : 0 }">
                   <template v-for="row in item" :key="row[rowKey]">
-                    <div v-if="row.type == 'more'" class="m-scrollbar-more" :class="{ 'm-scrollbar-more_ing': state.listenCellInViewIng }" :id="`${randId}-more-${row.name}`">
+                    <div
+                      v-if="row.type == 'more'"
+                      class="m-scrollbar-more"
+                      :class="{ 'm-scrollbar-more_ing': state.listenCellInViewIng }"
+                      :id="`${randId}-more-${row.name}`"
+                    >
                       <!-- PageNum:{{ state.PageNum }} ,type:{{ row.type }} ,index:{{ index }} -->
                     </div>
-                    <template v-if="row.type != 'more' && index + 1 <= Number(state.PageNum) + 2 && index + 1 >= Number(state.PageNum) - 3">
-                      <div v-if="row.type == 'empty' || index > Number(state.PageNum) + 2 || index < Number(state.PageNum) - 3" class="pa-table_body_content_cell_empty"></div>
+                    <template
+                      v-if="
+                        row.type != 'more' && index + 1 <= Number(state.PageNum) + 2 && index + 1 >= Number(state.PageNum) - 3
+                      "
+                    >
+                      <div
+                        v-if="row.type == 'empty' || index > Number(state.PageNum) + 2 || index < Number(state.PageNum) - 3"
+                        class="pa-table_body_content_cell_empty"
+                      ></div>
 
-                      <div v-else class="pa-table_body_content_cell" :class="[row.isOpenChild && (useChildren || useExpand) ? 'open-child' : '']">
+                      <div
+                        v-else
+                        class="pa-table_body_content_cell"
+                        :class="[row.isOpenChild && (useChildren || useExpand) ? 'open-child' : '']"
+                      >
                         <mLightTableCell
                           :structure="tableStructure"
                           :row="row"
@@ -203,7 +261,10 @@
 
                       <template v-if="(row.children?.length && useChildren) || useExpand">
                         <transition name="mo-animation-fadeIn">
-                          <div v-if="row.isOpenChild && index <= Number(state.PageNum) + 2 && index >= Number(state.PageNum) - 2" class="pa-table_body_content_children_box">
+                          <div
+                            v-if="row.isOpenChild && index <= Number(state.PageNum) + 2 && index >= Number(state.PageNum) - 2"
+                            class="pa-table_body_content_children_box"
+                          >
                             <template v-if="useChildren">
                               <template v-for="ch in row.children" :key="ch[rowKey]">
                                 <div class="pa-table_body_content_cell">
@@ -242,7 +303,11 @@
 
             <template v-if="state.tableLoadStatus"> </template>
           </div>
-          <div v-if="!state.flatTableData.length && state.tableLoadEndStatus" class="empty empty-table" style="text-align: center">
+          <div
+            v-if="!state.flatTableData.length && state.tableLoadEndStatus"
+            class="empty empty-table"
+            style="text-align: center"
+          >
             <pa-icon name="empty" style="font-size: 40px"></pa-icon>
             <pa-language :text="{ 'zh-CN': '暂无数据', 'en-US': 'No Data' }"></pa-language>
           </div>
@@ -253,10 +318,15 @@
                 v-if="tableStructure[index].isShow != false"
                 class="pa-table_body_summary_label border-right"
                 :class="[
-                  tableStructure[index]?.fixed == 'left' ? 'sticky-left border-right' : tableStructure[index]?.fixed == 'right' ? 'sticky-right border-right' : 'border-right',
+                  tableStructure[index]?.fixed == 'left'
+                    ? 'sticky-left border-right'
+                    : tableStructure[index]?.fixed == 'right'
+                    ? 'sticky-right border-right'
+                    : 'border-right',
                   tableStructure[index]?.lastLeftFixed ? 'last-left-fixed' : '',
                   tableStructure[index]?.lastRightFixed ? 'last-right-fixed' : '',
-                  (!tableStructure[index].width && !state.setCellWidthIng) || (state.useAverageWidth == 1 && !tableStructure[index].baseWidth && tableStructure[index].prop != 'operation')
+                  (!tableStructure[index].width && !state.setCellWidthIng) ||
+                  (state.useAverageWidth == 1 && !tableStructure[index].baseWidth && tableStructure[index].prop != 'operation')
                     ? 'pa-table_body_summary_flex'
                     : ''
                 ]"
@@ -268,7 +338,11 @@
                 }"
               >
                 <div
-                  :class="[tableStructure[index].width && !state.setCellWidthIng ? 'table_body_label_content' : `find_cell_${tableStructure[index].prop || tableStructure[index].type}`]"
+                  :class="[
+                    tableStructure[index].width && !state.setCellWidthIng
+                      ? 'table_body_label_content'
+                      : `find_cell_${tableStructure[index].prop || tableStructure[index].type}`
+                  ]"
                   :style="{
                     justifyContent: isRowIndex(tableStructure[index]) ? 'center' : 'flex-start'
                   }"
@@ -282,7 +356,12 @@
       </div>
 
       <!-- 分页组件 -->
-      <div v-if="props.usePagination" class="flex-center-between pa-table_footer" :class="{ 'use-sticky-view-in': useStickyViewIn }" ref="footerRef">
+      <div
+        v-if="props.usePagination"
+        class="flex-center-between pa-table_footer"
+        :class="{ 'use-sticky-view-in': useStickyViewIn }"
+        ref="footerRef"
+      >
         <div class="table-flex-lf">
           <slot name="FooterLeft">
             <template v-if="useSelect">
@@ -292,7 +371,10 @@
                 iconName="transfer_horizontal_line"
                 style="--pa-size-padding: 8px; --pa-size-font: 14px; --pa-size-height: 28px"
               >
-                <pa-language v-if="state.showSelectList" :text="{ 'zh-CN': '切换全选', 'en-US': 'Switch Selection' }"></pa-language>
+                <pa-language
+                  v-if="state.showSelectList"
+                  :text="{ 'zh-CN': '切换全选', 'en-US': 'Switch Selection' }"
+                ></pa-language>
                 <pa-language v-else :text="{ 'zh-CN': '切换至已选择', 'en-US': 'Switch To Selected' }"></pa-language>
               </pa-button>
               <div class="ml-size">
@@ -334,7 +416,21 @@
  * 模块导入
  * @description 导入 Vue 核心响应式 API
  */
-import { ref, Ref, useTemplateRef, onBeforeMount, computed, watch, provide, onBeforeUnmount, onUnmounted, nextTick, inject, onMounted, ComputedRef } from "vue";
+import {
+  ref,
+  Ref,
+  useTemplateRef,
+  onBeforeMount,
+  computed,
+  watch,
+  provide,
+  onBeforeUnmount,
+  onUnmounted,
+  nextTick,
+  inject,
+  onMounted,
+  ComputedRef
+} from "vue";
 /**
  * 模块导入
  * @description 导入表格单元格子组件
@@ -534,19 +630,30 @@ const randId = ref((props.id ? props.id + "_" : "") + "pa-table_" + useRenderId(
  * 组件事件
  * @description 组件的 emits 定义
  */
-const emits = defineEmits(["changeRowStatus", "tableCellChange", "changeRowAllStatus", "selectRowBack", "radioRowBack", "selectRowAllBack"]);
+const emits = defineEmits([
+  "changeRowStatus",
+  "tableCellChange",
+  "changeRowAllStatus",
+  "selectRowBack",
+  "radioRowBack",
+  "selectRowAllBack"
+]);
 /**
  * 交叉观察列表
  * @type Ref
  * @description 存储需要观察的交叉元素列表
  */
-const isIntersectingList = ref([] as unknown as Ref<{ isIntersecting: boolean; stopObserving: () => void; el: Element; Els: Element }[]>);
+const isIntersectingList = ref(
+  [] as unknown as Ref<{ isIntersecting: boolean; stopObserving: () => void; el: Element; Els: Element }[]>
+);
 /**
  * 视窗内元素列表
  * @type Ref
  * @description 存储已在视窗内的元素列表
  */
-const isInViewList = ref([] as unknown as Ref<{ isIntersecting: boolean; stopObserving: () => void; el: Element; Els: Element }[]>);
+const isInViewList = ref(
+  [] as unknown as Ref<{ isIntersecting: boolean; stopObserving: () => void; el: Element; Els: Element }[]>
+);
 /**
  * 粘性视图状态
  * @type Ref<boolean>
@@ -609,7 +716,17 @@ const {
  * 滚动钩子
  * @description 初始化表格滚动相关钩子
  */
-const { isLeft, isRight, scrollDirectionY, virtualScrollTop, virtualBodyHeight, handleSizeChange, handleCurrentChange, refreshTable, directlyScroll } = useScrollHooks(props, state, {
+const {
+  isLeft,
+  isRight,
+  scrollDirectionY,
+  virtualScrollTop,
+  virtualBodyHeight,
+  handleSizeChange,
+  handleCurrentChange,
+  refreshTable,
+  directlyScroll
+} = useScrollHooks(props, state, {
   isScrollHeaderIng,
   headerBoxRef,
   mScrollbarListRef,
@@ -623,17 +740,22 @@ const { isLeft, isRight, scrollDirectionY, virtualScrollTop, virtualBodyHeight, 
  * 选择钩子
  * @description 初始化表格行选择相关钩子
  */
-const { isShiftPressed, selectedRowsLength, isTableSelectAll, handleSelectChange, handleSelectAllStatus, setSelectedData, getSelectedData, cleanup } = useSelectHooks(
-  props,
-  state,
-  emits,
-  getTableList
-);
+const {
+  isShiftPressed,
+  selectedRowsLength,
+  isTableSelectAll,
+  handleSelectChange,
+  handleSelectAllStatus,
+  setSelectedData,
+  getSelectedData,
+  cleanup
+} = useSelectHooks(props, state, emits, getTableList);
 /**
  * 拖拽钩子
  * @description 初始化表格拖拽相关钩子
  */
-const { handleDragStart, handleDragOver, handleDrop, handleDragEnd, dragIng, handleDragWidthStart, positionWidthIndex } = useDragHooks(tableStructure);
+const { handleDragStart, handleDragOver, handleDrop, handleDragEnd, dragIng, handleDragWidthStart, positionWidthIndex } =
+  useDragHooks(tableStructure);
 /**
  * 滚动到相交位置
  * @description 注入的滚动到视图方法
@@ -646,7 +768,14 @@ const injectSetScrollToIntersect = inject("setScrollToIntersect", () => {
  * @description 初始化表格校验相关钩子
  */
 
-const { getSubmitTableList, validateField } = useValidateHooks(props, state.inRules, state.tableData, injectSetScrollToIntersect, mScrollbarListRef, getTableData);
+const { getSubmitTableList, validateField } = useValidateHooks(
+  props,
+  state.inRules,
+  state.tableData,
+  injectSetScrollToIntersect,
+  mScrollbarListRef,
+  getTableData
+);
 /**
  * 显示表格列表
  * @type ComputedRef

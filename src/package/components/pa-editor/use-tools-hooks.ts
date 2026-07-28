@@ -54,7 +54,10 @@ export function useToolsHooks(
         while (currentElement && currentElement !== editorRef.value) {
           if (currentElement.style.backgroundColor) {
             const bgColor = currentElement.style.backgroundColor;
-            return bgColor.toLowerCase() === tool.value?.toLowerCase() || bgColor.replace(/\s/g, "").toLowerCase() === tool.value?.replace(/\s/g, "").toLowerCase();
+            return (
+              bgColor.toLowerCase() === tool.value?.toLowerCase() ||
+              bgColor.replace(/\s/g, "").toLowerCase() === tool.value?.replace(/\s/g, "").toLowerCase()
+            );
           }
           currentElement = currentElement.parentElement;
         }
@@ -72,7 +75,10 @@ export function useToolsHooks(
         while (currentElement && currentElement !== editorRef.value) {
           if (currentElement.style.color) {
             const fontColor = currentElement.style.color;
-            return fontColor.toLowerCase() === tool.value?.toLowerCase() || fontColor.replace(/\s/g, "").toLowerCase() === tool.value?.replace(/\s/g, "").toLowerCase();
+            return (
+              fontColor.toLowerCase() === tool.value?.toLowerCase() ||
+              fontColor.replace(/\s/g, "").toLowerCase() === tool.value?.replace(/\s/g, "").toLowerCase()
+            );
           }
           currentElement = currentElement.parentElement;
         }

@@ -1,7 +1,19 @@
 <template>
-  <pa-overlay :modelValue="state.visible" @click-overlay="closeOnClickModal && closeMenu()" class="flex-center" :blur="overlayBlur">
+  <pa-overlay
+    :modelValue="state.visible"
+    @click-overlay="closeOnClickModal && closeMenu()"
+    class="flex-center"
+    :blur="overlayBlur"
+  >
     <transition name="mo-animation-fade">
-      <div :id="randId" class="pa-dialog" :class="[state.fullscreen ? 'pa-dialog_full' : '']" ref="DialogRef" v-if="state.visible" :style="dialogStyle">
+      <div
+        :id="randId"
+        class="pa-dialog"
+        :class="[state.fullscreen ? 'pa-dialog_full' : '']"
+        ref="DialogRef"
+        v-if="state.visible"
+        :style="dialogStyle"
+      >
         <div class="pa-dialog-content" :class="[$slots['background'] ? 'pa-dialog-content_body_background' : '']">
           <div class="pa-dialog-content_body_background">
             <slot name="background" />
@@ -36,7 +48,12 @@
           </div>
 
           <div class="pa-dialog-content_body" ref="ScrollbarRef">
-            <pa-scrollbar v-if="scroll" :useScrollX="useScrollX" @scroll-child-change="scrollChildChange" :parentBoxRef="ScrollbarRef">
+            <pa-scrollbar
+              v-if="scroll"
+              :useScrollX="useScrollX"
+              @scroll-child-change="scrollChildChange"
+              :parentBoxRef="ScrollbarRef"
+            >
               <div class="dialog__body flex-col" ref="ScrollbarBodyRef" :class="paddingClasses">
                 <template v-if="keepAlive"> <slot></slot> </template>
               </div>

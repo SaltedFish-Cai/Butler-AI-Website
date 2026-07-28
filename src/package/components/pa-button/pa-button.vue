@@ -1,5 +1,12 @@
 <template>
-  <button :id="randId" type="button" :disabled="disabled || isLoading" :class="buttonClasses" :style="props.style" @click="btnClick">
+  <button
+    :id="randId"
+    type="button"
+    :disabled="disabled || isLoading"
+    :class="buttonClasses"
+    :style="props.style"
+    @click="btnClick"
+  >
     <div v-if="isLoading" class="pa-button_icon">
       <pa-icon name="butler-reset_line" class="pa-button_loading" />
     </div>
@@ -166,7 +173,9 @@ const isLoading = ref(props.loading || false);
  * @returns `boolean` 是否显示左侧图标
  * @description 判断是否需要显示左侧图标（包含 loading 状态判断）
  */
-const showLeftIcon = computed(() => props.iconPosition === "left" && !props.loading && !isLoading.value && props.useIcon && !!currentIconName.value);
+const showLeftIcon = computed(
+  () => props.iconPosition === "left" && !props.loading && !isLoading.value && props.useIcon && !!currentIconName.value
+);
 /**
  * **是否显示右侧图标**
  * @returns `boolean` 是否显示右侧图标

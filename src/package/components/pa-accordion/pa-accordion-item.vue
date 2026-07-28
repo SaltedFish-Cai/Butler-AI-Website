@@ -3,14 +3,28 @@
     ref="rootEl"
     :id="accordionCtx?.randId + '_' + itemIdCounter"
     class="pa-accordion-item"
-    :class="{ 'pa-accordion-item--expanded': isExpanded, 'pa-accordion-item--disabled': disabled, 'pa-accordion-item--header-stuck': isHeaderStuck }"
+    :class="{
+      'pa-accordion-item--expanded': isExpanded,
+      'pa-accordion-item--disabled': disabled,
+      'pa-accordion-item--header-stuck': isHeaderStuck
+    }"
   >
     <div class="pa-accordion-item__sticky-sentinel" ref="sentinelEl"></div>
-    <div class="pa-accordion-item__header" @click="handleHeaderClick" role="button" :tabindex="disabled ? -1 : 0" @keydown.enter="handleHeaderClick">
+    <div
+      class="pa-accordion-item__header"
+      @click="handleHeaderClick"
+      role="button"
+      :tabindex="disabled ? -1 : 0"
+      @keydown.enter="handleHeaderClick"
+    >
       <div class="pa-accordion-item__header_content">
         <slot name="header" :expanded="isExpanded" :toggle="toggleExpanded">节点</slot>
       </div>
-      <pa-icon name="butler-caret-down" class="pa-accordion-item__arrow" :class="[isExpanded ? 'pa-accordion-item__arrow--open' : '']" />
+      <pa-icon
+        name="butler-caret-down"
+        class="pa-accordion-item__arrow"
+        :class="[isExpanded ? 'pa-accordion-item__arrow--open' : '']"
+      />
     </div>
     <Transition name="accordion-slide">
       <div v-if="isExpanded" class="pa-accordion-item__body" :class="paddingClasses">

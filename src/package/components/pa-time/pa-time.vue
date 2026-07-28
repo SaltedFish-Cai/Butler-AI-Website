@@ -1,5 +1,12 @@
 <template>
-  <div v-if="!display" :id="randId" class="pa-time" ref="selectRef" :class="[props.class, { 'is-disabled': props.disabled }]" :style="props.style">
+  <div
+    v-if="!display"
+    :id="randId"
+    class="pa-time"
+    ref="selectRef"
+    :class="[props.class, { 'is-disabled': props.disabled }]"
+    :style="props.style"
+  >
     <pa-popover
       ref="popoverRef"
       @change="handlePopoverChange"
@@ -53,8 +60,22 @@
           </div>
         </div>
       </template>
-      <MDateTimePanel v-if="DATE_TIME_MAP[type]" :model-value="internalValue" :type="type" :shortcuts="shortcuts" :disabled-date="disabledDateFn" @change="handlePanelChange" />
-      <MYearPanel v-else-if="YEAR_MAP[type]" :model-value="internalValue" :type="type" :shortcuts="shortcuts" :disabled-date="disabledDateFn" @change="handlePanelChange" />
+      <MDateTimePanel
+        v-if="DATE_TIME_MAP[type]"
+        :model-value="internalValue"
+        :type="type"
+        :shortcuts="shortcuts"
+        :disabled-date="disabledDateFn"
+        @change="handlePanelChange"
+      />
+      <MYearPanel
+        v-else-if="YEAR_MAP[type]"
+        :model-value="internalValue"
+        :type="type"
+        :shortcuts="shortcuts"
+        :disabled-date="disabledDateFn"
+        @change="handlePanelChange"
+      />
     </pa-popover>
   </div>
 
@@ -69,7 +90,11 @@
     </div>
   </div>
 
-  <div v-if="(alwaysContrast && !isNil(contrastData)) || (!isNil(contrastData) && !isEqual(inValue, contrastData))" :id="randId" :class="['pa-contrast-style']">
+  <div
+    v-if="(alwaysContrast && !isNil(contrastData)) || (!isNil(contrastData) && !isEqual(inValue, contrastData))"
+    :id="randId"
+    :class="['pa-contrast-style']"
+  >
     <slot name="exContrast"></slot>
     <template v-if="$slots.exContrast"> ( {{ findData(contrastData) || "--" }} ) </template>
     <template v-else>{{ findData(contrastData) || "--" }}</template>
@@ -271,7 +296,9 @@ const languagePackage = computed(() => {
  * @description 输入框的占位符文本
  */
 const inputPlaceholder = computed(() => {
-  return typeof props.placeholder === "object" ? props.placeholder[languageValue.value] || languagePackage.value[`selectPlaceholder`] : props.placeholder || languagePackage.value[`selectPlaceholder`];
+  return typeof props.placeholder === "object"
+    ? props.placeholder[languageValue.value] || languagePackage.value[`selectPlaceholder`]
+    : props.placeholder || languagePackage.value[`selectPlaceholder`];
 });
 
 /**

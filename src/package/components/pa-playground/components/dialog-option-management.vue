@@ -1,5 +1,11 @@
 <template>
-  <pa-dialog v-model="visible" :title="{ 'zh-CN': '扩展选项管理', 'en-US': 'Extension Option Management' }" :padding="['all']" :closeOnClickModal="false" @closed="handleClose">
+  <pa-dialog
+    v-model="visible"
+    :title="{ 'zh-CN': '扩展选项管理', 'en-US': 'Extension Option Management' }"
+    :padding="['all']"
+    :closeOnClickModal="false"
+    @closed="handleClose"
+  >
     <m-quick-table ref="tableRef" :tableData="inEditData" :tableConfig="tableConfig" :ex-options="exOptions">
       <template #Header>
         <pa-button is="add" @click="handleAdd" :text="{ 'zh-CN': '新建选项', 'en-US': 'New Option' }" />
@@ -7,7 +13,11 @@
 
       <template #operation="{ data }">
         <pa-button is="edit" @click="handleEdit(data as MOptionsType)" :text="{ 'zh-CN': '编辑选项', 'en-US': 'Edit Option' }" />
-        <pa-button is="delete" @click="handleDelete(data as MOptionsType)" :text="{ 'zh-CN': '删除选项', 'en-US': 'Delete Option' }" />
+        <pa-button
+          is="delete"
+          @click="handleDelete(data as MOptionsType)"
+          :text="{ 'zh-CN': '删除选项', 'en-US': 'Delete Option' }"
+        />
       </template>
     </m-quick-table>
   </pa-dialog>
@@ -20,7 +30,16 @@
     size="s"
     @closed="inEditDataItem = ({}  as MOptionsType)"
   >
-    <pa-form id="pa-playground_base" ref="formRef" :structure="formConfig" :data="inEditDataItem" :ex-span="1" :ex-options="exOptions" @form-cell-change="handleCellChange"> </pa-form>
+    <pa-form
+      id="pa-playground_base"
+      ref="formRef"
+      :structure="formConfig"
+      :data="inEditDataItem"
+      :ex-span="1"
+      :ex-options="exOptions"
+      @form-cell-change="handleCellChange"
+    >
+    </pa-form>
 
     <m-quick-table
       v-if="selectType === 'select'"
@@ -31,7 +50,12 @@
       class="mt-size"
     >
       <template #Header>
-        <pa-button is="add" @click="handleAddProp" :debounced="false" :text="{ 'zh-CN': '新增扩展选项', 'en-US': 'Add Extension Option' }" />
+        <pa-button
+          is="add"
+          @click="handleAddProp"
+          :debounced="false"
+          :text="{ 'zh-CN': '新增扩展选项', 'en-US': 'Add Extension Option' }"
+        />
       </template>
 
       <template #label="{ data }">
@@ -51,11 +75,18 @@
       </template>
 
       <template #value="{ data }">
-        <pa-input v-model="data.value" :placeholder="{ 'zh-CN': '请输入选项值', 'en-US': 'Please input option value' }"></pa-input>
+        <pa-input
+          v-model="data.value"
+          :placeholder="{ 'zh-CN': '请输入选项值', 'en-US': 'Please input option value' }"
+        ></pa-input>
       </template>
 
       <template #operation="{ data }">
-        <pa-button is="delete" @click="handleDeleteProp(data as PaOptionType.Select)" :text="{ 'zh-CN': '删除', 'en-US': 'Delete' }" />
+        <pa-button
+          is="delete"
+          @click="handleDeleteProp(data as PaOptionType.Select)"
+          :text="{ 'zh-CN': '删除', 'en-US': 'Delete' }"
+        />
       </template>
     </m-quick-table>
 
@@ -176,7 +207,9 @@ const formConfig = computed(() => {
     { label: { "zh-CN": "列名", "en-US": "Column Name" }, prop: "columnName", type: "input" }
   ];
 
-  const dictionaryTypeSystem: PaStructureType.Form[] = [{ label: { "zh-CN": "字典Key", "en-US": "Dictionary Key" }, prop: "dictionaryKey", type: "input" }];
+  const dictionaryTypeSystem: PaStructureType.Form[] = [
+    { label: { "zh-CN": "字典Key", "en-US": "Dictionary Key" }, prop: "dictionaryKey", type: "input" }
+  ];
 
   const interfaceConfig: PaStructureType.Form[] = [
     { label: { "zh-CN": "字典类型", "en-US": "Dictionary Type" }, prop: "dictionaryType", type: "select" },
@@ -302,7 +335,9 @@ const handleDeleteProp = (item: PaOptionType.Select) => {
   M_MessageBox.delete({
     onConfirm: async () => {
       try {
-        inEditDataItem.value.config = (inEditDataItem.value.config as PaOptionType.SelectList).filter(i => i.value !== item.value);
+        inEditDataItem.value.config = (inEditDataItem.value.config as PaOptionType.SelectList).filter(
+          i => i.value !== item.value
+        );
         M_Message.success(languageValue.value === "zh-CN" ? "属性删除成功" : "Property deleted successfully");
       } catch (error) {
         M_Message.danger(languageValue.value === "zh-CN" ? "属性删除失败" + error : "Property deletion failed" + error);

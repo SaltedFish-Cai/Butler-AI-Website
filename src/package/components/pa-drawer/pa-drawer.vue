@@ -1,5 +1,10 @@
 <template>
-  <pa-overlay :modelValue="state.visible" @click-overlay="closeOnClickModal && closeMenu()" :class="positionClass" :blur="overlayBlur">
+  <pa-overlay
+    :modelValue="state.visible"
+    @click-overlay="closeOnClickModal && closeMenu()"
+    :class="positionClass"
+    :blur="overlayBlur"
+  >
     <transition :name="transitionName">
       <div v-if="state.visible" :id="randId" class="pa-drawer">
         <div class="pa-drawer-content" :class="position" :style="contentStyle">

@@ -60,7 +60,7 @@ declare global {
     wangEditor: any;
     MTableSortableData: {};
     globalZIndex: number;
-    getPaAnagerGlobalZIndex: () => number;
+    getGlobalZIndex: () => number;
     PancakeGlobalConfig: PancakeGlobalConfigType & {
       language: languageKey;
       escapeMap?: string[];

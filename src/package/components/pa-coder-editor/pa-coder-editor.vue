@@ -1,9 +1,19 @@
 <template>
-  <div :id="randId" :class="['pa-coder-editor', 'pa-coder-editor--' + currentTheme, props.class]" :style="[props.style, { height: props.height, minHeight: props.minHeight }]">
+  <div
+    :id="randId"
+    :class="['pa-coder-editor', 'pa-coder-editor--' + currentTheme, props.class]"
+    :style="[props.style, { height: props.height, minHeight: props.minHeight }]"
+  >
     <!-- Toolbar -->
     <div v-if="props.showToolbar" class="pa-coder-editor__toolbar">
       <div class="pa-coder-editor__toolbar-left">
-        <pa-select v-if="props.showLanguageSwitch" :model-value="currentLanguage" :ex-options="languageOptions" class="pa-coder-editor__language-select" @update:model-value="handleLanguageChange" />
+        <pa-select
+          v-if="props.showLanguageSwitch"
+          :model-value="currentLanguage"
+          :ex-options="languageOptions"
+          class="pa-coder-editor__language-select"
+          @update:model-value="handleLanguageChange"
+        />
       </div>
       <div class="pa-coder-editor__toolbar-right">
         <button class="pa-coder-editor__format-btn" title="格式化代码 (Shift+Alt+F)" @click="formatDocument">格式</button>
@@ -20,7 +30,11 @@
     </div>
 
     <!-- Editor body -->
-    <pa-scrollbar :use-back-top="false" class="pa-coder-editor__scrollbar" :class="currentTheme === 'dark' ? 'pa-coder-editor__scrollbar--dark' : ''">
+    <pa-scrollbar
+      :use-back-top="false"
+      class="pa-coder-editor__scrollbar"
+      :class="currentTheme === 'dark' ? 'pa-coder-editor__scrollbar--dark' : ''"
+    >
       <div ref="editorContainer" class="pa-coder-editor__container"></div>
     </pa-scrollbar>
   </div>

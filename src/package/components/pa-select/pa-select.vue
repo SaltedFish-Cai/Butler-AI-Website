@@ -1,5 +1,12 @@
 <template>
-  <div v-if="!display" :id="randId" class="pa-select" ref="selectRef" :class="[props.class, { 'is-disabled': props.disabled }]" :style="props.style">
+  <div
+    v-if="!display"
+    :id="randId"
+    class="pa-select"
+    ref="selectRef"
+    :class="[props.class, { 'is-disabled': props.disabled }]"
+    :style="props.style"
+  >
     <pa-popover
       ref="popoverRef"
       @change="handlePopoverChange"
@@ -16,7 +23,12 @@
           </div>
           <div class="pa-select-input" :class="[isFocus ? 'is-focus' : '']">
             <template v-if="tagValue.length > 0 && isMultiple">
-              <pa-tag :tagList="tagValue" :disabled="props.disabled" :style="{ width: !waitTag ? '100%' : 'auto' }" @remove-tag="removeTag"></pa-tag>
+              <pa-tag
+                :tagList="tagValue"
+                :disabled="props.disabled"
+                :style="{ width: !waitTag ? '100%' : 'auto' }"
+                @remove-tag="removeTag"
+              ></pa-tag>
             </template>
             <input
               v-if="waitTag"
@@ -38,14 +50,22 @@
         </div>
       </template>
 
-      <div class="pa-select-options" style="max-height: 230px" ref="optionsRef" v-if="!props.disabled && filterOptionsList.length > 0">
+      <div
+        class="pa-select-options"
+        style="max-height: 230px"
+        ref="optionsRef"
+        v-if="!props.disabled && filterOptionsList.length > 0"
+      >
         <pa-scrollbar :useBackTop="false" :useShadow="false" :style="{ height: optionsHeight }" :useClosePopover="false">
           <slot name="optionLabelBefore"></slot>
           <div
             v-for="(item, index) in filterOptionsList"
             :key="String(item.value)"
             class="pa-select-option"
-            :class="[equalData(item.value, inValue) ? 'is-active' : '', keyboardActiveIndex === index ? 'is-keyboard-active' : '']"
+            :class="[
+              equalData(item.value, inValue) ? 'is-active' : '',
+              keyboardActiveIndex === index ? 'is-keyboard-active' : ''
+            ]"
             @mouseover="handleOptionHover(index)"
             @mouseleave="
               awaitSelecting = false;
@@ -77,7 +97,11 @@
     </div>
   </div>
 
-  <div v-if="(alwaysContrast && !isNil(contrastData)) || (!isNil(contrastData) && !isEqual(inValue, contrastData))" :id="randId" :class="['pa-contrast-style']">
+  <div
+    v-if="(alwaysContrast && !isNil(contrastData)) || (!isNil(contrastData) && !isEqual(inValue, contrastData))"
+    :id="randId"
+    :class="['pa-contrast-style']"
+  >
     <slot name="exContrast"></slot>
     <template v-if="$slots.exContrast"> ( {{ findData(contrastData || inValue) || "--" }} ) </template>
     <template v-else>{{ findData(contrastData || inValue) || "--" }}</template>
@@ -286,7 +310,9 @@ const languageValue = computed(() => {
  * @description 当前语言的文本配置
  */
 const languagePackage = computed(() => {
-  return languageValue.value === "zh-CN" ? { selectPlaceholder: "请选择内容", empty: "暂无数据" } : { selectPlaceholder: "Please Select Content", empty: "No Data" };
+  return languageValue.value === "zh-CN"
+    ? { selectPlaceholder: "请选择内容", empty: "暂无数据" }
+    : { selectPlaceholder: "Please Select Content", empty: "No Data" };
 });
 /**
  * 过滤后的选项列表
@@ -328,7 +354,9 @@ const inputPlaceholder = computed(() => {
     const _label = exOptionsList.value.find(item => item.value == inValue.value)?.label;
     return (
       (_label && typeof _label === "object" ? _label[languageValue.value] : _label) ||
-      (typeof props.placeholder === "object" ? props.placeholder[languageValue.value] || languagePackage.value[`selectPlaceholder`] : props.placeholder || languagePackage.value[`selectPlaceholder`])
+      (typeof props.placeholder === "object"
+        ? props.placeholder[languageValue.value] || languagePackage.value[`selectPlaceholder`]
+        : props.placeholder || languagePackage.value[`selectPlaceholder`])
     );
   } else {
     return typeof props.placeholder === "object"

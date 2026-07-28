@@ -1,5 +1,11 @@
 <template>
-  <div :id="randId" class="pa-tag" ref="tagRef" :class="[props.useCollapse ? 'pa-tag-collapse' : '', props.class]" :style="mergedStyle">
+  <div
+    :id="randId"
+    class="pa-tag"
+    ref="tagRef"
+    :class="[props.useCollapse ? 'pa-tag-collapse' : '', props.class]"
+    :style="mergedStyle"
+  >
     <div class="pa-tag-text" v-for="item in inValue" :key="String(item.value)">
       <div class="pa-tag-text_content">
         {{ getLabel(item.label) }}
@@ -18,7 +24,8 @@
           <div class="pa-tag-text_content">
             {{ getLabel(item.label) }}
           </div>
-          <pa-icon v-if="!props.disabled" name="close_circle_line" class="pa-tag-text_close" @click.stop="removeTag(item)"> </pa-icon>
+          <pa-icon v-if="!props.disabled" name="close_circle_line" class="pa-tag-text_close" @click.stop="removeTag(item)">
+          </pa-icon>
         </div>
       </div>
     </pa-popover>

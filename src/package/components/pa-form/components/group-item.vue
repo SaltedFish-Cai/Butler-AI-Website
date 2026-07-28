@@ -19,7 +19,9 @@
       ></pa-radio>
 
       <template v-for="groupItem in item.groupFormConfig" :key="groupItem.prop">
-        <template v-if="injectConfigContext.data && injectConfigContext.data[item.prop] == groupItem.value && groupItem.type != 'null'">
+        <template
+          v-if="injectConfigContext.data && injectConfigContext.data[item.prop] == groupItem.value && groupItem.type != 'null'"
+        >
           <formItem :id="id" :item="{ ...groupItem }" noLabel>
             <template v-for="slot in slotKeys" #[slot]="scope" :key="slot">
               <slot :name="slot" v-bind="scope"></slot>
@@ -33,7 +35,8 @@
               <div
                 v-if="
                   (injectConfigContext.alwaysContrast && !isNil(injectConfigContext.contrastData)) ||
-                  (!isNil(injectConfigContext.contrastData) && !isEqual(injectConfigContext.data[item.prop], injectConfigContext.contrastData))
+                  (!isNil(injectConfigContext.contrastData) &&
+                    !isEqual(injectConfigContext.data[item.prop], injectConfigContext.contrastData))
                 "
                 :class="['pa-contrast-style']"
               >
@@ -138,7 +141,9 @@ const injectConfigContext = inject<Ref<ConfigContextType>>(
  *
  * @description 设置校验规则注入
  */
-const injectSetRule = inject<(item: PaFormChildType | PaFormItemType, type?: string, options?: { titleKey?: string; removeList?: string[] }) => void>("setRule", data => {
+const injectSetRule = inject<
+  (item: PaFormChildType | PaFormItemType, type?: string, options?: { titleKey?: string; removeList?: string[] }) => void
+>("setRule", data => {
   console.log(data);
 });
 
@@ -148,7 +153,8 @@ const injectSetRule = inject<(item: PaFormChildType | PaFormItemType, type?: str
  */
 const radioOptions = computed(() => {
   const val = injectConfigContext.value.data[String(props.item.prop)];
-  let opts = (injectConfigContext.value.exOptions[String(props.item.prop)] || props.item.groupFormConfig) as PaOptionType.SelectList;
+  let opts = (injectConfigContext.value.exOptions[String(props.item.prop)] ||
+    props.item.groupFormConfig) as PaOptionType.SelectList;
   const types = typeof val;
   if (types == "number") {
     opts = opts.map(item => {

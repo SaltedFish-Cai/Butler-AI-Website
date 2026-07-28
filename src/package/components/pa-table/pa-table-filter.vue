@@ -1,5 +1,14 @@
 <template>
-  <div v-if="extraProps.useToolButton || $slots['HeaderLeft'] || $slots['HeaderCenter'] || $slots['ToolButton'] || $slots['ToolButtonInline']" class="table-flex table-flex-header">
+  <div
+    v-if="
+      extraProps.useToolButton ||
+      $slots['HeaderLeft'] ||
+      $slots['HeaderCenter'] ||
+      $slots['ToolButton'] ||
+      $slots['ToolButtonInline']
+    "
+    class="table-flex table-flex-header"
+  >
     <div class="table-flex-lf">
       <slot name="HeaderLeft" />
     </div>
@@ -11,11 +20,27 @@
         <div class="flex-center-end">
           <slot name="ToolButtonInline"></slot>
 
-          <pa-button v-if="extraProps.exportApi" is="export" @click="extraProps.exportApi" :text="{ 'zh-CN': '导出报表', 'en-US': 'Export Report' }" />
+          <pa-button
+            v-if="extraProps.exportApi"
+            is="export"
+            @click="extraProps.exportApi"
+            :text="{ 'zh-CN': '导出报表', 'en-US': 'Export Report' }"
+          />
 
-          <pa-button iconName="reset_line" type="default" @click="refreshTable({ Page: {} })" :text="{ 'zh-CN': '刷新', 'en-US': 'Refresh' }" />
+          <pa-button
+            iconName="reset_line"
+            type="default"
+            @click="refreshTable({ Page: {} })"
+            :text="{ 'zh-CN': '刷新', 'en-US': 'Refresh' }"
+          />
 
-          <pa-button :use-plain="false" iconName="filter_line" type="primary" @click="() => configRef?.changeColSetting(true)" :text="{ 'zh-CN': '筛选', 'en-US': 'Filter' }" />
+          <pa-button
+            :use-plain="false"
+            iconName="filter_line"
+            type="primary"
+            @click="() => configRef?.changeColSetting(true)"
+            :text="{ 'zh-CN': '筛选', 'en-US': 'Filter' }"
+          />
         </div>
       </slot>
     </div>
@@ -28,7 +53,10 @@
       <span class="icon_highlight mr5">#{{ Number(index) + 1 }}</span>
       <span>{{ item.label }} :</span>
 
-      <template v-for="(relationshipItem, relationshipIndex) in item.relationshipGroup" :key="'relationshipItem' + relationshipIndex">
+      <template
+        v-for="(relationshipItem, relationshipIndex) in item.relationshipGroup"
+        :key="'relationshipItem' + relationshipIndex"
+      >
         <!-- :style="{
                 backgroundColor: relationshipItem?.tagStyle?.bgColor,
                 color:
@@ -49,7 +77,12 @@
       </template>
     </div>
 
-    <pa-button is="trash" size="small" @click="handleCleanAllQuery" :label="{ 'zh-CN': '清除空条件', 'en-US': 'Clear Empty Conditions' }" />
+    <pa-button
+      is="trash"
+      size="small"
+      @click="handleCleanAllQuery"
+      :label="{ 'zh-CN': '清除空条件', 'en-US': 'Clear Empty Conditions' }"
+    />
   </section>
 
   <!-- 高级搜索结果展示 -->
@@ -59,7 +92,10 @@
       <span class="icon_highlight mr5">#{{ Number(index) + 1 }}</span>
       <span>{{ item.label }} :</span>
 
-      <template v-for="(relationshipItem, relationshipIndex) in item.relationshipGroup" :key="'relationshipItem' + relationshipIndex">
+      <template
+        v-for="(relationshipItem, relationshipIndex) in item.relationshipGroup"
+        :key="'relationshipItem' + relationshipIndex"
+      >
         <span class="flex-center query_item_box">
           <template v-for="(groupItem, groupItemIndex) in relationshipItem.group" :key="groupItem.key">
             <span class="query_item_text flex-center">
@@ -79,7 +115,12 @@
       <pa-icon class="ml5 hand remove-icon" name="close_circle_line" @click="handleRemoveSenior(item)"></pa-icon>
     </div>
 
-    <pa-button is="trash" size="small" @click="handleCleanAllSeniorQuery" :label="{ 'zh-CN': '清除空条件', 'en-US': 'Clear Empty Conditions' }" />
+    <pa-button
+      is="trash"
+      size="small"
+      @click="handleCleanAllSeniorQuery"
+      :label="{ 'zh-CN': '清除空条件', 'en-US': 'Clear Empty Conditions' }"
+    />
   </section>
 
   <!-- 高级搜索 -->
@@ -93,7 +134,13 @@
   />
 
   <!-- 表配置 -->
-  <ConfigSetting :tableStructure="tableStructure" ref="configRef" :id="extraProps.id" :table-query="tableQuery" :display="extraProps.display" />
+  <ConfigSetting
+    :tableStructure="tableStructure"
+    ref="configRef"
+    :id="extraProps.id"
+    :table-query="tableQuery"
+    :display="extraProps.display"
+  />
 </template>
 
 <script setup lang="ts" name="LightTableFilter">
@@ -122,9 +169,18 @@ const refreshTable = inject("refreshTable") as (
   }
 ) => Promise<void>;
 
-const { Query, AdvancedQuery, handleSeniorSetting, handleRemoveQ, handleRemoveSenior, handleCleanAllQuery, handleCleanAllSeniorQuery } = useFilterHooks(props.extraProps, props.state, language);
+const {
+  Query,
+  AdvancedQuery,
+  handleSeniorSetting,
+  handleRemoveQ,
+  handleRemoveSenior,
+  handleCleanAllQuery,
+  handleCleanAllSeniorQuery
+} = useFilterHooks(props.extraProps, props.state, language);
 
-const { seniorFilterOptions, seniorFilterData, openSeniorFilter, setConditionalType, setRelationshipGroupLinkType } = useSeniorFilterHooks();
+const { seniorFilterOptions, seniorFilterData, openSeniorFilter, setConditionalType, setRelationshipGroupLinkType } =
+  useSeniorFilterHooks();
 
 defineExpose({
   openSeniorFilter

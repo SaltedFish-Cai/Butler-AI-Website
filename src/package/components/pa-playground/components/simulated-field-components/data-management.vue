@@ -10,8 +10,21 @@
     </template>
   </m-quick-table>
 
-  <pa-dialog v-model="optionsVisible" :title="{ 'zh-CN': '编辑数据', 'en-US': 'Edit Data' }" :padding="['all']" :closeOnClickModal="false">
-    <pa-table id="data-management-table" ref="visibleTableRef2" :structure="tableConfig2" :request-api="getTableList2" :exOptions="exOptionsTable2" :use-pagination="false"> </pa-table>
+  <pa-dialog
+    v-model="optionsVisible"
+    :title="{ 'zh-CN': '编辑数据', 'en-US': 'Edit Data' }"
+    :padding="['all']"
+    :closeOnClickModal="false"
+  >
+    <pa-table
+      id="data-management-table"
+      ref="visibleTableRef2"
+      :structure="tableConfig2"
+      :request-api="getTableList2"
+      :exOptions="exOptionsTable2"
+      :use-pagination="false"
+    >
+    </pa-table>
   </pa-dialog>
 </template>
 
@@ -19,7 +32,7 @@
 import { ComputedRef, inject, ref, useTemplateRef, onMounted, nextTick } from "vue";
 import { PaOptionType, PaStructureType } from "PancakeType";
 import { PancakeGlobalConfigType } from "../../../pa-manager/types";
-import { MInterfaceConfig, PaPlaygroundPagesType, MStructureType } from "../../type";
+import { MInterfaceConfig, PaPlaygroundPagesType, MStructureType } from "../../types";
 import { getAllData, storeData, updateData } from "../../../indexDB/indexDB";
 import { M_Message } from "../../../feedback";
 import MQuickTable from "../quick-table.vue";

@@ -1,5 +1,11 @@
 <template>
-  <div :id="randId" v-if="!display" class="pa-number" :class="[props.class, { 'is-disabled': props.disabled }]" :style="props.style">
+  <div
+    :id="randId"
+    v-if="!display"
+    class="pa-number"
+    :class="[props.class, { 'is-disabled': props.disabled }]"
+    :style="props.style"
+  >
     <div v-if="title" :style="{ width: titleWidth }" class="pa-cell-label">
       {{ typeof title === "string" ? title : title[languageValue] }}
     </div>
@@ -40,7 +46,10 @@
     </div>
   </div>
 
-  <div v-if="(alwaysContrast && !isNil(contrastData)) || (!isNil(contrastData) && !isEqual(inValue, contrastData))" :class="['pa-contrast-style']">
+  <div
+    v-if="(alwaysContrast && !isNil(contrastData)) || (!isNil(contrastData) && !isEqual(inValue, contrastData))"
+    :class="['pa-contrast-style']"
+  >
     <slot name="exContrast"></slot>
     <template v-if="$slots.exContrast"> ( {{ keepDecimalPlaces(contrastData, precision) || "--" }}{{ unit }} ) </template>
     <template v-else>{{ keepDecimalPlaces(contrastData, precision) || "--" }}{{ unit }}</template>
@@ -178,7 +187,9 @@ const languagePackage = computed(() => {
  * @description 根据语言设置计算显示的占位符文本
  */
 const computedPlaceholder: ComputedRef<string> = computed(() => {
-  return typeof props.placeholder === "object" ? props.placeholder[languageValue.value] || languagePackage.value[`inputPlaceholder`] : props.placeholder || languagePackage.value[`inputPlaceholder`];
+  return typeof props.placeholder === "object"
+    ? props.placeholder[languageValue.value] || languagePackage.value[`inputPlaceholder`]
+    : props.placeholder || languagePackage.value[`inputPlaceholder`];
 });
 /**
  * 检查最大最小值限制
@@ -210,7 +221,8 @@ function handleInput(event: Event) {
   const decimalCount = (filteredValue.match(/\./g) || []).length;
   if (decimalCount > 1) {
     const firstDecimalIndex = filteredValue.indexOf(".");
-    inValue.value = filteredValue.substring(0, firstDecimalIndex + 1) + filteredValue.substring(firstDecimalIndex + 1).replace(/\./g, "");
+    inValue.value =
+      filteredValue.substring(0, firstDecimalIndex + 1) + filteredValue.substring(firstDecimalIndex + 1).replace(/\./g, "");
     return;
   }
   const minusCount = (filteredValue.match(/\-/g) || []).length;
@@ -266,7 +278,12 @@ function handleChange() {
  */
 function handleKeyUp(e: KeyboardEvent) {
   const value = (e.target as HTMLInputElement).value;
-  if (value === "" || value === "-" || ((e.target as HTMLInputElement).selectionStart === 0 && (e.target as HTMLInputElement).selectionEnd === (e.target as HTMLInputElement).value.length)) {
+  if (
+    value === "" ||
+    value === "-" ||
+    ((e.target as HTMLInputElement).selectionStart === 0 &&
+      (e.target as HTMLInputElement).selectionEnd === (e.target as HTMLInputElement).value.length)
+  ) {
     setRange = true;
   } else {
     setRange = false;

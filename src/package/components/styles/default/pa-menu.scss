@@ -66,9 +66,7 @@
 
 .pa-menu-fade-enter-active,
 .pa-menu-fade-leave-active {
-  transition:
-    opacity 0.15s ease,
-    transform 0.15s ease;
+  transition: opacity 0.15s ease, transform 0.15s ease;
 }
 
 .pa-menu-fade-enter-from,

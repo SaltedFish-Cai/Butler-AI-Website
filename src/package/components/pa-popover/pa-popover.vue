@@ -13,7 +13,14 @@
   <template v-if="inRenderEnd && visible">
     <teleport :to="teleportTo || 'body'">
       <transition name="mo-animation-fadeIn">
-        <div v-show="visible" :id="id" :class="['pa-popover', props.popoverClass]" :style="{ ...popoverStyle, zIndex: zIndex }" @mouseenter="handlePopoverEnter" @mouseleave="handlePopoverLeave">
+        <div
+          v-show="visible"
+          :id="id"
+          :class="['pa-popover', props.popoverClass]"
+          :style="{ ...popoverStyle, zIndex: zIndex }"
+          @mouseenter="handlePopoverEnter"
+          @mouseleave="handlePopoverLeave"
+        >
           <div class="pa-popover-content" ref="popoverRef" :class="contentClassName" :style="popoverContentStyle">
             <slot />
           </div>
@@ -94,13 +101,13 @@ const inRenderEnd = ref(false);
  * @type () => number
  * @description 获取全局 ZIndex 的方法
  */
-const getPaAnagerGlobalZIndex = inject("getPaAnagerGlobalZIndex") as () => number;
+const getGlobalZIndex = inject("getGlobalZIndex") as () => number;
 /**
  * 弹窗ZIndex
  * @type Ref<number>
  * @description 弹窗的 ZIndex 值
  */
-const zIndex = ref(getPaAnagerGlobalZIndex());
+const zIndex = ref(getGlobalZIndex());
 /**
  * 参考元素引用
  * @type Ref<HTMLElement | undefined>
@@ -415,7 +422,7 @@ function showPopover(): void {
   const position = getElementPosition(popoverReferenceRef.value);
   if (position) {
     visible.value = true;
-    zIndex.value = getPaAnagerGlobalZIndex();
+    zIndex.value = getGlobalZIndex();
     emits("change", true);
     nextTick(() => {
       calculatePosition();
@@ -454,8 +461,11 @@ function hidePopover(): void {
  */
 function handleGlobalClick(event: MouseEvent): void {
   if (!visible.value) return;
-  const isClickOnReference = popoverReferenceRef.value && (popoverReferenceRef.value === event.target || popoverReferenceRef.value.contains(event.target as Node));
-  const isClickOnPopover = popoverRef.value && (popoverRef.value === event.target || popoverRef.value.contains(event.target as Node));
+  const isClickOnReference =
+    popoverReferenceRef.value &&
+    (popoverReferenceRef.value === event.target || popoverReferenceRef.value.contains(event.target as Node));
+  const isClickOnPopover =
+    popoverRef.value && (popoverRef.value === event.target || popoverRef.value.contains(event.target as Node));
   if (isClickOnReference || isClickOnPopover) {
     return;
   }

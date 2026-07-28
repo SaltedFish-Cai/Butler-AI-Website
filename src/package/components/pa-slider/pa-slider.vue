@@ -93,7 +93,10 @@ const parsedMarks = computed<MarkItem[]>(() => {
     const numKey = Number(key);
     const position = ((numKey - min) / (max - min)) * 100;
     const label = typeof mark === "string" ? mark : mark.label;
-    const isActive = rangeActiveRange.value !== null ? numKey >= rangeActiveRange.value[0] && numKey <= rangeActiveRange.value[1] : vals.length > 0 && numKey <= vals[0];
+    const isActive =
+      rangeActiveRange.value !== null
+        ? numKey >= rangeActiveRange.value[0] && numKey <= rangeActiveRange.value[1]
+        : vals.length > 0 && numKey <= vals[0];
     return { value: numKey, position, label, isActive };
   });
 });

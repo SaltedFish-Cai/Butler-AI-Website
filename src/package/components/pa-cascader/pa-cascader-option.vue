@@ -6,12 +6,19 @@
         :id="id + '_option-' + String(item.value) + '-' + level"
         :key="String(item.value)"
         class="pa-cascader-option"
-        :class="[equalData(item.value, activeValue) || equalData(item.value, inValue) ? 'is-active' : '', { 'is-filter': isFilter }]"
+        :class="[
+          equalData(item.value, activeValue) || equalData(item.value, inValue) ? 'is-active' : '',
+          { 'is-filter': isFilter }
+        ]"
         @mouseover="handleOptionClick(item, 'over')"
         @click="handleOptionClick(item, 'click')"
       >
         <div class="flex-center-start">
-          <pa-checkbox-item v-if="(isMultiple && isCheck) || (isMultiple && !item.children?.length)" :isChecked="equalData(item.value, inValue)" class="mr-size">
+          <pa-checkbox-item
+            v-if="(isMultiple && isCheck) || (isMultiple && !item.children?.length)"
+            :isChecked="equalData(item.value, inValue)"
+            class="mr-size"
+          >
             <slot name="optionLabel" :option="item">
               {{ typeof item.label === "object" ? item.label[languageValue] || item.label["zh-CN"] : item.label }}
             </slot>
@@ -36,7 +43,15 @@
     </pa-scrollbar>
   </div>
   <template v-if="childExOptions.length">
-    <pa-cascader-option :id="id" :level="Number(level) + 1" :exOptions="childExOptions" :inValue="inValue" :isMultiple="isMultiple" :isCheck="isCheck" :optionsHeight="optionsHeight">
+    <pa-cascader-option
+      :id="id"
+      :level="Number(level) + 1"
+      :exOptions="childExOptions"
+      :inValue="inValue"
+      :isMultiple="isMultiple"
+      :isCheck="isCheck"
+      :optionsHeight="optionsHeight"
+    >
       <template #optionLabel="item">
         <slot name="optionLabel" :option="item"></slot>
       </template>

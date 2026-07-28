@@ -1,6 +1,11 @@
 <template>
   <!-- 表配置 -->
-  <pa-drawer :title="{ 'zh-CN': '列设置', 'en-US': 'Column Settings' }" v-model="drawerVisible" @closed="handleCloseDrawer" width="680px">
+  <pa-drawer
+    :title="{ 'zh-CN': '列设置', 'en-US': 'Column Settings' }"
+    v-model="drawerVisible"
+    @closed="handleCloseDrawer"
+    width="680px"
+  >
     <section :id="'table-col-' + id" class="p-all-size" style="height: calc(100% - var(--pa-size-padding, 10px) * 2)">
       <pa-table
         :id="id + '-table-col-setting'"
@@ -53,9 +58,19 @@
               :step="scope.row?.cellConfig.step"
             ></pa-number>
             <template v-else>
-              <pa-input v-model="scope.row.searchCriteria" :placeholder="{ 'zh-CN': '请输入筛选条件', 'en-US': 'Please Enter Filter Conditions' }" />
+              <pa-input
+                v-model="scope.row.searchCriteria"
+                :placeholder="{ 'zh-CN': '请输入筛选条件', 'en-US': 'Please Enter Filter Conditions' }"
+              />
               <!-- !scope.row.useSenior -->
-              <pa-button v-if="false" style="width: 100%" is="edit" @click="openSeniorFilter(scope.row)" :text="{ 'zh-CN': '编辑高级搜索', 'en-US': 'Edit Advanced Search' }"> </pa-button>
+              <pa-button
+                v-if="false"
+                style="width: 100%"
+                is="edit"
+                @click="openSeniorFilter(scope.row)"
+                :text="{ 'zh-CN': '编辑高级搜索', 'en-US': 'Edit Advanced Search' }"
+              >
+              </pa-button>
             </template>
           </template>
 
@@ -84,7 +99,14 @@
     </section>
     <template #footer>
       <div class="flex-center">
-        <pa-button plain type="primary" icon-name="save_line" @click="FetchSaveAndFilter" :text="{ 'zh-CN': '保存配置', 'en-US': 'Save Configuration' }"> </pa-button>
+        <pa-button
+          plain
+          type="primary"
+          icon-name="save_line"
+          @click="FetchSaveAndFilter"
+          :text="{ 'zh-CN': '保存配置', 'en-US': 'Save Configuration' }"
+        >
+        </pa-button>
       </div>
     </template>
   </pa-drawer>
@@ -129,7 +151,9 @@ const emit = defineEmits(["saveAndFilter", "closeDrawer", "openSeniorFilter", "h
 const props = withDefaults(defineProps<SettingPropsType>(), {});
 
 const settingColumnsData = computed(() => {
-  const arr = props.tableStructure.filter(item => item.type != "index" && item.type != "selection" && item.type != "row" && item.prop != "operation");
+  const arr = props.tableStructure.filter(
+    item => item.type != "index" && item.type != "selection" && item.type != "row" && item.prop != "operation"
+  );
   const dataObject: any = {};
   props.tableQuery.Filter &&
     props.tableQuery.Filter.forEach(item => {
@@ -264,8 +288,22 @@ async function FetchSaveAndFilter() {
       });
     }
 
-    if (element.isShow && element?.filterType == "time" && element.searchCriteria && element.searchCriteria[0] && element.searchCriteria[1] && element.searchCriteria[0] > element.searchCriteria[1]) {
-      return M_Message.danger(element.label + ` ${{ "zh-CN": "设置错误：开始时间-需小于-结束时间", "en-US": "Setting Error: Start Time - Less Than - End Time" }[language.value || "zh-CN"]}`);
+    if (
+      element.isShow &&
+      element?.filterType == "time" &&
+      element.searchCriteria &&
+      element.searchCriteria[0] &&
+      element.searchCriteria[1] &&
+      element.searchCriteria[0] > element.searchCriteria[1]
+    ) {
+      return M_Message.danger(
+        element.label +
+          ` ${
+            { "zh-CN": "设置错误：开始时间-需小于-结束时间", "en-US": "Setting Error: Start Time - Less Than - End Time" }[
+              language.value || "zh-CN"
+            ]
+          }`
+      );
     }
 
     if (!isTimeType(element, true)) {

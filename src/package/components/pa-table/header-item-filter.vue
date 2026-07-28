@@ -260,7 +260,9 @@ function FetchSaveAndFilter() {
       });
     }
     if (state.searchValue[0] && state.searchValue[1] && state.searchValue[0] > state.searchValue[1]) {
-      return M_Message.danger(element.label + ` ${language === "zh-CN" ? "开始时间不能晚于结束时间" : "Start Time cannot be later than End Time"}`);
+      return M_Message.danger(
+        element.label + ` ${language === "zh-CN" ? "开始时间不能晚于结束时间" : "Start Time cannot be later than End Time"}`
+      );
     }
   } else {
     filter = [
@@ -289,7 +291,9 @@ watch(
   () => props.data,
   value => {
     if (value?.fieldValue && String(value?.fieldValue)?.length) {
-      state.searchValue = Array.isArray(value.fieldValue) ? value.fieldValue.map(item => (item == "true" ? true : item == "false" ? false : item)) : value.fieldValue;
+      state.searchValue = Array.isArray(value.fieldValue)
+        ? value.fieldValue.map(item => (item == "true" ? true : item == "false" ? false : item))
+        : value.fieldValue;
     } else {
       state.searchValue = isTimeType(props.item, true) ? [] : "";
     }

@@ -2,7 +2,12 @@
   <pa-development :id="randId">
     <template v-if="initialization == 1">
       <div class="pa-form" :class="[props.class]" :style="{ ...props.style }">
-        <form-control :id="randId + '_form'" ref="FormControlRef" :rules="useRequired ? baseRulesMap['default'] : undefined" :model="formData">
+        <form-control
+          :id="randId + '_form'"
+          ref="FormControlRef"
+          :rules="useRequired ? baseRulesMap['default'] : undefined"
+          :model="formData"
+        >
           <template v-for="(itemConfigs, itemConfigsIndex) in inMultipleConfig" :key="itemConfigs.unitName">
             <!-- Group组标题 -->
             <template v-if="itemConfigs.unitName != 'default'">
@@ -22,7 +27,12 @@
               <template v-for="item in itemConfigs.configs" :key="String(item.prop)">
                 <!-- tabs 表 -->
                 <pa-col v-if="item.type == 'tabs-form'" :xs="1" :sm="1" :md="1" :lg="1" :xl="1">
-                  <tabsItem :id="randId + '_tabs_' + item.prop as string" @set-ref="refBody => setRuleTabsFormRef(refBody, item.prop as string)" :item="item" :rules="baseRulesMap">
+                  <tabsItem
+                    :id="randId + '_tabs_' + item.prop as string"
+                    @set-ref="refBody => setRuleTabsFormRef(refBody, item.prop as string)"
+                    :item="item"
+                    :rules="baseRulesMap"
+                  >
                     <template v-for="slot in slotKeys" #[slot]="scope" :key="slot">
                       <slot :name="slot" v-bind="scope"></slot>
                     </template>
@@ -231,7 +241,11 @@ const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<Pan
  * **滚动到可视区域方法注入**
  * @description 注入的滚动到可视区域方法
  */
-const injectSetScrollToIntersect = inject("setScrollToIntersect") as (el: Element, callback?: () => void, options?: { offsetY?: number }) => void;
+const injectSetScrollToIntersect = inject("setScrollToIntersect") as (
+  el: Element,
+  callback?: () => void,
+  options?: { offsetY?: number }
+) => void;
 /**
  * **当前语言值**
  * @type `ComputedRef<string>`
@@ -436,7 +450,11 @@ function createSpanStyle() {
  * @returns void
  * @description 根据表单项配置生成校验规则并存储到规则映射中
  */
-function setRule(item: PaFormChildType | PaFormItemType, type = "default", options?: { titleKey?: string; removeList?: string[] }) {
+function setRule(
+  item: PaFormChildType | PaFormItemType,
+  type = "default",
+  options?: { titleKey?: string; removeList?: string[] }
+) {
   if (options?.removeList && options?.removeList?.length > 0) {
     const list = options.removeList;
     for (const item of list) {
@@ -448,7 +466,10 @@ function setRule(item: PaFormChildType | PaFormItemType, type = "default", optio
     inRules.value[type] = {};
   }
 
-  const baseRules = item.display || item.disabled ? [] : [{ required: true, message: configContext.value.languagePackage["requiredMessage"], trigger: "blur" }];
+  const baseRules =
+    item.display || item.disabled
+      ? []
+      : [{ required: true, message: configContext.value.languagePackage["requiredMessage"], trigger: "blur" }];
   let _rules = baseRules;
   if (item.rules && Array.isArray(item.rules)) {
     let isRequired = true;
@@ -460,7 +481,11 @@ function setRule(item: PaFormChildType | PaFormItemType, type = "default", optio
         trigger: "blur",
         required: item.required || true,
         ...item,
-        message: typeof item.message == "string" ? item.message : item.message?.[PancakeGlobalConfig.value?.language || "zh-CN"] || configContext.value.languagePackage["requiredMessage"]
+        message:
+          typeof item.message == "string"
+            ? item.message
+            : item.message?.[PancakeGlobalConfig.value?.language || "zh-CN"] ||
+              configContext.value.languagePackage["requiredMessage"]
       };
       return data;
     });
@@ -512,7 +537,10 @@ function initConfig() {
   // --- 第一步：收集分组键 ---
   // const propsArr: (string[] | string | undefined)[] = [];
   for (const item of inConfig.value) {
-    const _groupName = typeof item.unitName == "object" ? item.unitName?.[PancakeGlobalConfig.value?.language || "zh-CN"] : item.unitName || "default";
+    const _groupName =
+      typeof item.unitName == "object"
+        ? item.unitName?.[PancakeGlobalConfig.value?.language || "zh-CN"]
+        : item.unitName || "default";
     if (!baseInMultipleConfigKeys.includes(_groupName)) {
       baseInMultipleConfigKeys.push(_groupName);
     }
@@ -583,7 +611,8 @@ function initConfig() {
 
     // --- 内联 setRule 逻辑 ---
     const _prop2 = item.prop as string;
-    const baseRulesForItem = item.display || item.disabled ? [] : [{ required: true, message: _requiredMessage, trigger: "blur" }];
+    const baseRulesForItem =
+      item.display || item.disabled ? [] : [{ required: true, message: _requiredMessage, trigger: "blur" }];
     let _rules = baseRulesForItem;
 
     if (item.rules && Array.isArray(item.rules)) {
@@ -627,7 +656,8 @@ function initConfig() {
           if (!inRules.value[tabsProp]) inRules.value[tabsProp] = {};
           if (!allRules[tabsProp]) allRules[tabsProp] = {};
 
-          const childBaseRules = childItem.display || childItem.disabled ? [] : [{ required: true, message: _requiredMessage, trigger: "blur" }];
+          const childBaseRules =
+            childItem.display || childItem.disabled ? [] : [{ required: true, message: _requiredMessage, trigger: "blur" }];
           let childRules = childBaseRules;
 
           if (childItem.rules && Array.isArray(childItem.rules)) {
@@ -654,7 +684,8 @@ function initConfig() {
         }
 
         // 添加到 inMultipleConfig 分组
-        const tabsGroupName = typeof childItem?.unitName == "object" ? childItem?.unitName?.[_language] : childItem.unitName || "default";
+        const tabsGroupName =
+          typeof childItem?.unitName == "object" ? childItem?.unitName?.[_language] : childItem.unitName || "default";
 
         // 在当前项的 inMultipleConfig 中找到或创建分组
         const tabsGroup = configItem.inMultipleConfig.find(g => g.unitName === tabsGroupName);
@@ -933,7 +964,8 @@ watch(
 watch(
   () => props.data,
   () => {
-    typeof window !== "undefined" && window.developLog.log("注意", "组件内使用数据隔离方案，请使用 changeDataAll 或 changeDataItem 方法变更内部数据", "danger");
+    typeof window !== "undefined" &&
+      window.developLog.log("注意", "组件内使用数据隔离方案，请使用 changeDataAll 或 changeDataItem 方法变更内部数据", "danger");
   }
 );
 

@@ -1,5 +1,13 @@
 <template>
-  <div v-if="!display" :id="randId" class="pa-checkbox" :class="props.class" ref="selectRef" :style="props.style" :disabled="props.disabled">
+  <div
+    v-if="!display"
+    :id="randId"
+    class="pa-checkbox"
+    :class="props.class"
+    ref="selectRef"
+    :style="props.style"
+    :disabled="props.disabled"
+  >
     <div v-if="title" :style="{ width: titleWidth }" class="pa-cell-label">
       {{ typeof title === "string" ? title : title[languageValue] }}
     </div>
@@ -31,7 +39,10 @@
     </div>
   </div>
 
-  <div v-if="(alwaysContrast && !isNil(contrastData)) || (!isNil(contrastData) && !isEqual(inValue, contrastData))" :class="['pa-contrast-style']">
+  <div
+    v-if="(alwaysContrast && !isNil(contrastData)) || (!isNil(contrastData) && !isEqual(inValue, contrastData))"
+    :class="['pa-contrast-style']"
+  >
     <slot name="exContrast"></slot>
     <template v-if="$slots.exContrast"> ( {{ findData(contrastData || inValue) || "--" }} ) </template>
     <template v-else>{{ findData(contrastData || inValue) || "--" }}</template>

@@ -1,5 +1,13 @@
 <template>
-  <div ref="menuItemRef" class="pa-menu-item" :class="itemClasses" :style="props.style" @click="handleClick" @mouseenter="handleMouseEnter" @mouseleave="handleMouseLeave">
+  <div
+    ref="menuItemRef"
+    class="pa-menu-item"
+    :class="itemClasses"
+    :style="props.style"
+    @click="handleClick"
+    @mouseenter="handleMouseEnter"
+    @mouseleave="handleMouseLeave"
+  >
     <div v-if="props.divided" class="pa-menu-item__divider"></div>
     <pa-icon v-if="props.icon" :name="props.icon" class="pa-menu-item__icon"></pa-icon>
     <slot name="label">
@@ -165,7 +173,11 @@ const resolvedLabel = computed(() => {
  * 菜单项样式类
  * @type ComputedRef<Array<string>>
  */
-const itemClasses = computed(() => [props.danger ? "pa-menu-item--danger" : "", props.disabled ? "pa-menu-item--disabled" : "", props.class]);
+const itemClasses = computed(() => [
+  props.danger ? "pa-menu-item--danger" : "",
+  props.disabled ? "pa-menu-item--disabled" : "",
+  props.class
+]);
 
 /**
  * 子菜单样式

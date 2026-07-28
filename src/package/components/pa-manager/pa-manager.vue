@@ -49,7 +49,7 @@ import { useBaseStore as globalState } from "../store/index";
  * 全局 Z 索引获取方法
  * @description 提供全局 Z 索引获取方法给子组件使用
  */
-const getPaAnagerGlobalZIndex = () => {
+const getGlobalZIndex = () => {
   return globalZIndex++;
 };
 
@@ -102,8 +102,8 @@ provide(
   })
 );
 
-provide("getPaAnagerGlobalZIndex", getPaAnagerGlobalZIndex);
-window.getPaAnagerGlobalZIndex = getPaAnagerGlobalZIndex;
+provide("getGlobalZIndex", getGlobalZIndex);
+window.getGlobalZIndex = getGlobalZIndex;
 
 setThemeColor(state.themeColor, state.isDark || false);
 

@@ -11,14 +11,30 @@
         <pa-icon class="pa-message-box__closeBtn" @click="handleClose" name="close_line"></pa-icon>
       </div>
       <slot name="content">
-        <div v-if="dangerouslyUseHTMLString" class="pa-message-box__content" v-html="dangerouslyUseHTMLString ? message : ''"></div>
+        <div
+          v-if="dangerouslyUseHTMLString"
+          class="pa-message-box__content"
+          v-html="dangerouslyUseHTMLString ? message : ''"
+        ></div>
         <div v-else class="pa-message-box__content">{{ typeof message === "string" ? message : message?.[language] }}</div>
       </slot>
       <div class="pa-message-box__footer">
-        <pa-button is="cancel" :iconName="cancelButtonIcon" :type="isType === 'confirm' ? 'default' : 'primary'" @click="handleClose">
+        <pa-button
+          is="cancel"
+          :iconName="cancelButtonIcon"
+          :type="isType === 'confirm' ? 'default' : 'primary'"
+          @click="handleClose"
+        >
           {{ cancelButtonText }}
         </pa-button>
-        <pa-button :iconName="confirmButtonIcon" v-if="isType === 'confirm'" :type="type" font="check_circle_line" is="submit" @click="handleClick">
+        <pa-button
+          :iconName="confirmButtonIcon"
+          v-if="isType === 'confirm'"
+          :type="type"
+          font="check_circle_line"
+          is="submit"
+          @click="handleClick"
+        >
           {{ confirmButtonText }}
         </pa-button>
       </div>
@@ -140,7 +156,7 @@ const handleAfterLeave = (): void => {
  * @returns void
  * @description 点击确认按钮时触发回调并关闭
  */
-const handleClick = async (): void => {
+const handleClick = async (): Promise<void> => {
   const back = await onConfirm?.();
   console.log(back);
   if (!back) {
@@ -177,9 +193,6 @@ function handleKeyDown(e: KeyboardEvent): void {
  * @description 初始化消息框显示和事件监听
  */
 onMounted(() => {
-  if (props.visible !== undefined && props.visible != null) {
-    return;
-  }
   setTimeout(() => {
     visible.value = true;
   }, 10);

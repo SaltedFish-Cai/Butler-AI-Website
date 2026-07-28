@@ -2,7 +2,12 @@
   <div
     :id="randId + '_' + props.value"
     class="pa-checkbox-item"
-    :class="[props.class, { 'is-disabled': props.disabled }, { 'is-checked': isChecked }, { 'is-indeterminate': isIndeterminate }]"
+    :class="[
+      props.class,
+      { 'is-disabled': props.disabled },
+      { 'is-checked': isChecked },
+      { 'is-indeterminate': isIndeterminate }
+    ]"
     ref="selectRef"
     :style="props.style"
     @click="changeEvent"

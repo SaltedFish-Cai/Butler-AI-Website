@@ -38,7 +38,11 @@ export function splitArrayWithCallback<T, R>(array: T[], size: number, callback:
  * @param asyncCallback 对每个子数组的异步处理回调函数
  * @returns Promise resolving to 处理后的结果数组
  */
-export async function splitArrayAsync<T, R>(array: T[], size: number, asyncCallback: (chunk: T[], index: number) => Promise<R>): Promise<R[]> {
+export async function splitArrayAsync<T, R>(
+  array: T[],
+  size: number,
+  asyncCallback: (chunk: T[], index: number) => Promise<R>
+): Promise<R[]> {
   const chunks = splitArray(array, size);
   const results: R[] = [];
 
@@ -57,7 +61,11 @@ export async function splitArrayAsync<T, R>(array: T[], size: number, asyncCallb
  * @param asyncCallback 对每个子数组的异步处理回调函数
  * @returns Promise resolving to 处理后的结果数组
  */
-export async function splitArrayParallel<T, R>(array: T[], size: number, asyncCallback: (chunk: T[], index: number) => Promise<R>): Promise<R[]> {
+export async function splitArrayParallel<T, R>(
+  array: T[],
+  size: number,
+  asyncCallback: (chunk: T[], index: number) => Promise<R>
+): Promise<R[]> {
   const chunks = splitArray(array, size);
   const promises = chunks.map((chunk, index) => asyncCallback(chunk, index));
   return Promise.all(promises);

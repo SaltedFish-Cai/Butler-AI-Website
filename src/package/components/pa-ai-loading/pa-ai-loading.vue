@@ -172,7 +172,10 @@ function initScene() {
     lineIntensity: { value: props.lineIntensity }
   };
 
-  const positions = new THREE.BufferAttribute(new Float32Array([-1.0, -1.0, 0.0, 1.0, -1.0, 0.0, -1.0, 1.0, 0.0, 1.0, -1.0, 0.0, -1.0, 1.0, 0.0, 1.0, 1.0, 0.0]), 3);
+  const positions = new THREE.BufferAttribute(
+    new Float32Array([-1.0, -1.0, 0.0, 1.0, -1.0, 0.0, -1.0, 1.0, 0.0, 1.0, -1.0, 0.0, -1.0, 1.0, 0.0, 1.0, 1.0, 0.0]),
+    3
+  );
   const geometry = new THREE.BufferGeometry();
   geometry.setAttribute("position", positions);
 

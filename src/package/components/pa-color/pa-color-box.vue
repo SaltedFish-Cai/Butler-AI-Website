@@ -13,7 +13,11 @@
       </div>
 
       <div class="color-picker-alpha-area" v-if="props.useAlpha">
-        <div class="color-picker-alpha-area-gradient" :style="{ backgroundColor: currentColorWithoutAlpha }" @mousedown="onAlphaAreaMouseDown"></div>
+        <div
+          class="color-picker-alpha-area-gradient"
+          :style="{ backgroundColor: currentColorWithoutAlpha }"
+          @mousedown="onAlphaAreaMouseDown"
+        ></div>
         <div class="color-picker-alpha-area-pointer" :style="{ left: `${100 - alpha * 100}%` }"></div>
       </div>
     </div>
@@ -25,7 +29,13 @@
     </div>
 
     <div class="color-picker-presets" v-if="presetColors && presetColors.length > 0">
-      <button class="color-picker-presets-preset" v-for="(color, index) in presetColors" :key="index" :style="{ backgroundColor: color }" @click="selectPresetColor(color)"></button>
+      <button
+        class="color-picker-presets-preset"
+        v-for="(color, index) in presetColors"
+        :key="index"
+        :style="{ backgroundColor: color }"
+        @click="selectPresetColor(color)"
+      ></button>
     </div>
   </div>
 </template>

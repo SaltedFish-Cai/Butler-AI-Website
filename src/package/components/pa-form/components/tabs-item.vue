@@ -23,13 +23,22 @@
           </pa-button>
         </template>
 
-        <pa-tabs-item v-for="(tab, tabIndex) in injectConfigContext.data[String(item.prop)]" :key="tab.name" :label="tab.name" :name="tab.name">
+        <pa-tabs-item
+          v-for="(tab, tabIndex) in injectConfigContext.data[String(item.prop)]"
+          :key="tab.name"
+          :label="tab.name"
+          :name="tab.name"
+        >
           <template #label>
             <!-- display -->
             <templage v-if="injectConfigContext.display || item.disabled">
               <div class="pa-form_tabs-title" :class="[tab.isError ? 'pa-form_tabs-title_error' : '']">
                 <template v-if="item.titleLabel">
-                  {{ typeof item.titleLabel == "string" ? item.titleLabel : item.titleLabel[injectConfigContext.language as "en-US" | "zh-CN"] }}
+                  {{
+                    typeof item.titleLabel == "string"
+                      ? item.titleLabel
+                      : item.titleLabel[injectConfigContext.language as "en-US" | "zh-CN"]
+                  }}
                   ({{ Number(tabIndex) + 1 }})
                 </template>
                 <template v-else>
@@ -41,13 +50,28 @@
             <template v-else-if="tab.name != editTitleIndex">
               <div :class="['flex-center-start', 'tabs-item-title', tab.isError ? 'pa-form_tabs-title_error' : '']">
                 <div v-if="item.titleLabel">
-                  {{ typeof item.titleLabel == "string" ? item.titleLabel : item.titleLabel[injectConfigContext.language as "en-US" | "zh-CN"] }}
+                  {{
+                    typeof item.titleLabel == "string"
+                      ? item.titleLabel
+                      : item.titleLabel[injectConfigContext.language as "en-US" | "zh-CN"]
+                  }}
                   ({{ Number(tabIndex) + 1 }})
                 </div>
-                <div v-else class="pa-form_tabs-title" @click.stop="stepsIndex == tab.name ? (editTitleIndex = tab.name) : ((stepsIndex = tab.name), (editTitleIndex = ''))">
+                <div
+                  v-else
+                  class="pa-form_tabs-title"
+                  @click.stop="
+                    stepsIndex == tab.name ? (editTitleIndex = tab.name) : ((stepsIndex = tab.name), (editTitleIndex = ''))
+                  "
+                >
                   {{ titleArr[tabIndex] }}
                 </div>
-                <pa-icon v-if="!injectConfigContext.display && !item.disabled" class="remove-hand ml-size" name="close_circle_line" @click.stop="removeTab(tab)" />
+                <pa-icon
+                  v-if="!injectConfigContext.display && !item.disabled"
+                  class="remove-hand ml-size"
+                  name="close_circle_line"
+                  @click.stop="removeTab(tab)"
+                />
               </div>
             </template>
 
@@ -65,7 +89,14 @@
 
           <!-- form -->
           <section class="tabs-form-body flat-style">
-            <form-control :id="id + '-tabs-form'" :model="tab" @set-ref="el => setRuleTabsFormRef(el, tab)" :rules="rules?.[String(item.prop)] || {}" inTabsForm @validation-states="validateTabsForm">
+            <form-control
+              :id="id + '-tabs-form'"
+              :model="tab"
+              @set-ref="el => setRuleTabsFormRef(el, tab)"
+              :rules="rules?.[String(item.prop)] || {}"
+              inTabsForm
+              @validation-states="validateTabsForm"
+            >
               <!-- v-show 防闪烁 -->
               <!-- v-show="stepsIndex == tab.name" -->
               <section class="tabs-form-item" v-for="tabGroupItem in item.inMultipleConfig" :key="tabGroupItem.unitName">
@@ -84,7 +115,14 @@
 
                 <pa-row :gutter="'calc(var(--pa-size-padding, 10px) / 4)'">
                   <template v-for="tabFormItem in tabGroupItem.configs" :key="String(tabFormItem.prop)">
-                    <formItem v-if="tabFormItem.prop != item.titleKey" :id="id" :item="tabFormItem" :tabsProps="item.prop" :tabsIndex="Number(tabIndex)" :ruleFormRef="getRuleTabsFormRef(tab.name)">
+                    <formItem
+                      v-if="tabFormItem.prop != item.titleKey"
+                      :id="id"
+                      :item="tabFormItem"
+                      :tabsProps="item.prop"
+                      :tabsIndex="Number(tabIndex)"
+                      :ruleFormRef="getRuleTabsFormRef(tab.name)"
+                    >
                       <template v-for="slot in slotKeys" #[slot]="scope" :key="slot">
                         <slot :name="slot" v-bind="scope"></slot>
                       </template>
@@ -97,12 +135,21 @@
         </pa-tabs-item>
 
         <!-- 对比后被删除数据 -->
-        <pa-tabs-item v-for="(tab, tabIndex) in contrastDeletedTab" :key="'contrastDeletedTab-' + tab.name" :label="'contrastDeletedTab-' + tab.name" :name="'contrastDeletedTab-' + tab.name">
+        <pa-tabs-item
+          v-for="(tab, tabIndex) in contrastDeletedTab"
+          :key="'contrastDeletedTab-' + tab.name"
+          :label="'contrastDeletedTab-' + tab.name"
+          :name="'contrastDeletedTab-' + tab.name"
+        >
           <template #label>
             <div class="pa-form_tabs-title deleted">
               {{ injectConfigContext.languagePackage["isDelete"] }} -
               <template v-if="item.titleLabel">
-                {{ typeof item.titleLabel == "string" ? item.titleLabel : item.titleLabel[injectConfigContext.language as "en-US" | "zh-CN"] }}
+                {{
+                  typeof item.titleLabel == "string"
+                    ? item.titleLabel
+                    : item.titleLabel[injectConfigContext.language as "en-US" | "zh-CN"]
+                }}
                 ({{ Number(tabIndex) + 1 }})
               </template>
               <template v-else>
@@ -367,7 +414,10 @@ function addTabs() {
   }
   injectConfigContext.value.data[String(props.item.prop)].push(newData);
 
-  stepsIndex.value = injectConfigContext.value.data[String(props.item.prop)][injectConfigContext.value.data[String(props.item.prop)].length - 1].name;
+  stepsIndex.value =
+    injectConfigContext.value.data[String(props.item.prop)][
+      injectConfigContext.value.data[String(props.item.prop)].length - 1
+    ].name;
 }
 
 /**
@@ -425,11 +475,15 @@ const submitTabsForm = async () => {
  * @description 处理Tab表单验证状态
  */
 function validateTabsForm(data: boolean) {
-  const itemData = injectConfigContext.value.data[String(props.item.prop)].filter((item: Record<string, any>) => item.name == stepsIndex.value)[0];
+  const itemData = injectConfigContext.value.data[String(props.item.prop)].filter(
+    (item: Record<string, any>) => item.name == stepsIndex.value
+  )[0];
   itemData.isError = !data;
   if (data) {
     nextTick(() => {
-      const errorItemData = injectConfigContext.value.data[String(props.item.prop)].filter((item: Record<string, any>) => item.isError == true);
+      const errorItemData = injectConfigContext.value.data[String(props.item.prop)].filter(
+        (item: Record<string, any>) => item.isError == true
+      );
       if (errorItemData.length > 0) stepsIndex.value = errorItemData[0].name;
     });
   }
@@ -455,7 +509,8 @@ watch(
           isError: false
         };
         if (props.item.titleKey) {
-          data[index][props.item.titleKey] = props.item?.titleLabel?.[(injectConfigContext.value.language || "zh-CN") as "en-US" | "zh-CN"] || "标签";
+          data[index][props.item.titleKey] =
+            props.item?.titleLabel?.[(injectConfigContext.value.language || "zh-CN") as "en-US" | "zh-CN"] || "标签";
         }
       }
       stepsIndex.value = data[0]?.name;

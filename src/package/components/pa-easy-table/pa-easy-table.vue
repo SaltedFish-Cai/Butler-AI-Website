@@ -1,5 +1,10 @@
 <template>
-  <div :id="randId" class="pa-easy-table" :class="[props.class, card ? 'card' : 'pa-easy-table--table', overflowX ? 'pa-easy-table--x-scroll' : '']" :style="props.style">
+  <div
+    :id="randId"
+    class="pa-easy-table"
+    :class="[props.class, card ? 'card' : 'pa-easy-table--table', overflowX ? 'pa-easy-table--x-scroll' : '']"
+    :style="props.style"
+  >
     <div class="pa-easy-table__table">
       <div ref="headerRef" class="pa-easy-table__row pa-easy-table__row--header" :style="{ gridTemplateColumns: gridTemplate }">
         <div v-for="col in columns" :key="col.key" class="pa-easy-table__cell pa-easy-table__cell--header">
@@ -7,7 +12,14 @@
         </div>
       </div>
       <pa-empty v-if="data.length === 0" style="--pa-color-bg: transparent" />
-      <pa-scrollbar v-else @directly-scroll="onDirectlyScroll" @scroll-child-change="onScrollChildChange" :paddingWidth="5" :padding="['top', 'bottom']" :overflowX="overflowX">
+      <pa-scrollbar
+        v-else
+        @directly-scroll="onDirectlyScroll"
+        @scroll-child-change="onScrollChildChange"
+        :paddingWidth="5"
+        :padding="['top', 'bottom']"
+        :overflowX="overflowX"
+      >
         <div class="pa-easy-table__virtual-space" :style="{ height: virtualTotalHeight + 'px' }">
           <div
             v-for="item in visibleItems"
@@ -21,9 +33,16 @@
             @mouseleave="hoveredRow = null"
             @click="emit('rowClick', item.data)"
           >
-            <div class="pa-easy-table__row pa-easy-table__row--data" :class="{ 'pa-easy-table__row--hovered': hoveredRow === item.key }" :style="{ gridTemplateColumns: gridTemplate }">
+            <div
+              class="pa-easy-table__row pa-easy-table__row--data"
+              :class="{ 'pa-easy-table__row--hovered': hoveredRow === item.key }"
+              :style="{ gridTemplateColumns: gridTemplate }"
+            >
               <div v-for="col in columns" :key="col.key" class="pa-easy-table__cell">
-                <div class="pa-easy-table__cell_inner" :style="{ whiteSpace: gridTemplate_Init ? '' : 'nowrap', width: gridTemplate_Init ? '100%' : '' }">
+                <div
+                  class="pa-easy-table__cell_inner"
+                  :style="{ whiteSpace: gridTemplate_Init ? '' : 'nowrap', width: gridTemplate_Init ? '100%' : '' }"
+                >
                   <PaEasyTableMaxChild v-if="col.maxChild" :max="col.maxChild">
                     <slot :name="col.slot || col.key" :row="item.data" :value="item.data[col.key]" :index="item.index">
                       {{ item.data[col.key] }}

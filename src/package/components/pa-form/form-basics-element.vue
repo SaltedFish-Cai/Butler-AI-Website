@@ -5,7 +5,11 @@
     </template>
 
     <pa-col v-else :xs="colSize" :sm="colSize" :md="colSize" :lg="colSize" :xl="colSize" :span="item.exSpan">
-      <form-item :prop="Array.isArray(item.prop) ? item.prop.join('-') : item.prop" :class="[item.exStyles?.class || '']" :style="item.exStyles?.style || {}">
+      <form-item
+        :prop="Array.isArray(item.prop) ? item.prop.join('-') : item.prop"
+        :class="[item.exStyles?.class || '']"
+        :style="item.exStyles?.style || {}"
+      >
         <!-- label -->
         <template #label v-if="computedLabel && !injectConfigContext.noLabel && !noLabel">
           <form-label :label="computedLabel" :tip="computedTip" :item="item" :data="computedValue">
@@ -97,13 +101,22 @@
           </template>
 
           <!-- cascader / address -->
-          <template v-else-if="resolvedItemType == 'cascader' || resolvedItemType == 'cascader-check' || resolvedItemType == 'multiple-cascader' || resolvedItemType == 'multiple-cascader-check'">
+          <template
+            v-else-if="
+              resolvedItemType == 'cascader' ||
+              resolvedItemType == 'cascader-check' ||
+              resolvedItemType == 'multiple-cascader' ||
+              resolvedItemType == 'multiple-cascader-check'
+            "
+          >
             <pa-cascader
               :id="id + '-' + item.prop + '-cascader'"
               v-model="computedValue"
               :type="resolvedItemType"
               :displayValue="item.displayValue ? injectConfigContext.data[item.displayValue] : undefined"
-              :exOptions="(resolvedItemType !== item.type && addressMap?.length ? addressMap : useExOptions) as PaOptionType.SelectList"
+              :exOptions="
+                (resolvedItemType !== item.type && addressMap?.length ? addressMap : useExOptions) as PaOptionType.SelectList
+              "
               :placeholder="usePlaceholder"
               :disabled="item.disabled || disabledFn(injectConfigContext.data)"
               :display="useDisplay"
@@ -320,7 +333,10 @@
           <!-- clickTag -->
           <template v-else-if="item.type == 'clickTag'">
             <div
-              :class="['click-tag', { 'pa-display-style': useDisplay, 'click-tag-disabled': item.disabled || disabledFn(injectConfigContext.data) }]"
+              :class="[
+                'click-tag',
+                { 'pa-display-style': useDisplay, 'click-tag-disabled': item.disabled || disabledFn(injectConfigContext.data) }
+              ]"
               @click="injectConfigContext.exCellDependent?.clickTagClick?.[item.prop](item.prop, injectConfigContext.data)"
             >
               <slot :name="'clickTag-' + item.prop" :config="item" :data="injectConfigContext.data"> 点击查看内容 </slot>
@@ -423,8 +439,8 @@ const computedValue = computed({
     const data = !isNil(props.exData)
       ? props.exData
       : props.tabsProps && !isNil(props.tabsIndex)
-        ? injectConfigContext.value.data[props.tabsProps][Number(props.tabsIndex)][String(props.item.prop)]
-        : injectConfigContext.value.data[String(props.item.prop)];
+      ? injectConfigContext.value.data[props.tabsProps][Number(props.tabsIndex)][String(props.item.prop)]
+      : injectConfigContext.value.data[String(props.item.prop)];
     return data;
   },
   set: value => {
@@ -441,7 +457,9 @@ const computedValue = computed({
  * @description 计算标签文本
  */
 const computedLabel: ComputedRef<string | undefined> = computed(() => {
-  return typeof props.item.label == "object" ? props.item.label?.[injectConfigContext.value.language || "zh-CN"] : (props.item.label as string);
+  return typeof props.item.label == "object"
+    ? props.item.label?.[injectConfigContext.value.language || "zh-CN"]
+    : (props.item.label as string);
 });
 
 /**
@@ -449,7 +467,9 @@ const computedLabel: ComputedRef<string | undefined> = computed(() => {
  * @description 计算提示文本
  */
 const computedTip: ComputedRef<string | undefined> = computed(() => {
-  return typeof props.item.tip == "object" ? props.item.tip?.[injectConfigContext.value.language || "zh-CN"] : (props.item.tip as string);
+  return typeof props.item.tip == "object"
+    ? props.item.tip?.[injectConfigContext.value.language || "zh-CN"]
+    : (props.item.tip as string);
 });
 
 /**
@@ -533,7 +553,10 @@ const colSize = computed(() => {
   const _injectConfigContext = injectConfigContext.value;
   const _prop = Array.isArray(props.item.prop) ? props.item.prop.join("-") : String(props.item.prop);
   if (props.noLabel) return 1;
-  const data = _prop && props.item.exSpan ? setSpanStyle(props.item.exSpan, _injectConfigContext.baseSpanSize) : _injectConfigContext.baseSpanSize;
+  const data =
+    _prop && props.item.exSpan
+      ? setSpanStyle(props.item.exSpan, _injectConfigContext.baseSpanSize)
+      : _injectConfigContext.baseSpanSize;
   return data;
 });
 
@@ -582,7 +605,9 @@ const usePlaceholder = computed(() => {
  * @description 计算展示状态
  */
 const useDisplay = computed(() => {
-  return props.enforcementDisplay || (!isNil(props.item.display) ? props.item.display : injectConfigContext.value.display || false);
+  return (
+    props.enforcementDisplay || (!isNil(props.item.display) ? props.item.display : injectConfigContext.value.display || false)
+  );
 });
 
 /**

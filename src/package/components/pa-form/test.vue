@@ -1,5 +1,12 @@
 <template>
-  <form-control ref="formRef" :model="formData" :rules="formRules" label-width="100px" label-position="left" @submit="handleSubmit">
+  <form-control
+    ref="formRef"
+    :model="formData"
+    :rules="formRules"
+    label-width="100px"
+    label-position="left"
+    @submit="handleSubmit"
+  >
     <form-item label="姓名" prop="name">
       <input v-model="formData.name" placeholder="请输入姓名" />
     </form-item>

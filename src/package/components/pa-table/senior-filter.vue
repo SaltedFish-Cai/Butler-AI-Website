@@ -5,7 +5,14 @@
         <div class="group">
           <div class="flex-center-between mb-size border-bottom group_top">
             <div class="flex1 group__title" style="text-align: left">{{ groupItem.groupName }} {{ groupItemIndex + 1 }}</div>
-            <pa-button v-if="groupItemIndex > 0" is="trash" size="small" @click="FilterFn.remove(groupItemIndex)" :text="{ 'zh-CN': '删除当前组', 'en-US': 'Delete Current Group' }"> </pa-button>
+            <pa-button
+              v-if="groupItemIndex > 0"
+              is="trash"
+              size="small"
+              @click="FilterFn.remove(groupItemIndex)"
+              :text="{ 'zh-CN': '删除当前组', 'en-US': 'Delete Current Group' }"
+            >
+            </pa-button>
           </div>
           <div class="group_bottom">
             <template v-for="(item, itemIndex) in groupItem.group" :key="item.key">
@@ -24,7 +31,14 @@
                   <div class="filter-item_name"># {{ propItem.label }}</div>
                 </template>
                 <template #Del>
-                  <pa-button class="ml0" is="trash" style="width: 100%" @click="FilterFn.removeItem(item.key, groupItemIndex)" :text="{ 'zh-CN': '删除', 'en-US': 'Delete' }"> </pa-button>
+                  <pa-button
+                    class="ml0"
+                    is="trash"
+                    style="width: 100%"
+                    @click="FilterFn.removeItem(item.key, groupItemIndex)"
+                    :text="{ 'zh-CN': '删除', 'en-US': 'Delete' }"
+                  >
+                  </pa-button>
                 </template>
               </pa-form>
               <!-- <el-form
@@ -75,30 +89,55 @@
               </div>
             </el-form> -->
               <div class="flex-center" v-if="itemIndex < groupItem.group.length - 1">
-                <pa-language style="font-size: var(--pa-size-font, 16px)" :text="{ 'zh-CN': '条件与条件关系', 'en-US': 'Conditional Relationship' }"></pa-language>
+                <pa-language
+                  style="font-size: var(--pa-size-font, 16px)"
+                  :text="{ 'zh-CN': '条件与条件关系', 'en-US': 'Conditional Relationship' }"
+                ></pa-language>
 
                 <pa-radio v-model="groupItem.groupLinkType" :ex-options="state.linkOptions"></pa-radio>
               </div>
             </template>
 
             <div class="flex-center mt-size">
-              <pa-button icon-name="add_circle_line" plain type="primary" @click="FilterFn.addFilter(groupItemIndex)" :text="{ 'zh-CN': '添加筛选条件', 'en-US': 'Add Filter Condition' }"> </pa-button>
+              <pa-button
+                icon-name="add_circle_line"
+                plain
+                type="primary"
+                @click="FilterFn.addFilter(groupItemIndex)"
+                :text="{ 'zh-CN': '添加筛选条件', 'en-US': 'Add Filter Condition' }"
+              >
+              </pa-button>
             </div>
           </div>
         </div>
         <div class="flex-center" v-if="groupItemIndex < state.advancedFilter.relationshipGroup.length - 1">
-          <pa-language style="font-size: var(--pa-size-font, 16px)" :text="{ 'zh-CN': '组与组关系', 'en-US': 'Group Relationship' }"></pa-language>
+          <pa-language
+            style="font-size: var(--pa-size-font, 16px)"
+            :text="{ 'zh-CN': '组与组关系', 'en-US': 'Group Relationship' }"
+          ></pa-language>
           <pa-radio v-model="state.advancedFilter.relationshipGroupLinkType" :ex-options="state.linkOptions"></pa-radio>
         </div>
       </template>
       <div class="flex-center mt-size">
-        <pa-button class="mb-size" icon-name="goods_line" @click="FilterFn.addFilterGroup" plain type="warning" :text="{ 'zh-CN': '添加筛选组', 'en-US': 'Add Filter Group' }"> </pa-button>
+        <pa-button
+          class="mb-size"
+          icon-name="goods_line"
+          @click="FilterFn.addFilterGroup"
+          plain
+          type="warning"
+          :text="{ 'zh-CN': '添加筛选组', 'en-US': 'Add Filter Group' }"
+        >
+        </pa-button>
       </div>
     </section>
 
     <template #footer>
       <div class="flex-center">
-        <pa-button is="search" @click="submitTabsForm" :text="{ 'zh-CN': '确认搜索', 'en-US': 'Enter Search Content' }"></pa-button>
+        <pa-button
+          is="search"
+          @click="submitTabsForm"
+          :text="{ 'zh-CN': '确认搜索', 'en-US': 'Enter Search Content' }"
+        ></pa-button>
       </div>
     </template>
   </pa-dialog>

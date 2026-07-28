@@ -1,8 +1,20 @@
 <template>
   <Teleport to="body">
-    <div v-if="props.visible" class="pa-menu__backdrop" @click="handleClose" @contextmenu.prevent="handleBackdropContextmenu"></div>
+    <div
+      v-if="props.visible"
+      class="pa-menu__backdrop"
+      @click="handleClose"
+      @contextmenu.prevent="handleBackdropContextmenu"
+    ></div>
     <Transition name="pa-menu-fade">
-      <div v-if="props.visible" :id="randId" ref="menuRef" class="pa-menu" :class="[pointClass, props.class]" :style="[menuStyle, props.style]">
+      <div
+        v-if="props.visible"
+        :id="randId"
+        ref="menuRef"
+        class="pa-menu"
+        :class="[pointClass, props.class]"
+        :style="[menuStyle, props.style]"
+      >
         <div class="pa-menu__content">
           <slot />
         </div>
@@ -82,7 +94,8 @@ function updatePosition() {
   const viewportWidth = window.innerWidth;
   const viewportHeight = window.innerHeight;
 
-  const basePoint: "bl" | "br" | "tl" | "tr" = props.point === true || !props.point ? "tl" : (props.point as "bl" | "br" | "tl" | "tr");
+  const basePoint: "bl" | "br" | "tl" | "tr" =
+    props.point === true || !props.point ? "tl" : (props.point as "bl" | "br" | "tl" | "tr");
 
   if (!menuRef.value) {
     adjustedLeft.value = baseX;

@@ -16,8 +16,21 @@
     </template>
   </m-quick-table>
 
-  <pa-dialog v-model="optionsVisible" :title="{ 'zh-CN': '编辑数据', 'en-US': 'Edit Data' }" :padding="['all']" :closeOnClickModal="false" size="s">
-    <pa-form id="data-management-form" ref="formRef" :structure="formConfig" :exOptions="editId ? exTableOptions : exOptions" :ex-span="1" @form-cell-change="cellChange" />
+  <pa-dialog
+    v-model="optionsVisible"
+    :title="{ 'zh-CN': '编辑数据', 'en-US': 'Edit Data' }"
+    :padding="['all']"
+    :closeOnClickModal="false"
+    size="s"
+  >
+    <pa-form
+      id="data-management-form"
+      ref="formRef"
+      :structure="formConfig"
+      :exOptions="editId ? exTableOptions : exOptions"
+      :ex-span="1"
+      @form-cell-change="cellChange"
+    />
 
     <template #footer>
       <pa-button is="save" @click="handleSubmit">
@@ -31,7 +44,7 @@
 import { ComputedRef, inject, ref, useTemplateRef, computed, onMounted, nextTick } from "vue";
 import { PaOptionType, PaStructureType } from "PancakeType";
 import { PancakeGlobalConfigType } from "../../../pa-manager/types";
-import { MInterfaceConfig, PaPlaygroundPagesType, MStructureType } from "../../type";
+import { MInterfaceConfig, PaPlaygroundPagesType, MStructureType } from "../../types";
 import { deleteData, getAllData, getDataById, storeData, updateData } from "../../../indexDB/indexDB";
 import { M_Message, M_MessageBox } from "../../../feedback";
 import MQuickTable from "../quick-table.vue";
@@ -81,7 +94,9 @@ const formConfig = computed<PaStructureType.Form[]>(() => {
 });
 
 const formRef = useTemplateRef("formRef");
-const interfaceConfigsOptions = ref(props.interfaceConfigs.map(item => ({ label: `${item.name} (${item.apiUrl})`, value: item.id })));
+const interfaceConfigsOptions = ref(
+  props.interfaceConfigs.map(item => ({ label: `${item.name} (${item.apiUrl})`, value: item.id }))
+);
 
 const exOptions = ref<PaOptionType.Default>({
   apiUrlId: [],
@@ -110,7 +125,7 @@ async function handleEdit(id: number) {
   if (data) {
     optionsVisible.value = true;
     setTimeout(() => {
-      formRef.value?.changeData_All({ id: id, ...data });
+      formRef.value?.changeDataAll({ id: id, ...data });
       cellChange({ prop: "apiUrlId", value: data.apiUrlId });
     }, 300);
   } else {
@@ -208,7 +223,9 @@ async function getTableList() {
 }
 
 function setApiUrlId() {
-  const outData = interfaceConfigsOptions.value.filter(item => tableData.value.findIndex(data => data.apiUrlId === item.value) === -1);
+  const outData = interfaceConfigsOptions.value.filter(
+    item => tableData.value.findIndex(data => data.apiUrlId === item.value) === -1
+  );
   return outData;
 }
 onMounted(() => {

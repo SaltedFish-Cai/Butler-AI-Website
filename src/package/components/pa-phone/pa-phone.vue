@@ -69,7 +69,11 @@
             </template>
             <!-- SFC 源码模式（传入 .vue 源码字符串，自动编译渲染） -->
             <template v-else-if="sfcSource">
-              <div class="pa-phone__dynamic" :class="{ 'pa-phone__dynamic--streaming': sfcStreaming }" @contextmenu="handleContentContextmenu">
+              <div
+                class="pa-phone__dynamic"
+                :class="{ 'pa-phone__dynamic--streaming': sfcStreaming }"
+                @contextmenu="handleContentContextmenu"
+              >
                 <!-- <Transition name="pa-phone__typewriter" mode="out-in"> -->
                 <component :is="sfcCompiled" :key="sfcVersion" v-if="sfcCompiled" />
                 <div v-else class="pa-phone__sfc-pending" :key="'pending'">
@@ -455,8 +459,12 @@ useRoute = () => {
   // 使旧页面 SFC 中的 fetchBindData() 也能获取 _route_id 参数并传给 API
   if (!processedScript.includes("__routeId__") && /fetch\(`\/api\/apps\/[^`]+\/data`/.test(processedScript)) {
     processedScript =
-      "const __routeId__ = (typeof window !== \"undefined\" && window.__phone_route_id) || ctx.__routeId__ || new URL(window.location.href).searchParams.get('id') || '';\n" + processedScript;
-    processedScript = processedScript.replace(/fetch\(`(\/api\/apps\/[^`]+\/data)`/g, "fetch(__routeId__ ? `$1?id=${encodeURIComponent(__routeId__)}` : `$1`");
+      "const __routeId__ = (typeof window !== \"undefined\" && window.__phone_route_id) || ctx.__routeId__ || new URL(window.location.href).searchParams.get('id') || '';\n" +
+      processedScript;
+    processedScript = processedScript.replace(
+      /fetch\(`(\/api\/apps\/[^`]+\/data)`/g,
+      "fetch(__routeId__ ? `$1?id=${encodeURIComponent(__routeId__)}` : `$1`"
+    );
   }
 
   const bindings = extractBindings(processedScript);
@@ -711,7 +719,9 @@ const outerHeight = computed(() => spec.value.h + props.bezel * 2);
 const outerRadius = computed(() => props.radius + props.bezel);
 
 const colorHex = computed(() => PRESET_COLORS[props.color] || props.color);
-const frameGradient = computed(() => `linear-gradient(135deg, ${shade(colorHex.value, 8)} 0%, ${colorHex.value} 40%, ${shade(colorHex.value, -14)} 100%)`);
+const frameGradient = computed(
+  () => `linear-gradient(135deg, ${shade(colorHex.value, 8)} 0%, ${colorHex.value} 40%, ${shade(colorHex.value, -14)} 100%)`
+);
 
 // ─── Auto Scale ──────────────────────────────────────────
 const SCALE_PADDING = 0.04;

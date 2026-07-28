@@ -81,7 +81,11 @@ function resolveLineColor(el: HTMLElement): THREE.Color {
   if (props.lineColor) {
     try {
       const c = new THREE.Color(props.lineColor);
-      return isFinite(c.r) && isFinite(c.g) && isFinite(c.b) ? c : isDark(el) ? new THREE.Color(1, 1, 1) : new THREE.Color(0, 0, 0);
+      return isFinite(c.r) && isFinite(c.g) && isFinite(c.b)
+        ? c
+        : isDark(el)
+        ? new THREE.Color(1, 1, 1)
+        : new THREE.Color(0, 0, 0);
     } catch {
       return isDark(el) ? new THREE.Color(1, 1, 1) : new THREE.Color(0, 0, 0);
     }
@@ -177,7 +181,10 @@ function initScene() {
     lineColor: { value: lineColor }
   };
 
-  const positions = new THREE.BufferAttribute(new Float32Array([-1.0, -1.0, 0.0, 1.0, -1.0, 0.0, -1.0, 1.0, 0.0, 1.0, -1.0, 0.0, -1.0, 1.0, 0.0, 1.0, 1.0, 0.0]), 3);
+  const positions = new THREE.BufferAttribute(
+    new Float32Array([-1.0, -1.0, 0.0, 1.0, -1.0, 0.0, -1.0, 1.0, 0.0, 1.0, -1.0, 0.0, -1.0, 1.0, 0.0, 1.0, 1.0, 0.0]),
+    3
+  );
   const geometry = new THREE.BufferGeometry();
   geometry.setAttribute("position", positions);
 

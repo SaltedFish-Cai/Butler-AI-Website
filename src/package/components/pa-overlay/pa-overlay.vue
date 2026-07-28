@@ -1,7 +1,13 @@
 <template>
   <teleport :to="teleportTo || 'body'">
     <transition name="mo-dialog-overlay-fade">
-      <div :id="randId" v-show="visible" class="pa-overlay" :class="[props.class, { 'pa-overlay--blur': props.blur }]" :style="{ ...props.style, zIndex: zIndex }">
+      <div
+        :id="randId"
+        v-show="visible"
+        class="pa-overlay"
+        :class="[props.class, { 'pa-overlay--blur': props.blur }]"
+        :style="{ ...props.style, zIndex: zIndex }"
+      >
         <div class="pa-overlay-content" :style="{ opacity: useBlock ? 1 : 0 }" @click="handleOverlayClick" />
         <slot />
       </div>
@@ -14,7 +20,7 @@
  * 模块导入
  * @description 导入 Vue 响应式 API
  */
-import { ref, watch, inject } from "vue";
+import { ref, watch } from "vue";
 /**
  * 模块导入
  * @description 导入组件类型定义
@@ -39,12 +45,12 @@ const randId = ref((props.id ? props.id + "_" : "") + "pa-overlay_" + useRenderI
  * 全局层级获取函数
  * @description 从父组件注入的全局层级管理函数
  */
-const getPaAnagerGlobalZIndex = window.getPaAnagerGlobalZIndex;
+const getGlobalZIndex = window.getGlobalZIndex;
 /**
  * 遮罩层层级
  * @description 当前遮罩层的 z-index 值
  */
-const zIndex = ref(getPaAnagerGlobalZIndex());
+const zIndex = ref(getGlobalZIndex());
 /**
  * 遮罩层可见状态
  * @description 遮罩层的可见状态
@@ -81,7 +87,7 @@ watch(
   value => {
     visible.value = value;
     if (value) {
-      zIndex.value = getPaAnagerGlobalZIndex();
+      zIndex.value = getGlobalZIndex();
     }
   },
   { immediate: true }
