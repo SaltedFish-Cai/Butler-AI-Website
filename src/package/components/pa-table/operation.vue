@@ -3,11 +3,12 @@
 </template>
 
 <script lang="tsx" setup>
-import { inject, useSlots, h } from "vue";
+import { inject, useSlots, h, ComputedRef } from "vue";
 import { ComponentUseItemProps, PaTableUseType } from "./types";
+import { LanguageKey } from "../manager-type";
 
 type OperationPropsType = { column: ComponentUseItemProps; row: PaTableUseType.PaTableInDataType };
-const languagePackage = inject("languagePackage") as Record<string, string>;
+const language = inject("language") as ComputedRef<LanguageKey>;
 const slots = useSlots();
 
 const props = withDefaults(defineProps<OperationPropsType>(), {});
@@ -52,7 +53,7 @@ function setOperations(arrData) {
             <pa-popover trigger="hover" contentClassName="pa-table-more-opt">
               {{
                 reference: () => {
-                  return <pa-button is="more">{languagePackage.value["more"]}</pa-button>;
+                  return <pa-button is="more">{language.value === "zh-CN" ? "更多操作" : "More Operations"}</pa-button>;
                 },
                 default: () => {
                   return (

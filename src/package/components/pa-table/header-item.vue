@@ -24,7 +24,7 @@
     <!-- @handle-remove-query="handleRemoveQ" -->
     <Filter v-if="item.useFilter != false" :id="props.id" ref="columnFilter" :item="item" :data="filterValue" @open-senior-filter="openSeniorFilter" @save-and-filter="saveAndFilter">
       <div class="pa-table-filter-box" :class="[setIconAction(item.prop) ? 'pa-table-filter-box-act' : '']">
-        <pa-icon :class="[setIconAction(item.prop) ? 'filter-icon flex-center filter-act' : 'filter-icon flex-center']" name="Filter" />
+        <pa-icon :class="[setIconAction(item.prop) ? 'filter-icon flex-center filter-act' : 'filter-icon flex-center']" name="filter-Fill" />
       </div>
       <template v-for="slot in Object.keys($slots).filter(item => item != 'default')" #[slot]="scope">
         <template v-if="slot.indexOf('header-option-') > -1 || slot.indexOf('header-tag-') > -1">
@@ -34,7 +34,9 @@
 
       <template #exBtn v-if="isUseCellConfig(item) && item.useSeniorFilter != false && useGlobalSeniorFilter">
         <div class="flex-center mt-size">
-          <pa-button font="mortarboard_line" @click="openSeniorFilter(item)">{{ languagePackage["useAdvancedSearch"] }} </pa-button>
+          <pa-button icon-name="mortarboard_line" @click="openSeniorFilter(item)">
+            {{ language === "zh-CN" ? "使用高级搜索" : "Use Advanced Search" }}
+          </pa-button>
         </div>
       </template>
     </Filter>
@@ -46,7 +48,7 @@
  * 模块导入
  * @description 导入 Vue 响应式 API
  */
-import { ref, Ref, watch, inject } from "vue";
+import { ref, Ref, watch, inject, ComputedRef } from "vue";
 /**
  * 模块导入
  * @description 导入表头筛选子组件
@@ -62,6 +64,7 @@ import { isSelectType, isUseCellConfig, isTimeType } from "./hooks/isType";
  * @description 导入组件类型定义
  */
 import { ComponentItemProps, ComponentUseItemProps, PaTableUseType } from "./types";
+import { LanguageKey } from "../manager-type";
 
 /**
  * 表头组件属性类型
@@ -113,7 +116,7 @@ let filterData = [] as Array<PaTableUseType.FilterType>;
  * @type Record<string, string>
  * @description 注入当前语言包
  */
-const languagePackage = inject("languagePackage") as Record<string, string>;
+const language = inject("language") as ComputedRef<LanguageKey>;
 /**
  * 全局高级搜索
  * @type Ref<boolean>

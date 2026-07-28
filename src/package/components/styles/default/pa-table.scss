@@ -113,6 +113,7 @@
 
 .pa-table.pa-table_scroll_left {
   .sticky-left.last-left-fixed {
+    border-right: 0;
     &::before {
       right: -10px;
       bottom: -1px;
@@ -125,13 +126,14 @@
       top: 0;
       touch-action: none;
       width: 10px;
-      box-shadow: inset 13px 0 14px -17px var(--pa-color-black);
+      box-shadow: inset 13px 0 14px -17px var(--pa-color-send-font);
     }
   }
 }
 
 .pa-table.pa-table_scroll_right {
   .sticky-right.last-right-fixed {
+    border-left: 0;
     &::before {
       left: -10px;
       bottom: -1px;
@@ -144,7 +146,7 @@
       top: 0;
       touch-action: none;
       width: 10px;
-      box-shadow: inset -13px 0 14px -17px var(--pa-color-black);
+      box-shadow: inset -13px 0 14px -17px var(--pa-color-send-font);
     }
   }
 }
@@ -166,7 +168,7 @@
     }
     > .pa-table_body_header_scroll {
       position: relative;
-      padding-right: calc(var(--pa-size-padding, 10px) + 2px);
+      padding-right: calc(var(--pa-size-padding, 10px) + 3.1px);
     }
   }
 }
@@ -372,7 +374,9 @@
       min-height: calc(var(--scroll-body-height) - var(--pa-size-padding, 10px) * 2 - 4em);
     }
   }
-  &:has(> .pa-scrollbar-content > .scrollbar-body > .scrollbar__bar.is-horizontal):has(> .pa-scrollbar-content > .scrollbar-body > .scrollbar-body-content > .pa-table_body_summary) {
+  &:has(> .pa-scrollbar-content > .scrollbar-body > .scrollbar__bar.is-horizontal):has(
+      > .pa-scrollbar-content > .scrollbar-body > .scrollbar-body-content > .pa-table_body_summary
+    ) {
     > .pa-scrollbar-content > .scrollbar-body > .scrollbar-body-content > .light-is-scroll-end {
       font-size: var(--pa-size-font, 16px);
       height: calc(var(--pa-size-padding, 10px) + 2em + var(--pa-size-height, 14.1px) / 2);

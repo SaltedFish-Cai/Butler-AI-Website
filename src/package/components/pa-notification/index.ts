@@ -7,7 +7,7 @@ import type { App } from "vue";
  * 模块导入
  * @description 导入通知配置和实例类型
  */
-import type { NotificationOptions, NotificationInstance } from "./types.d.ts";
+import type { NotificationOptions, NotificationInstance } from "./types";
 /**
  * 模块导入
  * @description 导入通知管理器

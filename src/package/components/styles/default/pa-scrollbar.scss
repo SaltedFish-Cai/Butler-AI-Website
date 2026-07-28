@@ -98,7 +98,7 @@
   .scrollbar__bar.is-vertical {
     top: 0;
     right: 0;
-    width: 11.1px;
+    width: 13.1px;
     height: 100%;
     display: flex;
     justify-content: center;
@@ -116,7 +116,7 @@
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 11.1px;
+    height: 13.1px;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -198,11 +198,11 @@
 }
 
 .pa-scrollbar:has(> .scrollbar__bar.is-vertical) {
-  padding-right: 11.1px;
+  padding-right: 13.1px;
 }
 
 .pa-scrollbar:has(> .scrollbar__bar.is-horizontal) {
-  padding-bottom: 11.1px;
+  padding-bottom: 13.1px;
 }
 
 .pa-scrollbar:has(> .scrollbar__bar.is-vertical.hidden-thumb) {

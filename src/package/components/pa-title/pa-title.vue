@@ -11,7 +11,7 @@
         </div>
       </div>
     </div>
-    <pa-line v-if="styleMode.lineConfig" v-bind="styleMode.lineConfig as LineComponentProps" />
+    <pa-line v-if="styleMode.lineConfig" v-bind="(styleMode.lineConfig as LineComponentProps)" />
 
     <div class="pa-title_tip" v-if="tipsPosition == 'bottom'">
       <slot name="tips">{{ tips }}</slot>

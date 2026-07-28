@@ -1,7 +1,7 @@
 <template>
   <pa-overlay :modelValue="state.visible" @click-overlay="closeOnClickModal && closeMenu()" class="flex-center" :blur="overlayBlur">
     <transition name="mo-animation-fade">
-      <div class="pa-dialog" :class="[state.fullscreen ? 'pa-dialog_full' : '']" ref="DialogRef" v-if="state.visible" :style="dialogStyle">
+      <div :id="randId" class="pa-dialog" :class="[state.fullscreen ? 'pa-dialog_full' : '']" ref="DialogRef" v-if="state.visible" :style="dialogStyle">
         <div class="pa-dialog-content" :class="[$slots['background'] ? 'pa-dialog-content_body_background' : '']">
           <div class="pa-dialog-content_body_background">
             <slot name="background" />
@@ -74,6 +74,7 @@ import { ref, reactive, watch, computed, onMounted, onUnmounted, nextTick, type 
  * @description 导入组件类型定义
  */
 import { ComponentProps, ComponentEmits } from "./types";
+import useRenderId from "../tools/render-id";
 /**
  * 组件属性
  * @type ComponentProps
@@ -93,6 +94,12 @@ const props = withDefaults(defineProps<ComponentProps>(), {
   scroll: true,
   overlayBlur: false
 });
+/**
+ * 随机 ID
+ * @type {string}
+ * @description 生成组件唯一标识
+ */
+const randId = ref((props.id ? props.id + "_" : "") + "pa-dialog_" + useRenderId());
 /**
  * 组件事件定义
  * @type ComponentEmits

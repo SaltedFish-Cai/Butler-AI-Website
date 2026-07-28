@@ -2,7 +2,7 @@
  * 模块导入
  * @description 导入消息配置和实例类型
  */
-import type { MessageOptions, MessageInstance } from "./types.d.ts";
+import type { MessageOptions, MessageInstance, MessageType } from "./types";
 /**
  * 模块导入
  * @description 导入消息管理器
@@ -29,7 +29,7 @@ export function Message(options: MessageOptions | string): MessageInstance {
  * @returns MessageInstance 消息实例
  * @description 显示成功类型的消息提示
  */
-Message.success = function (options: MessageOptions | string | LanguagePackageType): MessageInstance {
+Message.success = function (options: LanguagePackageType | MessageOptions | string): MessageInstance {
   return createMessage("success", options);
 };
 /**
@@ -38,7 +38,7 @@ Message.success = function (options: MessageOptions | string | LanguagePackageTy
  * @returns MessageInstance 消息实例
  * @description 显示警告类型的消息提示
  */
-Message.warning = function (options: MessageOptions | string | LanguagePackageType): MessageInstance {
+Message.warning = function (options: LanguagePackageType | MessageOptions | string): MessageInstance {
   return createMessage("warning", options);
 };
 /**
@@ -47,7 +47,7 @@ Message.warning = function (options: MessageOptions | string | LanguagePackageTy
  * @returns MessageInstance 消息实例
  * @description 显示危险类型的消息提示
  */
-Message.danger = function (options: MessageOptions | string | LanguagePackageType): MessageInstance {
+Message.danger = function (options: LanguagePackageType | MessageOptions | string): MessageInstance {
   return createMessage("danger", options);
 };
 /**
@@ -56,24 +56,24 @@ Message.danger = function (options: MessageOptions | string | LanguagePackageTyp
  * @returns MessageInstance 消息实例
  * @description 显示信息类型的消息提示
  */
-Message.info = function (options: MessageOptions | string | LanguagePackageType): MessageInstance {
+Message.info = function (options: LanguagePackageType | MessageOptions | string): MessageInstance {
   return createMessage("info", options);
 };
 
-function createMessage(type: string, options: MessageOptions | string | LanguagePackageType): MessageInstance {
+function createMessage(type: string, options: LanguagePackageType | MessageOptions | string): MessageInstance {
   const language = (typeof window !== "undefined" && window.PancakeGlobalConfig?.language) || "zh-CN";
   // 纯字符串 → 直接显示
   if (typeof options === "string") {
-    return Message({ message: options, type });
+    return Message({ message: options, type: type as MessageType | undefined });
   }
   // 判断是否为 LanguagePackageType（仅有 en-US/zh-CN 两个键）
   const keys = Object.keys(options);
   const isLanguagePackage = keys.length > 0 && keys.every(k => k === "en-US" || k === "zh-CN");
   if (isLanguagePackage) {
-    return Message({ message: (options as LanguagePackageType)[language] || "", type });
+    return Message({ message: (options as LanguagePackageType)[language] || "", type: type as MessageType | undefined });
   }
   // MessageOptions 配置对象
-  return Message({ type, ...(options as MessageOptions) });
+  return Message({ type: type as MessageType | undefined, ...(options as MessageOptions) });
 }
 /**
  * 关闭所有消息

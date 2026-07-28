@@ -1,8 +1,8 @@
 <template>
-  <pa-development :id="id">
+  <pa-development :id="randId">
     <template v-if="initialization == 1">
       <div class="pa-form" :class="[props.class]" :style="{ ...props.style }">
-        <form-control :id="id || 'default'" ref="FormControlRef" :rules="useRequired ? baseRulesMap['default'] : undefined" :model="formData">
+        <form-control :id="randId || 'default'" ref="FormControlRef" :rules="useRequired ? baseRulesMap['default'] : undefined" :model="formData">
           <template v-for="(itemConfigs, itemConfigsIndex) in inMultipleConfig" :key="itemConfigs.unitName">
             <!-- Group组标题 -->
             <template v-if="itemConfigs.unitName != 'default'">
@@ -22,7 +22,7 @@
               <template v-for="item in itemConfigs.configs" :key="String(item.prop)">
                 <!-- tabs 表 -->
                 <pa-col v-if="item.type == 'tabs-form'" :xs="1" :sm="1" :md="1" :lg="1" :xl="1">
-                  <tabsItem :id="id" @set-ref="refBody => setRuleTabsFormRef(refBody, item.prop as string)" :item="item" :rules="baseRulesMap">
+                  <tabsItem :id="randId" @set-ref="refBody => setRuleTabsFormRef(refBody, item.prop as string)" :item="item" :rules="baseRulesMap">
                     <template v-for="slot in slotKeys" #[slot]="scope" :key="slot">
                       <slot :name="slot" v-bind="scope"></slot>
                     </template>
@@ -30,7 +30,7 @@
                 </pa-col>
 
                 <!-- 标准表格 -->
-                <formItem v-else :id="id" :item="item">
+                <formItem v-else :id="randId" :item="item">
                   <template v-for="slot in slotKeys" #[slot]="scope" :key="slot">
                     <slot :name="slot" :config="item" :data="scope.data" :option="(scope as any).option"></slot>
                   </template>
@@ -65,11 +65,6 @@ import formControl from "./form-control.vue";
  * @description 导入浏览器环境检测工具
  */
 import inBrowser from "../tools/inBrowser";
-/**
- * **模块导入**
- * @description 导入随机字符生成工具
- */
-import randChar from "../tools/rand-char";
 /**
  * **模块导入**
  * @description 导入 Tab 表单项组件
@@ -116,13 +111,14 @@ import isEqual from "../tools/is-equal";
  */
 import debounce from "../tools/debounce";
 import isNil from "../tools/is-nil";
+import useRenderId from "../tools/render-id";
 
 /**
  * **组件属性**
  * @description PaForm 组件的属性对象
  */
 const props = withDefaults(defineProps<ComponentProps>(), {
-  id: randChar(),
+  id: "",
   value: () => ({}),
   contrastData: () => ({}),
   useRequired: true,
@@ -144,6 +140,13 @@ const props = withDefaults(defineProps<ComponentProps>(), {
   useTopTitle: true,
   titlePosition: ""
 });
+
+/**
+ * 随机 ID
+ * @type {string}
+ * @description 生成组件唯一标识
+ */
+const randId = ref((props.id ? props.id + "_" : "") + "pa-form_" + useRenderId());
 
 /**
  * **组件事件**
@@ -221,7 +224,7 @@ const ruleTabsFormRef: Record<string, { submitTabsForm: () => Promise<boolean | 
 /**
  * **全局配置注入**
  * @type `ComputedRef<PancakeGlobalConfigType>`
- * @description 注入的全局 PancakeUI 配置
+ * @description 注入的全局配置
  */
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 /**

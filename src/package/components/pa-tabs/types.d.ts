@@ -211,6 +211,13 @@ export type ComponentLabelProps = {
    */
   activeName?: string;
   /**
+   * 标签页标题的唯一标识
+   * @type string | undefined
+   * @default undefined
+   * @description 标签页标题的唯一标识
+   */
+  id?: string;
+  /**
    * 标签页切换函数
    * @type ((name: string, index: number) => void) | undefined
    * @default undefined

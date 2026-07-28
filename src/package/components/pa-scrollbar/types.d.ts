@@ -41,6 +41,7 @@ export type ComponentProps = {
    * @description styleMode='color'时：默认为 false
    */
   useShadow?: boolean;
+
   /**
    * 是否显示回到顶部按钮
    * @type boolean | undefined
@@ -69,6 +70,23 @@ export type ComponentProps = {
    * @description 是否显示滚动条内容
    */
   showThumb?: boolean;
+
+  /**
+   * 是否显示水平滚动条内容
+   * @type boolean | undefined
+   * @default true
+   * @description 是否显示水平滚动条内容
+   */
+  showThumbX?: boolean;
+
+  /**
+   * 是否显示垂直滚动条内容
+   * @type boolean | undefined
+   * @default true
+   * @description 是否显示垂直滚动条内容
+   */
+  showThumbY?: boolean;
+
   /**
    * 是否使用隐藏式滚动条
    * @type boolean | undefined

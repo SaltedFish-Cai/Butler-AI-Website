@@ -36,7 +36,7 @@ import { ref, computed, onMounted, onBeforeUnmount } from "vue";
  * 模块导入
  * @description 导入消息框配置类型
  */
-import type { MessageBoxOptions } from "./types.d.ts";
+import type { MessageBoxOptions } from "./types";
 /**
  * 模块导入
  * @description 导入图标组件

@@ -25,7 +25,7 @@ import { ref, computed, onMounted, onBeforeUnmount } from "vue";
  * 模块导入
  * @description 导入通知配置类型
  */
-import type { NotificationOptions } from "./types.d.ts";
+import type { NotificationOptions } from "./types";
 /**
  * 模块导入
  * @description 导入图标组件

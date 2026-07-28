@@ -12,7 +12,7 @@ import MNotification from "./pa-notification.vue";
  * 模块导入
  * @description 导入通知相关类型
  */
-import type { NotificationOptions, NotificationInstance, NotificationManager } from "./types.d.ts";
+import type { NotificationOptions, NotificationInstance, NotificationManager } from "./types";
 /**
  * 基础偏移量
  * @description 通知距离边缘的初始偏移量（像素）

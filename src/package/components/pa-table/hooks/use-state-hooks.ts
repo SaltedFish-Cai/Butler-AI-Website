@@ -20,11 +20,7 @@ import isNil from "../../tools/is-nil";
  */
 import cloneDeep from "../../tools/clone-deep";
 
-export const useStateHooks = (
-  props: ComponentProps,
-  emits,
-  { isScrollHeaderIng, language, languagePackage, bodyRef, contentRef, mScrollbarListRef, isIntersectingList, isInViewList, infiniteScroll }
-) => {
+export const useStateHooks = (props: ComponentProps, emits, { isScrollHeaderIng, language, bodyRef, contentRef, mScrollbarListRef, isIntersectingList, isInViewList, infiniteScroll }) => {
   const { listenCellInView, listenCellChildChange, clearListen } = useObserverHooks(props, {
     mScrollbarListRef,
     contentRef,
@@ -131,7 +127,16 @@ export const useStateHooks = (
    * @description 解析并设置单元格的校验规则
    */
   function setRule(item: PaFormChildType) {
-    const baseRules = item.display || item.disabled ? [] : [{ required: true, message: languagePackage.value["requiredMessage"], trigger: "blur" }];
+    const baseRules =
+      item.display || item.disabled
+        ? []
+        : [
+            {
+              required: true,
+              message: { "zh-CN": "此项为必填项", "en-US": "Please input" }[language.value || "zh-CN"],
+              trigger: "blur"
+            }
+          ];
     let _rules = baseRules;
     if (item.rules && Array.isArray(item.rules)) {
       let isRequired = true;
@@ -143,7 +148,7 @@ export const useStateHooks = (
           trigger: "blur",
           required: item.required || true,
           ...item,
-          message: typeof item.message == "string" ? item.message : item.message?.[language?.value || "zh-CN"] || languagePackage.value["requiredMessage"]
+          message: typeof item.message == "string" ? item.message : item.message?.[language?.value || "zh-CN"] || { "zh-CN": "此项为必填项", "en-US": "Please input" }[language.value || "zh-CN"]
         };
         return data;
       });
@@ -456,14 +461,12 @@ export const useStateHooks = (
       // }
 
       if (infiniteScroll.value) {
+        // 虚拟滚动模式下不再创建 "more" 和 "empty" 占位元素
+        // 改为在首次加载时设置初始占位，用于触发后续页面的 IntersectionObserver（兼容模式）
+        // 后续版本可完全移除 IntersectionObserver，改为基于 scrollTop 触发加载
         const up_pageNum = _pageNum - 1 >= 0 ? _pageNum - 1 : 0;
         if (!state.tableData[up_pageNum]?.length) {
           state.tableData[up_pageNum] = [{ renderIndex: -1, parentRenderIndex: -1, rowIndex: -1, type: "more", name: String(up_pageNum) }];
-          const emptyArr = Array.from({ length: 15 });
-          // const _emptyMoreIndex = Math.round(emptyArr.length / 2);
-          emptyArr.forEach(() => {
-            state.tableData[up_pageNum].push({ renderIndex: -1, parentRenderIndex: -1, rowIndex: -1, type: "empty" });
-          });
         }
       }
 

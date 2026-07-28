@@ -110,7 +110,7 @@ import { computed, ref, shallowRef, watch, nextTick, onMounted, onUnmounted, typ
 import * as Vue from "vue";
 import { useRoute, useRouter } from "vue-router";
 import type { PhoneModel, DeviceSpec } from "./types";
-import { apiFetch } from "@/shared/api";
+import { apiFetch } from "./api";
 
 // WorkshopComponent 类型定义（轻量内联，避免耦合 workshop 模块）
 interface WorkshopComponent {
@@ -270,7 +270,8 @@ function sanitizeScriptSetup(code: string): string {
   s = s.replace(/^\s*import\b.*$/gm, "");
 
   // 2b. line-by-line 彻底清除 regex 可能遗漏的 import 行（边缘格式）
-  s = s.split("\n")
+  s = s
+    .split("\n")
     .filter(line => !/^\s*import\b/.test(line))
     .join("\n");
 
@@ -428,8 +429,9 @@ function compileSFC(source: string, context?: Record<string, unknown>): { compon
   //    获取正确的 __routeId__（来自 handleSwitchToPage 设置的同步变量）
   //    避免依赖 Vue Router 的 reactive 状态（history.replaceState 不会触发它）
   //    仅在脚本调用了 useRoute 时注入，避免不必要的覆写
-  if (processedScript.includes('useRoute')) {
-    processedScript = `
+  if (processedScript.includes("useRoute")) {
+    processedScript =
+      `
 // [pa-phone] useRoute override — 确保 query.id 始终反映当前 _route_id
 const __pa_useRoute = useRoute;
 useRoute = () => {
@@ -442,12 +444,10 @@ useRoute = () => {
 
   // 兼容已保存的旧页面：注入 __routeId__ 读取逻辑
   // 使旧页面 SFC 中的 fetchBindData() 也能获取 _route_id 参数并传给 API
-  if (!processedScript.includes('__routeId__') && /fetch\(`\/api\/apps\/[^`]+\/data`/.test(processedScript)) {
-    processedScript = 'const __routeId__ = (typeof window !== "undefined" && window.__phone_route_id) || ctx.__routeId__ || new URL(window.location.href).searchParams.get(\'id\') || \'\';\n' + processedScript;
-    processedScript = processedScript.replace(
-      /fetch\(`(\/api\/apps\/[^`]+\/data)`/g,
-      'fetch(__routeId__ ? `$1?id=${encodeURIComponent(__routeId__)}` : `$1`'
-    );
+  if (!processedScript.includes("__routeId__") && /fetch\(`\/api\/apps\/[^`]+\/data`/.test(processedScript)) {
+    processedScript =
+      "const __routeId__ = (typeof window !== \"undefined\" && window.__phone_route_id) || ctx.__routeId__ || new URL(window.location.href).searchParams.get('id') || '';\n" + processedScript;
+    processedScript = processedScript.replace(/fetch\(`(\/api\/apps\/[^`]+\/data)`/g, "fetch(__routeId__ ? `$1?id=${encodeURIComponent(__routeId__)}` : `$1`");
   }
 
   const bindings = extractBindings(processedScript);
@@ -459,7 +459,7 @@ useRoute = () => {
 
   // 若用户脚本已声明 ctx（如 const ctx = inject('ctx')），则不再重复注入
   const hasCtxDecl = /\b(const|let|var)\s+ctx\b/.test(processedScript);
-  const ctxDecl = hasCtxDecl ? '' : 'const ctx = sfcContext || {};';
+  const ctxDecl = hasCtxDecl ? "" : "const ctx = sfcContext || {};";
   const fnBody = `
       const { ref, reactive, computed, watch, onMounted, onUnmounted, inject } = Vue;
       ${ctxDecl}
@@ -472,9 +472,9 @@ ${returnProps}
   try {
     const setupFn = new Function("Vue", "apiFetch", "useRoute", "useRouter", "sfcContext", fnBody) as (
       vue: typeof Vue,
-      apiFetch: (typeof import("@/shared/api"))["apiFetch"],
-      useRoute: (typeof import("vue-router"))["useRoute"],
-      useRouter: (typeof import("vue-router"))["useRouter"],
+      apiFetch: typeof import("@/shared/api")["apiFetch"],
+      useRoute: typeof import("vue-router")["useRoute"],
+      useRouter: typeof import("vue-router")["useRouter"],
       sfcContext: Record<string, unknown> | undefined
     ) => Record<string, unknown>;
 
@@ -1040,9 +1040,7 @@ let timer: ReturnType<typeof setInterval>;
     border: 2px solid transparent;
     border-radius: 6px;
     cursor: pointer;
-    transition:
-      border-color 0.15s,
-      opacity 0.2s;
+    transition: border-color 0.15s, opacity 0.2s;
     user-select: none;
 
     &:hover {
@@ -1097,10 +1095,7 @@ let timer: ReturnType<typeof setInterval>;
     min-height: 4px;
     border: 2px dashed transparent;
     border-radius: 6px;
-    transition:
-      min-height 0.2s,
-      background 0.2s,
-      border-color 0.2s;
+    transition: min-height 0.2s, background 0.2s, border-color 0.2s;
   }
 
   .pa-phone__comp-end-zone--active {
@@ -1124,9 +1119,7 @@ let timer: ReturnType<typeof setInterval>;
 
 // -------- Typewriter Transition（打字机渐进效果） --------
 .pa-phone__typewriter-enter-active {
-  transition:
-    opacity 0.35s ease-in-out,
-    transform 0.35s ease-in-out;
+  transition: opacity 0.35s ease-in-out, transform 0.35s ease-in-out;
 }
 
 .pa-phone__typewriter-leave-active {

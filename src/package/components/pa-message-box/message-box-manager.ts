@@ -38,7 +38,7 @@ import MessageBoxVue from "./pa-message-box.vue";
  * 模块导入
  * @description 导入消息框相关类型
  */
-import type { MessageBoxOptions, MessageBoxInstance, MessageBoxManager } from "./types.d.ts";
+import type { MessageBoxOptions, MessageBoxInstance, MessageBoxManager } from "./types";
 /**
  * 消息框管理器实现类
  * @description 消息框管理器的具体实现

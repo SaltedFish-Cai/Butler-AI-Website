@@ -6,7 +6,7 @@
       '--pa-tabs-label-left': useLabelLeft - headerScroll + 'px',
       '--pa-tabs-label-width': useLabelWidth + 'px'
     }"
-    :id="tabsId"
+    :id="randId"
     ref="tabsRef"
   >
     <div :class="['pa-tabs-content', mode === 'portrait' || mode === 'slider' ? 'flex' : 'flex-col']">
@@ -17,9 +17,16 @@
         <pa-icon v-if="useScrollY > 0 && (mode === 'portrait' || mode === 'slider')" :class="['icons', 'top-icon', headerScroll === 0 ? 'disabled' : '']" name="up_small_fill" @click="minusScroll" />
         <pa-icon v-else-if="useScrollX > 0" :class="['icons', 'left-icon', headerScroll === 0 ? 'disabled' : '']" name="left_small" @click="minusScroll" />
 
-        <div class="pa-tabs-title-list" :id="tabsId + '-tab-titles'" ref="tabsTitleRef" @mouseenter="handleMouseEnter" @mouseleave="handleMouseLeave">
-          <div :id="'pa-tabs-box_' + tabsId" class="pa-tabs-box" :class="[mode === 'portrait' || mode === 'slider' ? 'flex-col' : '']" :style="{ '--tab-header-scroll': '-' + headerScroll + 'px' }">
-            <title-item :slots="slotsTitle" :activeName="activeName" :changeTabs="changeTabs" :portrait="mode === 'portrait' || mode === 'slider'" :onDragReorder="handleLabelDragReorder"></title-item>
+        <div class="pa-tabs-title-list" :id="randId + '_titles'" ref="tabsTitleRef" @mouseenter="handleMouseEnter" @mouseleave="handleMouseLeave">
+          <div :id="randId + '_titles-box'" class="pa-tabs-box" :class="[mode === 'portrait' || mode === 'slider' ? 'flex-col' : '']" :style="{ '--tab-header-scroll': '-' + headerScroll + 'px' }">
+            <title-item
+              :slots="slotsTitle"
+              :activeName="activeName"
+              :changeTabs="changeTabs"
+              :portrait="mode === 'portrait' || mode === 'slider'"
+              :onDragReorder="handleLabelDragReorder"
+              :id="randId"
+            ></title-item>
           </div>
         </div>
 
@@ -32,8 +39,8 @@
       <div v-if="mode === 'slider'" class="pa-tabs-scroll">
         <slot name="afterLabel"></slot>
 
-        <div :id="tabsId + '-tab-contents-slider'" class="pa-tabs-contents">
-          <pa-scrollbar ref="mScrollRef" :intersectClassName="'.tab-item_line_' + tabsId" @intersecting="handleIntersecting">
+        <div :id="randId + '-tab-contents-slider'" class="pa-tabs-contents">
+          <pa-scrollbar ref="mScrollRef" :intersectClassName="'.tab-item_line_' + randId" @intersecting="handleIntersecting">
             <slot></slot>
           </pa-scrollbar>
         </div>
@@ -41,7 +48,7 @@
       <div v-else class="pa-tabs-scroll">
         <slot name="afterLabel"></slot>
 
-        <div :id="tabsId + '-tab-contents'" class="pa-tabs-contents" :style="{ position: 'relative', left: `-${visibleMode == 'visible' ? slotIndex : 0}00%` }">
+        <div :id="randId + '-tab-contents'" class="pa-tabs-contents" :style="{ position: 'relative', left: `-${visibleMode == 'visible' ? slotIndex : 0}00%` }">
           <slot></slot>
         </div>
       </div>
@@ -61,7 +68,7 @@ import { ref, onMounted, onUnmounted, useSlots, watch, nextTick, provide, comput
  * 模块导入
  * @description 导入随机字符生成工具
  */
-import { randChar } from "../tools/rand-char";
+import { useRenderId } from "../tools/render-id";
 /**
  * 模块导入
  * @description 导入标签页标题子组件
@@ -109,7 +116,7 @@ const props = withDefaults(defineProps<ComponentProps>(), {
  * @type {string}
  * @description 生成组件唯一标识
  */
-const randId = String(props.id || randChar());
+const randId = ref((props.id ? props.id + "_" : "") + "pa-tabs_" + useRenderId());
 /**
  * 全局状态
  * @description 用于缓存 label 顺序
@@ -157,12 +164,6 @@ const slotIndex = ref(0);
  * @description 记录 tab-item 在 DOM 中的原始 name 顺序（不受缓存重排影响），用于内容面板位移计算
  */
 const domOrder: string[] = [];
-/**
- * 标签页 ID
- * @type {Ref<string>}
- * @description 组件实例的唯一标识
- */
-const tabsId = ref(randId);
 /**
  * 水平滚动位置
  * @type {Ref<number>}
@@ -272,7 +273,7 @@ provide(
   "TabsContext",
   computed(() => ({
     mode: props.mode,
-    tabsId: tabsId.value,
+    randId: randId.value,
     activeName: activeName.value
   }))
 );
@@ -375,7 +376,7 @@ function changeTabs(name: string, index: number, scrollToIntersect = true): void
   emit("update:modelValue", name);
   emit("tabChange", { name, index });
   if (props.mode === "slider" && scrollToIntersect) {
-    const targetEl = document.querySelector(`#${tabsId.value} #${tabsId.value}-${name}`);
+    const targetEl = document.querySelector(`#${randId.value} #${randId.value}-${name}`);
     if (targetEl) mScrollRef.value?.setScrollToIntersect(targetEl);
   }
   setTabItemPosition();
@@ -388,8 +389,8 @@ function changeTabs(name: string, index: number, scrollToIntersect = true): void
  */
 function setTabItemPosition(): void {
   nextTick(() => {
-    const targetEl = document.querySelector(`#${tabsId.value} .pa-tabs-title_action_${tabsId.value}`);
-    const parentElement = document.querySelector(`#${tabsId.value} #pa-tabs-box_${tabsId.value}`);
+    const targetEl = document.querySelector(`#${randId.value} .pa-tabs-title_action_${randId.value}`);
+    const parentElement = document.querySelector(`#${randId.value} #pa-tabs-box_${randId.value}`);
     if (targetEl && parentElement) {
       const data = getElementPosition(targetEl, parentElement as HTMLElement);
       if ((props.mode == "portrait" || props.mode == "slider") && data?.parentTop && data?.height) {
@@ -589,7 +590,7 @@ function setLabelPosition(): void {
     clearTimeout(labelPositionTimer);
   }
   labelPositionTimer = setTimeout(() => {
-    const el: HTMLElement | null = typeof window !== "undefined" ? window.document?.querySelector(`.pa-tabs-title_action_${tabsId.value}`) : null;
+    const el: HTMLElement | null = typeof window !== "undefined" ? window.document?.querySelector(`.pa-tabs-title_action_${randId.value}`) : null;
     if (el) {
       const { width } = el.getBoundingClientRect();
       useLabelLeft.value = el.offsetLeft + 1;

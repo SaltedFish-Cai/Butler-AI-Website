@@ -37,7 +37,7 @@
               :is-checked="row.isSelected || isTableSelectAll"
               :is-indeterminate="row.isIndeterminate"
               :disabled="isTableSelectAll"
-              @change="handleSelectChange({ row, parentRow })"
+              @click.stop="handleSelectChange({ row, parentRow })"
             />
           </template>
 
@@ -48,7 +48,7 @@
               :is-checked="row.isSelected || isTableSelectAll"
               :is-indeterminate="row.isIndeterminate"
               :disabled="isTableSelectAll"
-              @change="handleSelectChange({ row, parentRow })"
+              @click.stop="handleSelectChange({ row, parentRow })"
             />
           </template>
 
@@ -88,14 +88,14 @@
               :row="row"
               :clickTag="exCellDependent?.tag_click?.[String(item.prop)]"
               :disabled="exCellDependent?.tag_disabled?.[String(item.prop)]?.({ value: row[String(item.prop)] })"
-              :exOptions="exOptions[String(item.prop)] as PaOptionType.SelectList || item.cellConfig.exOptions"
+              :exOptions="(exOptions[String(item.prop)] as PaOptionType.SelectList) || item.cellConfig.exOptions"
             />
 
             <!-- number -->
             <pa-number
               v-else-if="item.cellConfig.type == 'number'"
               v-model="row[String(item.prop)]"
-              :placeholder="item.cellConfig.placeholder || languagePackage?.['input'] + item.label"
+              :placeholder="item.cellConfig.placeholder || { 'zh-CN': '请输入', 'en-US': 'Please input' }[language] + item.label"
               :disabled="item.cellConfig.disabled"
               :display="item.cellConfig.display"
               :min="item.cellConfig.min"
@@ -122,10 +122,10 @@
               v-model="row[String(item.prop)]"
               :type="item.cellConfig.type"
               :displayValue="item.cellConfig.displayValue ? row[item.cellConfig.displayValue] : undefined"
-              :exOptions="exOptions[String(item.prop)] as PaOptionType.SelectList || item.cellConfig.exOptions"
+              :exOptions="(exOptions[String(item.prop)] as PaOptionType.SelectList) || item.cellConfig.exOptions"
               :requestApi="exCellDependent?.select_RequestApi?.[String(item.prop)]"
               :optionKey="item.cellConfig.optionKey"
-              :placeholder="item.cellConfig.placeholder || languagePackage?.['select'] + item.label"
+              :placeholder="item.cellConfig.placeholder || { 'zh-CN': '请选择', 'en-US': 'Please select' }[language] + item.label"
               :disabled="item.cellConfig.disabled"
               :display="item.cellConfig.display"
               :clearable="item.cellConfig.clearable"
@@ -143,7 +143,7 @@
               v-else-if="item.cellConfig.type == 'switch'"
               v-model="row[String(item.prop)]"
               :disabled="item.cellConfig.disabled"
-              :exOptions="exOptions[String(item.prop)] as PaOptionType.Switch || item.cellConfig.exOptions"
+              :exOptions="(exOptions[String(item.prop)] as PaOptionType.Switch) || item.cellConfig.exOptions"
               :display="item.cellConfig.display"
               :activeValue="item.cellConfig.activeValue"
               :inActiveValue="item.cellConfig.inActiveValue"
@@ -159,7 +159,7 @@
               v-else-if="item.cellConfig.type == 'radio'"
               v-model="row[String(item.prop)]"
               :disabled="item.cellConfig.disabled"
-              :exOptions="exOptions[String(item.prop)] as PaOptionType.SelectList || item.cellConfig.exOptions"
+              :exOptions="(exOptions[String(item.prop)] as PaOptionType.SelectList) || item.cellConfig.exOptions"
               :display="item.cellConfig.display"
               :contrastData="item.cellConfig.contrastData?.[String(item.prop)]"
               :alwaysContrast="item.cellConfig.alwaysContrast"
@@ -172,7 +172,7 @@
               v-else-if="item.cellConfig.type == 'checkbox'"
               v-model="row[String(item.prop)]"
               :disabled="item.cellConfig.disabled"
-              :exOptions="exOptions[String(item.prop)] as PaOptionType.SelectList || item.cellConfig.exOptions"
+              :exOptions="(exOptions[String(item.prop)] as PaOptionType.SelectList) || item.cellConfig.exOptions"
               :display="item.cellConfig.display"
               :contrastData="item.cellConfig.contrastData?.[String(item.prop)]"
               :alwaysContrast="item.cellConfig.alwaysContrast"
@@ -188,9 +188,8 @@
               v-model="row[String(item.prop)]"
               :type="item.cellConfig.type"
               :displayValue="item.cellConfig.displayValue ? row[item.cellConfig.displayValue] : undefined"
-              :exOptions="exOptions[String(item.prop)] as PaOptionType.SelectList|| item.cellConfig.exOptions"
-              :placeholder="item.cellConfig.placeholder || languagePackage?.['select'] + item.label"
-              :disabled="item.cellConfig.disabled"
+              :exOptions="(exOptions[String(item.prop)] as PaOptionType.SelectList) || item.cellConfig.exOptions"
+              :placeholder="item.cellConfig.placeholder || { 'zh-CN': '请选择', 'en-US': 'Please select' }[language] + item.label"
               :display="item.cellConfig.display"
               :useValueBylink="item.cellConfig.useValueBylink"
               :useTextByLink="item.cellConfig.useTextByLink"
@@ -216,7 +215,7 @@
               "
               v-model="row[String(item.prop)]"
               :type="item.cellConfig.type"
-              :placeholder="item.cellConfig.placeholder || languagePackage?.['select'] + item.label"
+              :placeholder="item.cellConfig.placeholder || { 'zh-CN': '请选择', 'en-US': 'Please select' }[language] + item.label"
               :disabledDateFn="exCellDependent?.time_disabledDateFn?.[String(item.prop)] || item.cellConfig.disabledDateFn"
               :shortcuts="exCellDependent?.time_shortcuts?.[String(item.prop)] || item.cellConfig.shortcuts"
               :disabled="item.cellConfig.disabled"
@@ -229,7 +228,7 @@
             <pa-select-icon
               v-else-if="item?.cellConfig.type == 'select-icon'"
               v-model="row[String(item.prop)]"
-              :placeholder="item.cellConfig.placeholder || languagePackage?.['select'] + item.label"
+              :placeholder="item.cellConfig.placeholder || { 'zh-CN': '请选择', 'en-US': 'Please select' }[language] + item.label"
               :disabled="item.cellConfig.disabled"
               :display="item.cellConfig.display"
               :contrastData="item.cellConfig.contrastData?.[String(item.prop)]"
@@ -240,7 +239,7 @@
             <pa-file
               v-else-if="item?.cellConfig.type == 'file'"
               v-model="row[String(item.prop)]"
-              :placeholder="item.cellConfig.placeholder || languagePackage?.['select'] + item.label"
+              :placeholder="item.cellConfig.placeholder || { 'zh-CN': '请选择文件', 'en-US': 'Please select file' }[language] + item.label"
               :attachedData="item.cellConfig.attachedData || exCellDependent?.file_attachedData?.[String(item.prop)]"
               :downloadTemplate="exCellDependent?.file_downloadTemplate?.[String(item.prop)]"
               :fileMultiple="item.cellConfig.fileMultiple"
@@ -259,7 +258,7 @@
               v-else-if="item?.cellConfig.type == 'input' || item?.cellConfig.type == 'textarea'"
               v-model="row[String(item.prop)]"
               :type="item.cellConfig.type"
-              :placeholder="item.cellConfig.placeholder || languagePackage?.['input'] + item.label"
+              :placeholder="item.cellConfig.placeholder || { 'zh-CN': '请输入', 'en-US': 'Please input' }[language] + item.label"
               :disabled="item.cellConfig.disabled"
               :display="item.cellConfig.display"
               :maxLength="item.cellConfig.maxLength"
@@ -321,7 +320,7 @@ import { findDataWithSelect, findDataWidthSwitch } from "../utils/find-data";
  * 模块导入
  * @description 导入选项类型定义
  */
-import { PaOptionType } from "../manager-type";
+import { LanguageKey, PaOptionType } from "../manager-type";
 /**
  * 模块导入
  * @description 导入表单子项类型定义
@@ -387,7 +386,7 @@ const exCellDependent = inject("exCellDependent") as PaTableCellExDependentType;
  * @type Record<string, string>
  * @description 注入当前语言包
  */
-const languagePackage = inject("languagePackage") as Record<string, string>;
+const language = inject("language") as ComputedRef<LanguageKey>;
 /**
  * 选择变化处理
  * @description 注入行选择变化处理方法

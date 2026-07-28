@@ -142,6 +142,9 @@
     .check-icon {
       display: none;
     }
+    &:hover {
+      cursor: pointer;
+    }
   }
 
   .pa-select-option.is-active {

@@ -63,9 +63,22 @@ export const useScrollHooks = (props: any, state: any, hooks: any) => {
    */
   const scrollDirectionX = ref("right");
   /**
+   * 虚拟滚动垂直滚动位置
+   * @type Ref<number>
+   * @description 表格主体垂直滚动位置（供虚拟滚动计算使用）
+   */
+  const virtualScrollTop = ref(0);
+  /**
+   * 虚拟滚动可视区域高度
+   * @type Ref<number>
+   * @description 表格主体可视区域高度（供虚拟滚动计算使用）
+   */
+  const virtualBodyHeight = ref(0);
+
+  /**
    * 直接滚动处理
    * @param data - 滚动数据
-   * @description 同步表头和主体的滚动位置
+   * @description 同步表头和主体的滚动位置，同时追踪虚拟滚动位置
    */
   function directlyScroll(data: any) {
     isLeft.value = data.isAtLeft;
@@ -74,6 +87,8 @@ export const useScrollHooks = (props: any, state: any, hooks: any) => {
     scrollDirectionX.value = data.scrollDirectionX;
     isScrollHeaderIng.value = true;
     mScrollbarHeaderListRef.value.scrollLeft = data.scrollLeft;
+    // 追踪虚拟滚动垂直位置
+    virtualScrollTop.value = data.scrollTop;
   }
   /**
    * 分页更改处理
@@ -167,6 +182,8 @@ export const useScrollHooks = (props: any, state: any, hooks: any) => {
     isDown,
     scrollDirectionX,
     scrollDirectionY,
+    virtualScrollTop,
+    virtualBodyHeight,
     setScrollTop,
     handleSizeChange,
     handleCurrentChange,

@@ -38,10 +38,10 @@ export const useSeniorFilterHooks = () => {
    * @description 获取高级搜索关系字典
    */
   async function GetDictionaries() {
-    const Data: any = await GetConditionals(PancakeGlobalConfig.value, "link");
-    state.seniorFilterOptions.LineConditional = Data.ConditionalType;
-    const List: any = await GetConditionals(PancakeGlobalConfig.value, "group", { keys: "FilterLinkNextType" });
-    state.seniorFilterOptions.linkOptions = List.FilterLinkNextType;
+    const Data: any = await GetConditionals("link");
+    state.seniorFilterOptions.LineConditional = Data?.ConditionalType ?? [];
+    const List: any = await GetConditionals("group", { keys: "FilterLinkNextType" });
+    state.seniorFilterOptions.linkOptions = List?.FilterLinkNextType ?? [];
   }
   /**
    * @description 设置高级搜索字典（计算类型）

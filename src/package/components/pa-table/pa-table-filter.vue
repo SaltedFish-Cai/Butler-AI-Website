@@ -11,11 +11,11 @@
         <div class="flex-center-end">
           <slot name="ToolButtonInline"></slot>
 
-          <pa-button v-if="extraProps.exportApi" is="export" @click="extraProps.exportApi">
-            {{ languagePackage["export"] }}
-          </pa-button>
-          <pa-button font="reset_line" type="default" @click="refreshTable({ Page: {} })">{{ languagePackage["refresh"] }} </pa-button>
-          <pa-button font="filter_line" :use-plain="false" type="primary" @click="() => configRef?.changeColSetting(true)">{{ languagePackage["filter"] }} </pa-button>
+          <pa-button v-if="extraProps.exportApi" is="export" @click="extraProps.exportApi" :text="{ 'zh-CN': '导出报表', 'en-US': 'Export Report' }" />
+
+          <pa-button iconName="reset_line" type="default" @click="refreshTable({ Page: {} })" :text="{ 'zh-CN': '刷新', 'en-US': 'Refresh' }" />
+
+          <pa-button :use-plain="false" iconName="filter_line" type="primary" @click="() => configRef?.changeColSetting(true)" :text="{ 'zh-CN': '筛选', 'en-US': 'Filter' }" />
         </div>
       </slot>
     </div>
@@ -23,7 +23,7 @@
 
   <!-- 普通搜索结果展示 -->
   <section v-if="Query.length" class="flex pa-table-query">
-    <div class="table-title-label mr-size">{{ languagePackage["searchFilter"] }} :</div>
+    <pa-language class="table-title-label mr-size" :text="{ 'zh-CN': '搜索条件', 'en-US': 'Search Filter' }"> </pa-language>
     <div class="mr-size query_item" v-for="(item, index) in Query" :key="item.label + item.value">
       <span class="icon_highlight mr5">#{{ Number(index) + 1 }}</span>
       <span>{{ item.label }} :</span>
@@ -49,12 +49,12 @@
       </template>
     </div>
 
-    <pa-button is="trash" size="small" @click="handleCleanAllQuery">{{ languagePackage["clean"] }}</pa-button>
+    <pa-button is="trash" size="small" @click="handleCleanAllQuery" :label="{ 'zh-CN': '清除空条件', 'en-US': 'Clear Empty Conditions' }" />
   </section>
 
   <!-- 高级搜索结果展示 -->
   <section v-if="AdvancedQuery.length" class="flex mb-size pa-table-query">
-    <div class="table-title-label mr-size">{{ languagePackage["Advanced"] }} :</div>
+    <pa-language class="table-title-label mr-size" :text="{ 'zh-CN': '高级搜索', 'en-US': 'Advanced Search' }"> </pa-language>
     <div class="mr-size query_item" v-for="(item, index) in AdvancedQuery" :key="item.label + item.value">
       <span class="icon_highlight mr5">#{{ Number(index) + 1 }}</span>
       <span>{{ item.label }} :</span>
@@ -79,7 +79,7 @@
       <pa-icon class="ml5 hand remove-icon" name="close_circle_line" @click="handleRemoveSenior(item)"></pa-icon>
     </div>
 
-    <pa-button is="trash" size="small" @click="handleCleanAllSeniorQuery">{{ languagePackage["clean"] }}</pa-button>
+    <pa-button is="trash" size="small" @click="handleCleanAllSeniorQuery" :label="{ 'zh-CN': '清除空条件', 'en-US': 'Clear Empty Conditions' }" />
   </section>
 
   <!-- 高级搜索 -->
@@ -125,8 +125,6 @@ const refreshTable = inject("refreshTable") as (
 const { Query, AdvancedQuery, handleSeniorSetting, handleRemoveQ, handleRemoveSenior, handleCleanAllQuery, handleCleanAllSeniorQuery } = useFilterHooks(props.extraProps, props.state, language);
 
 const { seniorFilterOptions, seniorFilterData, openSeniorFilter, setConditionalType, setRelationshipGroupLinkType } = useSeniorFilterHooks();
-
-const languagePackage = inject("languagePackage") as Record<string, string>;
 
 defineExpose({
   openSeniorFilter

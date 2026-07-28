@@ -9,15 +9,15 @@
       <pa-select
         v-if="isSelectType(item, true)"
         v-model="state.searchValue"
-        :placeholder="languagePackage['selectPlaceholder']"
+        :placeholder="{ 'zh-CN': '请选择需要筛选的' + item?.label, 'en-US': 'Please Select Filter ' + item?.label }"
         type="multiple-select"
-        :exOptions="(_exOptions[String(item.prop)] as PaOptionType.SelectList)"
+        :exOptions="_exOptions[String(item.prop)] as PaOptionType.SelectList"
         teleport-in-container
       >
-        <template #optionLabel="{ scope }">
+        <template #optionLabel="{ option }">
           <div class="flex-center-start">
-            <div class="pa-table-tag-color mr-size" :style="{ backgroundColor: scope?.tagStyle?.bgColor }"></div>
-            {{ typeof scope?.label === "object" ? scope?.label[language] : scope?.label }}
+            <div class="pa-table-tag-color mr-size" :style="{ backgroundColor: option?.tagStyle?.bgColor }"></div>
+            {{ typeof option?.label === "object" ? option?.label[language] : option?.label }}
           </div>
         </template>
         <!-- <template #tag>
@@ -47,7 +47,7 @@
         <pa-time
           v-model="state.searchValue[0]"
           type="date-picker"
-          :placeholder="languagePackage['startTime']"
+          :placeholder="{ 'zh-CN': '请选择开始时间', 'en-US': 'Please Select Start Time' }"
           :disabledDateFn="time => disabledStart(time)"
           teleport-in-container
           @keydown.enter="FetchSaveAndFilter"
@@ -56,7 +56,7 @@
         <pa-time
           v-model="state.searchValue[1]"
           type="date-picker"
-          :placeholder="languagePackage['endTime']"
+          :placeholder="{ 'zh-CN': '请选择结束时间', 'en-US': 'Please Select End Time' }"
           :disabledDateFn="time => disabledEnd(time)"
           teleport-in-container
           @keydown.enter="FetchSaveAndFilter"
@@ -68,22 +68,33 @@
         v-else-if="isNumberType(item, true)"
         v-model="state.searchValue"
         @keydown.enter="FetchSaveAndFilter"
-        :placeholder="languagePackage['inputPlaceholder']"
+        :placeholder="{
+          'zh-CN': '请输入需要搜索的' + item?.label,
+          'en-US': 'Please Input Search ' + item?.label
+        }"
         :disabled="item?.cellConfig?.disabled"
         :min="item?.cellConfig?.min"
         :max="item?.cellConfig?.max"
         :precision="item?.cellConfig?.precision"
         :step="item?.cellConfig?.step"
-        :contrastData="Number(item?.cellConfig?.contrastData)"
         :alwaysContrast="item?.cellConfig?.alwaysContrast"
       ></pa-number>
 
       <!-- input -->
-      <pa-input v-else v-model="state.searchValue" :placeholder="languagePackage['inputPlaceholder']" @enter="FetchSaveAndFilter" style="width: 100%; min-width: 210px" />
+      <pa-input
+        v-else
+        v-model="state.searchValue"
+        :placeholder="{
+          'zh-CN': '请输入需要搜索的' + item?.label,
+          'en-US': 'Please Input Search ' + item?.label
+        }"
+        @enter="FetchSaveAndFilter"
+        style="width: 100%; min-width: 210px"
+      />
 
       <!-- button -->
       <pa-button class="ml-size" style="flex: 0 0 89px" is="search" @click="FetchSaveAndFilter">
-        {{ languagePackage["search"] }}
+        {{ language === "zh-CN" ? "搜索" : "Search" }}
       </pa-button>
     </div>
     <slot name="exBtn"></slot>
@@ -118,7 +129,6 @@ const _id = randChar();
 // const emits = defineEmits(["saveAndFilter", "handleRemoveQ", "openSeniorFilter"]);
 const emits = defineEmits(["saveAndFilter", "openSeniorFilter"]);
 
-const languagePackage = inject("languagePackage") as Record<string, string>;
 const language = inject("language") as string;
 
 // const shortcuts = [
@@ -235,7 +245,7 @@ function FetchSaveAndFilter() {
   if (isTimeType(element, true)) {
     if (state.searchValue[0]) {
       filter.push({
-        fieldLabel: element.label + `-${languagePackage.value["start"]}`,
+        fieldLabel: element.label + `-${language === "zh-CN" ? "开始时间" : "Start Time"}`,
         fieldName: String(element.prop),
         conditionalType: 3,
         fieldValue: state.searchValue[0] + " 00:00:00"
@@ -243,14 +253,14 @@ function FetchSaveAndFilter() {
     }
     if (state.searchValue[1]) {
       filter.push({
-        fieldLabel: element.label + `-${languagePackage.value["end"]}`,
+        fieldLabel: element.label + `-${language === "zh-CN" ? "结束时间" : "End Time"}`,
         fieldName: String(element.prop),
         conditionalType: 5,
         fieldValue: state.searchValue[1] + " 23:59:59"
       });
     }
     if (state.searchValue[0] && state.searchValue[1] && state.searchValue[0] > state.searchValue[1]) {
-      return M_Message.danger(element.label + ` ${languagePackage.value["errorMessage"]}`);
+      return M_Message.danger(element.label + ` ${language === "zh-CN" ? "开始时间不能晚于结束时间" : "Start Time cannot be later than End Time"}`);
     }
   } else {
     filter = [

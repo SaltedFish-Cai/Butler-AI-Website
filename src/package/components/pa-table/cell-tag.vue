@@ -85,7 +85,7 @@ function findTextColor(row) {
   justify-content: center;
   align-items: center;
   width: max-content;
-  height: 2em;
+  height: 1.4em;
   border-radius: 3px;
   font-size: calc(var(--pa-size-font, 16px) - 2px);
   padding: calc(var(--pa-size-padding, 10px) / 4) calc(var(--pa-size-padding, 10px) - 2px);

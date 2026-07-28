@@ -37,7 +37,7 @@ import { computed, inject, ref, nextTick, onUnmounted, ComputedRef, useSlots, wa
  * 模块导入
  * @description 导入组件类型定义
  */
-import { ItemComponentProps, ItemComponentEmits, MenuContext, MenuGroupContext } from "../pa-menu/types";
+import { ItemComponentProps, ItemComponentEmits, MenuContext, MenuGroupContext } from "./types";
 /**
  * 模块导入
  * @description 导入全局配置类型定义

@@ -133,6 +133,7 @@ const RenderTableColumn = (slots: any): JSX.Element => {
         const name = props?.name;
         return (
           <div
+            id={_props.id + "_tab" + "_" + props?.name}
             class={className(props)}
             onClick={() => _props.changeTabs && _props.changeTabs(name, index)}
             draggable={!!_props.onDragReorder}

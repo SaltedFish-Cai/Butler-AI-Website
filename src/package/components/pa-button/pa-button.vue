@@ -1,5 +1,5 @@
 <template>
-  <button :id="id" type="button" :disabled="disabled || isLoading" :class="buttonClasses" :style="props.style" @click="btnClick">
+  <button :id="randId" type="button" :disabled="disabled || isLoading" :class="buttonClasses" :style="props.style" @click="btnClick">
     <div v-if="isLoading" class="pa-button_icon">
       <pa-icon name="butler-reset_line" class="pa-button_loading" />
     </div>
@@ -81,6 +81,7 @@ import type { PancakeGlobalConfigType } from "../pa-manager/types";
  */
 import debounce from "../tools/debounce";
 import { LanguagePackageType } from "../manager-type";
+import useRenderId from "../tools/render-id";
 /**
  * **组件属性**
  * @type `ComponentProps`
@@ -112,6 +113,12 @@ const slots = useSlots();
  * @description 从父组件注入的全局配置对象，包含语言设置等
  */
 const PancakeGlobalConfig = inject<PancakeGlobalConfigType>("PancakeGlobalConfig", {});
+/**
+ * **按钮唯一标识**
+ * @type `string`
+ * @description 按钮的唯一标识，用于自动化测试
+ */
+const randId = ref((props.id ? props.id + "_" : "") + "pa-button_" + useRenderId());
 /**
  * **显示文本**
  * @returns `string` 显示文字

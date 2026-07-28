@@ -1,13 +1,11 @@
 <template>
-  <pa-dialog v-model="state.visible" :title="languagePackage?.['Advanced']" @closed="closeMenu" size="m">
+  <pa-dialog v-model="state.visible" :title="{ 'zh-CN': '高级搜索', 'en-US': 'Advanced Search' }" @closed="closeMenu" size="m">
     <section class="pa-table_filter-list" style="height: calc(100% - 90px)">
       <template v-for="(groupItem, groupItemIndex) in state.advancedFilter.relationshipGroup" :key="groupItem.groupName">
         <div class="group">
           <div class="flex-center-between mb-size border-bottom group_top">
             <div class="flex1 group__title" style="text-align: left">{{ groupItem.groupName }} {{ groupItemIndex + 1 }}</div>
-            <pa-button v-if="groupItemIndex > 0" is="trash" size="small" @click="FilterFn.remove(groupItemIndex)">
-              {{ languagePackage?.["clenGroup"] }}
-            </pa-button>
+            <pa-button v-if="groupItemIndex > 0" is="trash" size="small" @click="FilterFn.remove(groupItemIndex)" :text="{ 'zh-CN': '删除当前组', 'en-US': 'Delete Current Group' }"> </pa-button>
           </div>
           <div class="group_bottom">
             <template v-for="(item, itemIndex) in groupItem.group" :key="item.key">
@@ -26,9 +24,7 @@
                   <div class="filter-item_name"># {{ propItem.label }}</div>
                 </template>
                 <template #Del>
-                  <pa-button class="ml0" is="trash" style="width: 100%" @click="FilterFn.removeItem(item.key, groupItemIndex)">
-                    {{ languagePackage?.["del"] }}
-                  </pa-button>
+                  <pa-button class="ml0" is="trash" style="width: 100%" @click="FilterFn.removeItem(item.key, groupItemIndex)" :text="{ 'zh-CN': '删除', 'en-US': 'Delete' }"> </pa-button>
                 </template>
               </pa-form>
               <!-- <el-form
@@ -79,33 +75,30 @@
               </div>
             </el-form> -->
               <div class="flex-center" v-if="itemIndex < groupItem.group.length - 1">
-                <span style="font-size: var(--pa-size-font, 16px)">{{ languagePackage?.["filterText"] }}：</span>
+                <pa-language style="font-size: var(--pa-size-font, 16px)" :text="{ 'zh-CN': '条件与条件关系', 'en-US': 'Conditional Relationship' }"></pa-language>
+
                 <pa-radio v-model="groupItem.groupLinkType" :ex-options="state.linkOptions"></pa-radio>
               </div>
             </template>
 
             <div class="flex-center mt-size">
-              <pa-button font="add_circle_line" plain type="primary" @click="FilterFn.addFilter(groupItemIndex)">
-                {{ languagePackage?.["addFilter"] }}
-              </pa-button>
+              <pa-button icon-name="add_circle_line" plain type="primary" @click="FilterFn.addFilter(groupItemIndex)" :text="{ 'zh-CN': '添加筛选条件', 'en-US': 'Add Filter Condition' }"> </pa-button>
             </div>
           </div>
         </div>
         <div class="flex-center" v-if="groupItemIndex < state.advancedFilter.relationshipGroup.length - 1">
-          <span style="font-size: var(--pa-size-font, 16px)">{{ languagePackage?.["groupText"] }}：</span>
+          <pa-language style="font-size: var(--pa-size-font, 16px)" :text="{ 'zh-CN': '组与组关系', 'en-US': 'Group Relationship' }"></pa-language>
           <pa-radio v-model="state.advancedFilter.relationshipGroupLinkType" :ex-options="state.linkOptions"></pa-radio>
         </div>
       </template>
       <div class="flex-center mt-size">
-        <pa-button class="mb-size" font="goods_line" @click="FilterFn.addFilterGroup" plain type="warning">
-          {{ languagePackage?.["addGroup"] }}
-        </pa-button>
+        <pa-button class="mb-size" icon-name="goods_line" @click="FilterFn.addFilterGroup" plain type="warning" :text="{ 'zh-CN': '添加筛选组', 'en-US': 'Add Filter Group' }"> </pa-button>
       </div>
     </section>
 
     <template #footer>
       <div class="flex-center">
-        <pa-button is="search" @click="submitTabsForm">{{ languagePackage?.["endterSearch"] }}</pa-button>
+        <pa-button is="search" @click="submitTabsForm" :text="{ 'zh-CN': '确认搜索', 'en-US': 'Enter Search Content' }"></pa-button>
       </div>
     </template>
   </pa-dialog>
@@ -113,9 +106,9 @@
 
 <script lang="ts" setup>
 // # Import
-import { reactive, watch, nextTick, inject } from "vue";
+import { reactive, watch, nextTick, inject, ComputedRef } from "vue";
 import { PaTableUseType } from "./types";
-import { PaOptionType, PaRefType } from "../manager-type";
+import { LanguageKey, PaOptionType, PaRefType } from "../manager-type";
 import { PaFormItemType } from "../pa-form/types";
 import { M_MessageBox } from "../feedback";
 
@@ -127,11 +120,11 @@ type SeniorFilterPropsType = {
 };
 // # Var
 const props = defineProps<SeniorFilterPropsType>();
-const languagePackage = inject("languagePackage") as Record<string, string>;
+const language = inject("language") as ComputedRef<LanguageKey>;
 
 const emits = defineEmits(["update:modelValue", "callback", "saveAndFilter"]);
 
-let ruleTabsFormRef: Array<{ name: string; ref: PaRefType.FormV2 }> = [];
+let ruleTabsFormRef: Array<{ name: string; ref: PaRefType.Form }> = [];
 const setAllFormRef = (ref: any, name: string) => {
   const its = ruleTabsFormRef.filter(item => item.name == name);
   if (its.length == 0 && ref) {
@@ -160,9 +153,15 @@ const _formBConfig: Array<PaFormItemType> = [
     prop: "conditionalType",
     type: "select",
     colSpan: 7,
-    placeholder: languagePackage.value?.["selectConditional"]
+    placeholder: { "zh-CN": "请选择关系类型", "en-US": "Please select the relationship type" }[language.value]
   },
-  { label: "Label-Text2", prop: "fieldValue", type: "input", colSpan: 7, placeholder: languagePackage.value?.["inputAdvanced"] },
+  {
+    label: "Label-Text2",
+    prop: "fieldValue",
+    type: "input",
+    colSpan: 7,
+    placeholder: { "zh-CN": "请输入搜索内容", "en-US": "Please input the search content" }[language.value]
+  },
   { label: "Label-Text2", prop: "Del", type: "slot", colSpan: 3, required: false }
 ];
 
@@ -171,7 +170,7 @@ const FilterFn = {
   addFilterGroup() {
     const key = String(Number(new Date()));
     const upData: PaTableUseType.RelationshipGroupType = {
-      groupName: languagePackage.value?.["group"],
+      groupName: { "zh-CN": "搜索条件组", "en-US": "Filter Group" }[language.value],
       group: [{ fieldValue: "", conditionalType: 0, key }],
       groupLinkType: "1"
     };
@@ -193,10 +192,9 @@ const FilterFn = {
   remove(pIndex: number, tip = true) {
     if (tip) {
       M_MessageBox.confirm({
-        message: languagePackage.value?.["isDelGroup"],
-        title: languagePackage.value?.["tip"],
+        message: { "zh-CN": "是否删除当前条件组", "en-US": "Are you sure you want to delete the current condition group?" },
         type: "danger",
-        confirmButtonText: languagePackage.value?.["enterDel"],
+        confirmButtonText: { "zh-CN": "删除", "en-US": "Delete" },
         onConfirm: () => {
           const item = state.advancedFilter.relationshipGroup[pIndex];
           for (let index = 0; index < item.group.length; index++) {
@@ -226,7 +224,7 @@ const FilterFn = {
 
 // #Function 暴露表单校验方法
 async function submitTabsForm() {
-  const _ruleTabsFormRef: Array<PaRefType.FormV2> = ruleTabsFormRef.map(item => item.ref);
+  const _ruleTabsFormRef: Array<PaRefType.Form> = ruleTabsFormRef.map(item => item.ref);
   if (_ruleTabsFormRef.length == 0) {
     return undefined;
   }

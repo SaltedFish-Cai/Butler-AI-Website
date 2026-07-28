@@ -1,7 +1,7 @@
 .pa-pagination {
   display: flex;
   align-items: center;
-  color: var(--pa-color);
+  color: var(--pa-color-send-font);
   font-size: var(--pa-size-font, 13px);
   .m-pagination-total {
     font-size: calc(var(--pa-size-font, 13px) - 1px);
@@ -32,7 +32,7 @@
     border: none;
     border-radius: var(--pa-size-radius);
     background: transparent;
-    color: var(--pa-color);
+    color: var(--pa-color-send-font);
     cursor: pointer;
     transition: all 0.3s;
     font-size: var(--pa-size-font, 13px);
@@ -58,7 +58,7 @@
     min-width: 32px;
     height: 32px;
     cursor: pointer;
-    color: var(--pa-color);
+    color: var(--pa-color-send-font);
     &:hover {
       color: var(--pa-color-primary);
     }

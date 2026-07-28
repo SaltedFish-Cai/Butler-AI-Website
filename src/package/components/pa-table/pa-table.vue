@@ -93,7 +93,7 @@
         <div v-if="state.flatTableData.length == 0 && state.tableLoadingSize != 100" class="pa-table_body_first_loading">
           <m-icon class="loading_font" name="loading_line"></m-icon>
         </div>
-        <pa-scrollbar ref="mScrollbarListRef" :useScrollY="!useSticky" @scroll-child-change="handleScrollChildChange" :onDirectlyScroll="directlyScroll">
+        <pa-scrollbar ref="mScrollbarListRef" :useScrollY="!useSticky" @scroll-child-change="handleScrollChildChange" :onDirectlyScroll="directlyScroll" :showThumbX="false">
           <!-- content -->
           <div
             class="pa-table_body_content"
@@ -106,79 +106,145 @@
               '--body_content_col_hover_index': -1
             }"
           >
-            <template v-for="(item, index) in showTableList" :key="index">
-              <div class="pa-table_body_content_rows" :style="{ opacity: state.flatTableData.length > 0 ? 1 : 0 }">
-                <template v-for="row in item" :key="row[rowKey]">
-                  <div v-if="row.type == 'more'" class="m-scrollbar-more" :class="{ 'm-scrollbar-more_ing': state.listenCellInViewIng }" :id="`${id}-more-${row.name}`">
-                    <!-- PageNum:{{ state.PageNum }} ,type:{{ row.type }} ,index:{{ index }} -->
-                  </div>
-                  <template v-if="row.type != 'more' && index + 1 <= Number(state.PageNum) + 2 && index + 1 >= Number(state.PageNum) - 3">
-                    <div v-if="row.type == 'empty' || index > Number(state.PageNum) + 2 || index < Number(state.PageNum) - 3" class="pa-table_body_content_cell_empty"></div>
-
-                    <div v-else class="pa-table_body_content_cell" :class="[row.isOpenChild && (useChildren || useExpand) ? 'open-child' : '']">
-                      <mLightTableCell
-                        :structure="tableStructure"
-                        :row="row"
-                        :rowKey="rowKey"
-                        :useExpand="useExpand"
-                        :rowIndex="row.rowIndex"
-                        :display="display"
-                        :useTableIndex="useTableIndex"
-                        :showSelectList="state.showSelectList"
-                        :useChildren="useChildren"
-                        :setCellWidthIng="state.setCellWidthIng"
-                        :useAverageWidth="state.useAverageWidth"
-                        @change-row-status="changeRowStatus"
-                      >
-                        <template v-for="slot in Object.keys($slots)" #[slot]="scope">
-                          <slot :name="slot" v-bind="scope"></slot>
-                        </template>
-                      </mLightTableCell>
-                    </div>
-
-                    <template v-if="(row.children?.length && useChildren) || useExpand">
-                      <transition name="mo-animation-fadeIn">
-                        <div v-if="row.isOpenChild && index <= Number(state.PageNum) + 2 && index >= Number(state.PageNum) - 2" class="pa-table_body_content_children_box">
-                          <template v-if="useChildren">
-                            <template v-for="ch in row.children" :key="ch[rowKey]">
-                              <div class="pa-table_body_content_cell">
-                                <mLightTableCell
-                                  :structure="tableStructure"
-                                  :row="ch"
-                                  :parentRowKey="row[props.rowKey]"
-                                  :rowKey="rowKey"
-                                  :useExpand="useExpand"
-                                  :rowIndex="ch.rowIndex"
-                                  :display="display"
-                                  :useTableIndex="useTableIndex"
-                                  :setCellWidthIng="state.setCellWidthIng"
-                                  :useAverageWidth="state.useAverageWidth"
-                                  :parentRow="row"
-                                >
-                                  <template v-for="slot in Object.keys($slots)" #[slot]="scope">
-                                    <slot :name="slot" v-bind="scope"></slot>
-                                  </template>
-                                </mLightTableCell>
-                              </div>
-                            </template>
-                          </template>
-
-                          <template v-else-if="useExpand">
-                            <slot name="Expand"></slot>
-                          </template>
-                        </div>
-                      </transition>
+            <!-- 虚拟滚动模式（无限滚动） -->
+            <div
+              v-if="infiniteScroll && !state.showSelectList && virtualFlatData.length > 0"
+              class="pa-table__virtual-space"
+              :style="{ height: virtualTotalHeight + 'px', position: 'relative', minHeight: '100%' }"
+            >
+              <div v-for="vi in visibleItems" :key="vi.key" :ref="el => measureRow(el, vi.index)" :style="{ position: 'absolute', top: vi.top + 'px', left: 0, right: 0, zIndex: 1 }">
+                <div class="pa-table_body_content_cell" :class="[vi.row.isOpenChild && (useChildren || useExpand) ? 'open-child' : '']">
+                  <mLightTableCell
+                    :structure="tableStructure"
+                    :row="vi.row"
+                    :rowKey="rowKey"
+                    :useExpand="useExpand"
+                    :rowIndex="vi.row.rowIndex"
+                    :display="display"
+                    :useTableIndex="useTableIndex"
+                    :showSelectList="state.showSelectList"
+                    :useChildren="useChildren"
+                    :setCellWidthIng="state.setCellWidthIng"
+                    :useAverageWidth="state.useAverageWidth"
+                    @change-row-status="changeRowStatus"
+                  >
+                    <template v-for="slot in Object.keys($slots)" #[slot]="scope">
+                      <slot :name="slot" v-bind="scope"></slot>
                     </template>
-                  </template>
+                  </mLightTableCell>
+                </div>
+
+                <template v-if="(vi.row.children?.length && useChildren) || useExpand">
+                  <transition name="mo-animation-fadeIn">
+                    <div v-if="vi.row.isOpenChild" class="pa-table_body_content_children_box">
+                      <template v-if="useChildren">
+                        <template v-for="ch in vi.row.children" :key="ch[rowKey]">
+                          <div class="pa-table_body_content_cell">
+                            <mLightTableCell
+                              :structure="tableStructure"
+                              :row="ch"
+                              :parentRowKey="vi.row[props.rowKey]"
+                              :rowKey="rowKey"
+                              :useExpand="useExpand"
+                              :rowIndex="ch.rowIndex"
+                              :display="display"
+                              :useTableIndex="useTableIndex"
+                              :setCellWidthIng="state.setCellWidthIng"
+                              :useAverageWidth="state.useAverageWidth"
+                              :parentRow="vi.row"
+                            >
+                              <template v-for="slot in Object.keys($slots)" #[slot]="scope">
+                                <slot :name="slot" v-bind="scope"></slot>
+                              </template>
+                            </mLightTableCell>
+                          </div>
+                        </template>
+                      </template>
+
+                      <template v-else-if="useExpand">
+                        <slot name="Expand"></slot>
+                      </template>
+                    </div>
+                  </transition>
                 </template>
               </div>
+            </div>
+
+            <template v-if="!infiniteScroll || state.showSelectList">
+              <template v-for="(item, index) in showTableList" :key="index">
+                <div class="pa-table_body_content_rows" :style="{ opacity: state.flatTableData.length > 0 ? 1 : 0 }">
+                  <template v-for="row in item" :key="row[rowKey]">
+                    <div v-if="row.type == 'more'" class="m-scrollbar-more" :class="{ 'm-scrollbar-more_ing': state.listenCellInViewIng }" :id="`${id}-more-${row.name}`">
+                      <!-- PageNum:{{ state.PageNum }} ,type:{{ row.type }} ,index:{{ index }} -->
+                    </div>
+                    <template v-if="row.type != 'more' && index + 1 <= Number(state.PageNum) + 2 && index + 1 >= Number(state.PageNum) - 3">
+                      <div v-if="row.type == 'empty' || index > Number(state.PageNum) + 2 || index < Number(state.PageNum) - 3" class="pa-table_body_content_cell_empty"></div>
+
+                      <div v-else class="pa-table_body_content_cell" :class="[row.isOpenChild && (useChildren || useExpand) ? 'open-child' : '']">
+                        <mLightTableCell
+                          :structure="tableStructure"
+                          :row="row"
+                          :rowKey="rowKey"
+                          :useExpand="useExpand"
+                          :rowIndex="row.rowIndex"
+                          :display="display"
+                          :useTableIndex="useTableIndex"
+                          :showSelectList="state.showSelectList"
+                          :useChildren="useChildren"
+                          :setCellWidthIng="state.setCellWidthIng"
+                          :useAverageWidth="state.useAverageWidth"
+                          @change-row-status="changeRowStatus"
+                        >
+                          <template v-for="slot in Object.keys($slots)" #[slot]="scope">
+                            <slot :name="slot" v-bind="scope"></slot>
+                          </template>
+                        </mLightTableCell>
+                      </div>
+
+                      <template v-if="(row.children?.length && useChildren) || useExpand">
+                        <transition name="mo-animation-fadeIn">
+                          <div v-if="row.isOpenChild && index <= Number(state.PageNum) + 2 && index >= Number(state.PageNum) - 2" class="pa-table_body_content_children_box">
+                            <template v-if="useChildren">
+                              <template v-for="ch in row.children" :key="ch[rowKey]">
+                                <div class="pa-table_body_content_cell">
+                                  <mLightTableCell
+                                    :structure="tableStructure"
+                                    :row="ch"
+                                    :parentRowKey="row[props.rowKey]"
+                                    :rowKey="rowKey"
+                                    :useExpand="useExpand"
+                                    :rowIndex="ch.rowIndex"
+                                    :display="display"
+                                    :useTableIndex="useTableIndex"
+                                    :setCellWidthIng="state.setCellWidthIng"
+                                    :useAverageWidth="state.useAverageWidth"
+                                    :parentRow="row"
+                                  >
+                                    <template v-for="slot in Object.keys($slots)" #[slot]="scope">
+                                      <slot :name="slot" v-bind="scope"></slot>
+                                    </template>
+                                  </mLightTableCell>
+                                </div>
+                              </template>
+                            </template>
+
+                            <template v-else-if="useExpand">
+                              <slot name="Expand"></slot>
+                            </template>
+                          </div>
+                        </transition>
+                      </template>
+                    </template>
+                  </template>
+                </div>
+              </template>
             </template>
 
             <template v-if="state.tableLoadStatus"> </template>
           </div>
           <div v-if="!state.flatTableData.length && state.tableLoadEndStatus" class="empty empty-table" style="text-align: center">
             <pa-icon name="empty" style="font-size: 40px"></pa-icon>
-            {{ languagePackage["empty"] }}
+            <pa-language :text="{ 'zh-CN': '暂无数据', 'en-US': 'No Data' }"></pa-language>
           </div>
           <!-- footer -->
           <div v-if="(useSummary && !usePagination) || summaryFunction" class="pa-table_body_summary">
@@ -226,12 +292,13 @@
                 iconName="transfer_horizontal_line"
                 style="--pa-size-padding: 8px; --pa-size-font: 14px; --pa-size-height: 28px"
               >
-                {{ state.showSelectList ? languagePackage["switchSelect"] : languagePackage["switchInvert"] }}
+                <pa-language v-if="state.showSelectList" :text="{ 'zh-CN': '切换全选', 'en-US': 'Switch Selection' }"></pa-language>
+                <pa-language v-else :text="{ 'zh-CN': '切换至已选择', 'en-US': 'Switch To Selected' }"></pa-language>
               </pa-button>
               <div class="ml-size">
-                {{ languagePackage["selected"] }}
+                <pa-language :text="{ 'zh-CN': '已选择', 'en-US': 'Selected' }"></pa-language>
                 <span class="bold-text ml3 mr3">{{ isTableSelectAll ? state.pageable.total : selectedRowsLength }}</span>
-                {{ languagePackage["piece"] }}
+                <pa-language :text="{ 'zh-CN': '件', 'en-US': 'Piece' }"></pa-language>
               </div>
             </template>
           </slot>
@@ -267,7 +334,7 @@
  * 模块导入
  * @description 导入 Vue 核心响应式 API
  */
-import { ref, Ref, useTemplateRef, onBeforeMount, computed, watch, provide, onBeforeUnmount, nextTick, inject, onMounted, ComputedRef } from "vue";
+import { ref, Ref, useTemplateRef, onBeforeMount, computed, watch, provide, onBeforeUnmount, onUnmounted, nextTick, inject, onMounted, ComputedRef } from "vue";
 /**
  * 模块导入
  * @description 导入表格单元格子组件
@@ -492,156 +559,7 @@ const parentScrollbarRef = inject("parentScrollbarRef");
  * @description 当前选中的语言
  */
 const languageValue = computed(() => PancakeGlobalConfig.value?.language || "zh-CN");
-/**
- * 语言包
- * @type ComputedRef
- * @description 当前语言的文本配置
- */
-const languagePackage = computed(() => {
-  return languageValue.value === "zh-CN"
-    ? {
-        required: "此项为必填项",
-        export: "导出报表",
-        refresh: "刷新",
-        filter: "筛选",
-        searchFilter: "搜索条件",
-        search: "搜索",
-        clean: "清除",
-        del: "删除",
-        filterText: "条件与条件关系",
-        addFilter: "添加新条件",
-        groupText: "组与组关系",
-        group: "搜索条件组",
-        addGroup: "新增条件组",
-        enterSearch: "确认搜索",
-        Advanced: "高级搜索",
-        clenGroup: "删除当前组",
-        tip: "温馨提示：",
-        isDelGroup: "是否删除当前条件组?",
-        enterDel: "确认删除",
-        selectAdvanced: "请选择需要搜索的字段",
-        inputAdvanced: "请输入搜索内容",
-        selectConditional: "请选择关系类型",
-        empty: "暂无数据",
-        selectAll: "一键全选",
-        selectInvert: "取消全选",
-        switchSelect: "切换全选",
-        switchInvert: "切换至已选择",
-        selected: "已选择",
-        piece: "条",
-        all: "全部",
-        warning: "请检查配置或权限",
-        colSetting: "列设置",
-        col: "列",
-        inputPlaceholder: "请输入筛选条件",
-        selectPlaceholder: "请选择筛选条件",
-        startTime: "开始时间",
-        endTime: "结束时间",
-        editAdvancedSearch: "编辑高级搜索",
-        noFilter: "无筛选条件",
-        fixedState: "固定状态",
-        clickChangeFixedState: "点击切换固定状态",
-        visibleState: "显示状态",
-        clickChangeVisibleState: "点击切换显示状态",
-        visible: "显示",
-        hide: "隐藏",
-        noCol: "暂无可配置列",
-        save: "保存配置",
-        fixedLeft: "固定左侧",
-        fixedRight: "固定右侧",
-        fixedNone: "不固定",
-        start: "开始",
-        end: "结束",
-        errorMessage: "设置错误：开始时间-需小于-结束时间",
-        today: "今天",
-        yesterday: "昨天",
-        aWeekAgo: "一周前",
-        useAdvancedSearch: "使用高级搜索",
-        more: "更多",
-        total: "合计",
-        requiredMessage: "此项为必填项",
-        input: "请输入",
-        select: "请选择",
-        records: "条",
-        records2: "条/页",
-        records3: "页",
-        jumpTo: "前往",
-        isClearAllFilters: "是否删除所有筛选项?",
-        tips: "温馨提示",
-        confirm: "确认"
-      }
-    : {
-        required: "This Item Is Mandatory",
-        export: "Export Table",
-        refresh: "Refresh",
-        filter: "Filter",
-        searchFilter: "Search Filter",
-        search: "Search",
-        clean: "Clean",
-        del: "Delete",
-        filterText: "Filter Conditions And Condition Relationships",
-        addFilter: "Add New Condition",
-        groupText: "Group And Group Relationships",
-        group: "Search Condition Group",
-        addGroup: "Add New Condition Group",
-        enterSearch: "Confirm Search",
-        Advanced: "Advanced Search",
-        clenGroup: "Delete Current Group",
-        tip: "Tips：",
-        isDelGroup: "Whether To Delete The Current Condition Group?",
-        enterDel: "Confirm Delete",
-        selectAdvanced: "Please Select The Fields To Search",
-        inputAdvanced: "Please Enter The Search Content",
-        selectConditional: "Please Select The Relationship Type",
-        empty: "No Data",
-        selectAll: "Select All",
-        selectInvert: "Invert Selection",
-        switchSelect: "Switch Selection",
-        switchInvert: "Switch To Selected",
-        selected: "Selected",
-        piece: "Piece",
-        all: "All",
-        warning: "Please Check The Configuration Or Permissions",
-        colSetting: "Column Settings",
-        col: "Column",
-        inputPlaceholder: "Please Enter Filter Conditions",
-        selectPlaceholder: "Please Select Filter Conditions",
-        startTime: "Start Time",
-        endTime: "End Time",
-        editAdvancedSearch: "Edit Advanced Search",
-        noFilter: "No Filter Conditions",
-        fixedState: "Fixed State",
-        clickChangeFixedState: "Click To Switch Fixed State",
-        visibleState: "Visible State",
-        clickChangeVisibleState: "Click To Switch Visible State",
-        visible: "Visible",
-        hide: "Hide",
-        noCol: "No Columns To Configure",
-        save: "Save Configuration",
-        fixedLeft: "Fixed Left",
-        fixedRight: "Fixed Right",
-        fixedNone: "Not Fixed",
-        start: "Start",
-        end: "End",
-        errorMessage: "Setting Error: Start Time - Less Than - End Time",
-        today: "Today",
-        yesterday: "Yesterday",
-        aWeekAgo: "A Week Ago",
-        useAdvancedSearch: "Use Advanced Search",
-        more: "More",
-        total: "Total",
-        requiredMessage: "This Item Is Mandatory",
-        input: "Please Input ",
-        select: "Please Select ",
-        records: "",
-        records2: "/Page",
-        records3: "",
-        jumpTo: "Jump To",
-        isClearAllFilters: "Is Clear All Filters?",
-        tips: "Tips",
-        confirm: "Confirm"
-      };
-});
+
 /**
  * 语言
  * @type ComputedRef<string>
@@ -686,14 +604,13 @@ const {
   mScrollbarListRef,
   isIntersectingList,
   isInViewList,
-  infiniteScroll,
-  languagePackage
+  infiniteScroll
 });
 /**
  * 滚动钩子
  * @description 初始化表格滚动相关钩子
  */
-const { isLeft, isRight, scrollDirectionY, handleSizeChange, handleCurrentChange, refreshTable, directlyScroll } = useScrollHooks(props, state, {
+const { isLeft, isRight, scrollDirectionY, virtualScrollTop, virtualBodyHeight, handleSizeChange, handleCurrentChange, refreshTable, directlyScroll } = useScrollHooks(props, state, {
   isScrollHeaderIng,
   headerBoxRef,
   mScrollbarListRef,
@@ -739,6 +656,140 @@ const showTableList: Ref<Array<Array<PaTableUseType.PaTableInDataType>>> = compu
   if (state.showSelectList) return [state.selectTableData];
   return state.tableData;
 });
+
+// ═══════════════════════════════════════════════
+// 虚拟滚动（无限滚动模式）- 动态行高
+// ═══════════════════════════════════════════════
+
+/** 虚拟滚动额外缓冲行数 */
+const VIRTUAL_OVERSCAN = 5;
+/** 虚拟滚动默认行高（ResizeObserver 测量前的初始值） */
+const VIRTUAL_DEFAULT_ROW_HEIGHT = 48;
+
+/** 虚拟滚动 — 扁平化数据行（过滤 "more" 和 "empty" 类型的占位行） */
+const virtualFlatData = computed<PaTableUseType.PaTableInDataType[]>(() => {
+  if (state.showSelectList) return [];
+  const result: PaTableUseType.PaTableInDataType[] = [];
+  for (const page of state.tableData) {
+    if (!page) continue;
+    for (const row of page) {
+      if (row.type === "more" || row.type === "empty") continue;
+      result.push(row);
+    }
+  }
+  return result;
+});
+
+/**
+ * 虚拟滚动 — 每行的实际高度
+ * @description 索引与 virtualFlatData 对齐，通过 ResizeObserver 动态测量
+ */
+const rowHeights = ref<number[]>([]);
+
+/** 当数据量变化时初始化/扩展 rowHeights */
+watch(
+  () => virtualFlatData.value.length,
+  newLen => {
+    while (rowHeights.value.length < newLen) {
+      rowHeights.value.push(VIRTUAL_DEFAULT_ROW_HEIGHT);
+    }
+  },
+  { immediate: true }
+);
+
+/** 虚拟滚动 — 累计顶部偏移（accumulatedTops[i] = 第 i 行的 top 值） */
+const accumulatedTops = computed(() => {
+  const tops: number[] = [];
+  let currentTop = 0;
+  for (let i = 0; i < rowHeights.value.length; i++) {
+    tops.push(currentTop);
+    currentTop += rowHeights.value[i];
+  }
+  return tops;
+});
+
+/** 虚拟滚动 — 数据总高度 */
+const virtualTotalHeight = computed(() => {
+  const tops = accumulatedTops.value;
+  if (!tops.length) return 0;
+  const lastHeight = rowHeights.value[rowHeights.value.length - 1] || 0;
+  return tops[tops.length - 1] + lastHeight;
+});
+
+/** 虚拟滚动 — 二分查找可视范围 */
+const visibleRange = computed(() => {
+  const count = virtualFlatData.value.length;
+  if (!virtualBodyHeight.value || !count) return { start: 0, end: 0 };
+  const st = virtualScrollTop.value;
+  const bh = virtualBodyHeight.value;
+  const tops = accumulatedTops.value;
+
+  // 二分查找第一个 top > st 的索引
+  let lo = 0,
+    hi = tops.length;
+  while (lo < hi) {
+    const mid = (lo + hi) >>> 1;
+    if (tops[mid] <= st) lo = mid + 1;
+    else hi = mid;
+  }
+  const start = Math.max(0, lo - 1 - VIRTUAL_OVERSCAN);
+
+  // 二分查找第一个 top > st + bh 的索引
+  const bottom = st + bh;
+  lo = 0;
+  hi = tops.length;
+  while (lo < hi) {
+    const mid = (lo + hi) >>> 1;
+    if (tops[mid] <= bottom) lo = mid + 1;
+    else hi = mid;
+  }
+  const end = Math.min(count, lo + VIRTUAL_OVERSCAN);
+
+  return { start, end };
+});
+
+/** 虚拟滚动 — 可视区域内的行数据（含 top 偏移） */
+const visibleItems = computed(() => {
+  const data = virtualFlatData.value;
+  const tops = accumulatedTops.value;
+  const { start, end } = visibleRange.value;
+  const items: { row: PaTableUseType.PaTableInDataType; top: number; index: number; key: number | string }[] = [];
+  for (let i = start; i < end && i < tops.length; i++) {
+    items.push({
+      row: data[i],
+      top: tops[i],
+      index: i,
+      key: (data[i] as any)[props.rowKey] ?? i
+    });
+  }
+  return items;
+});
+
+/** ResizeObserver — 实际测量每行高度 */
+let rowObserver: ResizeObserver | null = null;
+onMounted(() => {
+  rowObserver = new ResizeObserver(entries => {
+    for (const entry of entries) {
+      const idx = (entry.target as any).__virtualRowIndex as number;
+      if (typeof idx !== "number" || idx < 0 || idx >= rowHeights.value.length) continue;
+      const h = entry.contentRect.height;
+      if (h > 0 && rowHeights.value[idx] !== h) {
+        rowHeights.value[idx] = h;
+      }
+    }
+  });
+});
+onUnmounted(() => {
+  rowObserver?.disconnect();
+  rowObserver = null;
+});
+
+/** 虚拟滚动 — 模板 ref 回调，绑定元素到 ResizeObserver */
+function measureRow(el: any, index: number) {
+  if (!el || !(el instanceof Element) || !rowObserver) return;
+  (el as any).__virtualRowIndex = index;
+  rowObserver.observe(el);
+}
 /**
  * 注入 getTableList
  * @description 提供获取表格列表方法
@@ -753,10 +804,6 @@ provide("handleCellMouseEnter", handleCellMouseEnter);
 provide("handleCellMouseLeave", handleCellMouseLeave);
 provide("tableCellChange", (data: PaTableUseType.dataType) => emits("tableCellChange", data));
 provide("validateField", validateField);
-provide(
-  "languagePackage",
-  computed(() => PancakeGlobalConfig.value?.language?.package?.["table"] || {})
-);
 provide(
   "language",
   computed(() => PancakeGlobalConfig.value?.language || "zh-CN")
@@ -830,6 +877,7 @@ onMounted(() => {
 function handleScrollChildChange({ bodyHeight, bodyWidth, useScrollX }) {
   bodyContentHeight.value = bodyHeight;
   bodyContentWidth.value = bodyWidth;
+  virtualBodyHeight.value = bodyHeight;
   if (useScrollX) {
     isLeft.value = useScrollX;
     isRight.value = !useScrollX;
@@ -998,6 +1046,35 @@ watch(
     state.oldPageIndex = showIndexNumber;
   }, 50),
   { deep: true }
+);
+
+/**
+ * 虚拟滚动 — 滚动到底部时自动加载下一页
+ * @description 当滚动位置接近已加载数据底部时，触发加载更多
+ */
+const LOAD_MORE_THRESHOLD = 300; // px
+watch(
+  [() => virtualScrollTop.value, () => virtualBodyHeight.value, () => virtualFlatData.value.length],
+  debounce(() => {
+    if (!infiniteScroll.value) return;
+    if (state.showSelectList) return;
+    if (state.tableLoadStatus || state.tableLoadEndStatus) return;
+    const st = virtualScrollTop.value;
+    const bh = virtualBodyHeight.value;
+    const totalH = virtualTotalHeight.value;
+    if (!bh || !totalH) return;
+    if (st + bh >= totalH - LOAD_MORE_THRESHOLD) {
+      // 计算需要加载的下一页页码
+      const loadedCount = virtualFlatData.value.length;
+      const nextPage = Math.ceil(loadedCount / state.pageable.PageSize) + 1;
+      const maxPage = Math.ceil(state.pageable.total / state.pageable.PageSize);
+      if (state.maxPage != 0 && nextPage > state.maxPage) return;
+      if (state.tableData[nextPage - 1]?.length) return; // 该页已加载
+      getTableList({ Page: { PageNum: nextPage } });
+      state.PageNum = nextPage;
+    }
+  }, 100),
+  { deep: false }
 );
 /**
  * 监听视窗内元素列表

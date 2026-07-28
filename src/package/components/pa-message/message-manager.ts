@@ -12,7 +12,7 @@ import MMessage from "./pa-message.vue";
  * 模块导入
  * @description 导入消息相关类型
  */
-import type { MessageOptions, MessageInstance, MessageManagerType } from "./types.d.ts";
+import type { MessageOptions, MessageInstance, MessageManagerType } from "./types";
 
 class MessageManagerTypeImpl implements MessageManagerType {
   /**
@@ -141,7 +141,7 @@ class MessageManagerTypeImpl implements MessageManagerType {
     Object.keys(MessagesByPosition).forEach(position => {
       const Messages = MessagesByPosition[position];
       let offset = 0;
-      Messages.forEach((Message) => {
+      Messages.forEach(Message => {
         const msgOffset = Message.options.offset;
         if (msgOffset != null && msgOffset > offset) {
           offset = msgOffset;

@@ -1,8 +1,8 @@
 <template>
   <section :id="id" class="pa-scrollbar" :class="[prop.class, prop.styleMode === 'color' ? 'color-scrollbar' : '']" :style="rootStyle">
     <div class="pa-scrollbar-content" ref="scrollbarContentRef">
-      <div v-if="useShadow" class="is-scroll-top" :style="scrollTopShadowStyle"></div>
-      <div v-if="useShadow" class="is-scroll-left" :style="scrollLeftShadowStyle"></div>
+      <div v-if="useShadow && showThumbY" class="is-scroll-top" :style="scrollTopShadowStyle"></div>
+      <div v-if="useShadow && showThumbX" class="is-scroll-left" :style="scrollLeftShadowStyle"></div>
       <div :id="id + '_scrollbar_body'" class="scrollbar-body" :class="{ 'scrollbar-body-y': prop.useScrollY, 'scrollbar-body-x': prop.useScrollX }" :style="contentStyle" ref="scrollbarBodyRef">
         <div class="scrollbar-body-content" :class="paddingContentClasses" :style="paddingBorderVars" ref="scrollbarBodyContentRef">
           <div v-if="border?.includes('top') || border?.includes('all')" class="pa-border_top"></div>
@@ -16,10 +16,10 @@
           <slot></slot>
         </div>
       </div>
-      <div v-if="useShadow" class="is-scroll-end" :style="scrollEndShadowStyle"></div>
-      <div v-if="useShadow" class="is-scroll-right" :style="scrollRightShadowStyle"></div>
+      <div v-if="useShadow && showThumbY" class="is-scroll-end" :style="scrollEndShadowStyle"></div>
+      <div v-if="useShadow && showThumbX" class="is-scroll-right" :style="scrollRightShadowStyle"></div>
     </div>
-    <div v-if="useVertical && prop.useScrollY && prop.showThumb" class="scrollbar__bar is-vertical" :class="[useHiddenThumb ? 'hidden-thumb' : '']">
+    <div v-if="useVertical && prop.useScrollY && prop.showThumbY" class="scrollbar__bar is-vertical" :class="[useHiddenThumb ? 'hidden-thumb' : '']">
       <div class="scrollbar__thumb" ref="verticalThumbRef" :style="{ height: verticalThumb + 'px' }"></div>
     </div>
     <div v-if="useHorizontal && prop.useScrollX && prop.showThumb" class="scrollbar__bar is-horizontal" :class="[useHiddenThumb ? 'hidden-thumb' : '']">
@@ -102,11 +102,13 @@ const prop = withDefaults(defineProps<ComponentProps>(), {
   useScrollY: true,
   useScrollX: true,
   showThumb: true,
+  showThumbX: true,
+  showThumbY: true,
   useClosePopover: true,
   styleMode: "default",
   defaultScrollHorizontalThumb: 0,
   defaultScrollVerticalThumb: 0,
-  useHiddenThumb: true,
+  useHiddenThumb: false,
   paddingWidth: "var(--pa-size-padding, 10px)"
 });
 /**
@@ -559,7 +561,10 @@ const scrollTopShadowStyle = computed(() => ({ opacity: scrollVerticalThumb.valu
  * @description 计算左侧阴影的透明度样式（避免模板内联表达式）
  */
 const scrollLeftShadowStyle = computed(() => {
-  const data = { opacity: scrollHorizontalThumb.value > 5 ? "1" : "0", "--scrollbar-content": (scrollbarContentRef.value?.clientHeight || 0) + "px" };
+  const data = {
+    opacity: scrollHorizontalThumb.value > 5 ? "1" : "0",
+    "--scrollbar-content": (scrollbarContentRef.value?.clientHeight || 0) + "px"
+  };
   return data;
 });
 /**
@@ -572,7 +577,10 @@ const scrollEndShadowStyle = computed(() => ({ opacity: isScrollEnd.value ? "0" 
  * @description 计算右侧阴影的透明度样式（避免模板内联表达式）
  */
 const scrollRightShadowStyle = computed(() => {
-  const data = { opacity: isScrollRight.value ? "0" : "1", "--scrollbar-content": (scrollbarContentRef.value?.clientHeight || 0) + "px" };
+  const data = {
+    opacity: isScrollRight.value ? "0" : "1",
+    "--scrollbar-content": (scrollbarContentRef.value?.clientHeight || 0) + "px"
+  };
   return data;
 });
 /**

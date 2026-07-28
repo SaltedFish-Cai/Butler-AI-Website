@@ -7,7 +7,6 @@
 
   &:hover {
     background-color: var(#{$var-hover});
-    box-shadow: 0px 0px 5px 3px var(#{$var-shadow});
   }
 }
 
@@ -131,7 +130,6 @@
     cursor: not-allowed;
     color: var(--pa-color-info-light-1) !important;
     border-color: var(--pa-color-border);
-    box-shadow: none;
   }
 }
 
@@ -139,7 +137,6 @@
   cursor: not-allowed;
   color: var(--pa-color-info-light-1) !important;
   border-color: var(--pa-color-border);
-  box-shadow: none;
 }
 
 .pa-button.use-line {
@@ -156,7 +153,6 @@
   &:hover {
     color: var(--pa-button-color) !important;
     opacity: 1;
-    box-shadow: none;
   }
 }
 
@@ -178,9 +174,7 @@
   border-radius: var(--pa-size-radius, 3px);
   transition: var(--pa-animation-time, 0.2s);
   border-bottom-right-radius: 0;
-  &:hover {
-    box-shadow: var(--pa-color-shadow);
-  }
+
   > .pa-button {
     border: none;
     margin: 0;
@@ -190,7 +184,6 @@
 
     &:hover {
       z-index: 1;
-      box-shadow: none;
       transform: translateY(0px);
     }
   }

@@ -1,6 +1,6 @@
 <template>
   <!-- 表配置 -->
-  <pa-drawer :title="languagePackage?.['colSetting'] || ''" v-model="drawerVisible" @closed="handleCloseDrawer" width="680px">
+  <pa-drawer :title="{ 'zh-CN': '列设置', 'en-US': 'Column Settings' }" v-model="drawerVisible" @closed="handleCloseDrawer" width="680px">
     <section :id="'table-col-' + id" class="p-all-size" style="height: calc(100% - var(--pa-size-padding, 10px) * 2)">
       <pa-table
         :id="id + '-table-col-setting'"
@@ -19,13 +19,25 @@
             v-model="scope.row.searchCriteria"
             type="multiple-select"
             :exOptions="_exOptions[scope.row.prop] as PaOptionType.SelectList"
-            :placeholder="languagePackage?.['selectPlaceholder']"
+            :placeholder="{ 'zh-CN': '请选择筛选条件', 'en-US': 'Please Select Filter Conditions' }"
           ></pa-select>
 
           <div v-else-if="isTimeType(scope.row, display)" class="flex-center">
-            <pa-time v-model="scope.row.searchCriteria[0]" type="date-picker" :placeholder="languagePackage['startTime']" :disabledDateFn="time => disabledStart(time)" teleport-in-container />
+            <pa-time
+              v-model="scope.row.searchCriteria[0]"
+              type="date-picker"
+              :placeholder="{ 'zh-CN': '开始时间', 'en-US': 'Start Time' }"
+              :disabledDateFn="time => disabledStart(time)"
+              teleport-in-container
+            />
             <div class="ml5 mr5">/</div>
-            <pa-time v-model="scope.row.searchCriteria[1]" type="date-picker" :placeholder="languagePackage['endTime']" :disabledDateFn="time => disabledEnd(time)" teleport-in-container />
+            <pa-time
+              v-model="scope.row.searchCriteria[1]"
+              type="date-picker"
+              :placeholder="{ 'zh-CN': '结束时间', 'en-US': 'End Time' }"
+              :disabledDateFn="time => disabledEnd(time)"
+              teleport-in-container
+            />
           </div>
 
           <!-- 数字/文本 -->
@@ -41,39 +53,38 @@
               :step="scope.row?.cellConfig.step"
             ></pa-number>
             <template v-else>
-              <pa-input v-model="scope.row.searchCriteria" :placeholder="languagePackage?.['inputPlaceholder']" />
+              <pa-input v-model="scope.row.searchCriteria" :placeholder="{ 'zh-CN': '请输入筛选条件', 'en-US': 'Please Enter Filter Conditions' }" />
               <!-- !scope.row.useSenior -->
-              <pa-button v-if="false" style="width: 100%" is="edit" @click="openSeniorFilter(scope.row)">
-                {{ languagePackage?.["editAdvancedSearch"] }}
-              </pa-button>
+              <pa-button v-if="false" style="width: 100%" is="edit" @click="openSeniorFilter(scope.row)" :text="{ 'zh-CN': '编辑高级搜索', 'en-US': 'Edit Advanced Search' }"> </pa-button>
             </template>
           </template>
 
-          <template v-else> {{ languagePackage?.["noFilter"] }} </template>
+          <template v-else>
+            <pa-language :text="{ 'zh-CN': '无筛选条件', 'en-US': 'No Filter Conditions' }"></pa-language>
+          </template>
         </template>
 
         <!-- 固定 -->
         <template #fixed="scope">
-          <div :class="['change_btn', scope.row.fixed == undefined ? '' : 'icon_highlight']" @click="changeFixed(scope.row)" :title="languagePackage?.['clickChangeFixedState']">
+          <div :class="['change_btn', scope.row.fixed == undefined ? '' : 'icon_highlight']" @click="changeFixed(scope.row)">
             <pa-icon name="pin_line" :class="['mr5']" />
             <span>{{ setFixed(scope.row) }}</span>
-          </div></template
-        >
+          </div>
+        </template>
 
         <!-- 显示状态 -->
         <template #isShow="scope">
-          <div :class="['change_btn', scope.row.isShow ? '' : 'icon_highlight--hide']" @click="setView(scope.row)" :title="languagePackage?.['clickChangeVisibleState']">
+          <div :class="['change_btn', scope.row.isShow ? '' : 'icon_highlight--hide']" @click="setView(scope.row)">
             <pa-icon class="mr5" :name="scope.row.isShow ? 'eye_line' : 'eye_close_line'"></pa-icon>
-            <span>{{ scope.row.isShow ? languagePackage?.["visible"] : languagePackage?.["hide"] }}</span>
+            <pa-language v-if="scope.row.isShow" :text="{ 'zh-CN': '显示', 'en-US': 'Visible' }"></pa-language>
+            <pa-language v-else :text="{ 'zh-CN': '隐藏', 'en-US': 'Hide' }"></pa-language>
           </div>
         </template>
       </pa-table>
     </section>
     <template #footer>
       <div class="flex-center">
-        <pa-button plain type="primary" font="save_line" @click="FetchSaveAndFilter">
-          {{ languagePackage?.["save"] }}
-        </pa-button>
+        <pa-button plain type="primary" icon-name="save_line" @click="FetchSaveAndFilter" :text="{ 'zh-CN': '保存配置', 'en-US': 'Save Configuration' }"> </pa-button>
       </div>
     </template>
   </pa-drawer>
@@ -86,7 +97,7 @@ import { isSelectType, isTimeType, isTextType, isNumberType } from "./hooks/isTy
 
 import { ComponentUseItemProps, PaTableUseType } from "./types";
 import { convertValue } from "../pa-time/utils";
-import { PaOptionType, PaStructureType } from "../manager-type";
+import { LanguageKey, PaOptionType, PaStructureType } from "../manager-type";
 import { M_Message } from "../feedback";
 
 type SettingPropsType = {
@@ -108,7 +119,7 @@ const injectGetTableList = inject("getTableList") as (
 
 //  inject
 const injectCleanTableData = inject("cleanTableData") as () => void;
-const languagePackage = inject("languagePackage") as Record<string, string>;
+const language = inject("language") as ComputedRef<LanguageKey>;
 
 const exOptions = inject("exOptions") as PaOptionType.Default;
 
@@ -238,7 +249,7 @@ async function FetchSaveAndFilter() {
     const element: ComponentUseItemProps = array[index];
     if (element.isShow && isTimeType(element, true) && element.prop && element.searchCriteria && !!element.searchCriteria[0]) {
       Filter.push({
-        fieldLabel: element.label + `-${languagePackage.value?.["start"]}`,
+        fieldLabel: element.label + `-${{ "zh-CN": "开始时间", "en-US": "Start Time" }[language.value || "zh-CN"]}`,
         fieldName: element.prop,
         conditionalType: 3,
         fieldValue: element.searchCriteria[0] + " 00:00:00"
@@ -246,7 +257,7 @@ async function FetchSaveAndFilter() {
     }
     if (element.isShow && isTimeType(element, true) && element.prop && element.searchCriteria && !!element.searchCriteria[1]) {
       Filter.push({
-        fieldLabel: element.label + `-${languagePackage.value?.["end"]}`,
+        fieldLabel: element.label + `-${{ "zh-CN": "结束时间", "en-US": "End Time" }[language.value || "zh-CN"]}`,
         fieldName: element.prop,
         conditionalType: 5,
         fieldValue: element.searchCriteria[1] + " 23:59:59"
@@ -254,7 +265,7 @@ async function FetchSaveAndFilter() {
     }
 
     if (element.isShow && element?.filterType == "time" && element.searchCriteria && element.searchCriteria[0] && element.searchCriteria[1] && element.searchCriteria[0] > element.searchCriteria[1]) {
-      return M_Message.danger(element.label + ` ${languagePackage.value?.["errorMessage"]}`);
+      return M_Message.danger(element.label + ` ${{ "zh-CN": "设置错误：开始时间-需小于-结束时间", "en-US": "Setting Error: Start Time - Less Than - End Time" }[language.value || "zh-CN"]}`);
     }
 
     if (!isTimeType(element, true)) {
@@ -304,13 +315,13 @@ async function FetchSaveAndFilter() {
 
 // #Function 设置固定状态显示值
 function setFixed(row: { fixed: "left" | "right" | undefined }) {
-  let text = languagePackage.value?.["fixedNone"];
+  let text = { "zh-CN": "不固定", "en-US": "Fixed None" }[language.value || "zh-CN"];
   switch (row.fixed) {
     case "left":
-      text = languagePackage.value?.["fixedLeft"];
+      text = { "zh-CN": "固定左侧", "en-US": "Fixed Left" }[language.value || "zh-CN"];
       break;
     case "right":
-      text = languagePackage.value?.["fixedRight"];
+      text = { "zh-CN": "固定右侧", "en-US": "Fixed Right" }[language.value || "zh-CN"];
       break;
   }
   return text;
