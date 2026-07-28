@@ -15,7 +15,7 @@
       tabindex="0"
       @keydown.space.prevent="changeEvent"
       @keydown.enter.prevent="changeEvent"
-    >
+    />
     <div class="pa-checkbox-item-input-inner">
       <div class="pa-checkbox-item-input">
         <pa-icon v-if="isChecked" name="check_line"></pa-icon>
@@ -143,5 +143,5 @@ if (!props.isOption) {
 </script>
 
 <style lang="scss">
-@use "./index.scss";
+@use "../styles/default/pa-checkbox.scss";
 </style>

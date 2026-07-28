@@ -56,5 +56,5 @@ const messageText = computed(() => {
 </script>
 
 <style lang="scss" scoped>
-@use "./index.scss";
+@use "../styles/default/pa-empty.scss";
 </style>

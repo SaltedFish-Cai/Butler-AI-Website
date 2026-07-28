@@ -466,5 +466,5 @@ watch(
 </script>
 
 <style lang="scss">
-@use "../index.scss";
+@use "../../styles/default/pa-form.scss";
 </style>

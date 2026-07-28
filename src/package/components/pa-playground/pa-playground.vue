@@ -983,5 +983,5 @@ watch(
 </script>
 
 <style lang="scss">
-@use "./index.scss";
+@use "../styles/default/pa-playground.scss";
 </style>

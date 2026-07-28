@@ -506,5 +506,5 @@ const handleError = (): void => {
 </script>
 
 <style lang="scss">
-@use "./index.scss";
+@use "../styles/default/pa-file.scss";
 </style>

@@ -646,5 +646,5 @@ defineExpose({
 <style lang="scss">
 @use "./github-dark.scss";
 @use "./github.scss";
-@use "./index.scss";
+@use "../styles/default/pa-editor.scss";
 </style>

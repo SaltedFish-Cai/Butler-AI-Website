@@ -176,6 +176,6 @@ watch(
 </script>
 
 <style lang="scss">
-@use "./index.scss";
+@use "../styles/default/pa-radio.scss";
 @use "../cell-style.scss";
 </style>

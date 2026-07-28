@@ -23,5 +23,5 @@ const displayText = computed(() => {
 </script>
 
 <style lang="scss" scoped>
-@use "./index.scss";
+@use "../styles/default/pa-language.scss";
 </style>

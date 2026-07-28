@@ -369,6 +369,6 @@ watch(
 </script>
 
 <style lang="scss">
-@use "./index.scss";
+@use "../styles/default/pa-time.scss";
 @use "../cell-style.scss";
 </style>

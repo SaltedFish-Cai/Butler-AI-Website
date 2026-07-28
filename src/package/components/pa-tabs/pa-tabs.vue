@@ -347,7 +347,10 @@ function handleLabelDragReorder(fromIndex: number, toIndex: number): void {
     const names = arr.map(item => item?.props?.name);
     baseStore.setTabsCache(cacheKey, names);
   }
-  emit("labelDragEnd", arr.map(item => item?.props?.name));
+  emit(
+    "labelDragEnd",
+    arr.map(item => item?.props?.name)
+  );
   // 重新计算激活项 — slotIndex 基于 DOM 顺序
   const _name = props.modelValue || activeName.value;
   const domIndex = _name ? domOrder.indexOf(String(_name)) : -1;
@@ -457,7 +460,7 @@ function createSlotData(Mandatory = false): void {
       const name = slotsTitle.value[_index < 0 ? 0 : _index]?.props?.name;
       // slotIndex 基于 DOM 顺序（内容面板位移），而非缓存重排后的 slotsTitle 顺序
       const domIndex = name != null ? domOrder.indexOf(String(name)) : -1;
-      slotIndex.value = domIndex >= 0 ? domIndex : (_index < 0 ? 0 : _index);
+      slotIndex.value = domIndex >= 0 ? domIndex : _index < 0 ? 0 : _index;
       activeName.value = name;
       emit("update:modelValue", name);
       _debounce();
@@ -671,5 +674,5 @@ defineExpose({
 </script>
 
 <style lang="scss">
-@use "./index.scss";
+@use "../styles/default/pa-tabs.scss";
 </style>

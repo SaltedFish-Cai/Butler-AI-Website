@@ -144,5 +144,5 @@ onBeforeUnmount(() => {
 </script>
 
 <style scoped lang="scss">
-@use "./index.scss";
+@use "../styles/default/pa-development.scss";
 </style>

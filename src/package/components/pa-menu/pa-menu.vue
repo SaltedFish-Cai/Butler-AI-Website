@@ -48,7 +48,7 @@ const menuRef = ref<HTMLElement | null>(null);
 
 const adjustedLeft = ref(0);
 const adjustedTop = ref(0);
-const adjustedPoint = ref<"tl" | "tr" | "bl" | "br">("tl");
+const adjustedPoint = ref<"bl" | "br" | "tl" | "tr">("tl");
 
 const pointClass = computed(() => {
   if (!props.point) return "";
@@ -72,8 +72,7 @@ function updatePosition() {
   const viewportWidth = window.innerWidth;
   const viewportHeight = window.innerHeight;
 
-  const basePoint: "tl" | "tr" | "bl" | "br" =
-    props.point === true || !props.point ? "tl" : (props.point as "tl" | "tr" | "bl" | "br");
+  const basePoint: "bl" | "br" | "tl" | "tr" = props.point === true || !props.point ? "tl" : (props.point as "bl" | "br" | "tl" | "tr");
 
   if (!menuRef.value) {
     adjustedLeft.value = baseX;
@@ -121,9 +120,9 @@ function updatePosition() {
   adjustedLeft.value = left;
   adjustedTop.value = top;
 
-  const hFlip = flipX ? (basePoint.includes("l") ? "r" : "l") : (basePoint.includes("l") ? "l" : "r");
-  const vFlip = flipY ? (basePoint.includes("t") ? "b" : "t") : (basePoint.includes("t") ? "t" : "b");
-  adjustedPoint.value = (vFlip + hFlip) as "tl" | "tr" | "bl" | "br";
+  const hFlip = flipX ? (basePoint.includes("l") ? "r" : "l") : basePoint.includes("l") ? "l" : "r";
+  const vFlip = flipY ? (basePoint.includes("t") ? "b" : "t") : basePoint.includes("t") ? "t" : "b";
+  adjustedPoint.value = (vFlip + hFlip) as "bl" | "br" | "tl" | "tr";
 }
 
 watch(
@@ -133,8 +132,7 @@ watch(
       if (props.triggerEvent) {
         adjustedLeft.value = props.triggerEvent.clientX;
         adjustedTop.value = props.triggerEvent.clientY;
-        adjustedPoint.value =
-          props.point === true || !props.point ? "tl" : (props.point as "tl" | "tr" | "bl" | "br");
+        adjustedPoint.value = props.point === true || !props.point ? "tl" : (props.point as "bl" | "br" | "tl" | "tr");
       }
       nextTick(() => {
         updatePosition();
@@ -167,7 +165,9 @@ const menuContext: MenuContext = {
     emit("close");
   },
   onSelect: (item: MenuItemConfig) => emit("select", item),
-  resetActiveSubmenu: () => { topActiveSubmenuId.value = null; }
+  resetActiveSubmenu: () => {
+    topActiveSubmenuId.value = null;
+  }
 };
 provide("pa-menu-context", menuContext);
 
@@ -177,7 +177,9 @@ provide("pa-menu-context", menuContext);
  */
 const topGroupContext: MenuGroupContext = {
   activeSubmenuId: topActiveSubmenuId,
-  notifyClick: (id: symbol) => { topActiveSubmenuId.value = id; }
+  notifyClick: (id: symbol) => {
+    topActiveSubmenuId.value = id;
+  }
 };
 provide("pa-menu-group", topGroupContext);
 
@@ -261,5 +263,5 @@ onUnmounted(() => {
 </script>
 
 <style lang="scss">
-@use "./index.scss";
+@use "../styles/default/pa-menu.scss";
 </style>

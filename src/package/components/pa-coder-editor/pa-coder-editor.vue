@@ -349,5 +349,5 @@ onBeforeUnmount(() => {
 </script>
 
 <style lang="scss">
-@use "./index.scss";
+@use "../styles/default/pa-coder-editor.scss";
 </style>

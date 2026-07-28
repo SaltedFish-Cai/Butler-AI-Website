@@ -37,6 +37,7 @@
   --pa-size-font-base: var(--pa-size-font, 12px);
   --pa-size-padding-base: var(--pa-size-padding, 8px);
   .pa-coder-editor__language-select {
+    margin: 0 !important;
     width: 130px;
     --pa-size-font: calc(var(--pa-size-font-base, 12px) * 0.9);
     --pa-size-padding: calc(var(--pa-size-padding-base, 8px) * 0.9);

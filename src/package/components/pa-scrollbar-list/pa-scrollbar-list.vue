@@ -361,5 +361,5 @@ defineExpose({ refresh, setScrollTop, el: mScrollbarListRef });
 </script>
 
 <style scoped lang="scss">
-@use "./index.scss";
+@use "../styles/default/pa-scrollbar-list.scss";
 </style>

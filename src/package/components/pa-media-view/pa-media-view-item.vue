@@ -240,5 +240,5 @@ watch(
 </script>
 
 <style scoped lang="scss">
-@use "./index.scss";
+@use "../styles/default/pa-media-view.scss";
 </style>

@@ -446,5 +446,5 @@ watch(
 </script>
 
 <style lang="scss">
-@use "./index.scss";
+@use "../styles/default/pa-transfer.scss";
 </style>

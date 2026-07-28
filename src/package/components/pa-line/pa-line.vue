@@ -55,5 +55,5 @@ const lineStyle = computed(() => ({
 </script>
 
 <style lang="scss" scoped>
-@use "./index.scss";
+@use "../styles/default/pa-line.scss";
 </style>

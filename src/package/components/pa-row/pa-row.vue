@@ -117,5 +117,5 @@ provide("rowGutter", gutterValue);
 </script>
 
 <style lang="scss" scoped>
-@use "./index.scss";
+@use "../styles/default/pa-row.scss";
 </style>

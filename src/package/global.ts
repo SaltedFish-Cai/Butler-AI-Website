@@ -39,15 +39,18 @@ export type objectType = {
  * */
 export type languageKey = "en-US" | "zh-CN";
 
+interface LogFunctions {
+  info: (textOrTitle: string, content?: string) => void;
+  error: (textOrTitle: string, content?: string) => void;
+  warning: (textOrTitle: string, content?: string) => void;
+  success: (textOrTitle: string, content?: string) => void;
+  msg: (textOrTitle: string, content?: string) => void;
+}
+
 declare global {
   interface Window {
-    log: {
-      info: (title: string, message?: any) => any;
-      error: (title: string, message?: any) => any;
-      warning: (title: string, message?: any) => any;
-      success: (title: string, message?: any) => any;
-      msg: (title: string, message?: any) => any;
-    };
+    log: LogFunctions;
+
     Sortable: any;
     jsPreviewExcel: any;
     jsPreviewDocx: any;
@@ -100,7 +103,5 @@ declare global {
     success: (title: string, message?: any) => any;
     msg: (title: string, message?: any) => any;
   }
-  type objectType = {
-    [x: string]: any;
-  };
+  type objectType = Record<string, any>;
 }

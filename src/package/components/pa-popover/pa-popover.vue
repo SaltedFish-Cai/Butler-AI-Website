@@ -530,5 +530,5 @@ defineExpose({ showPopover, hidePopover });
 
 <style lang="scss">
 @use "../styles/animation.scss";
-@use "./index.scss";
+@use "../styles/default/pa-popover.scss";
 </style>

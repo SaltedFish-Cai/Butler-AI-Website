@@ -408,5 +408,5 @@ onBeforeUnmount(() => {
 </script>
 
 <style lang="scss">
-@use "./index.scss";
+@use "../styles/default/pa-easy-table.scss";
 </style>

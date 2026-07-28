@@ -110,5 +110,5 @@ onMounted(() => {
 </script>
 
 <style lang="scss">
-@use "./index.scss";
+@use "../styles/default/pa-icon.scss";
 </style>
