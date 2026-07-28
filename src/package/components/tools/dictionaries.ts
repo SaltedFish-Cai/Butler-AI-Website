@@ -3,14 +3,14 @@ import { systemParamsType, tableParamsType } from "./type";
 import { useBaseStore as globalState } from "../store/index";
 import lodashPkg from "lodash";
 import { GetTableDictionaries, GetSystemDictionaries } from "./dictionaries-fn";
-import { MOptionType } from "MTypes";
+import { PaOptionType } from "PancakeType";
 
 // #Function 字典方法入口
-async function dictionaries(type: "system" | "table", key: string[], params?: systemParamsType | tableParamsType[]): Promise<MOptionType.Select[]> {
+async function dictionaries(type: "system" | "table", key: string[], params?: systemParamsType | tableParamsType[]): Promise<PaOptionType.Select[]> {
   const useGlobalState = globalState();
   const { cloneDeep } = lodashPkg;
 
-  const options: MOptionType.Select[] = [];
+  const options: PaOptionType.Select[] = [];
 
   let KEY = "";
   if (key) {

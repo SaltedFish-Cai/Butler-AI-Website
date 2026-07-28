@@ -15,8 +15,8 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, watch, onMounted } from "vue";
-import { MStructureType } from "MTypes";
+import { ref, onMounted } from "vue";
+import { PaStructureType } from "PancakeType";
 
 const proTable = ref();
 const globalConfig = ref({
@@ -30,7 +30,7 @@ const globalConfig = ref({
   tableGlobalZoom: 100
 });
 
-const tableConfig: MStructureType.Table[] = [
+const tableConfig: PaStructureType.Table[] = [
   { label: "Label-Text", prop: "Text" },
   { label: "Label-Select", prop: "Select", filterType: "select" },
   { label: "操作", prop: "operation" }

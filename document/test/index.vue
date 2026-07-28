@@ -3,17 +3,7 @@
 
   <code-view v-model:html="formData"> </code-view>
 
-  <m-form
-    id="show-from-demo"
-    ref="proForm"
-    :labelWidth="100"
-    :labelPosition="'right'"
-    :data="baseFormData"
-    :structure="formConfig"
-    :ex-options="exOptions"
-    :ex-dependent="exDependent"
-    :span="2"
-  >
+  <m-form id="show-from-demo" ref="proForm" :labelWidth="100" :labelPosition="'right'" :data="baseFormData" :structure="formConfig" :ex-options="exOptions" :ex-dependent="exDependent" :span="2">
     <template #Input1> 123 </template>
   </m-form>
 
@@ -24,13 +14,13 @@
 
 <script lang="ts" setup>
 import { ref } from "vue";
-import { mFormStructureType, mOptionType } from "@m/global";
+import { PaStructureType, PaOptionType } from "PancakeType";
 
 const proForm = ref();
 const baseFormData = ref({ Select4: [11, 21, 2, 22, 13] });
 const formData = ref({});
 
-const formConfig: mFormStructureType[] = [
+const formConfig: PaStructureType.Form[] = [
   { label: "输入框", prop: "Input1", type: "input" },
   { label: "文本域", prop: "Textarea", type: "textarea" },
   { label: "数字输入框", prop: "Number1", type: "number" },
@@ -75,7 +65,7 @@ function remoteMethod() {
   ];
 }
 
-const exOptions: mOptionType = {
+const exOptions: PaOptionType.Default = {
   Switch2: {
     activeValue: "1",
     inActiveValue: "2",

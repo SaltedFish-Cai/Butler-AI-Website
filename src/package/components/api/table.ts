@@ -1,5 +1,5 @@
 // # Import
-import { MOptionType } from "MTypes";
+import { PaOptionType } from "PancakeType";
 import http from "../api/index";
 import { useBaseStore as globalState } from "../store/index";
 
@@ -9,7 +9,7 @@ export async function GetConditionals(useType: "group" | "link", params?: object
   let KEY = "SystemDictionary-GetConditionals";
   if (useType == "group") KEY = "SystemDictionary-GetGroupConditionals";
 
-  const data: MOptionType.Select[] | undefined = useGlobalState.getDictionary(KEY);
+  const data: PaOptionType.Select[] | undefined = useGlobalState.getDictionary(KEY);
   if (data) {
     return data;
   } else {

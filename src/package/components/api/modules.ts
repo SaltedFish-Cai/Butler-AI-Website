@@ -3,7 +3,7 @@ import http from "../api/index";
 import { useBaseStore as globalState } from "../store/index";
 import { ReqDictionaryParams } from "./type";
 import { dictType } from "../tools/type";
-import { MOptionType } from "MTypes";
+import { PaOptionType } from "PancakeType";
 
 // #Function 获取表字典方法
 export async function GetTableDictionaryByCondition(params: ReqDictionaryParams, options?: { noStore: boolean }) {
@@ -14,7 +14,7 @@ export async function GetTableDictionaryByCondition(params: ReqDictionaryParams,
     const element = FILTER[index];
     KEY += `${element.fieldName}-${element.fieldValue}-`;
   }
-  const data: MOptionType.Select[] | undefined = useGlobalState.getDictionary(KEY);
+  const data: PaOptionType.Select[] | undefined = useGlobalState.getDictionary(KEY);
   const _params = {
     page: {},
     params: {},
@@ -48,7 +48,7 @@ export async function GetTableDictionaryByCondition(params: ReqDictionaryParams,
 export async function GetDictionariesByKeys(params: objectType, options?: { noStore: boolean }) {
   const useGlobalState = globalState();
   const KEY = params.keys;
-  const data: MOptionType.Select[] | undefined = useGlobalState.getDictionary(KEY);
+  const data: PaOptionType.Select[] | undefined = useGlobalState.getDictionary(KEY);
   if (data && data?.length && !options?.noStore) {
     return data;
   } else {
@@ -75,7 +75,7 @@ export async function GetDictionariesByAll(params: dictType[]) {
   const result: any[] = [];
   for (const element of params) {
     const KEY = "ByAll" + element.dictionaryType + "_" + element.key;
-    const data: MOptionType.Select[] | undefined = useGlobalState.getDictionary(KEY);
+    const data: PaOptionType.Select[] | undefined = useGlobalState.getDictionary(KEY);
     if (data) {
       result.push(data);
     } else {

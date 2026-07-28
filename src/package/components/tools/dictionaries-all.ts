@@ -1,11 +1,11 @@
 import { dictType } from "./type";
 import { GetDictionariesAll } from "./dictionaries-fn";
-import { MOptionType } from "MTypes";
+import { PaOptionType } from "PancakeType";
 import { useBaseStore } from "../store/index";
 
 // #Function 字典方法入口
 async function dictionariesAll(value: dictType[]) {
-  const options: { [x: string]: MOptionType.Select[] } = {};
+  const options: { [x: string]: PaOptionType.Select[] } = {};
   if (!Array.isArray(value)) return options;
   const _keyMap = JSON.parse(JSON.stringify(value));
   const globalState = useBaseStore();

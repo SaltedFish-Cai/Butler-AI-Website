@@ -97,7 +97,7 @@ import { isSelectType, isTimeType, isTextType, isNumberType } from "./hooks/isTy
 
 import { ComponentUseItemProps, PaTableUseType } from "./types";
 import { convertValue } from "../pa-time/utils";
-import { LanguageKey, PaOptionType, PaStructureType } from "../manager-type";
+import { LanguageKey, PaOptionType, PaStructureType } from "PancakeType";
 import { M_Message } from "../feedback";
 
 type SettingPropsType = {
