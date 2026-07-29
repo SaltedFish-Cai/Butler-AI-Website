@@ -2,7 +2,8 @@
  * 模块导入
  * @description 导入 lodash 防抖和节流函数
  */
-import { debounce, throttle } from "lodash";
+import _ from "lodash";
+const { debounce, throttle } = _;
 /**
  * 滚动条滑块最大尺寸
  * @description 滚动条滑块的最大尺寸常量
