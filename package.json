@@ -152,9 +152,11 @@
     "mammoth-style-plus": "^1.7.2-9",
     "rollup-plugin-visualizer": "^5.9.0",
     "sortablejs": "^1.15.0",
+    "three": "^0.185.1",
     "vant": "^4.9.7",
     "vue-demi": "^0.14.10",
     "vue-json-viewer": "3",
+    "vue-router": "4",
     "wangeditor": "4.7.15"
   },
   "husky": {

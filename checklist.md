@@ -10,7 +10,7 @@
 > 2. 所有 JSDoc 注释必须使用**多行格式**，禁止单行写法。正确：`/**\n * 标题\n * @description 描述\n */`，错误：`/** 标题 @description 描述 */`
 
 | 维度     | 要求                                                                                                                                        | 结果                                               |
-| -------- | ------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------- | --- |
+| -------- | ------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------- |
 | index.ts | 所有 import 有 JSDoc 注释 多行格式 1.标题 2.@description                                                                                    |                                                    |
 | index.ts | install 参数类型为 App 非 any                                                                                                               |                                                    |
 | index.ts | install 函数有 JSDoc 注释 多行格式 1.标题 2.@param 3.@description                                                                           |                                                    |
@@ -25,7 +25,7 @@
 | \*.vue   | 所有生命周期钩子有 JSDoc 注释 多行格式 1.标题 2.@description                                                                                |                                                    |
 | \*.vue   | 无单行注释 改用 JSDoc 注释 多行格式 1.标题 2.@description                                                                                   |                                                    |
 | \*.vue   | 无被注释掉的代码 如有则删除                                                                                                                 |                                                    |
-| \*.vue   | defineEmits 类型化写法 defineEmits<ComponentEmits>()                                                                                        |                                                    |
+| \*.vue   | defineEmits 类型化写法 `defineEmits<ComponentEmits>()`                                                                                      |                                                    |
 | \*.vue   | 方法/变量之间无空行间隔 对象和对象、对象和方法、方法和方法之间都不需要空行（包括 Vue 文件中的 ts 代码）                                     |                                                    |
 | \*.vue   | 代码顺序规范 import → const/let 变量 → function → 生命周期钩子 → watch（const 依赖函数返回值时可放在该函数之后）                            |                                                    |
 | \*.vue   | Vue 内定义的 interface/type 不移动到 types.d.ts 保留在 Vue 文件内部，文档中也不需要显示                                                     |                                                    |
@@ -42,7 +42,7 @@
 | \*.scss  | 文件必须使用 Prettier 进行格式化                                                                                                            |                                                    |
 | \*.d.ts  | 文件命名为 types.d.ts 非 type.d.ts                                                                                                          |                                                    |
 | \*.d.ts  | 类型名称为 ComponentProps ComponentEmits 其他类型名称为 Component+类型名称（如 ComponentItemProps、ComponentLabelProps）                    |                                                    |
-| \*.d.ts  | 必须定义属性：id、class、style 三个都必须存在（可选属性，带?） id 类型：string; class Array<string> \| string; style Record<string, string> |                                                    |
+| \*.d.ts  | 必须定义属性：id、class、style 三个都必须存在（可选属性，带?） id 类型：string; class `Array<string>` \| string; style `Record<string, string>` |                                                    |
 | \*.d.ts  | 所有 import 有 JSDoc 注释 多行格式 1.标题 2.@description                                                                                    |                                                    |
 | \*.d.ts  | 所有 export type 有 JSDoc 注释 多行格式 1.标题 2.@type 3.@description                                                                       |                                                    |
 | \*.d.ts  | 所有属性有完整 JSDoc 注释 多行格式 1.标题 2.@type 3.@default 4.@description                                                                 |                                                    |
@@ -87,5 +87,5 @@
 | 文档     | 类型 `LanguagePackageType` 链接地址 `/document/PancakeUI_Doc/options#languagepackagetype`                                                   |                                                    |
 | 文档     | 文档中类型和类型之间用空格隔开 如 `Array<string>` `string`                                                                                  |                                                    |
 | 文档     | 字符串字面量用反引号包裹单引号内容 如插槽名、类型值等，如 `'default'`                                                                       |                                                    |
-| 文档     | 表格内容中的 `                                                                                                                              | `作为类型联合符号时必须转义为`\|`；`<>` 不需要转义 |     |
+| 文档     | 表格内容中的 `\|` 作为类型联合符号时必须转义为 `\|`；`<>` 不需要转义                                                                                                                                              |     |
 | 文档     | 文档中的类型名称必须与 types.d.ts 中的定义一致，不能凭猜测修改                                                                              |                                                    |

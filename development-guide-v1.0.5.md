@@ -100,11 +100,11 @@ export default { name: "PaButton", install };
 
 - 组件属性必须包含以下属性
   - id：组件唯一标识，类型为 string
-  - class：自定义类名，类型为 Array<string> | string
-  - style：自定义样式，类型为 Record<string, string>;
+  - class：自定义类名，类型为 `Array<string>` | `string`
+  - style：自定义样式，类型为 `Record<string, string>`;
   - 标题、提示信息等需要支持多语言，类型为 LanguagePackageType
   - 所有属性都必须填写注释，注释中必须包含属性的类型、默认值、描述等信息
-  - 属性中的 @default 必须和 Vue 文件中的 withDefaults(defineProps<ComponentProps>(), {}) 中的默认值一致，如果不存在默认值，则填写 undefined
+  - 属性中的 @default 必须和 Vue 文件中的 `withDefaults(defineProps<ComponentProps>(), {})` 中的默认值一致，如果不存在默认值，则填写 undefined
 
 #### 2.3.1 标题、提示信息等多语言示例
 
@@ -136,9 +136,8 @@ import { LanguagePackageType } from "../manager-type";
 - 组件开发中 所有方法和属性都必须填写注释，注释中必须包含方法的参数、返回值、异常等信息
 - 组件开发中 watch 必须放在 setup 函数中最下方
 - 组件开发中 TypeScript 代码顺序如下
-
   - import 语句
-  - const 定义，包含：常量 > props > ref > reactive > 变量 > computed
+  - const 定义，包含：常量 → props → ref → reactive → 变量 → computed
   - function 定义，包含：事件处理函数
   - watch 定义
 
