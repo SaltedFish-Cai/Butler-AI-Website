@@ -1,6 +1,6 @@
 import { dictType } from "./type";
 import { GetDictionariesAll } from "./dictionaries-fn";
-import { PaOptionType } from "PancakeType";
+import { PaOptionType } from "../manager-type";
 import { useBaseStore } from "../store/index";
 
 // #Function 字典方法入口

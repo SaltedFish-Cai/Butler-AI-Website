@@ -90,10 +90,10 @@
   }
   .use-sticky-view-in.pa-table_footer {
     position: sticky;
+    padding-bottom: var(--pa-size-padding, 10px);
     bottom: 0;
     z-index: 10;
     background-color: var(--pa-color-bg);
-    border-top: 1px solid var(--pa-color-border);
   }
   &:has(.use-sticky-view-in.pa-table_footer) {
     & > .pa-table_body {
@@ -117,7 +117,6 @@
     &::before {
       right: -10px;
       bottom: -1px;
-      box-shadow: none;
       content: "";
       overflow-x: hidden;
       overflow-y: hidden;
@@ -132,12 +131,57 @@
 }
 
 .pa-table.pa-table_scroll_right {
+  &:not(:has(.sticky-right)) {
+    > .pa-table_body_header_box {
+      position: relative;
+      &::before {
+        bottom: 0;
+        right: calc(var(--pa-size-padding, 10px) + 3px);
+        bottom: 0;
+        width: calc(var(--pa-size-padding, 10px) + 3px);
+        height: calc(var(--pa-size-padding, 10px) + var(--pa-size-height, 28px));
+        content: "";
+        overflow-x: hidden;
+        overflow-y: hidden;
+        pointer-events: none;
+        position: absolute;
+        touch-action: none;
+        z-index: 20;
+        box-shadow: inset -13px 0 14px -17px var(--pa-color-send-font);
+      }
+    }
+    &:not(:has(.scrollbar__bar.is-vertical)) {
+      > .pa-table_body_header_box {
+        &::before {
+          right: 0;
+          border-top-right-radius: var(--pa-size-radius, 3px);
+        }
+      }
+    }
+    .pa-scrollbar-content {
+      position: relative;
+      &::before {
+        right: 0px;
+        bottom: -1px;
+        content: "";
+        overflow-x: hidden;
+        overflow-y: hidden;
+        pointer-events: none;
+        position: absolute;
+        top: 0;
+        touch-action: none;
+        width: 10px;
+        height: var(--scrollbar-body-content-height, 100%);
+        z-index: 10;
+        box-shadow: inset -13px 0 14px -17px var(--pa-color-send-font);
+      }
+    }
+  }
   .sticky-right.last-right-fixed {
     border-left: 0;
     &::before {
       left: -10px;
       bottom: -1px;
-      box-shadow: none;
       content: "";
       overflow-x: hidden;
       overflow-y: hidden;
@@ -165,6 +209,7 @@
       right: 1px;
       z-index: 100;
       border-top-right-radius: var(--pa-size-radius, 3px);
+      border-left: 1px solid var(--pa-color-border);
     }
     > .pa-table_body_header_scroll {
       position: relative;
@@ -211,7 +256,7 @@
       font-size: var(--pa-size-font, 16px);
       padding: calc(var(--pa-size-padding, 10px) / 2) var(--pa-size-padding, 10px);
       flex: 0 0 calc(var(--pa-table-item-width) + var(--pa-size-padding, 10px) * 2);
-      min-width: calc(var(--pa-table-item-width) + var(--pa-size-padding, 10px) * 2);
+      min-width: calc(var(--pa-table-item-min-width) + var(--pa-size-padding, 10px) * 2);
 
       line-height: var(--pa-size-height, 28px);
       height: calc(var(--pa-size-height, 28px) + var(--pa-size-padding, 10px));
@@ -300,6 +345,14 @@
       }
     }
   }
+  .pa-table_body_header_label_flex {
+    width: 1px !important;
+    flex: 1 !important;
+    min-width: calc(var(--pa-table-item-min-width) + var(--pa-size-padding, 10px) * 2);
+    [class*="find_cell_"] {
+      width: 100%;
+    }
+  }
 }
 
 .pa-table_body {
@@ -313,6 +366,8 @@
   width: initial;
   height: 1px;
   overflow: hidden;
+  opacity: 0;
+  transition: opacity var(--pa-animation-time, 0.2s);
 
   .pa-table_body_loading {
     position: absolute;
@@ -386,6 +441,19 @@
       min-height: calc(var(--scroll-body-height) - var(--pa-size-padding, 10px) * 2 - 4em - var(--pa-size-height, 14.1px) / 2);
     }
   }
+
+  > .pa-scrollbar > .scrollbar__bar.is-horizontal {
+    border-top: 1px solid var(--pa-color-border);
+  }
+  > .pa-scrollbar > .scrollbar__bar.is-vertical {
+    border-left: 1px solid var(--pa-color-border);
+  }
+
+  &:not(:has(> .pa-scrollbar > .scrollbar__bar.is-vertical)) {
+    .pa-table_body_content_cell:last-child {
+      border-bottom: 1px solid var(--pa-color-border);
+    }
+  }
 }
 .pa-table_body_content {
   flex-wrap: nowrap;
@@ -406,7 +474,7 @@
     font-size: var(--pa-size-font, 16px);
     padding: calc(var(--pa-size-padding, 10px) / 2) var(--pa-size-padding, 10px);
     flex: 0 0 calc(var(--pa-table-item-width) + var(--pa-size-padding, 10px) * 2);
-    min-width: calc(var(--pa-table-item-width) + var(--pa-size-padding, 10px) * 2);
+    min-width: calc(var(--pa-table-item-min-width) + var(--pa-size-padding, 10px) * 2);
     min-height: calc(var(--pa-size-height, 28px) + var(--pa-size-padding, 10px));
     text-align: left;
     display: flex;
@@ -424,6 +492,11 @@
     background-size: 100% calc(var(--is-equal-6) * 100%);
     background-position: 0 0;
     background-repeat: no-repeat;
+
+    &:last-child {
+      border-right: none;
+    }
+
     &.highlight-row {
       background-color: var(--pa-color-primary-light-9) !important;
     }
@@ -509,7 +582,12 @@
     width: 100%;
     border-bottom: 1px solid var(--pa-color-border);
     font-size: var(--pa-size-font, 16px);
-
+    &:last-child {
+      border-bottom: none;
+      .table_body_label {
+        border-bottom: none;
+      }
+    }
     > .border-right:last-child {
       &:after {
         display: none;
@@ -594,7 +672,7 @@
     position: relative;
     font-size: var(--pa-size-font, 16px);
     padding: calc(var(--pa-size-padding, 10px) / 2) var(--pa-size-padding, 10px);
-    min-width: calc(var(--pa-table-item-width) + var(--pa-size-padding, 10px) * 2);
+    min-width: calc(var(--pa-table-item-min-width) + var(--pa-size-padding, 10px) * 2);
     line-height: 2em;
     white-space: nowrap;
     flex: 0 0 var(--pa-table-item-width);
@@ -636,6 +714,7 @@
   font-size: var(--pa-size-font, 16px);
   padding: var(--pa-size-padding, 10px) 0 0;
   .table-flex-lf {
+    margin-bottom: 0;
     display: flex;
     justify-content: flex-start;
     align-items: center;

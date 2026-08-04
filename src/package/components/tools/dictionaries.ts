@@ -3,7 +3,7 @@ import { systemParamsType, tableParamsType } from "./type";
 import { useBaseStore as globalState } from "../store/index";
 import lodashPkg from "lodash";
 import { GetTableDictionaries, GetSystemDictionaries } from "./dictionaries-fn";
-import { PaOptionType } from "PancakeType";
+import { PaOptionType } from "../manager-type";
 
 // #Function 字典方法入口
 async function dictionaries(

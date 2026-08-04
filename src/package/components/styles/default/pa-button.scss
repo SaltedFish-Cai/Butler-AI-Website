@@ -1,4 +1,5 @@
 @mixin button-type($var-color, $var-hover, $var-bg, $var-shadow) {
+  position: relative;
   --pa-button-color: var(#{$var-color});
   --pa-button-color2: var(#{$var-bg});
   background-color: var(#{$var-color});
@@ -7,6 +8,15 @@
 
   &:hover {
     background-color: var(#{$var-hover});
+  }
+  &:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
   }
 }
 
