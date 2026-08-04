@@ -9,7 +9,7 @@ import inBrowser from "../../tools/inBrowser";
 /**
  * @description 获取条件字典 API
  */
-import { GetConditionals } from "../../../api/table";
+import { GetConditionals } from "../../api/table";
 /**
  * @description PaOptionType 类型
  */

@@ -366,7 +366,7 @@ import groupItem from "./components/group-item.vue";
 
 import { ConfigContextType, PaFormItemType } from "./types";
 import { PaOptionType } from "../manager-type";
-import { GetSystemAddressMap } from "../../api/form";
+import { GetSystemAddressMap } from "../api/form";
 
 /**
  * 判断值是否为 null 或 undefined
