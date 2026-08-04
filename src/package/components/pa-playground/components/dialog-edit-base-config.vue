@@ -25,7 +25,7 @@
 <script lang="tsx" setup>
 import { ref, useTemplateRef } from "vue";
 import { PaPlaygroundPagesType, PaPlaygroundType } from "../types";
-import { PaStructureType } from "PancakeType";
+import { PaStructureType } from "../../manager-type";
 
 const props = withDefaults(
   defineProps<{

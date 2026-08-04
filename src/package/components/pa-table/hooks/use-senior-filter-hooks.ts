@@ -9,7 +9,7 @@ import inBrowser from "../../tools/inBrowser";
 /**
  * @description 获取条件字典 API
  */
-import { GetConditionals } from "../../api/table";
+import { GetConditionals } from "../../../api/table";
 /**
  * @description PaOptionType 类型
  */
@@ -50,7 +50,7 @@ export const useSeniorFilterHooks = () => {
    */
   function setConditionalType(value: string) {
     const { LineConditional } = state.seniorFilterOptions;
-    const findData = (LineConditional as any).find((item: any) => item.value == value);
+    const findData = (LineConditional as any).find((item: any) => item.Value == value);
     return findData?.Description;
   }
   /**

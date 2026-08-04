@@ -1,5 +1,5 @@
 <template>
-  <div class="pa-badge" :id="randId">
+  <div class="pa-badge" :id="renderId">
     <slot></slot>
     <template v-if="useShow || showVal || useDot">
       <div v-if="useDot || !showVal" class="pa-badge__dot"></div>
@@ -27,7 +27,7 @@ import useRenderId from "../tools/render-id";
  */
 const props = withDefaults(defineProps<ComponentProps>(), {});
 
-const randId = ref((props.id ? props.id + "_" : "") + "pa-badge_" + useRenderId());
+const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-badge_" + useRenderId()));
 
 /**
  * **显示值**

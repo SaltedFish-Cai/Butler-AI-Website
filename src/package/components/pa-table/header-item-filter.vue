@@ -1,6 +1,6 @@
 <template>
   <!-- 表头筛选 -->
-  <pa-popover ref="mPopoverRef" :id="_id" :popover-width="340">
+  <pa-popover ref="mPopoverRef" :renderId="props.id + '_' + item.prop + '_filter-popover'" :popover-width="340">
     <template #reference>
       <div @click="openVisible"><slot name="default"></slot></div>
     </template>
@@ -8,10 +8,11 @@
       <!-- select -->
       <pa-select
         v-if="isSelectType(item, true)"
+        :renderId="props.id + '_' + item.prop + '_filter-select'"
         v-model="state.searchValue"
         :placeholder="{ 'zh-CN': '请选择需要筛选的' + item?.label, 'en-US': 'Please Select Filter ' + item?.label }"
         type="multiple-select"
-        :exOptions="_exOptions[String(item.prop)] as PaOptionType.SelectList"
+        :exOptions="(_exOptions[String(item.prop)] as PaOptionType.SelectList)"
         teleport-in-container
       >
         <template #optionLabel="{ option }">
@@ -45,19 +46,21 @@
       <!-- time -->
       <div v-else-if="isTimeType(item, true)" class="flex-center my-date-picker">
         <pa-time
+          :renderId="props.id + '_' + item.prop + '_filter-time-start'"
           v-model="state.searchValue[0]"
           type="date-picker"
-          :placeholder="{ 'zh-CN': '请选择开始时间', 'en-US': 'Please Select Start Time' }"
-          :disabledDateFn="time => disabledStart(time)"
+          :placeholder="{ 'zh-CN': '开始时间', 'en-US': 'Start Time' }"
+          :disabledDateFn="time => disabledStart(time, item.disabledStartDateFn)"
           teleport-in-container
           @keydown.enter="FetchSaveAndFilter"
         />
         <div class="ml5 mr5">/</div>
         <pa-time
+          :renderId="props.id + '_' + item.prop + '_filter-time-end'"
           v-model="state.searchValue[1]"
           type="date-picker"
-          :placeholder="{ 'zh-CN': '请选择结束时间', 'en-US': 'Please Select End Time' }"
-          :disabledDateFn="time => disabledEnd(time)"
+          :placeholder="{ 'zh-CN': '结束时间', 'en-US': 'End Time' }"
+          :disabledDateFn="time => disabledEnd(time, item.disabledEndDateFn)"
           teleport-in-container
           @keydown.enter="FetchSaveAndFilter"
         />
@@ -66,6 +69,7 @@
       <!-- number -->
       <pa-number
         v-else-if="isNumberType(item, true)"
+        :renderId="props.id + '_' + item.prop + '_filter-number'"
         v-model="state.searchValue"
         @keydown.enter="FetchSaveAndFilter"
         :placeholder="{
@@ -83,6 +87,7 @@
       <!-- input -->
       <pa-input
         v-else
+        :renderId="props.id + '_' + item.prop + '_filter-input'"
         v-model="state.searchValue"
         :placeholder="{
           'zh-CN': '请输入需要搜索的' + item?.label,
@@ -93,7 +98,13 @@
       />
 
       <!-- button -->
-      <pa-button class="ml-size" style="flex: 0 0 89px" is="search" @click="FetchSaveAndFilter">
+      <pa-button
+        :renderId="props.id + '_' + item.prop + '_filter-btn'"
+        class="ml-size"
+        style="flex: 0 0 89px"
+        is="search"
+        @click="FetchSaveAndFilter"
+      >
         {{ language === "zh-CN" ? "搜索" : "Search" }}
       </pa-button>
     </div>
@@ -106,7 +117,6 @@
 // # import
 import { ref, inject, reactive, watch, computed, ComputedRef } from "vue";
 import { isSelectType, isTimeType, isNumberType } from "./hooks/isType";
-import { randChar } from "../tools/rand-char";
 import { ComponentItemProps, ComponentUseItemProps, PaTableUseType } from "./types";
 import { PaOptionType } from "../manager-type";
 import { M_Message } from "../feedback";
@@ -125,11 +135,10 @@ type TableColumnFilterType = {
 // # Var
 const props = withDefaults(defineProps<TableColumnFilterType>(), {});
 const exOptions = inject("exOptions") as PaOptionType.Default;
-const _id = randChar();
 // const emits = defineEmits(["saveAndFilter", "handleRemoveQ", "openSeniorFilter"]);
 const emits = defineEmits(["saveAndFilter", "openSeniorFilter"]);
 
-const language = inject("language") as string;
+const language = inject("language") as ComputedRef<string>;
 
 // const shortcuts = [
 //   {
@@ -152,13 +161,17 @@ const state = reactive({
 });
 
 // #Function 配置初始化开始时间
-const disabledStart = (time: Date) => {
-  return time > new Date();
+const disabledStart = (time: Date, disabledFn?: (date: any) => boolean) => {
+  if (disabledFn) return disabledFn(time);
+  return false;
+  // return time > new Date();
 };
 
 // #Function 配置初始化结束时间
-const disabledEnd = (time: Date) => {
-  return time < new Date();
+const disabledEnd = (time: Date, disabledFn?: (date: any) => boolean) => {
+  if (disabledFn) return disabledFn(time);
+  return false;
+  // return time < new Date();
 };
 
 // #Computed exOptions
@@ -245,7 +258,7 @@ function FetchSaveAndFilter() {
   if (isTimeType(element, true)) {
     if (state.searchValue[0]) {
       filter.push({
-        fieldLabel: element.label + `-${language === "zh-CN" ? "开始时间" : "Start Time"}`,
+        fieldLabel: element.label + `-${language.value === "zh-CN" ? "开始时间" : "Start Time"}`,
         fieldName: String(element.prop),
         conditionalType: 3,
         fieldValue: state.searchValue[0] + " 00:00:00"
@@ -253,7 +266,7 @@ function FetchSaveAndFilter() {
     }
     if (state.searchValue[1]) {
       filter.push({
-        fieldLabel: element.label + `-${language === "zh-CN" ? "结束时间" : "End Time"}`,
+        fieldLabel: element.label + `-${language.value === "zh-CN" ? "结束时间" : "End Time"}`,
         fieldName: String(element.prop),
         conditionalType: 5,
         fieldValue: state.searchValue[1] + " 23:59:59"
@@ -261,7 +274,7 @@ function FetchSaveAndFilter() {
     }
     if (state.searchValue[0] && state.searchValue[1] && state.searchValue[0] > state.searchValue[1]) {
       return M_Message.danger(
-        element.label + ` ${language === "zh-CN" ? "开始时间不能晚于结束时间" : "Start Time cannot be later than End Time"}`
+        element.label + ` ${language.value === "zh-CN" ? "开始时间不能晚于结束时间" : "Start Time cannot be later than End Time"}`
       );
     }
   } else {

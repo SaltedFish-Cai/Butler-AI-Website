@@ -1,5 +1,5 @@
 <template>
-  <div :id="randId" ref="rootRef" :class="['pa-phone', `pa-phone--${model}`]">
+  <div :id="renderId" ref="rootRef" :class="['pa-phone', `pa-phone--${model}`]">
     <div class="pa-phone__scaled" :style="scaledStyle">
       <div class="pa-phone__bezel" :style="[bezelStyle, { transform: `scale(${autoScale})`, transformOrigin: '0 0' }]">
         <div class="pa-phone__screen" :style="screenStyle">
@@ -155,6 +155,8 @@ const props = withDefaults(
     sfcRefreshKey?: number;
     /** 组件唯一标识 */
     id?: string;
+    /** render-id */
+    renderId?: string;
   }>(),
   {
     model: "14-pro",
@@ -188,7 +190,7 @@ const emit = defineEmits<{
  * render-id
  * @description 组件唯一标识
  */
-const randId = ref((props.id ? props.id + "_" : "") + "pa-phone_" + useRenderId());
+const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-phone_" + useRenderId()));
 
 // ─── SFC 源码编译（支持流式渲染） ──────────────────────
 

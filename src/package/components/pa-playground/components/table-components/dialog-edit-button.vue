@@ -270,7 +270,7 @@ import { PaPlaygroundPageButtonType } from "../../components/types";
 import { MStructureType, PaPlaygroundPagesType, MInterfaceConfig, PaPlaygroundActionFunctionType } from "../../types";
 import MQuickTable from "../quick-table.vue";
 import { PancakeGlobalConfigType } from "../../../pa-manager/types";
-import { PaOptionType, PaStructureType } from "PancakeType";
+import { PaOptionType, PaStructureType } from "../../../manager-type";
 import { ButtonTypeV2Is } from "../../../pa-button/types";
 import DialogEditButton from "./dialog-edit-button.vue";
 import { M_MessageBox } from "../../../feedback";

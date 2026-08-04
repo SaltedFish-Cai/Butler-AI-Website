@@ -1,20 +1,23 @@
 <template>
-  <div :id="randId" class="pa-pagination" :class="[props.class, { 'is-disabled': props.disabled }]" :style="props.style || {}">
+  <div :id="renderId" class="pa-pagination" :class="[props.class, { 'is-disabled': props.disabled }]" :style="props.style || {}">
     <span v-if="showTotal" class="m-pagination-total">
       {{ languagePackage?.total }} <span>{{ total }}</span> {{ languagePackage?.records2 }}
     </span>
     <div v-if="showSizes" class="m-pagination-sizes">
       <pa-select
+        :render-id="renderId + '-sizes'"
         style="width: 100px; --pa-size-padding: 8px; --pa-size-font: 14px; --pa-size-height: 28px"
         v-model="internalPageSize"
         @change="handleSizeChange"
         :clearable="false"
         :exOptions="exOptions"
         :disabled="props.disabled"
+        :useFilter="false"
       >
       </pa-select>
     </div>
     <button
+      :id="renderId + '-prev'"
       class="m-pagination-btn m-pagination-prev"
       :disabled="internalCurrentPage <= 1"
       @click="goToPage(internalCurrentPage - 1)"
@@ -24,6 +27,7 @@
     <template v-if="showPager">
       <button
         v-if="showFirstPage"
+        :id="renderId + '-first'"
         class="m-pagination-btn"
         :class="{ 'is-active': internalCurrentPage == 1 }"
         @click="goToPage(1)"
@@ -34,15 +38,17 @@
       <button
         v-for="page in pagerPages"
         :key="page"
+        :id="renderId + '-pager-' + page"
         class="m-pagination-btn"
         :class="{ 'is-active': internalCurrentPage == page }"
         @click="goToPage(page)"
       >
         {{ page }}
       </button>
-      <span v-if="showNextMore" class="m-pagination-more" @click="jumpNextMore"> ••• </span>
+      <span v-if="showNextMore" :id="renderId + '-next'" class="m-pagination-more" @click="jumpNextMore"> ••• </span>
       <button
         v-if="showLastPage"
+        :id="renderId + '-last'"
         class="m-pagination-btn"
         :class="{ 'is-active': internalCurrentPage == pageCount }"
         @click="goToPage(pageCount)"
@@ -60,6 +66,7 @@
     <div v-if="showJumper" class="m-pagination-jumper">
       <span>{{ languagePackage?.jumpTo }}</span>
       <pa-number
+        :render-id="renderId + '-jumper'"
         :min="1"
         :max="pageCount"
         class="m-pagination-jumper-input"
@@ -147,7 +154,7 @@ const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<Pan
  * render-id
  * @description 组件唯一标识
  */
-const randId = ref((props.id ? props.id + "_" : "") + "pa-pagination_" + useRenderId());
+const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-pagination_" + useRenderId()));
 /**
  * 语言值
  * @type ComputedRef<string>

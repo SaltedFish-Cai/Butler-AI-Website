@@ -1,5 +1,5 @@
 <template>
-  <div :id="randId + '_box'" class="pa-color-picker" v-if="!props.disabled">
+  <div :id="renderId + '_box'" class="pa-color-picker" v-if="!props.disabled">
     <div class="color-picker-main">
       <div class="color-picker-color-area" @mousedown="onColorAreaMouseDown">
         <div class="color-picker-color-area-overlay" :style="{ backgroundColor: hueColor }"></div>
@@ -69,7 +69,7 @@ const props = withDefaults(defineProps<ComponentProps>(), { useAlpha: true, useI
  * @type `string`
  * @description 用于唯一标识组件的随机 ID
  */
-const randId = ref((props.id ? props.id + "_" : "") + "pa-color_" + useRenderId());
+const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-color_" + useRenderId()));
 /**
  * 组件事件定义
  * @description 定义组件可触发的事件

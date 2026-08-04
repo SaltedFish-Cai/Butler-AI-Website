@@ -1,6 +1,6 @@
 <template>
   <div
-    :id="randId + '_' + props.value"
+    :id="renderId + '_' + props.value"
     class="pa-checkbox-item"
     :class="[
       props.class,
@@ -13,7 +13,7 @@
     @click="changeEvent"
   >
     <input
-      :id="randId + '_' + props.value + '_input'"
+      :id="renderId + '_' + props.value + '_input'"
       type="checkbox"
       class="pa-checkbox-item__native"
       :checked="isChecked"
@@ -23,7 +23,7 @@
       @keydown.space.prevent="changeEvent"
       @keydown.enter.prevent="changeEvent"
     />
-    <div :id="randId + '_' + props.value + '_input-inner'" class="pa-checkbox-item-input-inner">
+    <div :id="renderId + '_' + props.value + '_input-inner'" class="pa-checkbox-item-input-inner">
       <div class="pa-checkbox-item-input">
         <pa-icon v-if="isChecked" name="check_line"></pa-icon>
         <pa-icon v-else-if="isIndeterminate" name="minus1"></pa-icon>
@@ -73,7 +73,7 @@ const props = withDefaults(defineProps<ComponentItemProps & { isOption?: boolean
  * @type `string`
  * @description 用于唯一标识组件的随机 ID
  */
-const randId = ref((props.id ? props.id + "_" : "") + "pa-checkbox-item_" + useRenderId());
+const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-checkbox-item_" + useRenderId()));
 
 /**
  * **全局配置注入**

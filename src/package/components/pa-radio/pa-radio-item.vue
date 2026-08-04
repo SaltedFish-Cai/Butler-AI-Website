@@ -1,6 +1,6 @@
 <template>
   <div
-    :id="randId + '_' + props.value"
+    :id="renderId + '_' + props.value"
     class="pa-radio-item"
     :class="[props.class, { 'is-disabled': props.disabled }, { 'is-checked': isChecked }]"
     ref="selectRef"
@@ -8,7 +8,7 @@
     @click="changeEvent"
   >
     <input
-      :id="randId + '_' + props.value + '_input'"
+      :id="renderId + '_' + props.value + '_input'"
       type="radio"
       class="pa-radio-item__native"
       :checked="isChecked"
@@ -17,7 +17,7 @@
       @keydown.space.prevent="changeEvent"
       @keydown.enter.prevent="changeEvent"
     />
-    <div :id="randId + '_' + props.value + '_input-inner'" class="pa-radio-item-input-inner">
+    <div :id="renderId + '_' + props.value + '_input-inner'" class="pa-radio-item-input-inner">
       <div class="pa-radio-item-input">
         <transition name="mo-animation-fade" mode="out-in">
           <div v-if="isChecked" class="pa-radio-item-input-checked"></div>
@@ -68,7 +68,7 @@ const props = withDefaults(defineProps<ComponentItemProps>(), { isChecked: undef
  * @type `string`
  * @description 用于唯一标识组件的随机 ID
  */
-const randId = ref((props.id ? props.id + "_" : "") + "pa-radio-item_" + useRenderId());
+const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-radio-item_" + useRenderId()));
 
 /**
  * 全局配置注入

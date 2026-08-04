@@ -1,5 +1,5 @@
 <template>
-  <i :id="randId" class="pa-icon" :class="[props.class]" :style="iconStyle">
+  <i :id="renderId" class="pa-icon" :class="[props.class]" :style="iconStyle">
     <template v-if="!tip">
       <span :class="iconClasses" :style="iconFontStyle"></span>
     </template>
@@ -19,7 +19,7 @@
  * **模块导入**
  * @description 导入 Vue 组合式 API
  */
-import { computed, inject, ref, onMounted, ComputedRef } from "vue";
+import { computed, inject, ref, ComputedRef, onMounted } from "vue";
 /**
  * **模块导入**
  * @description 导入组件类型定义
@@ -37,7 +37,7 @@ import useRenderId from "../tools/render-id";
  * @description 组件的属性对象，包含 name、tip 等
  */
 const props = withDefaults(defineProps<ComponentProps>(), { name: "magic_line" });
-const randId = ref((props.id ? props.id + "_" : "") + "pa-icon_" + useRenderId());
+const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-icon_" + useRenderId()));
 /**
  * **全局配置注入**
  * @type `ComputedRef<PancakeGlobalConfigType>`

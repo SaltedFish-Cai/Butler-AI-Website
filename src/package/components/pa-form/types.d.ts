@@ -38,6 +38,13 @@ export type ComponentProps = {
    */
   id?: string;
   /**
+   * **render-id**
+   * @type `string` | `undefined`
+   * @default `undefined`
+   * @description 当设置该值时，会使用该值作为唯一ID
+   */
+  renderId?: string;
+  /**
    * **自定义类名**
    * @type `Array<string>` | `string` | `undefined`
    * @default `undefined`

@@ -42,7 +42,7 @@
 
 <script lang="tsx" setup>
 import { ComputedRef, inject, ref, useTemplateRef, computed, onMounted, nextTick } from "vue";
-import { PaOptionType, PaStructureType } from "PancakeType";
+import { PaOptionType, PaStructureType } from "../../../manager-type";
 import { PancakeGlobalConfigType } from "../../../pa-manager/types";
 import { MInterfaceConfig, PaPlaygroundPagesType, MStructureType } from "../../types";
 import { deleteData, getAllData, getDataById, storeData, updateData } from "../../../indexDB/indexDB";

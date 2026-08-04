@@ -20,6 +20,7 @@
           :style="{ ...popoverStyle, zIndex: zIndex }"
           @mouseenter="handlePopoverEnter"
           @mouseleave="handlePopoverLeave"
+          @click.stop
         >
           <div class="pa-popover-content" ref="popoverRef" :class="contentClassName" :style="popoverContentStyle">
             <slot />
@@ -63,6 +64,11 @@ const OFFSET = 9;
  */
 const SAFE_DISTANCE = 10;
 /**
+ * 粘性常量
+ * @description 弹窗是否粘性在参考元素上
+ */
+const STICKYWIDTH = 10;
+/**
  * 组件属性
  * @type ComponentProps
  * @description 组件的属性对象
@@ -89,7 +95,7 @@ const emits = defineEmits<ComponentEmits>();
  * @type Ref<string>
  * @description 弹窗的唯一标识符
  */
-const id = ref((props.id ? props.id + "_" : "") + "pa-popover_" + useRenderId());
+const id = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-popover_" + useRenderId()));
 /**
  * 渲染结束标识
  * @type Ref<boolean>
@@ -250,8 +256,12 @@ function calculatePosition(): void {
     }
     style.left = leftPos + "px";
 
-    const arrowRelativeLeft = refCenterX - leftPos;
-    arrowStyle.left = arrowRelativeLeft + "px";
+    arrowStyle.left =
+      props.sticky == "left"
+        ? OFFSET + SAFE_DISTANCE + STICKYWIDTH + "px"
+        : props.sticky == "right"
+        ? popW - OFFSET - SAFE_DISTANCE - STICKYWIDTH + "px"
+        : popW / 2 + "px";
   } else if (placement === "left" || placement === "right") {
     let topPos = refCenterY - popH / 2;
     topPos = Math.max(SAFE_DISTANCE, Math.min(topPos, winH - popH - SAFE_DISTANCE));

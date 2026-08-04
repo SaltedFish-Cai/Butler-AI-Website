@@ -1,7 +1,7 @@
 <template>
   <div
     ref="rootEl"
-    :id="accordionCtx?.randId + '_' + itemIdCounter"
+    :id="accordionCtx?.renderId + '_' + itemIdCounter"
     class="pa-accordion-item"
     :class="{
       'pa-accordion-item--expanded': isExpanded,

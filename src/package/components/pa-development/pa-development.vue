@@ -1,6 +1,6 @@
 <template>
   <teleport to="body" v-if="menu.visible">
-    <div :id="randId" class="pa-development">
+    <div :id="renderId" class="pa-development">
       <div class="menu_hide" @click="menu.visible = false" @contextmenu.prevent="menu.visible = false"></div>
       <div class="card content-menu" :style="{ top: menu.top, left: menu.left }">
         <div class="content-menu_item" @click="copyInfo">
@@ -44,7 +44,7 @@ import useRenderId from "../tools/render-id";
  * @description 组件 Props
  */
 const props = withDefaults(defineProps<ComponentProps>(), { id: "" });
-const randId = ref((props.id ? props.id + "_" : "") + "pa-development_" + useRenderId());
+const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-development_" + useRenderId()));
 /**
  * 全局配置注入
  * @description 全局配置注入

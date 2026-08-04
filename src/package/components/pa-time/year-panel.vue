@@ -134,6 +134,7 @@ import type { DatePickerShortcut, MDatePickerType } from "./types";
  */
 const props = withDefaults(
   defineProps<{
+    id?: string;
     modelValue?: any;
     type?: MDatePickerType;
     valueType?: "date" | "dayjs" | "string";

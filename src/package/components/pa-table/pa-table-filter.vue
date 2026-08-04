@@ -21,6 +21,7 @@
           <slot name="ToolButtonInline"></slot>
 
           <pa-button
+            :renderId="id + '_export-btn'"
             v-if="extraProps.exportApi"
             is="export"
             @click="extraProps.exportApi"
@@ -28,6 +29,7 @@
           />
 
           <pa-button
+            :renderId="id + '_refresh-btn'"
             iconName="reset_line"
             type="default"
             @click="refreshTable({ Page: {} })"
@@ -35,6 +37,7 @@
           />
 
           <pa-button
+            :renderId="id + '_filter-btn'"
             :use-plain="false"
             iconName="filter_line"
             type="primary"
@@ -51,7 +54,9 @@
     <pa-language class="table-title-label mr-size" :text="{ 'zh-CN': '搜索条件', 'en-US': 'Search Filter' }"> </pa-language>
     <div class="mr-size query_item" v-for="(item, index) in Query" :key="item.label + item.value">
       <span class="icon_highlight mr5">#{{ Number(index) + 1 }}</span>
-      <span>{{ item.label }} :</span>
+      <span class="query_item_label" :class="[item.conditionalType == 3 ? 'start' : item.conditionalType == 5 ? 'end' : '']">
+        {{ item.label }} :
+      </span>
 
       <template
         v-for="(relationshipItem, relationshipIndex) in item.relationshipGroup"
@@ -72,12 +77,18 @@
           <div :title="relationshipItem.value">
             {{ relationshipItem.value }}
           </div>
-          <pa-icon class="ml5 hand remove-icon" name="close_circle_line" @click="handleRemoveQ(relationshipItem)"></pa-icon>
+          <pa-icon
+            :renderId="id + '_' + relationshipItem.props + '_remove-icon'"
+            class="ml5 hand remove-icon"
+            name="close_circle_line"
+            @click="handleRemoveQ(relationshipItem)"
+          ></pa-icon>
         </span>
       </template>
     </div>
 
     <pa-button
+      :renderId="id + '_remove-filter-all-btn'"
       is="trash"
       size="small"
       @click="handleCleanAllQuery"
@@ -91,7 +102,6 @@
     <div class="mr-size query_item" v-for="(item, index) in AdvancedQuery" :key="item.label + item.value">
       <span class="icon_highlight mr5">#{{ Number(index) + 1 }}</span>
       <span>{{ item.label }} :</span>
-
       <template
         v-for="(relationshipItem, relationshipIndex) in item.relationshipGroup"
         :key="'relationshipItem' + relationshipIndex"
@@ -112,10 +122,16 @@
           &lt;{{ setRelationshipGroupLinkType(item.relationshipGroupLinkType) }}&gt;
         </span>
       </template>
-      <pa-icon class="ml5 hand remove-icon" name="close_circle_line" @click="handleRemoveSenior(item)"></pa-icon>
+      <pa-icon
+        :renderId="id + '_' + item.fieldName + '_remove-adv-icon'"
+        class="ml5 hand remove-icon"
+        name="close_circle_line"
+        @click="handleRemoveSenior(item)"
+      ></pa-icon>
     </div>
 
     <pa-button
+      :renderId="id + '_remove-adv-filter-all-btn'"
       is="trash"
       size="small"
       @click="handleCleanAllSeniorQuery"
@@ -135,9 +151,9 @@
 
   <!-- 表配置 -->
   <ConfigSetting
+    :id="id"
     :tableStructure="tableStructure"
     ref="configRef"
-    :id="extraProps.id"
     :table-query="tableQuery"
     :display="extraProps.display"
   />
@@ -152,6 +168,7 @@ import { useFilterHooks } from "./hooks/use-filter-hooks";
 import { useSeniorFilterHooks } from "./hooks/use-senior-filter-hooks";
 
 type LightTableFilterPropsType = {
+  id: string;
   tableStructure: Array<ComponentUseItemProps>;
   tableQuery: PaTableUseType.TableQueryType;
   extraProps: ComponentProps;

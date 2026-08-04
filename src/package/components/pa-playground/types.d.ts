@@ -5,9 +5,8 @@
 /**
  * @description 导入类型定义
  */
-import { PaStructureType, PaOptionType } from "PancakeType";
+import { PaStructureType, PaOptionType, LanguagePackageType } from "../manager-type";
 import { PaPlaygroundPageButtonType } from "./components/types";
-import { LanguagePackageType } from "../manager-type";
 
 /**
  * @description 接口配置类型

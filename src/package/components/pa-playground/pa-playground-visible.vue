@@ -177,7 +177,7 @@
   <pa-playground-visible
     v-if="findNextPage"
     ref="visibleDialogRef"
-    :id="randId"
+    :id="renderId"
     :base-config="props.baseConfig"
     :playground-items="props.playgroundItems"
     :interfaceConfigs="props.interfaceConfigs"
@@ -233,7 +233,7 @@ import { PancakeGlobalConfigType } from "../pa-manager/types";
  * 模块导入
  * @description 导入 Pancake 类型定义
  */
-import { PaOptionType, PaStructureType } from "PancakeType";
+import { PaOptionType, PaStructureType } from "../manager-type";
 /**
  * 模块导入
  * @description 导入 IndexDB 数据操作方法
@@ -288,6 +288,7 @@ const findNextPage = ref<boolean>(false);
 const props = withDefaults(
   defineProps<{
     id?: string;
+    renderId?: string;
     baseConfig: PaPlaygroundType;
     playgroundItems: PaPlaygroundPagesType[];
     interfaceConfigs: MInterfaceConfig[];
@@ -307,7 +308,7 @@ const props = withDefaults(
   }>(),
   { useMock: true, useToPage: false }
 );
-const randId = ref((props.id ? props.id + "_" : "") + "pa-playground-visible_" + useRenderId());
+const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-playground-visible_" + useRenderId()));
 
 /**
  * 扩展选项计算值

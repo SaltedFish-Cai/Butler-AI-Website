@@ -2,7 +2,7 @@
   <transition name="mo-animation-fadeUp" @after-enter="handleAfterEnter" @after-leave="handleAfterLeave">
     <div
       v-show="visible"
-      :id="randId"
+      :id="renderId"
       :class="['pa-message', type || '', customClass]"
       :style="styles"
       role="alert"
@@ -48,9 +48,10 @@ const language = (typeof window !== "undefined" && window.PancakeGlobalConfig?.l
  */
 const props = defineProps<{
   id: string;
+  renderId?: string;
   options: MessageOptions;
 }>();
-const randId = ref(props.id || "pa-message_" + useRenderId());
+const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-message_" + useRenderId()));
 /**
  * 解构选项
  * @description 从 props.options 中解构配置项

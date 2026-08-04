@@ -19,7 +19,6 @@ import { PancakeGlobalConfigType } from "../pa-manager/types";
  */
 import { ComponentLabelProps } from "./types";
 import { JSX } from "vue/jsx-runtime";
-import useRenderId from "../tools/render-id";
 /**
  * 标签页上下文
  * @type Ref<{ mode: string; tabsId: string }>
@@ -35,7 +34,6 @@ const tabsContext = inject("TabsContext") as Ref<{
  * @description 组件的属性对象
  */
 const _props = defineProps<ComponentLabelProps>();
-const randId = ref((_props.id ? _props.id + "_" : "") + "pa-tabs-label_" + useRenderId());
 /**
  * 全局配置
  * @type ComputedRef<PancakeGlobalConfigType>
@@ -138,7 +136,7 @@ const RenderTableColumn = (slots: any): JSX.Element => {
         const name = props?.name;
         return (
           <div
-            id={randId.value + "_tab" + "_" + props?.name}
+            id={_props.id + "_tab" + "_" + props?.name}
             class={className(props)}
             onClick={() => _props.changeTabs && _props.changeTabs(name, index)}
             draggable={!!_props.onDragReorder}

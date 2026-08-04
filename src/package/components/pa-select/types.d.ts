@@ -36,6 +36,13 @@ export type ComponentProps = {
    */
   id?: string;
   /**
+   * render-id
+   * @type string | undefined
+   * @default undefined
+   * @description 当设置该值时，会作为组件的唯一标识
+   */
+  renderId?: string;
+  /**
    * 自定义类名
    * @type Array<string> | string | undefined
    * @default undefined
@@ -84,6 +91,13 @@ export type ComponentProps = {
    * @description 表单项标签宽度
    */
   titleWidth?: string;
+  /**
+   * 是否开启筛选
+   * @type boolean
+   * @default false
+   * @description 是否开启筛选功能
+   */
+  useFilter?: boolean;
   /**
    * 创建时是否使用 change 事件
    * @type boolean

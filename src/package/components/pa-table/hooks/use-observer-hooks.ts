@@ -40,9 +40,9 @@ export const useObserverHooks = (props: any, refs: any) => {
    * @description 监听滚动更多元素进入视窗
    */
   function createObserver() {
-    if (!refs.infiniteScroll.value) return;
     if (refs.isIntersectingList.value.length) closeObserver();
     const root = props.useSticky || refs.mScrollbarListRef.value.bodyEl;
+    // 吸顶表头监听与无限滚动无关，需在任意模式下创建
     if (props.useSticky && !refs.isInViewList.value.length) {
       const Els = document.querySelector(`#${props.id} .pa-table_body_header_scroll`);
       if (Els) {
@@ -54,6 +54,7 @@ export const useObserverHooks = (props: any, refs: any) => {
         refs.isInViewList.value.push({ isIntersecting: isIntersecting, stopObserving, Els });
       }
     }
+    if (!refs.infiniteScroll.value) return;
     if (isBrowser) window.developLog.log(`打开监听——元素进入视窗`, props.id, "success");
     const Els = document.querySelectorAll(`#${props.id} .m-scrollbar-more`);
     if (Els.length) {

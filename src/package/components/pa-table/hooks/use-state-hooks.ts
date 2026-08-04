@@ -523,7 +523,9 @@ export const useStateHooks = (
   function setCellWidth() {
     state.setCellWidthIng = true;
     state.useAverageWidth = -1;
+    bodyRef.value.style.transition = "0s";
     nextTick(() => {
+      bodyRef.value.style.opacity = 0;
       const maxWidth = 500;
       let maxIndex = -1;
       let isMaxValue = 0;
@@ -632,6 +634,41 @@ export const useStateHooks = (
 
       tableStructure.value = _Structure;
       state.setCellWidthIng = false;
+
+      nextTick(() => {
+        if (contentClientWidth > allWidth) {
+          // @ 查找宽度最大的元素，忽略存在 type 属性的元素（如 row/selection/index/radio）及 operation 列
+          let findMaxWidthItem = _Structure.find(item => isNil(item.baseWidth));
+          if (!findMaxWidthItem) {
+            const _findMaxWidthItem = _Structure
+              .filter(item => !item.type && item.prop != "operation")
+              .reduce<(ComponentItemProps & ComponentUseItemProps) | null>(
+                (max, item) => (setWidthToNumber(item.width) > setWidthToNumber(max?.width) ? item : max),
+                null
+              );
+            if (_findMaxWidthItem) {
+              findMaxWidthItem = _findMaxWidthItem;
+            }
+          }
+
+          tableStructure.value.forEach(item => {
+            if (item.prop == findMaxWidthItem?.prop) {
+              item.width = "auto";
+            }
+          });
+        }
+
+        setTimeout(() => {
+          bodyRef.value.style.transition = "opacity var(--pa-animation-time, 0.2s)";
+          bodyRef.value.style.opacity = 1;
+        }, 500);
+
+        // if (contentClientWidth > allWidth) {
+        //   showScrollX.value = true;
+        // } else {
+        //   showScrollX.value = false;
+        // }
+      });
     });
   }
 

@@ -42,6 +42,11 @@ export interface ScrollListenerOptions {
  * @type interface
  * @description 滚动监听返回的状态信息
  */
+export interface ScrollUseInfo {
+  useHorizontal: boolean;
+  useVertical: boolean;
+}
+
 export interface ScrollUserInfo {
   horizontalThumb: number;
   verticalThumb: number;
@@ -109,21 +114,35 @@ export class ScrollListener {
     const _defaultScrollHorizontalThumb = this.options.defaultScrollHorizontalThumb;
     const _defaultScrollVerticalThumb = this.options.defaultScrollVerticalThumb;
 
+    const useHorizontal = scrollWidth - _clientWidth > 10;
+    const useVertical = scrollHeight - _clientHeight > 10;
+
     const clientWidth = _clientWidth - _defaultScrollHorizontalThumb;
     const clientHeight = _clientHeight - _defaultScrollVerticalThumb;
+
     const _h = (clientWidth / scrollWidth) * clientWidth;
     const _v = (clientHeight / scrollHeight) * clientHeight;
     const horizontalThumb = _h < MAX_THUMB_SIZE ? MAX_THUMB_SIZE : _h;
     const verticalThumb = _v < MAX_THUMB_SIZE ? MAX_THUMB_SIZE : _v;
-
-    const useHorizontal = scrollWidth - _clientWidth > 10;
-    const useVertical = scrollHeight - _clientHeight > 10;
 
     return {
       horizontalThumb,
       verticalThumb,
       horizontalThumbScale: useHorizontal ? (clientWidth - horizontalThumb) / (scrollWidth - _clientWidth) : 0,
       verticalThumbScale: useVertical ? (clientHeight - verticalThumb) / (scrollHeight - _clientHeight) : 0,
+      useHorizontal,
+      useVertical
+    };
+  }
+
+  public updateUse(element: HTMLElement, parentBoxRef: HTMLElement | undefined): ScrollUseInfo {
+    const { scrollHeight, scrollWidth } = element;
+    const { clientWidth: _clientWidth, clientHeight: _clientHeight } = parentBoxRef || element;
+
+    const useHorizontal = scrollWidth - _clientWidth > 10;
+    const useVertical = scrollHeight - _clientHeight > 10;
+
+    return {
       useHorizontal,
       useVertical
     };
@@ -556,6 +575,7 @@ export function listenElementScroll(
   useVertical: boolean;
   remove: () => void;
   update: (parentBoxRef: HTMLElement | undefined) => ScrollUserInfo;
+  updateUse: (parentBoxRef: HTMLElement | undefined) => ScrollUseInfo;
 } {
   const listener = new ScrollListener(options);
   const id = `element-scroll-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
@@ -573,6 +593,9 @@ export function listenElementScroll(
     },
     update: (parentBoxRef: HTMLElement | undefined) => {
       return listener.update(element, parentBoxRef);
+    },
+    updateUse: (parentBoxRef: HTMLElement | undefined) => {
+      return listener.updateUse(element, parentBoxRef);
     }
   };
 }

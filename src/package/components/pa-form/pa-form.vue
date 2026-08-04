@@ -1,9 +1,9 @@
 <template>
-  <pa-development :id="randId">
+  <pa-development :id="renderId">
     <template v-if="initialization == 1">
       <div class="pa-form" :class="[props.class]" :style="{ ...props.style }">
         <form-control
-          :id="randId + '_form'"
+          :id="renderId + '_form'"
           ref="FormControlRef"
           :rules="useRequired ? baseRulesMap['default'] : undefined"
           :model="formData"
@@ -28,8 +28,8 @@
                 <!-- tabs 表 -->
                 <pa-col v-if="item.type == 'tabs-form'" :xs="1" :sm="1" :md="1" :lg="1" :xl="1">
                   <tabsItem
-                    :id="randId + '_tabs_' + item.prop as string"
-                    @set-ref="refBody => setRuleTabsFormRef(refBody, item.prop as string)"
+                    :id="renderId + '_tabs_' + (item.prop as string)"
+                    @set-ref="refBody => setRuleTabsFormRef(refBody, (item.prop as string))"
                     :item="item"
                     :rules="baseRulesMap"
                   >
@@ -40,7 +40,7 @@
                 </pa-col>
 
                 <!-- 标准表格 -->
-                <formItem v-else :id="randId + '_form_' + item.prop as string" :item="item">
+                <formItem v-else :id="renderId" :item="item">
                   <template v-for="slot in slotKeys" #[slot]="scope" :key="slot">
                     <slot :name="slot" :config="item" :data="scope.data" :option="(scope as any).option"></slot>
                   </template>
@@ -156,7 +156,7 @@ const props = withDefaults(defineProps<ComponentProps>(), {
  * @type {string}
  * @description 生成组件唯一标识
  */
-const randId = ref((props.id ? props.id + "_" : "") + "pa-form_" + useRenderId());
+const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-form_" + useRenderId()));
 
 /**
  * **组件事件**
@@ -780,7 +780,7 @@ onMounted(() => {
  */
 async function getSubmitForm() {
   if (initialization.value == -1) {
-    return;
+    return false;
   }
 
   const _ruleFormRef = FormControlRef.value;
@@ -798,13 +798,13 @@ async function getSubmitForm() {
     }
   }
   if (formResult) {
-    const deepData = cloneDeep(formData.value) || {};
-    const FormData: FormDataType = deepData;
+    const deepData: Record<string, any> = cloneDeep(formData.value) || {};
+    const FormData = deepData;
     const _configs = props.structure || [];
     for (let index = 0; index < _configs.length; index++) {
       const element = _configs[index];
       if (element.type == "tabs-form" && element.prop && FormData[element.prop]) {
-        FormData[element.prop] = FormData[element.prop].map((item: FormDataType) => {
+        FormData[element.prop] = FormData[element.prop].map(item => {
           delete item.name;
           delete item.isError;
           return item;
@@ -866,7 +866,7 @@ function setStructureAll(newConfig: Array<PaFormItemType>) {
  */
 function setStructureItem(prop: string, item: PaFormItemType) {
   if (!prop) return;
-  exCellConfig.value[prop] = item;
+  exCellConfig.value[prop] = { ...exCellConfig.value[prop], ...item };
   debounceInitConfig();
 }
 

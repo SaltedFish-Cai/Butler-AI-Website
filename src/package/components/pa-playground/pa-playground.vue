@@ -460,7 +460,7 @@ import PaPlaygroundVisible from "./pa-playground-visible.vue";
  * 模块导入
  * @description 导入 Pancake 类型定义
  */
-import { PaStructureType } from "PancakeType";
+import { PaStructureType } from "../manager-type";
 /**
  * 模块导入
  * @description 导入页面按钮类型

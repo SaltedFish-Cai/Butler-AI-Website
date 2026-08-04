@@ -16,7 +16,7 @@
 
 <script lang="tsx" setup>
 import { nextTick, ref, useTemplateRef } from "vue";
-import { PaOptionType, PaStructureType } from "PancakeType";
+import { PaOptionType, PaStructureType } from "../../manager-type";
 
 const visible = ref(false);
 const visibleType = ref<"form" | "table">("table");

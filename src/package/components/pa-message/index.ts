@@ -8,7 +8,7 @@ import type { MessageOptions, MessageInstance, MessageType } from "./types";
  * @description 导入消息管理器
  */
 import { MessageManager } from "./message-manager";
-import { LanguagePackageType } from "PancakeType";
+import { LanguagePackageType } from "../manager-type";
 /**
  * 消息提示函数
  * @param options - 消息配置或消息内容

@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="!display"
-    :id="randId"
+    :id="renderId"
     class="pa-select"
     ref="selectRef"
     :class="[props.class, { 'is-disabled': props.disabled }]"
@@ -17,34 +17,40 @@
       :closeByScroll="false"
     >
       <template #reference>
-        <div class="pa-select-content">
+        <div class="pa-select-content" :class="[!useFilter ? 'no-use-filter' : '']">
           <div v-if="title" :style="{ width: titleWidth }" class="pa-cell-label">
             {{ typeof title === "string" ? title : title[languageValue] }}
           </div>
-          <div class="pa-select-input" :class="[isFocus ? 'is-focus' : '']">
-            <template v-if="tagValue.length > 0 && isMultiple">
-              <pa-tag
-                :tagList="tagValue"
+
+          <div class="pa-select-input" :id="renderId + '_select-input'" :class="[isFocus ? 'is-focus' : '']">
+            <template v-if="useFilter">
+              <template v-if="tagValue.length > 0 && isMultiple">
+                <pa-tag
+                  :id="renderId + '_tag-list'"
+                  :tagList="tagValue"
+                  :disabled="props.disabled"
+                  :style="{ width: !waitTag ? '100%' : 'auto' }"
+                  @remove-tag="removeTag"
+                ></pa-tag>
+              </template>
+              <input
+                v-if="waitTag"
+                :id="renderId + '_select-input-inner'"
+                class="pa-select-input-inner"
+                :value="inputValue"
+                :placeholder="inputPlaceholder"
+                ref="inputRef"
+                :name="id"
+                autocomplete="off"
                 :disabled="props.disabled"
-                :style="{ width: !waitTag ? '100%' : 'auto' }"
-                @remove-tag="removeTag"
-              ></pa-tag>
+                @focus="handleFocus"
+                @blur="handleBlur"
+                @input="handleInput"
+                @keydown="handleKeydown"
+              />
             </template>
-            <input
-              v-if="waitTag"
-              class="pa-select-input-inner"
-              :value="inputValue"
-              :placeholder="inputPlaceholder"
-              ref="inputRef"
-              :name="id"
-              autocomplete="off"
-              :disabled="props.disabled"
-              @focus="handleFocus"
-              @blur="handleBlur"
-              @input="handleInput"
-              @keydown="handleKeydown"
-            />
-            <pa-icon v-if="inValue && clearable" name="close_circle_line" class="clear-icon" @click="clearInput" />
+            <template v-else>{{ inputValue }}</template>
+            <pa-icon v-if="inValue && clearable && useFilter" name="close_circle_line" class="clear-icon" @click="clearInput" />
             <pa-icon :class="!isFocus ? 'down-icon' : 'down-icon up-icon'" name="down_line"></pa-icon>
           </div>
         </div>
@@ -60,6 +66,7 @@
           <slot name="optionLabelBefore"></slot>
           <div
             v-for="(item, index) in filterOptionsList"
+            :id="renderId + '_option_' + item.value"
             :key="String(item.value)"
             class="pa-select-option"
             :class="[
@@ -86,7 +93,7 @@
     </pa-popover>
   </div>
 
-  <div v-else :id="randId" class="pa-display-style" :class="[props.class]" :style="props.style">
+  <div v-else class="pa-display-style" :class="[props.class]" :style="props.style">
     <div v-if="title" :style="{ width: titleWidth }" class="pa-cell-label">
       {{ typeof title === "string" ? title : title[languageValue] }}
     </div>
@@ -99,7 +106,6 @@
 
   <div
     v-if="(alwaysContrast && !isNil(contrastData)) || (!isNil(contrastData) && !isEqual(inValue, contrastData))"
-    :id="randId"
     :class="['pa-contrast-style']"
   >
     <slot name="exContrast"></slot>
@@ -182,7 +188,8 @@ const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<Pan
  */
 const props = withDefaults(defineProps<ComponentProps>(), {
   type: "select",
-  clearable: true
+  clearable: true,
+  useFilter: true
 });
 /**
  * 组件事件定义
@@ -193,7 +200,7 @@ const emits = defineEmits<ComponentEmits>();
  * render-id
  * @description 组件唯一标识
  */
-const randId = ref((props.id ? props.id + "_" : "") + "pa-select_" + useRenderId());
+const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-select_" + useRenderId()));
 /**
  * 弹出层引用
  * @type any
@@ -332,7 +339,7 @@ const filterOptionsList = computed(() => {
  * @description 计算输入框应显示的文本内容
  */
 const inputValue = computed(() => {
-  if (isFocus.value || isMultiple.value) {
+  if (props.useFilter && (isFocus.value || isMultiple.value)) {
     return filterValue.value || "";
   } else {
     const data = exOptionsList.value?.find?.(item => item.value == inValue.value)?.label || inValue.value || "";
@@ -437,7 +444,8 @@ function handlePopoverChange(data) {
     filterValue.value = "";
     keyboardActiveIndex.value = -1;
   } else {
-    inputRef.value.focus();
+    isFocus.value = true;
+    inputRef?.value?.focus();
     optionsHeight.value = "auto";
     setTimeout(() => {
       if (optionsRef.value) {
@@ -607,7 +615,7 @@ watch(
     waitTag.value = false;
     inValue.value = !isNil(data) && data !== "" ? data || "" : isMultiple.value ? [] : "";
     oldValue = !isNil(data) && data !== "" ? data || "" : isMultiple.value ? [] : "";
-    if (isOnlineSelect.value || isRequestSelect.value) {
+    if ((isOnlineSelect.value || isRequestSelect.value) && !inValue.value) {
       remoteMethodFn(data);
     }
     nextTick(() => {

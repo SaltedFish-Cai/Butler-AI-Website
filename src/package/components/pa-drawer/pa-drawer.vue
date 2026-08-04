@@ -6,7 +6,7 @@
     :blur="overlayBlur"
   >
     <transition :name="transitionName">
-      <div v-if="state.visible" :id="randId" class="pa-drawer">
+      <div v-if="state.visible" :id="renderId" class="pa-drawer">
         <div class="pa-drawer-content" :class="position" :style="contentStyle">
           <div class="pa-drawer-content_header">
             <slot name="header">
@@ -25,7 +25,7 @@
                 </div>
               </div>
             </slot>
-            <div :id="randId + '_close'" class="pa-drawer-content_header_close">
+            <div :id="renderId + '_close'" class="pa-drawer-content_header_close">
               <pa-icon name="close_line" class="flex-center" @click="closeMenu" />
             </div>
           </div>
@@ -91,7 +91,7 @@ const props = withDefaults(defineProps<ComponentProps>(), {
  * @type {string}
  * @description 生成组件唯一标识
  */
-const randId = ref((props.id ? props.id + "_" : "") + "pa-drawer_" + useRenderId());
+const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-drawer_" + useRenderId()));
 /**
  * 组件事件定义
  * @type ComponentEmits

@@ -9,7 +9,7 @@
     <Transition name="pa-menu-fade">
       <div
         v-if="props.visible"
-        :id="randId"
+        :id="renderId"
         ref="menuRef"
         class="pa-menu"
         :class="[pointClass, props.class]"
@@ -60,7 +60,7 @@ const emit = defineEmits<ComponentEmits>();
  * render-id
  * @description 组件唯一标识
  */
-const randId = ref((props.id ? props.id + "_" : "") + "pa-menu_" + useRenderId());
+const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-menu_" + useRenderId()));
 
 /**
  * 菜单元素引用

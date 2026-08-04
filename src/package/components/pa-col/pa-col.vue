@@ -1,5 +1,5 @@
 <template>
-  <div :id="randId" :style="style" :class="classes">
+  <div :id="renderId" :style="style" :class="classes">
     <slot></slot>
   </div>
 </template>
@@ -29,7 +29,7 @@ const props = withDefaults(defineProps<ComponentProps>(), {
   lg: undefined,
   xl: undefined
 });
-const randId = ref((props.id ? props.id + "_" : "") + "pa-col_" + useRenderId());
+const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-col_" + useRenderId()));
 /**
  * **注入断点信息**
  * @type `Ref<BreakPoint>`

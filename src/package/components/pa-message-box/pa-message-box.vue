@@ -1,6 +1,6 @@
 <template>
   <pa-overlay v-if="visible" :model-value="visible" @click-overlay="handleClose">
-    <div :id="randId" :class="['pa-message-box', type ? `${type}` : '', customClass]" :style="overlayStyles" role="alert">
+    <div :id="renderId" :class="['pa-message-box', type ? `${type}` : '', customClass]" :style="overlayStyles" role="alert">
       <div class="pa-message-box_header mb-size">
         <div class="flex-center-start">
           <pa-icon class="pa-message-box__icon mr-size" name="warning_line"></pa-icon>
@@ -80,9 +80,11 @@ import languageMap from "../language.json";
  */
 const props = defineProps<{
   id: string;
+  renderId?: string;
   options: MessageBoxOptions;
 }>();
-const randId = ref(props.id || "pa-message-box_" + useRenderId());
+const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-message-box_" + useRenderId()));
+
 /**
  * 获取语言键
  * @returns 语言键值

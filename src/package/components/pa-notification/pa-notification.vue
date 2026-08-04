@@ -2,7 +2,7 @@
   <transition name="mo-animation-fade" @after-enter="handleAfterEnter" @after-leave="handleAfterLeave">
     <div
       v-show="visible"
-      :id="randId"
+      :id="renderId"
       :class="['pa-notification', type ? `${type}` : '', customClass]"
       :style="styles"
       role="alert"
@@ -50,9 +50,10 @@ import languageMap from "../language.json";
  */
 const props = defineProps<{
   id: string;
+  renderId?: string;
   options: NotificationOptions;
 }>();
-const randId = ref(props.id || "pa-notification_" + useRenderId());
+const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-notification_" + useRenderId()));
 /**
  * 当前语言
  * @description 获取全局配置的语言设置

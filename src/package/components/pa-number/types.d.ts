@@ -25,6 +25,13 @@ export type ComponentProps = {
    */
   id?: string;
   /**
+   * 渲染唯一标识
+   * @type string | undefined
+   * @default undefined
+   * @description 渲染时的唯一标识符
+   */
+  renderId?: string;
+  /**
    * 自定义类名
    * @type Array<string> | string | undefined
    * @default undefined

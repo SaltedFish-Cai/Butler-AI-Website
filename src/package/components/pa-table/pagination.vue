@@ -1,5 +1,6 @@
 <template>
   <pa-pagination
+    :render-id="id"
     v-model:current-page="props.pageNum"
     :page-size="exPagination.pageSize || pageable.PageSize"
     :total="pageable.total"
@@ -23,6 +24,7 @@ import { PaTableUseType } from "./types";
  * 分页组件属性类型
  */
 interface PaginationPropsType {
+  id: string;
   pageable: PaTableUseType.Pageable;
   pageNum: number;
   exPagination: {

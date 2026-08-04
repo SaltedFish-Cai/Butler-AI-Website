@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="!display"
-    :id="randId"
+    :id="renderId"
     class="pa-switch"
     :class="[inValue == options.activeValue ? 'pa-switch-active' : '', props.class, { 'is-disabled': props.disabled }]"
     :style="props.style"
@@ -152,7 +152,7 @@ const props = withDefaults(defineProps<ComponentProps>(), {
  */
 const emits = defineEmits<ComponentEmits>();
 
-const randId = ref((props.id ? props.id + "_" : "") + "pa-switch_" + useRenderId());
+const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-switch_" + useRenderId()));
 
 /**
  * 当前值

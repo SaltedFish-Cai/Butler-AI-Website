@@ -1,11 +1,11 @@
 <template>
-  <div :id="randId" class="pa-file" :class="[props.class, { 'is-disabled': props.disabled }]" :style="props.style">
+  <div :id="renderId" class="pa-file" :class="[props.class, { 'is-disabled': props.disabled }]" :style="props.style">
     <div class="flex-center-start" v-if="!display" style="flex-wrap: wrap">
       <div class="flex-center-start" style="width: 1px; flex: 1">
         <slot name="reference-before"></slot>
         <pa-button-group>
           <pa-button
-            :id="randId + '_upload'"
+            :id="renderId + '_upload'"
             :title="languagePackage['uploadText']"
             class="pa-file_upload-btn"
             position="left"
@@ -32,7 +32,7 @@
           </pa-button>
 
           <pa-button
-            :id="randId + '_download'"
+            :id="renderId + '_download'"
             v-if="downloadTemplate"
             is="download"
             :disabled="disabled"
@@ -45,7 +45,7 @@
 
       <pa-button
         v-if="inValue?.length && !display"
-        :id="randId + '_clean'"
+        :id="renderId + '_clean'"
         :title="languagePackage['clearAddedFiles']"
         style="--pa-size-font: 14px; --pa-size-height: 28px"
         class="btn-width ml-size"
@@ -166,7 +166,7 @@ const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<Pan
  * @description 定义 PaFile 组件的接收属性
  */
 const props = withDefaults(defineProps<ComponentProps>(), {});
-const randId = ref((props.id ? props.id + "_" : "") + "pa-dialog_" + useRenderId());
+const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-dialog_" + useRenderId()));
 
 /**
  * 组件事件定义

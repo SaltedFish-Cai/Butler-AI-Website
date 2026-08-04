@@ -41,7 +41,7 @@
 
 <script lang="tsx" setup>
 import { computed, ComputedRef, inject, ref, useTemplateRef } from "vue";
-import { PaStructureType, PaOptionType } from "PancakeType";
+import { PaStructureType, PaOptionType } from "../../../manager-type";
 
 import { editTableColConfig, editOtherTableColConfig, filterType, exOptionsById } from "../../configs/table-config";
 import {

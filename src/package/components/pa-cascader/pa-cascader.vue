@@ -1,5 +1,11 @@
 <template>
-  <div v-if="!display" class="pa-cascader" ref="selectRef" :class="[props.class, { 'is-disabled': props.disabled }]" :style="props.style">
+  <div
+    v-if="!display"
+    class="pa-cascader"
+    ref="selectRef"
+    :class="[props.class, { 'is-disabled': props.disabled }]"
+    :style="props.style"
+  >
     <pa-popover
       ref="popoverRef"
       @change="handlePopoverChange"
@@ -10,17 +16,22 @@
       :closeByScroll="false"
     >
       <template #reference>
-        <div class="pa-cascader-content" :id="randId">
+        <div class="pa-cascader-content" :id="renderId">
           <div v-if="title" :style="{ width: titleWidth }" class="pa-cell-label">
             {{ typeof title === "string" ? title : title[languageValue] }}
           </div>
           <div class="pa-cascader-input" :class="[isFocus ? 'is-focus' : '']">
             <template v-if="tagValue.length > 0 && isMultiple">
-              <pa-tag :tagList="tagValue" :disabled="props.disabled" :style="{ width: !waitTag ? '100%' : 'auto' }" @remove-tag="removeTag"></pa-tag>
+              <pa-tag
+                :tagList="tagValue"
+                :disabled="props.disabled"
+                :style="{ width: !waitTag ? '100%' : 'auto' }"
+                @remove-tag="removeTag"
+              ></pa-tag>
             </template>
             <input
               v-if="waitTag"
-              :id="randId + '_input'"
+              :id="renderId + '_input'"
               class="pa-cascader-input-inner"
               :value="inputValue"
               :placeholder="inputPlaceholder"
@@ -39,7 +50,7 @@
       <div class="pa-cascader-options" ref="optionsRef" v-if="!props.disabled && filterOptionsList.length > 0">
         <div class="pa-cascader-options-group">
           <pa-cascader-option
-            :id="randId"
+            :id="renderId"
             v-if="!filterValue"
             :exOptions="exOptionsList"
             :inValue="inValue"
@@ -54,7 +65,16 @@
               <slot name="optionLabel" :option="option"></slot>
             </template>
           </pa-cascader-option>
-          <pa-cascader-option :id="randId" v-else :exOptions="filterOptionsList" :inValue="inValue" :isMultiple="isMultiple" :isCheck="isCheck" :optionsHeight="optionsHeight" :level="0">
+          <pa-cascader-option
+            :id="renderId"
+            v-else
+            :exOptions="filterOptionsList"
+            :inValue="inValue"
+            :isMultiple="isMultiple"
+            :isCheck="isCheck"
+            :optionsHeight="optionsHeight"
+            :level="0"
+          >
             <template #optionLabel="option">
               <slot name="optionLabel" :option="option"></slot>
             </template>
@@ -77,7 +97,10 @@
     </div>
   </div>
 
-  <div v-if="(alwaysContrast && !isNil(contrastData)) || (!isNil(contrastData) && !isEqual(inValue, contrastData))" :class="['pa-contrast-style']">
+  <div
+    v-if="(alwaysContrast && !isNil(contrastData)) || (!isNil(contrastData) && !isEqual(inValue, contrastData))"
+    :class="['pa-contrast-style']"
+  >
     <slot name="exContrast"></slot>
     <template v-if="$slots.exContrast"> ( {{ findData(contrastData || inValue) || "--" }} )</template>
     <template v-else>{{ findData(contrastData || inValue) || "--" }}</template>
@@ -153,7 +176,9 @@ const props = withDefaults(defineProps<ComponentProps>(), {
   useTextByLink: true
 });
 
-const randId = ref((props.id ? props.id + "_" : "") + "pa-cascader_" + useRenderId());
+const renderId = ref(
+  props.renderId || props.id ? props.id?.replace(/\,/g, "") + "_" + useRenderId() : "pa-cascader_" + useRenderId()
+);
 
 /**
  * **组件事件定义**
@@ -313,7 +338,8 @@ const inputValue = computed(() => {
     return flatExOptions.value.find(item => item.value == inValue.value)?.label || inValue.value || "";
   } else {
     const findItem = flatExOptions.value.find(item => item.value == inValue.value);
-    const findText = (findItem?.label && typeof findItem?.label === "object" ? findItem?.label[languageValue.value] : findItem?.label) || "";
+    const findText =
+      (findItem?.label && typeof findItem?.label === "object" ? findItem?.label[languageValue.value] : findItem?.label) || "";
     return findParent(findItem, findText);
   }
 });
@@ -324,7 +350,9 @@ const inputValue = computed(() => {
  */
 const inputPlaceholder = computed(() => {
   const basePlaceholder =
-    typeof props.placeholder === "object" ? props.placeholder[languageValue.value] || languagePackage.value[`selectPlaceholder`] : props.placeholder || languagePackage.value[`selectPlaceholder`];
+    typeof props.placeholder === "object"
+      ? props.placeholder[languageValue.value] || languagePackage.value[`selectPlaceholder`]
+      : props.placeholder || languagePackage.value[`selectPlaceholder`];
   if (Array.isArray(inValue.value) && inValue.value?.length && isMultiple.value) {
     return "";
   } else if (isFocus.value) {
@@ -333,7 +361,8 @@ const inputPlaceholder = computed(() => {
       return (_label && typeof _label === "object" ? _label[languageValue.value] : _label) || basePlaceholder;
     } else {
       const findItem = flatExOptions.value.find(item => item.value == inValue.value);
-      const findText = (findItem?.label && typeof findItem?.label === "object" ? findItem?.label[languageValue.value] : findItem?.label) || "";
+      const findText =
+        (findItem?.label && typeof findItem?.label === "object" ? findItem?.label[languageValue.value] : findItem?.label) || "";
       return findParent(findItem, findText) || basePlaceholder;
     }
   } else {
@@ -365,7 +394,8 @@ const tagValue = computed(() => {
  */
 function findParent(item: PaOptionType.Select | undefined, findText: object | string): string {
   if (item?.parent) {
-    const _findText = (typeof item.parent.label === "object" ? item.parent.label[languageValue.value] : item.parent.label) + " / " + findText;
+    const _findText =
+      (typeof item.parent.label === "object" ? item.parent.label[languageValue.value] : item.parent.label) + " / " + findText;
     return findParent(item.parent, _findText);
   }
   return findText as string;

@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="!display"
-    :id="randId"
+    :id="renderId"
     class="pa-select-icon"
     :class="[props.class, { 'is-disabled': props.disabled }]"
     :style="props.style"
@@ -40,7 +40,7 @@
     </pa-popover>
   </div>
 
-  <div v-else :id="randId" class="pa-display-style" :class="[props.class]" :style="props.style">
+  <div v-else :id="renderId" class="pa-display-style" :class="[props.class]" :style="props.style">
     <div v-if="title" :style="{ width: titleWidth }" class="pa-cell-label">
       {{ typeof title === "string" ? title : title[languageValue] }}
     </div>
@@ -56,7 +56,7 @@
 
   <div
     v-if="(alwaysContrast && !isNil(contrastData)) || (!isNil(contrastData) && !isEqual(selectItem, contrastData))"
-    :id="randId"
+    :id="renderId"
     :class="['pa-contrast-style']"
   >
     <slot name="exContrast"></slot>
@@ -131,7 +131,7 @@ const emits = defineEmits<ComponentEmits>();
  * render-id
  * @description 组件唯一标识
  */
-const randId = ref((props.id ? props.id + "_" : "") + "pa-select-icon_" + useRenderId());
+const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-select-icon_" + useRenderId()));
 /**
  * 选择器容器引用
  * @type any

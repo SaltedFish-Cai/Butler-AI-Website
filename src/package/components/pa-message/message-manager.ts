@@ -35,6 +35,7 @@ class MessageManagerTypeImpl implements MessageManagerType {
       zIndex: options.zIndex || this.zIndex++,
       position: "center"
     };
+
     const container = document.createElement("div");
     container.id = `m-message-container-${id}`;
     document.body.appendChild(container);
@@ -140,7 +141,7 @@ class MessageManagerTypeImpl implements MessageManagerType {
     });
     Object.keys(MessagesByPosition).forEach(position => {
       const Messages = MessagesByPosition[position];
-      let offset = 0;
+      let offset = 20;
       Messages.forEach(Message => {
         const msgOffset = Message.options.offset;
         if (msgOffset != null && msgOffset > offset) {
@@ -149,7 +150,7 @@ class MessageManagerTypeImpl implements MessageManagerType {
         Message.vm.$el.style.top = `${offset}px`;
         const el = Message.vm.$el;
         if (el) {
-          offset += el.offsetHeight + 16;
+          offset += el.offsetHeight + 20;
         }
       });
     });

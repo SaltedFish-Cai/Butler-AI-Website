@@ -1,6 +1,6 @@
 <template>
   <div
-    :id="randId"
+    :id="renderId"
     v-if="!display"
     class="pa-number"
     :class="[props.class, { 'is-disabled': props.disabled }]"
@@ -13,6 +13,7 @@
     <div class="pa-number-input" :class="[isFocus ? 'is-focus' : '']">
       <input
         class="pa-number-input-inner"
+        :id="renderId + '_inner-input'"
         v-model="inValue"
         ref="inputRef"
         :name="id"
@@ -27,7 +28,13 @@
         :placeholder="computedPlaceholder"
       />
       <div v-if="unit" class="pa-number-input-unit">{{ unit }}</div>
-      <pa-icon v-if="!disabled && clearable && inValue" name="close_circle_line" class="clear-icon" @click="clearInput" />
+      <pa-icon
+        v-if="!disabled && clearable && inValue"
+        :id="renderId + '_clear-btn'"
+        name="close_circle_line"
+        class="clear-icon"
+        @click="clearInput"
+      />
       <div class="pa-number-input-controls" v-if="!disabled && controls">
         <pa-icon name="up_line" class="control-icon top" @click="handleControl('up')" />
         <pa-icon name="down_line" class="control-icon bottom" @click="handleControl('down')" />
@@ -110,7 +117,7 @@ const props = withDefaults(defineProps<ComponentProps>(), {
  * @description 定义组件可触发的事件
  */
 const emits = defineEmits<ComponentEmits>();
-const randId = ref((props.id ? props.id + "_" : "") + "pa-number_" + useRenderId());
+const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-number_" + useRenderId()));
 /**
  * 输入框引用
  * @type any
@@ -320,7 +327,7 @@ function handleFocus() {
   if (inValue.value === "" || inValue.value === "-") {
     setRange = true;
   } else {
-    const index = inValue.value.indexOf(".");
+    const index = inValue.value?.indexOf?.(".");
     if (index > -1) {
       const inputElement = inputRef.value;
       if (inputElement) {

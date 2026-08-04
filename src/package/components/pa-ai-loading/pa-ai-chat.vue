@@ -1,5 +1,5 @@
 <template>
-  <div :id="randId" class="pa-ai-chat" :style="{ width: `${FORM_WIDTH}px`, height: `${FORM_HEIGHT}px` }">
+  <div :id="renderId" class="pa-ai-chat" :style="{ width: `${FORM_WIDTH}px`, height: `${FORM_HEIGHT}px` }">
     <div ref="wrapperRef" class="pa-ai-chat__panel" :class="{ 'pa-ai-chat__panel--open': showForm }">
       <!-- Dock bar (固定在底部) -->
       <footer class="pa-ai-chat__dock">
@@ -59,8 +59,8 @@
 import { ref, computed, onMounted, onUnmounted, provide, nextTick } from "vue";
 import useRenderId from "../tools/render-id";
 
-const props = defineProps<{ id?: string }>();
-const randId = ref((props.id ? props.id + "_" : "") + "pa-ai-chat_" + useRenderId());
+const props = defineProps<{ id?: string; renderId?: string }>();
+const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-ai-chat_" + useRenderId()));
 
 // ─── Constants ───────────────────────────────────────────────────────
 

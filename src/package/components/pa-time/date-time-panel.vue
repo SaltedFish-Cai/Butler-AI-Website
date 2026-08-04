@@ -20,21 +20,36 @@
           <!-- 日期选择器 -->
           <template v-if="isDate">
             <div class="m-date-picker-header">
-              <button @click="prevYear('start')" class="m-date-picker-header-btn">«</button>
-              <button @click="prevMonth('start')" class="m-date-picker-header-btn">‹</button>
+              <button :id="id + '_prev_year_start'" @click="prevYear('start')" class="m-date-picker-header-btn">«</button>
+              <button :id="id + '_prev_month_start'" @click="prevMonth('start')" class="m-date-picker-header-btn">‹</button>
               <span class="m-date-picker-header-label">{{ startPanelDate.format("YYYY年MM月") }}</span>
-              <button @click="nextMonth('start')" :disabled="isSameMonth" class="m-date-picker-header-btn">›</button>
-              <button @click="nextYear('start')" :disabled="isSameMonth" class="m-date-picker-header-btn">»</button>
+              <button
+                :id="id + '_next_month_start'"
+                @click="nextMonth('start')"
+                :disabled="isSameMonth"
+                class="m-date-picker-header-btn"
+              >
+                ›
+              </button>
+              <button
+                :id="id + '_next_year_start'"
+                @click="nextYear('start')"
+                :disabled="isSameMonth"
+                class="m-date-picker-header-btn"
+              >
+                »
+              </button>
             </div>
             <table class="m-date-table start" @wheel="e => handleWheel(e, 'start')">
               <thead>
                 <tr>
-                  <th v-for="day in weekDays" :key="day">{{ day }}</th>
+                  <th :id="id + '_week_day_' + day" v-for="day in weekDays" :key="day">{{ day }}</th>
                 </tr>
               </thead>
               <tbody>
                 <tr v-for="(week, weekIndex) in startMonthWeeks" :key="weekIndex">
                   <td
+                    :id="id + '_date_' + weekIndex + '_' + dayIndex"
                     v-for="(day, dayIndex) in week"
                     :key="dayIndex"
                     :class="getDayClass(day, 'start')"
@@ -49,7 +64,7 @@
 
           <!-- 时间选择器 -->
           <div v-if="isTime" class="m-date-picker-time-panel">
-            <timer v-model="startTime" placeholder="HH:mm:ss" class="m-date-picker-time-input" />
+            <timer :id="id + '_time'" v-model="startTime" placeholder="HH:mm:ss" class="m-date-picker-time-input" />
           </div>
         </div>
 
@@ -57,21 +72,50 @@
           <!-- 日期选择器 -->
           <template v-if="isDate">
             <div class="m-date-picker-header">
-              <button @click="prevYear('end')" :disabled="isSameMonth" class="m-date-picker-header-btn">«</button>
-              <button @click="prevMonth('end')" :disabled="isSameMonth" class="m-date-picker-header-btn">‹</button>
+              <button
+                :id="id + '_prev_year_end'"
+                @click="prevYear('end')"
+                :disabled="isSameMonth"
+                class="m-date-picker-header-btn"
+              >
+                «
+              </button>
+              <button
+                :id="id + '_prev_month_end'"
+                @click="prevMonth('end')"
+                :disabled="isSameMonth"
+                class="m-date-picker-header-btn"
+              >
+                ‹
+              </button>
               <span class="m-date-picker-header-label">{{ endPanelDate.format("YYYY年MM月") }}</span>
-              <button @click="nextMonth('end')" class="m-date-picker-header-btn">›</button>
-              <button @click="nextYear('end')" class="m-date-picker-header-btn">»</button>
+              <button
+                :id="id + '_next_month_end'"
+                @click="nextMonth('end')"
+                :disabled="isSameMonth"
+                class="m-date-picker-header-btn"
+              >
+                ›
+              </button>
+              <button
+                :id="id + '_next_year_end'"
+                @click="nextYear('end')"
+                :disabled="isSameMonth"
+                class="m-date-picker-header-btn"
+              >
+                »
+              </button>
             </div>
             <table class="m-date-table end" @wheel="e => handleWheel(e, 'end')">
               <thead>
                 <tr>
-                  <th v-for="day in weekDays" :key="day">{{ day }}</th>
+                  <th :id="id + '_week_day_' + day" v-for="day in weekDays" :key="day">{{ day }}</th>
                 </tr>
               </thead>
               <tbody>
                 <tr v-for="(week, weekIndex) in endMonthWeeks" :key="weekIndex">
                   <td
+                    :id="id + '_date_' + weekIndex + '_' + dayIndex"
                     v-for="(day, dayIndex) in week"
                     :key="dayIndex"
                     :class="getDayClass(day, 'end')"
@@ -86,7 +130,7 @@
 
           <!-- 时间选择器 -->
           <div v-if="isTime" class="m-date-picker-time-panel">
-            <timer v-model="endTime" placeholder="HH:mm:ss" class="m-date-picker-time-input" />
+            <timer :id="id + '_time'" v-model="endTime" placeholder="HH:mm:ss" class="m-date-picker-time-input" />
           </div>
         </div>
       </div>
@@ -96,21 +140,27 @@
         <!-- 日期选择器 -->
         <template v-if="isDate">
           <div class="m-date-picker-header">
-            <button @click="prevYear()" class="m-date-picker-header-btn">«</button>
-            <button @click="prevMonth()" class="m-date-picker-header-btn">‹</button>
+            <button :id="id + '_prev_year'" @click="prevYear()" class="m-date-picker-header-btn">«</button>
+            <button :id="id + '_prev_month'" @click="prevMonth()" class="m-date-picker-header-btn">‹</button>
             <span class="m-date-picker-header-label">{{ currentDate.format("YYYY年MM月") }}</span>
-            <button @click="nextMonth()" class="m-date-picker-header-btn">›</button>
-            <button @click="nextYear()" class="m-date-picker-header-btn">»</button>
+            <button :id="id + '_next_month'" @click="nextMonth()" class="m-date-picker-header-btn">›</button>
+            <button :id="id + '_next_year'" @click="nextYear()" class="m-date-picker-header-btn">»</button>
           </div>
           <table class="m-date-table" @wheel="handleWheel">
             <thead>
               <tr>
-                <th v-for="day in weekDays" :key="day">{{ day }}</th>
+                <th :id="id + '_week_day_' + day" v-for="day in weekDays" :key="day">{{ day }}</th>
               </tr>
             </thead>
             <tbody>
               <tr v-for="(week, weekIndex) in currentMonthWeeks" :key="weekIndex">
-                <td v-for="(day, dayIndex) in week" :key="dayIndex" :class="getDayClass(day)" @click="selectDate(day)">
+                <td
+                  :id="id + '_date_' + weekIndex + '_' + dayIndex"
+                  v-for="(day, dayIndex) in week"
+                  :key="dayIndex"
+                  :class="getDayClass(day)"
+                  @click="selectDate(day)"
+                >
                   {{ day ? day.date() : "" }}
                 </td>
               </tr>
@@ -120,14 +170,14 @@
 
         <!-- 时间选择器 -->
         <div v-if="isTime" class="m-date-picker-time-panel">
-          <timer v-model="selectedTime" placeholder="HH:mm:ss" class="m-date-picker-time-input" />
+          <timer :id="id + '_time'" v-model="selectedTime" placeholder="HH:mm:ss" class="m-date-picker-time-input" />
         </div>
       </template>
 
       <!-- 底部操作按钮 -->
       <div class="m-date-picker-footer">
-        <pa-button @click="handleCancel" is="trash" type="default">清空</pa-button>
-        <pa-button @click="confirmSelection" font="check_line" type="primary">确定</pa-button>
+        <pa-button :render-id="id + '_cancel'" @click="handleCancel" is="trash" type="default">清空</pa-button>
+        <pa-button :render-id="id + '_confirm'" @click="confirmSelection" font="check_line" type="primary">确定</pa-button>
       </div>
     </div>
   </div>
@@ -166,6 +216,7 @@ import Timer from "./timer.vue";
  */
 const props = withDefaults(
   defineProps<{
+    id?: string;
     modelValue?: any;
     type?: MDatePickerType;
     valueType?: "date" | "dayjs" | "string";

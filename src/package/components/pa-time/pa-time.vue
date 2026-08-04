@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="!display"
-    :id="randId"
+    :id="renderId"
     class="pa-time"
     ref="selectRef"
     :class="[props.class, { 'is-disabled': props.disabled }]"
@@ -22,6 +22,7 @@
           </div>
           <div v-if="!isRange" class="pa-time-input" :class="[isFocus ? 'is-focus' : '']">
             <input
+              :id="renderId + '_input_inner'"
               class="pa-time-input-inner"
               v-model="inValue"
               :placeholder="inputPlaceholder"
@@ -35,6 +36,7 @@
           </div>
           <div v-else class="pa-time-input" :class="[isFocus ? 'is-focus' : '']">
             <input
+              :id="renderId + '_start_input_inner'"
               class="pa-time-input-inner center"
               v-model="inValue[0]"
               :placeholder="languagePackage['startTime']"
@@ -47,6 +49,7 @@
             />
             -
             <input
+              :id="renderId + '_end_input_inner'"
               class="pa-time-input-inner center"
               v-model="inValue[1]"
               :placeholder="languagePackage['endTime']"
@@ -62,6 +65,7 @@
       </template>
       <MDateTimePanel
         v-if="DATE_TIME_MAP[type]"
+        :id="renderId + '_date_time_panel'"
         :model-value="internalValue"
         :type="type"
         :shortcuts="shortcuts"
@@ -70,6 +74,7 @@
       />
       <MYearPanel
         v-else-if="YEAR_MAP[type]"
+        :id="renderId + '_year_panel'"
         :model-value="internalValue"
         :type="type"
         :shortcuts="shortcuts"
@@ -79,7 +84,7 @@
     </pa-popover>
   </div>
 
-  <div v-else :id="randId" class="pa-display-style" :class="props.class" :style="props.style">
+  <div v-else :id="renderId" class="pa-display-style" :class="props.class" :style="props.style">
     <div v-if="title" :style="{ width: titleWidth }" class="pa-cell-label">
       {{ typeof title === "string" ? title : title[languageValue] }}
     </div>
@@ -92,7 +97,7 @@
 
   <div
     v-if="(alwaysContrast && !isNil(contrastData)) || (!isNil(contrastData) && !isEqual(inValue, contrastData))"
-    :id="randId"
+    :id="renderId"
     :class="['pa-contrast-style']"
   >
     <slot name="exContrast"></slot>
@@ -210,7 +215,7 @@ const emits = defineEmits<ComponentEmits>();
  * render-id
  * @description 组件唯一标识
  */
-const randId = ref((props.id ? props.id + "_" : "") + "pa-time_" + useRenderId());
+const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-time_" + useRenderId()));
 
 /**
  * 是否为范围选择

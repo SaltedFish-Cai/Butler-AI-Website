@@ -11,7 +11,7 @@
       <!-- group -->
       <pa-radio
         v-if="!useDisplay"
-        :id="id + '-' + item.prop + '-radio'"
+        :id="id + '_' + item.prop"
         v-model="injectConfigContext.data[item.prop]"
         :disabled="item.disabled"
         :exOptions="radioOptions"

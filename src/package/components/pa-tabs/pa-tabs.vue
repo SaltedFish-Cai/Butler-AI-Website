@@ -6,7 +6,7 @@
       '--pa-tabs-label-left': useLabelLeft - headerScroll + 'px',
       '--pa-tabs-label-width': useLabelWidth + 'px'
     }"
-    :id="randId"
+    :id="renderId"
     ref="tabsRef"
   >
     <div :class="['pa-tabs-content', mode === 'portrait' || mode === 'slider' ? 'flex' : 'flex-col']">
@@ -29,13 +29,13 @@
 
         <div
           class="pa-tabs-title-list"
-          :id="randId + '_titles'"
+          :id="renderId + '_titles'"
           ref="tabsTitleRef"
           @mouseenter="handleMouseEnter"
           @mouseleave="handleMouseLeave"
         >
           <div
-            :id="randId + '_titles-box'"
+            :id="renderId + '_titles-box'"
             class="pa-tabs-box"
             :class="[mode === 'portrait' || mode === 'slider' ? 'flex-col' : '']"
             :style="{ '--tab-header-scroll': '-' + headerScroll + 'px' }"
@@ -46,7 +46,7 @@
               :changeTabs="changeTabs"
               :portrait="mode === 'portrait' || mode === 'slider'"
               :onDragReorder="handleLabelDragReorder"
-              :id="randId"
+              :id="renderId"
             ></title-item>
           </div>
         </div>
@@ -70,8 +70,8 @@
       <div v-if="mode === 'slider'" class="pa-tabs-scroll">
         <slot name="afterLabel"></slot>
 
-        <div :id="randId + '-tab-contents-slider'" class="pa-tabs-contents">
-          <pa-scrollbar ref="mScrollRef" :intersectClassName="'.tab-item_line_' + randId" @intersecting="handleIntersecting">
+        <div :id="renderId + '-tab-contents-slider'" class="pa-tabs-contents">
+          <pa-scrollbar ref="mScrollRef" :intersectClassName="'.tab-item_line_' + renderId" @intersecting="handleIntersecting">
             <slot></slot>
           </pa-scrollbar>
         </div>
@@ -80,7 +80,7 @@
         <slot name="afterLabel"></slot>
 
         <div
-          :id="randId + '-tab-contents'"
+          :id="renderId + '-tab-contents'"
           class="pa-tabs-contents"
           :style="{ position: 'relative', left: `-${visibleMode == 'visible' ? slotIndex : 0}00%` }"
         >
@@ -151,7 +151,7 @@ const props = withDefaults(defineProps<ComponentProps>(), {
  * @type {string}
  * @description 生成组件唯一标识
  */
-const randId = ref((props.id ? props.id + "_" : "") + "pa-tabs_" + useRenderId());
+const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-tabs_" + useRenderId()));
 /**
  * 全局状态
  * @description 用于缓存 label 顺序
@@ -308,7 +308,7 @@ provide(
   "TabsContext",
   computed(() => ({
     mode: props.mode,
-    randId: randId.value,
+    renderId: renderId.value,
     activeName: activeName.value
   }))
 );
@@ -411,7 +411,7 @@ function changeTabs(name: string, index: number, scrollToIntersect = true): void
   emit("update:modelValue", name);
   emit("tabChange", { name, index });
   if (props.mode === "slider" && scrollToIntersect) {
-    const targetEl = document.querySelector(`#${randId.value} #${randId.value}-${name}`);
+    const targetEl = document.querySelector(`#${renderId.value} #${renderId.value}-${name}`);
     if (targetEl) mScrollRef.value?.setScrollToIntersect(targetEl);
   }
   setTabItemPosition();
@@ -424,8 +424,8 @@ function changeTabs(name: string, index: number, scrollToIntersect = true): void
  */
 function setTabItemPosition(): void {
   nextTick(() => {
-    const targetEl = document.querySelector(`#${randId.value} .pa-tabs-title_action_${randId.value}`);
-    const parentElement = document.querySelector(`#${randId.value} #pa-tabs-box_${randId.value}`);
+    const targetEl = document.querySelector(`#${renderId.value} .pa-tabs-title_action_${renderId.value}`);
+    const parentElement = document.querySelector(`#${renderId.value} #pa-tabs-box_${renderId.value}`);
     if (targetEl && parentElement) {
       const data = getElementPosition(targetEl, parentElement as HTMLElement);
       if ((props.mode == "portrait" || props.mode == "slider") && data?.parentTop && data?.height) {
@@ -626,7 +626,7 @@ function setLabelPosition(): void {
   }
   labelPositionTimer = setTimeout(() => {
     const el: HTMLElement | null =
-      typeof window !== "undefined" ? window.document?.querySelector(`.pa-tabs-title_action_${randId.value}`) : null;
+      typeof window !== "undefined" ? window.document?.querySelector(`.pa-tabs-title_action_${renderId.value}`) : null;
     if (el) {
       const { width } = el.getBoundingClientRect();
       useLabelLeft.value = el.offsetLeft + 1;

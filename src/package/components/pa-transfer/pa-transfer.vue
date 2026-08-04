@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="!display"
-    :id="randId"
+    :id="renderId"
     class="pa-transfer"
     ref="selectRef"
     :class="[props.class, { 'is-disabled': props.disabled }]"
@@ -114,7 +114,7 @@
       </div>
     </div>
   </div>
-  <div v-else :id="randId" class="pa-display-style">
+  <div v-else :id="renderId" class="pa-display-style">
     <slot name="exDisplay"></slot>
     <template v-if="exOptionsList?.length || displayValue">
       <template v-if="$slots.exDisplay"> ( {{ findData(selectedList.map(item => item.value)) || "--" }} )</template>
@@ -122,7 +122,7 @@
     </template>
     <div v-else>--</div>
   </div>
-  <div v-if="useContrast" :id="randId" :class="['pa-contrast-style']">
+  <div v-if="useContrast" :id="renderId" :class="['pa-contrast-style']">
     <div v-if="exOptionsList?.length">
       <slot name="exContrast"></slot>
       <template v-if="$slots.exContrast"> ( {{ findData(contrastData || []) || "--" }} )</template>
@@ -203,7 +203,7 @@ const emits = defineEmits<ComponentEmits>();
  * render-id
  * @description 组件唯一标识
  */
-const randId = ref((props.id ? props.id + "_" : "") + "pa-transfer_" + useRenderId());
+const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-transfer_" + useRenderId()));
 /**
  * 全局配置注入
  * @type ComputedRef<PancakeGlobalConfigType>

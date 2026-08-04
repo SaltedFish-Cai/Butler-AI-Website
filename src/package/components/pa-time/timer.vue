@@ -14,6 +14,7 @@
         <div class="pa-timer-input" :class="[isFocus ? 'is-focus' : '']">
           <!-- 小时 -->
           <input
+            :id="id + '_h'"
             class="pa-timer-input-inner"
             v-model="hours"
             ref="hourInputRef"
@@ -30,6 +31,7 @@
           :
           <!-- 分钟 -->
           <input
+            :id="id + '_m'"
             class="pa-timer-input-inner"
             v-model="minutes"
             ref="minuteInputRef"
@@ -46,6 +48,7 @@
           :
           <!-- 秒钟 -->
           <input
+            :id="id + '_s'"
             class="pa-timer-input-inner"
             v-model="seconds"
             ref="secondInputRef"
@@ -239,7 +242,7 @@ const currentFocus = ref<"hour" | "minute" | "second">("hour");
  * @description 组件的属性对象
  */
 const props = withDefaults(defineProps<ComponentProps>(), {
-  id: randChar(),
+  id: "",
   modelValue: "",
   clearable: true,
   autofocus: false,

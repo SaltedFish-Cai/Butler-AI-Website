@@ -1,6 +1,6 @@
 <template>
   <template v-if="!display">
-    <div :id="randId" class="pa-input" :style="props.style" :class="props.class">
+    <div :id="renderId" class="pa-input" :style="props.style" :class="props.class">
       <div class="pa-input_body" :class="[{ 'is-disabled': disabled }, { 'is-focus': isFocus }]" @click="textareaRef.focus()">
         <div v-if="title" :style="{ width: titleWidth }" class="pa-cell-label">
           {{ typeof title === "string" ? title : title[languageValue] }}
@@ -18,7 +18,7 @@
 
           <input
             v-if="type === 'password'"
-            :id="randId + '_input'"
+            :id="renderId + '_inner-input'"
             ref="textareaRef"
             class="pa-input-textarea-inner"
             :class="[isFocus ? 'is-focus' : 'not-focus']"
@@ -39,7 +39,7 @@
 
           <textarea
             v-else
-            :id="randId + '_input'"
+            :id="renderId + '_inner-input'"
             ref="textareaRef"
             class="pa-input-textarea-inner textarea"
             :class="[isFocus ? 'is-focus' : 'not-focus']"
@@ -64,7 +64,7 @@
           </div>
 
           <pa-icon
-            :id="randId + '_clear'"
+            :id="renderId + '_clear-btn'"
             v-else-if="!disabled && clearable && inValue && !isFocus"
             name="close_circle_line"
             class="clear-icon"
@@ -191,7 +191,7 @@ const props = withDefaults(defineProps<ComponentProps>(), {
  * @type string
  * @description 用于唯一标识组件的字符串
  */
-const randId = ref((props.id ? props.id + "_" : "") + "pa-form_" + useRenderId());
+const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-input_" + useRenderId()));
 /**
  * 组件事件定义
  * @description 定义组件可触发的事件

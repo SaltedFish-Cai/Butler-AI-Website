@@ -1,5 +1,5 @@
 <template>
-  <div :id="randId" :class="['pa-color', { 'pa-color-disabled': props.disabled }]" :style="props.style">
+  <div :id="renderId" :class="['pa-color', { 'pa-color-disabled': props.disabled }]" :style="props.style">
     <pa-popover ref="popoverRef" :disabled="props.disabled" autoWidth @change="togglePicker">
       <template #reference>
         <div class="pa-color-preview" :class="{ 'pa-color-preview-active': isPickerOpen, disabled: props.disabled }">
@@ -9,7 +9,14 @@
           <div class="pa-color-preview-text">{{ currentColor }}</div>
         </div>
       </template>
-      <pa-color-box v-model="currentColor" :preset-colors="props.presetColors" :use-alpha="props.useAlpha" :use-input="props.useInput" @change="handleChange"> </pa-color-box>
+      <pa-color-box
+        v-model="currentColor"
+        :preset-colors="props.presetColors"
+        :use-alpha="props.useAlpha"
+        :use-input="props.useInput"
+        @change="handleChange"
+      >
+      </pa-color-box>
     </pa-popover>
   </div>
 </template>
@@ -43,7 +50,7 @@ const props = withDefaults(defineProps<ComponentProps>(), { useAlpha: true, useI
  * @type `string`
  * @description 用于唯一标识组件的随机 ID
  */
-const randId = ref((props.id ? props.id + "_" : "") + "pa-color_" + useRenderId());
+const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-color_" + useRenderId()));
 /**
  * 组件事件定义
  * @description 定义组件可触发的事件

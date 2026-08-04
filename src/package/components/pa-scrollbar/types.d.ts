@@ -21,6 +21,13 @@ export type ComponentProps = {
    */
   id?: string;
   /**
+   * 组件唯一标识
+   * @type string | undefined
+   * @default undefined
+   * @description 当设置该值时，会作为组件的唯一标识
+   */
+  renderId?: string;
+  /**
    * 自定义类名
    * @type Array<string> | string | undefined
    * @default undefined

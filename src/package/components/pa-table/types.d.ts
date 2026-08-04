@@ -97,6 +97,14 @@ export interface ComponentProps {
   id: string;
 
   /**
+   * render-id
+   * @type string | undefined
+   * @default undefined
+   * @description 当设置该值时，会作为组件的唯一标识
+   */
+  renderId?: string;
+
+  /**
    * 自定义类名
    * @type string
    * @default undefined
@@ -307,6 +315,19 @@ export interface ComponentProps {
    * ```
    */
   useOverflowTooltip?: boolean;
+
+  /**
+   * 是否显示选择框全部按钮
+   * @type boolean
+   * @default true
+   * @description 当设置该值为 `true` 时，会显示选择框全部按钮
+   * @description 当设置该值为 `false` 时，不会显示选择框全部按钮
+   * @example
+   * ```ts
+   * <m-table :use-select-all="true"></m-table>
+   * ```
+   */
+  useSelectAll?: boolean;
 
   /**
    * 是否显示表格功能按钮嵌入式样式
@@ -765,6 +786,18 @@ export type ComponentUseItemProps = ComponentItemProps & {
    * - 当设置该值为 `false` 时，不会使用高级搜索
    */
   useSeniorFilter?: boolean;
+  /**
+   * 筛选时间开始时间禁用函数
+   * @type (date: any) => boolean
+   * @description 当设置该值为 `(date: any) => boolean` 时，会使用该值作为筛选时间开始时间禁用函数
+   */
+  disabledStartDateFn?: (date: any) => boolean;
+  /**
+   * 筛选时间结束时间禁用函数
+   * @type (date: any) => boolean
+   * @description 当设置该值为 `(date: any) => boolean` 时，会使用该值作为筛选时间结束时间禁用函数
+   */
+  disabledEndDateFn?: (date: any) => boolean;
 };
 
 export namespace PaTableUseType {

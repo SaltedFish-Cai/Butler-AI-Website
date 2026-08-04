@@ -1,7 +1,7 @@
 /**
  * @description 导入类型定义
  */
-import { PaStructureType } from "PancakeType";
+import { PaStructureType } from "../../../manager-type";
 /**
  * @description 导入 Vue 相关类型
  */

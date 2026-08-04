@@ -26,6 +26,10 @@
     }
   }
 
+  .icon_highlight {
+    font-weight: bold;
+    color: var(--pa-color-font);
+  }
   .query_item {
     display: flex;
     flex-wrap: wrap;
@@ -91,6 +95,17 @@
       margin-left: 5px;
       font-size: 11px;
       color: var(--pa-color-primary-light-1);
+    }
+
+    .query_item_label {
+      font-size: calc(var(--pa-size-font, 14px) - 1px);
+      font-weight: bold;
+      &.start {
+        color: var(--pa-color-primary);
+      }
+      &.end {
+        color: var(--pa-color-danger);
+      }
     }
   }
 }

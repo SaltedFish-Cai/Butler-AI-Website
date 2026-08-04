@@ -2,8 +2,9 @@
   <section
     :id="id"
     class="pa-scrollbar"
+    ref="scrollbarRef"
     :class="[prop.class, prop.styleMode === 'color' ? 'color-scrollbar' : '']"
-    :style="rootStyle"
+    :style="{ ...rootStyle, '--scrollbar-body-content-height': scrollbarBodyContentRef?.clientHeight + 'px' }"
   >
     <div class="pa-scrollbar-content" ref="scrollbarContentRef">
       <div v-if="useShadow && showThumbY" class="is-scroll-top" :style="scrollTopShadowStyle"></div>
@@ -12,7 +13,7 @@
         :id="id + '_scrollbar_body'"
         class="scrollbar-body"
         :class="{ 'scrollbar-body-y': prop.useScrollY, 'scrollbar-body-x': prop.useScrollX }"
-        :style="contentStyle"
+        :style="{ ...contentStyle }"
         ref="scrollbarBodyRef"
       >
         <div
@@ -82,7 +83,7 @@ import { ComponentProps, ComponentEmits, ComponentDirectlyScrollData } from "./t
  * 模块导入
  * @description 导入滚动监听相关工具
  */
-import { startDrag, listenElementScroll, observeElementResize, ScrollUserInfo } from "./scrollListener";
+import { startDrag, listenElementScroll, observeElementResize, ScrollUserInfo, ScrollUseInfo } from "./scrollListener";
 /**
  * 模块导入
  * @description 导入交叉观察器工具
@@ -146,7 +147,14 @@ const prop = withDefaults(defineProps<ComponentProps>(), {
  * @type Ref<string>
  * @description 组件的唯一标识
  */
-const id = ref((prop.id ? prop.id + "_" : "") + "pa-scrollbar_" + useRenderId());
+const id = ref(prop.renderId || (prop.id ? prop.id + "_" + useRenderId() : "pa-scrollbar_" + useRenderId()));
+
+/**
+ * 滚动条主体引用
+ * @type Ref<HTMLElement | undefined>
+ * @description 滚动条主体 DOM 引用
+ */
+const scrollbarRef = ref();
 /**
  * 垂直滑块引用
  * @type Ref<HTMLElement | undefined>
@@ -195,6 +203,8 @@ let removeListen: (() => void) | undefined;
  * @description 更新滚动监听的函数
  */
 let updateListen: (parentBoxRef: HTMLElement | undefined) => ScrollUserInfo;
+let updateListenUse: (parentBoxRef: HTMLElement | undefined) => ScrollUseInfo;
+
 /**
  * 垂直滑块缩放比例
  * @type number
@@ -389,70 +399,80 @@ function resetObserver() {
  * @description 更新滚动条状态和尺寸
  */
 function setUpdate() {
-  if (updateListen) {
-    const {
-      horizontalThumb: horizontalThumbVal,
-      verticalThumb: verticalThumbVal,
-      horizontalThumbScale,
-      verticalThumbScale,
-      useHorizontal: useHorizontalValue,
-      useVertical: useVerticalValue
-    } = updateListen(prop.parentBoxRef);
-    horizontalThumb.value = horizontalThumbVal;
-    verticalThumb.value = verticalThumbVal;
-    _horizontalThumbScale = horizontalThumbScale;
-    _verticalThumbScale = verticalThumbScale;
+  if (updateListenUse) {
+    const { useHorizontal: useHorizontalValue, useVertical: useVerticalValue } = updateListenUse(
+      prop.parentBoxRef || scrollbarContentRef.value
+    );
+
     useHorizontal.value = useHorizontalValue;
     useVertical.value = useVerticalValue;
-    scrollBodyHeight.value = scrollbarBodyRef.value?.clientHeight;
-    nextTick(() => {
-      if (useVertical.value) {
-        verticalDragController = startDrag(verticalThumbRef.value, scrollbarBodyRef.value, "vertical");
-      } else {
-        verticalDragController?.stop?.();
-      }
-      if (useHorizontal.value) {
-        horizontalDragController = startDrag(horizontalThumbRef.value, scrollbarBodyRef.value, "horizontal");
-      } else {
-        horizontalDragController?.stop?.();
-      }
-      const _scrollbarBodyRef = scrollbarBodyRef.value;
-      if (_scrollbarBodyRef && _scrollbarBodyRef.scrollWidth > _scrollbarBodyRef.clientWidth) {
-        emits("scrollRight", false);
-      }
-      if (
-        (_scrollbarBodyRef && _scrollbarBodyRef.scrollHeight > _scrollbarBodyRef.clientHeight) ||
-        (prop.parentBoxRef && prop.parentBoxRef?.clientHeight < _scrollbarBodyRef.scrollHeight)
-      ) {
-        isScrollEnd.value = false;
-      } else {
-        isScrollEnd.value = true;
-      }
-      if (
-        (_scrollbarBodyRef && _scrollbarBodyRef.scrollWidth > _scrollbarBodyRef.clientWidth) ||
-        (prop.parentBoxRef && prop.parentBoxRef?.clientWidth < _scrollbarBodyRef.scrollWidth)
-      ) {
-        isScrollRight.value = false;
-      } else {
-        isScrollRight.value = true;
-      }
-      if (_scrollbarBodyRef) {
-        emits("scrollChildChange", {
-          bodyWidth: _scrollbarBodyRef.clientWidth,
-          bodyHeight: _scrollbarBodyRef.clientHeight,
-          useScrollX: useHorizontal.value,
-          useScrollY: useVertical.value
-        });
-      }
-    });
   }
+  nextTick(() => {
+    if (updateListen) {
+      const {
+        horizontalThumb: horizontalThumbVal,
+        verticalThumb: verticalThumbVal,
+        horizontalThumbScale,
+        verticalThumbScale,
+        useHorizontal: useHorizontalValue,
+        useVertical: useVerticalValue
+      } = updateListen(prop.parentBoxRef || scrollbarContentRef.value);
+      horizontalThumb.value = horizontalThumbVal;
+      verticalThumb.value = verticalThumbVal;
+      _horizontalThumbScale = horizontalThumbScale;
+      _verticalThumbScale = verticalThumbScale;
+      useHorizontal.value = useHorizontalValue;
+      useVertical.value = useVerticalValue;
+      scrollBodyHeight.value = scrollbarBodyRef.value?.clientHeight;
+      nextTick(() => {
+        if (useVertical.value) {
+          verticalDragController = startDrag(verticalThumbRef.value, scrollbarBodyRef.value, "vertical");
+        } else {
+          verticalDragController?.stop?.();
+        }
+        if (useHorizontal.value) {
+          horizontalDragController = startDrag(horizontalThumbRef.value, scrollbarBodyRef.value, "horizontal");
+        } else {
+          horizontalDragController?.stop?.();
+        }
+        const _scrollbarBodyRef = scrollbarBodyRef.value;
+        if (_scrollbarBodyRef && _scrollbarBodyRef.scrollWidth > _scrollbarBodyRef.clientWidth) {
+          emits("scrollRight", false);
+        }
+        if (
+          (_scrollbarBodyRef && _scrollbarBodyRef.scrollHeight > _scrollbarBodyRef.clientHeight) ||
+          (prop.parentBoxRef && prop.parentBoxRef?.clientHeight < _scrollbarBodyRef.scrollHeight)
+        ) {
+          isScrollEnd.value = false;
+        } else {
+          isScrollEnd.value = true;
+        }
+        if (
+          (_scrollbarBodyRef && _scrollbarBodyRef.scrollWidth > _scrollbarBodyRef.clientWidth) ||
+          (prop.parentBoxRef && prop.parentBoxRef?.clientWidth < _scrollbarBodyRef.scrollWidth)
+        ) {
+          isScrollRight.value = false;
+        } else {
+          isScrollRight.value = true;
+        }
+        if (_scrollbarBodyRef) {
+          emits("scrollChildChange", {
+            bodyWidth: _scrollbarBodyRef.clientWidth,
+            bodyHeight: _scrollbarBodyRef.clientHeight,
+            useScrollX: useHorizontal.value,
+            useScrollY: useVertical.value
+          });
+        }
+      });
+    }
+  });
 }
 /**
  * 防抖更新函数
  * @type Function
  * @description 防抖处理后的更新函数
  */
-const debounceSetUpdate = debounce(setUpdate, 110);
+const debounceSetUpdate = debounce(setUpdate, 300);
 /**
  * 组件挂载生命周期
  * @description 初始化滚动监听
@@ -465,6 +485,7 @@ onMounted(() => {
       bodyWidth,
       remove,
       update,
+      updateUse,
       useHorizontal: useHorizontalValue,
       useVertical: useVerticalValue
     } = listenElementScroll(
@@ -553,6 +574,7 @@ onMounted(() => {
     useHorizontal.value = useHorizontalValue;
     useVertical.value = useVerticalValue;
     updateListen = update;
+    updateListenUse = updateUse;
     nextTick(() => {
       debounceSetUpdate();
     });

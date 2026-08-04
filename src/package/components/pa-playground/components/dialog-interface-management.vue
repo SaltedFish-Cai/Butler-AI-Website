@@ -54,7 +54,7 @@
 <script lang="tsx" setup>
 import { computed, ComputedRef, inject, ref, useTemplateRef, watch } from "vue";
 import { MInterfaceConfig, MStructureType } from "../types";
-import { PaOptionType, PaStructureType } from "PancakeType";
+import { PaOptionType, PaStructureType } from "../../manager-type";
 import { M_Message, M_MessageBox } from "../../feedback";
 import { PancakeGlobalConfigType } from "../../pa-manager/types";
 import MQuickTable from "./quick-table.vue";

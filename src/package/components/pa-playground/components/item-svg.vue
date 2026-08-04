@@ -149,7 +149,7 @@
 <script lang="tsx" setup>
 import { computed, inject, Ref, ref, watch } from "vue";
 import { MOptionsType, PaPlaygroundItem, MStructureType } from "../types";
-import { PaOptionType, PaStructureType } from "PancakeType";
+import { PaOptionType, PaStructureType } from "../../manager-type";
 import { PaPlaygroundPageButtonType } from "./types";
 import { M_Message } from "../../feedback";
 /**

@@ -1,5 +1,5 @@
 <template>
-  <div :id="randId" class="pa-title" :class="[props.class, styleMode.model, paddingClasses]" :style="props.style">
+  <div :id="renderId" class="pa-title" :class="[props.class, styleMode.model, paddingClasses]" :style="props.style">
     <div class="pa-title_box">
       <div class="pa-title_text">
         <slot />
@@ -71,7 +71,7 @@ const props = withDefaults(defineProps<ComponentProps>(), {
  * render-id
  * @description 组件唯一标识
  */
-const randId = ref((props.id ? props.id + "_" : "") + "pa-title_" + useRenderId());
+const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-title_" + useRenderId()));
 defineExpose();
 /**
  * padding class 计算（合并为单个 computed，减少 Vue 依赖追踪节点）

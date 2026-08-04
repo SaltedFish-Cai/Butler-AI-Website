@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="!display"
-    :id="randId"
+    :id="renderId"
     class="pa-checkbox"
     :class="props.class"
     ref="selectRef"
@@ -12,7 +12,7 @@
       {{ typeof title === "string" ? title : title[languageValue] }}
     </div>
     <pa-checkbox-item
-      :id="randId"
+      :id="renderId"
       v-for="item in exOptionsList"
       :key="String(item.value)"
       :label="item.label"
@@ -103,7 +103,7 @@ const props = withDefaults(defineProps<ComponentProps>(), {});
  * @type `string`
  * @description 用于唯一标识组件的随机 ID
  */
-const randId = ref((props.id ? props.id + "_" : "") + "pa-checkbox_" + useRenderId());
+const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-checkbox_" + useRenderId()));
 /**
  * **组件事件定义**
  * @description 定义组件可触发的事件

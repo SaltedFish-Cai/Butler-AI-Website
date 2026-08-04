@@ -26,15 +26,9 @@ type SelectChangeStateType = {
  * @param props - 组件属性
  * @param state - 表格状态
  * @param emits - 事件发射器
- * @param getTableList - 获取表格数据方法
  * @returns 选择相关方法和状态
  */
-export const useSelectHooks = (
-  props: ComponentProps,
-  state: PaTableUseType.TableStateType,
-  emits: any,
-  getTableList: () => void
-) => {
+export const useSelectHooks = (props: ComponentProps, state: PaTableUseType.TableStateType, emits: any) => {
   const isBrowser = typeof window !== "undefined";
   /**
    * 全选状态
@@ -258,11 +252,56 @@ export const useSelectHooks = (
   /**
    * 设置选中数据
    * @param dataKeys - 数据键列表
-   * @description 设置外部传入的选中数据键并重新请求
+   * @description 设置外部传入的选中数据键，直接在当前已渲染数据上应用选中状态，不刷新页面
    */
   function setSelectedData(dataKeys: Record<string, any>[]) {
-    state.awaitSelectData = dataKeys;
-    getTableList();
+    if (!props.rowKey) return;
+    // 复制一份，避免后续 splice 时修改调用方的原数组
+    state.awaitSelectData = [...dataKeys];
+    // 清空已选数据并重置行选中状态，避免 setSelectedData([]) 时旧的勾选未被取消
+    isTableSelectAll.value = false;
+    state.selectTableData.length = 0;
+    state.tableData.forEach((arrItem: any) => {
+      arrItem?.forEach((item: any) => {
+        if (item?.renderIndex >= 0) {
+          item.isIndeterminate = false;
+          item.isSelected = false;
+          item.children?.forEach((ch: any) => {
+            ch.isSelected = false;
+          });
+        }
+      });
+    });
+    // 在当前已渲染数据中按 rowKey 匹配并直接勾选，未匹配的数据保留在 awaitSelectData 中，待后续请求时再应用
+    state.tableData.forEach((arrItem: any) => {
+      arrItem?.forEach((item: any) => {
+        if (item?.renderIndex < 0) return;
+        const _index = state.awaitSelectData.findIndex(data => data[String(props.rowKey)] === item[String(props.rowKey)]);
+        if (_index >= 0) {
+          state.awaitSelectData.splice(_index, 1);
+          item.isSelected = true;
+          item.isIndeterminate = false;
+          if (props.useChildren) {
+            item.children?.forEach((ch: any) => {
+              ch.isSelected = true;
+            });
+          }
+          handleSelectStatusMap({ row: item });
+        } else if (props.useChildren && item.children?.length) {
+          item.children.forEach((ch: any) => {
+            const _ind = state.awaitSelectData.findIndex(data => data[String(props.rowKey)] === ch[String(props.rowKey)]);
+            if (_ind >= 0) {
+              state.awaitSelectData.splice(_ind, 1);
+              ch.isSelected = true;
+            }
+          });
+          item.isIndeterminate =
+            item.children.some((ch: any) => ch.isSelected) && item.children.some((ch: any) => !ch.isSelected);
+          item.isSelected = item.children.every((ch: any) => ch.isSelected);
+          if (item.children.some((ch: any) => ch.isSelected)) handleSelectStatusMap({ row: item });
+        }
+      });
+    });
   }
   /**
    * 获取选中数据

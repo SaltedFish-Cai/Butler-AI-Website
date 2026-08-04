@@ -1,5 +1,5 @@
 <template>
-  <div :id="randId" class="pa-empty">
+  <div :id="renderId" class="pa-empty">
     <div class="pa-empty_inner" :class="props.class" :style="props.style">
       <pa-icon class="pa-empty_icon" :name="props.icon" />
       <div class="pa-empty_message">{{ messageText }}</div>
@@ -38,7 +38,7 @@ const props = withDefaults(defineProps<ComponentProps>(), {
   icon: "folder_open_line",
   message: "暂无数据"
 });
-const randId = ref((props.id ? props.id + "_" : "") + "pa-empty_" + useRenderId());
+const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-empty_" + useRenderId()));
 /**
  * 全局配置注入
  * @type ComputedRef<PancakeGlobalConfigType>

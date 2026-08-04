@@ -5,101 +5,115 @@
     v-model="drawerVisible"
     @closed="handleCloseDrawer"
     width="680px"
+    :scroll="false"
+    :padding="['all']"
   >
-    <section :id="'table-col-' + id" class="p-all-size" style="height: calc(100% - var(--pa-size-padding, 10px) * 2)">
-      <pa-table
-        :id="id + '-table-col-setting'"
-        ref="SettingTableRef"
-        :structure="tableConfig"
-        :request-api="getTableList"
-        :ex-options="exOptions"
-        :usePagination="false"
-        :useTableIndex="false"
-        :useToolButton="false"
-      >
-        <template #searchCriteria="scope">
-          <!-- 筛选 -->
-          <pa-select
-            v-if="isSelectType(scope.row, display)"
+    <pa-table
+      :id="id + '-col-setting-table'"
+      ref="SettingTableRef"
+      :structure="tableConfig"
+      :request-api="getTableList"
+      :ex-options="exOptions"
+      :usePagination="false"
+      :useTableIndex="false"
+      :useToolButton="false"
+    >
+      <template #searchCriteria="scope">
+        <!-- 筛选 -->
+        <pa-select
+          :render-id="id + '-col-setting-' + scope.row.prop + '-select'"
+          v-if="isSelectType(scope.row, display)"
+          v-model="scope.row.searchCriteria"
+          type="multiple-select"
+          :exOptions="(_exOptions[scope.row.prop] as PaOptionType.SelectList)"
+          :placeholder="{ 'zh-CN': '请选择筛选条件', 'en-US': 'Please Select Filter Conditions' }"
+        ></pa-select>
+
+        <div v-else-if="isTimeType(scope.row, display)" class="flex-center">
+          <pa-time
+            :render-id="id + '-col-setting-' + scope.row.prop + '-start-time'"
+            v-model="scope.row.searchCriteria[0]"
+            type="date-picker"
+            :placeholder="{ 'zh-CN': '开始时间', 'en-US': 'Start Time' }"
+            :disabledDateFn="time => disabledStart(time)"
+            teleport-in-container
+          />
+          <div class="ml5 mr5">/</div>
+          <pa-time
+            :render-id="id + '-col-setting-' + scope.row.prop + '-end-time'"
+            v-model="scope.row.searchCriteria[1]"
+            type="date-picker"
+            :placeholder="{ 'zh-CN': '结束时间', 'en-US': 'End Time' }"
+            :disabledDateFn="time => disabledEnd(time)"
+            teleport-in-container
+          />
+        </div>
+
+        <!-- 数字/文本 -->
+        <template v-else-if="isNumberType(scope.row, display) || isTextType(scope.row, display)">
+          <pa-number
+            :render-id="id + '-col-setting-' + scope.row.prop + '-number'"
+            v-if="isNumberType(scope.row, display)"
             v-model="scope.row.searchCriteria"
-            type="multiple-select"
-            :exOptions="_exOptions[scope.row.prop] as PaOptionType.SelectList"
-            :placeholder="{ 'zh-CN': '请选择筛选条件', 'en-US': 'Please Select Filter Conditions' }"
-          ></pa-select>
-
-          <div v-else-if="isTimeType(scope.row, display)" class="flex-center">
-            <pa-time
-              v-model="scope.row.searchCriteria[0]"
-              type="date-picker"
-              :placeholder="{ 'zh-CN': '开始时间', 'en-US': 'Start Time' }"
-              :disabledDateFn="time => disabledStart(time)"
-              teleport-in-container
-            />
-            <div class="ml5 mr5">/</div>
-            <pa-time
-              v-model="scope.row.searchCriteria[1]"
-              type="date-picker"
-              :placeholder="{ 'zh-CN': '结束时间', 'en-US': 'End Time' }"
-              :disabledDateFn="time => disabledEnd(time)"
-              teleport-in-container
-            />
-          </div>
-
-          <!-- 数字/文本 -->
-          <template v-else-if="isNumberType(scope.row, display) || isTextType(scope.row, display)">
-            <pa-number
-              v-if="isNumberType(scope.row, display)"
-              v-model="scope.row.searchCriteria"
-              :placeholder="scope.row?.cellConfig.placeholder"
-              :disabled="scope.row?.cellConfig.disabled"
-              :min="scope.row?.cellConfig.min"
-              :max="scope.row?.cellConfig.max"
-              :precision="scope.row?.cellConfig.precision"
-              :step="scope.row?.cellConfig.step"
-            ></pa-number>
-            <template v-else>
-              <pa-input
-                v-model="scope.row.searchCriteria"
-                :placeholder="{ 'zh-CN': '请输入筛选条件', 'en-US': 'Please Enter Filter Conditions' }"
-              />
-              <!-- !scope.row.useSenior -->
-              <pa-button
-                v-if="false"
-                style="width: 100%"
-                is="edit"
-                @click="openSeniorFilter(scope.row)"
-                :text="{ 'zh-CN': '编辑高级搜索', 'en-US': 'Edit Advanced Search' }"
-              >
-              </pa-button>
-            </template>
-          </template>
-
+            :placeholder="scope.row?.cellConfig.placeholder"
+            :disabled="scope.row?.cellConfig.disabled"
+            :min="scope.row?.cellConfig.min"
+            :max="scope.row?.cellConfig.max"
+            :precision="scope.row?.cellConfig.precision"
+            :step="scope.row?.cellConfig.step"
+          ></pa-number>
           <template v-else>
-            <pa-language :text="{ 'zh-CN': '无筛选条件', 'en-US': 'No Filter Conditions' }"></pa-language>
+            <pa-input
+              :render-id="id + '-col-setting-' + scope.row.prop + '-input'"
+              v-model="scope.row.searchCriteria"
+              :placeholder="{ 'zh-CN': '请输入筛选条件', 'en-US': 'Please Enter Filter Conditions' }"
+            />
+            <!-- !scope.row.useSenior -->
+            <pa-button
+              v-if="false"
+              style="width: 100%"
+              is="edit"
+              @click="openSeniorFilter(scope.row)"
+              :text="{ 'zh-CN': '编辑高级搜索', 'en-US': 'Edit Advanced Search' }"
+            >
+            </pa-button>
           </template>
         </template>
 
-        <!-- 固定 -->
-        <template #fixed="scope">
-          <div :class="['change_btn', scope.row.fixed == undefined ? '' : 'icon_highlight']" @click="changeFixed(scope.row)">
-            <pa-icon name="pin_line" :class="['mr5']" />
-            <span>{{ setFixed(scope.row) }}</span>
-          </div>
+        <template v-else>
+          <pa-language :text="{ 'zh-CN': '无筛选条件', 'en-US': 'No Filter Conditions' }"></pa-language>
         </template>
+      </template>
 
-        <!-- 显示状态 -->
-        <template #isShow="scope">
-          <div :class="['change_btn', scope.row.isShow ? '' : 'icon_highlight--hide']" @click="setView(scope.row)">
-            <pa-icon class="mr5" :name="scope.row.isShow ? 'eye_line' : 'eye_close_line'"></pa-icon>
-            <pa-language v-if="scope.row.isShow" :text="{ 'zh-CN': '显示', 'en-US': 'Visible' }"></pa-language>
-            <pa-language v-else :text="{ 'zh-CN': '隐藏', 'en-US': 'Hide' }"></pa-language>
-          </div>
-        </template>
-      </pa-table>
-    </section>
+      <!-- 固定 -->
+      <template #fixed="scope">
+        <div
+          :id="id + '-col-setting-' + scope.row.prop + '-fixed'"
+          :class="['change_btn', scope.row.fixed == undefined ? '' : 'icon_highlight']"
+          @click="changeFixed(scope.row)"
+        >
+          <pa-icon name="pin_line" :class="['mr5']" />
+          <span>{{ setFixed(scope.row) }}</span>
+        </div>
+      </template>
+
+      <!-- 显示状态 -->
+      <template #isShow="scope">
+        <div
+          :id="id + '-col-setting-' + scope.row.prop + '-isShow'"
+          :class="['change_btn', scope.row.isShow ? '' : 'icon_highlight--hide']"
+          @click="setView(scope.row)"
+        >
+          <pa-icon class="mr5" :name="scope.row.isShow ? 'eye_line' : 'eye_close_line'"></pa-icon>
+          <pa-language v-if="scope.row.isShow" :text="{ 'zh-CN': '显示', 'en-US': 'Visible' }"></pa-language>
+          <pa-language v-else :text="{ 'zh-CN': '隐藏', 'en-US': 'Hide' }"></pa-language>
+        </div>
+      </template>
+    </pa-table>
     <template #footer>
       <div class="flex-center">
         <pa-button
+          :render-id="id + '-col-setting-save'"
           plain
           type="primary"
           icon-name="save_line"
@@ -119,7 +133,7 @@ import { isSelectType, isTimeType, isTextType, isNumberType } from "./hooks/isTy
 
 import { ComponentUseItemProps, PaTableUseType } from "./types";
 import { convertValue } from "../pa-time/utils";
-import { LanguageKey, PaOptionType, PaStructureType } from "PancakeType";
+import { LanguageKey, PaOptionType, PaStructureType } from "../manager-type";
 import { M_Message } from "../feedback";
 
 type SettingPropsType = {
@@ -399,14 +413,28 @@ defineExpose({
   cursor: move;
 }
 .change_btn {
+  position: relative;
   cursor: pointer;
   width: max-content;
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+  &.icon_highlight--show {
+    background-color: var(--pa-color-primary);
+  }
   &:hover {
     font-weight: bold;
     color: var(--pa-color-primary);
     cursor: pointer;
   }
 }
+
 .icon_highlight {
   font-weight: bold;
   color: var(--pa-color-primary);

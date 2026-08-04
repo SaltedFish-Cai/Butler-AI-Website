@@ -24,7 +24,7 @@
           <!-- input -->
           <template v-if="item.type == 'input' || item.type == 'textarea'">
             <pa-input
-              :id="id + '-' + item.prop + '-input'"
+              :id="id + '_' + item.prop"
               v-model="computedValue"
               :type="item.type"
               :placeholder="usePlaceholder"
@@ -45,7 +45,7 @@
           <!-- number -->
           <template v-else-if="item.type == 'number'">
             <pa-number
-              :id="id + '-' + item.prop + '-number'"
+              :id="id + '_' + item.prop"
               v-model="computedValue"
               :placeholder="usePlaceholder"
               :disabled="item.disabled || disabledFn(injectConfigContext.data)"
@@ -77,7 +77,7 @@
             "
           >
             <pa-select
-              :id="id + '-' + item.prop + '-select'"
+              :id="id + '_' + item.prop"
               v-model="computedValue"
               :type="item.type"
               :displayValue="item.displayValue ? injectConfigContext.data[item.displayValue] : undefined"
@@ -110,7 +110,7 @@
             "
           >
             <pa-cascader
-              :id="id + '-' + item.prop + '-cascader'"
+              :id="id + '_' + item.prop"
               v-model="computedValue"
               :type="resolvedItemType"
               :displayValue="item.displayValue ? injectConfigContext.data[item.displayValue] : undefined"
@@ -138,7 +138,7 @@
           <!-- switch -->
           <template v-else-if="item.type == 'switch'">
             <pa-switch
-              :id="id + '-' + item.prop + '-switch'"
+              :id="id + '_' + item.prop"
               v-model="computedValue"
               :disabled="item.disabled || disabledFn(injectConfigContext.data)"
               :exOptions="injectConfigContext.exOptions[item.prop] as PaOptionType.Switch"
@@ -159,7 +159,7 @@
           <!-- checkbox -->
           <template v-else-if="item.type == 'checkbox'">
             <pa-checkbox
-              :id="id + '-' + item.prop + '-checkbox'"
+              :id="id + '_' + item.prop"
               v-model="computedValue"
               :disabled="item.disabled || disabledFn(injectConfigContext.data)"
               :exOptions="useExOptions as PaOptionType.SelectList"
@@ -176,7 +176,7 @@
           <!-- radio -->
           <template v-else-if="item.type == 'radio'">
             <pa-radio
-              :id="id + '-' + item.prop + '-radio'"
+              :id="id + '_' + item.prop"
               v-model="computedValue"
               :disabled="item.disabled || disabledFn(injectConfigContext.data)"
               :exOptions="useExOptions as PaOptionType.SelectList"
@@ -206,7 +206,7 @@
             "
           >
             <pa-time
-              :id="id + '-' + item.prop + '-time'"
+              :id="id + '_' + item.prop"
               v-model="computedValue"
               :type="item.type"
               :placeholder="usePlaceholder"
@@ -226,7 +226,7 @@
           <!-- select-icon -->
           <template v-else-if="item.type == 'select-icon'">
             <pa-select-icon
-              :id="id + '-' + item.prop + '-select-icon'"
+              :id="id + '_' + item.prop"
               v-model="computedValue"
               :placeholder="usePlaceholder"
               :disabled="item.disabled || disabledFn(injectConfigContext.data)"
@@ -244,7 +244,7 @@
           <template v-else-if="item.type == 'file' || item.type == 'file-custom'">
             <pa-file
               v-if="item.type == 'file'"
-              :id="id + '-' + item.prop + '-file'"
+              :id="id + '_' + item.prop"
               v-model="computedValue"
               :placeholder="usePlaceholder"
               :attachedData="item.attachedData || injectConfigContext.exCellDependent?.file_attachedData?.[String(item.prop)]"
@@ -270,7 +270,7 @@
 
             <pa-file-custom
               v-if="item.type == 'file-custom'"
-              :id="id + '-' + item.prop + '-file-custom'"
+              :id="id + '_' + item.prop"
               v-model="computedValue"
               :placeholder="usePlaceholder"
               :attachedData="item.attachedData || injectConfigContext.exCellDependent?.file_attachedData?.[String(item.prop)]"
@@ -300,7 +300,7 @@
           <!-- transfer -->
           <template v-else-if="item.type == 'transfer'">
             <pa-transfer
-              :id="id + '-' + item.prop + '-transfer'"
+              :id="id + '_' + item.prop"
               v-model="computedValue"
               :disabled="item.disabled || disabledFn(injectConfigContext.data)"
               :exOptions="useExOptions as PaOptionType.SelectList"
@@ -318,7 +318,7 @@
 
           <!-- group -->
           <template v-else-if="item.type == 'group'">
-            <groupItem :id="id + '-' + item.prop + '-group'" :item="item">
+            <groupItem :id="id + '_' + item.prop" :item="item">
               <template v-for="slot in slotKeys" #[slot]="scope" :key="slot">
                 <slot :name="slot" v-bind="scope"></slot>
               </template>
@@ -366,7 +366,7 @@ import groupItem from "./components/group-item.vue";
 
 import { ConfigContextType, PaFormItemType } from "./types";
 import { PaOptionType } from "../manager-type";
-import { GetSystemAddressMap } from "../api/form";
+import { GetSystemAddressMap } from "../../api/form";
 
 /**
  * 判断值是否为 null 或 undefined

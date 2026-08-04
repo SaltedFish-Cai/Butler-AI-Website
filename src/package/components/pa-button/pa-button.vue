@@ -1,6 +1,6 @@
 <template>
   <button
-    :id="randId"
+    :id="renderId"
     type="button"
     :disabled="disabled || isLoading"
     :class="buttonClasses"
@@ -8,17 +8,22 @@
     @click="btnClick"
   >
     <div v-if="isLoading" class="pa-button_icon">
-      <pa-icon name="butler-reset_line" class="pa-button_loading" />
+      <pa-icon :renderId="renderId + '_loading'" name="butler-reset_line" class="pa-button_loading" />
     </div>
     <slot name="icon">
-      <pa-icon v-if="showLeftIcon" :name="currentIconName" :class="hasContent ? 'mr-btn pa-button_icon' : ''" />
+      <pa-icon
+        v-if="showLeftIcon"
+        :renderId="renderId + '_icon'"
+        :name="currentIconName"
+        :class="hasContent ? 'mr-btn pa-button_icon' : ''"
+      />
     </slot>
     <div v-if="hasContent && useText" class="pa-button_text">
       <slot>
         <template v-if="text || is">{{ displayText }}</template>
       </slot>
     </div>
-    <pa-icon v-if="showRightIcon" :name="currentIconName" class="pa-button_ml pa-button_icon" />
+    <pa-icon v-if="showRightIcon" :renderId="renderId + '_icon'" :name="currentIconName" class="pa-button_ml pa-button_icon" />
   </button>
 </template>
 
@@ -125,7 +130,7 @@ const PancakeGlobalConfig = inject<PancakeGlobalConfigType>("PancakeGlobalConfig
  * @type `string`
  * @description 按钮的唯一标识，用于自动化测试
  */
-const randId = ref((props.id ? props.id + "_" : "") + "pa-button_" + useRenderId());
+const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-button_" + useRenderId()));
 /**
  * **显示文本**
  * @returns `string` 显示文字

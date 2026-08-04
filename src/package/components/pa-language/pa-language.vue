@@ -1,5 +1,5 @@
 <template>
-  <span :id="randId" class="pa-language" :class="props.class" :style="props.style">{{ displayText }}</span>
+  <span :id="renderId" class="pa-language" :class="props.class" :style="props.style">{{ displayText }}</span>
 </template>
 
 <script lang="ts" setup>
@@ -14,7 +14,7 @@ const DEFAULT_LANG = "zh-CN";
 const props = withDefaults(defineProps<ComponentProps>(), {
   text: () => ({ "zh-CN": "", "en-US": "" })
 });
-const randId = ref((props.id ? props.id + "_" : "") + "pa-language_" + useRenderId());
+const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-language_" + useRenderId()));
 
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 

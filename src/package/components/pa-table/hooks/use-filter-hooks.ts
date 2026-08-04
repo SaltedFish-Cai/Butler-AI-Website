@@ -106,6 +106,7 @@ export const useFilterHooks = (props: any, state: any, language: any) => {
     )
       .flat(1)
       .filter((data: any) => data);
+
     return mapData;
   }
   /**

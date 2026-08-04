@@ -41,7 +41,7 @@
 
 <script lang="tsx" setup>
 import { computed, ComputedRef, inject, ref, useTemplateRef } from "vue";
-import { PaStructureType } from "PancakeType";
+import { PaStructureType } from "../../../manager-type";
 
 import { editFormColConfig, editOtherFormItemConfig } from "../../configs/form-config";
 import {

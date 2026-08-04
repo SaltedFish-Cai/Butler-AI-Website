@@ -1,6 +1,6 @@
 <template>
   <div
-    :id="randId"
+    :id="renderId"
     :class="['pa-coder-editor', 'pa-coder-editor--' + currentTheme, props.class]"
     :style="[props.style, { height: props.height, minHeight: props.minHeight }]"
   >
@@ -117,7 +117,7 @@ const props = withDefaults(defineProps<ComponentProps>(), {
  * @type `string`
  * @description 用于唯一标识组件的随机 ID
  */
-const randId = ref((props.id ? props.id + "_" : "") + "pa-coder-editor_" + useRenderId());
+const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-coder-editor_" + useRenderId()));
 /**
  * 组件事件
  */

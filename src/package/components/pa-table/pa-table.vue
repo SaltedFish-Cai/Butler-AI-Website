@@ -1,5 +1,5 @@
 <template>
-  <pa-development :id="randId">
+  <pa-development :id="renderId">
     <div
       class="pa-table"
       ref="scrollBarList"
@@ -11,11 +11,12 @@
         !isRight ? 'pa-table_scroll_right' : ''
       ]"
       :style="{ ...props.style, '--pa-table-footer-height': footerHeight + 'px' }"
-      :id="randId"
+      :id="renderId"
     >
       <div class="pa-table_body_header_box" ref="headerBoxRef">
         <mTableV2Filter
           ref="filterRef"
+          :id="renderId"
           :tableStructure="tableStructure"
           :tableQuery="state.tableQuery"
           :extraProps="props"
@@ -39,8 +40,10 @@
                       item.fixed == 'left'
                         ? 'sticky-left border-right'
                         : item.fixed == 'right'
-                        ? 'sticky-right border-right'
-                        : 'border-right',
+                          ? 'sticky-right border-right'
+                          : index == tableStructure.length - 1
+                            ? ''
+                            : 'border-right',
                       item.lastLeftFixed ? 'last-left-fixed' : '',
                       item.lastRightFixed ? 'last-right-fixed' : '',
                       (!item.width && !state.setCellWidthIng) ||
@@ -64,7 +67,7 @@
                     <template v-if="item.type == 'index'"> # </template>
                     <template v-else-if="item.type == 'selection'">
                       <pa-checkbox-item
-                        v-if="!state.showSelectList"
+                        v-if="!state.showSelectList && props.useSelectAll"
                         :is-checked="isTableSelectAll"
                         :is-indeterminate="selectedRowsLength > 0"
                         @change="handleSelectAllStatus"
@@ -84,7 +87,7 @@
 
                     <headerItem
                       v-else
-                      :id="randId"
+                      :id="renderId"
                       :useOrderPropName="state.useOrderPropName"
                       :setCellWidthIng="state.setCellWidthIng"
                       :tableQuery="state.tableQuery"
@@ -220,7 +223,7 @@
                       v-if="row.type == 'more'"
                       class="m-scrollbar-more"
                       :class="{ 'm-scrollbar-more_ing': state.listenCellInViewIng }"
-                      :id="`${randId}-more-${row.name}`"
+                      :id="`${renderId}-more-${row.name}`"
                     >
                       <!-- PageNum:{{ state.PageNum }} ,type:{{ row.type }} ,index:{{ index }} -->
                     </div>
@@ -321,8 +324,8 @@
                   tableStructure[index]?.fixed == 'left'
                     ? 'sticky-left border-right'
                     : tableStructure[index]?.fixed == 'right'
-                    ? 'sticky-right border-right'
-                    : 'border-right',
+                      ? 'sticky-right border-right'
+                      : 'border-right',
                   tableStructure[index]?.lastLeftFixed ? 'last-left-fixed' : '',
                   tableStructure[index]?.lastRightFixed ? 'last-right-fixed' : '',
                   (!tableStructure[index].width && !state.setCellWidthIng) ||
@@ -390,12 +393,13 @@
           <slot name="FooterCenter"></slot>
         </div>
         <div class="table-flex-ri width-int mb0">
-          <div>
+          <div v-if="$slots['paginationLeft']">
             <slot name="paginationLeft"></slot>
           </div>
 
           <slot name="Pagination">
             <Pagination
+              :id="renderId"
               v-if="usePagination && !state.showSelectList"
               :pageable="state.pageable"
               :pageNum="state.PageNum"
@@ -625,7 +629,7 @@ const props = withDefaults(defineProps<ComponentProps>(), {
   summaryConfig: () => ({ sumText: "合计", unitText: "" }),
   useSticky: false
 });
-const randId = ref((props.id ? props.id + "_" : "") + "pa-table_" + useRenderId());
+const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-table_" + useRenderId()));
 /**
  * 组件事件
  * @description 组件的 emits 定义
@@ -644,7 +648,7 @@ const emits = defineEmits([
  * @description 存储需要观察的交叉元素列表
  */
 const isIntersectingList = ref(
-  [] as unknown as Ref<{ isIntersecting: boolean; stopObserving: () => void; el: Element; Els: Element }[]>
+  [] as unknown as { isIntersecting: Ref<boolean>; stopObserving: () => void; el: Element; Els: Element }[]
 );
 /**
  * 视窗内元素列表
@@ -652,7 +656,7 @@ const isIntersectingList = ref(
  * @description 存储已在视窗内的元素列表
  */
 const isInViewList = ref(
-  [] as unknown as Ref<{ isIntersecting: boolean; stopObserving: () => void; el: Element; Els: Element }[]>
+  [] as unknown as { isIntersecting: Ref<boolean>; stopObserving: () => void; el: Element; Els: Element }[]
 );
 /**
  * 粘性视图状态
@@ -702,7 +706,7 @@ const {
   listenCellInView,
   listenCellChildChange,
   clearListen
-} = useStateHooks({ ...props, id: randId.value }, emits, {
+} = useStateHooks({ ...props, id: renderId.value }, emits, {
   isScrollHeaderIng,
   language,
   bodyRef,
@@ -749,7 +753,7 @@ const {
   setSelectedData,
   getSelectedData,
   cleanup
-} = useSelectHooks(props, state, emits, getTableList);
+} = useSelectHooks(props, state, emits);
 /**
  * 拖拽钩子
  * @description 初始化表格拖拽相关钩子
@@ -1160,7 +1164,7 @@ watch(
   debounce(newVal => {
     const filterList = newVal.filter(item => item.isIntersecting);
     const showItem = filterList[filterList.length - 1];
-    const showIndex = showItem?.el?.id.split(randId.value + "-more-")[1] || -1;
+    const showIndex = showItem?.el?.id.split(renderId.value + "-more-")[1] || -1;
     const showIndexNumber = Number(showIndex);
     if (showIndexNumber == -1 || state.tableLoadStatus) return;
     if (state.maxPage != 0 && showIndexNumber + 1 >= state.maxPage) return;
@@ -1216,6 +1220,8 @@ watch(
     if (InView) {
       useStickyViewIn.value = InView.isIntersecting;
       footerHeight.value = footerRef.value?.clientHeight || "0px";
+    } else {
+      useStickyViewIn.value = false;
     }
   },
   { deep: true }

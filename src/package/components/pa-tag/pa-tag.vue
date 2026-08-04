@@ -1,6 +1,6 @@
 <template>
   <div
-    :id="randId"
+    :id="renderId"
     class="pa-tag"
     ref="tagRef"
     :class="[props.useCollapse ? 'pa-tag-collapse' : '', props.class]"
@@ -20,11 +20,17 @@
         <div class="pa-tag-text pa-tag-collapse-count">+{{ hideValue.length }}</div>
       </template>
       <div class="pa-tag">
-        <div class="pa-tag-text" v-for="item in hideValue" :key="String(item.value)">
+        <div class="pa-tag-text" v-for="(item, index) in hideValue" :key="String(item.value)">
           <div class="pa-tag-text_content">
             {{ getLabel(item.label) }}
           </div>
-          <pa-icon v-if="!props.disabled" name="close_circle_line" class="pa-tag-text_close" @click.stop="removeTag(item)">
+          <pa-icon
+            :id="renderId + '_remove-btn' + index"
+            v-if="!props.disabled"
+            name="close_circle_line"
+            class="pa-tag-text_close"
+            @click.stop="removeTag(item)"
+          >
           </pa-icon>
         </div>
       </div>
@@ -88,7 +94,7 @@ const props = withDefaults(defineProps<ComponentProps>(), { useCollapse: true, u
  * render-id
  * @description 组件唯一标识
  */
-const randId = ref((props.id ? props.id + "_" : "") + "pa-tag_" + useRenderId());
+const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-tag_" + useRenderId()));
 /**
  * 组件事件定义
  * @description 定义组件可触发的事件

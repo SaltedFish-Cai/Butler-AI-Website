@@ -1,5 +1,5 @@
 <template>
-  <div :id="randId" v-if="!hideBtn" class="flex pa-hand">
+  <div :id="renderId" v-if="!hideBtn" class="flex pa-hand">
     <slot>
       <pa-button is="view" @click="openFile">{{ languagePackage["filePreview"] }}</pa-button>
     </slot>
@@ -179,7 +179,7 @@ const pdfViewRef = useTemplateRef("pdfViewRef");
 const props = withDefaults(defineProps<ComponentProps>(), {
   hideBtn: false
 });
-const randId = ref((props.id ? props.id + "_" : "") + "pa-media-view_" + useRenderId());
+const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-media-view_" + useRenderId()));
 /**
  * 全局配置注入
  * @description 全局配置注入

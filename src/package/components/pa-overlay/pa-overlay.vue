@@ -2,7 +2,7 @@
   <teleport :to="teleportTo || 'body'">
     <transition name="mo-dialog-overlay-fade">
       <div
-        :id="randId"
+        :id="renderId"
         v-show="visible"
         class="pa-overlay"
         :class="[props.class, { 'pa-overlay--blur': props.blur }]"
@@ -40,7 +40,7 @@ const props = withDefaults(defineProps<ComponentProps>(), {
  * @description 定义组件的 emits
  */
 const emits = defineEmits<ComponentEmits>();
-const randId = ref((props.id ? props.id + "_" : "") + "pa-overlay_" + useRenderId());
+const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-overlay_" + useRenderId()));
 /**
  * 全局层级获取函数
  * @description 从父组件注入的全局层级管理函数

@@ -1,6 +1,6 @@
 <template>
   <div
-    :id="randId"
+    :id="renderId"
     class="pa-easy-table"
     :class="[props.class, card ? 'card' : 'pa-easy-table--table', overflowX ? 'pa-easy-table--x-scroll' : '']"
     :style="props.style"
@@ -96,6 +96,7 @@ interface VirtualItem {
 const props = withDefaults(
   defineProps<{
     id?: string;
+    renderId?: string;
     class?: string;
     style?: Record<string, string>;
     columns: ColumnDef[];
@@ -131,7 +132,7 @@ const bodyHeight = ref(0);
  * 已进入动画的行 key 集合
  */
 const enteredKeys = new Set<number | string>();
-const randId = ref((props.id ? props.id + "_" : "") + "pa-easy-table_" + useRenderId());
+const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-easy-table_" + useRenderId()));
 const OVERSCAN = 5;
 const ROW_GAP = 5;
 
@@ -228,7 +229,7 @@ function measureColumns() {
   if (measuring) return;
   measuring = true;
   const header = headerRef.value;
-  const table = header?.closest(`#${randId.value}`) as HTMLElement | null;
+  const table = header?.closest(`#${renderId.value}`) as HTMLElement | null;
   if (!header || !table) {
     measuring = false;
     return;
@@ -237,15 +238,15 @@ function measureColumns() {
   columnWidths.value = [];
 
   nextTick(() => {
-    const cells = header.querySelectorAll(`#${randId.value} .pa-easy-table__cell--header_inner`);
+    const cells = header.querySelectorAll(`#${renderId.value} .pa-easy-table__cell--header_inner`);
     let widths: number[] = [];
     cells.forEach((el, i) => {
       widths[i] = (el as HTMLElement).clientWidth;
     });
 
-    const rows = table.querySelectorAll(`#${randId.value} .pa-easy-table__row--data`);
+    const rows = table.querySelectorAll(`#${renderId.value} .pa-easy-table__row--data`);
     rows.forEach(row => {
-      const rowCells = row.querySelectorAll(`#${randId.value} .pa-easy-table__cell_inner`);
+      const rowCells = row.querySelectorAll(`#${renderId.value} .pa-easy-table__cell_inner`);
       rowCells.forEach((cell, i) => {
         if (i < widths.length) {
           widths[i] = Math.max(widths[i], (cell as HTMLElement).clientWidth);
@@ -304,7 +305,7 @@ let resizeObserver: ResizeObserver | null = null;
 
 onMounted(() => {
   measureColumns();
-  const table = headerRef.value?.closest(`#${randId.value}`) as HTMLElement | null;
+  const table = headerRef.value?.closest(`#${renderId.value}`) as HTMLElement | null;
   if (table) {
     resizeObserver = new ResizeObserver(() => measureColumns());
     resizeObserver.observe(table);

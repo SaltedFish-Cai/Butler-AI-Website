@@ -1,5 +1,5 @@
 <template>
-  <div :id="randId" ref="containerRef" class="ai-siri" :class="{ 'ai-siri--done': !loading }">
+  <div :id="renderId" ref="containerRef" class="ai-siri" :class="{ 'ai-siri--done': !loading }">
     <canvas ref="canvasRef" class="ai-siri__canvas" :style="canvasStyle" />
 
     <div class="ai-siri__overlay">
@@ -30,6 +30,13 @@ const props = withDefaults(
     color?: string;
     /** 组件唯一标识 */
     id?: string;
+    /**
+     * render-id
+     * @type string | undefined
+     * @default undefined
+     * @description 当设置该值时，会作为组件的唯一标识
+     */
+    renderId?: string;
   }>(),
   {
     loading: true,
@@ -44,7 +51,7 @@ const props = withDefaults(
  * render-id
  * @description 组件唯一标识
  */
-const randId = ref((props.id ? props.id + "_" : "") + "pa-ai-siri_" + useRenderId());
+const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-ai-siri_" + useRenderId()));
 
 const containerRef = ref<HTMLElement | null>(null);
 const canvasRef = ref<HTMLCanvasElement | null>(null);

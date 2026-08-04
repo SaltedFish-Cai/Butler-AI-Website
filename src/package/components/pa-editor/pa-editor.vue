@@ -1,9 +1,9 @@
 <template>
-  <div :id="randId" class="pa-editor" :style="{ ...props.style }" :class="[props.class]">
+  <div :id="renderId" class="pa-editor" :style="{ ...props.style }" :class="[props.class]">
     <editor-tools
       ref="editorToolsRef"
       :isSourceCodeMode="isSourceCodeMode"
-      v-bind="{ ...props, id: randId }"
+      v-bind="{ ...props, id: renderId }"
       :isToolActive="isToolActive"
       :findFontSize="findFontSize"
       :autoFormatCode="autoFormatCode"
@@ -67,7 +67,7 @@
       <div></div>
       <span class="word-count">{{ wordCount }} 字</span>
     </div>
-    <edit-image :id="randId" ref="editImageRef"></edit-image>
+    <edit-image :id="renderId" ref="editImageRef"></edit-image>
     <edit-table ref="editTableRef"></edit-table>
   </div>
 </template>
@@ -93,7 +93,7 @@ const props = withDefaults(defineProps<ComponentProps>(), {});
 /**
  * @description 编辑器唯一 ID
  */
-const randId = ref((props.id ? props.id + "_" : "") + "pa-editor_" + useRenderId());
+const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-editor_" + useRenderId()));
 
 /**
  * @description 图片编辑组件引用
@@ -230,7 +230,7 @@ let savedCursorRange: Range | null = null;
  * @description 切换全屏功能
  */
 function toggleFullscreen(): void {
-  const editorElement: any = document.getElementById(randId.value);
+  const editorElement: any = document.getElementById(renderId.value);
   if (!editorElement) return;
   if (!isFullscreen.value) {
     if (editorElement.requestFullscreen) {
@@ -364,7 +364,7 @@ function updateWordCountInSourceMode(): void {
 }
 
 const { wordCount, isToolActive, findFontSize } = useToolsHooks(
-  randId.value,
+  renderId.value,
   isSourceCodeMode,
   editorRef,
   sourceCodeRef,

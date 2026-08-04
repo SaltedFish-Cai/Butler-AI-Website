@@ -1,5 +1,5 @@
 <template>
-  <div :id="randId" :class="classes" :style="style">
+  <div :id="renderId" :class="classes" :style="style">
     <slot></slot>
   </div>
 </template>
@@ -38,7 +38,7 @@ const props = withDefaults(defineProps<ComponentProps>(), {
  * render-id
  * @description 组件唯一标识
  */
-const randId = ref((props.id ? props.id + "_" : "") + "pa-row_" + useRenderId());
+const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-row_" + useRenderId()));
 /**
  * 计算类名
  * @description 根据属性计算组件类名

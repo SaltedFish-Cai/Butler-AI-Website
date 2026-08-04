@@ -1,7 +1,7 @@
 /**
  * @description 导入类型定义
  */
-import { PaStructureType, PaOptionType } from "PancakeType";
+import { PaStructureType, PaOptionType } from "../../manager-type";
 
 /**
  * @description 单元格类型映射配置

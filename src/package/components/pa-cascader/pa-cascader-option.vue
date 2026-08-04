@@ -1,6 +1,12 @@
 <template>
   <div class="pa-cascader-option-group-item" style="max-height: 230px" :class="{ 'is-filter': isFilter }">
-    <pa-scrollbar :useBackTop="false" :useShadow="false" :style="optionsHeight ? { height: optionsHeight } : {}">
+    <pa-scrollbar
+      :useBackTop="false"
+      :useShadow="false"
+      :style="optionsHeight ? { height: optionsHeight } : {}"
+      useHiddenThumb
+      style="--scrollbar-width: 10.1px"
+    >
       <div
         v-for="item in exOptions"
         :id="id + '_option-' + String(item.value) + '-' + level"

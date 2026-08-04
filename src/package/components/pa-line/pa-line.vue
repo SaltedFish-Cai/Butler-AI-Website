@@ -1,5 +1,5 @@
 <template>
-  <div :id="randId" class="pa-line" :class="props.class" :style="lineStyle">
+  <div :id="renderId" class="pa-line" :class="props.class" :style="lineStyle">
     <div v-if="$slots['default']" class="ml-size mr-size">
       <slot />
     </div>
@@ -30,7 +30,7 @@ const props = withDefaults(defineProps<ComponentProps>(), {
   borderColor: "var(--pa-color-primary-light-6)",
   borderStyle: "solid"
 });
-const randId = ref((props.id ? props.id + "_" : "") + "pa-line_" + useRenderId());
+const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-line_" + useRenderId()));
 /**
  * 样式数值转 CSS 字符串
  * @description 判断 padding 值是否为数字，数字自动添加 px 后缀

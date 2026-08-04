@@ -1,5 +1,5 @@
 <template>
-  <div :id="randId" class="pa-file-custom">
+  <div :id="renderId" class="pa-file-custom">
     <slot name="reference">
       <div
         class="upload-area"
@@ -113,7 +113,7 @@ const props = withDefaults(defineProps<ComponentProps>(), {});
  * @description 定义 PaFileCustom 组件可触发的事件
  */
 const emits = defineEmits<ComponentEmits>();
-const randId = ref((props.id ? props.id + "_" : "") + "pa-file-custom_" + useRenderId());
+const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-file-custom_" + useRenderId()));
 /**
  * 文件输入框引用
  * @type Ref<HTMLInputElement | null>

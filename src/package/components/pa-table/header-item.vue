@@ -15,7 +15,8 @@
     <!-- 排序 -->
     <div v-if="item.useSort != false" class="flex-center-between flex1 pa-table-sort-box">
       <div
-        class="m-hand"
+        class="m-hand pa-table-sort-content"
+        :id="props.id + '_' + item.prop + '_sort-icon'"
         :class="[
           props.useOrderPropName == item.prop && orderString != null
             ? 'flex-col light-table-order-box light-order-box-act'
@@ -52,7 +53,11 @@
       @open-senior-filter="openSeniorFilter"
       @save-and-filter="saveAndFilter"
     >
-      <div class="pa-table-filter-box" :class="[setIconAction(item.prop) ? 'pa-table-filter-box-act' : '']">
+      <div
+        class="pa-table-filter-box"
+        :id="props.id + '_' + item.prop + '_filter-icon'"
+        :class="[setIconAction(item.prop) ? 'pa-table-filter-box-act' : '']"
+      >
         <pa-icon
           :class="[setIconAction(item.prop) ? 'filter-icon flex-center filter-act' : 'filter-icon flex-center']"
           name="filter-Fill"
@@ -66,7 +71,11 @@
 
       <template #exBtn v-if="isUseCellConfig(item) && item.useSeniorFilter != false && useGlobalSeniorFilter">
         <div class="flex-center mt-size">
-          <pa-button icon-name="mortarboard_line" @click="openSeniorFilter(item)">
+          <pa-button
+            icon-name="mortarboard_line"
+            @click="openSeniorFilter(item)"
+            :renderId="props.id + '_' + item.prop + '_senior-btn'"
+          >
             {{ language === "zh-CN" ? "使用高级搜索" : "Use Advanced Search" }}
           </pa-button>
         </div>
@@ -261,6 +270,7 @@ watch(
 
 <style lang="scss">
 %light-table-order-box {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -286,8 +296,32 @@ watch(
 .light-table-order-box {
   @extend %light-table-order-box;
 }
+.pa-table-sort-content {
+  position: relative;
+  overflow: hidden;
+  &:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+}
 .pa-table-filter-box {
   @extend %light-table-order-box;
+
+  &:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
   .filter-icon {
     display: flex !important;
     width: inherit;

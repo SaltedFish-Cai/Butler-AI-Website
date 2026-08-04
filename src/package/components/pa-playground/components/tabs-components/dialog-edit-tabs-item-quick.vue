@@ -74,7 +74,7 @@
 <script lang="tsx" setup>
 import { computed, ComputedRef, inject, ref, useTemplateRef, nextTick } from "vue";
 import { PancakeGlobalConfigType } from "../../../pa-manager/types";
-import { PaStructureType } from "PancakeType";
+import { PaStructureType } from "../../../manager-type";
 import { MOptionsType, PaPlaygroundPagesType } from "../../types";
 import MQuickTable from "../quick-table.vue";
 

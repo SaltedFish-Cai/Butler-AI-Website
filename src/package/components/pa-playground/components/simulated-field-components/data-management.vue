@@ -30,7 +30,7 @@
 
 <script lang="tsx" setup>
 import { ComputedRef, inject, ref, useTemplateRef, onMounted, nextTick } from "vue";
-import { PaOptionType, PaStructureType } from "PancakeType";
+import { PaOptionType, PaStructureType } from "../../../manager-type";
 import { PancakeGlobalConfigType } from "../../../pa-manager/types";
 import { MInterfaceConfig, PaPlaygroundPagesType, MStructureType } from "../../types";
 import { getAllData, storeData, updateData } from "../../../indexDB/indexDB";
