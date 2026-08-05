@@ -7,7 +7,7 @@
   />
 
   <pa-cascader
-    class="mt-size"
+    class="pa-mt-size"
     v-model="value2"
     :exOptions="exOptions"
     :type="'multiple-cascader-check'"

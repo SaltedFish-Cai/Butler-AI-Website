@@ -1,7 +1,7 @@
 <template>
   <pa-select v-model="value1" :exOptions="exOptions" :title="{ 'en-US': 'Basic Usage', 'zh-CN': '基础使用' }"></pa-select>
   <pa-select
-    class="mt-size"
+    class="pa-mt-size"
     type="multiple-select"
     v-model="value2"
     :exOptions="exOptions"

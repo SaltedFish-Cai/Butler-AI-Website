@@ -2,7 +2,7 @@
   <pa-time v-model="value1" type="month-picker" :title="{ 'en-US': 'Month Picker', 'zh-CN': '月份选择器' }"></pa-time>
 
   <pa-time
-    class="mt-size"
+    class="pa-mt-size"
     v-model="value2"
     type="month-picker-group"
     :title="{ 'en-US': 'Month Picker Group', 'zh-CN': '月份选择器组' }"

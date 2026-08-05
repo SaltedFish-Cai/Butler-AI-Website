@@ -2,7 +2,7 @@
   <pa-time v-model="value1" type="time-picker" :title="{ 'en-US': 'Time Picker', 'zh-CN': '时间选择器' }"></pa-time>
 
   <pa-time
-    class="mt-size"
+    class="pa-mt-size"
     v-model="value2"
     type="time-picker-group"
     :title="{ 'en-US': 'Time Picker Group', 'zh-CN': '时间选择器组' }"

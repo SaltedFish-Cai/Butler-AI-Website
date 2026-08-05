@@ -2,7 +2,7 @@
   <pa-time v-model="value2" type="date-picker" :title="{ 'en-US': 'Date Picker', 'zh-CN': '日期选择器' }"></pa-time>
 
   <pa-time
-    class="mt-size"
+    class="pa-mt-size"
     v-model="value1"
     type="date-picker-group"
     :title="{ 'en-US': 'Date Picker Group', 'zh-CN': '日期选择器组' }"

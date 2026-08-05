@@ -2,7 +2,7 @@
   <pa-cascader v-model="value1" :exOptions="exOptions" display :title="{ 'en-US': 'Basic Usage', 'zh-CN': '基础使用' }" />
 
   <pa-cascader
-    class="mt-size"
+    class="pa-mt-size"
     v-model="value1"
     :exOptions="exOptions"
     display
