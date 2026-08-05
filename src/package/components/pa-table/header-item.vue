@@ -70,7 +70,7 @@
       </template>
 
       <template #exBtn v-if="isUseCellConfig(item) && item.useSeniorFilter != false && useGlobalSeniorFilter">
-        <div class="flex-center mt-size">
+        <div class="flex-center pa-mt-size">
           <pa-button
             icon-name="mortarboard_line"
             @click="openSeniorFilter(item)"

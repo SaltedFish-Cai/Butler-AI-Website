@@ -67,19 +67,19 @@
         <template v-if="data.styleType === 'Custom'">
           <pa-select-icon v-model="data.icon"></pa-select-icon>
           <pa-input
-            class="mt-size"
+            class="pa-mt-size"
             v-model="data.text['zh-CN']"
             :title="language === 'zh-CN' ? '中文文本' : 'Chinese Text'"
             :placeholder="{ 'zh-CN': '请输入中文文本', 'en-US': 'Please input Chinese text' }"
           ></pa-input>
           <pa-input
-            class="mt-size"
+            class="pa-mt-size"
             v-model="data.text['en-US']"
             :title="language === 'zh-CN' ? '英文文本' : 'English Text'"
             :placeholder="{ 'zh-CN': '请输入英文文本', 'en-US': 'Please input English text' }"
           ></pa-input>
           <pa-select
-            class="mt-size"
+            class="pa-mt-size"
             v-model="data.type"
             :title="language === 'zh-CN' ? '按钮类型' : 'Button Type'"
             :exOptions="typeOptions"
@@ -98,7 +98,7 @@
 
           <pa-select
             v-if="data.actionType === 'delete' || data.actionType === 'dialog'"
-            class="mt-size"
+            class="pa-mt-size"
             type="multiple-select"
             v-model="data.transmitData"
             :title="language === 'zh-CN' ? '传递字段' : 'Transmit Data'"
@@ -109,7 +109,7 @@
           <!-- 跳转 -->
           <pa-input
             v-if="data.actionType === 'jump'"
-            class="mt-size"
+            class="pa-mt-size"
             v-model="data.jumpTarget"
             :title="language === 'zh-CN' ? '跳转目标' : 'Jump Target'"
             :placeholder="{ 'zh-CN': '请输入跳转目标', 'en-US': 'Please input jump target' }"
@@ -118,7 +118,7 @@
           <!-- 弹窗 -->
           <pa-select
             v-if="data.actionType === 'dialog'"
-            class="mt-size"
+            class="pa-mt-size"
             :exOptions="itemOptions"
             v-model="data.dialogContentId"
             :title="language === 'zh-CN' ? '弹窗页面' : 'Dialog Page'"
@@ -126,25 +126,25 @@
           />
           <template v-if="data.actionType === 'dialog'">
             <pa-input
-              class="mt-size"
+              class="pa-mt-size"
               v-model="data.dialogTitle['zh-CN']"
               :title="language === 'zh-CN' ? '中文弹窗标题' : 'Chinese Dialog Title'"
               :placeholder="{ 'zh-CN': '请输入中文弹窗标题', 'en-US': 'Please input Chinese dialog title' }"
             />
             <pa-input
-              class="mt-size"
+              class="pa-mt-size"
               v-model="data.dialogTitle['en-US']"
               :title="language === 'zh-CN' ? '英文弹窗标题' : 'English Dialog Title'"
               :placeholder="{ 'zh-CN': '请输入英文弹窗标题', 'en-US': 'Please input English dialog title' }"
             />
             <pa-select
-              class="mt-size"
+              class="pa-mt-size"
               v-model="data.dialogSubTitle"
               :title="language === 'zh-CN' ? '弹窗副标题' : 'Dialog Sub Title'"
               :exOptions="actionKeyOptions"
               :placeholder="{ 'zh-CN': '请选择弹窗副标题', 'en-US': 'Please select dialog sub title' }"
             />
-            <div class="flex mt-size">
+            <div class="flex pa-mt-size">
               <pa-select
                 :exOptions="dialogSizeOptions"
                 v-model="data.dialogSize"
@@ -152,14 +152,14 @@
                 :placeholder="{ 'zh-CN': '请选择弹窗尺寸', 'en-US': 'Please select dialog size' }"
               />
               <pa-select
-                class="ml-size"
+                class="pa-ml-size"
                 v-model="data.dialogScroll"
                 :title="language === 'zh-CN' ? '滚动条' : 'Add Scrollbar'"
                 :exOptions="yesNoOptions"
                 :placeholder="{ 'zh-CN': '是否添加滚动条', 'en-US': 'Is add scrollbar' }"
               />
             </div>
-            <div class="flex mt-size">
+            <div class="flex pa-mt-size">
               <pa-select
                 v-model="data.closeBySave"
                 :title="language === 'zh-CN' ? '提交自动关闭' : 'Submit Close Save'"
@@ -167,7 +167,7 @@
                 :placeholder="{ 'zh-CN': '是否提交自动关闭', 'en-US': 'Is submit auto close' }"
               />
               <pa-select
-                class="ml-size"
+                class="pa-ml-size"
                 v-model="data.refreshByDialogClose"
                 :title="language === 'zh-CN' ? '关闭后刷新上级' : 'Close Dialog Refresh'"
                 :exOptions="yesNoOptions"
@@ -177,7 +177,7 @@
           </template>
 
           <pa-button
-            class="mt-size"
+            class="pa-mt-size"
             style="width: 100%"
             v-if="data.actionType === 'dialog' && data.dialogContentId"
             is="view"
@@ -189,14 +189,14 @@
 
           <template v-if="data.actionType === 'delete' || data.actionType === 'save'">
             <pa-select
-              class="mt-size"
+              class="pa-mt-size"
               v-model="data.actionApiId"
               :title="language === 'zh-CN' ? '调用接口' : 'Call API'"
               :exOptions="actionApiOptions"
               :placeholder="{ 'zh-CN': '请选择调用接口', 'en-US': 'Please select call API' }"
             />
             <pa-select
-              class="mt-size"
+              class="pa-mt-size"
               v-model="data.refreshByDialogClose"
               :title="language === 'zh-CN' ? '自动刷新' : 'Auto Refresh'"
               :exOptions="yesNoOptions"
@@ -214,7 +214,7 @@
               >
                 <pa-input
                   v-if="dependency.type === 'input'"
-                  class="mt-size"
+                  class="pa-mt-size"
                   v-model="data[dependency.key]"
                   :title="dependency.label"
                   :placeholder="{
@@ -224,7 +224,7 @@
                 />
                 <pa-select
                   v-if="dependency.type === 'select'"
-                  class="mt-size"
+                  class="pa-mt-size"
                   :exOptions="dependency.exOptions"
                   v-model="data[dependency.key]"
                   :title="dependency.label"

@@ -115,6 +115,13 @@ export type ComponentProps = {
    */
   cancelButtonText?: LanguagePackageType | string;
   /**
+   * 是否显示取消按钮
+   * @type boolean | undefined
+   * @default true
+   * @description 是否显示取消按钮
+   */
+  showCancelButton?: boolean;
+  /**
    * 取消按钮图标
    * @type string | undefined
    * @default undefined

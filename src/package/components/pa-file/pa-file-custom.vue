@@ -1,5 +1,5 @@
 <template>
-  <div :id="renderId" class="pa-file-custom">
+  <div :id="renderId" class="pa-file-custom" :style="style">
     <slot name="reference">
       <div
         class="upload-area"
@@ -53,7 +53,7 @@
     <div v-if="uploadFilesList.length > 0" class="file-list">
       <div v-for="(file, index) in uploadFilesList" :key="file.name || index" class="file-item">
         <div class="file-info">
-          <pa-icon class="file-icon" name="file_upload_line" />
+          <pa-icon class="file-icon" name="file_save_line" />
 
           <div class="file-name">{{ file.name }}</div>
           <div class="file-size">{{ formatSize(file.size) }}</div>
@@ -77,7 +77,7 @@ import { PancakeGlobalConfigType } from "../pa-manager/types";
  * 模块导入
  * @description Vue 响应式 API 导入
  */
-import { computed, inject, ref, useTemplateRef, type ComputedRef } from "vue";
+import { computed, inject, ref, useTemplateRef, watch, type ComputedRef } from "vue";
 /**
  * 模块导入
  * @description 文件组件类型定义导入
@@ -94,6 +94,7 @@ import { M_Message } from "../feedback";
  */
 import { ajaxUpload } from "./ajax";
 import useRenderId from "../tools/render-id";
+import { useBaseStore as globalState } from "../store/index";
 
 /**
  * 全局配置注入
@@ -183,8 +184,8 @@ const languagePackage = computed(() => {
         canUploaded: "可上传",
         noCanUploaded: "不可上传",
         typeFile: "类型文件",
-        singleMax: " / 单文件最大",
-        singleMaxAll: " / 单次总文件最大",
+        singleMax: "单文件最大",
+        singleMaxAll: "单次总文件最大",
         msg: "上传文件限制数量",
         fail: "上传文件配置错误！",
         tip1: "上传文件过大，文件大小",
@@ -195,8 +196,8 @@ const languagePackage = computed(() => {
         canUploaded: "Can Upload",
         noCanUploaded: "Can't Upload",
         typeFile: "Type File",
-        singleMax: " / Single File Maximum",
-        singleMaxAll: " / Single Total File Maximum",
+        singleMax: "Single File Maximum",
+        singleMaxAll: "Single Total File Maximum",
         upFail: "Upload Failed",
         fail: "Upload File Configuration Error!",
         msg: "Upload File Limit Quantity",
@@ -210,7 +211,8 @@ const languagePackage = computed(() => {
  * @description 从全局配置中提取文件上传相关的配置信息
  */
 const fileConfigData = computed(() => {
-  const headerData = PancakeGlobalConfig.value?.requestHeader || {};
+  const useGlobalState = globalState();
+  const headerData = useGlobalState.getRequestHeader;
   const fileApi = PancakeGlobalConfig.value?.file_config;
   const apiBaseUrl = PancakeGlobalConfig.value?.baseHost;
   return { headerData, fileApi, apiBaseUrl };
@@ -519,6 +521,20 @@ const handleError = (): void => {
   M_Message.danger({ message: `${languagePackage.value["upFail"]}(02)` });
   loading.value = false;
 };
+
+// watch(
+//   () => props.modelValue,
+//   (data: Array<FileDataType> | undefined) => {
+//     uploadFilesList.value = props.modelValue;
+//   },
+//   { immediate: true, deep: true }
+// );
+
+defineExpose({
+  clearFiles: () => {
+    uploadFilesList.value.length = 0;
+  }
+});
 </script>
 
 <style lang="scss">

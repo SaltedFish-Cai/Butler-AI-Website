@@ -3,7 +3,7 @@
     <section class="pa-table_filter-list" style="height: calc(100% - 90px)">
       <template v-for="(groupItem, groupItemIndex) in state.advancedFilter.relationshipGroup" :key="groupItem.groupName">
         <div class="group">
-          <div class="flex-center-between mb-size border-bottom group_top">
+          <div class="flex-center-between pa-mb-size border-bottom group_top">
             <div class="flex1 group__title" style="text-align: left">{{ groupItem.groupName }} {{ groupItemIndex + 1 }}</div>
             <pa-button
               v-if="groupItemIndex > 0"
@@ -49,7 +49,7 @@
               <section class="filter-item flex-center-start">
                 <div class="filter-item_name"># {{ propItem.label }}</div>
 
-                <div class="ml-size mr-size">
+                <div class="pa-ml-size pa-mr-size">
                   <pa-select
                     v-model="item.conditionalType"
                     :placeholder="languagePackage?.['selectConditional']"
@@ -62,7 +62,7 @@
 
                 <el-form-item prop="fieldValue" style="width: 60% !important; margin-bottom: 0">
                   <pa-input
-                    class="mr-size"
+                    class="pa-mr-size"
                     style="width: 100%"
                     v-model="item.fieldValue"
                     :placeholder="languagePackage?.['inputAdvanced']"
@@ -98,7 +98,7 @@
               </div>
             </template>
 
-            <div class="flex-center mt-size">
+            <div class="flex-center pa-mt-size">
               <pa-button
                 icon-name="add_circle_line"
                 plain
@@ -118,9 +118,9 @@
           <pa-radio v-model="state.advancedFilter.relationshipGroupLinkType" :ex-options="state.linkOptions"></pa-radio>
         </div>
       </template>
-      <div class="flex-center mt-size">
+      <div class="flex-center pa-mt-size">
         <pa-button
-          class="mb-size"
+          class="pa-mb-size"
           icon-name="goods_line"
           @click="FilterFn.addFilterGroup"
           plain

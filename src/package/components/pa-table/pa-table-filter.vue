@@ -51,8 +51,8 @@
 
   <!-- 普通搜索结果展示 -->
   <section v-if="Query.length" class="flex pa-table-query">
-    <pa-language class="table-title-label mr-size" :text="{ 'zh-CN': '搜索条件', 'en-US': 'Search Filter' }"> </pa-language>
-    <div class="mr-size query_item" v-for="(item, index) in Query" :key="item.label + item.value">
+    <pa-language class="table-title-label pa-mr-size" :text="{ 'zh-CN': '搜索条件', 'en-US': 'Search Filter' }"> </pa-language>
+    <div class="pa-mr-size query_item" v-for="(item, index) in Query" :key="item.label + item.value">
       <span class="icon_highlight mr5">#{{ Number(index) + 1 }}</span>
       <span class="query_item_label" :class="[item.conditionalType == 3 ? 'start' : item.conditionalType == 5 ? 'end' : '']">
         {{ item.label }} :
@@ -97,9 +97,9 @@
   </section>
 
   <!-- 高级搜索结果展示 -->
-  <section v-if="AdvancedQuery.length" class="flex mb-size pa-table-query">
-    <pa-language class="table-title-label mr-size" :text="{ 'zh-CN': '高级搜索', 'en-US': 'Advanced Search' }"> </pa-language>
-    <div class="mr-size query_item" v-for="(item, index) in AdvancedQuery" :key="item.label + item.value">
+  <section v-if="AdvancedQuery.length" class="flex pa-mb-size pa-table-query">
+    <pa-language class="table-title-label pa-mr-size" :text="{ 'zh-CN': '高级搜索', 'en-US': 'Advanced Search' }"> </pa-language>
+    <div class="pa-mr-size query_item" v-for="(item, index) in AdvancedQuery" :key="item.label + item.value">
       <span class="icon_highlight mr5">#{{ Number(index) + 1 }}</span>
       <span>{{ item.label }} :</span>
       <template

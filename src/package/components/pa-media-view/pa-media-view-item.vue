@@ -1,7 +1,7 @@
 <template>
   <div class="pa-media-view-download-file">
-    <div @click="openFile" class="pa-media-view-download-file_name flex-center-start pa-hand pr-size">
-      <pa-icon :name="'attachment_line'" class="ml-size mr-size" />
+    <div @click="openFile" class="pa-media-view-download-file_name flex-center-start pa-hand pa-pr-size">
+      <pa-icon :name="'attachment_line'" class="pa-ml-size pa-mr-size" />
       <slot>
         <div style="white-space: initial; width: 100%">{{ fileName || file?.OriginalName || file?.FileName }}</div>
       </slot>
@@ -34,7 +34,7 @@
     </template>
     <template #footerRight>
       <div class="flex-center zoom-box" v-if="fileType == 'pdf' || fileType == 'image'">
-        <div class="flex-center mr-size reset-btn" @click="reset90" v-if="fileType == 'pdf' || fileType == 'image'">
+        <div class="flex-center pa-mr-size reset-btn" @click="reset90" v-if="fileType == 'pdf' || fileType == 'image'">
           <pa-icon class="mr5" name="reset_line"></pa-icon>
           <span style="font-size: 12px">{{ languagePackage["rotate"] }}</span>
         </div>

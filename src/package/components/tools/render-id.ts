@@ -53,6 +53,15 @@ function getNodeSignature(vnode: VNode): string {
   return parts.join("|");
 }
 
+// 路由包装组件以 route.fullPath 作为 name/key，query 部分（如 ?tabName=xx）变化时
+// 会导致同一页面生成不同的 renderId（SPA 内部导航与整页刷新两条路径不一致）。
+// 这里对 URL 形态的段去掉 query，保证同一路径的页面 id 稳定，同时路径参数仍参与区分。
+function stripRouteQuery(segment: string): string {
+  if (!segment.startsWith("/")) return segment;
+  const idx = segment.indexOf("?");
+  return idx > -1 ? segment.slice(0, idx) : segment;
+}
+
 // 遍历组件树构建稳定路径
 // - v-for 场景自动带上 vnode.key
 // - 无 key 时基于 vnode props + 文本内容签名区分，与创建顺序无关
@@ -61,12 +70,12 @@ function buildPath(instance: ComponentInternalInstance): string {
   let current: ComponentInternalInstance | null = instance;
 
   while (current) {
-    const name = (current.type as any)?.__name ?? (current.type as any)?.name ?? "anonymous";
+    const name = stripRouteQuery((current.type as any)?.__name ?? (current.type as any)?.name ?? "anonymous");
     const key = current.vnode?.key;
     const keyStr = key != null && typeof key !== "symbol" ? String(key) : null;
 
     if (keyStr != null) {
-      segments.unshift(`${name}[${keyStr}]`);
+      segments.unshift(`${name}[${stripRouteQuery(keyStr)}]`);
     } else {
       const sig = getNodeSignature(current.vnode);
       segments.unshift(sig ? `${name}|${sig}` : name);

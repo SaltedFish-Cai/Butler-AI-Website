@@ -48,7 +48,7 @@
       :tableData="inEditDataItem.config"
       :tableConfig="editTableConfig"
       :ex-options="exOptions"
-      class="mt-size"
+      class="pa-mt-size"
     >
       <template #Header>
         <pa-button
@@ -66,7 +66,7 @@
           :text="{ 'zh-CN': '新增属性', 'en-US': 'Add Property' }"
         />
         <!-- 上传属性JSON -->
-        <pa-button-group is="default" class="ml-size">
+        <pa-button-group is="default" class="pa-ml-size">
           <pa-button
             is="upload"
             @click="triggerFileUpload"
@@ -115,7 +115,7 @@
           :placeholder="{ 'zh-CN': '请输入中文文本', 'en-US': 'Please input Chinese text' }"
         ></pa-input>
         <pa-input
-          class="mt-size"
+          class="pa-mt-size"
           v-model="data.label['en-US']"
           :title="languageValue === 'zh-CN' ? '英文文本' : 'English Text'"
           :titleWidth="languageValue === 'zh-CN' ? '70px' : '100px'"

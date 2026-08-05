@@ -31,7 +31,7 @@
                   <pa-icon
                     v-if="useFull"
                     :name="!state.fullscreen ? 'fullscreen_arrow_line' : 'fullscreen_arrow_exit_line'"
-                    class="flex-center full_icon ml-size"
+                    class="flex-center full_icon pa-ml-size"
                     @click="state.fullscreen = !state.fullscreen"
                   />
                 </div>

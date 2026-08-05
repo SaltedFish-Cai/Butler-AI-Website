@@ -380,7 +380,7 @@
                 ></pa-language>
                 <pa-language v-else :text="{ 'zh-CN': '切换至已选择', 'en-US': 'Switch To Selected' }"></pa-language>
               </pa-button>
-              <div class="ml-size">
+              <div class="pa-ml-size">
                 <pa-language :text="{ 'zh-CN': '已选择', 'en-US': 'Selected' }"></pa-language>
                 <span class="bold-text ml3 mr3">{{ isTableSelectAll ? state.pageable.total : selectedRowsLength }}</span>
                 <pa-language :text="{ 'zh-CN': '件', 'en-US': 'Piece' }"></pa-language>

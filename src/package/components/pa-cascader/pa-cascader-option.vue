@@ -23,14 +23,14 @@
           <pa-checkbox-item
             v-if="(isMultiple && isCheck) || (isMultiple && !item.children?.length)"
             :isChecked="equalData(item.value, inValue)"
-            class="mr-size"
+            class="pa-mr-size"
           >
             <slot name="optionLabel" :option="item">
               {{ typeof item.label === "object" ? item.label[languageValue] || item.label["zh-CN"] : item.label }}
             </slot>
             <template v-if="item.children?.length">({{ item.children.length }})</template></pa-checkbox-item
           >
-          <pa-radio-item v-else-if="isCheck" :isChecked="equalData(item.value, inValue)" class="mr-size">
+          <pa-radio-item v-else-if="isCheck" :isChecked="equalData(item.value, inValue)" class="pa-mr-size">
             <slot name="optionLabel" :option="item">
               {{ typeof item.label === "object" ? item.label[languageValue] || item.label["zh-CN"] : item.label }}
             </slot>

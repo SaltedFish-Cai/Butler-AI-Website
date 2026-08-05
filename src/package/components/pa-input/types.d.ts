@@ -59,7 +59,7 @@ export type ComponentProps = {
    * @default textarea
    * @description 输入框类型，可选值为 `input`、`text`、`textarea`、`password`
    */
-  type?: "input" | "text" | "textarea" | "password";
+  type?: "input" | "password" | "text" | "textarea";
   /**
    * 表单项标签
    * @type LanguagePackageType | string | undefined

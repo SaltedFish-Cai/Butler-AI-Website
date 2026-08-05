@@ -19,7 +19,13 @@
           ></pa-checkbox-item>
           {{ languagePackage["unSelected"] }}
         </div>
-        <pa-input v-if="useSearch" style="width: 1px; flex: 1" class="ml-size" :disabled="props.disabled" v-model="searchAll" />
+        <pa-input
+          v-if="useSearch"
+          style="width: 1px; flex: 1"
+          class="pa-ml-size"
+          :disabled="props.disabled"
+          v-model="searchAll"
+        />
       </div>
       <div class="transfer-select-box_options">
         <pa-scrollbar
@@ -78,7 +84,7 @@
         <pa-input
           v-if="useSearch"
           style="width: 1px; flex: 1"
-          class="ml-size"
+          class="pa-ml-size"
           :disabled="props.disabled"
           v-model="searchSelected"
         />

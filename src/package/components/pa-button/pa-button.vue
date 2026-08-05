@@ -8,7 +8,7 @@
     @click="btnClick"
   >
     <div v-if="isLoading" class="pa-button_icon">
-      <pa-icon :renderId="renderId + '_loading'" name="butler-reset_line" class="pa-button_loading" />
+      <pa-icon :renderId="renderId + '_loading'" name="reset_line" class="pa-button_loading" />
     </div>
     <slot name="icon">
       <pa-icon
@@ -172,7 +172,7 @@ const currentType = computed(() => {
  * @returns `boolean` 按钮的自动 loading 状态
  * @description 按钮的自动 loading 状态
  */
-const isLoading = ref(props.loading || false);
+const isLoading = computed(() => props.loading || false);
 /**
  * **是否显示左侧图标**
  * @returns `boolean` 是否显示左侧图标

@@ -24,7 +24,7 @@
           :placeholder="{ 'zh-CN': '请输入中文文本', 'en-US': 'Please input Chinese text' }"
         ></pa-input>
         <pa-input
-          class="mt-size"
+          class="pa-mt-size"
           v-model="(data.label as object)['en-US']"
           :title="language === 'zh-CN' ? '英文文本' : 'English Text'"
           :placeholder="{ 'zh-CN': '请输入英文文本', 'en-US': 'Please input English text' }"

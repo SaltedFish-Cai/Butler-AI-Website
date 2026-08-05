@@ -68,7 +68,7 @@
                 </div>
                 <pa-icon
                   v-if="!injectConfigContext.display && !item.disabled"
-                  class="remove-hand ml-size"
+                  class="remove-hand pa-ml-size"
                   name="close_circle_line"
                   @click.stop="removeTab(tab)"
                 />

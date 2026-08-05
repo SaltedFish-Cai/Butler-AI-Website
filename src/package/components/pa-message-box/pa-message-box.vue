@@ -1,9 +1,9 @@
 <template>
   <pa-overlay v-if="visible" :model-value="visible" @click-overlay="handleClose">
     <div :id="renderId" :class="['pa-message-box', type ? `${type}` : '', customClass]" :style="overlayStyles" role="alert">
-      <div class="pa-message-box_header mb-size">
+      <div class="pa-message-box_header pa-mb-size">
         <div class="flex-center-start">
-          <pa-icon class="pa-message-box__icon mr-size" name="warning_line"></pa-icon>
+          <pa-icon class="pa-message-box__icon pa-mr-size" name="warning_line"></pa-icon>
           <div class="pa-message-box__title">
             {{ typeof title === "string" ? title : title?.[language] || languagePackage["notificationTitle"] }}
           </div>
@@ -20,6 +20,7 @@
       </slot>
       <div class="pa-message-box__footer">
         <pa-button
+          v-if="showCancelButton"
           is="cancel"
           :iconName="cancelButtonIcon"
           :type="isType === 'confirm' ? 'default' : 'primary'"
@@ -120,10 +121,11 @@ const {
   dangerouslyUseHTMLString = false,
   onConfirm,
   onClose,
-  confirmButtonText = languagePackage?.confirmButtonText || "确定",
-  cancelButtonText = isType === "confirm" ? languagePackage?.cancelButtonText : languagePackage?.confirmButtonText || "取消",
-  cancelButtonIcon = "close_circle_line",
   confirmButtonIcon = "check_circle_line",
+  confirmButtonText = languagePackage?.confirmButtonText || "确定",
+  showCancelButton = true,
+  cancelButtonIcon = "close_circle_line",
+  cancelButtonText = isType === "confirm" ? languagePackage?.cancelButtonText : languagePackage?.confirmButtonText || "取消",
   zIndex = 2050,
   closeOnPressEscape = true
 } = props.options;

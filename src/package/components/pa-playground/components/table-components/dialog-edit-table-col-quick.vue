@@ -20,7 +20,7 @@
           :placeholder="{ 'zh-CN': '请输入中文文本', 'en-US': 'Please input Chinese text' }"
         ></pa-input>
         <pa-input
-          class="mt-size"
+          class="pa-mt-size"
           v-model="(data.label as object)['en-US']"
           :title="language === 'zh-CN' ? '英文文本' : 'English Text'"
           :placeholder="{ 'zh-CN': '请输入英文文本', 'en-US': 'Please input English text' }"
@@ -43,7 +43,7 @@
         ></pa-cascader>
 
         <pa-select
-          class="mt-size"
+          class="pa-mt-size"
           v-if="
             exOptionsMap &&
             data.prop &&
@@ -67,7 +67,7 @@
           :title="{ 'zh-CN': '使用筛选', 'en-US': 'Use Filter' }"
         ></pa-select>
         <pa-select
-          class="mt-size"
+          class="pa-mt-size"
           v-if="data.useFilter"
           v-model="data.filterType"
           :exOptions="exOptionsComputed['filterType']"
@@ -75,7 +75,7 @@
         ></pa-select>
 
         <pa-select
-          class="mt-size"
+          class="pa-mt-size"
           v-if="exOptionsMap && data.prop && data.filterType == 'select'"
           v-model="data['exOptionsById']"
           :exOptions="exOptionsComputed['exOptionsById']"
@@ -90,7 +90,7 @@
       <template #operation="{ data, index }">
         <div class="flex-col">
           <pa-button
-            class="mb-size"
+            class="pa-mb-size"
             is="edit"
             @click="handleMoreOperation(data, index)"
             :text="{ 'zh-CN': '更多', 'en-US': 'More' }"
@@ -135,7 +135,7 @@
             :placeholder="{ 'zh-CN': '请输入中文文本', 'en-US': 'Please input Chinese text' }"
           />
           <pa-input
-            class="mt-size"
+            class="pa-mt-size"
             v-model="(scope.data.label as object)['en-US']"
             :title="language === 'zh-CN' ? '英文文本' : 'English Text'"
             :titleWidth="language === 'zh-CN' ? '70px' : '100px'"

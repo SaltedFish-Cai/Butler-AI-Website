@@ -17,7 +17,7 @@
       >
         <template #optionLabel="{ option }">
           <div class="flex-center-start">
-            <div class="pa-table-tag-color mr-size" :style="{ backgroundColor: option?.tagStyle?.bgColor }"></div>
+            <div class="pa-table-tag-color pa-mr-size" :style="{ backgroundColor: option?.tagStyle?.bgColor }"></div>
             {{ typeof option?.label === "object" ? option?.label[language] : option?.label }}
           </div>
         </template>
@@ -33,7 +33,7 @@
           <slot :name="'header-option-' + item.prop" v-bind="{ row: opt }">
             <div class="flex-center-start">
               <div
-                class="pa-table-tag-color mr-size"
+                class="pa-table-tag-color pa-mr-size"
                 v-if="opt.tagStyle?.bgColor"
                 :style="{ backgroundColor: opt.tagStyle.bgColor }"
               ></div>
@@ -100,7 +100,7 @@
       <!-- button -->
       <pa-button
         :renderId="props.id + '_' + item.prop + '_filter-btn'"
-        class="ml-size"
+        class="pa-ml-size"
         style="flex: 0 0 89px"
         is="search"
         @click="FetchSaveAndFilter"

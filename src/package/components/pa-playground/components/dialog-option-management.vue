@@ -47,7 +47,7 @@
       :tableData="inEditDataItem.config as PaOptionType.SelectList"
       :tableConfig="editTableConfig"
       :ex-options="exOptions"
-      class="mt-size"
+      class="pa-mt-size"
     >
       <template #Header>
         <pa-button
@@ -66,7 +66,7 @@
           :placeholder="{ 'zh-CN': '请输入中文文本', 'en-US': 'Please input Chinese text' }"
         ></pa-input>
         <pa-input
-          class="mt-size"
+          class="pa-mt-size"
           v-model="data.label['en-US']"
           :title="languageValue === 'zh-CN' ? '英文文本' : 'English Text'"
           :titleWidth="languageValue === 'zh-CN' ? '70px' : '100px'"
@@ -90,7 +90,7 @@
       </template>
     </m-quick-table>
 
-    <div class="m-playground-dialog-table mt-size" v-else-if="selectType === 'switch'">
+    <div class="m-playground-dialog-table pa-mt-size" v-else-if="selectType === 'switch'">
       <div class="m-playground-dialog-table-body">
         <div class="m-playground-dialog-table-row">
           <div class="m-playground-dialog-table-cell" style="flex: 0 0 180px">
@@ -105,7 +105,7 @@
               :placeholder="{ 'zh-CN': '请输入中文文本', 'en-US': 'Please input Chinese text' }"
             ></pa-input>
             <pa-input
-              class="mt-size"
+              class="pa-mt-size"
               v-if="(inEditDataItem.config as PaOptionType.Switch).activeText"
               v-model="(inEditDataItem.config as any).activeText['en-US']"
               :title="languageValue === 'zh-CN' ? '英文文本' : 'English Text'"
@@ -140,7 +140,7 @@
               :placeholder="{ 'zh-CN': '请输入中文文本', 'en-US': 'Please input Chinese text' }"
             ></pa-input>
             <pa-input
-              class="mt-size"
+              class="pa-mt-size"
               v-if="(inEditDataItem.config as PaOptionType.Switch).inActiveText"
               v-model="(inEditDataItem.config as any).inActiveText['en-US']"
               :title="languageValue === 'zh-CN' ? '英文文本' : 'English Text'"

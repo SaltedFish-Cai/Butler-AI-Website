@@ -2,7 +2,7 @@
   <div class="pa-playground" :class="[props.class]" :style="{ ...props.style }">
     <!-- 固定的创建表格按钮 -->
     <div class="fixed-button">
-      <pa-button-group :type="'primary' as const" class="mr-size">
+      <pa-button-group :type="'primary' as const" class="pa-mr-size">
         <pa-button
           icon-name="star_line"
           @click="editBaseDialogRef?.open"
@@ -26,14 +26,14 @@
       </pa-button-group>
 
       <pa-button
-        class="mr-size"
+        class="pa-mr-size"
         is="add"
         type="success"
         @click="handleCreatePage"
         :text="{ 'zh-CN': '创建页面', 'en-US': 'Create Page' }"
       />
 
-      <pa-button-group type="warning" class="mr-size">
+      <pa-button-group type="warning" class="pa-mr-size">
         <pa-button
           type="warning"
           icon-name="report_data_line"

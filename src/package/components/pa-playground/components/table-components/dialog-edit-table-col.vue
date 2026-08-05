@@ -23,7 +23,7 @@
             :placeholder="{ 'zh-CN': '请输入中文文本', 'en-US': 'Please input Chinese text' }"
           />
           <pa-input
-            class="mt-size"
+            class="pa-mt-size"
             v-model="(scope.data.label as object)['en-US']"
             :title="language === 'zh-CN' ? '英文文本' : 'English Text'"
             :titleWidth="language === 'zh-CN' ? '70px' : '100px'"

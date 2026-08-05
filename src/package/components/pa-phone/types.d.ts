@@ -1,6 +1,6 @@
 import type { Component } from "vue";
 
-export type PhoneModel = "14" | "14-pro" | "15" | "15-pro" | "x" | "plain";
+export type PhoneModel = "14-pro" | "14" | "15-pro" | "15" | "plain" | "x";
 
 export interface DeviceSpec {
   w: number;

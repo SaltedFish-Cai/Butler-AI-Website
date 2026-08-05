@@ -10,7 +10,7 @@
     >
       <div class="pa-message_header">
         <div class="flex-center-start">
-          <pa-icon class="pa-message__icon mr-size" name="warning_line"></pa-icon>
+          <pa-icon class="pa-message__icon pa-mr-size" name="warning_line"></pa-icon>
           <div v-if="dangerouslyUseHTMLString" class="pa-message__content" v-html="message"></div>
           <div v-else class="pa-message__content">{{ typeof message === "string" ? message : message?.[language] }}</div>
         </div>

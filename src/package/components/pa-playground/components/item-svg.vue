@@ -27,7 +27,7 @@
           <div v-if="baseConfig" class="flex-center-start">
             <m-title
               v-if="baseConfig.title?.[language]"
-              class="mr-size"
+              class="pa-mr-size"
               :line="false"
               style="display: inline-block; padding-top: 0"
             >
@@ -90,7 +90,7 @@
         <!-- 按钮 -->
         <pa-button
           v-if="baseConfig?.type === 'form'"
-          class="mt-size"
+          class="pa-mt-size"
           style="width: 100%"
           is="edit"
           iconName="version_line"
@@ -101,7 +101,7 @@
         <template v-if="baseConfig?.type === 'table'">
           <div class="flex" style="width: 100%">
             <pa-button
-              class="mt-size"
+              class="pa-mt-size"
               is="edit"
               iconName="version_line"
               style="width: 50%"
@@ -109,7 +109,7 @@
               :text="{ 'zh-CN': '表格 快捷设置', 'en-US': 'Table Quick Settings' }"
             />
             <pa-button
-              class="mt-size"
+              class="pa-mt-size"
               is="edit"
               iconName="setting_line"
               style="width: 50%"
@@ -124,7 +124,7 @@
 
         <pa-button
           v-if="baseConfig?.type === 'tabs'"
-          class="mt-size"
+          class="pa-mt-size"
           style="width: 100%"
           is="edit"
           iconName="version_line"

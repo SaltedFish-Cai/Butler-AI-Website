@@ -1,6 +1,6 @@
 <template>
   <div :id="renderId" class="pa-line" :class="props.class" :style="lineStyle">
-    <div v-if="$slots['default']" class="ml-size mr-size">
+    <div v-if="$slots['default']" class="pa-ml-size pa-mr-size">
       <slot />
     </div>
   </div>

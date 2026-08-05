@@ -133,6 +133,13 @@ export type ComponentProps = {
    * @description 通知的 z-index 值
    */
   zIndex?: number | undefined;
+  /**
+   * 是否加载中
+   * @type boolean | undefined
+   * @default undefined
+   * @description 是否显示加载中图标
+   */
+  loading?: boolean | undefined;
 };
 /**
  * 通知配置选项

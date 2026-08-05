@@ -15,7 +15,7 @@
           >
             <div class="flex-center">
               <div style="word-wrap: break-word">{{ computedPlaceholder }}</div>
-              <div class="ml-size" v-if="fileMultiple && fileMultiple > 1">
+              <div class="pa-ml-size" v-if="fileMultiple && fileMultiple > 1">
                 (<span class="light-text"> {{ inValue?.length || 0 }}</span
                 >/{{ fileMultiple }})
               </div>
@@ -48,7 +48,7 @@
         :id="renderId + '_clean'"
         :title="languagePackage['clearAddedFiles']"
         style="--pa-size-font: 14px; --pa-size-height: 28px"
-        class="btn-width ml-size"
+        class="btn-width pa-ml-size"
         is="trash"
         :disabled="disabled"
         @click="cleanFiles"
@@ -92,7 +92,7 @@
             <pa-icon
               v-if="!display && !disabled"
               :title="languagePackage['del']"
-              class="file-item-box__del-hand ml-size"
+              class="file-item-box__del-hand pa-ml-size"
               name="close_circle_line"
               @click="removeFile(index)"
             />

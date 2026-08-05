@@ -67,7 +67,7 @@
     </template>
     <template #footerRight>
       <div class="flex-center zoom-box">
-        <div class="flex-center mr-size reset-btn" @click="reset90" v-if="fileType == 'pdf'">
+        <div class="flex-center pa-mr-size reset-btn" @click="reset90" v-if="fileType == 'pdf'">
           <pa-icon class="mr5" name="reset_line"></pa-icon><span style="font-size: 12px">{{ languagePackage["rotateTip"] }}</span>
         </div>
         <pa-icon name="minus_circle_line" class="pa-hand" @click="handleMouseWheel({ deltaY: 1 })"></pa-icon>

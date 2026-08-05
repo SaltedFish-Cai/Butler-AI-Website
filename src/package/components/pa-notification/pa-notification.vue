@@ -8,9 +8,10 @@
       role="alert"
       @click="handleClick"
     >
-      <div class="pa-notification_header mb-size">
+      <div class="pa-notification_header pa-mb-size">
         <div class="flex-center-start">
-          <pa-icon class="pa-notification__icon mr-size" name="warning_line" />
+          <pa-icon v-if="loading" class="pa-notification__icon pa-mr-size loading" name="loading_line" />
+          <pa-icon v-else class="pa-notification__icon pa-mr-size" name="warning_line" />
           <div class="pa-notification__title">{{ typeof title === "string" ? title : title?.[language] }}</div>
         </div>
         <pa-icon class="pa-notification__closeBtn" @click="handleClose" name="close_line" />
@@ -48,11 +49,7 @@ import languageMap from "../language.json";
  * 组件属性
  * @description 组件的 props 定义
  */
-const props = defineProps<{
-  id: string;
-  renderId?: string;
-  options: NotificationOptions;
-}>();
+const props = defineProps<{ id: string; renderId?: string; options: NotificationOptions }>();
 const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-notification_" + useRenderId()));
 /**
  * 当前语言
@@ -78,7 +75,8 @@ const {
   offset = 0,
   position = "top-right",
   duration = 3000,
-  zIndex = 2050
+  zIndex = 2050,
+  loading = false
 } = props.options;
 /**
  * 标题

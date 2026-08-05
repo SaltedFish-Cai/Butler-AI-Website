@@ -45,7 +45,7 @@ export type MenuItemConfig = {
    * @default undefined
    * @description 选中菜单项时通过 @select 事件返回的唯一标识，用于区分不同操作
    */
-  command?: string | number;
+  command?: number | string;
   /**
    * 自定义类名
    * @type Array<string> | string | undefined
@@ -107,7 +107,7 @@ export type ComponentProps = {
    * @default false
    * @description 在菜单边缘显示装饰性圆点。true 或 "tl" 为左上，"tr" 为右上，"bl" 为左下，"br" 为右下
    */
-  point?: boolean | "tl" | "tr" | "bl" | "br";
+  point?: boolean | "bl" | "br" | "tl" | "tr";
   /**
    * 自定义类名
    * @type Array<string> | string | undefined
@@ -191,7 +191,7 @@ export type ItemComponentProps = {
    * @default undefined
    * @description 选中菜单项时通过 @select 事件返回的唯一标识
    */
-  command?: string | number;
+  command?: number | string;
   /**
    * 子菜单触发方式
    * @type "click" | "hover"

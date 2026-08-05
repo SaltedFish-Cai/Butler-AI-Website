@@ -1,7 +1,7 @@
 <template>
   <template v-if="useToPage">
     <template v-for="page in homeIndexConfig?.itemConfigs" :key="page.itemId">
-      <m-title v-if="page.title?.[language]" class="mb-size">{{ page.title[language] }}</m-title>
+      <m-title v-if="page.title?.[language]" class="pa-mb-size">{{ page.title[language] }}</m-title>
 
       <pa-form
         id="visibleForm"
@@ -91,7 +91,7 @@
     @closed="emits('closed')"
   >
     <template v-for="page in homeIndexConfig?.itemConfigs" :key="page.itemId">
-      <m-title v-if="page.title?.[language]" class="mb-size">{{ page.title[language] }}</m-title>
+      <m-title v-if="page.title?.[language]" class="pa-mb-size">{{ page.title[language] }}</m-title>
 
       <pa-form
         id="visibleForm"

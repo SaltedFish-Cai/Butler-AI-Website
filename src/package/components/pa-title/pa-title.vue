@@ -4,7 +4,7 @@
       <div class="pa-title_text">
         <slot />
         <div class="pa-title_tip" v-if="tipsPosition == 'right'">
-          <div class="ml-size">
+          <div class="pa-ml-size">
             (<slot name="tips">{{ tips }}</slot
             >)
           </div>
