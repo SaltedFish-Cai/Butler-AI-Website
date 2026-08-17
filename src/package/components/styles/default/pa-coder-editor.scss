@@ -7,6 +7,7 @@
   background: var(--pa-color-bg, #fff);
   min-height: var(--pa-coder-editor-min-height, 100px);
   height: 100%;
+  font-family: var(--pa-component-font-family);
 
   &.pa-coder-editor--dark {
     border-color: #333;

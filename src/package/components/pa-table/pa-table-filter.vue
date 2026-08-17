@@ -24,6 +24,7 @@
             :renderId="id + '_export-btn'"
             v-if="extraProps.exportApi"
             is="export"
+            dataName="按钮 - 表格导出"
             @click="extraProps.exportApi"
             :text="{ 'zh-CN': '导出报表', 'en-US': 'Export Report' }"
           />
@@ -32,6 +33,7 @@
             :renderId="id + '_refresh-btn'"
             iconName="reset_line"
             type="default"
+            dataName="按钮 - 表格刷新"
             @click="refreshTable({ Page: {} })"
             :text="{ 'zh-CN': '刷新', 'en-US': 'Refresh' }"
           />
@@ -41,6 +43,7 @@
             :use-plain="false"
             iconName="filter_line"
             type="primary"
+            dataName="按钮 - 表格列筛选"
             @click="() => configRef?.changeColSetting(true)"
             :text="{ 'zh-CN': '筛选', 'en-US': 'Filter' }"
           />
@@ -67,23 +70,17 @@
                 color:
                   relationshipItem?.tagStyle?.bgColor && isDarkColor(relationshipItem?.tagStyle?.bgColor) ? '#fff' : '#818181'
               }" -->
-        <span
-          class="flex-center query_item_box query_item_box2"
-          :style="{
-            backgroundColor: 'var(--pa-color-primary-light-8)',
-            color: '#818181'
-          }"
-        >
-          <div :title="relationshipItem.value">
-            {{ relationshipItem.value }}
-          </div>
+
+        <pa-tag type="info" :name="'删除表筛选 - ' + item.label" :renderId="id + '_' + relationshipItem.props">
+          <div :title="relationshipItem.value">{{ relationshipItem.value }}</div>
           <pa-icon
-            :renderId="id + '_' + relationshipItem.props + '_remove-icon'"
-            class="ml5 hand remove-icon"
+            :renderId="id + '_' + relationshipItem.props + '_' + relationshipItem.relValue + '_remove-btn'"
+            :data-name="'删除表筛选 - ' + item.label + ` (${relationshipItem.value})`"
+            class="ml5 hand"
             name="close_circle_line"
             @click="handleRemoveQ(relationshipItem)"
           ></pa-icon>
-        </span>
+        </pa-tag>
       </template>
     </div>
 
@@ -92,6 +89,7 @@
       is="trash"
       size="small"
       @click="handleCleanAllQuery"
+      data-name="删除全部表筛选"
       :label="{ 'zh-CN': '清除空条件', 'en-US': 'Clear Empty Conditions' }"
     />
   </section>

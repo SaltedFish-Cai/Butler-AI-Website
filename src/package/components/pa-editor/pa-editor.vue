@@ -93,7 +93,7 @@ const props = withDefaults(defineProps<ComponentProps>(), {});
 /**
  * @description 编辑器唯一 ID
  */
-const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-editor_" + useRenderId()));
+const renderId = ref(props.renderId || (props.id ? props.id : "pa-editor_" + useRenderId()));
 
 /**
  * @description 图片编辑组件引用

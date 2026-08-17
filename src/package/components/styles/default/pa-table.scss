@@ -6,6 +6,7 @@
   display: flex;
   flex-direction: column;
   color: var(--pa-color-font);
+  font-family: var(--pa-component-font-family);
 
   .empty {
     opacity: 0;
@@ -33,7 +34,7 @@
   }
   .table-flex-ri,
   .table-flex-lf {
-    margin-bottom: var(--pa-size-padding, 10px);
+    margin-bottom: calc(var(--pa-size-padding, 10px) * 0.5);
     display: flex;
     align-items: center;
     justify-content: flex-end;
@@ -43,7 +44,7 @@
   }
   .table-flex-ct {
     position: absolute;
-    bottom: calc(5px + calc(var(--pa-size-padding, 10px) / 1.5));
+    bottom: calc(var(--pa-size-padding, 10px) * 0.5);
     left: 50%;
     flex-direction: column;
     justify-content: center;
@@ -201,7 +202,7 @@
     &:after {
       content: "";
       display: block;
-      width: calc(var(--pa-size-padding, 10px) + 3px);
+      width: calc(13.1px - 1px);
       height: calc(var(--pa-size-padding, 10px) + var(--pa-size-height, 28px));
       background-color: var(--pa-color-send-bg);
       position: absolute;
@@ -213,7 +214,10 @@
     }
     > .pa-table_body_header_scroll {
       position: relative;
-      padding-right: calc(var(--pa-size-padding, 10px) + 3.1px);
+      padding-right: 13.1px;
+      overflow: hidden;
+      width: 100%;
+      box-sizing: border-box;
     }
   }
 }
@@ -227,7 +231,7 @@
     border: 1px solid var(--pa-color-border);
     border-bottom: 0;
     background-color: var(--pa-color-send-bg);
-    overflow-x: hidden;
+    overflow: hidden;
     > .pa-scrollbar > .pa-scrollbar-content > .scrollbar-body > .scrollbar-body-content {
       min-width: 100%;
     }

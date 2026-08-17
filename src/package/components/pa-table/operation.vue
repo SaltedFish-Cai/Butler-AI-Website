@@ -6,12 +6,21 @@
 import { inject, useSlots, h, ComputedRef } from "vue";
 import { ComponentUseItemProps, PaTableUseType } from "./types";
 import { LanguageKey } from "../manager-type";
+import { PancakeGlobalConfigType } from "../pa-manager/types";
 
-type OperationPropsType = { column: ComponentUseItemProps; row: PaTableUseType.PaTableInDataType };
+type OperationPropsType = { tableId: string; column: ComponentUseItemProps; row: PaTableUseType.PaTableInDataType };
 const language = inject("language") as ComputedRef<LanguageKey>;
 const slots = useSlots();
 
 const props = withDefaults(defineProps<OperationPropsType>(), {});
+
+const PancakeGlobalConfig = inject<PancakeGlobalConfigType>("PancakeGlobalConfig", {});
+
+const displayText = props => {
+  if (typeof props.text === "string") return props.text;
+  const lang = PancakeGlobalConfig?.language || "zh-CN";
+  return props.text?.[lang] || "按钮";
+};
 
 function setOperations(arrData) {
   const arrayChild = arrData?.[0].children;
@@ -20,8 +29,14 @@ function setOperations(arrData) {
     function findChild(arrayChild) {
       for (let index = 0; index < arrayChild.length; index++) {
         const element = arrayChild[index];
-
+        const { row, tableId } = props;
         const { type, children } = element;
+
+        if (element.props) {
+          element.props.dataName = "按钮 - " + displayText(element.props) + ` (表格数据${row.rowIndex})`;
+          element.props.renderId = tableId + "-row-" + row.rowIndex + "_" + element.key;
+        }
+
         const stringType = String(type);
         if (stringType.indexOf("Symbol") < 0 || stringType == "Symbol(v-txt)") {
           _arrayChild.push(element);

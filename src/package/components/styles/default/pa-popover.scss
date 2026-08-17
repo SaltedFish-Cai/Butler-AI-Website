@@ -3,6 +3,8 @@
   width: max-content;
   height: max-content;
   z-index: 200;
+  font-family: var(--pa-component-font-family);
+
   &:hover {
     cursor: pointer;
   }
@@ -41,6 +43,7 @@
   border: 1px solid var(--pa-color-border);
   border-radius: var(--pa-size-radius, 3px);
   box-shadow: var(--pa-color-shadow);
+  font-family: var(--pa-component-font-family);
 
   .pa-popover-arrow {
     position: absolute;
@@ -58,7 +61,7 @@
     box-sizing: border-box;
     color: var(--pa-color-font);
     font-size: var(--pa-size-font);
-    padding: calc(var(--pa-size-padding, 10px) / 1.5);
+    padding: var(--pa-size-padding_small, 10px) var(--pa-size-padding, 10px);
     overflow-wrap: break-word;
     border-radius: var(--pa-size-radius, 3px);
     z-index: 220;

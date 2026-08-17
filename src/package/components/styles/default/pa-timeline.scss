@@ -1,0 +1,96 @@
+.pa-timeline {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-family: var(--pa-component-font-family);
+
+  .pa-timeline-item {
+    position: relative;
+    padding-bottom: calc(var(--pa-size-padding_large, 10px) * 2);
+
+    &:last-child {
+      .pa-timeline-item__tail {
+        display: none;
+      }
+    }
+    &:nth-last-of-type(2) {
+      .pa-timeline-item__tail {
+        height: calc(100% - 2px);
+      }
+    }
+  }
+
+  .pa-timeline-item__tail {
+    position: absolute;
+    left: var(--pa-size-padding_large, 10px);
+    transform: translateX(-50%);
+    top: 8px;
+    height: 100%;
+    border-left: 2px solid var(--pa-color-info-light-5);
+  }
+
+  .pa-timeline-item__node {
+    position: absolute;
+    left: var(--pa-size-padding_large, 10px);
+    transform: translateX(-50%);
+    top: 3px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: calc(var(--pa-size-padding_large, 10px) * 1.2);
+    height: calc(var(--pa-size-padding_large, 10px) * 1.2);
+    box-sizing: border-box;
+
+    $pa-timeline-types: ("primary", "success", "warning", "danger", "info");
+    @each $pa-timeline-type in $pa-timeline-types {
+      &.pa-timeline-item__node--#{$pa-timeline-type} {
+        background-color: var(--pa-color-#{$pa-timeline-type});
+      }
+    }
+
+    &.is-hollow {
+      background-color: var(--pa-color-white, #fff);
+      border-width: 2px;
+      border-style: solid;
+
+      $pa-timeline-hollow-types: ("primary", "success", "warning", "danger", "info");
+      @each $pa-timeline-hollow-type in $pa-timeline-hollow-types {
+        &.pa-timeline-item__node--#{$pa-timeline-hollow-type} {
+          border-color: var(--pa-color-#{$pa-timeline-hollow-type});
+        }
+      }
+    }
+  }
+
+  .pa-timeline-item__wrapper {
+    position: relative;
+    font-size: var(--pa-size-font, 13px);
+    color: var(--pa-color-send-font);
+    padding-left: calc(var(--pa-size-padding_large, 10px) * 2.5);
+    line-height: 1.2em;
+  }
+
+  .pa-timeline-item__timestamp {
+    color: var(--pa-color-font);
+    font-size: var(--pa-size-font, 13px);
+    line-height: 1.4;
+
+    &.is-top {
+      margin-bottom: calc(var(--pa-size-padding_large, 10px) / 2);
+    }
+
+    &.is-bottom {
+      margin-top: calc(var(--pa-size-padding_large, 10px) / 2);
+    }
+  }
+
+  .pa-timeline-item-center {
+    .pa-timeline-item__wrapper {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 100%;
+    }
+  }
+}

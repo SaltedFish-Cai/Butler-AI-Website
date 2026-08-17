@@ -7,6 +7,7 @@
   display: flex;
   flex-direction: column;
   background-color: var(--pa-color-send-bg);
+  font-family: var(--pa-component-font-family);
 
   &:has(.hidden-thumb) {
     .hidden-thumb {
@@ -107,6 +108,8 @@
     align-items: flex-start;
     z-index: 12;
     background-color: var(--pa-color-send-bg);
+    border-left: 1px solid var(--pa-color-border);
+    box-sizing: border-box;
 
     > .scrollbar__thumb {
       width: calc(100% - 4px);
@@ -129,6 +132,8 @@
     align-items: center;
     z-index: 11;
     background-color: var(--pa-color-send-bg);
+    border-top: 1px solid var(--pa-color-border);
+    box-sizing: border-box;
 
     > .scrollbar__thumb {
       height: calc(100% - 4px);

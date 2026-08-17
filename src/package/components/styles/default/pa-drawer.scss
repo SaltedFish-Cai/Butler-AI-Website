@@ -4,6 +4,8 @@
   width: max-content;
   height: max-content;
   z-index: 1;
+  font-family: var(--pa-component-font-family);
+
   .pa-drawer-content {
     display: flex;
     flex-direction: column;

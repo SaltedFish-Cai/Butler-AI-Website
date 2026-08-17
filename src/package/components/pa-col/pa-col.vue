@@ -29,7 +29,7 @@ const props = withDefaults(defineProps<ComponentProps>(), {
   lg: undefined,
   xl: undefined
 });
-const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-col_" + useRenderId()));
+const renderId = ref(props.renderId || (props.id ? props.id : "pa-col_" + useRenderId()));
 /**
  * **注入断点信息**
  * @type `Ref<BreakPoint>`

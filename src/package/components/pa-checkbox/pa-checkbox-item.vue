@@ -1,6 +1,7 @@
 <template>
   <div
     :id="renderId + '_' + props.value"
+    :data-name="dataName || (typeof name === 'string' ? name : name?.[languageValue]) + ` (${props.label})`"
     class="pa-checkbox-item"
     :class="[
       props.class,
@@ -73,7 +74,7 @@ const props = withDefaults(defineProps<ComponentItemProps & { isOption?: boolean
  * @type `string`
  * @description 用于唯一标识组件的随机 ID
  */
-const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-checkbox-item_" + useRenderId()));
+const renderId = ref(props.renderId || (props.id ? props.id : "pa-checkbox-item_" + useRenderId()));
 
 /**
  * **全局配置注入**

@@ -95,7 +95,7 @@ const emits = defineEmits<ComponentEmits>();
  * @type Ref<string>
  * @description 弹窗的唯一标识符
  */
-const id = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-popover_" + useRenderId()));
+const id = ref(props.renderId || (props.id ? props.id : "pa-popover_" + useRenderId()));
 /**
  * 渲染结束标识
  * @type Ref<boolean>
@@ -314,7 +314,7 @@ function startObserving(): void {
   if (popoverRef.value) {
     resizeObserver.observe(popoverRef.value);
   }
-  window.addEventListener("scroll", handleScroll, { passive: true });
+  window.addEventListener("scroll", handleScroll, { passive: true, capture: true });
 }
 /**
  * 停止观察元素变化
@@ -326,7 +326,7 @@ function stopObserving(): void {
     resizeObserver.disconnect();
     resizeObserver = null;
   }
-  window.removeEventListener("scroll", handleScroll);
+  window.removeEventListener("scroll", handleScroll, true);
   if (scrollRafId) {
     cancelAnimationFrame(scrollRafId);
     scrollRafId = null;

@@ -3,6 +3,7 @@
   align-items: center;
   justify-content: center;
   width: 100%;
+  font-family: var(--pa-component-font-family);
 
   .reference-btn {
     width: 100%;
@@ -88,6 +89,7 @@
   align-items: flex-start;
   justify-content: flex-start;
   max-height: 300px;
+  font-family: var(--pa-component-font-family);
 
   .pop_icon {
     width: 100%;

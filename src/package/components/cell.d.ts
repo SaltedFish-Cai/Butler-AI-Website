@@ -9,7 +9,7 @@ import { SaCascaderType } from "./pa-cascader/type";
 import { MSelectIconV2Type } from "./pa-select-icon/type";
 import { SaFileType } from "./pa-file/type";
 
-export type MCellV2Type =
+export type PaCellType =
   | SaCascaderType
   | SaInputType
   | SaSelectType
@@ -25,4 +25,4 @@ type UnionKeys<T> = T extends T ? keyof T : never;
 type StrictUnionHelper<T, TAll> = T extends any ? Partial<Record<Exclude<UnionKeys<TAll>, keyof T>, never>> & T : never;
 type StrictUnion<T> = StrictUnionHelper<T, T>;
 
-export type MCellItemV2Type = StrictUnion<MCellV2Type>;
+export type MCellItemV2Type = StrictUnion<PaCellType>;

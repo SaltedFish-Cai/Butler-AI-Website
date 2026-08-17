@@ -23,6 +23,7 @@
           <div class="pa-cascader-input" :class="[isFocus ? 'is-focus' : '']">
             <template v-if="tagValue.length > 0 && isMultiple">
               <pa-tag
+                ref="tagRef"
                 :tagList="tagValue"
                 :disabled="props.disabled"
                 :style="{ width: !waitTag ? '100%' : 'auto' }"
@@ -32,6 +33,7 @@
             <input
               v-if="waitTag"
               :id="renderId + '_input'"
+              :data-name="typeof name === 'string' ? name : name?.[languageValue]"
               class="pa-cascader-input-inner"
               :value="inputValue"
               :placeholder="inputPlaceholder"
@@ -50,11 +52,12 @@
       <div class="pa-cascader-options" ref="optionsRef" v-if="!props.disabled && filterOptionsList.length > 0">
         <div class="pa-cascader-options-group">
           <pa-cascader-option
-            :id="renderId"
+            :id="renderId || ''"
             v-if="!filterValue"
             :exOptions="exOptionsList"
             :inValue="inValue"
             :isMultiple="isMultiple"
+            :name="name"
             :isCheck="isCheck"
             :flatExOptions="flatExOptions"
             :exOptionsList="exOptionsList"
@@ -66,7 +69,7 @@
             </template>
           </pa-cascader-option>
           <pa-cascader-option
-            :id="renderId"
+            :id="renderId || ''"
             v-else
             :exOptions="filterOptionsList"
             :inValue="inValue"
@@ -112,7 +115,18 @@
  * **模块导入**
  * @description 导入 Vue 组合式 API
  */
-import { ref, computed, watch, nextTick, provide, inject, onBeforeUnmount, type ComputedRef } from "vue";
+import {
+  ref,
+  computed,
+  watch,
+  nextTick,
+  provide,
+  inject,
+  onBeforeUnmount,
+  onMounted,
+  useTemplateRef,
+  type ComputedRef
+} from "vue";
 /**
  * **模块导入**
  * @description 导入级联选项子组件
@@ -176,9 +190,7 @@ const props = withDefaults(defineProps<ComponentProps>(), {
   useTextByLink: true
 });
 
-const renderId = ref(
-  props.renderId || props.id ? props.id?.replace(/\,/g, "") + "_" + useRenderId() : "pa-cascader_" + useRenderId()
-);
+const renderId = ref(props.renderId || props.id ? props.id?.replace(/\,/g, "") : "pa-cascader_" + useRenderId());
 
 /**
  * **组件事件定义**
@@ -215,6 +227,12 @@ const optionsRef = ref();
  * @description 输入框的 DOM 引用
  */
 const inputRef = ref();
+/**
+ * **标签容器引用**
+ * @type `Ref`
+ * @description 多选模式下标签组件的引用，用于显式触发折叠计算
+ */
+const tagRef = useTemplateRef("tagRef");
 /**
  * **等待标签状态**
  * @type `Ref<boolean>`
@@ -428,6 +446,9 @@ function handleFocus(): void {
   focusTimer.value = setTimeout(() => {
     popoverRef.value?.showPopover();
   }, 200);
+  nextTick(() => {
+    tagRef.value?.initPopover();
+  });
 }
 /**
  * **处理弹出层变化**
@@ -563,6 +584,15 @@ function setMapValue(data: Array<PaOptionType.Select>, parentValue?: string): Ar
   });
   return _data;
 }
+/**
+ * **组件挂载生命周期**
+ * @description 挂载后显式触发多选标签的折叠计算，避免初始化时机过晚导致标签折叠不正确
+ */
+onMounted(() => {
+  nextTick(() => {
+    tagRef.value?.initPopover();
+  });
+});
 /**
  * **组件卸载前生命周期**
  * @description 清理定时器，防止内存泄漏

@@ -5,11 +5,12 @@
       :useShadow="false"
       :style="optionsHeight ? { height: optionsHeight } : {}"
       useHiddenThumb
-      style="--scrollbar-width: 10.1px"
+      style="--scrollbar-width: 11.1px"
     >
       <div
         v-for="item in exOptions"
         :id="id + '_option-' + String(item.value) + '-' + level"
+        :data-name="(typeof name === 'string' ? name : name?.[languageValue]) + ` (${item.label})`"
         :key="String(item.value)"
         class="pa-cascader-option"
         :class="[
@@ -55,6 +56,7 @@
       :exOptions="childExOptions"
       :inValue="inValue"
       :isMultiple="isMultiple"
+      :name="name"
       :isCheck="isCheck"
       :optionsHeight="optionsHeight"
     >
@@ -80,7 +82,7 @@ import { equalData } from "../utils/equalData";
  * **模块导入**
  * @description 导入选项类型定义
  */
-import type { PaOptionType } from "../manager-type";
+import type { LanguagePackageType, PaOptionType } from "../manager-type";
 /**
  * **模块导入**
  * @description 导入级联选项子组件
@@ -149,6 +151,13 @@ const props = withDefaults(
      * @description 当前选中的值
      */
     inValue?: Array<number | string> | number | string;
+    /**
+     * **表单项名称**
+     * @type LanguagePackageType | string | undefined
+     * @default undefined
+     * @description 表单项名称文本
+     */
+    name?: LanguagePackageType | string;
     /**
      * **选项区域高度**
      * @type `string` | `undefined`

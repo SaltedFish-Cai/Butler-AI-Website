@@ -2,6 +2,10 @@
   <div
     v-if="!display"
     :id="renderId"
+    :data-name="
+      (typeof name === 'string' ? name : name?.[languageValue]) +
+      ` (${inValue == options.activeValue ? options.activeText : options.inActiveText})`
+    "
     class="pa-switch"
     :class="[inValue == options.activeValue ? 'pa-switch-active' : '', props.class, { 'is-disabled': props.disabled }]"
     :style="props.style"
@@ -152,7 +156,7 @@ const props = withDefaults(defineProps<ComponentProps>(), {
  */
 const emits = defineEmits<ComponentEmits>();
 
-const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-switch_" + useRenderId()));
+const renderId = ref(props.renderId || (props.id ? props.id : "pa-switch_" + useRenderId()));
 
 /**
  * 当前值

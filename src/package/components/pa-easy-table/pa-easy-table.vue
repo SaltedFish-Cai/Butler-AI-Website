@@ -132,7 +132,7 @@ const bodyHeight = ref(0);
  * 已进入动画的行 key 集合
  */
 const enteredKeys = new Set<number | string>();
-const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-easy-table_" + useRenderId()));
+const renderId = ref(props.renderId || (props.id ? props.id : "pa-easy-table_" + useRenderId()));
 const OVERSCAN = 5;
 const ROW_GAP = 5;
 

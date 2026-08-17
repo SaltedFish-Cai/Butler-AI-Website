@@ -110,6 +110,13 @@ export type ComponentProps = PaOptionType.Switch & {
    * @description 当设置该值时，会作为表单项标签宽度
    */
   titleWidth?: string;
+  /**
+   * 表单项名称
+   * @type LanguagePackageType | string | undefined
+   * @default undefined
+   * @description 表单项名称文本
+   */
+  name?: LanguagePackageType | string;
 };
 /**
  * 开关事件类型

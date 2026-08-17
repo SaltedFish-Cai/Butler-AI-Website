@@ -40,10 +40,10 @@
                       item.fixed == 'left'
                         ? 'sticky-left border-right'
                         : item.fixed == 'right'
-                          ? 'sticky-right border-right'
-                          : index == tableStructure.length - 1
-                            ? ''
-                            : 'border-right',
+                        ? 'sticky-right'
+                        : index == tableStructure.length - 1
+                        ? ''
+                        : 'border-right',
                       item.lastLeftFixed ? 'last-left-fixed' : '',
                       item.lastRightFixed ? 'last-right-fixed' : '',
                       (!item.width && !state.setCellWidthIng) ||
@@ -160,6 +160,7 @@
                   :class="[vi.row.isOpenChild && (useChildren || useExpand) ? 'open-child' : '']"
                 >
                   <mLightTableCell
+                    :table-id="renderId"
                     :structure="tableStructure"
                     :row="vi.row"
                     :rowKey="rowKey"
@@ -186,6 +187,7 @@
                         <template v-for="ch in vi.row.children" :key="ch[rowKey]">
                           <div class="pa-table_body_content_cell">
                             <mLightTableCell
+                              :table-id="renderId"
                               :structure="tableStructure"
                               :row="ch"
                               :parentRowKey="vi.row[props.rowKey]"
@@ -243,6 +245,7 @@
                         :class="[row.isOpenChild && (useChildren || useExpand) ? 'open-child' : '']"
                       >
                         <mLightTableCell
+                          :table-id="renderId"
                           :structure="tableStructure"
                           :row="row"
                           :rowKey="rowKey"
@@ -272,6 +275,7 @@
                               <template v-for="ch in row.children" :key="ch[rowKey]">
                                 <div class="pa-table_body_content_cell">
                                   <mLightTableCell
+                                    :table-id="renderId"
                                     :structure="tableStructure"
                                     :row="ch"
                                     :parentRowKey="row[props.rowKey]"
@@ -324,8 +328,8 @@
                   tableStructure[index]?.fixed == 'left'
                     ? 'sticky-left border-right'
                     : tableStructure[index]?.fixed == 'right'
-                      ? 'sticky-right border-right'
-                      : 'border-right',
+                    ? 'sticky-right'
+                    : 'border-right',
                   tableStructure[index]?.lastLeftFixed ? 'last-left-fixed' : '',
                   tableStructure[index]?.lastRightFixed ? 'last-right-fixed' : '',
                   (!tableStructure[index].width && !state.setCellWidthIng) ||
@@ -507,11 +511,6 @@ import { PancakeGlobalConfigType } from "../pa-manager/types";
 import useRenderId from "../tools/render-id";
 /**
  * 模块导入
- * @description 导入数组分割工具
- */
-import { splitArray } from "../utils/arraySplit";
-/**
- * 模块导入
  * @description 导入深拷贝工具函数
  */
 import cloneDeep from "../tools/clone-deep";
@@ -629,7 +628,7 @@ const props = withDefaults(defineProps<ComponentProps>(), {
   summaryConfig: () => ({ sumText: "合计", unitText: "" }),
   useSticky: false
 });
-const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-table_" + useRenderId()));
+const renderId = ref(props.renderId || (props.id ? props.id : "pa-table_" + useRenderId()));
 /**
  * 组件事件
  * @description 组件的 emits 定义
@@ -705,7 +704,9 @@ const {
   handleCellMouseLeave,
   listenCellInView,
   listenCellChildChange,
-  clearListen
+  clearListen,
+  changeData_All,
+  changeData_Item
 } = useStateHooks({ ...props, id: renderId.value }, emits, {
   isScrollHeaderIng,
   language,
@@ -1090,43 +1091,7 @@ function setStructure_Item(prop: string, item: ComponentItemProps) {
     });
   }
 }
-/**
- * 设置表格所有数据
- * @param data - 表格数据
- * @description 替换表格所有数据
- */
-function changeData_All(data: PaTableUseType.dataType) {
-  const cloneData = cloneDeep(data);
-  if (!props.usePagination) {
-    state.tableData = [cloneData];
-  } else {
-    state.tableData = splitArray(cloneData, state.pageable.PageSize);
-  }
-}
-/**
- * 设置表格单个数据
- * @param rowKey - 行标识值
- * @param value - 新数据
- * @description 更新指定行的数据
- */
-function changeData_Item(rowKey: string, value: any) {
-  if (!rowKey) return;
-  const cloneValue = cloneDeep(value);
-  let paretIndex = -1;
-  let rowIndex = -1;
-  for (let i = 0; i < state.tableData.length; i++) {
-    const ArrayItem = state.tableData[i];
-    const index = ArrayItem.findIndex(item => item[props.rowKey] == rowKey);
-    if (index != -1) {
-      paretIndex = i;
-      rowIndex = index;
-      break;
-    }
-  }
-  if (paretIndex != -1 && rowIndex != -1) {
-    state.tableData[paretIndex][rowIndex] = cloneValue;
-  }
-}
+
 /**
  * 暴露组件方法
  * @description 对外暴露表格操作方法

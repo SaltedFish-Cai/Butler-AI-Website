@@ -77,7 +77,7 @@ import { PancakeGlobalConfigType } from "../pa-manager/types";
  * 模块导入
  * @description Vue 响应式 API 导入
  */
-import { computed, inject, ref, useTemplateRef, watch, type ComputedRef } from "vue";
+import { computed, inject, ref, useTemplateRef, type ComputedRef } from "vue";
 /**
  * 模块导入
  * @description 文件组件类型定义导入
@@ -114,7 +114,7 @@ const props = withDefaults(defineProps<ComponentProps>(), {});
  * @description 定义 PaFileCustom 组件可触发的事件
  */
 const emits = defineEmits<ComponentEmits>();
-const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-file-custom_" + useRenderId()));
+const renderId = ref(props.renderId || (props.id ? props.id : "pa-file-custom_" + useRenderId()));
 /**
  * 文件输入框引用
  * @type Ref<HTMLInputElement | null>

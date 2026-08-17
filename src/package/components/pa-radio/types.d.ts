@@ -55,6 +55,13 @@ export type ComponentItemProps = {
    */
   label?: LanguagePackageType | string;
   /**
+   * 表单项名称
+   * @type LanguagePackageType | string | undefined
+   * @default undefined
+   * @description 表单项名称文本
+   */
+  name?: LanguagePackageType | string;
+  /**
    * 值
    * @type boolean | number | string | undefined
    * @default undefined
@@ -202,6 +209,13 @@ export type ComponentProps = {
    * @description 当设置该值时，会作为表单项标签宽度
    */
   titleWidth?: string;
+  /**
+   * 表单项名称
+   * @type LanguagePackageType | string | undefined
+   * @default undefined
+   * @description 表单项名称文本
+   */
+  name?: LanguagePackageType | string;
 };
 /**
  * 单选框事件类型

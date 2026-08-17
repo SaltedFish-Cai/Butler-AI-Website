@@ -14,6 +14,7 @@
       <input
         class="pa-number-input-inner"
         :id="renderId + '_inner-input'"
+        :data-name="typeof name === 'string' ? name : name?.[languageValue]"
         v-model="inValue"
         ref="inputRef"
         :name="id"
@@ -117,7 +118,7 @@ const props = withDefaults(defineProps<ComponentProps>(), {
  * @description 定义组件可触发的事件
  */
 const emits = defineEmits<ComponentEmits>();
-const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-number_" + useRenderId()));
+const renderId = ref(props.renderId || (props.id ? props.id : "pa-number_" + useRenderId()));
 /**
  * 输入框引用
  * @type any

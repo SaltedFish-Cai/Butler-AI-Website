@@ -9,11 +9,13 @@
       <pa-select
         v-if="isSelectType(item, true)"
         :renderId="props.id + '_' + item.prop + '_filter-select'"
+        :name="'表格筛选选择 - ' + item.label"
         v-model="state.searchValue"
         :placeholder="{ 'zh-CN': '请选择需要筛选的' + item?.label, 'en-US': 'Please Select Filter ' + item?.label }"
         type="multiple-select"
         :exOptions="(_exOptions[String(item.prop)] as PaOptionType.SelectList)"
         teleport-in-container
+        class="filter-body-box"
       >
         <template #optionLabel="{ option }">
           <div class="flex-center-start">
@@ -44,9 +46,10 @@
       </pa-select>
 
       <!-- time -->
-      <div v-else-if="isTimeType(item, true)" class="flex-center my-date-picker">
+      <div v-else-if="isTimeType(item, true)" class="flex-center filter-body-box">
         <pa-time
           :renderId="props.id + '_' + item.prop + '_filter-time-start'"
+          :name="'表格筛选开始时间 - ' + item.label"
           v-model="state.searchValue[0]"
           type="date-picker"
           :placeholder="{ 'zh-CN': '开始时间', 'en-US': 'Start Time' }"
@@ -57,6 +60,7 @@
         <div class="ml5 mr5">/</div>
         <pa-time
           :renderId="props.id + '_' + item.prop + '_filter-time-end'"
+          :name="'表格筛选结束时间 - ' + item.label"
           v-model="state.searchValue[1]"
           type="date-picker"
           :placeholder="{ 'zh-CN': '结束时间', 'en-US': 'End Time' }"
@@ -69,7 +73,9 @@
       <!-- number -->
       <pa-number
         v-else-if="isNumberType(item, true)"
+        class="filter-body-box"
         :renderId="props.id + '_' + item.prop + '_filter-number'"
+        :name="'表格筛选输入 - ' + item.label"
         v-model="state.searchValue"
         @keydown.enter="FetchSaveAndFilter"
         :placeholder="{
@@ -87,7 +93,9 @@
       <!-- input -->
       <pa-input
         v-else
+        class="filter-body-box"
         :renderId="props.id + '_' + item.prop + '_filter-input'"
+        :name="'表格筛选输入 - ' + item.label"
         v-model="state.searchValue"
         :placeholder="{
           'zh-CN': '请输入需要搜索的' + item?.label,
@@ -100,8 +108,8 @@
       <!-- button -->
       <pa-button
         :renderId="props.id + '_' + item.prop + '_filter-btn'"
+        :data-name="'表格筛选搜索 - ' + item.label"
         class="pa-ml-size"
-        style="flex: 0 0 89px"
         is="search"
         @click="FetchSaveAndFilter"
       >
@@ -334,7 +342,8 @@ watch(
 .filter-body {
   position: relative;
   z-index: 10;
-  > .pa-select {
+
+  .filter-body-box {
     flex: 1;
     width: 1px;
   }
@@ -354,6 +363,7 @@ watch(
   width: 10px;
   height: 10px;
   border-radius: 50%;
+  flex: 0 0 10px;
   display: inline-block;
 }
 </style>

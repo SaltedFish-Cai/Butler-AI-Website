@@ -2,6 +2,7 @@
   width: 100%;
   padding: 8px 0;
   box-sizing: border-box;
+  font-family: var(--pa-component-font-family);
 
   &.is-disabled {
     .pa-slider__runway {

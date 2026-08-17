@@ -82,4 +82,12 @@ export type ComponentProps = {
    * @description 字体颜色，数组元素为颜色值，用于渐变色
    */
   fontColor?: Array<string>;
+
+  /**
+   * 表单项名称
+   * @type  string | undefined
+   * @default undefined
+   * @description 表单项名称文本
+   */
+  dataName?: string;
 };

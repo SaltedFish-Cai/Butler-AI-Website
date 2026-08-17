@@ -164,7 +164,7 @@ const emit = defineEmits<ComponentEmits>();
  * 组件唯一标识
  * @description 组件唯一标识
  */
-const id = ref(props.id ? props.id + "_" + useRenderId() : "pa-scrollbar-list_" + useRenderId());
+const id = ref(props.id ? props.id : "pa-scrollbar-list_" + useRenderId());
 /**
  * 滚动条组件引用
  * @description pa-scrollbar 子组件引用

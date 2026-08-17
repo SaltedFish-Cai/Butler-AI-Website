@@ -11,6 +11,9 @@
       <div class="pa-notification_header pa-mb-size">
         <div class="flex-center-start">
           <pa-icon v-if="loading" class="pa-notification__icon pa-mr-size loading" name="loading_line" />
+          <pa-icon v-else-if="type == 'success'" class="pa-notification__icon pa-mr-size" name="check-circle" />
+          <pa-icon v-else-if="type == 'danger'" class="pa-notification__icon pa-mr-size" name="close-circle" />
+          <pa-icon v-else-if="type == 'warning'" class="pa-notification__icon pa-mr-size" name="warning_line" />
           <pa-icon v-else class="pa-notification__icon pa-mr-size" name="warning_line" />
           <div class="pa-notification__title">{{ typeof title === "string" ? title : title?.[language] }}</div>
         </div>
@@ -50,7 +53,7 @@ import languageMap from "../language.json";
  * @description 组件的 props 定义
  */
 const props = defineProps<{ id: string; renderId?: string; options: NotificationOptions }>();
-const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-notification_" + useRenderId()));
+const renderId = ref(props.renderId || (props.id ? props.id : "pa-notification_" + useRenderId()));
 /**
  * 当前语言
  * @description 获取全局配置的语言设置

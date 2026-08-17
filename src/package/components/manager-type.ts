@@ -1,5 +1,5 @@
 import { PaFormItemType, ComponentRef as PaFormRef } from "./pa-form/types";
-import { ComponentItemProps as PaTableItemType, ComponentProps as PaTableType } from "./pa-table/types";
+import { ComponentItemProps as PaTableItemType, ComponentRef as PaTableRef } from "./pa-table/types";
 import { ComponentProps as PaManagerType } from "./pa-manager/types";
 
 export type LanguageKey = "en-US" | "zh-CN";
@@ -111,7 +111,7 @@ export namespace PaStructureType {
 
 export namespace PaRefType {
   export type Form = PaFormRef;
-  export type Table = PaTableType;
+  export type Table = PaTableRef;
 }
 
 export type PancakeGlobalType = PaManagerType;

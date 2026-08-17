@@ -19,7 +19,14 @@
           <div v-if="title" :style="{ width: titleWidth }" class="pa-cell-label">
             {{ typeof title === "string" ? title : title[languageValue] }}
           </div>
-          <pa-button class="flex1" :icon-name="selectItem" type="default" :useStop="false">{{ inputPlaceholder }}</pa-button>
+          <pa-button
+            :renderId="renderId + '_select-icon'"
+            class="flex1"
+            :icon-name="selectItem"
+            type="default"
+            :useStop="false"
+            :text="inputPlaceholder"
+          ></pa-button>
         </div>
       </template>
 
@@ -29,6 +36,8 @@
             <template v-for="icon in its.icons" :key="icon.value">
               <pa-icon
                 class="pop_icon"
+                :id="renderId + '_select-icon_' + its.name + '_' + icon.value"
+                :data-name="(typeof name === 'string' ? name : name?.[languageValue]) + ' - ' + icon.value + ' (select-icon)'"
                 :class="[icon.value == selectItem ? 'selected' : '']"
                 :name="icon.value"
                 @click="selectedIcon(icon.value)"
@@ -72,7 +81,7 @@
  * 模块导入
  * @description 导入 Vue 组合式 API
  */
-import { ref, computed, watch, inject, type ComputedRef } from "vue";
+import { ref, computed, watch, inject, type ComputedRef, useTemplateRef } from "vue";
 /**
  * 模块导入
  * @description 导入组件类型定义
@@ -131,13 +140,15 @@ const emits = defineEmits<ComponentEmits>();
  * render-id
  * @description 组件唯一标识
  */
-const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-select-icon_" + useRenderId()));
+const renderId = ref(props.renderId || (props.id ? props.id : "pa-select-icon_" + useRenderId()));
 /**
  * 选择器容器引用
  * @type any
  * @description 选择器容器 DOM 元素引用
  */
 const selectRef = ref();
+const popoverRef = useTemplateRef("popoverRef");
+
 /**
  * 选中的图标
  * @type string
@@ -220,6 +231,7 @@ function selectedIcon(value: string) {
   emits("update:modelValue", value);
   emits("change", { value, oldValue });
   oldValue = value;
+  popoverRef.value?.hidePopover();
 }
 /**
  * 监听 modelValue 变化

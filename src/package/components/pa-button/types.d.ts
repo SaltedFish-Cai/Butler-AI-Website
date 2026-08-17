@@ -90,6 +90,14 @@ export type ComponentProps = {
   text?: LanguagePackageType | string;
 
   /**
+   * **按钮数据名称**
+   * @type `string` | `undefined`
+   * @default `undefined`
+   * @description 当设置该值时，会作为按钮的唯一名称
+   */
+  dataName?: string;
+
+  /**
    * **按钮大小**
    * @type `'large'` | `'medium'` | `'small'` | `undefined`
    * @default `"medium"`

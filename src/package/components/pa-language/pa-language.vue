@@ -14,7 +14,7 @@ const DEFAULT_LANG = "zh-CN";
 const props = withDefaults(defineProps<ComponentProps>(), {
   text: () => ({ "zh-CN": "", "en-US": "" })
 });
-const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-language_" + useRenderId()));
+const renderId = ref(props.renderId || (props.id ? props.id : "pa-language_" + useRenderId()));
 
 const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 

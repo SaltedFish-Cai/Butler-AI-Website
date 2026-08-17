@@ -145,7 +145,7 @@ const viewRef = useTemplateRef("viewRef");
  * @description 组件 Props
  */
 const props = withDefaults(defineProps<ComponentItemProps>(), {});
-const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-media-view-item_" + useRenderId()));
+const renderId = ref(props.renderId || (props.id ? props.id : "pa-media-view-item_" + useRenderId()));
 /**
  * 当前语言值
  * @type ComputedRef<string>

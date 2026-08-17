@@ -99,6 +99,7 @@ import { getElementPosition } from "../utils/getElementPosition";
  * @description 导入防抖工具函数
  */
 import debounce from "../tools/debounce";
+import paIcon from "../pa-icon/pa-icon.vue";
 /**
  * 组件事件定义
  * @description 定义组件可触发的事件

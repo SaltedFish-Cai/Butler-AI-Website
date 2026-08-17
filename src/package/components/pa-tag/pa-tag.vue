@@ -1,5 +1,16 @@
 <template>
+  <!-- 徽标模式：使用默认插槽且不传 tagList 时，渲染单个彩色标签 -->
   <div
+    v-if="badgeMode"
+    :id="renderId"
+    class="pa-tag-badge"
+    :class="[`pa-tag-badge-${props.type}`, { 'pa-tag-badge-plain': props.plain }, props.class]"
+    :style="props.style"
+  >
+    <slot></slot>
+  </div>
+  <div
+    v-else
     :id="renderId"
     class="pa-tag"
     ref="tagRef"
@@ -10,7 +21,15 @@
       <div class="pa-tag-text_content">
         {{ getLabel(item.label) }}
       </div>
-      <pa-icon v-if="!props.disabled" name="close_circle_line" class="pa-tag-text_close" @click.stop="removeTag(item)"> </pa-icon>
+      <pa-icon
+        v-if="!props.disabled"
+        :id="renderId + '_remove-btn'"
+        :data-name="(typeof name === 'string' ? name : name?.[language] || '') + ` (${item.value})`"
+        name="close_circle_line"
+        class="pa-tag-text_close"
+        @click.stop="removeTag(item)"
+      >
+      </pa-icon>
     </div>
     <div v-if="props.useAddTag" class="pa-tag-text pa-tag-add">
       <input type="text" v-model="addTagInput" :placeholder="resolvedAddTagPlaceholder" @keydown.enter="handleAddTag" />
@@ -25,7 +44,8 @@
             {{ getLabel(item.label) }}
           </div>
           <pa-icon
-            :id="renderId + '_remove-btn' + index"
+            :id="renderId + '_remove-btn_' + index"
+            :data-name="(typeof name === 'string' ? name : name?.[language] || '') + ` (${item.value})`"
             v-if="!props.disabled"
             name="close_circle_line"
             class="pa-tag-text_close"
@@ -51,7 +71,7 @@ const DEFAULT_LANGUAGE = "zh-CN";
  * 模块导入
  * @description 导入 Vue 组合式 API
  */
-import { onMounted, ref, watch, nextTick, inject, computed, ComputedRef } from "vue";
+import { onMounted, ref, watch, nextTick, inject, computed, ComputedRef, useSlots } from "vue";
 /**
  * 模块导入
  * @description 导入组件类型定义
@@ -89,17 +109,33 @@ const language = computed(() => PancakeGlobalConfig.value?.language || DEFAULT_L
  * @type ComponentProps
  * @description 组件的属性对象
  */
-const props = withDefaults(defineProps<ComponentProps>(), { useCollapse: true, useAddTag: false });
+const props = withDefaults(defineProps<ComponentProps>(), {
+  useCollapse: true,
+  useAddTag: false,
+  type: "info",
+  plain: false
+});
 /**
  * render-id
  * @description 组件唯一标识
  */
-const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-tag_" + useRenderId()));
+const renderId = ref(props.renderId || (props.id ? props.id : "pa-tag_" + useRenderId()));
 /**
  * 组件事件定义
  * @description 定义组件可触发的事件
  */
 const emits = defineEmits<ComponentEmits>();
+/**
+ * 插槽引用
+ * @description 用于判断是否存在默认插槽（徽标模式）
+ */
+const slots = useSlots();
+/**
+ * 是否徽标模式
+ * @type ComputedRef<boolean>
+ * @description 不传 tagList 且提供了默认插槽时，渲染为单个彩色徽标
+ */
+const badgeMode = computed(() => !props.tagList?.length && !!slots.default);
 /**
  * 合并样式
  * @type ComputedRef<Record<string, string | number>>
@@ -184,7 +220,7 @@ function handleAddTag() {
  */
 const resolvedAddTagPlaceholder = computed(() => {
   if (props.addTagPlaceholder) return getLabel(props.addTagPlaceholder);
-  return "输入后回车添加";
+  return { "zh-CN": "输入后回车添加", "en-US": "Press Enter to add" }[language.value];
 });
 /**
  * 初始化弹窗显示
@@ -231,6 +267,10 @@ watch(
   },
   { immediate: true, deep: true }
 );
+
+defineExpose({
+  initPopover
+});
 </script>
 
 <style lang="scss">

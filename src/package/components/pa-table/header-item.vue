@@ -17,6 +17,7 @@
       <div
         class="m-hand pa-table-sort-content"
         :id="props.id + '_' + item.prop + '_sort-icon'"
+        :data-name="'排序按钮按钮 - ' + item.label"
         :class="[
           props.useOrderPropName == item.prop && orderString != null
             ? 'flex-col light-table-order-box light-order-box-act'
@@ -56,6 +57,7 @@
       <div
         class="pa-table-filter-box"
         :id="props.id + '_' + item.prop + '_filter-icon'"
+        :data-name="'表格筛选按钮 - ' + item.label"
         :class="[setIconAction(item.prop) ? 'pa-table-filter-box-act' : '']"
       >
         <pa-icon
@@ -75,8 +77,9 @@
             icon-name="mortarboard_line"
             @click="openSeniorFilter(item)"
             :renderId="props.id + '_' + item.prop + '_senior-btn'"
+            :data-name="'使用高级搜索 - ' + item.label"
+            :text="language === 'zh-CN' ? '使用高级搜索' : 'Use Advanced Search'"
           >
-            {{ language === "zh-CN" ? "使用高级搜索" : "Use Advanced Search" }}
           </pa-button>
         </div>
       </template>

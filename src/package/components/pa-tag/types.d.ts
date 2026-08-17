@@ -61,12 +61,33 @@ export type ComponentProps = {
    */
   style?: Record<string, string>;
   /**
+   * 表单项名称
+   * @type LanguagePackageType | string | undefined
+   * @default undefined
+   * @description 表单项名称文本
+   */
+  name?: LanguagePackageType | string;
+  /**
    * 标签列表
    * @type Array<TagType> | undefined
    * @default undefined
    * @description 标签列表
    */
   tagList?: Array<TagType>;
+  /**
+   * 标签颜色类型
+   * @type `'primary' | 'success' | 'warning' | 'danger' | 'info'` | undefined
+   * @default `"info"`
+   * @description 徽标模式下（使用默认插槽且不传 tagList）生效，控制标签颜色
+   */
+  type?: "danger" | "info" | "primary" | "success" | "warning";
+  /**
+   * 是否浅底（plain）样式
+   * @type boolean | undefined
+   * @default `false`
+   * @description 徽标模式下生效，true 时使用浅色描边底、纯色文字样式
+   */
+  plain?: boolean;
   /**
    * 是否折叠
    * @type boolean | undefined

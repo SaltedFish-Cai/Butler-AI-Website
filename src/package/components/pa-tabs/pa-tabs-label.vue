@@ -7,7 +7,7 @@
  * 模块导入
  * @description 导入 Vue 组合式 API
  */
-import { computed, ComputedRef, inject, ref, Ref } from "vue";
+import { computed, ComputedRef, inject, Ref } from "vue";
 /**
  * 模块导入
  * @description 导入全局配置类型定义
@@ -137,6 +137,7 @@ const RenderTableColumn = (slots: any): JSX.Element => {
         return (
           <div
             id={_props.id + "_tab" + "_" + props?.name}
+            data-name={"标签页 - " + setLabel(props?.label)}
             class={className(props)}
             onClick={() => _props.changeTabs && _props.changeTabs(name, index)}
             draggable={!!_props.onDragReorder}

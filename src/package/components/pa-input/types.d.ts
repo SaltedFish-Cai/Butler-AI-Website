@@ -75,6 +75,13 @@ export type ComponentProps = {
    */
   titleWidth?: string;
   /**
+   * 表单项名称
+   * @type LanguagePackageType | string | undefined
+   * @default undefined
+   * @description 表单项名称文本
+   */
+  name?: LanguagePackageType | string;
+  /**
    * 表单项占位符
    * @type LanguagePackageType | string | undefined
    * @default undefined

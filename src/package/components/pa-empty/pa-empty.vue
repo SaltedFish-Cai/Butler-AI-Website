@@ -38,7 +38,7 @@ const props = withDefaults(defineProps<ComponentProps>(), {
   icon: "folder_open_line",
   message: "暂无数据"
 });
-const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-empty_" + useRenderId()));
+const renderId = ref(props.renderId || (props.id ? props.id : "pa-empty_" + useRenderId()));
 /**
  * 全局配置注入
  * @type ComputedRef<PancakeGlobalConfigType>

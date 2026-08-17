@@ -1,6 +1,8 @@
 /**
  * 组件属性定义
  */
+import { LanguagePackageType } from "../manager-type";
+
 export type PaAccordionProps = {
   /**
    * 组件唯一标识
@@ -77,13 +79,20 @@ export type PaAccordionItemProps = {
    * @type boolean | undefined
    * @default false
    */
-  expanded?: boolean;
+  expand?: boolean;
   /**
    * 是否禁用
    * @type boolean | undefined
    * @default false
    */
   disabled?: boolean;
+  /**
+   * 表单项标签
+   * @type LanguagePackageType | string | undefined
+   * @default undefined
+   * @description 表单项标签文本
+   */
+  title?: LanguagePackageType | string;
 };
 
 /**
@@ -94,7 +103,7 @@ export type PaAccordionItemEmits = {
    * 展开状态更新事件
    * @param value - 展开状态
    */
-  (e: "update:expanded", value: boolean): void;
+  (e: "update:expand", value: boolean): void;
 };
 
 /**
@@ -105,10 +114,10 @@ export type PaAccordionItemSlots = {
    * 头部插槽
    * @param scope - 作用域参数
    */
-  header?: (scope: { expanded: boolean; toggle: () => void }) => unknown;
+  header?: (scope: { expand: boolean; toggle: () => void }) => unknown;
   /**
    * 默认内容插槽
    * @param scope - 作用域参数
    */
-  default?: (scope: { expanded: boolean }) => unknown;
+  default?: (scope: { expand: boolean }) => unknown;
 };

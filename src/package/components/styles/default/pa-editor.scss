@@ -11,7 +11,7 @@
   height: 100%;
   min-height: 400px;
   color: var(--pa-color-font);
-  font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+  font-family: var(--pa-component-font-family);
 
   .editor-toolbar {
     display: flex;

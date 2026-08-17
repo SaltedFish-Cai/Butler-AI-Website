@@ -5,7 +5,7 @@
         <slot name="reference-before"></slot>
         <pa-button-group>
           <pa-button
-            :id="renderId + '_upload'"
+            :id="renderId + '_upload_file'"
             :title="languagePackage['uploadText']"
             class="pa-file_upload-btn"
             position="left"
@@ -21,6 +21,8 @@
               </div>
             </div>
             <input
+              :id="renderId + '_upload_file_input'"
+              :data-name="name"
               ref="fileInput"
               type="file"
               :multiple="fileMultiple ? fileMultiple > 1 : false"
@@ -47,7 +49,6 @@
         v-if="inValue?.length && !display"
         :id="renderId + '_clean'"
         :title="languagePackage['clearAddedFiles']"
-        style="--pa-size-font: 14px; --pa-size-height: 28px"
         class="btn-width pa-ml-size"
         is="trash"
         :disabled="disabled"
@@ -153,6 +154,7 @@ import isEqual from "../tools/is-equal";
 import isNil from "../tools/is-nil";
 import debounce from "../tools/debounce";
 import useRenderId from "../tools/render-id";
+import { useBaseStore as globalState } from "../store/index";
 
 /**
  * 全局配置注入
@@ -166,7 +168,7 @@ const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<Pan
  * @description 定义 PaFile 组件的接收属性
  */
 const props = withDefaults(defineProps<ComponentProps>(), {});
-const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-dialog_" + useRenderId()));
+const renderId = ref(props.renderId || (props.id ? props.id : "pa-dialog_" + useRenderId()));
 
 /**
  * 组件事件定义
@@ -286,7 +288,8 @@ const computedPlaceholder: ComputedRef<string> = computed(() => {
  * @description 从全局配置中提取文件上传相关的配置信息
  */
 const fileConfigData = computed(() => {
-  const headerData = PancakeGlobalConfig.value?.requestHeader || {};
+  const useGlobalState = globalState();
+  const headerData = useGlobalState.getRequestHeader;
   const fileApi = PancakeGlobalConfig.value?.file_config;
   const apiBaseUrl = PancakeGlobalConfig.value?.baseHost;
   return { headerData, fileApi, apiBaseUrl };

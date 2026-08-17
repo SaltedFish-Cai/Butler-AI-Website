@@ -1,5 +1,5 @@
 <template>
-  <i :id="renderId" class="pa-icon" :class="[props.class]" :style="iconStyle">
+  <i :id="renderId" class="pa-icon" :class="[props.class]" :style="iconStyle" :data-name="dataName">
     <template v-if="!tip">
       <span :class="iconClasses" :style="iconFontStyle"></span>
     </template>
@@ -37,7 +37,7 @@ import useRenderId from "../tools/render-id";
  * @description 组件的属性对象，包含 name、tip 等
  */
 const props = withDefaults(defineProps<ComponentProps>(), { name: "magic_line" });
-const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-icon_" + useRenderId()));
+const renderId = ref(props.renderId || (props.id ? props.id : "pa-icon_" + useRenderId()));
 /**
  * **全局配置注入**
  * @type `ComputedRef<PancakeGlobalConfigType>`

@@ -1039,3 +1039,97 @@ export namespace PaTableUseType {
     fieldValue?: Array<string> | string;
   };
 }
+
+/**
+ * **组件引用类型**
+ * @type `object`
+ * @description PaTable 组件暴露的方法类型定义
+ */
+export type ComponentRef = {
+  /**
+   * **获取表格查询参数**
+   * @type `() => `[`PaTableUseType.TableQueryType`](#pausetype)``
+   * @returns `PaTableUseType.TableQueryType` 表格查询参数
+   * @description 获取当前表格的查询参数
+   */
+  getTableQuery: () => PaTableUseType.TableQueryType;
+  /**
+   * **请求表格数据**
+   * @type `(exQuery?: Record<string, any>) => Promise<any>`
+   * @param exQuery 额外查询参数
+   * @returns `Promise<any>` 请求结果
+   * @description 请求表格数据，可传入额外查询参数
+   */
+  getTableList: (exQuery?: Record<string, any>) => Promise<any>;
+  /**
+   * **清除表格数据**
+   * @type `() => void`
+   * @returns `void`
+   * @description 清除表格所有数据
+   */
+  cleanTableData: () => void;
+  /**
+   * **获取提交表格数据**
+   * @type `() => Promise<Array<Record<string, any>> | false>`
+   * @returns `Promise<Array<Record<string, any>> | false>` 校验通过返回清理后的提交数据，校验失败返回 false
+   * @description 校验并获取提交表格数据
+   */
+  getSubmitTableList: () => Promise<Array<Record<string, any>> | false>;
+  /**
+   * **获取表格内数据**
+   * @type `(data?: any) => Array<Record<string, any>>`
+   * @param data 可选的数据源，缺省时使用表格当前数据
+   * @returns `Array<Record<string, any>>` 清理后的表格数据
+   * @description 获取并清理表格数据，供外部提交使用
+   */
+  getTableData: (data?: any) => Array<Record<string, any>>;
+  /**
+   * **获取选中数据**
+   * @type `() => Array<Record<string, any>>`
+   * @returns `Array<Record<string, any>>` 选中的数据列表
+   * @description 获取表格当前选中的所有数据
+   */
+  getSelectedData: () => Array<Record<string, any>>;
+  /**
+   * **设置选中数据**
+   * @type `(dataKeys: Record<string, any>[]) => void`
+   * @param dataKeys 数据键列表
+   * @returns `void`
+   * @description 设置外部传入的选中数据键，直接在当前已渲染数据上应用选中状态
+   */
+  setSelectedData: (dataKeys: Record<string, any>[]) => void;
+  /**
+   * **设置表格所有结构**
+   * @type `(structure: `[`ComponentItemProps`](#componentitemprops)`[]) => void`
+   * @param structure 表格列配置数组
+   * @returns `void`
+   * @description 重置表格所有结构并重新监听视窗变化
+   */
+  setStructure_All: (structure: ComponentItemProps[]) => void;
+  /**
+   * **设置表格单个结构**
+   * @type `(prop: string, item: `[`ComponentItemProps`](#componentitemprops)`) => void`
+   * @param prop 列标识
+   * @param item 列配置对象
+   * @returns `void`
+   * @description 更新指定列的配置
+   */
+  setStructure_Item: (prop: string, item: ComponentItemProps) => void;
+  /**
+   * **设置表格所有数据**
+   * @type `(data: `[`PaTableUseType.dataType`](#pausetype)`) => void`
+   * @param data 表格数据
+   * @returns `void`
+   * @description 替换表格所有数据
+   */
+  changeData_All: (data: PaTableUseType.dataType) => void;
+  /**
+   * **设置表格单个数据**
+   * @type `(rowKey: string, value: any) => void`
+   * @param rowKey 行标识值
+   * @param value 新数据
+   * @returns `void`
+   * @description 更新指定行的数据
+   */
+  changeData_Item: (rowKey: string, value: any) => void;
+};

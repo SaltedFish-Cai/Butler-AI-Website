@@ -1,6 +1,7 @@
 .pa-input {
   position: relative;
   width: 100%;
+  font-family: var(--pa-component-font-family);
 
   .pa-input_body {
     position: relative;
@@ -14,6 +15,10 @@
     display: flex;
     transition: var(--pa-animation-time, 0.2s);
 
+    & input,
+    textarea {
+      font-family: var(--pa-component-font-family);
+    }
     &:hover {
       border-color: var(--pa-color-primary);
       box-shadow: var(--pa-color-shadow);
@@ -173,7 +178,8 @@
       .clear-icon {
         position: absolute;
         right: 0;
-        top: calc(50% - 9px);
+        height: 0;
+        top: 50%;
       }
     }
 

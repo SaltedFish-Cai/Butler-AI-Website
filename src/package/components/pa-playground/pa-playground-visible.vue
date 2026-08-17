@@ -308,7 +308,7 @@ const props = withDefaults(
   }>(),
   { useMock: true, useToPage: false }
 );
-const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-playground-visible_" + useRenderId()));
+const renderId = ref(props.renderId || (props.id ? props.id : "pa-playground-visible_" + useRenderId()));
 
 /**
  * 扩展选项计算值

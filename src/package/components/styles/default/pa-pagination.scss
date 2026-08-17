@@ -3,8 +3,10 @@
   align-items: center;
   color: var(--pa-color-send-font);
   font-size: var(--pa-size-font, 13px);
+  font-family: var(--pa-component-font-family);
+
   .m-pagination-total {
-    font-size: calc(var(--pa-size-font, 13px) - 1px);
+    font-size: calc(var(--pa-size-font, 13px));
     margin-left: calc(var(--pa-size-padding, 10px) / 2);
     margin-right: calc(var(--pa-size-padding, 10px) / 2);
     > span {
@@ -78,7 +80,7 @@
     align-items: center;
     gap: 4px;
     margin-left: calc(var(--pa-size-padding, 10px) / 2);
-    font-size: calc(var(--pa-size-font, 13px) - 1px);
+    font-size: calc(var(--pa-size-font, 13px));
     .m-pagination-jumper-input {
       .pa-number-input-inner {
         text-align: center;

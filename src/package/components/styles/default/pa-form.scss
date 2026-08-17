@@ -1,6 +1,7 @@
 .pa-form {
   width: calc(100%);
   overflow: hidden;
+  font-family: var(--pa-component-font-family);
 
   .form-title_label-icon {
     margin-left: calc(var(--pa-size-padding, 10px) / 2);

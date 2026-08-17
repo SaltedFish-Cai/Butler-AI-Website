@@ -156,7 +156,7 @@ const props = withDefaults(defineProps<ComponentProps>(), {
  * @type {string}
  * @description 生成组件唯一标识
  */
-const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-form_" + useRenderId()));
+const renderId = ref(props.renderId || (props.id ? props.id : "pa-form_" + useRenderId()));
 
 /**
  * **组件事件**
@@ -610,7 +610,8 @@ function initConfig() {
     }
 
     // --- 内联 setRule 逻辑 ---
-    const _prop2 = item.prop as string;
+    item.baseProps = item.prop;
+    item.prop = (Array.isArray(item.prop) ? item.prop.join("-") : item.prop) as string;
     const baseRulesForItem =
       item.display || item.disabled ? [] : [{ required: true, message: _requiredMessage, trigger: "blur" }];
     let _rules = baseRulesForItem;
@@ -630,16 +631,17 @@ function initConfig() {
     }
     if (item.required == false) item.rules = false;
 
-    if (_useRequired && useRequired.value && _prop2 && item.rules != false && _rules.length) {
-      allRules["default"][_prop2] = _exCellRules[_prop2] ? [..._rules, ..._exCellRules[_prop2]] : _rules;
+    if (_useRequired && useRequired.value && item.prop && item.rules != false && _rules.length) {
+      allRules["default"][item.prop] = _exCellRules[item.prop] ? [..._rules, ..._exCellRules[item.prop]] : _rules;
     } else if (!_useRequired || !useRequired.value) {
-      allRules["default"][_prop2] = item.display || item.disabled ? [] : item.rules || [];
+      allRules["default"][item.prop] = item.display || item.disabled ? [] : item.rules || [];
     }
 
     // --- 处理 tabs-form 的多配置和子项规则（原 setMultipleConfig 逻辑） ---
     if ((item as ExMultipleConfigType).tabsFormConfig?.length) {
       const configItem = item as ExMultipleConfigType;
-      const tabsProp = Array.isArray(item.prop) ? item.prop.join("-") : item.prop;
+      item.baseProps = item.prop;
+      item.prop = Array.isArray(item.prop) ? item.prop.join("-") : item.prop;
       const propsArr = configItem.tabsFormConfig.map(c => c.prop);
 
       configItem.inMultipleConfig = configItem.inMultipleConfig || [];
@@ -653,8 +655,8 @@ function initConfig() {
         // setRule for child (inline)
         const childProp = childItem.prop as string;
         if (childProp) {
-          if (!inRules.value[tabsProp]) inRules.value[tabsProp] = {};
-          if (!allRules[tabsProp]) allRules[tabsProp] = {};
+          if (!inRules.value[item.prop]) inRules.value[item.prop] = {};
+          if (!allRules[item.prop]) allRules[item.prop] = {};
 
           const childBaseRules =
             childItem.display || childItem.disabled ? [] : [{ required: true, message: _requiredMessage, trigger: "blur" }];
@@ -677,9 +679,9 @@ function initConfig() {
 
           if (_useRequired && useRequired.value && childProp && childItem.rules != false && childRules.length) {
             const _cellRules2 = _exCellRules[childProp] || [];
-            allRules[tabsProp][childProp] = _cellRules2.length ? [...childRules, ..._cellRules2] : childRules;
+            allRules[item.prop][childProp] = _cellRules2.length ? [...childRules, ..._cellRules2] : childRules;
           } else if (!_useRequired || !useRequired.value) {
-            allRules[tabsProp][childProp] = childItem.display || childItem.disabled ? [] : childItem.rules || [];
+            allRules[item.prop][childProp] = childItem.display || childItem.disabled ? [] : childItem.rules || [];
           }
         }
 
@@ -708,7 +710,6 @@ function initConfig() {
       for (const g of configItem.inMultipleConfig) {
         g.configs = g.configs.filter(c => propsArr.includes(c.prop));
       }
-      console.log("++++++++++> configItem:", configItem);
     }
 
     // --- 将 item 分配到对应的主分组中 ---
@@ -738,7 +739,6 @@ function initConfig() {
 
   // 一次性替换 inMultipleConfig 全部内容
   inMultipleConfig.length = 0;
-  console.log("++++++++++> newMultipleConfig:", newMultipleConfig);
   for (const mc of newMultipleConfig) {
     inMultipleConfig.push(mc);
   }

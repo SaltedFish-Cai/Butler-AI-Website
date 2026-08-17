@@ -151,7 +151,7 @@ const props = withDefaults(defineProps<ComponentProps>(), {
  * @type {string}
  * @description 生成组件唯一标识
  */
-const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-tabs_" + useRenderId()));
+const renderId = ref(props.renderId || (props.id ? props.id : "pa-tabs_" + useRenderId()));
 /**
  * 全局状态
  * @description 用于缓存 label 顺序

@@ -22,10 +22,16 @@
             {{ typeof title === "string" ? title : title[languageValue] }}
           </div>
 
-          <div class="pa-select-input" :id="renderId + '_select-input'" :class="[isFocus ? 'is-focus' : '']">
+          <div
+            class="pa-select-input"
+            :id="renderId + '_select-input'"
+            :data-name="typeof name === 'string' ? name : name?.[languageValue]"
+            :class="[isFocus ? 'is-focus' : '']"
+          >
             <template v-if="useFilter">
               <template v-if="tagValue.length > 0 && isMultiple">
                 <pa-tag
+                  ref="tagRef"
                   :id="renderId + '_tag-list'"
                   :tagList="tagValue"
                   :disabled="props.disabled"
@@ -36,6 +42,7 @@
               <input
                 v-if="waitTag"
                 :id="renderId + '_select-input-inner'"
+                :data-name="typeof name === 'string' ? name : name?.[languageValue]"
                 class="pa-select-input-inner"
                 :value="inputValue"
                 :placeholder="inputPlaceholder"
@@ -62,11 +69,20 @@
         ref="optionsRef"
         v-if="!props.disabled && filterOptionsList.length > 0"
       >
-        <pa-scrollbar :useBackTop="false" :useShadow="false" :style="{ height: optionsHeight }" :useClosePopover="false">
+        <pa-scrollbar
+          :renderId="renderId + '_options'"
+          :useBackTop="false"
+          :useShadow="false"
+          :style="{ height: optionsHeight }"
+          :useClosePopover="false"
+          useHiddenThumb
+          style="--scrollbar-width: 11.1px"
+        >
           <slot name="optionLabelBefore"></slot>
           <div
             v-for="(item, index) in filterOptionsList"
             :id="renderId + '_option_' + item.value"
+            :data-name="(typeof name === 'string' ? name : name?.[languageValue]) + ` (${item.label})`"
             :key="String(item.value)"
             class="pa-select-option"
             :class="[
@@ -200,13 +216,19 @@ const emits = defineEmits<ComponentEmits>();
  * render-id
  * @description 组件唯一标识
  */
-const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-select_" + useRenderId()));
+const renderId = ref(props.renderId || (props.id ? props.id : "pa-select_" + useRenderId()));
 /**
  * 弹出层引用
  * @type any
  * @description 弹出层组件引用
  */
 const popoverRef = useTemplateRef("popoverRef");
+/**
+ * 标签容器引用
+ * @type any
+ * @description 标签容器 DOM 元素引用
+ */
+const tagRef = useTemplateRef("tagRef");
 /**
  * 选择器容器引用
  * @type any
@@ -424,6 +446,9 @@ async function handleInput({ target }) {
 function handleFocus() {
   isFocus.value = true;
   popoverRef.value?.showPopover();
+  nextTick(() => {
+    tagRef.value?.initPopover();
+  });
 }
 /**
  * 处理失焦事件
@@ -604,6 +629,9 @@ onMounted(() => {
     const item = exOptionsList.value.find(item => item.value === props.modelValue);
     handleOptionClick(item || {});
   }
+  nextTick(() => {
+    tagRef.value?.initPopover();
+  });
 });
 /**
  * 监听 modelValue 变化

@@ -50,20 +50,29 @@
             class="pa-transfer-option"
             @click="handleOptionClick(item, 'left', index)"
           >
-            <pa-checkbox-item :disabled="props.disabled" :isChecked="item.value ? awaitSelectList.includes(item.value) : false">{{
-              item.label
-            }}</pa-checkbox-item>
+            <pa-checkbox-item
+              :disabled="props.disabled"
+              :isChecked="item.value ? awaitSelectList.includes(item.value) : false"
+              :renderId="renderId + '-transfer-left_' + item.value"
+              :data-name="name + ` - ${item.label}`"
+            >
+              {{ item.label }}
+            </pa-checkbox-item>
           </div>
         </pa-scrollbar>
       </div>
     </div>
     <div class="pa-transfer-transfer">
       <pa-button
+        :renderId="renderId + '-transfer-left_btn'"
+        :data-name="name + ` (取消)`"
         icon-name="left_line"
         :disabled="props.disabled || awaitSelectedList.length === 0"
         @click="handleTransferClick('left')"
       ></pa-button>
       <pa-button
+        :renderId="renderId + '-transfer-right_btn'"
+        :data-name="name + ` (选择)`"
         icon-name="right_line"
         :disabled="props.disabled || awaitSelectList.length === 0"
         @click="handleTransferClick('right')"
@@ -112,9 +121,14 @@
             class="pa-transfer-option"
             @click="handleOptionClick(item, 'right', index)"
           >
-            <pa-checkbox-item :disabled="props.disabled" :isChecked="awaitSelectedList.includes(item.value)">{{
-              item.label
-            }}</pa-checkbox-item>
+            <pa-checkbox-item
+              :disabled="props.disabled"
+              :isChecked="awaitSelectedList.includes(item.value)"
+              :renderId="renderId + '-transfer-right_' + item.value"
+              :data-name="name + ` - ${item.label}`"
+            >
+              {{ item.label }}
+            </pa-checkbox-item>
           </div>
         </pa-scrollbar>
       </div>
@@ -209,7 +223,7 @@ const emits = defineEmits<ComponentEmits>();
  * render-id
  * @description 组件唯一标识
  */
-const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-transfer_" + useRenderId()));
+const renderId = ref(props.renderId || (props.id ? props.id : "pa-transfer_" + useRenderId()));
 /**
  * 全局配置注入
  * @type ComputedRef<PancakeGlobalConfigType>

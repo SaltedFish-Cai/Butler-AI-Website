@@ -1,5 +1,10 @@
 <template>
-  <div :id="renderId" class="pa-slider" :class="[props.class, { 'is-disabled': disabled, 'is-range': range }]" :style="props.style">
+  <div
+    :id="renderId"
+    class="pa-slider"
+    :class="[props.class, { 'is-disabled': disabled, 'is-range': range }]"
+    :style="props.style"
+  >
     <div ref="runwayRef" class="pa-slider__runway" @mousedown.prevent="onRunwayClick">
       <div v-for="m in parsedMarks" :key="m.value" class="pa-slider__stop" :style="{ left: m.position + '%' }">
         <div class="pa-slider__marks-dot" :class="{ 'pa-slider__marks-dot--active': m.isActive }" />
@@ -45,7 +50,7 @@ const props = withDefaults(defineProps<ComponentProps>(), {
 });
 const emits = defineEmits<ComponentEmits>();
 
-const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-slider_" + useRenderId()));
+const renderId = ref(props.renderId || (props.id ? props.id : "pa-slider_" + useRenderId()));
 
 type MarkItem = {
   value: number;

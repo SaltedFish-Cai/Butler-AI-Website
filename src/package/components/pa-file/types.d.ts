@@ -97,6 +97,14 @@ export type ComponentProps = {
    * @description 当设置该值时，会使用该值作为表单项占位符
    */
   placeholder?: LanguagePackageType | string;
+
+  /**
+   * 表单项名称
+   * @type string | undefined
+   * @default undefined
+   * @description 当设置该值时，会将该值作为表单项名称
+   */
+  name?: string;
   /**
    * 是否禁用
    * @type boolean | undefined

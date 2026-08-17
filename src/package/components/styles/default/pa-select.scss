@@ -10,6 +10,7 @@
   display: flex;
   width: 100%;
   transition: var(--pa-animation-time, 0.2s);
+  font-family: var(--pa-component-font-family);
 
   &:has(.no-use-filter) {
     .down-icon {
@@ -159,12 +160,15 @@
   .pa-select-option {
     position: relative;
     z-index: 231;
-    padding: var(--pa-size-padding);
+    padding: var(--pa-size-padding) var(--pa-size-padding_large);
     font-size: var(--pa-size-font);
     display: flex;
     justify-content: space-between;
     align-items: center;
-
+    border-bottom: 1px dashed var(--pa-color-scrollbar);
+    &:last-child {
+      border-bottom: none;
+    }
     .check-icon {
       display: none;
     }

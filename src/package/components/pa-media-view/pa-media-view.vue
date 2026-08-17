@@ -179,7 +179,7 @@ const pdfViewRef = useTemplateRef("pdfViewRef");
 const props = withDefaults(defineProps<ComponentProps>(), {
   hideBtn: false
 });
-const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-media-view_" + useRenderId()));
+const renderId = ref(props.renderId || (props.id ? props.id : "pa-media-view_" + useRenderId()));
 /**
  * 全局配置注入
  * @description 全局配置注入

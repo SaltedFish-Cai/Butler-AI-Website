@@ -32,10 +32,11 @@
   font-size: calc(var(--pa-size-font)) !important;
   border-radius: var(--pa-size-radius, 3px);
   border: 1px solid;
-  padding: calc(var(--pa-size-padding) / 2) calc(var(--pa-size-padding) + 5px);
+  padding: calc(var(--pa-size-padding) / 2) calc(var(--pa-size-padding));
   user-select: none;
   box-sizing: border-box;
   transition: var(--pa-animation-time, 0.2s);
+  font-family: var(--pa-component-font-family);
 
   .pa-button_icon {
     margin-right: calc(var(--pa-size-padding) / 2);
@@ -78,6 +79,8 @@
   }
 
   &.default {
+    @include button-type(--pa-color-success, --pa-color-success-light-3, --pa-color-success-light-9, --pa-color-success-light-3);
+
     --pa-button-color2: var(--pa-color-bg);
     --pa-button-color: var(--pa-color-font);
     --pa-button-color5: var(--pa-color-send-bg);

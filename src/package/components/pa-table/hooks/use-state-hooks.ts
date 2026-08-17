@@ -6,7 +6,11 @@ import { ComponentProps, ComponentItemProps, ComponentUseItemProps, PaTableUseTy
 import { useObserverHooks } from "./use-observer-hooks";
 import { setWidthToNumber, setWidthToString } from "./string-number";
 import { PaFormChildType } from "../../pa-form/types";
-
+/**
+ * 模块导入
+ * @description 导入数组分割工具
+ */
+import { splitArray } from "../../utils/arraySplit";
 /**
  * @description 防抖工具函数
  */
@@ -306,6 +310,72 @@ export const useStateHooks = (
   let intervalId: any = null;
   let timeoutId: any = null;
 
+  /**
+   * 构建表格行数据
+   * @param items - 原始行数组
+   * @param startIndex - 起始索引（rowIndex/renderIndex 起点，分页时按页码 * PageSize 计算）
+   * @description 与 getTableList 对齐，为每行补充 rowIndex/renderIndex/isSelected 等内部字段，并同步选中态
+   */
+  function buildRows(items: any[], startIndex: number) {
+    let index = startIndex;
+    let renderIndex = startIndex;
+    const ar: PaTableUseType.dataType = [];
+    items.forEach(item => {
+      index++;
+      renderIndex++;
+      let selectedItem = state.selectTableData.find(child => child[String(props.rowKey)] === item[String(props.rowKey)]);
+      if (!selectedItem) {
+        const _index = state.awaitSelectData.findIndex(data => data[String(props.rowKey)] === item[String(props.rowKey)]);
+
+        if (_index >= 0) {
+          state.awaitSelectData.splice(_index, 1);
+        }
+
+        selectedItem = {
+          ...item,
+          children: item?.children?.map(ch => {
+            const _ind = state.awaitSelectData.findIndex(data => data[String(props.rowKey)] === ch[String(props.rowKey)]);
+            if (_ind >= 0) {
+              state.awaitSelectData.splice(_ind, 1);
+            }
+            const outData = { ...ch, isSelected: _ind >= 0 };
+
+            if (_ind >= 0) {
+              state.selectTableData.push(outData);
+            }
+
+            return outData;
+          }),
+          isSelected: _index >= 0
+        };
+        if (_index >= 0) {
+          state.selectTableData.push(selectedItem as PaTableUseType.PaTableInDataType);
+        }
+      }
+
+      ar.push({
+        rowIndex: index,
+        renderIndex: renderIndex,
+        parentRenderIndex: renderIndex,
+        isIndeterminate: selectedItem?.children?.length && selectedItem?.children?.length > 0,
+        isSelected: props.useChildren ? selectedItem?.children?.length == item?.children?.length : selectedItem?.isSelected,
+        isOpenChild: props.expandAuto || false,
+        ...item,
+        children: item?.children?.map((ch, ch_i) => {
+          index++;
+          return {
+            rowIndex: index,
+            parentRenderIndex: renderIndex,
+            isSelected: selectedItem?.children?.some(child => child[String(props.rowKey)] === ch[String(props.rowKey)]),
+            renderIndex: ch_i,
+            ...ch
+          };
+        })
+      });
+    });
+    return ar;
+  }
+
   // # Function 获取表格数据
   async function getTableList(exQuery: PaTableUseType.TableQueryType = {}, stopListen: boolean = false) {
     if (state.showSelectList) return;
@@ -394,8 +464,6 @@ export const useStateHooks = (
 
     state.tableQuery = _query;
 
-    let index = _pageNum * state.pageable.PageSize;
-    let renderIndex = _pageNum * state.pageable.PageSize;
     let _data: any = [];
 
     // @ requestApi
@@ -406,60 +474,7 @@ export const useStateHooks = (
       const ar: PaTableUseType.dataType = [
         { renderIndex: -1, parentRenderIndex: -1, rowIndex: -1, type: "more", name: String(_pageNum) }
       ];
-
-      _data.forEach(item => {
-        index++;
-        renderIndex++;
-        let selectedItem = state.selectTableData.find(child => child[String(props.rowKey)] === item[String(props.rowKey)]);
-        if (!selectedItem) {
-          const _index = state.awaitSelectData.findIndex(data => data[String(props.rowKey)] === item[String(props.rowKey)]);
-
-          if (_index >= 0) {
-            state.awaitSelectData.splice(_index, 1);
-          }
-
-          selectedItem = {
-            ...item,
-            children: item?.children?.map(ch => {
-              const _ind = state.awaitSelectData.findIndex(data => data[String(props.rowKey)] === ch[String(props.rowKey)]);
-              if (_ind >= 0) {
-                state.awaitSelectData.splice(_ind, 1);
-              }
-              const outData = { ...ch, isSelected: _ind >= 0 };
-
-              if (_ind >= 0) {
-                state.selectTableData.push(outData);
-              }
-
-              return outData;
-            }),
-            isSelected: _index >= 0
-          };
-          if (_index >= 0) {
-            state.selectTableData.push(selectedItem as PaTableUseType.PaTableInDataType);
-          }
-        }
-
-        ar.push({
-          rowIndex: index,
-          renderIndex: renderIndex,
-          parentRenderIndex: renderIndex,
-          isIndeterminate: selectedItem?.children?.length && selectedItem?.children?.length > 0,
-          isSelected: props.useChildren ? selectedItem?.children?.length == item?.children?.length : selectedItem?.isSelected,
-          isOpenChild: props.expandAuto || false,
-          ...item,
-          children: item?.children?.map((ch, ch_i) => {
-            index++;
-            return {
-              rowIndex: index,
-              parentRenderIndex: renderIndex,
-              isSelected: selectedItem?.children?.some(child => child[String(props.rowKey)] === ch[String(props.rowKey)]),
-              renderIndex: ch_i,
-              ...ch
-            };
-          })
-        });
-      });
+      ar.push(...buildRows(_data, _pageNum * state.pageable.PageSize));
 
       state.tableData[_pageNum] = ar;
 
@@ -520,12 +535,13 @@ export const useStateHooks = (
   }
 
   // # Function 设置单元格宽度
-  function setCellWidth() {
+  function setCellWidth(skipFade = false) {
     state.setCellWidthIng = true;
     state.useAverageWidth = -1;
     bodyRef.value.style.transition = "0s";
     nextTick(() => {
-      bodyRef.value.style.opacity = 0;
+      // skipFade 为 true（changeData_* 触发）时不隐藏，避免页面先空白后显示
+      bodyRef.value.style.opacity = skipFade === true ? 1 : 0;
       const maxWidth = 500;
       let maxIndex = -1;
       let isMaxValue = 0;
@@ -536,6 +552,18 @@ export const useStateHooks = (
       const contentClientWidth = Number(bodyRef.value.clientWidth);
       const exOut = ["selection", "radio", "expand", "row"];
       const _tableStructure = cloneDeep(tableStructure.value);
+
+      // 原始配置宽度 Map（按 prop），用于每次测量前重置 width/minWidth/baseWidth，
+      // 避免上一次实测值残留导致二次 setCellWidth / changeData_All 时宽度与真实内容产生偏差
+      const originConfigMap: { [x: string]: { width?: string; baseWidth?: string; minWidth?: string } } = {};
+      (props.structure || []).forEach((cfg: any) => {
+        if (!cfg.prop) return;
+        originConfigMap[cfg.prop] = {
+          width: setWidthToString(cfg.width),
+          baseWidth: cfg.baseWidth || setWidthToString(cfg.width),
+          minWidth: cfg.minWidth || setWidthToString(cfg.width)
+        };
+      });
 
       const indexArr = typeof window !== "undefined" && window.document?.querySelectorAll(`#${props.id} .find_cell_index`);
       let maxIndexNumber = 20;
@@ -550,6 +578,13 @@ export const useStateHooks = (
         if (item.type == "index") {
           item.width = setWidthToString(maxIndexNumber);
           return;
+        }
+        // 重置为原始配置，避免上次实测值粘连
+        const origin = item.prop ? originConfigMap[item.prop] : null;
+        if (origin) {
+          item.width = origin.width;
+          item.baseWidth = origin.baseWidth;
+          item.minWidth = origin.minWidth;
         }
         const operation_item =
           typeof window !== "undefined" && window.document?.querySelectorAll(`#${props.id} .find_cell_${item.prop}`);
@@ -658,10 +693,12 @@ export const useStateHooks = (
           });
         }
 
-        setTimeout(() => {
-          bodyRef.value.style.transition = "opacity var(--pa-animation-time, 0.2s)";
-          bodyRef.value.style.opacity = 1;
-        }, 500);
+        if (skipFade !== true) {
+          setTimeout(() => {
+            bodyRef.value.style.transition = "opacity var(--pa-animation-time, 0.2s)";
+            bodyRef.value.style.opacity = 1;
+          }, 500);
+        }
 
         // if (contentClientWidth > allWidth) {
         //   showScrollX.value = true;
@@ -732,6 +769,65 @@ export const useStateHooks = (
     state.showSelectList = !state.showSelectList;
   }
 
+  /**
+   * 刷新表格配置操作
+   * @description 数据变更后与 getTableList 对齐，重新触发动态列宽计算与合计值刷新
+   */
+  function refreshTableConfig() {
+    // 数据变更后重新测量列宽；skipFade 避免页面先空白后显示的闪烁
+    setCellWidth(true);
+    if (props.useSummary && !props.usePagination) debounceGetSummary();
+    if (props.summaryFunction) debounceGetSummary();
+  }
+
+  /**
+   * 设置表格所有数据
+   * @param data - 表格数据
+   * @description 替换表格所有数据
+   */
+  function changeData_All(data: PaTableUseType.dataType) {
+    state.flatTableData.length = 0;
+    const cloneData = cloneDeep(data);
+    if (!props.usePagination) {
+      state.tableData = [buildRows(cloneData, 0)];
+    } else {
+      const pages = splitArray(cloneData, state.pageable.PageSize);
+      state.tableData = pages.map((page, pageIndex) => buildRows(page, pageIndex * state.pageable.PageSize));
+    }
+    state.flatTableData = cloneData;
+    // 与 getTableList 对齐，更新总条数
+    state.pageable.total = cloneData.length;
+    refreshTableConfig();
+  }
+  /**
+   * 设置表格单个数据
+   * @param rowKey - 行标识值
+   * @param value - 新数据
+   * @description 更新指定行的数据
+   */
+  function changeData_Item(rowKey: string, value: any) {
+    if (!rowKey || !props.rowKey) return;
+    const cloneValue = cloneDeep(value);
+    let paretIndex = -1;
+    let rowIndex = -1;
+    for (let i = 0; i < state.tableData.length; i++) {
+      const ArrayItem = state.tableData[i];
+      const index = ArrayItem.findIndex(item => item[String(props.rowKey)] == rowKey);
+      if (index != -1) {
+        paretIndex = i;
+        rowIndex = index;
+        break;
+      }
+    }
+    if (paretIndex != -1 && rowIndex != -1) {
+      // 保留原行的 rowIndex/renderIndex，并为新值及子行补充内部字段（与 getTableList 对齐）
+      const oldRowIndex = Number(state.tableData[paretIndex][rowIndex]?.rowIndex) || 0;
+      const enriched = buildRows([cloneValue], oldRowIndex - 1)[0];
+      state.tableData[paretIndex][rowIndex] = enriched;
+      refreshTableConfig();
+    }
+  }
+
   return {
     // ...toRefs(state),
     state,
@@ -747,6 +843,8 @@ export const useStateHooks = (
     handleCellMouseLeave,
     listenCellInView,
     listenCellChildChange,
-    clearListen
+    clearListen,
+    changeData_All,
+    changeData_Item
   };
 };

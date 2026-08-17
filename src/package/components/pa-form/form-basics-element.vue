@@ -24,8 +24,9 @@
           <!-- input -->
           <template v-if="item.type == 'input' || item.type == 'textarea'">
             <pa-input
-              :id="id + '_' + item.prop"
               v-model="computedValue"
+              :id="id + '_' + item.prop"
+              :name="'表单输入 - ' + computedLabel"
               :type="item.type"
               :placeholder="usePlaceholder"
               :disabled="item.disabled || disabledFn(injectConfigContext.data)"
@@ -45,8 +46,9 @@
           <!-- number -->
           <template v-else-if="item.type == 'number'">
             <pa-number
-              :id="id + '_' + item.prop"
               v-model="computedValue"
+              :id="id + '_' + item.prop"
+              :name="'表单输入 - ' + computedLabel"
               :placeholder="usePlaceholder"
               :disabled="item.disabled || disabledFn(injectConfigContext.data)"
               :display="useDisplay"
@@ -77,8 +79,9 @@
             "
           >
             <pa-select
-              :id="id + '_' + item.prop"
               v-model="computedValue"
+              :id="id + '_' + item.prop"
+              :name="'表单选择 - ' + computedLabel"
               :type="item.type"
               :displayValue="item.displayValue ? injectConfigContext.data[item.displayValue] : undefined"
               :exOptions="useExOptions as PaOptionType.SelectList"
@@ -110,8 +113,9 @@
             "
           >
             <pa-cascader
-              :id="id + '_' + item.prop"
               v-model="computedValue"
+              :id="id + '_' + item.prop"
+              :name="'表单选择 - ' + computedLabel"
               :type="resolvedItemType"
               :displayValue="item.displayValue ? injectConfigContext.data[item.displayValue] : undefined"
               :exOptions="
@@ -138,8 +142,9 @@
           <!-- switch -->
           <template v-else-if="item.type == 'switch'">
             <pa-switch
-              :id="id + '_' + item.prop"
               v-model="computedValue"
+              :id="id + '_' + item.prop"
+              :name="'表单选择 - ' + computedLabel"
               :disabled="item.disabled || disabledFn(injectConfigContext.data)"
               :exOptions="injectConfigContext.exOptions[item.prop] as PaOptionType.Switch"
               :display="useDisplay"
@@ -159,8 +164,9 @@
           <!-- checkbox -->
           <template v-else-if="item.type == 'checkbox'">
             <pa-checkbox
-              :id="id + '_' + item.prop"
               v-model="computedValue"
+              :id="id + '_' + item.prop"
+              :name="'表单选择 - ' + computedLabel"
               :disabled="item.disabled || disabledFn(injectConfigContext.data)"
               :exOptions="useExOptions as PaOptionType.SelectList"
               :display="useDisplay"
@@ -176,8 +182,9 @@
           <!-- radio -->
           <template v-else-if="item.type == 'radio'">
             <pa-radio
-              :id="id + '_' + item.prop"
               v-model="computedValue"
+              :id="id + '_' + item.prop"
+              :name="'表单选择 - ' + computedLabel"
               :disabled="item.disabled || disabledFn(injectConfigContext.data)"
               :exOptions="useExOptions as PaOptionType.SelectList"
               :display="useDisplay"
@@ -206,8 +213,9 @@
             "
           >
             <pa-time
-              :id="id + '_' + item.prop"
               v-model="computedValue"
+              :id="id + '_' + item.prop"
+              :name="'表单选择 - ' + computedLabel"
               :type="item.type"
               :placeholder="usePlaceholder"
               :disabledDateFn="item.disabledDateFn"
@@ -226,8 +234,9 @@
           <!-- select-icon -->
           <template v-else-if="item.type == 'select-icon'">
             <pa-select-icon
-              :id="id + '_' + item.prop"
               v-model="computedValue"
+              :id="id + '_' + item.prop"
+              :name="'表单选择 - ' + computedLabel"
               :placeholder="usePlaceholder"
               :disabled="item.disabled || disabledFn(injectConfigContext.data)"
               :display="useDisplay"
@@ -244,8 +253,9 @@
           <template v-else-if="item.type == 'file' || item.type == 'file-custom'">
             <pa-file
               v-if="item.type == 'file'"
-              :id="id + '_' + item.prop"
               v-model="computedValue"
+              :id="id + '_' + item.prop"
+              :name="'表单上传 - ' + computedLabel"
               :placeholder="usePlaceholder"
               :attachedData="item.attachedData || injectConfigContext.exCellDependent?.file_attachedData?.[String(item.prop)]"
               :downloadTemplate="injectConfigContext.exCellDependent?.file_downloadTemplate?.[String(item.prop)]"
@@ -270,8 +280,9 @@
 
             <pa-file-custom
               v-if="item.type == 'file-custom'"
-              :id="id + '_' + item.prop"
               v-model="computedValue"
+              :id="id + '_' + item.prop"
+              :name="'表单上传 - ' + computedLabel"
               :placeholder="usePlaceholder"
               :attachedData="item.attachedData || injectConfigContext.exCellDependent?.file_attachedData?.[String(item.prop)]"
               :downloadTemplate="injectConfigContext.exCellDependent?.file_downloadTemplate?.[String(item.prop)]"
@@ -300,8 +311,9 @@
           <!-- transfer -->
           <template v-else-if="item.type == 'transfer'">
             <pa-transfer
-              :id="id + '_' + item.prop"
               v-model="computedValue"
+              :id="id + '_' + item.prop"
+              :name="'表单选择 - ' + computedLabel"
               :disabled="item.disabled || disabledFn(injectConfigContext.data)"
               :exOptions="useExOptions as PaOptionType.SelectList"
               :useSearch="item.useSearch"

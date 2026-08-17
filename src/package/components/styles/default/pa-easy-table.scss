@@ -5,6 +5,7 @@
   overflow: hidden;
   position: relative;
   box-sizing: border-box;
+  font-family: var(--pa-component-font-family);
 
   &--x-scroll {
     overflow-x: auto;

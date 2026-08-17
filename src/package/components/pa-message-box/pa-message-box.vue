@@ -84,7 +84,7 @@ const props = defineProps<{
   renderId?: string;
   options: MessageBoxOptions;
 }>();
-const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-message-box_" + useRenderId()));
+const renderId = ref(props.renderId || (props.id ? props.id : "pa-message-box_" + useRenderId()));
 
 /**
  * 获取语言键

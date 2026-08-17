@@ -1,6 +1,7 @@
 .pa-file {
   display: flex;
   flex-direction: column;
+  font-family: var(--pa-component-font-family);
 
   > .flex-center-start {
     > * {

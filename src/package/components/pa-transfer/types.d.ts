@@ -6,7 +6,7 @@
  * 模块导入
  * @description 导入选项类型定义
  */
-import type { PaOptionType } from "../manager-type";
+import { PaOptionType, LanguagePackageType } from "../manager-type";
 /**
  * PaTransfer 组件 Props
  * @type object
@@ -62,6 +62,13 @@ export type ComponentProps = {
    * @description 当设置该值时，会显示该值
    */
   displayValue?: string;
+  /**
+   * 表单项名称
+   * @type LanguagePackageType | string | undefined
+   * @default undefined
+   * @description 表单项名称文本
+   */
+  name?: LanguagePackageType | string;
   /**
    * 外置数据选项
    * @type PaOptionType.SelectList | undefined

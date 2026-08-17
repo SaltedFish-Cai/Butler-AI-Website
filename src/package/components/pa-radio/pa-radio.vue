@@ -19,6 +19,7 @@
       :value="item.value"
       :is-checked="inValue == item.value"
       :disabled="props.disabled"
+      :name="props.name"
       isOption
       @change="
         ({ value }) => {
@@ -103,7 +104,7 @@ const props = withDefaults(defineProps<ComponentProps>(), {});
  * @type `string`
  * @description 用于唯一标识组件的随机 ID
  */
-const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-radio_" + useRenderId()));
+const renderId = ref(props.renderId || (props.id ? props.id : "pa-radio_" + useRenderId()));
 /**
  * 组件事件定义
  * @description 定义组件可触发的事件

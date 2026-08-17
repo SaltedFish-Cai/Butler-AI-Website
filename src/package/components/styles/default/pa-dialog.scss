@@ -5,6 +5,7 @@
   height: 100%;
   max-height: calc(100vh - var(--pa-size-padding) * 2);
   z-index: 1;
+  font-family: var(--pa-component-font-family);
 
   .pa-dialog-content {
     position: relative;

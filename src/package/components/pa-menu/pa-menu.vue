@@ -60,7 +60,7 @@ const emit = defineEmits<ComponentEmits>();
  * render-id
  * @description 组件唯一标识
  */
-const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-menu_" + useRenderId()));
+const renderId = ref(props.renderId || (props.id ? props.id : "pa-menu_" + useRenderId()));
 
 /**
  * 菜单元素引用

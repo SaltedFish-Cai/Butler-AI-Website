@@ -7,6 +7,7 @@
   display: flex;
   height: var(--pa-line-height);
   line-height: var(--pa-line-height);
+  font-family: var(--pa-component-font-family);
 
   &::before,
   &::after {

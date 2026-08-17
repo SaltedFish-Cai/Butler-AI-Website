@@ -51,7 +51,7 @@ const props = defineProps<{
   renderId?: string;
   options: MessageOptions;
 }>();
-const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-message_" + useRenderId()));
+const renderId = ref(props.renderId || (props.id ? props.id : "pa-message_" + useRenderId()));
 /**
  * 解构选项
  * @description 从 props.options 中解构配置项

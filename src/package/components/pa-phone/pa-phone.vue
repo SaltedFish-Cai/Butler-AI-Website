@@ -190,7 +190,7 @@ const emit = defineEmits<{
  * render-id
  * @description 组件唯一标识
  */
-const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-phone_" + useRenderId()));
+const renderId = ref(props.renderId || (props.id ? props.id : "pa-phone_" + useRenderId()));
 
 // ─── SFC 源码编译（支持流式渲染） ──────────────────────
 

@@ -50,7 +50,7 @@ const props = withDefaults(defineProps<ComponentProps>(), { useAlpha: true, useI
  * @type `string`
  * @description 用于唯一标识组件的随机 ID
  */
-const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-color_" + useRenderId()));
+const renderId = ref(props.renderId || (props.id ? props.id : "pa-color_" + useRenderId()));
 /**
  * 组件事件定义
  * @description 定义组件可触发的事件

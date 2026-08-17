@@ -9,10 +9,9 @@
       <div class="pa-coder-editor__toolbar-left">
         <pa-select
           v-if="props.showLanguageSwitch"
-          :model-value="currentLanguage"
+          v-model="currentLanguage"
           :ex-options="languageOptions"
           class="pa-coder-editor__language-select"
-          @update:model-value="handleLanguageChange"
         />
       </div>
       <div class="pa-coder-editor__toolbar-right">
@@ -117,7 +116,7 @@ const props = withDefaults(defineProps<ComponentProps>(), {
  * @type `string`
  * @description 用于唯一标识组件的随机 ID
  */
-const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-coder-editor_" + useRenderId()));
+const renderId = ref(props.renderId || (props.id ? props.id : "pa-coder-editor_" + useRenderId()));
 /**
  * 组件事件
  */
@@ -276,15 +275,6 @@ function createEditor(): void {
   });
   formatDocument();
   emit("ready");
-}
-
-/**
- * 语言切换处理
- * @param value - 切换后的语言
- */
-function handleLanguageChange(value: CoderEditorLanguage): void {
-  currentLanguage.value = value;
-  emit("update:language", value);
 }
 
 /**

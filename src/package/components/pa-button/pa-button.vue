@@ -1,6 +1,8 @@
 <template>
   <button
     :id="renderId"
+    :data-name="dataName || '按钮 - ' + displayText"
+    :data-is="is"
     type="button"
     :disabled="disabled || isLoading"
     :class="buttonClasses"
@@ -53,7 +55,7 @@ const IS_MAP: Record<string, { iconName?: string; type?: string; text?: Language
   import: { iconName: "file_download_line", type: "default", text: { "en-US": "Import", "zh-CN": "导入" } },
   export: { iconName: "file_upload_line", type: "default", text: { "en-US": "Export", "zh-CN": "导出" } },
   ok: { iconName: "check_circle_line", type: "success", text: { "en-US": "OK", "zh-CN": "确认" } },
-  cancel: { iconName: "close_circle_line", type: "default", text: { "en-US": "Cancel", "zh-CN": "取消" } },
+  cancel: { iconName: "close_circle_line", type: "warning", text: { "en-US": "Cancel", "zh-CN": "取消" } },
   more: { iconName: "version_line", type: "warning", text: { "en-US": "More", "zh-CN": "更多" } },
   delete: { iconName: "delete_back_line", type: "danger", text: { "en-US": "Delete", "zh-CN": "删除" } },
   copy: { iconName: "copy_line", type: "warning", text: { "en-US": "Copy", "zh-CN": "复制" } },
@@ -130,7 +132,7 @@ const PancakeGlobalConfig = inject<PancakeGlobalConfigType>("PancakeGlobalConfig
  * @type `string`
  * @description 按钮的唯一标识，用于自动化测试
  */
-const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-button_" + useRenderId()));
+const renderId = ref(props.renderId || (props.id ? props.id : "pa-button_" + useRenderId()));
 /**
  * **显示文本**
  * @returns `string` 显示文字
@@ -172,7 +174,8 @@ const currentType = computed(() => {
  * @returns `boolean` 按钮的自动 loading 状态
  * @description 按钮的自动 loading 状态
  */
-const isLoading = computed(() => props.loading || false);
+const _loading = ref(false);
+const isLoading = computed(() => props.loading || _loading.value);
 /**
  * **是否显示左侧图标**
  * @returns `boolean` 是否显示左侧图标
@@ -295,16 +298,16 @@ function realClick(event: MouseEvent) {
   nextTick(() => {
     const EL = props.loadingBy && window.document.querySelector(props.loadingBy);
     if (!EL) return;
-    isLoading.value = true;
+    _loading.value = true;
     safeLockTimer = setTimeout(() => {
-      isLoading.value = false;
+      _loading.value = false;
       cleanupObserver();
     }, 15 * 60 * 1000);
     observer = new window.MutationObserver(() => {
       const target = window.document.querySelector(props.loadingBy!);
       if (!target) {
         if (safeLockTimer) clearTimeout(safeLockTimer);
-        isLoading.value = false;
+        _loading.value = false;
         cleanupObserver();
       }
     });
@@ -337,13 +340,13 @@ function btnClick(event: MouseEvent) {
  */
 onUnmounted(() => {
   cleanupObserver();
-  isLoading.value = false;
+  _loading.value = false;
 });
 
 watch(
   () => props.loading,
   newVal => {
-    isLoading.value = newVal || false;
+    _loading.value = newVal || false;
   }
 );
 </script>

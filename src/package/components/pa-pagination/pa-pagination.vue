@@ -6,7 +6,8 @@
     <div v-if="showSizes" class="m-pagination-sizes">
       <pa-select
         :render-id="renderId + '-sizes'"
-        style="width: 100px; --pa-size-padding: 8px; --pa-size-font: 14px; --pa-size-height: 28px"
+        :name="'表格页导航 - 条数'"
+        style="width: 90px"
         v-model="internalPageSize"
         @change="handleSizeChange"
         :clearable="false"
@@ -18,6 +19,7 @@
     </div>
     <button
       :id="renderId + '-prev'"
+      data-name="表格页导航 - 上一页面"
       class="m-pagination-btn m-pagination-prev"
       :disabled="internalCurrentPage <= 1"
       @click="goToPage(internalCurrentPage - 1)"
@@ -28,6 +30,7 @@
       <button
         v-if="showFirstPage"
         :id="renderId + '-first'"
+        data-name="表格页导航 - 第1页"
         class="m-pagination-btn"
         :class="{ 'is-active': internalCurrentPage == 1 }"
         @click="goToPage(1)"
@@ -39,6 +42,7 @@
         v-for="page in pagerPages"
         :key="page"
         :id="renderId + '-pager-' + page"
+        :data-name="`表格页导航 - 第${page}页`"
         class="m-pagination-btn"
         :class="{ 'is-active': internalCurrentPage == page }"
         @click="goToPage(page)"
@@ -49,6 +53,7 @@
       <button
         v-if="showLastPage"
         :id="renderId + '-last'"
+        data-name="表格页导航 - 最后页"
         class="m-pagination-btn"
         :class="{ 'is-active': internalCurrentPage == pageCount }"
         @click="goToPage(pageCount)"
@@ -57,20 +62,24 @@
       </button>
     </template>
     <button
+      :id="renderId + '-next'"
+      data-name="表格页导航 - 下一页面"
       class="m-pagination-btn m-pagination-next"
       :disabled="internalCurrentPage >= pageCount"
       @click="goToPage(internalCurrentPage + 1)"
     >
       <pa-icon name="right_line"></pa-icon>
     </button>
+
     <div v-if="showJumper" class="m-pagination-jumper">
       <span>{{ languagePackage?.jumpTo }}</span>
       <pa-number
         :render-id="renderId + '-jumper'"
+        name="表格页导航 - 跳转"
         :min="1"
         :max="pageCount"
         class="m-pagination-jumper-input"
-        style="width: 40px; --pa-size-padding: 8px; --pa-size-font: 14px; --pa-size-height: 28px"
+        style="width: 40px"
         v-model="internalCurrentPage"
         placeholder=" "
         :controls="false"
@@ -154,7 +163,7 @@ const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<Pan
  * render-id
  * @description 组件唯一标识
  */
-const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-pagination_" + useRenderId()));
+const renderId = ref(props.renderId || (props.id ? props.id : "pa-pagination_" + useRenderId()));
 /**
  * 语言值
  * @type ComputedRef<string>
@@ -191,7 +200,7 @@ const internalPageSize = ref(props.pageSize);
 const exOptions = computed(() => {
   const recordsText = languagePackage.value?.records || "";
   return props.pageSizes.map(size => ({
-    label: ` ${size}${recordsText}`,
+    label: `${size}${recordsText}`,
     value: size
   }));
 });

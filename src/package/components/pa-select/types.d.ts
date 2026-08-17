@@ -92,6 +92,13 @@ export type ComponentProps = {
    */
   titleWidth?: string;
   /**
+   * 表单项名称
+   * @type LanguagePackageType | string | undefined
+   * @default undefined
+   * @description 表单项名称文本
+   */
+  name?: LanguagePackageType | string;
+  /**
    * 是否开启筛选
    * @type boolean
    * @default false

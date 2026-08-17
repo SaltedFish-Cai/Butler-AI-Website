@@ -22,6 +22,7 @@
         <!-- 筛选 -->
         <pa-select
           :render-id="id + '-col-setting-' + scope.row.prop + '-select'"
+          :name="'表列设置筛选 - ' + scope.row.prop"
           v-if="isSelectType(scope.row, display)"
           v-model="scope.row.searchCriteria"
           type="multiple-select"
@@ -32,6 +33,7 @@
         <div v-else-if="isTimeType(scope.row, display)" class="flex-center">
           <pa-time
             :render-id="id + '-col-setting-' + scope.row.prop + '-start-time'"
+            :name="'表列设置筛选 - ' + scope.row.prop"
             v-model="scope.row.searchCriteria[0]"
             type="date-picker"
             :placeholder="{ 'zh-CN': '开始时间', 'en-US': 'Start Time' }"
@@ -41,6 +43,7 @@
           <div class="ml5 mr5">/</div>
           <pa-time
             :render-id="id + '-col-setting-' + scope.row.prop + '-end-time'"
+            :name="'表列设置筛选 - ' + scope.row.prop"
             v-model="scope.row.searchCriteria[1]"
             type="date-picker"
             :placeholder="{ 'zh-CN': '结束时间', 'en-US': 'End Time' }"
@@ -53,6 +56,7 @@
         <template v-else-if="isNumberType(scope.row, display) || isTextType(scope.row, display)">
           <pa-number
             :render-id="id + '-col-setting-' + scope.row.prop + '-number'"
+            :name="'表列设置筛选 - ' + scope.row.prop"
             v-if="isNumberType(scope.row, display)"
             v-model="scope.row.searchCriteria"
             :placeholder="scope.row?.cellConfig.placeholder"
@@ -65,6 +69,7 @@
           <template v-else>
             <pa-input
               :render-id="id + '-col-setting-' + scope.row.prop + '-input'"
+              :name="'表列设置筛选 - ' + scope.row.prop"
               v-model="scope.row.searchCriteria"
               :placeholder="{ 'zh-CN': '请输入筛选条件', 'en-US': 'Please Enter Filter Conditions' }"
             />
@@ -74,6 +79,7 @@
               style="width: 100%"
               is="edit"
               @click="openSeniorFilter(scope.row)"
+              :name="'表列设置筛选 - ' + scope.row.prop"
               :text="{ 'zh-CN': '编辑高级搜索', 'en-US': 'Edit Advanced Search' }"
             >
             </pa-button>
@@ -89,6 +95,7 @@
       <template #fixed="scope">
         <div
           :id="id + '-col-setting-' + scope.row.prop + '-fixed'"
+          :data-name="'表列设置固定 - ' + scope.row.prop"
           :class="['change_btn', scope.row.fixed == undefined ? '' : 'icon_highlight']"
           @click="changeFixed(scope.row)"
         >
@@ -102,6 +109,7 @@
         <div
           :id="id + '-col-setting-' + scope.row.prop + '-isShow'"
           :class="['change_btn', scope.row.isShow ? '' : 'icon_highlight--hide']"
+          :data-name="'表列设置显示 - ' + scope.row.prop"
           @click="setView(scope.row)"
         >
           <pa-icon class="mr5" :name="scope.row.isShow ? 'eye_line' : 'eye_close_line'"></pa-icon>
@@ -116,6 +124,7 @@
           :render-id="id + '-col-setting-save'"
           plain
           type="primary"
+          dataName="表列设置保存"
           icon-name="save_line"
           @click="FetchSaveAndFilter"
           :text="{ 'zh-CN': '保存配置', 'en-US': 'Save Configuration' }"

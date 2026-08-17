@@ -1,6 +1,7 @@
 <template>
   <div
     :id="renderId + '_' + props.value"
+    :data-name="(typeof name === 'string' ? name : name?.[language]) + ` (${props.label})`"
     class="pa-radio-item"
     :class="[props.class, { 'is-disabled': props.disabled }, { 'is-checked': isChecked }]"
     ref="selectRef"
@@ -68,7 +69,7 @@ const props = withDefaults(defineProps<ComponentItemProps>(), { isChecked: undef
  * @type `string`
  * @description 用于唯一标识组件的随机 ID
  */
-const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-radio-item_" + useRenderId()));
+const renderId = ref(props.renderId || (props.id ? props.id : "pa-radio-item_" + useRenderId()));
 
 /**
  * 全局配置注入

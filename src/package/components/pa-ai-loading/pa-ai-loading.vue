@@ -57,7 +57,7 @@ const props = withDefaults(
  * render-id
  * @description 组件唯一标识
  */
-const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-ai-loading_" + useRenderId()));
+const renderId = ref(props.renderId || (props.id ? props.id : "pa-ai-loading_" + useRenderId()));
 
 const containerRef = ref<HTMLElement | null>(null);
 const canvasRef = ref<HTMLCanvasElement | null>(null);

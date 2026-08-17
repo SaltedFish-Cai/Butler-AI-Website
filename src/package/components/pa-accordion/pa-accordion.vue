@@ -24,7 +24,7 @@ const props = withDefaults(defineProps<PaAccordionProps>(), {
 const rootEl = ref<HTMLElement | null>(null);
 const activeItemId = ref("");
 
-const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-accordion_" + useRenderId()));
+const renderId = ref(props.renderId || (props.id ? props.id : "pa-accordion_" + useRenderId()));
 
 function setActiveItemId(id: string) {
   activeItemId.value = id;

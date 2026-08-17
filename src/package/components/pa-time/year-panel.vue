@@ -18,18 +18,57 @@
       <div v-if="isRange" class="m-year-month-picker-range-panel">
         <div class="m-year-month-picker-range-side">
           <div class="m-year-month-picker-header">
-            <button v-if="isYear" @click="prevYear('start')" class="m-year-month-picker-header-btn">«</button>
-            <button v-else @click="prevMouth('start')" class="m-year-month-picker-header-btn">«</button>
+            <button
+              v-if="isYear"
+              :id="id + '_start-year-prev'"
+              :data-name="name + ' (前一年份)'"
+              @click="prevYear('start')"
+              class="m-year-month-picker-header-btn"
+            >
+              «
+            </button>
+            <button
+              v-else
+              :id="id + '_start-month-prev'"
+              :data-name="name + ' (前一个月)'"
+              @click="prevMouth('start')"
+              class="m-year-month-picker-header-btn"
+            >
+              «
+            </button>
             <span class="m-year-month-picker-header-label">{{ getYearRangeLabel(startPanelDate, "start") }}</span>
-            <button v-if="!isYear" @click="nextMouth('start')" :disabled="isSameYear" class="m-year-month-picker-header-btn">
+            <button
+              v-if="!isYear"
+              :id="id + '_start-month-next'"
+              :data-name="name + ' (后一个月)'"
+              @click="nextMouth('start')"
+              :disabled="isSameYear"
+              class="m-year-month-picker-header-btn"
+            >
               »
             </button>
-            <button v-else @click="nextYear('start')" :disabled="isSameYear" class="m-year-month-picker-header-btn">»</button>
+            <button
+              v-else
+              :id="id + '_start-year-next'"
+              :data-name="name + ' (后一年份)'"
+              @click="nextYear('start')"
+              :disabled="isSameYear"
+              class="m-year-month-picker-header-btn"
+            >
+              »
+            </button>
           </div>
 
           <!-- 年份选择网格 -->
           <div v-if="isYear" class="m-year-picker-grid" @wheel="e => handleWheel(e, 'year', 'start')">
-            <div v-for="year in startYears" :key="year" :class="getYearClass(year, 'start')" @click="selectYear(year, 'start')">
+            <div
+              v-for="year in startYears"
+              :id="id + '_start-year-' + year"
+              :data-name="name + ' - ' + year + ' (年份)'"
+              :key="year"
+              :class="getYearClass(year, 'start')"
+              @click="selectYear(year, 'start')"
+            >
               {{ year }}
             </div>
           </div>
@@ -38,6 +77,8 @@
           <div v-else class="m-month-picker-grid" @wheel="e => handleWheel(e, 'month', 'start')">
             <div
               v-for="month in months"
+              :id="id + '_start-month-' + month.value"
+              :data-name="name + ' - ' + startPanelDate.year() + '-' + month.value + ' (月份)'"
               :key="month.value"
               :class="getMonthClass(month.value, 'start')"
               @click="selectMonth(month.value, 'start')"
@@ -49,18 +90,59 @@
 
         <div class="m-year-month-picker-range-side">
           <div class="m-year-month-picker-header">
-            <button v-if="isYear" @click="prevYear('end')" :disabled="isSameYear" class="m-year-month-picker-header-btn">
+            <button
+              v-if="isYear"
+              :id="id + '_end-year-prev'"
+              :data-name="name + ' (前一年份)'"
+              @click="prevYear('end')"
+              :disabled="isSameYear"
+              class="m-year-month-picker-header-btn"
+            >
               «
             </button>
-            <button v-else @click="prevMouth('end')" :disabled="isSameYear" class="m-year-month-picker-header-btn">«</button>
+            <button
+              v-else
+              :id="id + '_end-month-prev'"
+              :data-name="name + ' (前一个月)'"
+              @click="prevMouth('end')"
+              :disabled="isSameYear"
+              class="m-year-month-picker-header-btn"
+            >
+              «
+            </button>
             <span class="m-year-month-picker-header-label">{{ getYearRangeLabel(endPanelDate, "end") }}</span>
-            <button v-if="!isYear" @click="nextMouth('end')" class="m-year-month-picker-header-btn">»</button>
-            <button v-else @click="nextYear('end')" class="m-year-month-picker-header-btn">»</button>
+            <button
+              v-if="!isYear"
+              :id="id + '_end-month-next'"
+              :data-name="name + ' (后一个月)'"
+              @click="nextMouth('end')"
+              :disabled="isSameYear"
+              class="m-year-month-picker-header-btn"
+            >
+              »
+            </button>
+            <button
+              v-else
+              :id="id + '_end-year-next'"
+              :data-name="name + ' (后一年份)'"
+              @click="nextYear('end')"
+              :disabled="isSameYear"
+              class="m-year-month-picker-header-btn"
+            >
+              »
+            </button>
           </div>
 
           <!-- 年份选择网格 -->
           <div v-if="isYear" class="m-year-picker-grid" @wheel="e => handleWheel(e, 'year', 'end')">
-            <div v-for="year in endYears" :key="year" :class="getYearClass(year, 'end')" @click="selectYear(year, 'end')">
+            <div
+              v-for="year in endYears"
+              :id="id + '_end-year-' + year"
+              :data-name="name + ' - ' + year + ' (年份)'"
+              :key="year"
+              :class="getYearClass(year, 'end')"
+              @click="selectYear(year, 'end')"
+            >
               {{ year }}
             </div>
           </div>
@@ -69,6 +151,8 @@
           <div v-else class="m-month-picker-grid" @wheel="e => handleWheel(e, 'month', 'end')">
             <div
               v-for="month in months"
+              :id="id + '_end-month-' + month.value"
+              :data-name="name + ' - ' + endPanelDate.year() + '-' + month.value + ' (月份)'"
               :key="month.value"
               :class="getMonthClass(month.value, 'end')"
               @click="selectMonth(month.value, 'end')"
@@ -82,21 +166,69 @@
       <!-- 单个年月选择面板 -->
       <template v-else>
         <div class="m-year-month-picker-header">
-          <button v-if="isYear" @click="prevYear()" class="m-year-month-picker-header-btn">«</button>
-          <button v-else @click="prevMouth()" class="m-year-month-picker-header-btn">«</button>
+          <button
+            v-if="isYear"
+            :id="id + '_year-prev'"
+            :data-name="name + ' (前一年份)'"
+            @click="prevYear()"
+            class="m-year-month-picker-header-btn"
+          >
+            «
+          </button>
+          <button
+            v-else
+            :id="id + '_month-prev'"
+            :data-name="name + ' (前一个月)'"
+            @click="prevMouth()"
+            class="m-year-month-picker-header-btn"
+          >
+            «
+          </button>
           <span class="m-year-month-picker-header-label">{{ getYearRangeLabel(currentDate) }}</span>
-          <button v-if="!isYear" @click="nextMouth()" class="m-year-month-picker-header-btn">»</button>
-          <button v-else @click="nextYear()" class="m-year-month-picker-header-btn">»</button>
+          <button
+            v-if="!isYear"
+            :id="id + '_month-next'"
+            :data-name="name + ' (后一个月)'"
+            @click="nextMouth()"
+            class="m-year-month-picker-header-btn"
+          >
+            »
+          </button>
+          <button
+            v-else
+            :id="id + '_year-next'"
+            :data-name="name + ' (后一年份)'"
+            @click="nextYear()"
+            class="m-year-month-picker-header-btn"
+          >
+            »
+          </button>
         </div>
 
         <!-- 年份选择网格 -->
         <div v-if="isYear" class="m-year-picker-grid" @wheel="e => handleWheel(e, 'year')">
-          <div v-for="year in currentYears" :key="year" :class="getYearClass(year)" @click="selectYear(year)">{{ year }}</div>
+          <div
+            v-for="year in currentYears"
+            :id="id + '_current-year-' + year"
+            :data-name="name + ' - ' + year + ' (年份)'"
+            :key="year"
+            :class="getYearClass(year)"
+            @click="selectYear(year)"
+          >
+            {{ year }}
+          </div>
         </div>
 
         <!-- 月份选择网格 -->
         <div v-else class="m-month-picker-grid" @wheel="e => handleWheel(e, 'month')">
-          <div v-for="month in months" :key="month.value" :class="getMonthClass(month.value)" @click="selectMonth(month.value)">
+          <div
+            v-for="month in months"
+            :id="id + '_current-month-' + month.value"
+            :data-name="name + ' - ' + currentDate.year() + '-' + month.value + ' (月份)'"
+            :key="month.value"
+            :class="getMonthClass(month.value)"
+            @click="selectMonth(month.value)"
+          >
             {{ month.text }}
           </div>
         </div>
@@ -104,8 +236,22 @@
 
       <!-- 底部操作按钮 -->
       <div class="m-year-month-picker-footer">
-        <pa-button @click="handleCancel" is="trash" type="default">清空</pa-button>
-        <pa-button @click="confirmSelection" font="check_line" type="primary">确定</pa-button>
+        <pa-button
+          :render-id="id + '_cancel'"
+          :data-name="name + ' (清空选择时间)'"
+          is="trash"
+          type="default"
+          @click="handleCancel"
+          :text="{ 'zh-CN': '清空', 'en-US': 'Clear' }"
+        />
+
+        <pa-button
+          :render-id="id + '_confirm'"
+          :data-name="name + ' (确认时间)'"
+          is="submit"
+          @click="confirmSelection"
+          :text="{ 'zh-CN': '确定', 'en-US': 'Confirm' }"
+        />
       </div>
     </div>
   </div>
@@ -135,6 +281,7 @@ import type { DatePickerShortcut, MDatePickerType } from "./types";
 const props = withDefaults(
   defineProps<{
     id?: string;
+    name?: string;
     modelValue?: any;
     type?: MDatePickerType;
     valueType?: "date" | "dayjs" | "string";
@@ -376,10 +523,9 @@ function selectMonth(month: number, position?: "end" | "start"): void {
   const year =
     isRange.value && position
       ? position === "start"
-        ? selectedRangeYears.value[0]
-        : selectedRangeYears.value[1]
-      : selectedYear.value;
-
+        ? startPanelDate.value.year()
+        : endPanelDate.value.year()
+      : currentDate.value.year();
   if (year === null) return;
 
   const date = dayjs()

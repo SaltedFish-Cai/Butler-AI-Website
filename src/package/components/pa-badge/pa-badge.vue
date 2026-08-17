@@ -27,7 +27,7 @@ import useRenderId from "../tools/render-id";
  */
 const props = withDefaults(defineProps<ComponentProps>(), {});
 
-const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-badge_" + useRenderId()));
+const renderId = ref(props.renderId || (props.id ? props.id : "pa-badge_" + useRenderId()));
 
 /**
  * **显示值**

@@ -3,6 +3,7 @@
   flex-direction: column;
   gap: var(--pa-size-padding, 10px);
   width: 100%;
+  font-family: var(--pa-component-font-family);
 }
 
 .pa-accordion-item {
@@ -11,6 +12,7 @@
   background: var(--pa-color-bg, #fff);
   transition: var(--pa-animation-time, 0.2s);
   position: relative;
+  font-family: var(--pa-component-font-family);
 }
 
 .pa-accordion-item--disabled {
@@ -74,7 +76,7 @@
   border-top-right-radius: 0;
 }
 
-.pa-accordion-item--expanded {
+.pa-accordion-item--expand {
   border-color: var(--pa-color-primary);
   > .pa-accordion-item__header {
     border-bottom: 1px solid var(--pa-color-border, #dcdfe6);

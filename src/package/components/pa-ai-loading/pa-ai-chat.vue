@@ -60,7 +60,7 @@ import { ref, computed, onMounted, onUnmounted, provide, nextTick } from "vue";
 import useRenderId from "../tools/render-id";
 
 const props = defineProps<{ id?: string; renderId?: string }>();
-const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-ai-chat_" + useRenderId()));
+const renderId = ref(props.renderId || (props.id ? props.id : "pa-ai-chat_" + useRenderId()));
 
 // ─── Constants ───────────────────────────────────────────────────────
 

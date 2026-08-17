@@ -5,11 +5,7 @@
         class="table_body_label"
         :class="[
           isRowIndex(item) ? 'table_body_label_index' : '',
-          item.fixed == 'left'
-            ? 'sticky-left border-right'
-            : item.fixed == 'right'
-            ? 'sticky-right border-right'
-            : 'border-right',
+          item.fixed == 'left' ? 'sticky-left border-right' : item.fixed == 'right' ? 'sticky-right' : 'border-right',
           (!item.width && !setCellWidthIng) || (useAverageWidth == 1 && !item.baseWidth && item.prop != 'operation')
             ? 'table_body_label_flex'
             : '',
@@ -73,11 +69,16 @@
 
           <!-- slot -->
           <template v-else-if="item.prop != 'operation' && $slots[String(item.prop)]">
-            <slot :name="String(item.prop)" :row="row" :index="rowIndex"></slot>
+            <slot
+              :name="String(item.prop)"
+              :row="row"
+              :index="rowIndex"
+              :info="{ renderId: tableId + '-' + item.prop + '_' + rowIndex, name: '表格数据填写 - ' + item.label }"
+            ></slot>
           </template>
 
           <!-- operation -->
-          <Operation v-else-if="item.prop == 'operation'" :row="row" :column="{ ...item }">
+          <Operation v-else-if="item.prop == 'operation'" :row="row" :column="{ ...item }" :tableId="tableId">
             <template #operation>
               <slot name="operation" :row="row" :index="row.rowIndex"></slot>
             </template>
@@ -94,8 +95,10 @@
 
             <cell-tag
               v-else-if="item?.cellConfig.type == 'tag'"
+              :id="tableId"
               :value="row[String(item.prop)]"
               :row="row"
+              :item-config="item"
               :clickTag="exCellDependent?.tag_click?.[String(item.prop)]"
               :disabled="exCellDependent?.tag_disabled?.[String(item.prop)]?.({ value: row[String(item.prop)] })"
               :exOptions="(exOptions[String(item.prop)] as PaOptionType.SelectList) || item.cellConfig.exOptions"
@@ -351,6 +354,7 @@ import { PancakeGlobalConfigType } from "../pa-manager/types";
  * 单元格组件属性类型
  */
 type TableCellType = {
+  tableId: string;
   structure: Array<ComponentUseItemProps>;
   row: PaTableUseType.PaTableInDataType;
   renderIndex?: number;

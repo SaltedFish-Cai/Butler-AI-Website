@@ -116,7 +116,7 @@ const props = withDefaults(defineProps<ComponentProps>(), {
  * @type {string}
  * @description 生成组件唯一标识
  */
-const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-dialog_" + useRenderId()));
+const renderId = ref(props.renderId || (props.id ? props.id : "pa-dialog_" + useRenderId()));
 /**
  * 组件事件定义
  * @type ComponentEmits

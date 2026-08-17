@@ -14,6 +14,7 @@
       :popoverWidth="!isRange ? 280 : 600"
       :teleportTo="props.teleportInContainer ? selectRef : 'body'"
       :targetClose="false"
+      :closeByScroll="false"
     >
       <template #reference>
         <div class="pa-time-content">
@@ -23,6 +24,7 @@
           <div v-if="!isRange" class="pa-time-input" :class="[isFocus ? 'is-focus' : '']">
             <input
               :id="renderId + '_input_inner'"
+              :data-name="typeof name === 'string' ? name : name?.[languageValue]"
               class="pa-time-input-inner"
               v-model="inValue"
               :placeholder="inputPlaceholder"
@@ -37,6 +39,7 @@
           <div v-else class="pa-time-input" :class="[isFocus ? 'is-focus' : '']">
             <input
               :id="renderId + '_start_input_inner'"
+              :data-name="typeof name === 'string' ? name : name?.[languageValue]"
               class="pa-time-input-inner center"
               v-model="inValue[0]"
               :placeholder="languagePackage['startTime']"
@@ -50,6 +53,7 @@
             -
             <input
               :id="renderId + '_end_input_inner'"
+              :data-name="typeof name === 'string' ? name : name?.[languageValue]"
               class="pa-time-input-inner center"
               v-model="inValue[1]"
               :placeholder="languagePackage['endTime']"
@@ -66,6 +70,7 @@
       <MDateTimePanel
         v-if="DATE_TIME_MAP[type]"
         :id="renderId + '_date_time_panel'"
+        :name="typeof name === 'string' ? name : name?.[languageValue]"
         :model-value="internalValue"
         :type="type"
         :shortcuts="shortcuts"
@@ -75,6 +80,7 @@
       <MYearPanel
         v-else-if="YEAR_MAP[type]"
         :id="renderId + '_year_panel'"
+        :name="typeof name === 'string' ? name : name?.[languageValue]"
         :model-value="internalValue"
         :type="type"
         :shortcuts="shortcuts"
@@ -215,7 +221,7 @@ const emits = defineEmits<ComponentEmits>();
  * render-id
  * @description 组件唯一标识
  */
-const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-time_" + useRenderId()));
+const renderId = ref(props.renderId || (props.id ? props.id : "pa-time_" + useRenderId()));
 
 /**
  * 是否为范围选择

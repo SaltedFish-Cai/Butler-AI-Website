@@ -19,6 +19,7 @@
           <input
             v-if="type === 'password'"
             :id="renderId + '_inner-input'"
+            :data-name="typeof name === 'string' ? name : name?.[languageValue]"
             ref="textareaRef"
             class="pa-input-textarea-inner"
             :class="[isFocus ? 'is-focus' : 'not-focus']"
@@ -40,6 +41,7 @@
           <textarea
             v-else
             :id="renderId + '_inner-input'"
+            :data-name="typeof name === 'string' ? name : name?.[languageValue]"
             ref="textareaRef"
             class="pa-input-textarea-inner textarea"
             :class="[isFocus ? 'is-focus' : 'not-focus']"
@@ -191,7 +193,7 @@ const props = withDefaults(defineProps<ComponentProps>(), {
  * @type string
  * @description 用于唯一标识组件的字符串
  */
-const renderId = ref(props.renderId || (props.id ? props.id + "_" + useRenderId() : "pa-input_" + useRenderId()));
+const renderId = ref(props.renderId || (props.id ? props.id : "pa-input_" + useRenderId()));
 /**
  * 组件事件定义
  * @description 定义组件可触发的事件

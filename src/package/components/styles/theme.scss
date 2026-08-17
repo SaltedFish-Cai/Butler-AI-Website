@@ -97,21 +97,25 @@
 // LIGHT
 .pa-content.light {
   @extend %colors-light;
+  --pa-component-font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial,
+    sans-serif;
+
+  font-family: var(--pa-component-font-family);
 
   // LIGHT
   --pa-overlay-color-lighter: rgba(0, 0, 0, 0.5);
 
   // V2
-  --pa-size-font: 14px;
-  --pa-size-height: 28px;
-  --pa-size-padding: 10px;
-  --pa-size-radius: 8px;
+  --pa-size-font: 12px;
+  --pa-size-height: calc(var(--pa-size-font) * 2);
+  --pa-size-padding: 8px;
+  --pa-size-radius: 5px;
 
-  --pa-size-font_small: calc(var(--pa-size-font) * 0.8);
-  --pa-size-font_large: calc(var(--pa-size-font) * 1.2);
+  --pa-size-font_small: calc(var(--pa-size-font) - 1px);
+  --pa-size-font_large: calc(var(--pa-size-font) + 1px);
 
-  --pa-size-padding_small: calc(var(--pa-size-padding) * 0.5);
-  --pa-size-padding_large: calc(var(--pa-size-padding) * 1.2);
+  --pa-size-padding_small: calc(var(--pa-size-padding) - 2px);
+  --pa-size-padding_large: calc(var(--pa-size-padding) + 2px);
 
   // V2
   --pa-color-info: #909399;
@@ -160,16 +164,14 @@
 
 // LARGE
 .pa-content.large {
-  --pa-size-font: 16px;
-  --pa-size-height: 32px;
-  --pa-size-padding: 12px;
-  --pa-size-radius: 10px;
+  --pa-size-font: 13px;
+  --pa-size-padding: 10px;
+  --pa-size-radius: 8px;
 }
 
 // SMALL
 .pa-content.small {
-  --pa-size-font: 13px;
-  --pa-size-height: 26px;
-  --pa-size-padding: 8px;
-  --pa-size-radius: 6px;
+  --pa-size-font: 11px;
+  --pa-size-padding: 6px;
+  --pa-size-radius: 3px;
 }

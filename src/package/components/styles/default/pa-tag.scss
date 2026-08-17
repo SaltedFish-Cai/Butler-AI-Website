@@ -1,39 +1,37 @@
 .pa-tag {
   display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  transform: translateX(-2px);
   flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
   width: 100%;
+  transform: translateX(-2px);
+  font-family: var(--pa-component-font-family);
 
   .pa-tag-text {
     display: flex;
+    flex: 0 0 max-content;
+    align-items: center;
+    justify-content: center;
+    width: max-content;
     padding: 1px calc(var(--pa-size-padding, 10px) / 2);
     margin: calc(var(--pa-size-padding, 10px) / 4);
-    border-radius: calc(var(--pa-size-radius, 3px) * 0.8);
-    line-height: normal;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--pa-color-info-light-8);
-    color: var(--pa-color-font);
-    font-size: calc(var(--pa-size-font, 13px) - 1px);
     overflow: hidden;
-    width: max-content;
-    flex: 0 0 max-content;
-
+    font-size: calc(var(--pa-size-font, 13px) - 1px);
+    line-height: normal;
+    color: var(--pa-color-font);
+    background-color: var(--pa-color-info-light-8);
+    border-radius: calc(var(--pa-size-radius, 3px) * 0.8);
     .pa-tag-text_content {
       width: max-content;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
     }
-
     .pa-tag-text_close {
       margin-left: calc(var(--pa-size-padding, 10px) / 2);
+      font-size: var(--pa-size-font, 13px);
       color: var(--pa-color-default);
       transition: var(--pa-animation-time, 0.2s);
-      font-size: var(--pa-size-font, 13px);
-
       &:hover {
         color: var(--pa-color-danger);
         cursor: pointer;
@@ -41,54 +39,74 @@
     }
   }
 }
-
 .pa-tag-collapse {
   flex-wrap: nowrap;
   max-width: calc(100%);
-
   &-count {
-    width: auto;
     flex: none;
+    width: auto;
   }
 }
-
 .pa-tag-add {
-  border: 1px dashed var(--pa-color-info-light-4) !important;
-  background-color: transparent !important;
   cursor: text;
-
+  background-color: transparent !important;
+  border: 1px dashed var(--pa-color-info-light-4) !important;
   input {
     width: 100%;
+    font-family: inherit;
+    font-size: var(--pa-size-font, 13px);
+    color: var(--pa-color-font);
+    background-color: transparent;
     border: none;
     outline: none;
-    background-color: transparent;
-    color: var(--pa-color-font);
-    font-size: var(--pa-size-font, 13px);
-    font-family: inherit;
-
     &::placeholder {
       color: var(--pa-color-info-light-4);
     }
   }
-
   &:hover {
     border-color: var(--pa-color-primary) !important;
   }
-
   &:focus-within {
     border-color: var(--pa-color-primary) !important;
   }
 }
-
 .pa-popover-reference {
   & > .pa-tag-text {
     color: var(--pa-color-font);
     background-color: var(--pa-color-info-light-6);
     transition: background-color var(--pa-animation-time, 0.2s);
-
     &:hover {
       color: var(--pa-color-white);
       background-color: var(--pa-color-primary);
+    }
+  }
+}
+
+// ---------- 徽标模式（type / plain，供 el-tag 风格的单徽标展示） ----------
+.pa-tag-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 1px calc(var(--pa-size-padding, 10px) / 2);
+  margin: calc(var(--pa-size-padding, 10px) / 4);
+  font-size: var(--pa-size-font, 13px);
+  line-height: 1.4;
+  white-space: nowrap;
+  border: 1px solid transparent;
+  border-radius: calc(var(--pa-size-radius, 3px) * 0.8);
+
+  $pa-tag-types: ("primary", "success", "warning", "danger", "info");
+
+  @each $pa-tag-type in $pa-tag-types {
+    &.pa-tag-badge-#{$pa-tag-type} {
+      color: var(--pa-color-#{$pa-tag-type});
+      background-color: var(--pa-color-#{$pa-tag-type}-light-8);
+      border-color: var(--pa-color-#{$pa-tag-type}-light-6);
+    }
+
+    &.pa-tag-badge-plain.pa-tag-badge-#{$pa-tag-type} {
+      color: var(--pa-color-#{$pa-tag-type});
+      background-color: var(--pa-color-send-bg);
+      border-color: var(--pa-color-#{$pa-tag-type});
     }
   }
 }

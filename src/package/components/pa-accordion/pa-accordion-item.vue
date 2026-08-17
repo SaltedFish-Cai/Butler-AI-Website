@@ -1,10 +1,10 @@
 <template>
   <div
     ref="rootEl"
-    :id="accordionCtx?.renderId + '_' + itemIdCounter"
+    :id="accordionCtx?.renderId + '_' + itemId"
     class="pa-accordion-item"
     :class="{
-      'pa-accordion-item--expanded': isExpanded,
+      'pa-accordion-item--expand': isExpand,
       'pa-accordion-item--disabled': disabled,
       'pa-accordion-item--header-stuck': isHeaderStuck
     }"
@@ -12,23 +12,27 @@
     <div class="pa-accordion-item__sticky-sentinel" ref="sentinelEl"></div>
     <div
       class="pa-accordion-item__header"
+      :id="accordionCtx?.renderId + '_' + itemId"
+      :data-label="(typeof title === 'string' ? title : title[languageValue]) + '(accordion)'"
       @click="handleHeaderClick"
       role="button"
       :tabindex="disabled ? -1 : 0"
       @keydown.enter="handleHeaderClick"
     >
       <div class="pa-accordion-item__header_content">
-        <slot name="header" :expanded="isExpanded" :toggle="toggleExpanded">节点</slot>
+        <slot name="header" :expand="isExpand" :toggle="toggleExpand">
+          {{ typeof title === "string" ? title : title[languageValue] }}
+        </slot>
       </div>
       <pa-icon
         name="butler-caret-down"
         class="pa-accordion-item__arrow"
-        :class="[isExpanded ? 'pa-accordion-item__arrow--open' : '']"
+        :class="[isExpand ? 'pa-accordion-item__arrow--open' : '']"
       />
     </div>
     <Transition name="accordion-slide">
-      <div v-if="isExpanded" class="pa-accordion-item__body" :class="paddingClasses">
-        <slot name="default" :expanded="isExpanded" />
+      <div v-if="isExpand" class="pa-accordion-item__body" :class="paddingClasses">
+        <slot name="default" :expand="isExpand" />
       </div>
     </Transition>
   </div>
@@ -43,31 +47,52 @@ let itemIdCounter = 0;
  * 模块导入
  * @description 导入 Vue 组合式 API
  */
-import { computed, inject, onMounted, onUnmounted, ref, watch } from "vue";
+import { computed, ComputedRef, inject, onMounted, onUnmounted, ref, watch } from "vue";
 /**
  * 模块导入
  * @description 导入组件类型定义
  */
 import type { PaAccordionItemProps, PaAccordionItemEmits, PaAccordionContext } from "./types";
+/**
+ * 模块导入
+ * @description 导入全局配置类型
+ */
+import { PancakeGlobalConfigType } from "../pa-manager/types";
+
+/**
+ * 全局配置注入
+ * @type ComputedRef<PancakeGlobalConfigType>
+ * @description 注入全局配置对象
+ */
+const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<PancakeGlobalConfigType>;
 
 const props = withDefaults(defineProps<PaAccordionItemProps>(), {
-  expanded: false,
+  expand: false,
   disabled: false,
-  padding: () => ["all"]
+  padding: () => ["all"],
+  title: () => ({ "zh-CN": "节点", "en-US": "Node" })
 });
 const emit = defineEmits<PaAccordionItemEmits>();
 /**
+ * 当前语言值
+ * @type ComputedRef<string>
+ * @description 当前选中的语言
+ */
+const languageValue = computed(() => {
+  return PancakeGlobalConfig.value?.language || "zh-CN";
+});
+/**
  * 展开状态
  */
-const isExpanded = computed({
-  get: () => props.expanded,
-  set: (val: boolean) => emit("update:expanded", val)
+const isExpand = computed({
+  get: () => props.expand,
+  set: (val: boolean) => emit("update:expand", val)
 });
 
 const accordionCtx = inject<PaAccordionContext>("accordion");
-const itemId = `pa-accordion-item-${++itemIdCounter}`;
+const itemId = `_item-${++itemIdCounter}`;
 if (accordionCtx?.singleExpand) {
-  watch(isExpanded, val => {
+  watch(isExpand, val => {
     if (val) {
       accordionCtx.setActiveItemId(itemId);
     } else if (accordionCtx.activeItemId.value === itemId) {
@@ -76,8 +101,8 @@ if (accordionCtx?.singleExpand) {
   });
 
   watch(accordionCtx.activeItemId, newId => {
-    if (newId && newId !== itemId && isExpanded.value) {
-      isExpanded.value = false;
+    if (newId && newId !== itemId && isExpand.value) {
+      isExpand.value = false;
     }
   });
 }
@@ -121,9 +146,9 @@ onUnmounted(() => {
 /**
  * 切换展开状态
  */
-function toggleExpanded() {
+function toggleExpand() {
   if (props.disabled) return;
-  isExpanded.value = !isExpanded.value;
+  isExpand.value = !isExpand.value;
 }
 /**
  * 头部点击处理
@@ -133,7 +158,7 @@ function handleHeaderClick(event) {
   if (props.disabled) return;
   const target = event.target as HTMLElement;
   if (target.closest("button, a, [data-accordion-no-toggle]")) return;
-  toggleExpanded();
+  toggleExpand();
 }
 </script>
 
