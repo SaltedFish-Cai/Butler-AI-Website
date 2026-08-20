@@ -34,7 +34,7 @@
   }
   .table-flex-ri,
   .table-flex-lf {
-    margin-bottom: calc(var(--pa-size-padding, 10px) * 0.5);
+    margin-bottom: var(--pa-size-padding, 10px);
     display: flex;
     align-items: center;
     justify-content: flex-end;
@@ -85,12 +85,12 @@
 .pa-table.pa-table_sticky {
   height: max-content !important;
   .pa-table_body_header_box {
-    position: sticky;
+    position: sticky !important;
     padding-top: var(--pa-size-padding, 10px);
     top: 0;
   }
   .use-sticky-view-in.pa-table_footer {
-    position: sticky;
+    position: sticky !important;
     padding-bottom: var(--pa-size-padding, 10px);
     bottom: 0;
     z-index: 10;
@@ -99,13 +99,16 @@
   &:has(.use-sticky-view-in.pa-table_footer) {
     & > .pa-table_body {
       position: initial;
+      overflow: visible;
       > .pa-scrollbar {
         position: initial;
         overflow: initial;
         padding-bottom: 0;
         > .scrollbar__bar.is-horizontal {
           position: sticky;
-          bottom: calc(var(--pa-table-footer-height, 0px) + 1px);
+          bottom: calc(var(--pa-table-footer-height, 0px));
+          width: 100%;
+          border-bottom: 1px solid var(--pa-color-border);
         }
       }
     }

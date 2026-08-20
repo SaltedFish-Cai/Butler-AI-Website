@@ -10,11 +10,11 @@
     >
       <div class="pa-message_header">
         <div class="flex-center-start">
-          <pa-icon class="pa-message__icon pa-mr-size" name="warning_line"></pa-icon>
-          <div v-if="dangerouslyUseHTMLString" class="pa-message__content" v-html="message"></div>
+          <pa-icon class="pa-message__icon pa-mr-size" name="warning_line" />
+          <div v-if="dangerouslyUseHTMLString" class="pa-message__content" v-html="message" />
           <div v-else class="pa-message__content">{{ typeof message === "string" ? message : message?.[language] }}</div>
         </div>
-        <pa-icon class="pa-message__closeBtn" @click="handleClose" name="close_line"></pa-icon>
+        <pa-icon class="pa-message__closeBtn" @click="handleClose" name="close_line" />
       </div>
     </div>
   </transition>
@@ -65,7 +65,6 @@ const {
   dangerouslyUseHTMLString = false,
   onClick,
   onClose,
-  zIndex = 2050,
   closeOnPressEscape = true
 } = props.options;
 /**
@@ -89,11 +88,21 @@ const verticalOffset = ref(offset);
  */
 const escapeMap = typeof window !== "undefined" ? window.PancakeGlobalConfig?.escapeMap : undefined;
 /**
+ * 全局层级获取函数
+ * @description 从父组件注入的全局层级管理函数
+ */
+const getGlobalZIndex = window.getGlobalZIndex;
+/**
+ * 遮罩层层级
+ * @description 当前遮罩层的 z-index 值
+ */
+const zIndex = ref(getGlobalZIndex());
+/**
  * 计算样式
  * @description 计算消息的样式对象
  */
 const styles = computed(() => ({
-  zIndex,
+  zIndex: zIndex.value,
   top: `${verticalOffset.value}px`
 }));
 /**

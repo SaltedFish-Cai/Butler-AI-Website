@@ -2,19 +2,20 @@
   <div :id="renderId" class="pa-title" :class="[props.class, styleMode.model, paddingClasses]" :style="props.style">
     <div class="pa-title_box">
       <div class="pa-title_text">
-        <slot />
-        <div class="pa-title_tip" v-if="tipsPosition == 'right'">
+        <slot>
+          {{ typeof text === "string" ? text : text?.[languageValue] || "" }}
+        </slot>
+        <div class="pa-title_tip" v-if="tipsPosition == 'right' && tips">
           <div class="pa-ml-size">
-            (<slot name="tips">{{ tips }}</slot
-            >)
+            (<slot name="tips"> {{ typeof tips === "string" ? tips : tips[languageValue] }} </slot>)
           </div>
         </div>
       </div>
     </div>
     <pa-line v-if="styleMode.lineConfig" v-bind="(styleMode.lineConfig as LineComponentProps)" />
 
-    <div class="pa-title_tip" v-if="tipsPosition == 'bottom'">
-      <slot name="tips">{{ tips }}</slot>
+    <div class="pa-title_tip" v-if="tipsPosition == 'bottom' && tips">
+      <slot name="tips">{{ typeof tips === "string" ? tips : tips[languageValue] }}</slot>
     </div>
   </div>
 </template>
@@ -73,6 +74,14 @@ const props = withDefaults(defineProps<ComponentProps>(), {
  */
 const renderId = ref(props.renderId || (props.id ? props.id : "pa-title_" + useRenderId()));
 defineExpose();
+/**
+ * 当前语言值
+ * @type ComputedRef<string>
+ * @description 当前选中的语言
+ */
+const languageValue = computed(() => {
+  return PancakeGlobalConfig.value?.language || "zh-CN";
+});
 /**
  * padding class 计算（合并为单个 computed，减少 Vue 依赖追踪节点）
  * @description 根据 padding prop 计算 padding class 列表

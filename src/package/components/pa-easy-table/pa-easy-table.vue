@@ -11,7 +11,7 @@
           <div class="pa-easy-table__cell--header_inner">{{ col.label }}</div>
         </div>
       </div>
-      <pa-empty v-if="data.length === 0" style="--pa-color-bg: transparent" />
+      <pa-empty v-if="data.length === 0" :style="{ '--pa-color-bg': 'transparent' }" />
       <pa-scrollbar
         v-else
         @directly-scroll="onDirectlyScroll"

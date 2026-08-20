@@ -20,11 +20,6 @@ class MessageManagerTypeImpl implements MessageManagerType {
    * @description 当前显示的所有消息实例
    */
   Messages: Array<MessageInstance> = [];
-  /**
-   * 基础层级
-   * @description 消息的基础 z-index 值
-   */
-  zIndex = 3050;
 
   add(options: MessageOptions): MessageInstance {
     const id = `Message_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
@@ -32,7 +27,6 @@ class MessageManagerTypeImpl implements MessageManagerType {
     const mergedOptions = {
       ...options,
       message: typeof options.message === "string" ? options.message : options.message?.[languageKey] || "",
-      zIndex: options.zIndex || this.zIndex++,
       position: "center"
     };
 

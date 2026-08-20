@@ -78,7 +78,6 @@ const {
   offset = 0,
   position = "top-right",
   duration = 3000,
-  zIndex = 2050,
   loading = false
 } = props.options;
 /**
@@ -107,12 +106,22 @@ const timer = ref<ReturnType<typeof setTimeout> | null>(null);
  */
 const verticalOffset = ref(offset);
 /**
+ * 全局层级获取函数
+ * @description 从父组件注入的全局层级管理函数
+ */
+const getGlobalZIndex = window.getGlobalZIndex;
+/**
+ * 遮罩层层级
+ * @description 当前遮罩层的 z-index 值
+ */
+const zIndex = ref(getGlobalZIndex());
+/**
  * 计算样式
  * @description 计算通知的样式对象，包含位置和层级信息
  */
 const styles = computed(() => {
   const style: Record<string, number | string> = {
-    zIndex,
+    zIndex: zIndex.value,
     top: `${verticalOffset.value}px`,
     left: "auto",
     right: "auto",

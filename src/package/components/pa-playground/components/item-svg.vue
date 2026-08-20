@@ -40,7 +40,7 @@
               type="warning"
               @click="openEditItemBaseDialog(baseConfig)"
               :debounced="false"
-              style="--pa-button-color: #6244cf; --pa-button-color2: #e8e2ff"
+              :style="{ '--pa-button-color': '#6244cf', '--pa-button-color2': '#e8e2ff' }"
             >
               {{ language === "zh-CN" ? "表格设置" : "Table Settings" }}
             </pa-button>
@@ -51,7 +51,7 @@
               type="warning"
               @click="openEditItemBaseDialog(baseConfig)"
               :debounced="false"
-              style="--pa-button-color: #b344cf; --pa-button-color2: #f0e0f4"
+              :style="{ '--pa-button-color': '#b344cf', '--pa-button-color2': '#f0e0f4' }"
             >
               {{ language === "zh-CN" ? "表单设置" : "Form Settings" }}
             </pa-button>
@@ -62,7 +62,7 @@
               type="warning"
               @click="openEditItemBaseDialog(baseConfig)"
               :debounced="false"
-              style="--pa-button-color: #d76c09; --pa-button-color2: #fce8d6"
+              :style="{ '--pa-button-color': '#d76c09', '--pa-button-color2': '#fce8d6' }"
             >
               {{ language === "zh-CN" ? "选项卡设置" : "Tabs Settings" }}
             </pa-button>

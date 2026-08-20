@@ -237,7 +237,7 @@ export type ComponentRef = {
    * @type `() => Promise<Record<string, string> | "no-change" | false | void>`
    * @description 校验并获取表格数据，校验失败返回 false，校验成功返回表格数据，若没有变更则返回 "no-change"
    */
-  getSubmitForm: () => Promise<Record<string, string> | "no-change" | false | void>;
+  getSubmitForm: (draft?: boolean) => Promise<Record<string, string> | "no-change" | false | void>;
   /**
    * **清除表单所有数据**
    * @type `() => void`

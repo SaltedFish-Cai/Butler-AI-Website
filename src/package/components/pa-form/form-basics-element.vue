@@ -661,15 +661,12 @@ function disabledFn(data) {
   word-break: break-all;
 }
 .cell-slots {
+  padding-top: 5px;
   font-size: 14px;
   line-height: 1.5em;
   word-break: break-all;
-  padding-top: 5px;
 }
-
 .h26 {
   height: 26px;
 }
 </style>
-
-<style lang="scss"></style>

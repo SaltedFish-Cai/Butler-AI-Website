@@ -11,7 +11,7 @@
           <template v-for="(itemConfigs, itemConfigsIndex) in inMultipleConfig" :key="itemConfigs.unitName">
             <!-- Group组标题 -->
             <template v-if="itemConfigs.unitName != 'default'">
-              <pa-title :padding="[itemConfigsIndex != 0 ? 'top' : 'null']">
+              <pa-title :padding="[itemConfigsIndex != 0 ? 'top' : 'null', 'bottom']">
                 <div ref="RefUnitContainer">{{ itemConfigs.unitName }}</div>
                 <pa-popover v-if="itemConfigs.unitTip" trigger="hover" :teleport-to="RefUnitContainer" placement="top">
                   <template #reference>
@@ -778,7 +778,27 @@ onMounted(() => {
  * @returns `Record<string, string>` | `"no-change"` | `false` | `void` 校验通过返回数据，无变更返回"no-change"，失败返回false
  * @description 校验表单并获取数据，校验失败返回 false，校验成功返回表格数据，若没有变更则返回 "no-change"
  */
-async function getSubmitForm() {
+
+function getDataToSubmit() {
+  const deepData: Record<string, any> = cloneDeep(formData.value) || {};
+  const FormData = deepData;
+  const _configs = props.structure || [];
+  for (let index = 0; index < _configs.length; index++) {
+    const element = _configs[index];
+    if (element.type == "tabs-form" && element.prop && FormData[element.prop]) {
+      FormData[element.prop] = FormData[element.prop].map(item => {
+        delete item.name;
+        delete item.isError;
+        return item;
+      });
+    }
+  }
+  return FormData;
+}
+
+async function getSubmitForm(draft?: boolean) {
+  if (draft) return getDataToSubmit();
+
   if (initialization.value == -1) {
     return false;
   }
@@ -798,20 +818,7 @@ async function getSubmitForm() {
     }
   }
   if (formResult) {
-    const deepData: Record<string, any> = cloneDeep(formData.value) || {};
-    const FormData = deepData;
-    const _configs = props.structure || [];
-    for (let index = 0; index < _configs.length; index++) {
-      const element = _configs[index];
-      if (element.type == "tabs-form" && element.prop && FormData[element.prop]) {
-        FormData[element.prop] = FormData[element.prop].map(item => {
-          delete item.name;
-          delete item.isError;
-          return item;
-        });
-      }
-    }
-
+    const FormData = getDataToSubmit();
     if (isEqual(baseFormData, FormData)) return "no-change";
     return FormData;
   } else {
@@ -830,7 +837,7 @@ async function getSubmitForm() {
  */
 async function cleanAll() {
   formData.value = {};
-  FormControlRef.value?.resetFields();
+  // FormControlRef.value?.resetFields();
   FormControlRef.value.clearValidate();
 }
 

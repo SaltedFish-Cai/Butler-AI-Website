@@ -41,20 +41,18 @@ const RefLabelContainer = ref();
 </script>
 
 <style lang="scss" scoped>
-.form_label_text {
-  font-size: calc(var(--pa-size-font, 16px) + 1px);
-  font-weight: bold;
-  color: var(--pa-title-color);
-  word-break: break-all;
-}
 .form_label {
   display: flex;
+  align-items: center;
   justify-content: flex-start;
   color: var(--dms-page-text-color);
-  align-items: center;
   &_text {
     overflow: hidden;
+    font-size: var(--pa-size-font, 16px);
+    font-weight: bold;
+    color: var(--pa-title-color);
     text-overflow: ellipsis;
+    word-break: break-all;
     white-space: nowrap;
   }
   &-tip {

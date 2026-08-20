@@ -47,6 +47,13 @@ export type ComponentProps = {
    */
   style?: Record<string, string>;
   /**
+   * 标题文本
+   * @type LanguagePackageType | string | undefined
+   * @default undefined
+   * @description 当设置该值时，会在标题中显示文本
+   */
+  text?: LanguagePackageType | string;
+  /**
    * 提示信息
    * @type LanguagePackageType | string | undefined
    * @default undefined

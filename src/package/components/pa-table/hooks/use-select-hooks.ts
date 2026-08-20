@@ -250,6 +250,30 @@ export const useSelectHooks = (props: ComponentProps, state: PaTableUseType.Tabl
     emits("selectRowAllBack", { isSelected: isTableSelectAll.value });
   }
   /**
+   * 处理当前页面全选
+   * @description 全选当前页所有行，再次点击取消当前页全部勾选；每次操作后更新选中数据并触发事件
+   */
+  function handleSelectAllChange() {
+    if (!props.rowKey) return;
+    // 当前页数据：tableData 按页存储，当前页下标为 PageNum - 1
+    const currentPageData = state.tableData[state.PageNum - 1] || [];
+    // 过滤 more/empty 等占位行，仅保留当前页真实数据行
+    const currentPageRows = currentPageData.filter((item: any) => item.renderIndex >= 0);
+    if (!currentPageRows.length) return;
+
+    // 判定当前页是否已全部勾选：已全部勾选则取消，否则全选当前页
+    const isAllSelected = currentPageRows.every((item: any) =>
+      props.useChildren ? item.children?.every((ch: any) => ch.isSelected) : item.isSelected
+    );
+    const targetStatus = !isAllSelected;
+
+    currentPageRows.forEach((item: any) => {
+      handleSingeSelectChange({ row: item, status: targetStatus });
+    });
+
+    emits("selectRowAllBack", { isSelected: targetStatus });
+  }
+  /**
    * 设置选中数据
    * @param dataKeys - 数据键列表
    * @description 设置外部传入的选中数据键，直接在当前已渲染数据上应用选中状态，不刷新页面
@@ -328,6 +352,7 @@ export const useSelectHooks = (props: ComponentProps, state: PaTableUseType.Tabl
     isTableSelectAll,
     handleSelectChange,
     handleSelectAllStatus,
+    handleSelectAllChange,
     setSelectedData,
     getSelectedData,
     cleanup

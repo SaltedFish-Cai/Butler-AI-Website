@@ -15,7 +15,7 @@
     </template>
   </template>
   <div
-    v-else-if="value && !Array.isArray(value)"
+    v-else-if="!isNil(value) && !Array.isArray(value)"
     :id="id + '-tag-' + itemConfig.prop + '-' + row.rowIndex + '_' + value"
     :data-name="'表格标签 - ' + itemConfig.label + ' ' + findText(value) + ` (表格数据${row.rowIndex})`"
     class="pa-table-tag"
@@ -32,6 +32,7 @@
 import { LanguagePackageType, PaOptionType } from "../manager-type";
 import isDarkColor from "../tools/isDarkColor";
 import { ComponentUseItemProps, PaTableUseType } from "./types";
+import isNil from "../tools/is-nil";
 
 type Props = {
   id: string;
@@ -60,7 +61,7 @@ function findText(row) {
 }
 
 function findBgColor(row) {
-  let bgColor = "transparent";
+  let bgColor = "var(--pa-color-primary-light-3)";
   if (props.exOptions) {
     props.exOptions.map(item => {
       if (item.value == row) {
@@ -72,7 +73,7 @@ function findBgColor(row) {
 }
 
 function findTextColor(row) {
-  let textColor = "#818181";
+  let textColor = "var(--pa-color-send-bg)";
   if (props.exOptions) {
     props.exOptions.map(item => {
       if (item.value == row) {

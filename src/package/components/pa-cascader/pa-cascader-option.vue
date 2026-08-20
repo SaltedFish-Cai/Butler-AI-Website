@@ -3,9 +3,8 @@
     <pa-scrollbar
       :useBackTop="false"
       :useShadow="false"
-      :style="optionsHeight ? { height: optionsHeight } : {}"
+      :style="optionsHeight ? { height: optionsHeight, '--scrollbar-width': '11.1px' } : { '--scrollbar-width': '11.1px' }"
       useHiddenThumb
-      style="--scrollbar-width: 11.1px"
     >
       <div
         v-for="item in exOptions"
@@ -44,8 +43,8 @@
             <template v-if="item.children?.length">({{ item.children.length }})</template>
           </template>
         </div>
-        <pa-icon v-if="!item.children?.length && !isCheck" name="check_line" class="check-icon"></pa-icon>
-        <pa-icon v-if="item.children?.length" name="right_line" class="arrow-icon"></pa-icon>
+        <pa-icon v-if="!item.children?.length && !isCheck" name="check_line" class="check-icon" />
+        <pa-icon v-if="item.children?.length" name="right_line" class="arrow-icon" />
       </div>
     </pa-scrollbar>
   </div>
@@ -61,7 +60,7 @@
       :optionsHeight="optionsHeight"
     >
       <template #optionLabel="item">
-        <slot name="optionLabel" :option="item"></slot>
+        <slot name="optionLabel" :option="item" />
       </template>
     </pa-cascader-option>
   </template>

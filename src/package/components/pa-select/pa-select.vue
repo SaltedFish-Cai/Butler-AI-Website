@@ -37,7 +37,7 @@
                   :disabled="props.disabled"
                   :style="{ width: !waitTag ? '100%' : 'auto' }"
                   @remove-tag="removeTag"
-                ></pa-tag>
+                />
               </template>
               <input
                 v-if="waitTag"
@@ -58,7 +58,7 @@
             </template>
             <template v-else>{{ inputValue }}</template>
             <pa-icon v-if="inValue && clearable && useFilter" name="close_circle_line" class="clear-icon" @click="clearInput" />
-            <pa-icon :class="!isFocus ? 'down-icon' : 'down-icon up-icon'" name="down_line"></pa-icon>
+            <pa-icon :class="!isFocus ? 'down-icon' : 'down-icon up-icon'" name="down_line" />
           </div>
         </div>
       </template>
@@ -73,12 +73,11 @@
           :renderId="renderId + '_options'"
           :useBackTop="false"
           :useShadow="false"
-          :style="{ height: optionsHeight }"
+          :style="{ height: optionsHeight, '--scrollbar-width': '11.1px' }"
           :useClosePopover="false"
           useHiddenThumb
-          style="--scrollbar-width: 11.1px"
         >
-          <slot name="optionLabelBefore"></slot>
+          <slot name="optionLabelBefore" />
           <div
             v-for="(item, index) in filterOptionsList"
             :id="renderId + '_option_' + item.value"
@@ -99,9 +98,9 @@
             <slot name="optionLabel" :option="item">
               {{ typeof item.label === "object" ? item.label[languageValue] || item.label["zh-CN"] : item.label }}
             </slot>
-            <pa-icon name="check_line" class="check-icon"></pa-icon>
+            <pa-icon name="check_line" class="check-icon" />
           </div>
-          <slot name="optionLabelAfter"></slot>
+          <slot name="optionLabelAfter" />
         </pa-scrollbar>
       </div>
       <div v-else-if="exOptionsList.length" class="pa-select-no-data">{{ languagePackage["empytFind"] }}</div>
@@ -114,7 +113,7 @@
       {{ typeof title === "string" ? title : title[languageValue] }}
     </div>
     <div class="pa-display-value_content">
-      <slot name="exDisplay"></slot>
+      <slot name="exDisplay" />
       <template v-if="$slots.exDisplay"> ( {{ findData(inValue) || "--" }} ) </template>
       <template v-else>{{ findData(inValue) || "--" }}</template>
     </div>
@@ -124,7 +123,7 @@
     v-if="(alwaysContrast && !isNil(contrastData)) || (!isNil(contrastData) && !isEqual(inValue, contrastData))"
     :class="['pa-contrast-style']"
   >
-    <slot name="exContrast"></slot>
+    <slot name="exContrast" />
     <template v-if="$slots.exContrast"> ( {{ findData(contrastData || inValue) || "--" }} ) </template>
     <template v-else>{{ findData(contrastData || inValue) || "--" }}</template>
   </div>
@@ -448,6 +447,9 @@ function handleFocus() {
   popoverRef.value?.showPopover();
   nextTick(() => {
     tagRef.value?.initPopover();
+    if (isOnlineSelect.value && !inValue.value) {
+      remoteMethodFn(inValue.value);
+    }
   });
 }
 /**

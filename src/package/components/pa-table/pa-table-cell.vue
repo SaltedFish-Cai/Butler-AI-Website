@@ -36,6 +36,8 @@
           <template v-else-if="item.type == 'selection'">
             <pa-checkbox-item
               v-if="!(showSelectList && useChildren)"
+              :renderId="tableId + '-' + item.prop + '_' + rowIndex + '_checkbox'"
+              :name="'表格多选 - ' + item.label + ` (行：${rowIndex})`"
               :is-checked="row.isSelected || isTableSelectAll"
               :is-indeterminate="row.isIndeterminate"
               :disabled="isTableSelectAll"
@@ -47,6 +49,8 @@
           <template v-else-if="item.type == 'radio'">
             <pa-radio-item
               v-if="!(showSelectList && useChildren)"
+              :renderId="tableId + '-' + item.prop + '_' + rowIndex + '_radio'"
+              :name="'表格单选 - ' + item.label + ` (行：${rowIndex})`"
               :is-checked="row.isSelected || isTableSelectAll"
               :is-indeterminate="row.isIndeterminate"
               :disabled="isTableSelectAll"
@@ -73,14 +77,17 @@
               :name="String(item.prop)"
               :row="row"
               :index="rowIndex"
-              :info="{ renderId: tableId + '-' + item.prop + '_' + rowIndex, name: '表格数据填写 - ' + item.label }"
-            ></slot>
+              :info="{
+                renderId: tableId + '-' + item.prop + '_' + rowIndex,
+                name: '表格数据填写 - ' + item.label + ` (行：${rowIndex})`
+              }"
+            />
           </template>
 
           <!-- operation -->
           <Operation v-else-if="item.prop == 'operation'" :row="row" :column="{ ...item }" :tableId="tableId">
             <template #operation>
-              <slot name="operation" :row="row" :index="row.rowIndex"></slot>
+              <slot name="operation" :row="row" :index="row.rowIndex" />
             </template>
           </Operation>
 
@@ -90,7 +97,7 @@
               :key="'cellConfig-' + item.prop + '-' + row.rowIndex"
               :style="{ whiteSpace: setCellWidthIng ? 'nowrap' : 'wrap' }"
             >
-              {{ setCellDisplayValue(row, String(item.prop), item.cellConfig) || "--" }}
+              {{ setCellDisplayValue(row, String(item.prop), item.cellConfig) }}
             </div>
 
             <cell-tag
@@ -147,7 +154,7 @@
               @change="data => valueChange(data, { prop: item.prop, ...row })"
             >
               <template v-for="slot in Object.keys($slots)" #[slot]="scope">
-                <slot :name="slot" v-bind="scope"></slot>
+                <slot :name="slot" v-bind="scope" />
               </template>
             </pa-select>
 
@@ -165,7 +172,7 @@
               :contrastData="item.cellConfig.contrastData?.[String(item.prop)]"
               :alwaysContrast="item.cellConfig.alwaysContrast"
               @change="data => valueChange(data, { prop: item.prop, ...row })"
-            ></pa-switch>
+            />
 
             <!-- radio -->
             <pa-radio
@@ -177,8 +184,7 @@
               :contrastData="item.cellConfig.contrastData?.[String(item.prop)]"
               :alwaysContrast="item.cellConfig.alwaysContrast"
               @change="data => valueChange(data, { prop: item.prop, ...row })"
-            >
-            </pa-radio>
+            />
 
             <!-- checkbox -->
             <pa-checkbox
@@ -190,8 +196,7 @@
               :contrastData="item.cellConfig.contrastData?.[String(item.prop)]"
               :alwaysContrast="item.cellConfig.alwaysContrast"
               @change="data => valueChange(data, { prop: item.prop, ...row })"
-            >
-            </pa-checkbox>
+            />
 
             <!-- cascader -->
             <pa-cascader
@@ -213,8 +218,7 @@
               :contrastData="item.cellConfig.contrastData?.[String(item.prop)]"
               :alwaysContrast="item.cellConfig.alwaysContrast"
               @change="data => valueChange(data, { prop: item.prop, ...row })"
-            >
-            </pa-cascader>
+            />
 
             <pa-time
               v-else-if="
@@ -349,6 +353,7 @@ import { PaFormChildType } from "../pa-form/types";
  * @description 导入全局配置类型
  */
 import { PancakeGlobalConfigType } from "../pa-manager/types";
+import isNil from "../tools/is-nil.js";
 
 /**
  * 单元格组件属性类型
@@ -451,11 +456,12 @@ const emits = defineEmits(["changeRowStatus", "handleChangeChecked", "selectRowB
  */
 function setCellDisplayValue(row: PaTableUseType.PaTableInDataType, prop: string, cellConfig: PaFormChildType) {
   const type = cellConfig.type;
+  let outValue = "";
   if (type == "number") {
-    return keepDecimalPlaces(row[prop], cellConfig.precision);
+    outValue = keepDecimalPlaces(row[prop], cellConfig.precision);
   } else if (type == "switch") {
     const _exOptions = exOptions.value[prop];
-    return findDataWidthSwitch(row[prop], _exOptions, PancakeGlobalConfig.value?.language);
+    outValue = findDataWidthSwitch(row[prop], _exOptions, PancakeGlobalConfig.value?.language);
   } else if (
     type == "radio" ||
     type == "checkbox" ||
@@ -469,10 +475,11 @@ function setCellDisplayValue(row: PaTableUseType.PaTableInDataType, prop: string
     type == "multiple-online-select"
   ) {
     const _exOptions = exOptions.value[prop];
-    return findDataWithSelect(row[prop], _exOptions);
+    outValue = findDataWithSelect(row[prop], _exOptions);
   } else {
-    return row[prop];
+    outValue = row[prop];
   }
+  return isNil(outValue) ? "--" : outValue;
 }
 /**
  * 值变化处理

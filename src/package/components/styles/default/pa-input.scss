@@ -103,9 +103,11 @@
         -ms-overflow-style: none;
 
         &::placeholder {
+          font-family: var(--pa-component-font-family);
           color: var(--pa-color-info-light-4);
         }
         &.placeholder {
+          font-family: var(--pa-component-font-family);
           color: var(--pa-color-info-light-4);
         }
         &::-webkit-scrollbar {
@@ -115,6 +117,7 @@
           margin: 0;
           white-space: pre-wrap;
           word-wrap: break-word;
+          font-family: var(--pa-component-font-family);
         }
       }
       .not-focus {
@@ -148,6 +151,10 @@
         top: 0;
         width: 100%;
         opacity: 0;
+        font-family: var(--pa-component-font-family);
+        &::placeholder {
+          font-family: var(--pa-component-font-family);
+        }
       }
       .pa-input-textarea-inner.is-focus {
         position: relative;

@@ -23,7 +23,7 @@
           :state="state"
         >
           <template v-for="slot in Object.keys($slots)" #[slot]="scope">
-            <slot :name="slot" v-bind="scope"></slot>
+            <slot :name="slot" v-bind="scope" />
           </template>
         </mTableV2Filter>
 
@@ -68,12 +68,14 @@
                     <template v-else-if="item.type == 'selection'">
                       <pa-checkbox-item
                         v-if="!state.showSelectList && props.useSelectAll"
+                        :renderId="renderId + '_checkbox-all'"
+                        :name="'表格全选'"
                         :is-checked="isTableSelectAll"
                         :is-indeterminate="selectedRowsLength > 0"
-                        @change="handleSelectAllStatus"
+                        @click.stop="handleSelectAllChange"
                       />
                     </template>
-                    <template v-else-if="item.type == 'radio'"></template>
+                    <template v-else-if="item.type == 'radio'" />
                     <template v-else-if="item.type == 'row'">
                       <div v-if="!usePagination" class="flex-center m-hand" style="width: 100%; height: 100%">
                         <pa-icon
@@ -96,7 +98,7 @@
                       @handle-sort-change="handleSortChange"
                       @save-and-filter="handleColSetting"
                       @open-senior-filter="val => filterRef?.openSeniorFilter(val)"
-                    ></headerItem>
+                    />
 
                     <pa-icon
                       v-if="!item.type && item.prop != 'operation'"
@@ -120,9 +122,9 @@
           v-if="state.tableLoadingSize != 100"
           class="pa-table_body_loading"
           :style="{ width: state.tableLoadingSize + '%' }"
-        ></div>
+        />
         <div v-if="state.flatTableData.length == 0 && state.tableLoadingSize != 100" class="pa-table_body_first_loading">
-          <m-icon class="loading_font" name="loading_line"></m-icon>
+          <m-icon class="loading_font" name="loading_line" />
         </div>
         <pa-scrollbar
           ref="mScrollbarListRef"
@@ -175,7 +177,7 @@
                     @change-row-status="changeRowStatus"
                   >
                     <template v-for="slot in Object.keys($slots)" #[slot]="scope">
-                      <slot :name="slot" v-bind="scope"></slot>
+                      <slot :name="slot" v-bind="scope" />
                     </template>
                   </mLightTableCell>
                 </div>
@@ -201,7 +203,7 @@
                               :parentRow="vi.row"
                             >
                               <template v-for="slot in Object.keys($slots)" #[slot]="scope">
-                                <slot :name="slot" v-bind="scope"></slot>
+                                <slot :name="slot" v-bind="scope" />
                               </template>
                             </mLightTableCell>
                           </div>
@@ -209,7 +211,7 @@
                       </template>
 
                       <template v-else-if="useExpand">
-                        <slot name="Expand"></slot>
+                        <slot name="Expand" />
                       </template>
                     </div>
                   </transition>
@@ -237,7 +239,7 @@
                       <div
                         v-if="row.type == 'empty' || index > Number(state.PageNum) + 2 || index < Number(state.PageNum) - 3"
                         class="pa-table_body_content_cell_empty"
-                      ></div>
+                      />
 
                       <div
                         v-else
@@ -260,7 +262,7 @@
                           @change-row-status="changeRowStatus"
                         >
                           <template v-for="slot in Object.keys($slots)" #[slot]="scope">
-                            <slot :name="slot" v-bind="scope"></slot>
+                            <slot :name="slot" v-bind="scope" />
                           </template>
                         </mLightTableCell>
                       </div>
@@ -289,7 +291,7 @@
                                     :parentRow="row"
                                   >
                                     <template v-for="slot in Object.keys($slots)" #[slot]="scope">
-                                      <slot :name="slot" v-bind="scope"></slot>
+                                      <slot :name="slot" v-bind="scope" />
                                     </template>
                                   </mLightTableCell>
                                 </div>
@@ -297,7 +299,7 @@
                             </template>
 
                             <template v-else-if="useExpand">
-                              <slot name="Expand"></slot>
+                              <slot name="Expand" />
                             </template>
                           </div>
                         </transition>
@@ -308,15 +310,15 @@
               </template>
             </template>
 
-            <template v-if="state.tableLoadStatus"> </template>
+            <template v-if="state.tableLoadStatus" />
           </div>
           <div
             v-if="!state.flatTableData.length && state.tableLoadEndStatus"
             class="empty empty-table"
             style="text-align: center"
           >
-            <pa-icon name="empty" style="font-size: 40px"></pa-icon>
-            <pa-language :text="{ 'zh-CN': '暂无数据', 'en-US': 'No Data' }"></pa-language>
+            <pa-icon name="empty" style="font-size: 40px" />
+            <pa-language :text="{ 'zh-CN': '暂无数据', 'en-US': 'No Data' }" />
           </div>
           <!-- footer -->
           <div v-if="(useSummary && !usePagination) || summaryFunction" class="pa-table_body_summary">
@@ -373,32 +375,42 @@
           <slot name="FooterLeft">
             <template v-if="useSelect">
               <pa-button
+                v-if="props.useSelectAll"
+                :disabled="state.showSelectList"
+                icon-name="select-all"
+                :type="isTableSelectAll ? 'primary' : 'default'"
+                :text="{ 'zh-CN': '全选数据', 'en-US': 'Select All Data' }"
+                @click="handleSelectAllStatus"
+              />
+
+              <pa-button
+                :renderId="renderId + '_switch-select-btn'"
+                :data-name="'切换表格选择'"
                 :disabled="selectedRowsLength <= 0 && !state.showSelectList"
                 @click="changeSelectListVisible"
                 iconName="transfer_horizontal_line"
-                style="--pa-size-padding: 8px; --pa-size-font: 14px; --pa-size-height: 28px"
-              >
-                <pa-language
-                  v-if="state.showSelectList"
-                  :text="{ 'zh-CN': '切换全选', 'en-US': 'Switch Selection' }"
-                ></pa-language>
-                <pa-language v-else :text="{ 'zh-CN': '切换至已选择', 'en-US': 'Switch To Selected' }"></pa-language>
-              </pa-button>
+                :text="
+                  state.showSelectList
+                    ? { 'zh-CN': '切换至全部数据', 'en-US': 'Switch To All Data' }
+                    : { 'zh-CN': '切换至已选择', 'en-US': 'Switch To Selected' }
+                "
+              />
+
               <div class="pa-ml-size">
-                <pa-language :text="{ 'zh-CN': '已选择', 'en-US': 'Selected' }"></pa-language>
+                <pa-language :text="{ 'zh-CN': '已选择', 'en-US': 'Selected' }" />
                 <span class="bold-text ml3 mr3">{{ isTableSelectAll ? state.pageable.total : selectedRowsLength }}</span>
-                <pa-language :text="{ 'zh-CN': '件', 'en-US': 'Piece' }"></pa-language>
+                <pa-language :text="{ 'zh-CN': '件', 'en-US': 'Piece' }" />
               </div>
             </template>
           </slot>
         </div>
 
         <div v-if="$slots['FooterCenter']" class="table-flex-ct flex-center">
-          <slot name="FooterCenter"></slot>
+          <slot name="FooterCenter" />
         </div>
         <div class="table-flex-ri width-int mb0">
           <div v-if="$slots['paginationLeft']">
-            <slot name="paginationLeft"></slot>
+            <slot name="paginationLeft" />
           </div>
 
           <slot name="Pagination">
@@ -607,6 +619,7 @@ const props = withDefaults(defineProps<ComponentProps>(), {
   structure: () => [],
   requestAuto: true,
   expandAuto: false,
+  useSelectAll: false,
   usePagination: true,
   useExpandAll: true,
   useSummary: false,
@@ -751,6 +764,7 @@ const {
   isTableSelectAll,
   handleSelectChange,
   handleSelectAllStatus,
+  handleSelectAllChange,
   setSelectedData,
   getSelectedData,
   cleanup
@@ -1183,9 +1197,13 @@ watch(
   newVal => {
     const InView = newVal.find(item => !!item.Els);
     if (InView) {
-      useStickyViewIn.value = InView.isIntersecting;
-      footerHeight.value = footerRef.value?.clientHeight || "0px";
-    } else {
+      nextTick(() => {
+        useStickyViewIn.value = InView.isIntersecting;
+        const timer = setTimeout(() => {
+          footerHeight.value = footerRef.value?.clientHeight || "0px";
+          clearTimeout(timer);
+        }, 0);
+      });
       useStickyViewIn.value = false;
     }
   },

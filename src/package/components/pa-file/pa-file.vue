@@ -1,7 +1,7 @@
 <template>
   <div :id="renderId" class="pa-file" :class="[props.class, { 'is-disabled': props.disabled }]" :style="props.style">
     <div class="flex-center-start" v-if="!display" style="flex-wrap: wrap">
-      <div class="flex-center-start" style="width: 1px; flex: 1">
+      <div class="flex-center-start" style="flex: 1; width: 1px">
         <slot name="reference-before"></slot>
         <pa-button-group>
           <pa-button
@@ -154,6 +154,9 @@ import isEqual from "../tools/is-equal";
 import isNil from "../tools/is-nil";
 import debounce from "../tools/debounce";
 import useRenderId from "../tools/render-id";
+import paButton from "../pa-button/pa-button.vue";
+import paIcon from "../pa-icon/pa-icon.vue";
+import paButtonGroup from "../pa-button/pa-button-group.vue";
 import { useBaseStore as globalState } from "../store/index";
 
 /**

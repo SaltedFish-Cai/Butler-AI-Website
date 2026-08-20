@@ -6,6 +6,10 @@
   margin: 0 calc(var(--pa-size-padding) / 2);
   font-family: var(--pa-component-font-family);
 
+  &:hover {
+    cursor: pointer;
+  }
+
   &::after {
     display: block;
     content: "";

@@ -3,19 +3,15 @@
     <div :id="renderId" :class="['pa-message-box', type ? `${type}` : '', customClass]" :style="overlayStyles" role="alert">
       <div class="pa-message-box_header pa-mb-size">
         <div class="flex-center-start">
-          <pa-icon class="pa-message-box__icon pa-mr-size" name="warning_line"></pa-icon>
+          <pa-icon class="pa-message-box__icon pa-mr-size" name="warning_line" />
           <div class="pa-message-box__title">
             {{ typeof title === "string" ? title : title?.[language] || languagePackage["notificationTitle"] }}
           </div>
         </div>
-        <pa-icon class="pa-message-box__closeBtn" @click="handleClose" name="close_line"></pa-icon>
+        <pa-icon class="pa-message-box__closeBtn" @click="handleClose" name="close_line" />
       </div>
       <slot name="content">
-        <div
-          v-if="dangerouslyUseHTMLString"
-          class="pa-message-box__content"
-          v-html="dangerouslyUseHTMLString ? message : ''"
-        ></div>
+        <div v-if="dangerouslyUseHTMLString" class="pa-message-box__content" v-html="dangerouslyUseHTMLString ? message : ''" />
         <div v-else class="pa-message-box__content">{{ typeof message === "string" ? message : message?.[language] }}</div>
       </slot>
       <div class="pa-message-box__footer">
@@ -126,9 +122,18 @@ const {
   showCancelButton = true,
   cancelButtonIcon = "close_circle_line",
   cancelButtonText = isType === "confirm" ? languagePackage?.cancelButtonText : languagePackage?.confirmButtonText || "取消",
-  zIndex = 2050,
   closeOnPressEscape = true
 } = props.options;
+/**
+ * 全局层级获取函数
+ * @description 从父组件注入的全局层级管理函数
+ */
+const getGlobalZIndex = window.getGlobalZIndex;
+/**
+ * 遮罩层层级
+ * @description 当前遮罩层的 z-index 值
+ */
+const zIndex = ref(getGlobalZIndex());
 /**
  * 可见状态
  * @description 控制消息框的显示与隐藏
@@ -138,7 +143,7 @@ const visible = ref(false);
  * overlay 样式
  * @description 计算遮罩层和消息框的 z-index 样式
  */
-const overlayStyles = computed(() => ({ zIndex }));
+const overlayStyles = computed(() => ({ zIndex: zIndex.value }));
 /**
  * ESC 键映射表
  * @description 获取全局 ESC 键映射表的引用

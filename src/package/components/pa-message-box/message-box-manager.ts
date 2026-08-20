@@ -49,11 +49,6 @@ class MessageBoxManagerImpl implements MessageBoxManager {
    * @description 当前显示的所有消息框实例
    */
   notifications: Array<MessageBoxInstance> = [];
-  /**
-   * 基础层级
-   * @description 消息框的基础 z-index 值
-   */
-  zIndex = 2050;
 
   add(options: MessageBoxOptions): MessageBoxInstance {
     const id = generateId();
@@ -68,7 +63,6 @@ class MessageBoxManagerImpl implements MessageBoxManager {
           : options.confirmButtonText?.[languageKey] || "",
       cancelButtonText:
         typeof options.cancelButtonText === "string" ? options.cancelButtonText : options.cancelButtonText?.[languageKey] || "",
-      zIndex: options.zIndex || this.zIndex++,
       position: "center"
     };
     const container = document.createElement("div");

@@ -33,17 +33,11 @@ class NotificationManagerImpl implements NotificationManager {
    * @description 当前显示的所有通知实例
    */
   notifications: Array<NotificationInstance> = [];
-  /**
-   * 基础层级
-   * @description 通知的基础 z-index 值
-   */
-  zIndex = 2050;
 
   add(options: NotificationOptions): NotificationInstance {
     const id = `notification_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
     const mergedOptions = {
       ...options,
-      zIndex: options.zIndex || this.zIndex++,
       position: options.position || "top-right"
     };
     const container = document.createElement("div");

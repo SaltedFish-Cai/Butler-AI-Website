@@ -1,7 +1,7 @@
 <template>
   <div :id="id" :class="[className, { 'is-disabled': disabled }]" :style="styles">
     <!-- 表单内容插槽 -->
-    <slot></slot>
+    <slot />
   </div>
 </template>
 
@@ -520,13 +520,15 @@ watch(
 
 /**
  * **监听rules变化**
- * @performance 优化：使用 JSON 序列化做浅比较
+ * @performance 优化：使用 JSON 序列化做浅比较（仅当规则内容变化时快照串变化才触发，避免深度监听开销）
+ * @note 不能用 JSON.parse 反序列化——rules 内含 validator 等函数，JSON 会丢弃函数导致校验不生效。
+ * 改为用「保留函数」的 cloneDeep 深拷贝，兼顾引用隔离与函数保留。
  */
 watch(
-  () => JSON.stringify(props.rules),
+  () => props.rules,
   newRulesStr => {
     if (newRulesStr) {
-      formRules.value = JSON.parse(newRulesStr);
+      formRules.value = cloneDeep(props.rules) || {};
     }
   },
   { immediate: true }

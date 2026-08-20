@@ -163,39 +163,38 @@ provide("elFormItem", {
 
 <style lang="scss">
 .form-item {
-  display: flex;
-  align-items: flex-start;
   position: relative;
-  width: 100%;
+
   // 表单项内边距,不知道有啥用
   // padding: calc(var(--pa-size-padding, 10px) / 4) calc(var(--pa-size-padding, 10px) / 4);
   box-sizing: border-box;
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
   transition: 0.2s;
-
   &__label {
+    box-sizing: border-box;
     display: flex;
+    flex: 0 0 var(--pa-form-label-width, auto);
+    width: var(--pa-form-label-width);
+    padding-right: calc(var(--pa-size-padding, 10px) / 1);
     font-size: calc(var(--pa-size-font, 13px) + 1px);
+    font-weight: bold;
+    line-height: 1.5em;
     color: var(--pa-color-font);
     word-break: break-all;
-    box-sizing: border-box;
-    line-height: 1.5em;
-    font-weight: bold;
-    width: var(--pa-form-label-width);
-    flex: 0 0 var(--pa-form-label-width, auto);
-    padding-right: calc(var(--pa-size-padding, 10px) / 1);
   }
-
   &__content {
+    box-sizing: border-box;
     width: 100%;
     padding: 0 4px;
-    box-sizing: border-box;
     font-size: var(--pa-size-font, 13px);
     color: var(--pa-color-font);
     .m-form-group-item {
       > .m-col {
         max-width: 100% !important;
-        margin: 0 !important;
         padding: 0 !important;
+        margin: 0 !important;
         > .form-item {
           padding: 0 !important;
         }
@@ -203,9 +202,10 @@ provide("elFormItem", {
     }
   }
   &__error {
-    margin-top: calc(var(--pa-size-padding, 10px) / 4);
-    color: var(--pa-color-danger);
+    padding-bottom: 4px;
+    margin-top: 4px;
     font-size: calc(var(--pa-size-font, 13px) - 2px);
+    color: var(--pa-color-danger);
   }
   &--left {
     .form-item__label {
@@ -224,27 +224,23 @@ provide("elFormItem", {
     align-items: flex-start;
     justify-content: flex-start;
   }
-
   &--top .form-item__content {
     margin-left: 0;
   }
 }
-
 .form-item:has(.form-item__error) {
   background-color: var(--pa-color-warning-light-7);
   border-radius: 3px;
 }
-
 .form-item.is-required {
   > .form-item__label {
     &::before {
-      content: "*";
-      color: var(--pa-color-danger);
       margin-right: 4px;
+      color: var(--pa-color-danger);
+      content: "*";
     }
   }
 }
-
 .form-item:has(> .form-item__content > .pa-form-tabs) {
   padding: 0;
 }
