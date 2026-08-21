@@ -265,6 +265,54 @@
   }
 }
 
+.pa-editor.pa-editor_sticky {
+  height: max-content !important;
+  min-height: 500px;
+  border-radius: 0 !important;
+  overflow: visible;
+
+  .editor-toolbar {
+    position: sticky !important;
+    top: 0;
+    z-index: 10;
+    background-color: var(--pa-color-send-bg);
+  }
+  .use-sticky-view-in.editor-footer {
+    position: sticky !important;
+    padding-bottom: var(--pa-size-padding, 10px);
+    bottom: 0;
+    z-index: 10;
+    background-color: var(--pa-color-bg);
+  }
+  &:has(.use-sticky-view-in.editor-footer) {
+    & > .pa-scrollbar {
+      position: initial;
+      overflow: initial;
+      padding-bottom: 0;
+      > .scrollbar__bar.is-horizontal {
+        position: sticky;
+        bottom: calc(var(--pa-editor-footer-height, 0px) + 1px);
+        width: 100%;
+      }
+    }
+  }
+  // 关闭内层滚动条固定高度裁剪，让编辑器内容随父级滚动条展开滚动（仿 pa-table_sticky 的 overflow 重置）
+  // flex:none 取消内层 scrollbar 的 inline `flex:1`(basis:0)，避免 sticky 模式无盈余高度时折叠为 0
+  // & > .pa-scrollbar {
+  //   flex: none;
+  //   height: auto;
+  //   overflow: visible;
+  //   & > .pa-scrollbar-content > .scrollbar-body {
+  //     height: auto;
+  //     overflow: visible;
+  //   }
+  // }
+
+  .source-code-container {
+    min-height: 300px;
+  }
+}
+
 .pa-editor-toolbar {
   .pa-editor-toolbar_array {
     display: flex;

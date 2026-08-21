@@ -65,6 +65,19 @@ export type ComponentProps = {
    * @description 编辑器配置对象
    */
   config?: ComponentConfig;
+
+  /**
+   * 是否使用粘性表头
+   * @type ElementRef<HTMLDivElement> | false
+   * @default ElementRef<HTMLDivElement>
+   * @description 当设置该值为 `ElementRef<HTMLDivElement>` 时，会使用粘性表头
+   * @description 当设置该值为 `false` 时，不会使用粘性表头
+   * @example
+   * ```ts
+   * <m-editor :useSticky="Ref<HTMLDivElement>"></m-editor>
+   * ```
+   */
+  useSticky?: Element | false;
 };
 
 /**

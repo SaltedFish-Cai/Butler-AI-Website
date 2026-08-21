@@ -84,10 +84,17 @@
 
 .pa-table.pa-table_sticky {
   height: max-content !important;
+
   .pa-table_body_header_box {
     position: sticky !important;
     padding-top: var(--pa-size-padding, 10px);
     top: 0;
+    .pa-table_body_header_scroll {
+      border-radius: 0 !important;
+    }
+  }
+  .pa-table_body {
+    border-radius: 0 !important;
   }
   .use-sticky-view-in.pa-table_footer {
     position: sticky !important;
@@ -158,7 +165,7 @@
       > .pa-table_body_header_box {
         &::before {
           right: 0;
-          border-top-right-radius: var(--pa-size-radius, 3px);
+          // border-top-right-radius: var(--pa-size-radius, 3px);
         }
       }
     }

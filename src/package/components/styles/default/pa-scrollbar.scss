@@ -116,7 +116,7 @@
       height: 100px;
     }
   }
-  &:has(.scrollbar__bar.is-horizontal) {
+  &:has(> .scrollbar__bar.is-horizontal) {
     .scrollbar__bar.is-vertical {
       height: calc(100% - var(--scrollbar-width, 13.1px));
     }
@@ -141,7 +141,7 @@
     }
   }
 
-  &:has(.scrollbar__bar.is-vertical) {
+  &:has(> .scrollbar__bar.is-vertical) {
     .scrollbar__bar.is-horizontal {
       width: calc(100% - var(--scrollbar-width, 13.1px));
     }

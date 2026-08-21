@@ -55,11 +55,11 @@
               :parentBoxRef="ScrollbarRef"
             >
               <div class="dialog__body flex-col" ref="ScrollbarBodyRef" :class="paddingClasses">
-                <template v-if="keepAlive"> <slot></slot> </template>
+                <template v-if="keepAlive"> <slot v-if="ScrollbarRef"></slot> </template>
               </div>
             </pa-scrollbar>
             <div v-else class="dialog__body flex-col" :class="paddingClasses">
-              <template v-if="keepAlive"> <slot></slot> </template>
+              <template v-if="keepAlive"> <slot v-if="ScrollbarRef"></slot> </template>
             </div>
           </div>
 

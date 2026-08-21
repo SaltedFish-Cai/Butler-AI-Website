@@ -1,5 +1,10 @@
 <template>
-  <div :id="renderId" class="pa-editor" :style="{ ...props.style }" :class="[props.class]">
+  <div
+    :id="renderId"
+    class="pa-editor"
+    :style="{ ...props.style, '--pa-editor-footer-height': footerHeight + 'px' }"
+    :class="[{ 'pa-editor_sticky': useSticky }, props.class]"
+  >
     <editor-tools
       ref="editorToolsRef"
       :isSourceCodeMode="isSourceCodeMode"
@@ -11,12 +16,11 @@
       :ex-button="exButton"
       @popver-change="value => (openPopover = value)"
       @source-code-mode-change="value => (isSourceCodeMode = value)"
-    >
-    </editor-tools>
+    />
+
     <pa-scrollbar
-      useShadow
-      style="flex: 1"
-      :useScrollX="false"
+      :useShadow="false"
+      style="flex: 1; width: 100%; height: 100%"
       :contentStyle="
         isSourceCodeMode == 'code' ? { background: isDarkTheme ? 'var(--pa-color-dark-bg)' : 'var(--pa-color-white)' } : {}
       "
@@ -59,16 +63,20 @@
           :inActiveText="''"
           :activeIcon="'moon_line'"
           :inActiveIcon="'sun_line'"
-        >
-        </pa-switch>
+        />
       </div>
     </pa-scrollbar>
-    <div class="editor-footer" v-show="isSourceCodeMode != 'visible' && isSourceCodeMode != 'code'">
+    <div
+      ref="footerRef"
+      class="editor-footer"
+      :class="{ 'use-sticky-view-in': useStickyViewIn }"
+      v-show="isSourceCodeMode != 'visible' && isSourceCodeMode != 'code'"
+    >
       <div></div>
       <span class="word-count">{{ wordCount }} 字</span>
     </div>
-    <edit-image :id="renderId" ref="editImageRef"></edit-image>
-    <edit-table ref="editTableRef"></edit-table>
+    <edit-image :id="renderId" ref="editImageRef" />
+    <edit-table ref="editTableRef" />
   </div>
 </template>
 
@@ -84,6 +92,7 @@ import prettierHtmlParser from "prettier/parser-html";
 import hljs from "highlight.js";
 import debounce from "../tools/debounce";
 import useRenderId from "../tools/render-id";
+import { useIntersectionObserver } from "../utils/useIntersectionObserver";
 
 /**
  * @description 组件 props 定义
@@ -94,6 +103,48 @@ const props = withDefaults(defineProps<ComponentProps>(), {});
  * @description 编辑器唯一 ID
  */
 const renderId = ref(props.renderId || (props.id ? props.id : "pa-editor_" + useRenderId()));
+
+/**
+ * @description 吸顶视图状态（参考 pa-table 的 useStickyViewIn）
+ * 当 use-sticky 开启时，用 IntersectionObserver 观察工具栏（.editor-toolbar）是否仍在视窗内，
+ * 从而决定底部 .editor-footer 是否吸底：工具栏可见（isIntersecting=true）→ footer 吸底。
+ */
+const useStickyViewIn = ref(false);
+/**
+ * @description 底部 footer 高度（参考 pa-table 的 footerHeight），以 `--pa-table-footer-height` 暴露在根节点
+ */
+const footerHeight = ref("0px");
+/**
+ * @description 吸顶观察器实例
+ */
+let stickyViewInObserver: { isIntersecting: Ref<boolean>; stopObserving: () => void } | null = null;
+/**
+ * @description 初始化吸顶观察器（工具栏进入视窗时 footer 吸底）
+ */
+function initStickyView() {
+  if (!props.useSticky) return;
+  if (stickyViewInObserver) {
+    stickyViewInObserver.stopObserving();
+    stickyViewInObserver = null;
+  }
+  const toolbarEl = document.querySelector(`#${renderId.value} .editor-toolbar`);
+  if (!toolbarEl) return;
+  stickyViewInObserver = useIntersectionObserver(toolbarEl, {
+    root: props.useSticky as unknown as Element,
+    rootMargin: `0px 0px -80px 0px`,
+    threshold: [1]
+  });
+  watch(
+    () => stickyViewInObserver?.isIntersecting.value,
+    v => {
+      useStickyViewIn.value = v ?? false;
+      nextTick(() => {
+        footerHeight.value = "" + (footerRef.value?.clientHeight || 0);
+      });
+    },
+    { immediate: true }
+  );
+}
 
 /**
  * @description 图片编辑组件引用
@@ -128,6 +179,11 @@ const emit = defineEmits<ComponentEmits>();
  * @description 编辑器主内容区域引用
  */
 const editorRef = ref<HTMLElement | null>(null);
+
+/**
+ * @description 编辑器底部 footer 引用（字数组 / 吸底高度计算用）
+ */
+const footerRef = useTemplateRef<HTMLElement>("footerRef");
 
 /**
  * @description 源码高亮覆盖层引用
@@ -303,6 +359,8 @@ onBeforeUnmount(() => {
   if (editorRef.value) {
     editorRef.value.removeEventListener("blur", saveCursorPosition);
   }
+  stickyViewInObserver?.stopObserving();
+  stickyViewInObserver = null;
 });
 
 /**
@@ -601,7 +659,17 @@ function handleContextMenu(e: MouseEvent): void {
  */
 onMounted(() => {
   setEditorContent(props.modelValue);
+  initStickyView();
 });
+
+/**
+ * @description 监听 use-sticky 变化（如弹窗滚动条就绪后传入）以初始化/重建吸顶观察器
+ */
+watch(
+  () => props.useSticky,
+  () => initStickyView(),
+  { flush: "post" }
+);
 
 /**
  * @description 获取编辑器内容

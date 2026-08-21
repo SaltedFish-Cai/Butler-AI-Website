@@ -1241,6 +1241,13 @@ watch(
     refreshTable();
   }
 );
+
+watch(
+  () => props.useSticky,
+  (value, oldValue) => {
+    if (!oldValue && value) listenCellInView.create();
+  }
+);
 </script>
 
 <style lang="scss">
