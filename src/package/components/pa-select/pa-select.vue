@@ -282,6 +282,7 @@ const optionsHeight = ref("auto");
  * @description 处理后的选项列表
  */
 const exOptionsList = ref<PaOptionType.Select[]>([]);
+const selectedOptionsList = ref<PaOptionType.Select[]>([]);
 /**
  * 过滤值
  * @type string
@@ -446,7 +447,7 @@ function handleFocus() {
   isFocus.value = true;
   popoverRef.value?.showPopover();
   nextTick(() => {
-    tagRef.value?.initPopover();
+    // tagRef.value?.initPopover();
     if (isOnlineSelect.value && !inValue.value) {
       remoteMethodFn(inValue.value);
     }
@@ -494,8 +495,10 @@ function handleOptionClick(item) {
       const _InValue: Array<string> = inValue.value.map(item => String(item));
       if (_InValue.includes(String(item.value))) {
         inValue.value = inValue.value.filter(val => item.value != val);
+        selectedOptionsList.value = selectedOptionsList.value.filter(val => val.value != item.value);
       } else {
         inValue.value.push(item.value);
+        selectedOptionsList.value.push(item);
       }
     }
     nextTick(() => {
@@ -617,9 +620,10 @@ async function remoteMethodFn(query) {
   }
   if (props.requestApi) {
     const opt: PaOptionType.SelectList = await props.requestApi({ query: query || "" });
-    exOptionsList.value = opt || [];
+    const filterOpt = opt.filter(item => !selectedOptionsList.value.find(val => val.value === item.value));
+    exOptionsList.value = [...selectedOptionsList.value, ...filterOpt];
   } else {
-    exOptionsList.value = [];
+    exOptionsList.value = exOptionsList.value || [];
   }
 }
 /**
@@ -645,9 +649,14 @@ watch(
     waitTag.value = false;
     inValue.value = !isNil(data) && data !== "" ? data || "" : isMultiple.value ? [] : "";
     oldValue = !isNil(data) && data !== "" ? data || "" : isMultiple.value ? [] : "";
-    if ((isOnlineSelect.value || isRequestSelect.value) && !inValue.value) {
-      remoteMethodFn(data);
-    }
+    remoteMethodFn(data);
+    // 首次无传入数据请求一次
+    // if (
+    //   (((isOnlineSelect.value && !isMultiple.value) || isRequestSelect.value) && !inValue.value) ||
+    //   (isOnlineSelect.value && isMultiple.value && !(inValue.value as Array<string>).length)
+    // ) {
+    //   remoteMethodFn(data);
+    // }
     nextTick(() => {
       waitTag.value = true;
     });

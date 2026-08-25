@@ -2,7 +2,11 @@
   <div
     :id="renderId"
     class="pa-editor"
-    :style="{ ...props.style, '--pa-editor-footer-height': footerHeight + 'px' }"
+    :style="{
+      ...props.style,
+      '--pa-editor-footer-height': footerHeight + 'px',
+      '--pa-editor-min-height': minHeight && typeof minHeight == 'number' ? minHeight + 'px' : minHeight
+    }"
     :class="[{ 'pa-editor_sticky': useSticky }, props.class]"
   >
     <editor-tools
@@ -20,7 +24,7 @@
 
     <pa-scrollbar
       :useShadow="false"
-      style="flex: 1; width: 100%; height: 100%"
+      class="pa-editor_scrollbar"
       :contentStyle="
         isSourceCodeMode == 'code' ? { background: isDarkTheme ? 'var(--pa-color-dark-bg)' : 'var(--pa-color-white)' } : {}
       "
@@ -97,7 +101,9 @@ import { useIntersectionObserver } from "../utils/useIntersectionObserver";
 /**
  * @description 组件 props 定义
  */
-const props = withDefaults(defineProps<ComponentProps>(), {});
+const props = withDefaults(defineProps<ComponentProps>(), {
+  minHeight: 400
+});
 
 /**
  * @description 编辑器唯一 ID

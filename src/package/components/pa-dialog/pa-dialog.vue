@@ -327,6 +327,8 @@ watch(
     state.visible = data;
     if (data) {
       scrollChildChange();
+    } else {
+      closeMenu();
     }
     if (data && props.closeOnPressEscape && typeof window !== "undefined") {
       window.PancakeGlobalConfig.escapeMap = window.PancakeGlobalConfig.escapeMap || [];

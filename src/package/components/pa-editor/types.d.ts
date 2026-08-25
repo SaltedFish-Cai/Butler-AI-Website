@@ -78,6 +78,12 @@ export type ComponentProps = {
    * ```
    */
   useSticky?: Element | false;
+  /**
+   * @type {number | string | undefined}
+   * @default undefined
+   * @description 编辑器最小高度
+   */
+  minHeight?: number | string | undefined;
 };
 
 /**

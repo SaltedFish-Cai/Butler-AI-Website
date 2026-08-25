@@ -7,8 +7,8 @@
     :style="{ ...rootStyle, '--scrollbar-body-content-height': scrollbarBodyContentRef?.clientHeight + 'px' }"
   >
     <div class="pa-scrollbar-content" ref="scrollbarContentRef">
-      <div v-if="useShadow && showThumbY" class="is-scroll-top" :style="scrollTopShadowStyle"></div>
-      <div v-if="useShadow && showThumbX" class="is-scroll-left" :style="scrollLeftShadowStyle"></div>
+      <div v-if="useShadow && showThumbY && prop.useScrollY" class="is-scroll-top" :style="scrollTopShadowStyle"></div>
+      <div v-if="useShadow && showThumbX && prop.useScrollX" class="is-scroll-left" :style="scrollLeftShadowStyle"></div>
       <div
         :id="id + '_scrollbar_body'"
         class="scrollbar-body"
@@ -33,8 +33,8 @@
           <slot></slot>
         </div>
       </div>
-      <div v-if="useShadow && showThumbY" class="is-scroll-end" :style="scrollEndShadowStyle"></div>
-      <div v-if="useShadow && showThumbX" class="is-scroll-right" :style="scrollRightShadowStyle"></div>
+      <div v-if="useShadow && showThumbY && prop.useScrollY" class="is-scroll-end" :style="scrollEndShadowStyle"></div>
+      <div v-if="useShadow && showThumbX && prop.useScrollX" class="is-scroll-right" :style="scrollRightShadowStyle"></div>
     </div>
     <div
       v-if="useVertical && prop.useScrollY && prop.showThumbY"

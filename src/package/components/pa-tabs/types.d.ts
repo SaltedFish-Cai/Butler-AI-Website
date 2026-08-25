@@ -67,6 +67,13 @@ export type ComponentProps = {
    */
   style?: Record<string, string>;
   /**
+   * 是否使用内边距
+   * @type Array<ComponentPadding> | undefined
+   * @default undefined
+   * @description 设置需要添加内边距的方向
+   */
+  padding?: Array<ComponentPadding>;
+  /**
    * 双向绑定值
    * @type string | undefined
    * @default undefined

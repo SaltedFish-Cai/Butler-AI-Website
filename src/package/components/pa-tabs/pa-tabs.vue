@@ -1,6 +1,6 @@
 <template>
   <div
-    :class="[props.class, 'pa-tabs', `mode-${mode}`, `style_mode-${styleMode}`, `style_align-${align}`]"
+    :class="[props.class, 'pa-tabs', `mode-${mode}`, `style_mode-${styleMode}`, `style_align-${align}`, paddingStyle]"
     :style="{
       ...props.style,
       '--pa-tabs-label-left': useLabelLeft - headerScroll + 'px',
@@ -47,7 +47,7 @@
               :portrait="mode === 'portrait' || mode === 'slider'"
               :onDragReorder="handleLabelDragReorder"
               :id="renderId"
-            ></title-item>
+            />
           </div>
         </div>
 
@@ -314,6 +314,16 @@ provide(
 );
 provide("initTitle", () => {
   _debounceTitle();
+});
+
+const paddingStyle = computed(() => {
+  const padding = props.padding || [];
+  return {
+    "padding-top": padding?.includes("top") || padding?.includes("all"),
+    "padding-left": padding?.includes("left") || padding?.includes("all"),
+    "padding-bottom": padding?.includes("bottom") || padding?.includes("all"),
+    "padding-right": padding?.includes("right") || padding?.includes("all")
+  };
 });
 /**
  * 获取缓存 key

@@ -194,7 +194,27 @@
         height: 100%;
         width: 100%;
       }
+
+      &:has(> .pa-tabs-contents > .pa-tabs-item > .pa-tabs-item_body > .pa-tabs-item-body_fix) {
+        overflow: visible;
+      }
     }
+  }
+
+  &.padding-top {
+    padding-top: calc(var(--pa-size-padding, 10px)) !important;
+  }
+
+  &.padding-left {
+    padding-left: calc(var(--pa-size-padding, 10px)) !important;
+  }
+
+  &.padding-bottom {
+    padding-bottom: calc(var(--pa-size-padding, 10px)) !important;
+  }
+
+  &.padding-right {
+    padding-right: calc(var(--pa-size-padding, 10px)) !important;
   }
 }
 

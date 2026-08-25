@@ -367,7 +367,7 @@
     </pa-col>
   </template>
   <!-- null -->
-  <pa-col v-else-if="item?.type == 'null'" :xs="colSize" :sm="colSize" :md="colSize" :lg="colSize" :xl="colSize"> </pa-col>
+  <pa-col v-else-if="item?.type == 'null'" :xs="colSize" :sm="colSize" :md="colSize" :lg="colSize" :xl="colSize" />
 </template>
 
 <script lang="ts" setup>
@@ -541,7 +541,7 @@ function setSpanStyle(span?: 1 | 2 | 3 | 4, baseSpanSize = 4) {
     2: [2, 1, 1, 1],
     1: [1, 1, 1, 1]
   };
-  console.log("++++++++++> baseSpanSize:", baseSpanSize);
+
   let data;
   if (maxSpanList[baseSpanSize]) {
     if (span == 1) {
