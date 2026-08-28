@@ -854,7 +854,7 @@ export namespace PaTableUseType {
     props: string;
   };
 
-  export type PaTableInDataType = {
+  export type PaTableInDataType = Record<string, any> & {
     parentRenderIndex: number;
     rowIndex: number;
     renderIndex: number;
@@ -865,6 +865,7 @@ export namespace PaTableUseType {
     type?: string;
     name?: string;
     errorList?: Record<string, string>;
+    showExpand?: boolean;
   };
 
   export type TableQueryType = {

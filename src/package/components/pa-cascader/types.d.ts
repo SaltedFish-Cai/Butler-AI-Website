@@ -91,7 +91,7 @@ export type ComponentProps = {
    * @default `undefined`
    * @description 当设置该值为 `true` 时，返回值为'AA-aa'格式的选项值
    */
-  useValueBylink?: boolean;
+  useValueByLink?: boolean;
 
   /**
    * **是否使用'AA/aa'格式的选项标签模式**

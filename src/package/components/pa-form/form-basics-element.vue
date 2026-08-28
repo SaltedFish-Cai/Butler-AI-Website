@@ -124,7 +124,7 @@
               :placeholder="usePlaceholder"
               :disabled="item.disabled || disabledFn(injectConfigContext.data)"
               :display="useDisplay"
-              :useValueBylink="resolvedUseValueBylink"
+              :useValueByLink="resolvedUseValueByLink"
               :useTextByLink="resolvedUseTextByLink"
               :clearable="item.clearable"
               :contrastData="item.prop && injectConfigContext.contrastData?.[item.prop]"
@@ -499,8 +499,9 @@ const useExOptions = computed(() => {
 const resolvedItemType = computed(() => {
   return props.item.type === "address" ? "cascader" : props.item.type;
 });
-const resolvedUseValueBylink = computed(() => {
-  return props.item.type === "address" ? false : props.item.useValueBylink;
+const resolvedUseValueByLink = computed(() => {
+  const data = props.item.type === "address" ? false : props.item.useValueByLink;
+  return data;
 });
 const resolvedUseTextByLink = computed(() => {
   return props.item.type === "address" ? true : props.item.useTextByLink;

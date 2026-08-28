@@ -184,7 +184,11 @@
 
                 <template v-if="(vi.row.children?.length && useChildren) || useExpand">
                   <transition name="mo-animation-fadeIn">
-                    <div v-if="vi.row.isOpenChild" class="pa-table_body_content_children_box">
+                    <div
+                      v-if="vi.row.isOpenChild"
+                      class="pa-table_body_content_children_box"
+                      :style="{ width: bodyContentWidth + 'px' }"
+                    >
                       <template v-if="useChildren">
                         <template v-for="ch in vi.row.children" :key="ch[rowKey]">
                           <div class="pa-table_body_content_cell">
@@ -211,7 +215,7 @@
                       </template>
 
                       <template v-else-if="useExpand">
-                        <slot name="Expand" />
+                        <slot name="Expand" :row="vi.row" />
                       </template>
                     </div>
                   </transition>
@@ -272,6 +276,7 @@
                           <div
                             v-if="row.isOpenChild && index <= Number(state.PageNum) + 2 && index >= Number(state.PageNum) - 2"
                             class="pa-table_body_content_children_box"
+                            :style="{ width: bodyContentWidth + 'px' }"
                           >
                             <template v-if="useChildren">
                               <template v-for="ch in row.children" :key="ch[rowKey]">
@@ -299,7 +304,7 @@
                             </template>
 
                             <template v-else-if="useExpand">
-                              <slot name="Expand" />
+                              <slot name="Expand" :row="row" />
                             </template>
                           </div>
                         </transition>

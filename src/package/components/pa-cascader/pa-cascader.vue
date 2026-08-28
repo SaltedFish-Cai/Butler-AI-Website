@@ -28,7 +28,7 @@
                 :disabled="props.disabled"
                 :style="{ width: !waitTag ? '100%' : 'auto' }"
                 @remove-tag="removeTag"
-              ></pa-tag>
+              />
             </template>
             <input
               v-if="waitTag"
@@ -45,7 +45,7 @@
               @input="handleInput"
             />
             <pa-icon v-if="inValue && clearable" name="close_circle_line" class="clear-icon" @click="clearInput" />
-            <pa-icon :class="!isFocus ? 'down-icon' : 'down-icon up-icon'" name="down_line"></pa-icon>
+            <pa-icon :class="!isFocus ? 'down-icon' : 'down-icon up-icon'" name="down_line" />
           </div>
         </div>
       </template>
@@ -187,7 +187,8 @@ const PancakeGlobalConfig = inject("PancakeGlobalConfig", {}) as ComputedRef<Pan
 const props = withDefaults(defineProps<ComponentProps>(), {
   type: "cascader",
   clearable: true,
-  useTextByLink: true
+  useTextByLink: true,
+  useValueByLink: false
 });
 
 const renderId = ref(props.renderId || props.id ? props.id?.replace(/\,/g, "") : "pa-cascader_" + useRenderId());
@@ -501,9 +502,14 @@ function handleOptionClick(item: PaOptionType.Select): void {
     popoverRef.value.hidePopover();
     inValue.value = typeof item.value === "string" ? item.value : String(item.value);
   }
-  emit("update:modelValue", inValue.value);
-  emit("change", { value: inValue.value, oldValue, option: item });
-  oldValue = inValue.value;
+  let _data = inValue.value;
+  if (props.useValueByLink && typeof _data === "string") {
+    _data = _data.split("-");
+  }
+
+  emit("update:modelValue", _data);
+  emit("change", { value: _data, oldValue, option: item });
+  oldValue = _data;
 }
 provide("handleOptionClick", handleOptionClick);
 /**
@@ -615,8 +621,12 @@ watch(
   () => props.modelValue,
   data => {
     waitTag.value = false;
-    inValue.value = !isNil(data) ? data || "" : isMultiple.value ? [] : "";
-    oldValue = !isNil(data) ? data || "" : isMultiple.value ? [] : "";
+    let _data = !isNil(data) ? data || "" : isMultiple.value ? [] : "";
+    if (props.useValueByLink && typeof _data != "string" && typeof _data != "number") {
+      _data = _data.join("-");
+    }
+    inValue.value = _data;
+    oldValue = _data;
     nextTick(() => {
       waitTag.value = true;
     });
@@ -630,7 +640,7 @@ watch(
 watch(
   () => props.exOptions,
   data => {
-    exOptionsList.value = props.useValueBylink ? setMapValue(data || []) : data || [];
+    exOptionsList.value = props.useValueByLink ? setMapValue(data || []) : data || [];
     flatExOptions.value = flatOptions(exOptionsList.value);
   },
   { immediate: true, deep: true }
