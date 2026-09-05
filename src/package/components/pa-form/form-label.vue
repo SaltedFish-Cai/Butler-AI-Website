@@ -6,7 +6,7 @@
 
     <pa-popover v-if="tip" trigger="hover" :teleport-to="RefLabelContainer" placement="top">
       <template #reference>
-        <pa-icon name="question_line" class="form-title_label-icon"></pa-icon>
+        <pa-icon name="question_line" class="form-title_label-icon" />
       </template>
       <div>{{ tip }}</div>
     </pa-popover>
@@ -30,7 +30,7 @@ export type labelPropsType = {
   tip?: string;
   label?: string;
   item: PaFormItemType;
-  data: Record<string, string>;
+  data: Record<string, string> | any;
 };
 defineProps<labelPropsType>();
 /**

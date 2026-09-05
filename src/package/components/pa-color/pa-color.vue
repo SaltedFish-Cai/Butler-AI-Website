@@ -15,8 +15,7 @@
         :use-alpha="props.useAlpha"
         :use-input="props.useInput"
         @change="handleChange"
-      >
-      </pa-color-box>
+      />
     </pa-popover>
   </div>
 </template>

@@ -9,7 +9,7 @@
       <div
         :id="renderId"
         class="pa-dialog"
-        :class="[state.fullscreen ? 'pa-dialog_full' : '']"
+        :class="[state.fullscreen ? 'pa-dialog_full' : '', props.class]"
         ref="DialogRef"
         v-if="state.visible"
         :style="dialogStyle"

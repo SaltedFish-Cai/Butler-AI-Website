@@ -26,8 +26,8 @@
     />
     <div :id="renderId + '_' + props.value + '_input-inner'" class="pa-checkbox-item-input-inner">
       <div class="pa-checkbox-item-input">
-        <pa-icon v-if="isChecked" name="check_line"></pa-icon>
-        <pa-icon v-else-if="isIndeterminate" name="minus1"></pa-icon>
+        <pa-icon v-if="isChecked" name="check_line" />
+        <pa-icon v-else-if="isIndeterminate" name="minus1" />
       </div>
       <div v-if="props.label || $slots.default" class="pa-checkbox-item-label">
         <slot>{{ typeof props.label === "object" ? props.label[languageValue] : props.label }}</slot>

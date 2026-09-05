@@ -86,7 +86,6 @@
               :displayValue="item.displayValue ? injectConfigContext.data[item.displayValue] : undefined"
               :exOptions="useExOptions as PaOptionType.SelectList"
               :requestApi="injectConfigContext.exCellDependent?.select_RequestApi?.[item.prop]"
-              :optionKey="item.optionKey"
               :placeholder="usePlaceholder"
               :disabled="item.disabled || disabledFn(injectConfigContext.data)"
               :display="useDisplay"

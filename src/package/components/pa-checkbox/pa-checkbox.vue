@@ -26,7 +26,7 @@
           changeEvent({ value: value, option: item });
         }
       "
-    ></pa-checkbox-item>
+    />
   </div>
 
   <div v-else class="pa-display-style" :class="props.class" :style="props.style">

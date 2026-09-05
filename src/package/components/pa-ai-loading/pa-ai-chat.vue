@@ -67,7 +67,7 @@ const renderId = ref(props.renderId || (props.id ? props.id : "pa-ai-chat_" + us
 const FORM_WIDTH = 360;
 const FORM_HEIGHT = 200;
 
-const SPEED_FACTOR = 1;
+// const SPEED_FACTOR = 1;
 
 // ─── State ───────────────────────────────────────────────────────────
 

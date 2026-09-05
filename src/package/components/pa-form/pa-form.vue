@@ -15,7 +15,7 @@
                 <div ref="RefUnitContainer">{{ itemConfigs.unitName }}</div>
                 <pa-popover v-if="itemConfigs.unitTip" trigger="hover" :teleport-to="RefUnitContainer" placement="top">
                   <template #reference>
-                    <pa-icon name="question_line" class="form-title_label-icon"></pa-icon>
+                    <pa-icon name="question_line" class="form-title_label-icon" />
                   </template>
                   <div>{{ itemConfigs.unitTip }}</div>
                 </pa-popover>
@@ -34,7 +34,14 @@
                     :rules="baseRulesMap"
                   >
                     <template v-for="slot in slotKeys" #[slot]="scope" :key="slot">
-                      <slot :name="slot" v-bind="scope"></slot>
+                      <slot
+                        :name="slot"
+                        v-bind="scope"
+                        :info="{
+                          renderId: renderId + '-' + item.prop,
+                          name: '表单输入 - ' + typeof item.label == 'string' ? item.label : item.label[languageValue]
+                        }"
+                      ></slot>
                     </template>
                   </tabsItem>
                 </pa-col>
@@ -42,7 +49,16 @@
                 <!-- 标准表格 -->
                 <formItem v-else :id="renderId" :item="item">
                   <template v-for="slot in slotKeys" #[slot]="scope" :key="slot">
-                    <slot :name="slot" :config="item" :data="scope.data" :option="(scope as any).option"></slot>
+                    <slot
+                      :name="slot"
+                      :config="item"
+                      :data="scope.data"
+                      :option="(scope as any).option"
+                      :info="{
+                        renderId: renderId + '-' + item.prop,
+                        name: '表单输入 - ' + typeof item.label == 'string' ? item.label : item.label[languageValue]
+                      }"
+                    ></slot>
                   </template>
                 </formItem>
               </template>
@@ -52,7 +68,7 @@
       </div>
     </template>
     <div v-else-if="initialization == -1" class="pa-loading">
-      <pa-icon class="loading_font" name="loading_line"></pa-icon>
+      <pa-icon class="loading_font" name="loading_line" />
     </div>
 
     <div v-else class="config-error">{{ configContext.languagePackage["warning"] }}</div>
@@ -616,7 +632,7 @@ function initConfig() {
       item.display || item.disabled ? [] : [{ required: true, message: _requiredMessage, trigger: "blur" }];
     let _rules = baseRulesForItem;
 
-    if (item.rules && Array.isArray(item.rules)) {
+    if (!(item.display || item.disabled) && item.rules && Array.isArray(item.rules)) {
       let isRequired = true;
       _rules = item.rules.map(r => {
         if (r.required == false) isRequired = false;
@@ -1011,15 +1027,17 @@ watch(
   }
 );
 
-if (isNil(props.modelValue)) {
-  watch(
-    () => props.modelValue,
-    value => {
+// if (isNil(props.modelValue)) {
+watch(
+  () => props.modelValue,
+  value => {
+    if (!isNil(value)) {
+      formData.value = value || {};
       emit("update:modelValue", value);
-    },
-    { deep: true }
-  );
-}
+    }
+  }
+);
+// }
 </script>
 
 <style lang="scss">

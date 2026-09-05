@@ -8,7 +8,7 @@
       useLabelPosition ? `form-item--${useLabelPosition}` : '',
       injectFormContext.errorsMessage[prop] ? 'is-error' : ''
     ]"
-    :style="{ ...props.style }"
+    :style="props.style"
   >
     <label v-if="label || $slots.label" class="form-item__label" :for="prop" :style="labelStyle">
       <slot name="label">
@@ -63,14 +63,14 @@ type PaFormItemProps = {
    * @default `undefined`
    * @description 添加到组件的自定义类名
    */
-  class?: Array<string>;
+  class?: Array<string> | string;
   /**
    * **自定义样式**
    * @type `Record<string, string>` | `undefined`
    * @default `undefined`
    * @description 添加到组件的自定义样式
    */
-  style?: Record<string, string>;
+  style?: Record<string, string> | string;
   /**
    * **帮助信息**
    * @type `string` | `undefined`

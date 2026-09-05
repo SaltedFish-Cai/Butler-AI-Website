@@ -368,6 +368,8 @@ const inputValue = computed(() => {
  * @description 输入框的占位符文本
  */
 const inputPlaceholder = computed(() => {
+  if (props.display || props.disabled) return "";
+
   const basePlaceholder =
     typeof props.placeholder === "object"
       ? props.placeholder[languageValue.value] || languagePackage.value[`selectPlaceholder`]
