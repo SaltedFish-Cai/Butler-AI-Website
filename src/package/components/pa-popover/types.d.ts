@@ -63,11 +63,11 @@ export type ComponentProps = {
   disabled?: boolean;
   /**
    * 弹窗挂载位置
-   * @type string | undefined
+   * @type string | HTMLElement | undefined
    * @default body
    * @description 弹窗挂载位置
    */
-  teleportTo?: string;
+  teleportTo?: HTMLElement | string;
   /**
    * 弹窗位置
    * @type "bottom" | "left" | "right" | "top" | undefined
@@ -89,6 +89,13 @@ export type ComponentProps = {
    * @description 内容类名
    */
   contentClassName?: string;
+  /**
+   * 内容样式
+   * @type Record<string, string> | undefined
+   * @default undefined
+   * @description 当设置该值时，会添加到内容的样式中
+   */
+  contentStyle?: Record<string, string>;
   /**
    * 弹出层宽度
    * @type number | undefined

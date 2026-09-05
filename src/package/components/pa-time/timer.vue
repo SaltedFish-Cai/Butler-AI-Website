@@ -15,7 +15,7 @@
         <div class="pa-timer-input" :class="[isFocus ? 'is-focus' : '']">
           <!-- 小时 -->
           <input
-            :id="id + '_' + _name + '_h'"
+            :id="id + '_' + propsName + '_h'"
             :data-name="name + ' (选择小时)'"
             class="pa-timer-input-inner"
             v-model="hours"
@@ -33,7 +33,7 @@
           :
           <!-- 分钟 -->
           <input
-            :id="id + '_' + _name + '_m'"
+            :id="id + '_' + propsName + '_m'"
             :data-name="name + ' (选择分钟)'"
             class="pa-timer-input-inner"
             v-model="minutes"
@@ -51,7 +51,7 @@
           :
           <!-- 秒钟 -->
           <input
-            :id="id + '_' + _name + '_s'"
+            :id="id + '_' + propsName + '_s'"
             :data-name="name + ' (选择秒)'"
             class="pa-timer-input-inner"
             v-model="seconds"
@@ -78,7 +78,7 @@
               <div class="pa-timer-time-list">
                 <div
                   v-for="h in 24"
-                  :id="id + '_' + _name + '_h' + h"
+                  :id="id + '_' + propsName + '_h' + h"
                   :data-name="name + ` (${h} Hour)`"
                   :key="h"
                   :class="['pa-timer-time-item', { selected: hours === formatTimeUnit(h - 1) }]"
@@ -93,7 +93,7 @@
               <div class="pa-timer-time-list">
                 <div
                   v-for="m in 60"
-                  :id="id + '_' + _name + '_m' + m"
+                  :id="id + '_' + propsName + '_m' + m"
                   :data-name="name + ` (${m} Minute)`"
                   :key="m"
                   :class="['pa-timer-time-item', { selected: minutes === formatTimeUnit(m - 1) }]"
@@ -108,7 +108,7 @@
               <div class="pa-timer-time-list">
                 <div
                   v-for="s in 60"
-                  :id="id + '_' + _name + '_s' + s"
+                  :id="id + '_' + propsName + '_s' + s"
                   :data-name="name + ` (${s} Second)`"
                   :key="s"
                   :class="['pa-timer-time-item', { selected: seconds === formatTimeUnit(s - 1) }]"
@@ -127,7 +127,7 @@
             type="default"
             icon-name="clock-circle"
             size="small"
-            :data-name="name + ` (${_name} 00:00:00)`"
+            :data-name="name + ` (${propsName} 00:00:00)`"
           >
             {{ languagePackage["start"] }}
           </pa-button>
@@ -137,7 +137,7 @@
             type="default"
             icon-name="clock-circle"
             size="small"
-            :data-name="name + ` (${_name} 当前时间)`"
+            :data-name="name + ` (${propsName} 当前时间)`"
           >
             {{ languagePackage["current"] }}
           </pa-button>
@@ -147,7 +147,7 @@
             type="default"
             icon-name="clock-circle"
             size="small"
-            :data-name="name + ` (${_name} 23:59:59)`"
+            :data-name="name + ` (${propsName} 23:59:59)`"
           >
             {{ languagePackage["end"] }}
           </pa-button>
@@ -267,7 +267,7 @@ const currentFocus = ref<"hour" | "minute" | "second">("hour");
  * @type ComponentProps
  * @description 组件的属性对象
  */
-const props = withDefaults(defineProps<ComponentProps & { _name?: "" | "end-" | "start-" }>(), {
+const props = withDefaults(defineProps<ComponentProps & { propsName?: "" | "end-" | "start-" }>(), {
   id: "",
   modelValue: "",
   clearable: true,

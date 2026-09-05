@@ -23,8 +23,7 @@
       :request-api="getTableList2"
       :exOptions="exOptionsTable2"
       :use-pagination="false"
-    >
-    </pa-table>
+    />
   </pa-dialog>
 </template>
 

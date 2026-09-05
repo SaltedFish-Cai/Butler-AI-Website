@@ -22,26 +22,26 @@
           v-model="(data.label as object)['zh-CN']"
           :title="language === 'zh-CN' ? '中文文本' : 'Chinese Text'"
           :placeholder="{ 'zh-CN': '请输入中文文本', 'en-US': 'Please input Chinese text' }"
-        ></pa-input>
+        />
         <pa-input
           class="pa-mt-size"
           v-model="(data.label as object)['en-US']"
           :title="language === 'zh-CN' ? '英文文本' : 'English Text'"
           :placeholder="{ 'zh-CN': '请输入英文文本', 'en-US': 'Please input English text' }"
-        ></pa-input>
+        />
       </template>
 
       <template #prop="{ data }">
-        <pa-input v-model="data.prop" :placeholder="{ 'zh-CN': '请输入列Key', 'en-US': 'Please input column key' }"></pa-input
-      ></template>
+        <pa-input v-model="data.prop" :placeholder="{ 'zh-CN': '请输入列Key', 'en-US': 'Please input column key' }" />
+      </template>
 
       <template #page="{ data }">
         <pa-select
           v-model="data.page"
           :placeholder="{ 'zh-CN': '请选择选项卡页面', 'en-US': 'Please select tabs page' }"
           :exOptions="exOptionsComputed?.['page']"
-        ></pa-select
-      ></template>
+        />
+      </template>
 
       <template #padding="{ data }">
         <pa-select
@@ -49,8 +49,8 @@
           type="multiple-select"
           :placeholder="{ 'zh-CN': '请选择内边距', 'en-US': 'Please select padding' }"
           :exOptions="exOptionsComputed?.['padding']"
-        ></pa-select
-      ></template>
+        />
+      </template>
 
       <template #scroll="{ data }">
         <pa-select v-model="data.scroll" :exOptions="exOptionsComputed?.['scroll']" />

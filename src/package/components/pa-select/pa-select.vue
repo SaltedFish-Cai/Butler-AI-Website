@@ -377,6 +377,8 @@ const inputValue = computed(() => {
  * @description 计算输入框的占位符文本
  */
 const inputPlaceholder = computed(() => {
+  if (props.display || props.disabled) return "";
+
   if (Array.isArray(inValue.value) && inValue.value?.length && isMultiple.value) {
     return "";
   } else if (isFocus.value) {
@@ -670,7 +672,8 @@ watch(
 watch(
   () => props.exOptions,
   data => {
-    exOptionsList.value = data || [];
+    exOptionsList.value =
+      data?.map(item => ({ ...item, value: typeof item.value == "number" ? String(item.value) : item.value })) || [];
   },
   { immediate: true, deep: true }
 );

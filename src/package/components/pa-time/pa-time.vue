@@ -307,6 +307,8 @@ const languagePackage = computed(() => {
  * @description 输入框的占位符文本
  */
 const inputPlaceholder = computed(() => {
+  if (props.display || props.disabled) return "";
+
   return typeof props.placeholder === "object"
     ? props.placeholder[languageValue.value] || languagePackage.value[`selectPlaceholder`]
     : props.placeholder || languagePackage.value[`selectPlaceholder`];

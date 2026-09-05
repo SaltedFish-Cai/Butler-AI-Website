@@ -184,7 +184,7 @@ let _totalLoaded = 0;
  * 分页每页条数选项
  * @description 分页器可选的每页条数
  */
-const PAGE_SIZES: number[] = [50, 100, 150];
+const PAGE_SIZES: number[] = [50, 100, 150, 500];
 /**
  * 表格状态
  * @description 组件核心响应式状态

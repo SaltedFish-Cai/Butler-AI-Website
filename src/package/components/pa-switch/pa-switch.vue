@@ -24,7 +24,7 @@
             style="display: flex"
             v-if="options.activeIcon || options.inActiveIcon"
             :name="inValue == options.activeValue ? options.activeIcon : options.inActiveIcon"
-          ></pa-icon>
+          />
         </div>
       </div>
       <div class="pa-switch-text pa-switch-text-active">

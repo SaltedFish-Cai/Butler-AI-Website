@@ -28,8 +28,7 @@
         name="close_circle_line"
         class="pa-tag-text_close"
         @click.stop="removeTag(item)"
-      >
-      </pa-icon>
+      />
     </div>
     <div v-if="props.useAddTag" class="pa-tag-text pa-tag-add">
       <input type="text" v-model="addTagInput" :placeholder="resolvedAddTagPlaceholder" @keydown.enter="handleAddTag" />
@@ -50,8 +49,7 @@
             name="close_circle_line"
             class="pa-tag-text_close"
             @click.stop="removeTag(item)"
-          >
-          </pa-icon>
+          />
         </div>
       </div>
     </pa-popover>

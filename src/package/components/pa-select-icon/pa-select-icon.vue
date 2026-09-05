@@ -26,7 +26,7 @@
             type="default"
             :useStop="false"
             :text="inputPlaceholder"
-          ></pa-button>
+          />
         </div>
       </template>
 
@@ -189,6 +189,8 @@ const languagePackage = computed(() => {
  * @description 计算输入框的占位符文本
  */
 const inputPlaceholder = computed(() => {
+  if (props.display || props.disabled) return "";
+
   return typeof props.placeholder === "object"
     ? props.placeholder[languageValue.value] || languagePackage.value[`clickChangeIcon`]
     : props.placeholder || languagePackage.value[`clickChangeIcon`];

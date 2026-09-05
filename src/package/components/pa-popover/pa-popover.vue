@@ -22,7 +22,12 @@
           @mouseleave="handlePopoverLeave"
           @click.stop
         >
-          <div class="pa-popover-content" ref="popoverRef" :class="contentClassName" :style="popoverContentStyle">
+          <div
+            class="pa-popover-content"
+            ref="popoverRef"
+            :class="contentClassName"
+            :style="{ ...contentStyle, ...popoverContentStyle }"
+          >
             <slot />
           </div>
           <div class="pa-popover-arrow" :style="popoverArrowStyle"></div>
@@ -79,6 +84,7 @@ const props = withDefaults(defineProps<ComponentProps>(), {
   trigger: "click",
   contentClassName: "",
   stopPropagation: false,
+  contentStyle: undefined,
   autoWidth: false,
   placement: "bottom",
   targetClose: true,

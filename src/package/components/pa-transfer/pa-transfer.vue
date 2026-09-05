@@ -16,7 +16,7 @@
             :is-indeterminate="awaitSelectList.length > 0"
             :isChecked="awaitSelectList.length === searchAllSelectList.length && searchAllSelectList.length > 0"
             @change="handleCheckedChange('left')"
-          ></pa-checkbox-item>
+          />
           {{ languagePackage["unSelected"] }}
         </div>
         <pa-input
@@ -42,7 +42,7 @@
                 ? { 'zh-CN': '无匹配数据', 'en-US': 'No match data' }
                 : { 'zh-CN': '无更多数据', 'en-US': 'No more data' }
             "
-          ></pa-empty>
+          />
           <div
             v-else
             v-for="(item, index) in searchAllSelectList"
@@ -69,14 +69,14 @@
         icon-name="left_line"
         :disabled="props.disabled || awaitSelectedList.length === 0"
         @click="handleTransferClick('left')"
-      ></pa-button>
+      />
       <pa-button
         :renderId="renderId + '-transfer-right_btn'"
         :data-name="name + ` (选择)`"
         icon-name="right_line"
         :disabled="props.disabled || awaitSelectList.length === 0"
         @click="handleTransferClick('right')"
-      ></pa-button>
+      />
     </div>
     <div class="transfer-select-box">
       <div class="transfer-select-box_title">
@@ -87,7 +87,7 @@
             :is-indeterminate="awaitSelectedList.length > 0"
             :isChecked="awaitSelectedList.length === filterSelectedList.length && filterSelectedList.length > 0"
             @change="handleCheckedChange('right')"
-          ></pa-checkbox-item>
+          />
           {{ languagePackage["selected"] }}
         </div>
         <pa-input
@@ -113,7 +113,7 @@
                 ? { 'zh-CN': '无匹配数据', 'en-US': 'No match data' }
                 : { 'zh-CN': '无更多数据', 'en-US': 'No more data' }
             "
-          ></pa-empty>
+          />
           <div
             v-else
             v-for="(item, index) in filterSelectedList"

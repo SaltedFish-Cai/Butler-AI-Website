@@ -40,7 +40,7 @@
               { label: { 'en-US': 'Operation Column', 'zh-CN': '操作列' }, value: 'operation' }
             ]
           "
-        ></pa-select>
+        />
       </template>
 
       <template #styleType="{ data }">
@@ -51,39 +51,34 @@
             { label: { 'en-US': 'Built-in Style', 'zh-CN': '内置样式' }, value: 'Built' },
             { label: { 'en-US': 'Custom Style', 'zh-CN': '自定义样式' }, value: 'Custom' }
           ]"
-        ></pa-select>
+        />
       </template>
 
       <template #is="{ data, index }">
         <!-- 样式配置 -->
         <template v-if="data.styleType === 'Built'">
-          <pa-select
-            v-model="data.is"
-            :exOptions="isOptions"
-            @change="({ value }) => isChange(value, index)"
-            createUseChange
-          ></pa-select>
+          <pa-select v-model="data.is" :exOptions="isOptions" @change="({ value }) => isChange(value, index)" createUseChange />
         </template>
         <template v-if="data.styleType === 'Custom'">
-          <pa-select-icon v-model="data.icon"></pa-select-icon>
+          <pa-select-icon v-model="data.icon" />
           <pa-input
             class="pa-mt-size"
             v-model="data.text['zh-CN']"
             :title="language === 'zh-CN' ? '中文文本' : 'Chinese Text'"
             :placeholder="{ 'zh-CN': '请输入中文文本', 'en-US': 'Please input Chinese text' }"
-          ></pa-input>
+          />
           <pa-input
             class="pa-mt-size"
             v-model="data.text['en-US']"
             :title="language === 'zh-CN' ? '英文文本' : 'English Text'"
             :placeholder="{ 'zh-CN': '请输入英文文本', 'en-US': 'Please input English text' }"
-          ></pa-input>
+          />
           <pa-select
             class="pa-mt-size"
             v-model="data.type"
             :title="language === 'zh-CN' ? '按钮类型' : 'Button Type'"
             :exOptions="typeOptions"
-          ></pa-select>
+          />
         </template>
       </template>
 
@@ -113,7 +108,7 @@
             v-model="data.jumpTarget"
             :title="language === 'zh-CN' ? '跳转目标' : 'Jump Target'"
             :placeholder="{ 'zh-CN': '请输入跳转目标', 'en-US': 'Please input jump target' }"
-          ></pa-input>
+          />
 
           <!-- 弹窗 -->
           <pa-select
