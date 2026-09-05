@@ -6,7 +6,7 @@
     :closeOnClickModal="false"
     size="s"
   >
-    <pa-form id="pa-playground_base" ref="formRef" :structure="config" :data="editBaseData" :ex-span="1"> </pa-form>
+    <pa-form id="pa-playground_base" ref="formRef" :structure="config" :data="editBaseData" :ex-span="1" />
 
     <template #footer>
       <pa-button is="save" @click="handleSubmit" :text="{ 'zh-CN': '保存配置', 'en-US': 'Save Config' }" />
@@ -34,7 +34,7 @@ const editBaseData = ref<PaPlaygroundPagesType>({
 });
 
 const formRef = useTemplateRef("formRef");
-const emit = defineEmits<{
+const emits = defineEmits<{
   submit: [data: any];
 }>();
 const editIndex = ref(-1);

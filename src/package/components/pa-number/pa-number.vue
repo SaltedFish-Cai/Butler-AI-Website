@@ -195,6 +195,8 @@ const languagePackage = computed(() => {
  * @description 根据语言设置计算显示的占位符文本
  */
 const computedPlaceholder: ComputedRef<string> = computed(() => {
+  if (props.display || props.disabled) return "";
+
   return typeof props.placeholder === "object"
     ? props.placeholder[languageValue.value] || languagePackage.value[`inputPlaceholder`]
     : props.placeholder || languagePackage.value[`inputPlaceholder`];

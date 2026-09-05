@@ -7,8 +7,7 @@
       :structure="tableConfig"
       :request-api="getTableList"
       :exOptions="exOptions"
-    >
-    </pa-table>
+    />
 
     <pa-form id="visibleForm" v-if="visibleType === 'form'" ref="visibleFormRef" :structure="formConfig" :exOptions="exOptions" />
   </pa-dialog>

@@ -41,7 +41,7 @@ class NotificationManagerImpl implements NotificationManager {
       position: options.position || "top-right"
     };
     const container = document.createElement("div");
-    container.id = `m-notification-container-${id}`;
+    container.id = `pa-notification-container-${id}`;
     document.body.appendChild(container);
     const app = createApp({
       render: () =>
@@ -90,7 +90,7 @@ class NotificationManagerImpl implements NotificationManager {
         this.notifications.splice(index, 1);
         this.repositionNotifications();
       }
-      document.getElementById(`m-notification-container-${id}`)?.remove();
+      document.getElementById(`pa-notification-container-${id}`)?.remove();
     }
   }
 

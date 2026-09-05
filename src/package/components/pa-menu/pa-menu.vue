@@ -176,7 +176,7 @@ function handleResize() {
  * @description 记录当前哪个顶级菜单项的子菜单处于打开状态，
  *              点击同级其他项时自动关闭已打开的子菜单
  */
-const topActiveSubmenuId = ref<symbol | null>(null);
+const topActiveSubMenuId = ref<symbol | null>(null);
 
 /**
  * 菜单上下文（provide/inject）
@@ -184,12 +184,12 @@ const topActiveSubmenuId = ref<symbol | null>(null);
  */
 const menuContext: MenuContext = {
   closeAll: () => {
-    topActiveSubmenuId.value = null;
+    topActiveSubMenuId.value = null;
     emit("close");
   },
   onSelect: (item: MenuItemConfig) => emit("select", item),
-  resetActiveSubmenu: () => {
-    topActiveSubmenuId.value = null;
+  resetActiveSubMenu: () => {
+    topActiveSubMenuId.value = null;
   }
 };
 provide("pa-menu-context", menuContext);
@@ -199,9 +199,9 @@ provide("pa-menu-context", menuContext);
  * @description 顶级菜单项之间通过此上下文协调子菜单的打开/关闭
  */
 const topGroupContext: MenuGroupContext = {
-  activeSubmenuId: topActiveSubmenuId,
+  activeSubMenuId: topActiveSubMenuId,
   notifyClick: (id: symbol) => {
-    topActiveSubmenuId.value = id;
+    topActiveSubMenuId.value = id;
   }
 };
 provide("pa-menu-group", topGroupContext);

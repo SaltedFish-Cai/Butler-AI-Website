@@ -42,8 +42,7 @@
       :ex-span="1"
       :ex-options="exOptions"
       @form-cell-change="handleFormCellChange"
-    >
-    </pa-form>
+    />
 
     <template #footer>
       <pa-button is="save" @click="handleSubmit" :text="{ 'zh-CN': '保存配置', 'en-US': 'Save Config' }" />
@@ -106,7 +105,7 @@ const exOptions = ref<PaOptionType.Default>({
 });
 
 const formRef = useTemplateRef("formRef");
-const emit = defineEmits<{
+const emits = defineEmits<{
   submit: [data: any];
 }>();
 

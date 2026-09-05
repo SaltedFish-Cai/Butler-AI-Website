@@ -16,7 +16,7 @@
         :disabled="item.disabled"
         :exOptions="radioOptions"
         @change="radioChange"
-      ></pa-radio>
+      />
 
       <template v-for="groupItem in item.groupFormConfig" :key="groupItem.prop">
         <template

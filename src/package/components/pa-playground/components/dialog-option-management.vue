@@ -28,7 +28,7 @@
     :padding="['all']"
     :closeOnClickModal="false"
     size="s"
-    @closed="inEditDataItem = ({}  as MOptionsType)"
+    @closed="inEditDataItem = ({} as MOptionsType)"
   >
     <pa-form
       id="pa-playground_base"
@@ -38,8 +38,7 @@
       :ex-span="1"
       :ex-options="exOptions"
       @form-cell-change="handleCellChange"
-    >
-    </pa-form>
+    />
 
     <m-quick-table
       v-if="selectType === 'select'"
@@ -64,21 +63,18 @@
           :title="languageValue === 'zh-CN' ? '中文文本' : 'Chinese Text'"
           :titleWidth="languageValue === 'zh-CN' ? '70px' : '100px'"
           :placeholder="{ 'zh-CN': '请输入中文文本', 'en-US': 'Please input Chinese text' }"
-        ></pa-input>
+        />
         <pa-input
           class="pa-mt-size"
           v-model="data.label['en-US']"
           :title="languageValue === 'zh-CN' ? '英文文本' : 'English Text'"
           :titleWidth="languageValue === 'zh-CN' ? '70px' : '100px'"
           :placeholder="{ 'zh-CN': '请输入英文文本', 'en-US': 'Please input English text' }"
-        ></pa-input>
+        />
       </template>
 
       <template #value="{ data }">
-        <pa-input
-          v-model="data.value"
-          :placeholder="{ 'zh-CN': '请输入选项值', 'en-US': 'Please input option value' }"
-        ></pa-input>
+        <pa-input v-model="data.value" :placeholder="{ 'zh-CN': '请输入选项值', 'en-US': 'Please input option value' }" />
       </template>
 
       <template #operation="{ data }">
@@ -103,7 +99,7 @@
               :title="languageValue === 'zh-CN' ? '中文文本' : 'Chinese Text'"
               :titleWidth="languageValue === 'zh-CN' ? '70px' : '110px'"
               :placeholder="{ 'zh-CN': '请输入中文文本', 'en-US': 'Please input Chinese text' }"
-            ></pa-input>
+            />
             <pa-input
               class="pa-mt-size"
               v-if="(inEditDataItem.config as PaOptionType.Switch).activeText"
@@ -111,7 +107,7 @@
               :title="languageValue === 'zh-CN' ? '英文文本' : 'English Text'"
               :titleWidth="languageValue === 'zh-CN' ? '70px' : '110px'"
               :placeholder="{ 'zh-CN': '请输入英文文本', 'en-US': 'Please input English text' }"
-            ></pa-input>
+            />
           </div>
         </div>
         <div class="m-playground-dialog-table-row">
@@ -120,11 +116,11 @@
           </div>
           <div class="m-playground-dialog-table-cell">
             <pa-input
-              v-model="(inEditDataItem.config as PaOptionType.Switch).activeValue"
+              v-model="((inEditDataItem.config as PaOptionType.Switch).activeValue as string)"
               :title="languageValue === 'zh-CN' ? '生效值' : 'Active Value'"
               :titleWidth="languageValue === 'zh-CN' ? '70px' : '110px'"
               :placeholder="languageValue === 'zh-CN' ? '请输入生效值' : 'Active Value'"
-            ></pa-input>
+            />
           </div>
         </div>
         <div class="m-playground-dialog-table-row">
@@ -138,7 +134,7 @@
               :title="languageValue === 'zh-CN' ? '中文文本' : 'Chinese Text'"
               :titleWidth="languageValue === 'zh-CN' ? '70px' : '110px'"
               :placeholder="{ 'zh-CN': '请输入中文文本', 'en-US': 'Please input Chinese text' }"
-            ></pa-input>
+            />
             <pa-input
               class="pa-mt-size"
               v-if="(inEditDataItem.config as PaOptionType.Switch).inActiveText"
@@ -146,7 +142,7 @@
               :title="languageValue === 'zh-CN' ? '英文文本' : 'English Text'"
               :titleWidth="languageValue === 'zh-CN' ? '70px' : '110px'"
               :placeholder="{ 'zh-CN': '请输入英文文本', 'en-US': 'Please input English text' }"
-            ></pa-input>
+            />
           </div>
         </div>
         <div class="m-playground-dialog-table-row">
@@ -155,11 +151,11 @@
           </div>
           <div class="m-playground-dialog-table-cell">
             <pa-input
-              v-model="(inEditDataItem.config as PaOptionType.Switch).inActiveValue"
+              v-model="((inEditDataItem.config as PaOptionType.Switch).inActiveValue as string)"
               :title="languageValue === 'zh-CN' ? '未生效值' : 'Inactive Value'"
               :titleWidth="languageValue === 'zh-CN' ? '70px' : '110px'"
               :placeholder="languageValue === 'zh-CN' ? '请输入未生效值' : 'Inactive Value'"
-            ></pa-input>
+            />
           </div>
         </div>
       </div>
@@ -275,7 +271,7 @@ const handleCellChange = ({ prop, value }) => {
 };
 
 const formRef = useTemplateRef("formRef");
-const emit = defineEmits<{
+const emits = defineEmits<{
   submit: [data: MOptionsType[]];
 }>();
 

@@ -83,7 +83,7 @@
                 autofocus
                 :clearable="false"
                 placeholder=" "
-              ></pa-input>
+              />
             </div>
           </template>
 
@@ -106,7 +106,7 @@
                     {{ tabGroupItem.unitName }}
                     <pa-popover v-if="tabGroupItem.unitTip" placement="right">
                       <template #reference>
-                        <pa-icon name="question_line" class="form-title_label-icon"></pa-icon>
+                        <pa-icon name="question_line" class="form-title_label-icon" />
                       </template>
                       {{ tabGroupItem.unitTip }}
                     </pa-popover>
@@ -167,7 +167,7 @@
                   <pa-title>
                     {{ tabGroupItem.unitName }}
                     <el-tooltip v-if="tabGroupItem.unitTip" :content="tabGroupItem.unitTip" placement="right">
-                      <pa-icon name="question_line" class="form-title_label-icon"></pa-icon>
+                      <pa-icon name="question_line" class="form-title_label-icon" />
                     </el-tooltip>
                   </pa-title>
                 </template>

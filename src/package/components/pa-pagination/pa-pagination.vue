@@ -14,8 +14,7 @@
         :exOptions="exOptions"
         :disabled="props.disabled"
         :useFilter="false"
-      >
-      </pa-select>
+      />
     </div>
     <button
       :id="renderId + '-prev'"
@@ -24,7 +23,7 @@
       :disabled="internalCurrentPage <= 1"
       @click="goToPage(internalCurrentPage - 1)"
     >
-      <pa-icon name="left_line"></pa-icon>
+      <pa-icon name="left_line" />
     </button>
     <template v-if="showPager">
       <button
@@ -68,7 +67,7 @@
       :disabled="internalCurrentPage >= pageCount"
       @click="goToPage(internalCurrentPage + 1)"
     >
-      <pa-icon name="right_line"></pa-icon>
+      <pa-icon name="right_line" />
     </button>
 
     <div v-if="showJumper" class="m-pagination-jumper">
@@ -87,7 +86,7 @@
         :precision="0"
         @change="handleJumperEnter"
         :disabled="props.disabled"
-      ></pa-number>
+      />
       <span>{{ languagePackage?.records3 || "" }}</span>
     </div>
   </div>

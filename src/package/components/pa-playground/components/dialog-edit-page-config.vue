@@ -20,13 +20,13 @@
           v-model="data.title['zh-CN']"
           :title="language === 'zh-CN' ? '中文文本' : 'Chinese Text'"
           :placeholder="{ 'zh-CN': '请输入中文文本', 'en-US': 'Please input Chinese text' }"
-        ></pa-input>
+        />
         <pa-input
           class="pa-mt-size"
           v-model="data.title['en-US']"
           :title="language === 'zh-CN' ? '英文文本' : 'English Text'"
           :placeholder="{ 'zh-CN': '请输入英文文本', 'en-US': 'Please input English text' }"
-        ></pa-input>
+        />
       </template>
     </pa-form>
 

@@ -19,7 +19,7 @@
           :playground-items="playgroundItems"
           :interface-configs="interfaceConfigs"
           :data-structures="dataStructures"
-        ></simulated-interface>
+        />
       </pa-tabs-item>
 
       <!-- 数据管理 -->
@@ -35,7 +35,7 @@
           :playground-items="playgroundItems"
           :interface-configs="interfaceConfigs"
           :data-structures="dataStructures"
-        ></data-management>
+        />
       </pa-tabs-item>
 
       <template #HeaderRight>

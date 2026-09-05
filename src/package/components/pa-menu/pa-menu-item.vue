@@ -9,16 +9,16 @@
     @mouseleave="handleMouseLeave"
   >
     <div v-if="props.divided" class="pa-menu-item__divider"></div>
-    <pa-icon v-if="props.icon" :name="props.icon" class="pa-menu-item__icon"></pa-icon>
+    <pa-icon v-if="props.icon" :name="props.icon" class="pa-menu-item__icon" />
     <slot name="label">
       <span class="pa-menu-item__label">{{ resolvedLabel }}</span>
     </slot>
-    <span v-if="hasSubmenu" class="pa-menu-item__arrow">&#x276F;</span>
+    <span v-if="hasSubMenu" class="pa-menu-item__arrow">&#x276F;</span>
 
-    <!-- Submenu (position: fixed 脱离文档流，不受父级 overflow: hidden 裁剪；
+    <!-- SubMenu (position: fixed 脱离文档流，不受父级 overflow: hidden 裁剪；
          作为 DOM 子节点确保 mouseleave 不会在移入子菜单时误触发) -->
     <Transition name="pa-menu-fade">
-      <div v-if="submenuVisible" ref="submenuRef" class="pa-menu__submenu" :style="submenuStyle">
+      <div v-if="subMenuVisible" ref="subMenuRef" class="pa-menu__subMenu" :style="subMenuStyle">
         <div class="pa-menu__content">
           <slot />
         </div>
@@ -86,7 +86,7 @@ const props = withDefaults(defineProps<ItemComponentProps>(), {
   divided: false,
   disabled: false,
   command: undefined,
-  submenuTrigger: "click"
+  subMenuTrigger: "click"
 });
 
 /**
@@ -122,25 +122,25 @@ const menuItemRef = ref<HTMLElement | null>(null);
  * 子菜单元素引用
  * @type Ref<HTMLElement | null>
  */
-const submenuRef = ref<HTMLElement | null>(null);
+const subMenuRef = ref<HTMLElement | null>(null);
 
 /**
  * 子菜单可见状态
  * @type Ref<boolean>
  */
-const submenuVisible = ref(false);
+const subMenuVisible = ref(false);
 
 /**
  * 子菜单位置
  */
-const submenuLeft = ref(0);
-const submenuTop = ref(0);
+const subMenuLeft = ref(0);
+const subMenuTop = ref(0);
 
 /**
  * 是否是点击模式
  * @type ComputedRef<boolean>
  */
-const isClickMode = computed(() => props.submenuTrigger === "click");
+const isClickMode = computed(() => props.subMenuTrigger === "click");
 
 /**
  * 显示定时器（仅 hover 模式使用）
@@ -149,13 +149,20 @@ const isClickMode = computed(() => props.submenuTrigger === "click");
 let showTimer: ReturnType<typeof setTimeout> | null = null;
 
 /**
+ * 隐藏定时器（仅 hover 模式使用）
+ * @description 延迟 200ms 后隐藏。子菜单与菜单项之间存在视觉间隙（margin），
+ *              鼠标穿过间隙时会触发 mouseleave，若无延迟子菜单会在到达前被关闭
+ */
+let hideTimer: ReturnType<typeof setTimeout> | null = null;
+
+/**
  * 是否有子菜单（通过检测插槽内容）
  * @type ComputedRef<boolean>
  * @description 检查父组件是否传递了 slot 内容，以此判断是否有子菜单。
  *              Vue 3 中 slots.default 仅在父组件提供了 slot 内容时才存在，
  *              比调用 slots.default() 再过滤 vnode 更可靠。
  */
-const hasSubmenu = computed(() => typeof slots.default === "function");
+const hasSubMenu = computed(() => typeof slots.default === "function");
 
 /**
  * 解析后的标签文本
@@ -183,11 +190,11 @@ const itemClasses = computed(() => [
  * 子菜单样式
  * @type ComputedRef<Record<string, string>>
  */
-const submenuStyle = computed(() => ({
+const subMenuStyle = computed(() => ({
   position: "fixed" as const,
-  left: submenuLeft.value + "px",
-  top: submenuTop.value + "px",
-  display: submenuVisible.value ? undefined : "none"
+  left: subMenuLeft.value + "px",
+  top: subMenuTop.value + "px",
+  display: subMenuVisible.value ? undefined : "none"
 }));
 
 /**
@@ -195,12 +202,12 @@ const submenuStyle = computed(() => ({
  * @description 当前菜单项如果包含子菜单（插槽内有 pa-menu-item），
  *              则子级菜单项之间也需要同级协调
  */
-const childActiveSubmenuId = ref<symbol | null>(null);
-if (hasSubmenu.value && isClickMode.value) {
+const childActiveSubMenuId = ref<symbol | null>(null);
+if (hasSubMenu.value && isClickMode.value) {
   const childGroupContext: MenuGroupContext = {
-    activeSubmenuId: childActiveSubmenuId,
+    activeSubMenuId: childActiveSubMenuId,
     notifyClick: (id: symbol) => {
-      childActiveSubmenuId.value = id;
+      childActiveSubMenuId.value = id;
     }
   };
   provide("pa-menu-group", childGroupContext);
@@ -212,10 +219,10 @@ if (hasSubmenu.value && isClickMode.value) {
  */
 if (groupContext && isClickMode.value) {
   watch(
-    () => groupContext.activeSubmenuId.value,
+    () => groupContext.activeSubMenuId.value,
     newId => {
-      if (newId !== null && newId !== itemId && submenuVisible.value) {
-        submenuVisible.value = false;
+      if (newId !== null && newId !== itemId && subMenuVisible.value) {
+        subMenuVisible.value = false;
       }
     }
   );
@@ -224,25 +231,25 @@ if (groupContext && isClickMode.value) {
 /**
  * 打开并定位子菜单
  */
-function openSubmenu(): void {
-  submenuVisible.value = true;
+function openSubMenu(): void {
+  subMenuVisible.value = true;
 
   // 设置初始位置
   if (menuItemRef.value) {
     const rect = menuItemRef.value.getBoundingClientRect();
-    submenuLeft.value = rect.right;
-    submenuTop.value = rect.top;
+    subMenuLeft.value = rect.right;
+    subMenuTop.value = rect.top;
   }
 
   // 更新位置（考虑溢出）
-  nextTick(() => updateSubmenuPosition());
+  nextTick(() => updateSubMenuPosition());
 }
 
 /**
  * 更新子菜单位置
  * @description 根据菜单项的位置计算子菜单在右侧显示的位置，处理视口溢出
  */
-function updateSubmenuPosition(): void {
+function updateSubMenuPosition(): void {
   if (!menuItemRef.value) return;
 
   const rect = menuItemRef.value.getBoundingClientRect();
@@ -253,9 +260,9 @@ function updateSubmenuPosition(): void {
   let top = rect.top;
 
   nextTick(() => {
-    if (!submenuRef.value) return;
-    const sw = submenuRef.value.offsetWidth;
-    const sh = submenuRef.value.offsetHeight;
+    if (!subMenuRef.value) return;
+    const sw = subMenuRef.value.offsetWidth;
+    const sh = subMenuRef.value.offsetHeight;
 
     // 右侧溢出时翻转到左侧显示
     if (left + sw > vw) {
@@ -270,43 +277,61 @@ function updateSubmenuPosition(): void {
       top = 0;
     }
 
-    submenuLeft.value = left;
-    submenuTop.value = top;
+    subMenuLeft.value = left;
+    subMenuTop.value = top;
   });
 }
 
 /**
+ * 取消待执行的隐藏（仅 hover 模式）
+ * @description 鼠标从间隙或子菜单重新进入菜单项时调用，避免子菜单被误关闭
+ */
+function cancelHide(): void {
+  if (hideTimer) {
+    clearTimeout(hideTimer);
+    hideTimer = null;
+  }
+}
+
+/**
  * 鼠标进入菜单项（仅 hover 模式）
- * @description 如果有子菜单（插槽内容）且未禁用，延迟 200ms 显示子菜单
+ * @description 如果有子菜单（插槽内容）且未禁用，取消待执行的隐藏并延迟 200ms 显示子菜单
  */
 function handleMouseEnter(): void {
   if (isClickMode.value) return;
-  if (!hasSubmenu.value || props.disabled) return;
+  if (!hasSubMenu.value || props.disabled) return;
+  // 从子菜单/间隙移回菜单项时，取消尚未执行的隐藏
+  cancelHide();
   if (showTimer) clearTimeout(showTimer);
   showTimer = setTimeout(() => {
-    openSubmenu();
+    openSubMenu();
     showTimer = null;
   }, 200);
 }
 
 /**
  * 鼠标离开菜单项（仅 hover 模式）
- * @description 子菜单是 DOM 子节点，mouseleave 只在真正离开元素树时触发，
- *              此时立即隐藏（无需延迟）
+ * @description 子菜单是 DOM 子节点，mouseleave 只在真正离开元素树时触发。
+ *              延迟 200ms 隐藏：为鼠标穿过间隙/移入子菜单留出缓冲，
+ *              期间重新进入会通过 handleMouseEnter 取消隐藏
  */
 function handleMouseLeave(): void {
   if (isClickMode.value) return;
-  if (!hasSubmenu.value) return;
+  if (!hasSubMenu.value) return;
   if (showTimer) {
     clearTimeout(showTimer);
     showTimer = null;
   }
-  submenuVisible.value = false;
+  cancelHide();
+  hideTimer = setTimeout(() => {
+    subMenuVisible.value = false;
+    hideTimer = null;
+  }, 200);
 }
 
 /**
  * 处理点击事件
- * @description 根据 submenuTrigger 模式不同行为：
+ * @description 根据 subMenuTrigger 模式不同行为：
  *              - click 模式：点击有子菜单的项切换子菜单，点击叶子节点触发事件
  *              - hover 模式：有子菜单的项忽略点击，叶子节点触发事件
  *
@@ -319,17 +344,17 @@ function handleClick(event: MouseEvent): void {
   // 阻止事件冒泡到父级菜单项，避免父级 handleClick 误触发
   event.stopPropagation();
 
-  if (hasSubmenu.value) {
+  if (hasSubMenu.value) {
     if (isClickMode.value) {
       // 点击模式：切换子菜单
-      if (submenuVisible.value) {
+      if (subMenuVisible.value) {
         // 已打开 → 关闭
-        submenuVisible.value = false;
+        subMenuVisible.value = false;
       } else {
         // 通知同级关闭各自的子菜单
         groupContext?.notifyClick(itemId);
         // 打开自己的子菜单
-        openSubmenu();
+        openSubMenu();
       }
     }
     // hover 模式下点击有子菜单的项不做任何事
@@ -346,6 +371,7 @@ function handleClick(event: MouseEvent): void {
  */
 onUnmounted(() => {
   if (showTimer) clearTimeout(showTimer);
+  if (hideTimer) clearTimeout(hideTimer);
 });
 </script>
 

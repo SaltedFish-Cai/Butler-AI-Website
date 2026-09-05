@@ -40,8 +40,7 @@
       :data="inEditDataItem"
       :ex-span="1"
       :ex-options="exOptions"
-    >
-    </pa-form>
+    />
 
     <m-quick-table
       ref="editTableRef"
@@ -88,15 +87,15 @@
           :isChecked="inEditDataItem.indexKey == data.id"
           @click="inEditDataItem.indexKey = data.id"
           v-model="inEditDataItem.indexKey"
-        ></pa-radio-item
-      ></template>
+        />
+      </template>
 
       <template #prop="{ data }">
         <pa-input
           :title="languageValue === 'zh-CN' ? '属性名' : 'Property Name'"
           v-model="data.prop"
           :placeholder="{ 'zh-CN': '请输入属性名', 'en-US': 'Please input property prop' }"
-        ></pa-input>
+        />
       </template>
 
       <template #description="{ data }">
@@ -104,7 +103,7 @@
           :title="languageValue === 'zh-CN' ? '属性描述' : 'Property Description'"
           v-model="data.description"
           :placeholder="{ 'zh-CN': '请输入属性描述', 'en-US': 'Please input property description' }"
-        ></pa-input>
+        />
       </template>
 
       <template #label="{ data }">
@@ -113,14 +112,14 @@
           :title="languageValue === 'zh-CN' ? '中文文本' : 'Chinese Text'"
           :titleWidth="languageValue === 'zh-CN' ? '70px' : '100px'"
           :placeholder="{ 'zh-CN': '请输入中文文本', 'en-US': 'Please input Chinese text' }"
-        ></pa-input>
+        />
         <pa-input
           class="pa-mt-size"
           v-model="data.label['en-US']"
           :title="languageValue === 'zh-CN' ? '英文文本' : 'English Text'"
           :titleWidth="languageValue === 'zh-CN' ? '70px' : '100px'"
           :placeholder="{ 'zh-CN': '请输入英文文本', 'en-US': 'Please input English text' }"
-        ></pa-input>
+        />
       </template>
 
       <template #visible="{ data }">
@@ -130,7 +129,7 @@
             { label: { 'en-US': 'Yes', 'zh-CN': '是' }, value: 1 },
             { label: { 'en-US': 'No', 'zh-CN': '否' }, value: 0 }
           ]"
-        ></pa-select>
+        />
       </template>
 
       <template v-for="item in props.authorizationFunction" :key="'dialog-edit-button_' + item.prop" #[item.prop]="{ data }">
@@ -209,7 +208,7 @@ const formRef = useTemplateRef("formRef");
 const editTableRef = useTemplateRef("editTableRef");
 const visibleTableRef = useTemplateRef("visibleTableRef");
 const fileInput = useTemplateRef("fileInput");
-const emit = defineEmits<{
+const emits = defineEmits<{
   submit: [data: MStructureType[]];
 }>();
 

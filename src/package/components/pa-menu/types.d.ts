@@ -198,7 +198,7 @@ export type ItemComponentProps = {
    * @default "click"
    * @description "click"：点击展开子菜单；"hover"：鼠标悬停展开子菜单
    */
-  submenuTrigger?: "click" | "hover";
+  subMenuTrigger?: "click" | "hover";
   /**
    * 自定义类名
    * @type Array<string> | string | undefined
@@ -237,7 +237,7 @@ export type MenuContext = {
   /** 选中菜单项 */
   onSelect: (item: MenuItemConfig) => void;
   /** 重置子菜单打开状态（菜单关闭时调用） */
-  resetActiveSubmenu?: () => void;
+  resetActiveSubMenu?: () => void;
 };
 
 /**
@@ -248,7 +248,7 @@ export type MenuContext = {
  */
 export type MenuGroupContext = {
   /** 当前处于打开状态的子菜单项 ID（null 表示无打开的子菜单） */
-  activeSubmenuId: { value: symbol | null };
+  activeSubMenuId: { value: symbol | null };
   /** 通知同级：某个菜单项被点击打开子菜单 */
   notifyClick: (id: symbol) => void;
 };

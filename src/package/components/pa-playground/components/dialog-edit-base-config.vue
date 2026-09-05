@@ -13,8 +13,7 @@
       :data="props.editBaseData"
       :ex-span="1"
       :ex-options="exOptions"
-    >
-    </pa-form>
+    />
 
     <template #footer>
       <pa-button is="save" @click="handleSubmit" :text="{ 'zh-CN': '保存配置', 'en-US': 'Save Config' }" />
@@ -36,7 +35,7 @@ const props = withDefaults(
 );
 
 const formRef = useTemplateRef("formRef");
-const emit = defineEmits<{
+const emits = defineEmits<{
   submit: [data: any];
 }>();
 

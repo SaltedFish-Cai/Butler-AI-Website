@@ -142,7 +142,6 @@ function setPaManagerSize(size: "default" | "large" | "small"): void {
  * @description 更新语言配置和对应的语言包
  */
 function setPaManagerLanguage(language: "en-US" | "zh-CN"): void {
-  console.log("+++123123+++++++> language:", language);
   state.language = language;
 }
 

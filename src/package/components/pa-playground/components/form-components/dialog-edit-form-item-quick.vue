@@ -19,26 +19,22 @@
           :title="language === 'zh-CN' ? '中文文本' : 'Chinese Text'"
           :titleWidth="language === 'zh-CN' ? '70px' : '100px'"
           :placeholder="{ 'zh-CN': '请输入中文文本', 'en-US': 'Please input Chinese text' }"
-        ></pa-input>
+        />
         <pa-input
           class="pa-mt-size"
           v-model="(data.label as object)['en-US']"
           :title="language === 'zh-CN' ? '英文文本' : 'English Text'"
           :titleWidth="language === 'zh-CN' ? '70px' : '100px'"
           :placeholder="{ 'zh-CN': '请输入英文文本', 'en-US': 'Please input English text' }"
-        ></pa-input>
+        />
       </template>
 
       <template #prop="{ data }">
-        <pa-input
-          display
-          v-model="data.prop"
-          :placeholder="{ 'zh-CN': '请输入列Key', 'en-US': 'Please input column key' }"
-        ></pa-input
-      ></template>
+        <pa-input display v-model="data.prop" :placeholder="{ 'zh-CN': '请输入列Key', 'en-US': 'Please input column key' }"
+      /></template>
 
       <template #cellConfig="{ data }">
-        <pa-cascader v-model="data.type" :exOptions="cellMapConfig" :title="{ 'zh-CN': '类型', 'en-US': 'Type' }"></pa-cascader>
+        <pa-cascader v-model="data.type" :exOptions="cellMapConfig" :title="{ 'zh-CN': '类型', 'en-US': 'Type' }" />
 
         <pa-select
           class="pa-mt-size"
