@@ -160,7 +160,7 @@
   .pa-select-option {
     position: relative;
     z-index: 231;
-    padding: var(--pa-size-padding) var(--pa-size-padding_large);
+    padding: calc(var(--pa-size-padding) * 0.8) calc(var(--pa-size-padding_large) * 1.4);
     font-size: var(--pa-size-font);
     display: flex;
     justify-content: space-between;

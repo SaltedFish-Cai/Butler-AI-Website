@@ -169,7 +169,7 @@
 
 .pa-cascader-option {
   position: relative;
-  padding: var(--pa-size-padding);
+  padding: calc(var(--pa-size-padding) * 0.8) calc(var(--pa-size-padding_large) * 1.4);
   display: flex;
   justify-content: space-between;
   align-items: center;

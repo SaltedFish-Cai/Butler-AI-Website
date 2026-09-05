@@ -82,23 +82,24 @@
   position: relative;
   display: flex;
   align-items: center;
-  padding: 8px 16px;
-  font-size: 13px;
-  color: var(--pa-color-font, #333);
+  padding: var(--pa-size-padding) calc(var(--pa-size-padding) * 2);
+  font-size: var(--pa-size-font);
+  color: var(--pa-color-send-font);
+  min-width: 96px;
   cursor: pointer;
   user-select: none;
   transition: background-color 0.15s;
 
   &:hover {
-    background-color: var(--pa-color-primary-light-7, #f0f5ff);
+    background-color: var(--pa-color-primary-light-7);
   }
 }
 
 .pa-menu-item--danger {
-  color: var(--pa-color-danger, #a41515);
+  color: var(--pa-color-danger);
 
   &:hover {
-    background-color: var(--pa-color-danger-light-7, #fff3f3);
+    background-color: var(--pa-color-danger-light-7);
   }
 }
 
@@ -152,9 +153,9 @@
   background: var(--pa-color-border-opacity-1, #e4e7ed);
 }
 
-/* ─── Submenu (子菜单面板) ──────────────────── */
+/* ─── SubMenu (子菜单面板) ──────────────────── */
 
-.pa-menu__submenu {
+.pa-menu__subMenu {
   z-index: 2001;
   min-width: 140px;
   border: 1px solid var(--pa-color-border-opacity-1, #e4e7ed);

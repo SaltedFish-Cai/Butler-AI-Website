@@ -25,6 +25,7 @@
   justify-content: center;
   align-items: center;
   width: max-content;
+  max-width: 100%;
   overflow: hidden;
   line-height: 1.2em;
   white-space: nowrap;
@@ -43,9 +44,10 @@
   }
 
   .pa-button_text {
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+    white-space: normal; /* 覆盖父级 nowrap，允许换行 */
+    word-break: break-all; /* GUID 这种连续字符串在任意字符处断开 */
+    overflow-wrap: anywhere; /* 现代浏览器兼容，等价于 break-all 语义更准确 */
+    overflow: visible;
   }
 
   .pa-button_ml {
@@ -159,7 +161,6 @@
   padding: 0;
   line-height: 1.3em;
   border-radius: 0;
-  height: 1.4em;
   opacity: 0.7;
   transition: opacity var(--pa-animation-time, 0.2s);
 

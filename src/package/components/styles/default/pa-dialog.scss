@@ -39,6 +39,7 @@
 
       .title_body {
         padding: calc(var(--pa-size-padding, 10px) / 2) calc(var(--pa-size-padding)) !important;
+        padding-right: calc(var(--pa-size-font, 13px) + var(--pa-size-padding, 10px) * 3) !important;
         width: 100%;
         display: flex;
         justify-content: space-between;
@@ -58,7 +59,9 @@
       }
 
       .pa-dialog-content_header_close {
-        position: relative;
+        position: absolute;
+        top: 0;
+        right: 0;
         width: calc(var(--pa-size-font, 13px) + var(--pa-size-padding, 10px) * 2);
         min-height: calc(var(--pa-size-font, 13px) + var(--pa-size-padding, 10px) * 2);
         height: 100%;
@@ -125,7 +128,6 @@
       background-color: var(--pa-color-bg);
     }
     .pa-dialog-content_footer {
-      border-color: var(--pa-color-border-opacity-1);
       background-color: var(--pa-color-bg);
     }
   }
