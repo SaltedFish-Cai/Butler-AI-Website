@@ -5,7 +5,13 @@
         class="table_body_label"
         :class="[
           isRowIndex(item) ? 'table_body_label_index' : '',
-          item.fixed == 'left' ? 'sticky-left border-right' : item.fixed == 'right' ? 'sticky-right' : 'border-right',
+          item.fixed == 'left'
+            ? 'sticky-left pa-table_border-right'
+            : item.fixed == 'right'
+            ? 'sticky-right pa-table_border-right'
+            : columnIndex != structure.length - 1
+            ? 'pa-table_border-right'
+            : '',
           (!item.width && !setCellWidthIng) || (useAverageWidth == 1 && !item.baseWidth && item.prop != 'operation')
             ? 'table_body_label_flex'
             : '',
@@ -40,8 +46,8 @@
               :name="'表格多选 - ' + item.label + ` (行：${rowIndex})`"
               :is-checked="row.isSelected || isTableSelectAll"
               :is-indeterminate="row.isIndeterminate"
-              :disabled="isTableSelectAll"
-              @click.stop="handleSelectChange({ row, parentRow })"
+              :disabled="isTableSelectAll || filterSelectRow?.(row) == false"
+              @click.stop="isTableSelectAll || filterSelectRow?.(row) == false ? null : handleSelectChange({ row, parentRow })"
             />
           </template>
 
@@ -53,8 +59,8 @@
               :name="'表格单选 - ' + item.label + ` (行：${rowIndex})`"
               :is-checked="row.isSelected || isTableSelectAll"
               :is-indeterminate="row.isIndeterminate"
-              :disabled="isTableSelectAll"
-              @click.stop="handleSelectChange({ row, parentRow })"
+              :disabled="isTableSelectAll || filterSelectRow?.(row) == false"
+              @click.stop="isTableSelectAll || filterSelectRow?.(row) == false ? null : handleSelectChange({ row, parentRow })"
             />
           </template>
 
@@ -63,6 +69,7 @@
             <div class="flex-center m-hand" style="width: 100%; height: 100%">
               <pa-icon
                 v-if="(!parentRow && row?.children?.length) || props.useExpand"
+                class="row_expend"
                 name="right_line"
                 style="font-size: 18px; transition: var(--pa-animation-time, 0.2s)"
                 :style="{ transform: row.isOpenChild ? 'rotate(90deg)' : 'rotate(0deg)' }"
@@ -117,7 +124,7 @@
               v-model="row[String(item.prop)]"
               :placeholder="item.cellConfig.placeholder || { 'zh-CN': '请输入', 'en-US': 'Please input' }[language] + item.label"
               :disabled="item.cellConfig.disabled"
-              :display="item.cellConfig.display"
+              :display="item.cellConfig.display || display"
               :min="item.cellConfig.min"
               :max="item.cellConfig.max"
               :precision="item.cellConfig.precision"
@@ -147,7 +154,7 @@
               :optionKey="item.cellConfig.optionKey"
               :placeholder="item.cellConfig.placeholder || { 'zh-CN': '请选择', 'en-US': 'Please select' }[language] + item.label"
               :disabled="item.cellConfig.disabled"
-              :display="item.cellConfig.display"
+              :display="item.cellConfig.display || display"
               :clearable="item.cellConfig.clearable"
               :contrastData="item.cellConfig.contrastData?.[String(item.prop)]"
               :alwaysContrast="item.cellConfig.alwaysContrast"
@@ -164,7 +171,7 @@
               v-model="row[String(item.prop)]"
               :disabled="item.cellConfig.disabled"
               :exOptions="(exOptions[String(item.prop)] as PaOptionType.Switch) || item.cellConfig.exOptions"
-              :display="item.cellConfig.display"
+              :display="item.cellConfig.display || display"
               :activeValue="item.cellConfig.activeValue"
               :inActiveValue="item.cellConfig.inActiveValue"
               :activeText="item.cellConfig.activeText"
@@ -180,7 +187,7 @@
               v-model="row[String(item.prop)]"
               :disabled="item.cellConfig.disabled"
               :exOptions="(exOptions[String(item.prop)] as PaOptionType.SelectList) || item.cellConfig.exOptions"
-              :display="item.cellConfig.display"
+              :display="item.cellConfig.display || display"
               :contrastData="item.cellConfig.contrastData?.[String(item.prop)]"
               :alwaysContrast="item.cellConfig.alwaysContrast"
               @change="data => valueChange(data, { prop: item.prop, ...row })"
@@ -192,7 +199,7 @@
               v-model="row[String(item.prop)]"
               :disabled="item.cellConfig.disabled"
               :exOptions="(exOptions[String(item.prop)] as PaOptionType.SelectList) || item.cellConfig.exOptions"
-              :display="item.cellConfig.display"
+              :display="item.cellConfig.display || display"
               :contrastData="item.cellConfig.contrastData?.[String(item.prop)]"
               :alwaysContrast="item.cellConfig.alwaysContrast"
               @change="data => valueChange(data, { prop: item.prop, ...row })"
@@ -211,7 +218,7 @@
               :displayValue="item.cellConfig.displayValue ? row[item.cellConfig.displayValue] : undefined"
               :exOptions="(exOptions[String(item.prop)] as PaOptionType.SelectList) || item.cellConfig.exOptions"
               :placeholder="item.cellConfig.placeholder || { 'zh-CN': '请选择', 'en-US': 'Please select' }[language] + item.label"
-              :display="item.cellConfig.display"
+              :display="item.cellConfig.display || display"
               :useValueBylink="item.cellConfig.useValueBylink"
               :useTextByLink="item.cellConfig.useTextByLink"
               :clearable="item.cellConfig.clearable"
@@ -239,7 +246,7 @@
               :disabledDateFn="exCellDependent?.time_disabledDateFn?.[String(item.prop)] || item.cellConfig.disabledDateFn"
               :shortcuts="exCellDependent?.time_shortcuts?.[String(item.prop)] || item.cellConfig.shortcuts"
               :disabled="item.cellConfig.disabled"
-              :display="item.cellConfig.display"
+              :display="item.cellConfig.display || display"
               :contrastData="item.cellConfig.contrastData?.[String(item.prop)]"
               :alwaysContrast="item.cellConfig.alwaysContrast"
               @change="data => valueChange(data, { prop: item.prop, ...row })"
@@ -250,7 +257,7 @@
               v-model="row[String(item.prop)]"
               :placeholder="item.cellConfig.placeholder || { 'zh-CN': '请选择', 'en-US': 'Please select' }[language] + item.label"
               :disabled="item.cellConfig.disabled"
-              :display="item.cellConfig.display"
+              :display="item.cellConfig.display || display"
               :contrastData="item.cellConfig.contrastData?.[String(item.prop)]"
               :alwaysContrast="item.cellConfig.alwaysContrast"
               @change="data => valueChange(data, { prop: item.prop, ...row })"
@@ -270,7 +277,7 @@
               :fileSingleSize="item.cellConfig.fileSingleSize"
               :fileAllSize="item.cellConfig.fileAllSize"
               :disabled="item.cellConfig.disabled"
-              :display="item.cellConfig.display"
+              :display="item.cellConfig.display || display"
               :contrastData="item.cellConfig.contrastData?.[String(item.prop)]"
               :alwaysContrast="item.cellConfig.alwaysContrast"
               @change="data => valueChange(data, { prop: item.prop, ...row })"
@@ -282,7 +289,7 @@
               :type="item.cellConfig.type"
               :placeholder="item.cellConfig.placeholder || { 'zh-CN': '请输入', 'en-US': 'Please input' }[language] + item.label"
               :disabled="item.cellConfig.disabled"
-              :display="item.cellConfig.display"
+              :display="item.cellConfig.display || display"
               :maxLength="item.cellConfig.maxLength"
               :clearable="item.cellConfig.clearable"
               :autofocus="item.cellConfig.autofocus"
@@ -374,6 +381,7 @@ type TableCellType = {
   showSelectList?: boolean;
   useChildren?: boolean;
   useAverageWidth?: -1 | 0 | 1;
+  filterSelectRow?: (row: any) => boolean;
 };
 /**
  * 组件属性

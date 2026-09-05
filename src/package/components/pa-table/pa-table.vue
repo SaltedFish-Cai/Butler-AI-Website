@@ -8,7 +8,8 @@
         isShiftPressed ? 'pa-table_shirft' : '',
         useSticky ? 'pa-table_sticky' : '',
         !isLeft ? 'pa-table_scroll_left' : '',
-        !isRight ? 'pa-table_scroll_right' : ''
+        !isRight ? 'pa-table_scroll_right' : '',
+        state.widthAnimIng ? 'pa-table_width-anim' : ''
       ]"
       :style="{ ...props.style, '--pa-table-footer-height': footerHeight + 'px' }"
       :id="renderId"
@@ -38,12 +39,12 @@
                     :class="[
                       isRowIndex(item) ? 'pa-table_body_header_label_index' : '',
                       item.fixed == 'left'
-                        ? 'sticky-left border-right'
+                        ? 'sticky-left pa-table_border-right'
                         : item.fixed == 'right'
-                        ? 'sticky-right'
+                        ? 'sticky-right pa-table_border-right'
                         : index == tableStructure.length - 1
                         ? ''
-                        : 'border-right',
+                        : 'pa-table_border-right',
                       item.lastLeftFixed ? 'last-left-fixed' : '',
                       item.lastRightFixed ? 'last-right-fixed' : '',
                       (!item.width && !state.setCellWidthIng) ||
@@ -79,6 +80,7 @@
                     <template v-else-if="item.type == 'row'">
                       <div v-if="!usePagination" class="flex-center m-hand" style="width: 100%; height: 100%">
                         <pa-icon
+                          class="row_expend"
                           name="right_line"
                           style="font-size: 18px; transition: var(--pa-animation-time, 0.2s)"
                           :style="{ transform: state.isRowOpenStatus ? 'rotate(90deg)' : 'rotate(0deg)' }"
@@ -145,22 +147,28 @@
               '--body_content_col_hover_index': -1
             }"
           >
-            <!-- 虚拟滚动模式（无限滚动） -->
+            <!-- 虚拟滚动模式（无限滚动 / 分页模式下按需渲染可视区行） -->
             <div
-              v-if="infiniteScroll && !state.showSelectList && virtualFlatData.length > 0"
+              v-if="useVirtual && !state.showSelectList && virtualFlatData.length > 0"
               class="pa-table__virtual-space"
               :style="{ height: virtualTotalHeight + 'px', position: 'relative', minHeight: '100%' }"
             >
-              <div
-                v-for="vi in visibleItems"
-                :key="vi.key"
-                :ref="el => measureRow(el, vi.index)"
-                :style="{ position: 'absolute', top: vi.top + 'px', left: 0, right: 0, zIndex: 1 }"
-              >
+              <template v-for="vi in visibleItems" :key="vi.key">
                 <div
                   class="pa-table_body_content_cell"
                   :class="[vi.row.isOpenChild && (useChildren || useExpand) ? 'open-child' : '']"
+                  :ref="el => measureRow(el, vi.index)"
+                  :style="{
+                    position: 'absolute',
+                    top: vi.top + 'px',
+                    left: 0,
+                    right: 0,
+                    zIndex: 1,
+                    width: 'fit-content',
+                    minWidth: '100%'
+                  }"
                 >
+                  <div class="open-child_box-shadow_top"></div>
                   <mLightTableCell
                     :table-id="renderId"
                     :structure="tableStructure"
@@ -175,11 +183,13 @@
                     :setCellWidthIng="state.setCellWidthIng"
                     :useAverageWidth="state.useAverageWidth"
                     @change-row-status="changeRowStatus"
+                    :filterSelectRow="filterSelectRow"
                   >
                     <template v-for="slot in Object.keys($slots)" #[slot]="scope">
                       <slot :name="slot" v-bind="scope" />
                     </template>
                   </mLightTableCell>
+                  <div class="open-child_box-shadow_bottom"></div>
                 </div>
 
                 <template v-if="(vi.row.children?.length && useChildren) || useExpand">
@@ -205,6 +215,7 @@
                               :setCellWidthIng="state.setCellWidthIng"
                               :useAverageWidth="state.useAverageWidth"
                               :parentRow="vi.row"
+                              :filterSelectRow="filterSelectRow"
                             >
                               <template v-for="slot in Object.keys($slots)" #[slot]="scope">
                                 <slot :name="slot" v-bind="scope" />
@@ -220,10 +231,10 @@
                     </div>
                   </transition>
                 </template>
-              </div>
+              </template>
             </div>
 
-            <template v-if="!infiniteScroll || state.showSelectList">
+            <template v-if="!useVirtual || state.showSelectList">
               <template v-for="(item, index) in showTableList" :key="index">
                 <div class="pa-table_body_content_rows" :style="{ opacity: state.flatTableData.length > 0 ? 1 : 0 }">
                   <template v-for="row in item" :key="row[rowKey]">
@@ -250,6 +261,7 @@
                         class="pa-table_body_content_cell"
                         :class="[row.isOpenChild && (useChildren || useExpand) ? 'open-child' : '']"
                       >
+                        <div class="open-child_box-shadow_top"></div>
                         <mLightTableCell
                           :table-id="renderId"
                           :structure="tableStructure"
@@ -264,11 +276,13 @@
                           :setCellWidthIng="state.setCellWidthIng"
                           :useAverageWidth="state.useAverageWidth"
                           @change-row-status="changeRowStatus"
+                          :filterSelectRow="filterSelectRow"
                         >
                           <template v-for="slot in Object.keys($slots)" #[slot]="scope">
                             <slot :name="slot" v-bind="scope" />
                           </template>
                         </mLightTableCell>
+                        <div class="open-child_box-shadow_bottom"></div>
                       </div>
 
                       <template v-if="(row.children?.length && useChildren) || useExpand">
@@ -294,6 +308,7 @@
                                     :setCellWidthIng="state.setCellWidthIng"
                                     :useAverageWidth="state.useAverageWidth"
                                     :parentRow="row"
+                                    :filterSelectRow="filterSelectRow"
                                   >
                                     <template v-for="slot in Object.keys($slots)" #[slot]="scope">
                                       <slot :name="slot" v-bind="scope" />
@@ -330,13 +345,13 @@
             <template v-for="(val, index) in state.summaryData" :key="index">
               <div
                 v-if="tableStructure[index].isShow != false"
-                class="pa-table_body_summary_label border-right"
+                class="pa-table_body_summary_label pa-table_border-right"
                 :class="[
                   tableStructure[index]?.fixed == 'left'
-                    ? 'sticky-left border-right'
+                    ? 'sticky-left pa-table_border-right'
                     : tableStructure[index]?.fixed == 'right'
                     ? 'sticky-right'
-                    : 'border-right',
+                    : 'pa-table_border-right',
                   tableStructure[index]?.lastLeftFixed ? 'last-left-fixed' : '',
                   tableStructure[index]?.lastRightFixed ? 'last-right-fixed' : '',
                   (!tableStructure[index].width && !state.setCellWidthIng) ||
@@ -624,6 +639,7 @@ const props = withDefaults(defineProps<ComponentProps>(), {
   structure: () => [],
   requestAuto: true,
   expandAuto: false,
+  useSelect: false,
   useSelectAll: false,
   usePagination: true,
   useExpandAll: true,
@@ -642,9 +658,11 @@ const props = withDefaults(defineProps<ComponentProps>(), {
     tag_click: {},
     tag_disabled: {}
   }),
-  exPagination: () => ({ PageNum: 1, PageSize: 30, pageSizes: [30, 50, 100, 150] }),
+  exPagination: () => ({ PageNum: 1, PageSize: 30, pageSizes: [30, 50, 100, 150, 500] }),
   summaryConfig: () => ({ sumText: "合计", unitText: "" }),
-  useSticky: false
+  useSticky: false,
+  useViewportLazy: true,
+  alwaysWatchWidth: false
 });
 const renderId = ref(props.renderId || (props.id ? props.id : "pa-table_" + useRenderId()));
 /**
@@ -686,7 +704,7 @@ const useStickyViewIn = ref(false);
  * @type Ref
  * @description 注入的父级滚动条引用
  */
-const parentScrollbarRef = inject("parentScrollbarRef");
+const parentScrollbarRef = inject("parentScrollbarRef", null);
 /**
  * 语言
  * @type ComputedRef<string>
@@ -696,9 +714,16 @@ const language = computed(() => PancakeGlobalConfig.value?.language || "zh-CN");
 /**
  * 无限滚动
  * @type ComputedRef<boolean>
- * @description 是否启用无限滚动
+ * @description 是否启用无限滚动，滚动到底自动加载下一页
  */
 const infiniteScroll = computed(() => PancakeGlobalConfig.value?.table_config?.infiniteScroll || false);
+/**
+ * 是否使用行级虚拟滚动
+ * @type ComputedRef<boolean>
+ * @description 无限滚动 或 分页（单页数据可能较多）时，只渲染可视区行，减少 DOM 节点
+ * @description 分页模式下仅按需渲染内容，不会像无限滚动那样滚动到底自动加载下一页
+ */
+const useVirtual = computed(() => !!(infiniteScroll.value || props.usePagination));
 /**
  * 表头滚动状态
  * @type Ref<boolean>
@@ -722,10 +747,11 @@ const {
   handleCellMouseLeave,
   listenCellInView,
   listenCellChildChange,
+  scheduleColumnWidthReCalc,
   clearListen,
   changeData_All,
   changeData_Item
-} = useStateHooks({ ...props, id: renderId.value }, emits, {
+} = useStateHooks(props, emits, {
   isScrollHeaderIng,
   language,
   bodyRef,
@@ -839,10 +865,11 @@ const virtualFlatData = computed<PaTableUseType.PaTableInDataType[]>(() => {
  */
 const rowHeights = ref<number[]>([]);
 
-/** 当数据量变化时初始化/扩展 rowHeights */
+/** 当数据量变化时初始化/截断 rowHeights（分页切页、筛选重置导致数据变少时同步收缩） */
 watch(
   () => virtualFlatData.value.length,
   newLen => {
+    if (rowHeights.value.length > newLen) rowHeights.value.length = newLen;
     while (rowHeights.value.length < newLen) {
       rowHeights.value.push(VIRTUAL_DEFAULT_ROW_HEIGHT);
     }
@@ -856,7 +883,7 @@ const accumulatedTops = computed(() => {
   let currentTop = 0;
   for (let i = 0; i < rowHeights.value.length; i++) {
     tops.push(currentTop);
-    currentTop += rowHeights.value[i];
+    currentTop += rowHeights.value[i] || VIRTUAL_DEFAULT_ROW_HEIGHT;
   }
   return tops;
 });
@@ -865,8 +892,7 @@ const accumulatedTops = computed(() => {
 const virtualTotalHeight = computed(() => {
   const tops = accumulatedTops.value;
   if (!tops.length) return 0;
-  const lastHeight = rowHeights.value[rowHeights.value.length - 1] || 0;
-  return tops[tops.length - 1] + lastHeight;
+  return tops[tops.length - 1] + (rowHeights.value[rowHeights.value.length - 1] || 0);
 });
 
 /** 虚拟滚动 — 二分查找可视范围 */
@@ -918,10 +944,34 @@ const visibleItems = computed(() => {
   return items;
 });
 
+/** 列宽过渡动画期间缓存的待回写行高（动画窗口内新进入可视区的行，其首次测量不能被跳过，否则行高永久失真形成行间空档/重叠） */
+const pendingRowHeights = new Map<number, number>();
+/** 将动画期间缓存的行高一次性回写 rowHeights */
+function flushPendingRowHeights() {
+  if (!pendingRowHeights.size) return;
+  pendingRowHeights.forEach((h, idx) => {
+    if (h > 0 && idx < rowHeights.value.length && rowHeights.value[idx] !== h) {
+      rowHeights.value[idx] = h;
+    }
+  });
+  pendingRowHeights.clear();
+}
 /** ResizeObserver — 实际测量每行高度 */
 let rowObserver: ResizeObserver | null = null;
 onMounted(() => {
   rowObserver = new ResizeObserver(entries => {
+    // 列宽过渡动画期间行宽逐帧变化，行高可能随文本换行逐帧跳动；
+    // 此时不回写 top 偏移，仅缓存最新高度，避免虚拟行逐帧抖动（动画结束后统一收敛）
+    if (state.widthAnimIng) {
+      for (const entry of entries) {
+        const idx = (entry.target as any).__virtualRowIndex as number;
+        if (typeof idx !== "number" || idx < 0) continue;
+        const h = entry.contentRect.height;
+        if (h > 0) pendingRowHeights.set(idx, h);
+      }
+      return;
+    }
+    flushPendingRowHeights();
     for (const entry of entries) {
       const idx = (entry.target as any).__virtualRowIndex as number;
       if (typeof idx !== "number" || idx < 0 || idx >= rowHeights.value.length) continue;
@@ -932,6 +982,14 @@ onMounted(() => {
     }
   });
 });
+// 列宽过渡动画结束（宽度收敛）时，把动画期间缓存的行高一次性回写，
+// 补上被跳过的首次测量，行间空档/重叠随即消除
+watch(
+  () => state.widthAnimIng,
+  ing => {
+    if (!ing) flushPendingRowHeights();
+  }
+);
 onUnmounted(() => {
   rowObserver?.disconnect();
   rowObserver = null;
@@ -996,6 +1054,12 @@ const exDisplay = ref({} as { [x: string]: (value) => boolean });
  */
 const scrollBarList = ref();
 /**
+ * 表格是否已进入浏览器视窗
+ * @type Ref<boolean>
+ * @description 开启 useViewportLazy 后，用于控制初始加载与滚动触底自动加载的时机
+ */
+const tableInView = ref(false);
+/**
  * 排序钩子
  * @description 初始化表格排序相关钩子
  */
@@ -1013,10 +1077,31 @@ onBeforeMount(() => {
 /**
  * 组件挂载后
  * @description 自动请求表格数据
+ * @description 开启 useViewportLazy 时，延迟到表格进入浏览器视窗后再请求
  */
+let viewportObserver: IntersectionObserver | null = null;
 onMounted(() => {
   nextTick(() => {
     if (!props.requestAuto) return;
+    if (props.useViewportLazy) {
+      const el = scrollBarList.value as Element | undefined;
+      if (!el) return getTableList();
+      // 利用 IntersectionObserver 观察表格自身是否进入浏览器视窗
+      viewportObserver = new IntersectionObserver(
+        entries => {
+          entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+            tableInView.value = true;
+            getTableList();
+            viewportObserver?.disconnect();
+            viewportObserver = null;
+          });
+        },
+        { root: null, rootMargin: "0px 0px 0px 0px", threshold: 0 }
+      );
+      viewportObserver.observe(el);
+      return;
+    }
     getTableList();
   });
 });
@@ -1031,9 +1116,17 @@ function handleScrollChildChange({ bodyHeight, bodyWidth, useScrollX }) {
   bodyContentHeight.value = bodyHeight;
   bodyContentWidth.value = bodyWidth;
   virtualBodyHeight.value = bodyHeight;
+  // 尺寸 / 内容宽度变化后（页面宽度变化、列宽重算等），按真实滚动位置判断左右边界，
+  // 不能仅凭 useScrollX 假定滚动停在左端，否则会误清除 pa-table_scroll_left 样式
+  const bodyEl: HTMLElement | undefined = mScrollbarListRef.value?.bodyEl;
   if (useScrollX) {
-    isLeft.value = useScrollX;
-    isRight.value = !useScrollX;
+    if (bodyEl) {
+      isLeft.value = bodyEl.scrollLeft <= 1;
+      isRight.value = bodyEl.scrollLeft + bodyEl.clientWidth >= bodyEl.scrollWidth - 1;
+    } else {
+      isLeft.value = true;
+      isRight.value = false;
+    }
   } else {
     isLeft.value = true;
     isRight.value = true;
@@ -1044,6 +1137,8 @@ function handleScrollChildChange({ bodyHeight, bodyWidth, useScrollX }) {
  * @description 清理事件监听和观察器
  */
 onBeforeUnmount(() => {
+  viewportObserver?.disconnect();
+  viewportObserver = null;
   cleanup();
   clearListen();
 });
@@ -1168,12 +1263,15 @@ watch(
 /**
  * 虚拟滚动 — 滚动到底部时自动加载下一页
  * @description 当滚动位置接近已加载数据底部时，触发加载更多
+ * @description 开启 useViewportLazy 时，表格不在视窗内则暂不自动加载，进入视窗后再恢复
  */
 const LOAD_MORE_THRESHOLD = 300; // px
 watch(
   [() => virtualScrollTop.value, () => virtualBodyHeight.value, () => virtualFlatData.value.length],
   debounce(() => {
     if (!infiniteScroll.value) return;
+    // 开启 useViewportLazy 时，表格不在视窗内暂不自动加载下一页
+    if (props.useViewportLazy && !tableInView.value) return;
     if (state.showSelectList) return;
     if (state.tableLoadStatus || state.tableLoadEndStatus) return;
     const st = virtualScrollTop.value;
@@ -1192,6 +1290,61 @@ watch(
     }
   }, 100),
   { deep: false }
+);
+
+/**
+ * 虚拟滚动 - 增量列宽重算调度
+ * @description 可视内容随滚动变化，触发增量测量以让列宽贴合当前可视内容。
+ * 触发依据为"滚动净位移"：从最近一次实际测量位置起，单方向累计位移达到 33%
+ * （可视高度 × 33%）才安排一次测量（仍走 350ms 空闲防抖，滚动停止后执行），
+ * 避免每次停止都重算造成频繁写宽与动画；反向滚动穿越基准点时重置累计，
+ * 过滤来回小幅摆动；数据追加（加载更多 / 翻页）仍直接触发一次。
+ */
+let lastColumnWidthReCalcFingerprint = "";
+/** 位移触发阈值系数：累计滚动可视区高度的 33.3% 触发一次测量 */
+const WIDTH_WATCH_TRAVEL_RATIO = 0.33;
+/** 最近一次实际执行增量测量时的滚动位置（-1 表示基准尚未建立） */
+let widthCalcTravelBase = -1;
+/** 上一次滚动方向（1 向下 / -1 向上 / 0 无变化） */
+let widthCalcLastDir = 0;
+function handleVirtualContentChange() {
+  if (!virtualFlatData.value.length || state.showSelectList) return;
+  const firstItem = visibleItems.value[0];
+  const fingerprint = `${firstItem?.key ?? ""}:${visibleItems.value.length}:${virtualFlatData.value.length}`;
+  if (fingerprint === lastColumnWidthReCalcFingerprint) return;
+  lastColumnWidthReCalcFingerprint = fingerprint;
+  scheduleColumnWidthReCalc(() => {
+    // 增量测量真正执行前，将位移基准校准到当前滚动位置，下一段位移从此处重新累计
+    widthCalcTravelBase = virtualScrollTop.value;
+  });
+}
+/** 虚拟滚动 - 按滚动位移判定是否触发列宽重算 */
+function handleScrollForWidthCalc(top: number) {
+  if (widthCalcTravelBase < 0) widthCalcTravelBase = top;
+  const dir = top > widthCalcTravelBase ? 1 : top < widthCalcTravelBase ? -1 : 0;
+  // 反向滚动穿越基准点：视为进入新的累计段，基准拉回当前位置重新计数
+  if (dir !== 0 && widthCalcLastDir !== 0 && dir !== widthCalcLastDir) {
+    widthCalcTravelBase = top;
+  }
+  widthCalcLastDir = dir || widthCalcLastDir;
+  const threshold = (virtualBodyHeight.value || 0) * WIDTH_WATCH_TRAVEL_RATIO;
+  if (threshold <= 0) return;
+  // 从基准点起的单方向净位移达到阈值才触发；基准点由测量执行前的回调推进，
+  // 此处不推进，避免防抖/守卫拦截导致后续位移漏触发
+  if (Math.abs(top - widthCalcTravelBase) >= threshold) {
+    handleVirtualContentChange();
+  }
+}
+watch(
+  () => virtualScrollTop.value,
+  top => handleScrollForWidthCalc(top)
+);
+watch(
+  () => virtualFlatData.value.length,
+  (newLen, oldLen) => {
+    // 追加了新数据（加载更多 / 翻页）后安排一次增量列宽重算
+    if (newLen > oldLen) handleVirtualContentChange();
+  }
 );
 /**
  * 监听视窗内元素列表
@@ -1236,6 +1389,13 @@ watch(
     setStructure_All(value);
   }
 );
+/**
+ * 监听选择模式切换
+ * @description 当 useSelect / useRadio 变化时重新构建列配置，使勾选列/单选列出现或消失
+ */
+watch([() => props.useSelect, () => props.useRadio], () => {
+  setStructure_All(props.structure);
+});
 /**
  * 监听无限滚动配置变化
  * @description 刷新表格以应用新的滚动模式

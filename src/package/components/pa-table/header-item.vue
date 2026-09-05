@@ -79,8 +79,7 @@
             :renderId="props.id + '_' + item.prop + '_senior-btn'"
             :data-name="'使用高级搜索 - ' + item.label"
             :text="language === 'zh-CN' ? '使用高级搜索' : 'Use Advanced Search'"
-          >
-          </pa-button>
+          />
         </div>
       </template>
     </Filter>

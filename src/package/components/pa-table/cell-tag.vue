@@ -9,7 +9,7 @@
         :style="{ color: findTextColor(item), backgroundColor: findBgColor(item) }"
         @click="!disabled && clickTag?.({ row })"
       >
-        <pa-icon v-if="!!clickTag && !disabled" name="finger_press_line" style="margin-right: 4px"></pa-icon>
+        <pa-icon v-if="!!clickTag && !disabled" name="finger_press_line" style="margin-right: 4px" />
         {{ findText(item) }}
       </div>
     </template>
@@ -23,7 +23,7 @@
     :style="{ color: findTextColor(value), backgroundColor: findBgColor(value) }"
     @click="!disabled && clickTag?.({ row })"
   >
-    <pa-icon v-if="!!clickTag && !disabled" name="finger_press_line" style="margin-right: 4px"></pa-icon>
+    <pa-icon v-if="!!clickTag && !disabled" name="finger_press_line" style="margin-right: 4px" />
     {{ findText(value) }}
   </div>
   <div v-else>--</div>

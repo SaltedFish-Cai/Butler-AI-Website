@@ -100,6 +100,12 @@ export const useScrollHooks = (props: any, state: any, hooks: any) => {
     nextTick(async () => {
       state.PageNum = value;
       await getTableList({ Page: { PageNum: value } }, true);
+      // 分页模式下数据按页加载，切页后回到顶部重新展示（避免停留在上一页的滚动位置）
+      if (props.usePagination && !infiniteScroll.value) {
+        setScrollTop(0);
+        scrollDirectionY.value = "down";
+        return;
+      }
       if (!infiniteScroll.value) return;
       nextTick(async () => {
         await getTableList({ Page: { PageNum: value - 1 } }, true);
@@ -123,6 +129,12 @@ export const useScrollHooks = (props: any, state: any, hooks: any) => {
     if (isBrowser) window.developLog.log("每页条数改变", val, "info");
     nextTick(async () => {
       await getTableList({ Page: { PageSize: val }, ...exQuery }, true);
+      // 分页模式下每页条数变化后回到顶部
+      if (props.usePagination && !infiniteScroll.value) {
+        setScrollTop(0);
+        scrollDirectionY.value = "down";
+        return;
+      }
       nextTick(async () => {
         const mpreEl: any = document.querySelector(`#${props.id} #${props.id}-more-0`);
         if (mpreEl) {

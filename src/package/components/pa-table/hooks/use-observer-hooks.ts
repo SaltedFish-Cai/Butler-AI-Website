@@ -75,7 +75,7 @@ export const useObserverHooks = (props: any, refs: any) => {
    * @description 使用 MutationObserver 监听子元素变化以重新计算宽度
    */
   function listenChildCell(callback?: () => void) {
-    if (observer?.disconnect) return;
+    if (observer?.disconnect) return callback?.();
     if (isBrowser) window.developLog.log(`打开监听——子元素宽度变化`, props.id, "success");
     observer = new window.MutationObserver(refs.setCellWidth);
     const config = { childList: true };

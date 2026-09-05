@@ -54,7 +54,7 @@
 
   <!-- 普通搜索结果展示 -->
   <section v-if="Query.length" class="flex pa-table-query">
-    <pa-language class="table-title-label pa-mr-size" :text="{ 'zh-CN': '搜索条件', 'en-US': 'Search Filter' }"> </pa-language>
+    <pa-language class="table-title-label pa-mr-size" :text="{ 'zh-CN': '搜索条件', 'en-US': 'Search Filter' }" />
     <div class="pa-mr-size query_item" v-for="(item, index) in Query" :key="item.label + item.value">
       <span class="icon_highlight mr5">#{{ Number(index) + 1 }}</span>
       <span class="query_item_label" :class="[item.conditionalType == 3 ? 'start' : item.conditionalType == 5 ? 'end' : '']">
@@ -79,7 +79,7 @@
             class="ml5 hand"
             name="close_circle_line"
             @click="handleRemoveQ(relationshipItem)"
-          ></pa-icon>
+          />
         </pa-tag>
       </template>
     </div>
@@ -96,7 +96,7 @@
 
   <!-- 高级搜索结果展示 -->
   <section v-if="AdvancedQuery.length" class="flex pa-mb-size pa-table-query">
-    <pa-language class="table-title-label pa-mr-size" :text="{ 'zh-CN': '高级搜索', 'en-US': 'Advanced Search' }"> </pa-language>
+    <pa-language class="table-title-label pa-mr-size" :text="{ 'zh-CN': '高级搜索', 'en-US': 'Advanced Search' }" />
     <div class="pa-mr-size query_item" v-for="(item, index) in AdvancedQuery" :key="item.label + item.value">
       <span class="icon_highlight mr5">#{{ Number(index) + 1 }}</span>
       <span>{{ item.label }} :</span>
@@ -125,7 +125,7 @@
         class="ml5 hand remove-icon"
         name="close_circle_line"
         @click="handleRemoveSenior(item)"
-      ></pa-icon>
+      />
     </div>
 
     <pa-button

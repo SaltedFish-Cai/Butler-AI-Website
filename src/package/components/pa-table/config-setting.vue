@@ -28,7 +28,7 @@
           type="multiple-select"
           :exOptions="(_exOptions[scope.row.prop] as PaOptionType.SelectList)"
           :placeholder="{ 'zh-CN': '请选择筛选条件', 'en-US': 'Please Select Filter Conditions' }"
-        ></pa-select>
+        />
 
         <div v-else-if="isTimeType(scope.row, display)" class="flex-center">
           <pa-time
@@ -65,7 +65,7 @@
             :max="scope.row?.cellConfig.max"
             :precision="scope.row?.cellConfig.precision"
             :step="scope.row?.cellConfig.step"
-          ></pa-number>
+          />
           <template v-else>
             <pa-input
               :render-id="id + '-col-setting-' + scope.row.prop + '-input'"
@@ -81,13 +81,12 @@
               @click="openSeniorFilter(scope.row)"
               :name="'表列设置筛选 - ' + scope.row.prop"
               :text="{ 'zh-CN': '编辑高级搜索', 'en-US': 'Edit Advanced Search' }"
-            >
-            </pa-button>
+            />
           </template>
         </template>
 
         <template v-else>
-          <pa-language :text="{ 'zh-CN': '无筛选条件', 'en-US': 'No Filter Conditions' }"></pa-language>
+          <pa-language :text="{ 'zh-CN': '无筛选条件', 'en-US': 'No Filter Conditions' }" />
         </template>
       </template>
 
@@ -112,9 +111,9 @@
           :data-name="'表列设置显示 - ' + scope.row.prop"
           @click="setView(scope.row)"
         >
-          <pa-icon class="mr5" :name="scope.row.isShow ? 'eye_line' : 'eye_close_line'"></pa-icon>
-          <pa-language v-if="scope.row.isShow" :text="{ 'zh-CN': '显示', 'en-US': 'Visible' }"></pa-language>
-          <pa-language v-else :text="{ 'zh-CN': '隐藏', 'en-US': 'Hide' }"></pa-language>
+          <pa-icon class="mr5" :name="scope.row.isShow ? 'eye_line' : 'eye_close_line'" />
+          <pa-language v-if="scope.row.isShow" :text="{ 'zh-CN': '显示', 'en-US': 'Visible' }" />
+          <pa-language v-else :text="{ 'zh-CN': '隐藏', 'en-US': 'Hide' }" />
         </div>
       </template>
     </pa-table>
@@ -128,8 +127,7 @@
           icon-name="save_line"
           @click="FetchSaveAndFilter"
           :text="{ 'zh-CN': '保存配置', 'en-US': 'Save Configuration' }"
-        >
-        </pa-button>
+        />
       </div>
     </template>
   </pa-drawer>

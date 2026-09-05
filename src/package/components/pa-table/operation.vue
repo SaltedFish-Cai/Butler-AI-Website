@@ -108,14 +108,11 @@ function RenderTableColumn(item: ComponentUseItemProps & { isTipTitle?: boolean 
 
 <style lang="scss">
 .pa-table-more-opt {
-  > .pa-button {
-    margin: calc(var(--pa-size-padding, 10px) / 2) 0;
-    &:first-child {
-      margin-top: 0;
-    }
-    &:last-child {
-      margin-bottom: 0;
-    }
+  display: flex;
+  flex-direction: column;
+  > .pa-button + .pa-button {
+    margin-top: calc(var(--pa-size-padding, 10px) / 2);
+    margin-left: 0;
   }
 }
 </style>

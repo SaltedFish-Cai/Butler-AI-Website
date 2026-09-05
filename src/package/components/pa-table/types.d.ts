@@ -213,6 +213,36 @@ export interface ComponentProps {
   requestAuto?: boolean;
 
   /**
+   * 是否延迟到进入视窗后再自动加载
+   * @type boolean
+   * @default true
+   * @description 当设置该值为 `true` 时，初始请求会延迟到表格进入浏览器视窗时再执行
+   * @description 当设置该值为 `false` 时，保持原有行为（挂载后直接请求）
+   * @description 开启后，无论是否无限滚动，滚动触底自动加载都只在表格处于视窗内时执行
+   * @example
+   * ```ts
+   * <m-table :useViewportLazy="true"></m-table>
+   * ```
+   */
+  useViewportLazy?: boolean;
+
+  /**
+   * 虚拟滚动下是否持续动态计算列宽
+   * @type boolean
+   * @default false
+   * @description 当设置该值为 `true` 时，虚拟滚动模式下滚动/追加数据后，会按当前可视内容持续
+   * 动态重算内容列（未配置固定宽度的列）的宽度，可增可减（含防抖与迟滞，避免抖动与闪白）
+   * @description 当设置该值为 `false`（默认）时，内容列不随滚动动态重算，仅操作列（operation）
+   * 保持滚动动态计算
+   * @description 该开关不影响数据刷新/换页/changeData 等整表重置时的全量列宽重算
+   * @example
+   * ```ts
+   * <m-table :alwaysWatchWidth="true"></m-table>
+   * ```
+   */
+  alwaysWatchWidth?: boolean;
+
+  /**
    * 是否直接打开Expand
    * @type boolean
    * @default true
@@ -416,16 +446,16 @@ export interface ComponentProps {
 
   /**
    * 过滤 `选择表状态下` 可选择数据
-   * @type (params: any) => Promise<any> | any
-   * @param params 请求参数
-   * @returns Promise<any> | any
+   * @type (row: any) => boolean
+   * @param row 行数据
+   * @returns boolean
    * @description 当设置该值时，会使用该值作为过滤 `选择表状态下` 可选择数据
    * @example
    * ```ts
    * <m-table :filterSelectRow="filterSelectRow"></m-table>
    * ```
    */
-  filterSelectRow?: (params: any) => Promise<any> | any;
+  filterSelectRow?: (row: any) => boolean;
 
   /**
    * 纯展示模式
@@ -953,6 +983,12 @@ export namespace PaTableUseType {
      * @description 当设置该值为 `true` 时，会设置单元格宽度中
      */
     setCellWidthIng: boolean;
+    /**
+     * 自动列宽写入后的过渡动画中
+     * @type boolean
+     * @description 当设置该值为 `true` 时，列宽变化会带上平滑过渡（仅虚拟滚动增量重算路径触发，不影响手动拖拽与数据重置）
+     */
+    widthAnimIng: boolean;
     /**
      * 表格加载状态
      * @type boolean

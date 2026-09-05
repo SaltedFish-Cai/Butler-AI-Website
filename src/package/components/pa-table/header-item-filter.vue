@@ -88,7 +88,7 @@
         :precision="item?.cellConfig?.precision"
         :step="item?.cellConfig?.step"
         :alwaysContrast="item?.cellConfig?.alwaysContrast"
-      ></pa-number>
+      />
 
       <!-- input -->
       <pa-input

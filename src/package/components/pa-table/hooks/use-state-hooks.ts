@@ -53,7 +53,7 @@ export const useStateHooks = (
     pageable: {
       PageNum: PAGE_NUM,
       PageSize: PAGE_SIZE,
-      pageSizes: [PAGE_SIZE, 50, 100, 150],
+      pageSizes: [PAGE_SIZE, 50, 100, 150, 500],
       total: 0
     },
     tableQuery: {
@@ -67,6 +67,7 @@ export const useStateHooks = (
       Sort: []
     },
     setCellWidthIng: true,
+    widthAnimIng: false,
     tableLoadStatus: false,
     tableLoadEndStatus: false,
     useOrderPropName: "",
@@ -467,10 +468,11 @@ export const useStateHooks = (
     let _data: any = [];
 
     // @ requestApi
-    const { Data, Code } = await props.requestApi(_query);
+    const _Data = (await props.requestApi(_query)) || {};
+    const { Data = { List: [], TotalCount: 0 }, Code = 200 } = _Data;
     if (Code == 200) {
       const { List, TotalCount } = Data;
-      _data = props.usePagination ? List : Data;
+      _data = props.usePagination ? List : Data || [];
       const ar: PaTableUseType.dataType = [
         { renderIndex: -1, parentRenderIndex: -1, rowIndex: -1, type: "more", name: String(_pageNum) }
       ];
@@ -535,6 +537,9 @@ export const useStateHooks = (
   }
 
   // # Function 设置单元格宽度
+  // 虚拟滚动模式下，可视区行首次加载时可能未渲染（virtualBodyHeight 尚未就绪），
+  // 此时没有可测量的单元格；用重试等待行渲染出来一次性完成测量，避免列宽失效与二次闪烁
+  let retryCellWidthCount = 0;
   function setCellWidth(skipFade = false) {
     state.setCellWidthIng = true;
     state.useAverageWidth = -1;
@@ -547,6 +552,16 @@ export const useStateHooks = (
       let isMaxValue = 0;
       // @ 计算所有单元格宽度总和
       let allWidth = 0;
+
+      // 有数据但尚未渲染出任何单元格（首次加载虚拟滚动高度未就绪）时延迟重试
+      const hasCell = typeof window === "undefined" || !!document.querySelector(`#${props.id} .pa-table_body_content_cell`);
+      if (!skipFade && state.flatTableData.length > 0 && !hasCell && retryCellWidthCount < 10) {
+        state.setCellWidthIng = false;
+        retryCellWidthCount++;
+        setTimeout(() => setCellWidth(false), 300);
+        return;
+      }
+      retryCellWidthCount = 0;
 
       // 去掉px单位，转换为数字
       const contentClientWidth = Number(bodyRef.value.clientWidth);
@@ -709,6 +724,192 @@ export const useStateHooks = (
     });
   }
 
+  // # Function 虚拟滚动 - 增量列宽重算
+  // 全量 setCellWidth 只在数据重置（首次加载/刷新/换页/changeData_*）时被触发；
+  // 虚拟滚动模式下后续追加的数据页、滚动进入可视区的新内容不会触发它，
+  // 更宽的内容会被固定列宽挤压换行，更窄的内容又会让列宽显得过宽。
+  // 这里提供"空闲防抖 + 按可视内容自适应（可增可减）"的增量测量：
+  //   1. 由 props.alwaysWatchWidth 控制是否开启：开启后内容列随滚动持续动态计算；
+  //      关闭（默认）时仅最后一列操作列（operation）保持滚动动态计算；
+  //   2. 滚动空闲 / 数据追加后再测量，避免滚动过程中反复重排影响流畅度；
+  //   3. 引入迟滞阈值，实测宽度与当前列宽差异过小时不回写，
+  //      吸收取整误差与轻微波动，抑制来回滚动时列宽的抖动；
+  //   4. 测量态切换与宽度回写在同一任务内完成（仅 nextTick 微任务，无中间渲染帧），
+  //      且不整体隐藏内容、不做透明度过渡，避免页面闪白；
+  //   5. 配置了固定宽度的内容列遵循用户约束，不做自动缩放（operation 列除外）。
+  let columnWidthReCalcTimer: any = null;
+  function isVirtualMode() {
+    return !!(props.usePagination || infiniteScroll.value);
+  }
+  /**
+   * 是否存在可参与滚动增量测量的列
+   * @description 开启 alwaysWatchWidth 时内容列均可参与；未开启时仅 operation 列参与
+   */
+  function hasWatchableColumn() {
+    return !!props.alwaysWatchWidth || tableStructure.value.some(item => item.isShow !== false && item.prop == "operation");
+  }
+  /**
+   * 调度虚拟滚动列宽增量重算
+   * @param onBeforeExec - 空闲窗口真正执行测量前的回调（如校准位移触发基准）
+   * @description 空闲防抖：滚动 / 追加数据过程中仅重置定时器，停止 350ms 后触发一次测量
+   */
+  function scheduleColumnWidthReCalc(onBeforeExec?: () => void) {
+    if (!isVirtualMode()) return;
+    if (typeof window === "undefined") return;
+    // 请求装载 / 选择视图 / 全量测量进行中不叠加调度
+    if (state.tableLoadStatus || state.showSelectList || state.setCellWidthIng) return;
+    // 没有可参与测量的列时不安排任务
+    if (!hasWatchableColumn()) return;
+    clearTimeout(columnWidthReCalcTimer);
+    columnWidthReCalcTimer = setTimeout(() => {
+      // 执行前先回调（校准位移基准），避免防抖等待期间继续滚动造成的基准偏差
+      onBeforeExec?.();
+      incrementalColumnWidthReCalc();
+    }, 350);
+  }
+  /**
+   * 自动列宽写入过渡
+   * @description 宽度回写渲染的同一批次开启过渡 class，300ms 后移除；
+   * @description 仅增量重算路径调用，不影响手动拖拽列宽与数据重置时的整体淡入淡出
+   */
+  let columnWidthAnimTimer: any = null;
+  function playColumnWidthAnim() {
+    if (typeof window === "undefined") return;
+    state.widthAnimIng = true;
+    clearTimeout(columnWidthAnimTimer);
+    columnWidthAnimTimer = setTimeout(() => {
+      state.widthAnimIng = false;
+    }, 300);
+  }
+  /**
+   * 虚拟滚动 - 增量列宽测量（按可视内容自适应）
+   * @description 仅对可视区内已渲染的单元格测量，实测内容宽于/窄于当前列宽时，同步回写该列宽度
+   */
+  function incrementalColumnWidthReCalc() {
+    if (!isVirtualMode()) return;
+    if (typeof window === "undefined") return;
+    const body = bodyRef.value;
+    if (!body || !body.clientHeight) return;
+    // 全量测量（含透明度隐藏过渡期）或请求装载中跳过，避免叠加干扰
+    if (state.setCellWidthIng || state.tableLoadStatus) return;
+    if (body.style.opacity == "0" || state.showSelectList) return;
+    if (!state.flatTableData.length) return;
+    // 无任何可参与测量的列（未开启 alwaysWatchWidth 且无 operation 列）时直接跳过
+    if (!hasWatchableColumn()) return;
+    // 切换到测量态：单元格内容 nowrap 并提供 find_cell_${prop} 类，便于读取真实内容宽度
+    state.setCellWidthIng = true;
+    nextTick(() => {
+      const doc = window.document;
+      const maxWidth = 500;
+      const exOut = ["selection", "radio", "expand", "row"];
+      const _tableStructure = cloneDeep(tableStructure.value);
+      const pendingChanges: Array<{ prop: string; width: number }> = [];
+      // 仅测量真实可视区内的单元格：虚拟滚动会预渲染 OVERSCAN 缓冲行，
+      // 若缓冲行的内容参与 max 计算，窗口内残留的一行宽内容会长期顶住列宽，窄内容行无法触发收缩
+      const bodyRect = body.getBoundingClientRect();
+      _tableStructure?.forEach(item => {
+        if (exOut.indexOf(String(item.type)) > -1 || !item.prop) return;
+        // 开关门控：内容列仅在开启 alwaysWatchWidth 时参与；operation 列始终参与滚动动态计算
+        if (item.prop != "operation" && !props.alwaysWatchWidth) return;
+        // 配置了固定宽度的内容列遵循用户约束，不做自动缩放；operation 列内容随行变化，允许扩宽/收缩
+        if (item.prop != "operation" && item.baseWidth) return;
+        const currentWidth = setWidthToNumber(item.width);
+        if (!currentWidth) return;
+        const cellEls = doc.querySelectorAll(`#${props.id} .find_cell_${item.prop}`);
+        if (!cellEls?.length) return;
+        let useWidth = 0;
+        for (let index = 0; index < cellEls.length; index++) {
+          const element = cellEls[index] as HTMLElement;
+          const rect = element.getBoundingClientRect();
+          // 跳过 OVERSCAN 缓冲行（不在可视区域内），列宽只按真实可见内容计算
+          if (rect.bottom <= bodyRect.top || rect.top >= bodyRect.bottom) continue;
+          if (useWidth < element.clientWidth) {
+            useWidth = element.clientWidth;
+          }
+        }
+        if (!useWidth) return;
+        const isWidth = (useWidth > maxWidth ? maxWidth : useWidth) + 1;
+        const _width = isWidth % 2 == 0 ? isWidth : isWidth + 1;
+        // 迟滞阈值：变化过小（含 0/2px 圆整误差）不进候选，抑制滚动宽窄内容交错时的列宽抖动
+        if (Math.abs(_width - currentWidth) < 4) return;
+        pendingChanges.push({ prop: String(item.prop), width: _width });
+      });
+      if (!pendingChanges.length) {
+        state.setCellWidthIng = false;
+        return;
+      }
+      // 收缩保护：若存在 flex/auto 列可吸收剩余空间，或收缩后整表总宽仍不小于可视容器宽度，
+      // 才允许收缩，避免内容区右侧留白 / 横向滚动条抖动；扩宽始终放行
+      const contentClientWidth = Number(body.clientWidth) || 0;
+      const pendingMap: { [prop: string]: number } = {};
+      let pendingTotal = 0;
+      pendingChanges.forEach(item => {
+        pendingMap[item.prop] = item.width;
+      });
+      _tableStructure.forEach(item => {
+        const cur = setWidthToNumber(item.width);
+        pendingTotal += pendingMap[String(item.prop)] || cur;
+      });
+      const hasFlexColumn = _tableStructure.some(
+        item => item.isShow !== false && item.prop && !item.baseWidth && !setWidthToNumber(item.width)
+      );
+      const canShrink = hasFlexColumn || !contentClientWidth || pendingTotal >= contentClientWidth;
+      const changedList: string[] = [];
+      _tableStructure.forEach(item => {
+        const prop = String(item.prop);
+        if (pendingMap[prop] === undefined) return;
+        const currentWidth = setWidthToNumber(item.width);
+        const _width = pendingMap[prop];
+        // 收缩受容器宽度保护时拦截
+        if (_width < currentWidth && !canShrink) return;
+        // operation 列收缩以配置的 baseWidth 为下限；扩宽则按内容宽度
+        if (prop == "operation" && item.baseWidth && _width < setWidthToNumber(item.baseWidth)) {
+          if (currentWidth <= setWidthToNumber(item.baseWidth)) return;
+          item.width = item.baseWidth;
+          item.minWidth = item.baseWidth;
+          changedList.push(prop);
+          return;
+        }
+        item.width = setWidthToString(_width);
+        // minWidth 同步跟随（operation 保留 baseWidth 下限），避免收缩时被旧的 min-width 卡住无法收窄
+        item.minWidth = item.baseWidth || String(item.width);
+        changedList.push(prop);
+      });
+      if (!changedList.length) {
+        state.setCellWidthIng = false;
+        return;
+      }
+      if (typeof window !== "undefined")
+        window.developLog.log(`虚拟滚动增量列宽重算：${changedList.join(",")}`, props.id, "info");
+      // 与宽度回写同一批次开启过渡动画，让列宽变化平滑（200ms）
+      playColumnWidthAnim();
+      // 重排固定列偏移与顺序（与 setCellWidth 末尾逻辑保持一致）
+      const showArr = _tableStructure.filter(item => item.isShow !== false);
+      const hideArr = _tableStructure.filter(item => item.isShow === false);
+      const LeftArr = showArr.filter(item => item.fixed == "left");
+      let _fixedValue = 0;
+      LeftArr.forEach((item, index) => {
+        item.fixedValueIndex = index;
+        item.fixedValue = setWidthToString(_fixedValue);
+        item.lastLeftFixed = index == LeftArr.length - 1;
+        _fixedValue += setWidthToNumber(item.width || item.minWidth);
+      });
+      const RightArr = showArr.filter(item => item.fixed == "right");
+      RightArr.reverse();
+      let _rightFixedValue = 0;
+      RightArr.forEach((item, index) => {
+        item.fixedValueIndex = index;
+        item.fixedValue = setWidthToString(_rightFixedValue);
+        item.lastRightFixed = index == RightArr.length - 1;
+        _rightFixedValue += setWidthToNumber(item.width || item.minWidth);
+      });
+      RightArr.reverse();
+      const defaultArr = showArr.filter(item => item.fixed != "left" && item.fixed != "right");
+      tableStructure.value = [...LeftArr, ...defaultArr, ...RightArr, ...hideArr];
+      state.setCellWidthIng = false;
+    });
+  }
+
   // # Function 切换行状态
   function changeRowStatus({ item, row }) {
     row.isOpenChild = !row.isOpenChild;
@@ -843,6 +1044,7 @@ export const useStateHooks = (
     handleCellMouseLeave,
     listenCellInView,
     listenCellChildChange,
+    scheduleColumnWidthReCalc,
     clearListen,
     changeData_All,
     changeData_Item
