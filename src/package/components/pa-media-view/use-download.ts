@@ -17,7 +17,10 @@ import { M_MessageBox, M_Notification } from "../feedback";
  * @returns Promise<Blob | undefined>
  * @description 接收数据流生成 blob，创建链接，下载文件
  */
-export const useGetBlob = async (config = { downloadHose: "", requestHeader: {} }, path: string): Promise<Blob | undefined> => {
+export const useGetBlob = async (
+  config = { downloadHose: "", requestHeader: {} as Record<string, any> | undefined },
+  path: string
+): Promise<Blob | undefined> => {
   try {
     const headerData = config.requestHeader;
     const baseURL = config.downloadHose;
@@ -75,10 +78,20 @@ export const useGetBlob = async (config = { downloadHose: "", requestHeader: {} 
  * @description 根据文件路径下载文件，支持自定义文件名
  */
 export const useDownload = async (
-  config = { downloadHose: "", requestHeader: {} },
-  path: string,
+  config = { downloadHose: "", requestHeader: {} as Record<string, any> | undefined },
+  path: string = "",
   exFileName?: string
 ): Promise<void> => {
+  if (!path) {
+    M_Notification({
+      title: "温馨提示",
+      message: "文件路径不能为空",
+      type: "warning",
+      duration: 3000
+    });
+    return;
+  }
+
   const megNotify: any = M_Notification({
     title: "温馨提示",
     dangerouslyUseHTMLString: true,
@@ -99,6 +112,7 @@ export const useDownload = async (
         headers[key] = headerData[key];
       }
     }
+
     const _path = baseURL + path;
     fetch(`${_path}`, {
       method: "GET",
@@ -159,8 +173,10 @@ export const useDownload = async (
             const _navigator: any = window.navigator;
             return _navigator.msSaveOrOpenBlob(res, `${fileName}` || `${new Date().getTime()}.xlsx`);
           }
-          const blobUrl = typeof window !== "undefined" && window.URL.createObjectURL(res);
-          const exportFile = typeof window !== "undefined" && window.document.createElement("a");
+          const blobUrl = (typeof window !== "undefined" && window.URL.createObjectURL(res)) || "";
+          const exportFile = typeof window !== "undefined" && (window.document.createElement("a") as HTMLAnchorElement);
+          if (!exportFile) return;
+
           exportFile.style.display = "none";
           exportFile.download = `${fileName}` || `${new Date().getTime()}.xlsx`;
           exportFile.href = blobUrl;

@@ -7,27 +7,27 @@
     <transition v-show="menuSettingVisible" appear name="fade-opacity-transform" mode="out-in">
       <div class="menu-setting" :style="{ top: client.y + 'px', left: client.x + 'px' }">
         <div class="setting-item flex-center" @click="left90(PDF_ID + '-pdf', 1)">
-          <m-icon name="flush_line"> </m-icon>
+          <m-icon name="flush_line" />
           <div class="ml5">{{ languagePackage["rotateLeftTip"] }}</div>
         </div>
         <div class="setting-item flex-center mt5" @click="left90(PDF_ID + '-pdf', 2)">
-          <m-icon name="flush_line"> </m-icon>
+          <m-icon name="flush_line" />
           <div class="ml5">{{ languagePackage["rotateRightTip"] }}</div>
         </div>
         <div class="setting-item flex-center mt5" @click="left90(PDF_ID + '-pdf', 3)">
-          <m-icon name="switch_horizontal_line"> </m-icon>
+          <m-icon name="switch_horizontal_line" />
           <div class="ml5">{{ languagePackage["rotateLeftRightTip"] }}</div>
         </div>
         <div class="setting-item flex-center mt5" @click="left90(PDF_ID + '-pdf', 4)">
-          <m-icon name="switch_horizontal_line"> </m-icon>
+          <m-icon name="switch_horizontal_line" />
           <div class="ml5">{{ languagePackage["rotateUpDownTip"] }}</div>
         </div>
         <div class="setting-item flex-center mt5" @click="changePix(0.5)">
-          <m-icon name="circle_arrow_up_line"> </m-icon>
+          <m-icon name="circle_arrow_up_line" />
           <div class="ml5">{{ languagePackage["zoomInTip"] }}</div>
         </div>
         <div class="setting-item flex-center mt5" @click="changePix(-0.5)">
-          <m-icon name="circle_arrow_down_line"> </m-icon>
+          <m-icon name="circle_arrow_down_line" />
           <div class="ml5">{{ languagePackage["zoomOutTip"] }}</div>
         </div>
       </div>
@@ -94,7 +94,7 @@ const PDF_ID = randChar();
 const props = withDefaults(defineProps<{ filePath: string; zoom: number }>(), {});
 const textUrl = String(props.filePath);
 
-const client = ref({ ...DEFAULT_CLIENT });
+const client = ref({ ...DEFAULT_CLIENT } as { x: number; y: number });
 const menuSettingVisible = ref(false);
 let pxit = 1.5;
 let blobDataObject: string | undefined;

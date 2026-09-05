@@ -11,19 +11,19 @@
     <transition v-show="menuSettingVisible" appear name="fade-opacity-transform" mode="out-in">
       <div class="menu-setting" :style="{ top: client.y + 'px', left: client.x + 'px' }">
         <div class="setting-item flex-center" @click="left90(IMG_ID + '-img', 1)">
-          <m-icon name="flush_line"> </m-icon>
+          <m-icon name="flush_line" />
           <div class="ml5">{{ languagePackage["rotateLeftTip"] }}</div>
         </div>
         <div class="setting-item flex-center mt5" @click="left90(IMG_ID + '-img', 2)">
-          <m-icon name="flush_line"> </m-icon>
+          <m-icon name="flush_line" />
           <div class="ml5">{{ languagePackage["rotateRightTip"] }}</div>
         </div>
         <div class="setting-item flex-center mt5" @click="left90(IMG_ID + '-img', 3)">
-          <m-icon name="switch_horizontal_line"> </m-icon>
+          <m-icon name="switch_horizontal_line" />
           <div class="ml5">{{ languagePackage["rotateLeftRightTip"] }}</div>
         </div>
         <div class="setting-item flex-center mt5" @click="left90(IMG_ID + '-img', 4)">
-          <m-icon name="switch_horizontal_line"> </m-icon>
+          <m-icon name="switch_horizontal_line" />
           <div class="ml5">{{ languagePackage["rotateUpDownTip"] }}</div>
         </div>
       </div>
@@ -97,7 +97,7 @@ const props = withDefaults(defineProps<{ filePath: string; modelValue: number }>
 const textUrl = String(props.filePath);
 const zoomIndex = ref(1);
 const baseIndex = ref(1);
-const client = ref({ ...DEFAULT_CLIENT });
+const client = ref({ ...DEFAULT_CLIENT } as { x: number; y: number });
 const menuSettingVisible = ref(false);
 /**
  * 鼠标事件处理器数组
@@ -113,8 +113,8 @@ onMounted(async () => {
   const blobData = await useGetBlob(config, textUrl);
   if (blobData) {
     const _data = typeof window !== "undefined" && window.URL.createObjectURL(blobData);
+    if (!_data) return;
     mediaImage.value = _data;
-
     setTimeout(() => {
       typeof window !== "undefined" && window.URL.revokeObjectURL(_data);
     }, 1000);
@@ -134,7 +134,7 @@ function imgLoaded(): void {
         e.preventDefault();
         return false;
       };
-      const handler = (event: MouseEvent) =>
+      const handler: any = (event: MouseEvent) =>
         mouseUp(event as MouseEvent, e => {
           menuSettingVisible.value = true;
           client.value = { x: e.clientX + 5, y: e.clientY + 10 };

@@ -36,21 +36,21 @@
           :class="[!processVisible ? '' : 'media-close-process']"
           @click="processVisible = !processVisible"
         >
-          <pa-icon :name="!processVisible ? 'circle_arrow_right_line' : 'circle_arrow_left_line'"></pa-icon>
+          <pa-icon :name="!processVisible ? 'circle_arrow_right_line' : 'circle_arrow_left_line'" />
           {{ !processVisible ? languagePackage["expand"] : languagePackage["collapse"] }}
         </div>
       </div>
-      <div class="pa-media-page-body" v-if="show">
-        <imageView v-if="fileType == 'image'" :filePath="fileList[viewIndex]?.filePath" v-model="zoomIndex"></imageView>
+      <div class="pa-media-page-body" v-if="show && fileList[viewIndex]?.filePath">
+        <imageView v-if="fileType == 'image'" :filePath="fileList[viewIndex]?.filePath || ''" v-model="zoomIndex" />
         <pdfView
           v-else-if="fileType == 'pdf'"
-          :filePath="fileList[viewIndex]?.filePath"
+          :filePath="fileList[viewIndex]?.filePath || ''"
           :zoom="zoomIndex"
           ref="pdfViewRef"
-        ></pdfView>
-        <excel-view v-else-if="fileType == 'excel'" :filePath="fileList[viewIndex]?.filePath" :zoom="zoomIndex"></excel-view>
-        <word-view v-if="fileType == 'word'" :filePath="fileList[viewIndex]?.filePath" :zoom="zoomIndex"></word-view>
-        <textView v-else-if="fileType == 'text'" :filePath="fileList[viewIndex]?.filePath" :zoom="zoomIndex"></textView>
+        />
+        <excel-view v-else-if="fileType == 'excel'" :filePath="fileList[viewIndex]?.filePath || ''" :zoom="zoomIndex" />
+        <word-view v-if="fileType == 'word'" :filePath="fileList[viewIndex]?.filePath || ''" :zoom="zoomIndex" />
+        <textView v-else-if="fileType == 'text'" :filePath="fileList[viewIndex]?.filePath || ''" :zoom="zoomIndex" />
       </div>
     </div>
     <template #footer>
@@ -68,9 +68,9 @@
     <template #footerRight>
       <div class="flex-center zoom-box">
         <div class="flex-center pa-mr-size reset-btn" @click="reset90" v-if="fileType == 'pdf'">
-          <pa-icon class="mr5" name="reset_line"></pa-icon><span style="font-size: 12px">{{ languagePackage["rotateTip"] }}</span>
+          <pa-icon class="mr5" name="reset_line" /><span style="font-size: 12px">{{ languagePackage["rotateTip"] }}</span>
         </div>
-        <pa-icon name="minus_circle_line" class="pa-hand" @click="handleMouseWheel({ deltaY: 1 })"></pa-icon>
+        <pa-icon name="minus_circle_line" class="pa-hand" @click="handleMouseWheel({ deltaY: 1 })" />
         <div
           style="font-size: 14px; width: 42px; text-align: center"
           class="pl5 ml5 mr5 pa-hand-scroll"
@@ -79,7 +79,7 @@
         >
           {{ (zoomIndex * 100).toFixed(0) }}%
         </div>
-        <pa-icon name="add_circle_line" class="pa-hand" @click="handleMouseWheel({ deltaY: -1 })"></pa-icon>
+        <pa-icon name="add_circle_line" class="pa-hand" @click="handleMouseWheel({ deltaY: -1 })" />
       </div>
     </template>
   </pa-dialog>
@@ -177,7 +177,8 @@ const pdfViewRef = useTemplateRef("pdfViewRef");
  * @description 组件 Props
  */
 const props = withDefaults(defineProps<ComponentProps>(), {
-  hideBtn: false
+  hideBtn: false,
+  fileList: () => []
 });
 const renderId = ref(props.renderId || (props.id ? props.id : "pa-media-view_" + useRenderId()));
 /**
@@ -306,7 +307,7 @@ function downAll(): void {
     downloadHose: PancakeGlobalConfig.value?.file_config?.downloadHose || ""
   };
   for (let i = 0; i < props.fileList.length; i++) {
-    useDownload(config, props.fileList[i]?.filePath, props.fileList[i]?.fileName || "文件");
+    useDownload(config, props.fileList[i]?.filePath || "", props.fileList[i]?.fileName || "文件");
   }
 }
 /**

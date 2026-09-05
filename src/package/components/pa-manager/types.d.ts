@@ -142,11 +142,11 @@ export type PancakeGlobal = {
   file_config?: ApiType & { downloadHose: string; compareKey: string };
   /**
    * 请求头
-   * @type Record<string, unknown> | undefined
+   * @type Record<string, any> | undefined
    * @default undefined
    * @description 当设置该值时，会自定义请求头
    */
-  requestHeader?: Record<string, unknown>;
+  requestHeader?: Record<string, any>;
 };
 /**
  * PaManager 组件 Props

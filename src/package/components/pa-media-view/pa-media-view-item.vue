@@ -19,11 +19,14 @@
     :scroll="false"
   >
     <div class="pa-media-page-body">
-      <imageView v-if="fileType == 'image'" :filePath="filePath" v-model="zoomIndex" ref="viewRef"></imageView>
-      <pdfView v-else-if="fileType == 'pdf'" :filePath="filePath" :zoom="zoomIndex" ref="viewRef"></pdfView>
-      <excel-view v-else-if="fileType == 'excel'" :filePath="filePath" :zoom="zoomIndex"></excel-view>
-      <word-view v-if="fileType == 'word'" :filePath="filePath" :zoom="zoomIndex"></word-view>
-      <textView v-else-if="fileType == 'text'" :filePath="filePath" :zoom="zoomIndex"></textView>
+      <template v-if="filePath">
+        <imageView v-if="fileType == 'image'" :filePath="filePath" v-model="zoomIndex" ref="viewRef" />
+        <pdfView v-else-if="fileType == 'pdf'" :filePath="filePath" :zoom="zoomIndex" ref="viewRef" />
+        <excel-view v-else-if="fileType == 'excel'" :filePath="filePath" :zoom="zoomIndex" />
+        <word-view v-if="fileType == 'word'" :filePath="filePath" :zoom="zoomIndex" />
+        <textView v-else-if="fileType == 'text'" :filePath="filePath" :zoom="zoomIndex" />
+      </template>
+      <pa-empty :message="{ 'zh-CN': '文件路径不能为空', 'en-US': 'File path is empty' }" v-else />
     </div>
     <template #footer>
       <div class="flex-center" style="position: relative">
@@ -35,10 +38,10 @@
     <template #footerRight>
       <div class="flex-center zoom-box" v-if="fileType == 'pdf' || fileType == 'image'">
         <div class="flex-center pa-mr-size reset-btn" @click="reset90" v-if="fileType == 'pdf' || fileType == 'image'">
-          <pa-icon class="mr5" name="reset_line"></pa-icon>
+          <pa-icon class="mr5" name="reset_line" />
           <span style="font-size: 12px">{{ languagePackage["rotate"] }}</span>
         </div>
-        <pa-icon name="minus_circle_line" class="pa-hand" @click="handleMouseWheel({ deltaY: 1 })"></pa-icon>
+        <pa-icon name="minus_circle_line" class="pa-hand" @click="handleMouseWheel({ deltaY: 1 })" />
         <div
           style="font-size: 14px; width: 42px; text-align: center"
           class="pl5 ml5 mr5 pa-hand-scroll"
@@ -47,7 +50,7 @@
         >
           {{ (zoomIndex * 100).toFixed(0) }}%
         </div>
-        <pa-icon name="add_circle_line" class="pa-hand" @click="handleMouseWheel({ deltaY: -1 })"></pa-icon>
+        <pa-icon name="add_circle_line" class="pa-hand" @click="handleMouseWheel({ deltaY: -1 })" />
       </div>
     </template>
   </pa-dialog>

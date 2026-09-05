@@ -7,37 +7,37 @@
     @mousedown.prevent
   >
     <div class="menu-item" @click="executeImageCommand('imageResize', '50%')">
-      <pa-icon name="desktop"></pa-icon>
+      <pa-icon name="desktop" />
       <span>调整为窗口大小</span>
     </div>
     <div class="menu-item" @click="executeImageCommand('imageResize', '100%')">
-      <pa-icon name="loop"></pa-icon>
+      <pa-icon name="loop" />
       <span>恢复原始大小</span>
     </div>
     <div class="menu-item" @click="executeImageCommand('imageResize', '+25%')">
-      <pa-icon name="zoom-in"></pa-icon>
+      <pa-icon name="zoom-in" />
       <span>放大25%</span>
     </div>
     <div class="menu-item" @click="executeImageCommand('imageResize', '-25%')">
-      <pa-icon name="zoom-out"></pa-icon>
+      <pa-icon name="zoom-out" />
       <span>缩小25%</span>
     </div>
     <div class="menu-divider"></div>
     <div class="menu-item" @click="executeImageCommand('imageRotate', '90')">
-      <pa-icon name="rotate-right"></pa-icon>
+      <pa-icon name="rotate-right" />
       <span>旋转90°</span>
     </div>
     <div class="menu-item" @click="executeImageCommand('imageRotate', '-90')">
-      <pa-icon name="rotate-left"></pa-icon>
+      <pa-icon name="rotate-left" />
       <span>旋转-90°</span>
     </div>
     <div class="menu-divider"></div>
     <div class="menu-item" @click="executeImageCommand('imageFlip', 'horizontal')">
-      <pa-icon name="switch_horizontal_line"></pa-icon>
+      <pa-icon name="switch_horizontal_line" />
       <span>水平翻转</span>
     </div>
     <div class="menu-item" @click="executeImageCommand('imageFlip', 'vertical')">
-      <pa-icon name="switch_vertical_line"></pa-icon>
+      <pa-icon name="switch_vertical_line" />
       <span>垂直翻转</span>
     </div>
   </div>
@@ -95,7 +95,7 @@ function executeCommand(command: string, value?: any): void {
   editorRef?.value?.focus?.();
   if (command === "imageResize" && value) {
     saveToUndoStack();
-    const selection: any = typeof window !== "undefined" ? window.getSelection() : null();
+    const selection: any = typeof window !== "undefined" ? window.getSelection() : null;
     const anchorNode = selection?.anchorNode;
     let imageElement: any = null;
     if (anchorNode instanceof HTMLImageElement) {
@@ -138,7 +138,7 @@ function executeCommand(command: string, value?: any): void {
   }
   if (command === "imageRotate") {
     saveToUndoStack();
-    const selection: any = typeof window !== "undefined" ? window.getSelection() : null();
+    const selection: any = typeof window !== "undefined" ? window.getSelection() : null;
     const anchorNode = selection?.anchorNode;
     let imageElement: any = null;
     if (anchorNode instanceof HTMLImageElement) {
@@ -169,7 +169,7 @@ function executeCommand(command: string, value?: any): void {
   }
   if (command === "imageFlip" && value) {
     saveToUndoStack();
-    const selection: any = typeof window !== "undefined" ? window.getSelection() : null();
+    const selection: any = typeof window !== "undefined" ? window.getSelection() : null;
     const anchorNode = selection?.anchorNode;
     let imageElement: any = null;
     if (anchorNode instanceof HTMLImageElement) {
@@ -222,7 +222,7 @@ function executeImageCommand(command: string, value?: string): void {
   if (!selectedImageElement.value) return;
   const range = document.createRange();
   range.selectNode(selectedImageElement.value);
-  const selection = typeof window !== "undefined" ? window.getSelection() : null();
+  const selection = typeof window !== "undefined" ? window.getSelection() : null;
   selection?.removeAllRanges();
   selection?.addRange(range);
   executeCommand?.(command, value);

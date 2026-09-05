@@ -34,7 +34,7 @@
             "
           >
             <template v-if="tool.command == 'fontSizeArray'">{{ tool.icon }}</template>
-            <pa-icon v-else :name="tool.icon"></pa-icon>
+            <pa-icon v-else :name="tool.icon" />
           </button>
         </template>
         <pa-color-box
@@ -42,13 +42,13 @@
           v-model="tool.foreColor"
           @change="value => throttleExecuteCommand(tool.command, value)"
           :presetColors="presetColors"
-        ></pa-color-box>
+        />
         <pa-color-box
           v-else-if="tool.command == 'backColor'"
           v-model="tool.backColor"
           @change="value => throttleExecuteCommand(tool.command, value)"
           :presetColors="presetColors"
-        ></pa-color-box>
+        />
 
         <div class="pa-editor-toolbar_input" v-else-if="tool.command == 'createLink'">
           <input
@@ -96,7 +96,7 @@
               @click="executeCommand(child.command, child.value)"
               :title="child.title"
             >
-              <pa-icon :name="child.icon"></pa-icon>
+              <pa-icon :name="child.icon" />
             </button>
           </template>
         </div>
@@ -108,7 +108,7 @@
         class="file_upload-btn"
         :disabled="isSourceCodeMode != 'edit'"
       >
-        <pa-icon :name="tool.icon"></pa-icon>
+        <pa-icon :name="tool.icon" />
         <input
           ref="fileInput"
           type="file"
@@ -140,7 +140,7 @@
           (isSourceCodeMode == 'visible' && tool.command != 'visible')
         "
       >
-        <pa-icon :name="tool.icon"></pa-icon>
+        <pa-icon :name="tool.icon" />
       </button>
     </template>
     <template v-if="exButton">
@@ -152,7 +152,7 @@
         :title="tool.name"
         :disabled="isSourceCodeMode == 'code' || isSourceCodeMode == 'visible'"
       >
-        <pa-icon :name="tool.icon"></pa-icon>
+        <pa-icon :name="tool.icon" />
       </button>
     </template>
   </div>

@@ -7,29 +7,29 @@
     @mousedown.prevent
   >
     <div class="menu-item" @click="executeTableCommand('insertTableRow', { position: 'above' })">
-      <pa-icon name="to-top"></pa-icon>
+      <pa-icon name="to-top" />
       <span>在上方插入行</span>
     </div>
     <div class="menu-item" @click="executeTableCommand('insertTableRow', { position: 'below' })">
-      <pa-icon name="to-bottom"></pa-icon>
+      <pa-icon name="to-bottom" />
       <span>在下方插入行</span>
     </div>
     <div class="menu-divider"></div>
     <div class="menu-item" @click="executeTableCommand('insertTableColumn', { position: 'left' })">
-      <pa-icon name="to-left"></pa-icon>
+      <pa-icon name="to-left" />
       <span>在左侧插入列</span>
     </div>
     <div class="menu-item" @click="executeTableCommand('insertTableColumn', { position: 'right' })">
-      <pa-icon name="to-right"></pa-icon>
+      <pa-icon name="to-right" />
       <span>在右侧插入列</span>
     </div>
     <div class="menu-divider"></div>
     <div class="menu-item" @click="executeTableCommand('deleteTableRow')">
-      <pa-icon name="transfer_horizontal_line"></pa-icon>
+      <pa-icon name="transfer_horizontal_line" />
       <span>删除当前行</span>
     </div>
     <div class="menu-item" @click="executeTableCommand('deleteTableColumn')">
-      <pa-icon name="transfer_vertical_line"></pa-icon>
+      <pa-icon name="transfer_vertical_line" />
       <span>删除当前列</span>
     </div>
   </div>
@@ -111,7 +111,7 @@ function executeCommand(command: string, value?: any): void {
           row.insertBefore(newCell, cells[insertIndex]);
         }
       });
-      const selection = typeof window !== "undefined" ? window.getSelection() : null();
+      const selection = typeof window !== "undefined" ? window.getSelection() : null;
       if (selection && rows.length > 0) {
         const firstRowCells = Array.from(rows[0].querySelectorAll("td, th"));
         const newCell: any = firstRowCells[insertIndex];
@@ -141,7 +141,7 @@ function executeCommand(command: string, value?: any): void {
           row.removeChild(cells[colIndex]);
         }
       });
-      const selection = typeof window !== "undefined" ? window.getSelection() : null();
+      const selection = typeof window !== "undefined" ? window.getSelection() : null;
       if (selection) {
         const currentRow = cellInfo.row;
         const currentCells = Array.from(currentRow.querySelectorAll("td, th"));
@@ -176,13 +176,13 @@ function executeCommand(command: string, value?: any): void {
         newCell.innerHTML = "&nbsp;";
         newRow.appendChild(newCell);
       }
-      const rowParent = row.parentNode;
+      const rowParent = row.parentNode as HTMLElement;
       if (position === "above") {
         rowParent.insertBefore(newRow, row);
       } else {
         rowParent.insertBefore(newRow, row.nextSibling);
       }
-      const selection = typeof window !== "undefined" ? window.getSelection() : null();
+      const selection = typeof window !== "undefined" ? window.getSelection() : null;
       if (selection) {
         const newCell = newRow.querySelector("td");
         if (newCell) {
@@ -204,12 +204,12 @@ function executeCommand(command: string, value?: any): void {
     const { row, rowCount } = cellInfo;
     if (rowCount <= 1) return;
     try {
-      const nextRow = row.nextSibling;
-      const prevRow = row.previousSibling;
-      const targetRow = nextRow || prevRow;
-      const rowParent = row.parentNode;
+      const nextRow = row.nextSibling as HTMLElement | null;
+      const prevRow = row.previousSibling as HTMLElement | null;
+      const targetRow = nextRow || (prevRow as HTMLElement | null);
+      const rowParent = row.parentNode as HTMLElement;
       rowParent.removeChild(row);
-      const selection = typeof window !== "undefined" ? window.getSelection() : null();
+      const selection = typeof window !== "undefined" ? window.getSelection() : null;
       if (selection && targetRow) {
         const targetCells = Array.from(targetRow.querySelectorAll("td, th"));
         const targetCell: any = targetCells[cellInfo.colIndex] || targetCells[0];
@@ -238,7 +238,7 @@ function executeTableCommand(command: string, value?: any): void {
   if (!selectedTableCell.value) return;
   const range = document.createRange();
   range.selectNode(selectedTableCell.value);
-  const selection = typeof window !== "undefined" ? window.getSelection() : null();
+  const selection = typeof window !== "undefined" ? window.getSelection() : null;
   selection?.removeAllRanges();
   selection?.addRange(range);
   executeCommand(command, value);
