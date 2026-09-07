@@ -40,7 +40,7 @@
           {{ !processVisible ? languagePackage["expand"] : languagePackage["collapse"] }}
         </div>
       </div>
-      <div class="pa-media-page-body" v-if="show && fileList[viewIndex]?.filePath">
+      <div class="pa-media-page-body" v-if="show && fileList?.[viewIndex]">
         <imageView v-if="fileType == 'image'" :filePath="fileList[viewIndex]?.filePath || ''" v-model="zoomIndex" />
         <pdfView
           v-else-if="fileType == 'pdf'"
@@ -307,7 +307,7 @@ function downAll(): void {
     downloadHose: PancakeGlobalConfig.value?.file_config?.downloadHose || ""
   };
   for (let i = 0; i < props.fileList.length; i++) {
-    useDownload(config, props.fileList[i]?.filePath || "", props.fileList[i]?.fileName || "文件");
+    useDownload(config, props.fileList[i]?.filePath, props.fileList[i]?.fileName || "文件");
   }
 }
 /**
