@@ -9,7 +9,8 @@
         useSticky ? 'pa-table_sticky' : '',
         !isLeft ? 'pa-table_scroll_left' : '',
         !isRight ? 'pa-table_scroll_right' : '',
-        state.widthAnimIng ? 'pa-table_width-anim' : ''
+        state.widthAnimIng ? 'pa-table_width-anim' : '',
+        useStickyViewIn ? 'use-sticky-view-in' : ''
       ]"
       :style="{ ...props.style, '--pa-table-footer-height': footerHeight + 'px' }"
       :id="renderId"
@@ -337,60 +338,63 @@
             class="empty empty-table"
             style="text-align: center"
           >
-            <pa-icon name="empty" style="font-size: 40px" />
+            <pa-icon name="empty1" style="font-size: 40px" />
             <pa-language :text="{ 'zh-CN': '暂无数据', 'en-US': 'No Data' }" />
           </div>
           <!-- footer -->
-          <div v-if="(useSummary && !usePagination) || summaryFunction" class="pa-table_body_summary">
-            <template v-for="(val, index) in state.summaryData" :key="index">
-              <div
-                v-if="tableStructure[index].isShow != false"
-                class="pa-table_body_summary_label pa-table_border-right"
-                :class="[
-                  tableStructure[index]?.fixed == 'left'
-                    ? 'sticky-left pa-table_border-right'
-                    : tableStructure[index]?.fixed == 'right'
-                    ? 'sticky-right'
-                    : 'pa-table_border-right',
-                  tableStructure[index]?.lastLeftFixed ? 'last-left-fixed' : '',
-                  tableStructure[index]?.lastRightFixed ? 'last-right-fixed' : '',
-                  (!tableStructure[index].width && !state.setCellWidthIng) ||
-                  (state.useAverageWidth == 1 && !tableStructure[index].baseWidth && tableStructure[index].prop != 'operation')
-                    ? 'pa-table_body_summary_flex'
-                    : ''
-                ]"
-                :style="{
-                  '--pa-table-sticky': tableStructure[index]?.fixedValue,
-                  '--pa-table-sticky-index': tableStructure[index]?.fixedValueIndex,
-                  '--pa-table-item-width': tableStructure[index]?.width,
-                  '--pa-table-item-min-width': tableStructure[index]?.minWidth
-                }"
-              >
-                <div
-                  :class="[
-                    tableStructure[index].width && !state.setCellWidthIng
-                      ? 'table_body_label_content'
-                      : `find_cell_${tableStructure[index].prop || tableStructure[index].type}`
-                  ]"
-                  :style="{
-                    justifyContent: isRowIndex(tableStructure[index]) ? 'center' : 'flex-start'
-                  }"
-                >
-                  {{ val }}
+          <template #innerFooter>
+            <div ref="mScrollbarSummaryListRef" class="pa-table_body_summary_box">
+              <div :style="{ width: isLeft && isRight ? '100%' : 'max-content' }">
+                <div v-if="(useSummary && !usePagination) || summaryFunction" class="pa-table_body_summary">
+                  <template v-for="(val, index) in state.summaryData" :key="index">
+                    <div
+                      v-if="tableStructure[index].isShow != false"
+                      class="pa-table_body_summary_label pa-table_border-right"
+                      :class="[
+                        tableStructure[index]?.fixed == 'left'
+                          ? 'sticky-left pa-table_border-right'
+                          : tableStructure[index]?.fixed == 'right'
+                          ? 'sticky-right'
+                          : 'pa-table_border-right',
+                        tableStructure[index]?.lastLeftFixed ? 'last-left-fixed' : '',
+                        tableStructure[index]?.lastRightFixed ? 'last-right-fixed' : '',
+                        (!tableStructure[index].width && !state.setCellWidthIng) ||
+                        (state.useAverageWidth == 1 &&
+                          !tableStructure[index].baseWidth &&
+                          tableStructure[index].prop != 'operation')
+                          ? 'pa-table_body_summary_flex'
+                          : ''
+                      ]"
+                      :style="{
+                        '--pa-table-sticky': tableStructure[index]?.fixedValue,
+                        '--pa-table-sticky-index': tableStructure[index]?.fixedValueIndex,
+                        '--pa-table-item-width': tableStructure[index]?.width,
+                        '--pa-table-item-min-width': tableStructure[index]?.minWidth
+                      }"
+                    >
+                      <div
+                        :class="[
+                          tableStructure[index].width && !state.setCellWidthIng
+                            ? 'table_body_label_content'
+                            : `find_cell_${tableStructure[index].prop || tableStructure[index].type}`
+                        ]"
+                        :style="{
+                          justifyContent: isRowIndex(tableStructure[index]) ? 'center' : 'flex-start'
+                        }"
+                      >
+                        {{ val }}
+                      </div>
+                    </div>
+                  </template>
                 </div>
               </div>
-            </template>
-          </div>
+            </div>
+          </template>
         </pa-scrollbar>
       </div>
 
       <!-- 分页组件 -->
-      <div
-        v-if="props.usePagination"
-        class="flex-center-between pa-table_footer"
-        :class="{ 'use-sticky-view-in': useStickyViewIn }"
-        ref="footerRef"
-      >
+      <div v-if="props.usePagination" class="flex-center-between pa-table_footer" ref="footerRef">
         <div class="table-flex-lf">
           <slot name="FooterLeft">
             <template v-if="useSelect">
@@ -570,6 +574,12 @@ const mScrollbarListRef = useTemplateRef("mScrollbarListRef");
  */
 const mScrollbarHeaderListRef = ref();
 /**
+ * 总结滚动列表引用
+ * @type Ref
+ * @description 总结滚动容器引用
+ */
+const mScrollbarSummaryListRef = ref();
+/**
  * 筛选组件引用
  * @type Ref
  * @description 表格筛选组件引用
@@ -604,7 +614,7 @@ const bodyContentWidth = ref(0);
  * @type Ref<string>
  * @description 表格底部区域高度
  */
-const footerHeight = ref("0px");
+const footerHeight = ref(0);
 /**
  * 表头盒子引用
  * @type Ref
@@ -646,7 +656,6 @@ const props = withDefaults(defineProps<ComponentProps>(), {
   useSummary: false,
   useTableIndex: true,
   useToolButton: true,
-  display: true,
   embeddedToolButton: false,
   exOptions: () => ({}),
   exDependent: () => ({ disabledRule: {}, displayRule: {}, exCellRules: {} }),
@@ -780,6 +789,7 @@ const {
   headerBoxRef,
   mScrollbarListRef,
   mScrollbarHeaderListRef,
+  mScrollbarSummaryListRef,
   listenCellInView,
   parentScrollbarRef,
   infiniteScroll,
@@ -1358,7 +1368,7 @@ watch(
       nextTick(() => {
         useStickyViewIn.value = InView.isIntersecting;
         const timer = setTimeout(() => {
-          footerHeight.value = footerRef.value?.clientHeight || "0px";
+          footerHeight.value = footerRef.value?.clientHeight || 0;
           clearTimeout(timer);
         }, 0);
       });

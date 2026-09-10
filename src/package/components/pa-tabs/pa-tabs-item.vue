@@ -4,11 +4,16 @@
     :data-label="label"
     class="pa-tabs-item flex-col"
     :class="[tabsContext.activeName === name ? 'active' : '', useBorder ? 'use-border' : '']"
-    ref="ScrollbarRef"
   >
     <slot name="before"></slot>
-    <div class="pa-tabs-item_body" v-if="init">
-      <pa-scrollbar v-if="scroll && tabsContext.mode !== 'slider'" ref="scrollbarRef" :useScrollX="useScrollX" :padding="padding">
+    <div class="pa-tabs-item_body" v-if="init" ref="parentBoxRef">
+      <pa-scrollbar
+        v-if="scroll && tabsContext.mode !== 'slider'"
+        ref="scrollbarRef"
+        :useScrollX="useScrollX || false"
+        :padding="padding"
+        :parentBoxRef="parentBoxRef"
+      >
         <slot></slot>
       </pa-scrollbar>
 
@@ -81,6 +86,8 @@ const languageValue = computed(() => {
  * @description 滚动条组件的引用
  */
 const scrollbarRef = ref<any>();
+const parentBoxRef = ref<any>();
+
 provide("parentScrollbarRef", scrollbarRef);
 /**
  * 标签页上下文
@@ -109,12 +116,6 @@ const props = withDefaults(defineProps<ComponentItemProps>(), {});
  * @description 标签项底部线条的 DOM 引用
  */
 const tabItemLine = ref<any>();
-/**
- * 滚动条容器引用
- * @type Ref<any>
- * @description 滚动条容器的 DOM 引用
- */
-const ScrollbarRef = ref<any>();
 /**
  * 初始化状态
  * @type Ref<boolean>
@@ -159,7 +160,7 @@ onBeforeUnmount(() => {
  * @description 暴露滚动条容器引用供父组件使用
  */
 defineExpose({
-  ScrollbarRef: ScrollbarRef
+  ScrollbarRef: parentBoxRef
 });
 /**
  * 监听 name 和 label 变化

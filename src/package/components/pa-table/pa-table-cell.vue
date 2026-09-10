@@ -374,7 +374,7 @@ type TableCellType = {
   rowKey: string;
   useExpand?: boolean;
   rowIndex: number;
-  display: boolean;
+  display?: boolean;
   parentRow?: PaTableUseType.PaTableInDataType;
   useTableIndex?: boolean;
   setCellWidthIng?: boolean;

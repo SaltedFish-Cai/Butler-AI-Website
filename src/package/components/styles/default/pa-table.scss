@@ -104,14 +104,16 @@
   .pa-table_body {
     border-radius: 0 !important;
   }
-  .use-sticky-view-in.pa-table_footer {
-    position: sticky !important;
-    bottom: 0;
-    z-index: 10;
-    background-color: var(--pa-color-bg);
-    border-top: 1px solid var(--pa-color-border);
+  &.use-sticky-view-in {
+    > .pa-table_footer {
+      position: sticky !important;
+      bottom: 0;
+      z-index: 10;
+      background-color: var(--pa-color-bg);
+      border-top: 1px solid var(--pa-color-border);
+    }
   }
-  &:has(.use-sticky-view-in.pa-table_footer) {
+  &.use-sticky-view-in {
     & > .pa-table_body {
       position: initial;
       overflow: visible;
@@ -119,11 +121,24 @@
         position: initial;
         overflow: initial;
         padding-bottom: 0;
+
+        > .pa-table_body_summary_box {
+          position: sticky;
+          bottom: calc(var(--pa-table-footer-height, 0px));
+          z-index: 25;
+        }
+        &:has(> .scrollbar__bar.is-horizontal) {
+          > .pa-table_body_summary_box {
+            bottom: var(--scrollbar-width, 12.1px);
+          }
+        }
+
         > .scrollbar__bar.is-horizontal {
           position: sticky;
           bottom: calc(var(--pa-table-footer-height, 0px));
           width: 100%;
           border-bottom: 1px solid var(--pa-color-border);
+          z-index: 25;
         }
       }
     }
@@ -444,7 +459,7 @@
       min-height: calc(var(--scroll-body-height) - var(--pa-size-padding, 10px) - 2em - var(--pa-size-height, 14.1px) / 2);
     }
   }
-  &:has(> .pa-scrollbar-content > .scrollbar-body > .scrollbar-body-content > .pa-table_body_summary) {
+  &:has(> .pa-scrollbar-content > .scrollbar-body > .scrollbar-body-content > .pa-table_body_summary_box) {
     > .pa-scrollbar-content > .scrollbar-body > .scrollbar-body-content > .light-is-scroll-end {
       font-size: var(--pa-size-font, 16px);
       height: calc(var(--pa-size-padding, 10px) + 2em);
@@ -455,7 +470,7 @@
     }
   }
   &:has(> .pa-scrollbar-content > .scrollbar-body > .scrollbar__bar.is-horizontal):has(
-      > .pa-scrollbar-content > .scrollbar-body > .scrollbar-body-content > .pa-table_body_summary
+      > .pa-scrollbar-content > .scrollbar-body > .scrollbar-body-content > .pa-table_body_summary_box
     ) {
     > .pa-scrollbar-content > .scrollbar-body > .scrollbar-body-content > .light-is-scroll-end {
       font-size: var(--pa-size-font, 16px);
@@ -733,7 +748,7 @@
     }
   }
 }
-.pa-table_body:has(.pa-table_body_summary) {
+.pa-table_body:has(.pa-table_body_summary_box) {
   .pa-table_body_content {
     min-height: calc(var(--body-content-height) - calc(var(--pa-size-padding, 10px) + 2em));
   }
@@ -742,6 +757,9 @@
   width: max-content;
 }
 
+.pa-table_body_summary_box {
+  overflow: hidden;
+}
 .pa-table_body_summary {
   flex-wrap: nowrap;
   display: flex;
@@ -751,11 +769,12 @@
   bottom: 0;
   color: var(--pa-color-font);
   width: max-content;
-  background-color: var(--pa-scrollbar-color);
+  background-color: var(--pa-color-send-bg);
   width: 100%;
   font-size: var(--pa-size-font, 16px);
   height: calc(var(--pa-size-padding, 10px) + 2em);
   z-index: 15;
+  border-top: 1px solid var(--pa-color-border);
 
   .pa-table_body_summary_label {
     position: relative;
@@ -777,6 +796,7 @@
     text-align: center;
     box-sizing: border-box;
     z-index: 1;
+    background-color: var(--pa-color-send-bg);
   }
 
   .pa-table_body_summary_label.sticky-left {
@@ -842,17 +862,13 @@
 // 仅容器带 .pa-table_width-anim 时生效；手动拖拽列宽 / 数据重置（含淡入淡出）不走该路径
 .pa-table_width-anim {
   .pa-table_body_header_label {
-    transition:
-      flex-basis var(--pa-table-width-anim-time, 0.2s) ease-out,
-      min-width var(--pa-table-width-anim-time, 0.2s) ease-out,
-      width var(--pa-table-width-anim-time, 0.2s) ease-out,
+    transition: flex-basis var(--pa-table-width-anim-time, 0.2s) ease-out,
+      min-width var(--pa-table-width-anim-time, 0.2s) ease-out, width var(--pa-table-width-anim-time, 0.2s) ease-out,
       opacity var(--pa-animation-time, 0.2s);
   }
   .table_body_label {
-    transition:
-      flex-basis var(--pa-table-width-anim-time, 0.2s) ease-out,
-      min-width var(--pa-table-width-anim-time, 0.2s) ease-out,
-      width var(--pa-table-width-anim-time, 0.2s) ease-out;
+    transition: flex-basis var(--pa-table-width-anim-time, 0.2s) ease-out,
+      min-width var(--pa-table-width-anim-time, 0.2s) ease-out, width var(--pa-table-width-anim-time, 0.2s) ease-out;
     // 动画期间禁止换行与溢出，避免收缩过程中文本换行引起虚拟行高抖动
     white-space: nowrap;
     overflow: hidden;

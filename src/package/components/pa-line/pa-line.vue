@@ -27,7 +27,7 @@ const props = withDefaults(defineProps<ComponentProps>(), {
   padding: () => [0, 0, 0, 0],
   height: "2px",
   width: "100%",
-  borderColor: "var(--pa-color-primary-light-6)",
+  borderColor: "var(--pa-color-border)",
   borderStyle: "solid"
 });
 const renderId = ref(props.renderId || (props.id ? props.id : "pa-line_" + useRenderId()));

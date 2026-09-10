@@ -647,11 +647,11 @@ export interface FormItemRule {
   required?: boolean;
   /**
    * **验证错误信息**
-   * @type `string` | `undefined`
+   * @type `string` | LanguagePackageType | `undefined`
    * @default `undefined`
    * @description 验证失败时的错误信息
    */
-  message?: string;
+  message?: LanguagePackageType | string;
   /**
    * **验证触发方式**
    * @type `'blur'` | `'change'` | `'input'` | `undefined`

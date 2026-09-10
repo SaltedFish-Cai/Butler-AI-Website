@@ -36,6 +36,9 @@
       <div v-if="useShadow && showThumbY && prop.useScrollY" class="is-scroll-end" :style="scrollEndShadowStyle"></div>
       <div v-if="useShadow && showThumbX && prop.useScrollX" class="is-scroll-right" :style="scrollRightShadowStyle"></div>
     </div>
+
+    <slot name="innerFooter" />
+
     <div
       v-if="useVertical && prop.useScrollY && prop.showThumbY"
       class="scrollbar__bar is-vertical"

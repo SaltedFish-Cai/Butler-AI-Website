@@ -16,6 +16,7 @@ export const useScrollHooks = (props: any, state: any, hooks: any) => {
   const headerBoxRef = hooks.headerBoxRef;
   const mScrollbarListRef = hooks.mScrollbarListRef;
   const mScrollbarHeaderListRef = hooks.mScrollbarHeaderListRef;
+  const mScrollbarSummaryListRef = hooks.mScrollbarSummaryListRef;
   const listenCellInView = hooks.listenCellInView;
   const parentScrollbarRef = hooks.parentScrollbarRef;
   const infiniteScroll = hooks.infiniteScroll;
@@ -87,6 +88,7 @@ export const useScrollHooks = (props: any, state: any, hooks: any) => {
     scrollDirectionX.value = data.scrollDirectionX;
     isScrollHeaderIng.value = true;
     mScrollbarHeaderListRef.value.scrollLeft = data.scrollLeft;
+    mScrollbarSummaryListRef.value.scrollLeft = data.scrollLeft;
     // 追踪虚拟滚动垂直位置
     virtualScrollTop.value = data.scrollTop;
   }

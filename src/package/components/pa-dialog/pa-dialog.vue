@@ -70,6 +70,10 @@
             <div v-if="$slots['footer']" class="pa-dialog-content_footer_center">
               <slot name="footer" />
             </div>
+            <div v-if="$slots['footerLeft'] || $slots['footerRight']" class="pa-dialog-content_footer_center_hidden">
+              <slot name="footer" />
+            </div>
+
             <div v-if="$slots['footerRight'] || $slots['footerLeft']" class="pa-dialog-content_footer_right">
               <slot name="footerRight" />
             </div>

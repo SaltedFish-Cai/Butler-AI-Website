@@ -434,7 +434,7 @@ export const useStateHooks = (
       clearInterval(intervalId);
       clearTimeout(timeoutId);
 
-      if (props.usePagination && !stopListen) {
+      if (!stopListen) {
         // @ 开始监听元素是否进入视窗
         nextTick(() => {
           listenCellInView.create();
@@ -527,7 +527,7 @@ export const useStateHooks = (
     clearInterval(intervalId);
     clearTimeout(timeoutId);
 
-    if (props.usePagination && !stopListen) {
+    if (!stopListen) {
       // @ 开始监听元素是否进入视窗
       nextTick(() => {
         listenCellInView.create();

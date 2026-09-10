@@ -72,8 +72,11 @@ function findDataWidthSwitch(data: boolean | number | string, options: PaOptionT
    * 基础选项配置
    * @description 合并默认配置和用户配置
    */
-  const activeText = options?.activeText || DEFAULT_ACTIVE_TEXT[language] || DEFAULT_ACTIVE_TEXT["zh-CN"];
-  const inActiveText = options?.inActiveText || DEFAULT_INACTIVE_TEXT[language] || DEFAULT_INACTIVE_TEXT["zh-CN"];
+  const _activeText = typeof options?.activeText === "object" ? options?.activeText[language] : options?.activeText;
+  const _inActiveText = typeof options?.inActiveText === "object" ? options?.inActiveText[language] : options?.inActiveText;
+
+  const activeText = _activeText || DEFAULT_ACTIVE_TEXT[language] || DEFAULT_ACTIVE_TEXT["zh-CN"];
+  const inActiveText = _inActiveText || DEFAULT_INACTIVE_TEXT[language] || DEFAULT_INACTIVE_TEXT["zh-CN"];
   const activeValue = options?.activeValue ?? true;
   const inActiveValue = options?.inActiveValue ?? false;
 

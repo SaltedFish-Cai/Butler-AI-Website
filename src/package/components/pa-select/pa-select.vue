@@ -490,6 +490,7 @@ function handlePopoverChange(data) {
  * 处理选项点击事件
  * @description 选择或取消选择选项
  */
+let userClick = false;
 function handleOptionClick(item) {
   if (isMultiple.value) {
     waitTag.value = false;
@@ -510,6 +511,7 @@ function handleOptionClick(item) {
     popoverRef.value?.hidePopover();
     inValue.value = item.value;
   }
+  userClick = true;
   emits("update:modelValue", inValue.value);
   emits("change", { value: inValue.value, oldValue, option: item });
   oldValue = inValue.value;
@@ -634,7 +636,7 @@ async function remoteMethodFn(query) {
  */
 onMounted(() => {
   if (props.createUseChange) {
-    const item = exOptionsList.value.find(item => item.value === props.modelValue);
+    const item = exOptionsList.value.find(item => item.value == props.modelValue);
     handleOptionClick(item || {});
   }
   nextTick(() => {
@@ -651,7 +653,7 @@ watch(
     waitTag.value = false;
     inValue.value = !isNil(data) && data !== "" ? data || "" : isMultiple.value ? [] : "";
     oldValue = !isNil(data) && data !== "" ? data || "" : isMultiple.value ? [] : "";
-    remoteMethodFn(data);
+    if (!userClick) remoteMethodFn(data);
     // 首次无传入数据请求一次
     // if (
     //   (((isOnlineSelect.value && !isMultiple.value) || isRequestSelect.value) && !inValue.value) ||
@@ -672,8 +674,7 @@ watch(
 watch(
   () => props.exOptions,
   data => {
-    exOptionsList.value =
-      data?.map(item => ({ ...item, value: typeof item.value == "number" ? String(item.value) : item.value })) || [];
+    exOptionsList.value = data?.map(item => ({ ...item })) || [];
   },
   { immediate: true, deep: true }
 );

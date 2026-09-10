@@ -5,17 +5,17 @@
         <slot>
           {{ typeof text === "string" ? text : text?.[languageValue] || "" }}
         </slot>
-        <div class="pa-title_tip" v-if="tipsPosition == 'right' && tips">
-          <div class="pa-ml-size">
-            (<slot name="tips"> {{ typeof tips === "string" ? tips : tips[languageValue] }} </slot>)
-          </div>
+      </div>
+      <div class="pa-title_tip" v-if="tipsPosition == 'right' && (tips || $slots['tips'])">
+        <div class="pa-ml-size">
+          <slot name="tips"> {{ typeof tips === "string" ? tips : tips?.[languageValue] }} </slot>
         </div>
       </div>
     </div>
     <pa-line v-if="styleMode.lineConfig" v-bind="(styleMode.lineConfig as LineComponentProps)" />
 
-    <div class="pa-title_tip" v-if="tipsPosition == 'bottom' && tips">
-      <slot name="tips">{{ typeof tips === "string" ? tips : tips[languageValue] }}</slot>
+    <div class="pa-title_tip" v-if="tipsPosition == 'bottom' && (tips || $slots['tips'])">
+      <slot name="tips">{{ typeof tips === "string" ? tips : tips?.[languageValue] }}</slot>
     </div>
   </div>
 </template>

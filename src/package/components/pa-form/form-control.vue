@@ -307,11 +307,14 @@ async function validateFieldInTabsForm(prop: string, value: string): Promise<{ v
  */
 function validateRule(rule: FormItemRule, value: any, prop: string): Promise<void> {
   return new Promise((resolve, reject) => {
+    const language = injectConfigContext.value?.language || "zh-CN";
+    const _message = typeof rule.message === "string" ? rule.message : rule.message?.[language] || "";
+
     if (
       rule.required &&
       (value === undefined || value === null || value === "" || (Array.isArray(value) && value.length === 0))
     ) {
-      reject(rule.message || `${prop} is required`);
+      reject(_message || `${prop} is required`);
       return;
     }
 
@@ -325,39 +328,39 @@ function validateRule(rule: FormItemRule, value: any, prop: string): Promise<voi
     }
 
     if (rule.type && !validateType(rule.type, value)) {
-      reject(rule.message || `${prop} type error`);
+      reject(_message || `${prop} type error`);
       return;
     }
 
     if (rule.min !== undefined && getValueLength(value) < rule.min) {
-      reject(rule.message || `${prop} length must be greater than or equal to ${rule.min}`);
+      reject(_message || `${prop} length must be greater than or equal to ${rule.min}`);
       return;
     }
 
     if (rule.max !== undefined && getValueLength(value) > rule.max) {
-      reject(rule.message || `${prop} length must be less than or equal to ${rule.max}`);
+      reject(_message || `${prop} length must be less than or equal to ${rule.max}`);
       return;
     }
 
     if (rule.len !== undefined && getValueLength(value) !== rule.len) {
-      reject(rule.message || `${prop} length must be equal to ${rule.len}`);
+      reject(_message || `${prop} length must be equal to ${rule.len}`);
       return;
     }
 
     if (rule.pattern && rule.pattern instanceof RegExp && !rule.pattern.test(String(value))) {
-      reject(rule.message || `${prop} format error`);
+      reject(_message || `${prop} format error`);
       return;
     }
 
     if (rule.enum && Array.isArray(rule.enum) && !rule.enum.includes(value)) {
-      reject(rule.message || `${prop} value not in enum`);
+      reject(_message || `${prop} value not in enum`);
       return;
     }
 
     if (rule.validator) {
       const callback = (error?: string) => {
         if (error) {
-          reject(error);
+          reject(typeof error == "string" ? error : error?.[language] || _message);
         } else {
           resolve();
         }
@@ -365,7 +368,7 @@ function validateRule(rule: FormItemRule, value: any, prop: string): Promise<voi
 
       const result = rule.validator({ rule, value, callback });
       if (result instanceof Promise) {
-        result.then(() => resolve()).catch(err => reject(err || rule.message));
+        result.then(() => resolve()).catch(err => reject((typeof err == "string" ? err : err?.[language]) || _message));
       }
     } else {
       resolve();
