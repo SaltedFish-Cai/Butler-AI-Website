@@ -191,6 +191,13 @@
     color: var(--pa-color-primary);
   }
 
+  .pa-select-option.is-disabled {
+    color: var(--pa-color-info-light-1);
+    &:hover {
+      cursor: not-allowed;
+    }
+  }
+
   > .pa-scrollbar > .pa-scrollbar-content > .scrollbar-body > .scrollbar-body-content {
     width: 100% !important;
   }

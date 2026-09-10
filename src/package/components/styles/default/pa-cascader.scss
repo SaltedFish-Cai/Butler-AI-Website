@@ -213,3 +213,10 @@
     display: block;
   }
 }
+
+.pa-cascader-option.is-disabled {
+  color: var(--pa-color-info-light-1);
+  &:hover {
+    cursor: not-allowed;
+  }
+}

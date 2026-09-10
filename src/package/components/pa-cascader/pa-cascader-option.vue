@@ -14,7 +14,8 @@
         class="pa-cascader-option"
         :class="[
           equalData(item.value, activeValue) || equalData(item.value, inValue) ? 'is-active' : '',
-          { 'is-filter': isFilter }
+          { 'is-filter': isFilter },
+          item.disabled ? 'is-disabled' : ''
         ]"
         @mouseover="handleOptionClick(item, 'over')"
         @click="handleOptionClick(item, 'click')"
@@ -210,6 +211,7 @@ function handleOptionClick(item: PaOptionType.Select, type: "click" | "over"): v
     activeValue.value = "";
   }
   if ((type === "click" && props.isCheck) || (type === "click" && !item.children?.length)) {
+    if (item.disabled) return;
     injectHandleOptionClick(item);
   }
 }

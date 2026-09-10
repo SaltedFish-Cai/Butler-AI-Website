@@ -86,7 +86,8 @@
             class="pa-select-option"
             :class="[
               equalData(item.value, inValue) ? 'is-active' : '',
-              keyboardActiveIndex === index ? 'is-keyboard-active' : ''
+              keyboardActiveIndex === index ? 'is-keyboard-active' : '',
+              item.disabled ? 'is-disabled' : ''
             ]"
             @mouseover="handleOptionHover(index)"
             @mouseleave="
@@ -492,6 +493,7 @@ function handlePopoverChange(data) {
  */
 let userClick = false;
 function handleOptionClick(item) {
+  if (item.disabled) return;
   if (isMultiple.value) {
     waitTag.value = false;
     if (inValue.value && Array.isArray(inValue.value)) {
