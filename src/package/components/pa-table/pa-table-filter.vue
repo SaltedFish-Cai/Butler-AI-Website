@@ -15,6 +15,10 @@
     <div class="table-flex-ct">
       <slot name="HeaderCenter" />
     </div>
+    <div class="table-flex-ct_hidden">
+      <slot name="HeaderCenter" />
+    </div>
+
     <div :class="[extraProps.embeddedToolButton ? 'table-flex-ri-embedded' : 'table-flex-ri']" v-if="extraProps.useToolButton">
       <slot name="ToolButton">
         <div class="flex-center-end">

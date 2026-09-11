@@ -353,12 +353,12 @@ export const useStateHooks = (
           state.selectTableData.push(selectedItem as PaTableUseType.PaTableInDataType);
         }
       }
-
+      const isIndeterminate = (selectedItem?.children || []).some(child => child.isSelected);
       ar.push({
         rowIndex: index,
         renderIndex: renderIndex,
         parentRenderIndex: renderIndex,
-        isIndeterminate: selectedItem?.children?.length && selectedItem?.children?.length > 0,
+        isIndeterminate: isIndeterminate,
         isSelected: props.useChildren ? selectedItem?.children?.length == item?.children?.length : selectedItem?.isSelected,
         isOpenChild: props.expandAuto || false,
         ...item,

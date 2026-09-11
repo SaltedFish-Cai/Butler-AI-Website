@@ -432,6 +432,11 @@
         <div v-if="$slots['FooterCenter']" class="table-flex-ct flex-center">
           <slot name="FooterCenter" />
         </div>
+
+        <div v-if="$slots['FooterCenter']" class="table-flex-ct_hidden flex-center">
+          <slot name="FooterCenter" />
+        </div>
+
         <div class="table-flex-ri width-int mb0">
           <div v-if="$slots['paginationLeft']">
             <slot name="paginationLeft" />

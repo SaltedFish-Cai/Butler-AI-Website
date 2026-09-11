@@ -192,8 +192,8 @@ export const useSelectHooks = (props: ComponentProps, state: PaTableUseType.Tabl
         item.isSelected = row.isSelected;
       });
     } else if (parentRow) {
-      const selectChildren = parentRow.children?.filter((child: any) => child.isSelected);
-      if (selectChildren?.length) parentRow.isIndeterminate = selectChildren?.length > 0;
+      const selectChildren = parentRow.children?.filter((child: any) => child.isSelected) || [];
+      parentRow.isIndeterminate = selectChildren?.length > 0;
       parentRow.isSelected = selectChildren?.length == parentRow.children?.length;
     }
     if (typeof status != "boolean") {

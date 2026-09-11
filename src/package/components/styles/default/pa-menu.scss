@@ -6,7 +6,8 @@
   min-width: 140px;
   border: 1px solid var(--pa-color-border-opacity-1, #e4e7ed);
   border-radius: var(--pa-size-radius, 8px);
-  background-color: var(--pa-color-bg-opacity, #fff);
+  background-color: var(--pa-color-bg);
+  box-shadow: var(--pa-color-shadow);
   font-family: var(--pa-component-font-family);
 }
 
