@@ -202,6 +202,8 @@ const sfcStreaming = ref(false);
 const sfcVersion = ref(0);
 /** 注入到 document.head 中的样式元素 */
 let sfcStyleEl: HTMLStyleElement | null = null;
+/** 样式元素 id：按实例唯一，避免多个 PaPhone 共用同一 style 元素，卸载时误删彼此的样式 */
+const sfcStyleId = `pa-phone-sfc-styles-${renderId.value}`;
 /** 防抖定时器 */
 let sfcDebounceTimer: ReturnType<typeof setTimeout> | null = null;
 
@@ -528,11 +530,10 @@ function applySfcStyles(css: string) {
   if (sfcStyleEl) {
     sfcStyleEl.textContent = css;
   } else {
-    const id = "pa-phone-sfc-styles";
-    sfcStyleEl = document.getElementById(id) as HTMLStyleElement;
+    sfcStyleEl = document.getElementById(sfcStyleId) as HTMLStyleElement;
     if (!sfcStyleEl) {
       sfcStyleEl = document.createElement("style");
-      sfcStyleEl.id = id;
+      sfcStyleEl.id = sfcStyleId;
       document.head.appendChild(sfcStyleEl);
     }
     sfcStyleEl.textContent = css;

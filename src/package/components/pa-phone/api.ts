@@ -1,5 +1,6 @@
 // # Import
 import { useBaseStore } from "../store/index";
+import { resolveApiUrl } from "@/config/env";
 
 interface ApiFetchOptions {
   method?: "DELETE" | "GET" | "POST" | "PUT";
@@ -16,11 +17,13 @@ interface ApiResponse<T = unknown> {
 /**
  * 通用 API 请求函数（供动态 SFC 组件使用）
  * 自动读取 Pinia store 中的 apiBaseUrl 和请求头配置
+ * 并统一经 resolveApiUrl 解析：环境变量 VITE_API_BASE_URL 存在时拼上后端域名，
+ * 否则保持同源相对路径（由 vite 代理转发）
  */
 export async function apiFetch<T = unknown>(url: string, options: ApiFetchOptions = {}): Promise<ApiResponse<T>> {
   const store = useBaseStore();
   const apiBaseUrl = store.getApiBaseUrl;
-  const fullUrl = apiBaseUrl + url;
+  const fullUrl = resolveApiUrl(apiBaseUrl + url);
 
   const { method = "GET", params, headers } = options;
 
