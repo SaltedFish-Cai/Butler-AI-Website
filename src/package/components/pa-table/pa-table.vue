@@ -130,6 +130,7 @@
           <m-icon class="loading_font" name="loading_line" />
         </div>
         <pa-scrollbar
+          :renderId="id + '_scrollbar'"
           ref="mScrollbarListRef"
           :useScrollY="!useSticky"
           @scroll-child-change="handleScrollChildChange"

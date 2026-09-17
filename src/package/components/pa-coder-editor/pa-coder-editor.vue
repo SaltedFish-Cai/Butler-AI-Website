@@ -32,6 +32,7 @@
     <pa-scrollbar
       :use-back-top="false"
       class="pa-coder-editor__scrollbar"
+      use-hidden-thumb
       :class="currentTheme === 'dark' ? 'pa-coder-editor__scrollbar--dark' : ''"
     >
       <div ref="editorContainer" class="pa-coder-editor__container"></div>

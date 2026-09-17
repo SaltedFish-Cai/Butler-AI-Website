@@ -213,7 +213,7 @@ export const useSelectHooks = (props: ComponentProps, state: PaTableUseType.Tabl
    */
   function handleSelectStatusMap({ row }: { row: PaTableUseType.PaTableInDataType }) {
     const _row = cloneDeep(row);
-    if (props.useChildren) {
+    if (props.useChildren && _row?.children?.length) {
       const isSelected = _row?.children?.some((child: any) => child.isSelected);
       const index = state.selectTableData.findIndex((item: any) => item[String(props.rowKey)] === _row[String(props.rowKey)]);
       if (isSelected) {
@@ -333,7 +333,23 @@ export const useSelectHooks = (props: ComponentProps, state: PaTableUseType.Tabl
    * @description 获取表格当前选中的所有数据
    */
   function getSelectedData() {
-    return [...state.awaitSelectData, ...state.selectTableData];
+    // flatTableData 为当前表格最新数据，存在子级时一并扁平化，便于按 rowKey 匹配
+    const flatTableData = state.tableData
+      .flatMap((arrItem: any) => arrItem)
+      .flatMap((item: any) => [item, ...(item.children || [])]);
+    const _list = [...state.awaitSelectData, ...state.selectTableData];
+    // 存在子级时，将 children 扁平化到同一层级，避免调用方需要递归处理
+    // oldSelectedData 是选中时的旧数据，flatTableData 是最新数据
+    // 按 rowKey 匹配，用最新数据覆盖选中数据；匹配不到则保留原数据
+
+    const outData = _list
+      .flatMap((item: any) => [item, ...(item.children || [])])
+      .map((item: any) => {
+        const latestItem = flatTableData.find((row: any) => row[String(props.rowKey)] === item[String(props.rowKey)]);
+        return latestItem || item;
+      });
+
+    return outData.filter((item: any) => item.isSelected || item.isIndeterminate);
   }
   /**
    * 清理函数

@@ -13,6 +13,10 @@
     border-color: #333;
     background: #1e1e1e;
   }
+
+  .pa-scrollbar .scrollbar-body-x > .scrollbar-body-content {
+    min-width: 100%;
+  }
 }
 
 .pa-coder-editor__toolbar {

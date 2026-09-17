@@ -207,11 +207,15 @@
 
 .pa-cascader-option.is-active {
   font-weight: bold;
-  color: var(--pa-color-primary);
 
   .check-icon {
     display: block;
   }
+}
+
+.pa-cascader-option.is-selected {
+  font-weight: bold;
+  color: var(--pa-color-primary);
 }
 
 .pa-cascader-option.is-disabled {

@@ -335,8 +335,8 @@ const isCheck = computed(() => {
  */
 const filterOptionsList = computed(() => {
   const filterData = flatExOptions.value.filter(item => {
-    const label = typeof item.label === "object" ? item.label[languageValue.value] : item.label;
-    return !item.children && label.includes(filterValue.value);
+    const label = (typeof item.label === "object" ? item.label?.[languageValue.value] : item?.label) || "";
+    return !item?.children?.length && label.includes(filterValue.value);
   });
   const exData = filterData.map(item => ({
     label: findParent(item, item.label),

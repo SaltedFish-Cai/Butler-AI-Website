@@ -69,10 +69,10 @@ export const useValidateHooks = (
           const fixedIndex = document.querySelectorAll(`#${props.id} > .pa-table_body_header_box .sticky-left`);
           const offsetX = Array.from(fixedIndex).reduce((prev, cur: any) => prev + cur.offsetWidth, 20);
           const offsetY = errorItem.parentElement?.parentElement?.clientHeight || 20;
-          if (injectSetScrollToIntersect) {
-            injectSetScrollToIntersect(errorItem, undefined, { offsetY, offsetX });
-          } else if (mScrollbarListRef.value) {
+          if (mScrollbarListRef.value) {
             mScrollbarListRef.value.setScrollToIntersect(errorItem, undefined, { offsetY, offsetX });
+          } else if (injectSetScrollToIntersect) {
+            injectSetScrollToIntersect(errorItem, undefined, { offsetY, offsetX });
           }
         }
         return false;

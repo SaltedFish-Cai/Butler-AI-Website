@@ -13,7 +13,8 @@
         :key="String(item.value)"
         class="pa-cascader-option"
         :class="[
-          equalData(item.value, activeValue) || equalData(item.value, inValue) ? 'is-active' : '',
+          equalData(item.value, activeValue) ? 'is-active' : '',
+          equalData(item.value, inValue) || item.children?.find(child => equalData(child.value, inValue)) ? 'is-selected' : '',
           { 'is-filter': isFilter },
           item.disabled ? 'is-disabled' : ''
         ]"

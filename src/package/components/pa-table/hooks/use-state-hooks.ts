@@ -71,7 +71,7 @@ export const useStateHooks = (
     tableLoadStatus: false,
     tableLoadEndStatus: false,
     useOrderPropName: "",
-    isRowOpenStatus: false,
+    isRowOpenStatus: props.expandAuto || false,
     showSelectList: false,
     hoveredRowIndex: -1,
     hoveredColumnIndex: -1,
@@ -321,6 +321,7 @@ export const useStateHooks = (
     let index = startIndex;
     let renderIndex = startIndex;
     const ar: PaTableUseType.dataType = [];
+
     items.forEach(item => {
       index++;
       renderIndex++;
@@ -353,27 +354,41 @@ export const useStateHooks = (
           state.selectTableData.push(selectedItem as PaTableUseType.PaTableInDataType);
         }
       }
-      const isIndeterminate = (selectedItem?.children || []).some(child => child.isSelected);
-      ar.push({
+
+      const itemChildren =
+        item?.children?.map((ch, ch_i) => {
+          return {
+            isSelected: selectedItem?.children?.some(child => child[String(props.rowKey)] === ch[String(props.rowKey)]),
+            renderIndex: ch_i,
+            ...ch
+          };
+        }) || [];
+
+      const arrItem = {
+        ...item,
         rowIndex: index,
         renderIndex: renderIndex,
         parentRenderIndex: renderIndex,
-        isIndeterminate: isIndeterminate,
-        isSelected: props.useChildren ? selectedItem?.children?.length == item?.children?.length : selectedItem?.isSelected,
-        isOpenChild: props.expandAuto || false,
-        ...item,
+        isIndeterminate: itemChildren.some(child => child.isSelected) && itemChildren.some(child => !child.isSelected),
+        isSelected:
+          props.useChildren && itemChildren.length
+            ? itemChildren.every(child => child.isSelected)
+            : selectedItem?.isSelected || item.isSelected,
+        isOpenChild: props.expandAuto && !!item?.children?.length,
         children: item?.children?.map((ch, ch_i) => {
           index++;
           return {
             rowIndex: index,
             parentRenderIndex: renderIndex,
-            isSelected: selectedItem?.children?.some(child => child[String(props.rowKey)] === ch[String(props.rowKey)]),
-            renderIndex: ch_i,
-            ...ch
+            ...itemChildren[ch_i]
           };
         })
-      });
+      };
+
+      if (arrItem.isSelected || arrItem.isIndeterminate) state.selectTableData.push(arrItem);
+      ar.push(arrItem);
     });
+
     return ar;
   }
 
@@ -912,7 +927,7 @@ export const useStateHooks = (
 
   // # Function 切换行状态
   function changeRowStatus({ item, row }) {
-    row.isOpenChild = !row.isOpenChild;
+    row.isOpenChild = !row.isOpenChild && !!row?.children?.length;
     state.isRowOpenStatus = state.tableData.flat().filter(item => item.isOpenChild).length > 0;
     emits("changeRowStatus", { item, row });
   }
@@ -922,7 +937,7 @@ export const useStateHooks = (
     state.isRowOpenStatus = !state.isRowOpenStatus;
     state.tableData = state.tableData.map(item =>
       item.map(child => {
-        child.isOpenChild = state.isRowOpenStatus;
+        child.isOpenChild = state.isRowOpenStatus && !!child?.children?.length;
         return child;
       })
     );
