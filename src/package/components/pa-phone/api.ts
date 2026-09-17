@@ -1,6 +1,5 @@
 // # Import
 import { useBaseStore } from "../store/index";
-import { resolveApiUrl } from "@/config/env";
 
 interface ApiFetchOptions {
   method?: "DELETE" | "GET" | "POST" | "PUT";
@@ -23,7 +22,7 @@ interface ApiResponse<T = unknown> {
 export async function apiFetch<T = unknown>(url: string, options: ApiFetchOptions = {}): Promise<ApiResponse<T>> {
   const store = useBaseStore();
   const apiBaseUrl = store.getApiBaseUrl;
-  const fullUrl = resolveApiUrl(apiBaseUrl + url);
+  const fullUrl = apiBaseUrl + url;
 
   const { method = "GET", params, headers } = options;
 

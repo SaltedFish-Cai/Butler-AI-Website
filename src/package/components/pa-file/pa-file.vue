@@ -294,7 +294,7 @@ const fileConfigData = computed(() => {
   const useGlobalState = globalState();
   const headerData = useGlobalState.getRequestHeader;
   const fileApi = PancakeGlobalConfig.value?.file_config;
-  const apiBaseUrl = PancakeGlobalConfig.value?.baseHost;
+  const apiBaseUrl = PancakeGlobalConfig.value?.apiBaseUrl;
   return { headerData, fileApi, apiBaseUrl };
 });
 /**

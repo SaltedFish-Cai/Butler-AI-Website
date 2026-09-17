@@ -57,7 +57,7 @@ export function useUpFileHooks(
   const fileConfigData = computed(() => {
     const headerData = PancakeGlobalConfig.value?.requestHeader || {};
     const fileApi = PancakeGlobalConfig.value?.file_config;
-    const apiBaseUrl = PancakeGlobalConfig.value?.baseHost;
+    const apiBaseUrl = PancakeGlobalConfig.value?.apiBaseUrl;
     return { headerData, fileApi, apiBaseUrl };
   });
 

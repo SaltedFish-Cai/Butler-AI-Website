@@ -451,10 +451,9 @@ export const useStateHooks = (
 
     const _pageNum = (exQuery.Page?.PageNum || 1) - 1 <= 0 ? 0 : (exQuery.Page?.PageNum || 1) - 1;
     // @ 如果数据加载结束或者当前页数据已经存在，则不再请求数据
-    if (
-      state.tableLoadEndStatus ||
-      (state.tableData?.length && state.tableData[_pageNum]?.length && state.tableData[_pageNum][1].type != "empty")
-    ) {
+
+    // 注释原因：不使用分页的时候，刷新不生效 state.tableLoadEndStatus ||
+    if (state.tableData?.length && state.tableData[_pageNum]?.length && state.tableData[_pageNum][1].type != "empty") {
       if (props.useSummary && !props.usePagination) debounceGetSummary();
       typeof window !== "undefined" && window.developLog.log("当前页数据已经存在", _pageNum, "info");
 

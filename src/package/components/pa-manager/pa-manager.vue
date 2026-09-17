@@ -69,7 +69,7 @@ const PancakeUIConfigs = window.localStorage.getItem("ui-global-configs");
  * @description 响应式全局配置状态对象
  */
 const state = reactive({
-  baseHost: props.baseHost,
+  apiBaseUrl: props.apiBaseUrl,
   themeColor: props.themeColor,
   size: props.size || "default",
   isDark: props.isDark,
@@ -86,6 +86,8 @@ const state = reactive({
 
 if (!PancakeUIConfigs) {
   useGlobalState.setGlobalConfig(props);
+} else {
+  useGlobalState.setGlobalConfig({ ...JSON.parse(PancakeUIConfigs), apiBaseUrl: props.apiBaseUrl });
 }
 
 /**

@@ -335,7 +335,7 @@
             <template v-if="state.tableLoadStatus" />
           </div>
           <div
-            v-if="!state.flatTableData.length && state.tableLoadEndStatus"
+            v-if="!state.flatTableData.length && state.tableLoadEndStatus && state.tableLoadingSize != 100"
             class="empty empty-table"
             style="text-align: center"
           >

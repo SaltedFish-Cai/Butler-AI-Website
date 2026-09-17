@@ -76,7 +76,7 @@ export type PancakeGlobal = {
    * @default undefined
    * @description 当设置该值时，会自定义 API 基础 URL
    */
-  baseHost?: string;
+  apiBaseUrl?: string;
   /**
    * 主题颜色
    * @type string | undefined
