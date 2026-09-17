@@ -388,21 +388,18 @@ const handleSuccess = (response: string | { Code: Number; Data: Array<FileDataTy
     if (!inValue.value) {
       inValue.value = [];
     }
+    const buildFileData = (item: FileDataType): FileDataType => {
+      const fileData: FileDataType = {
+        ...item,
+        FileName: item?.OriginalName || item?.FileName,
+        FullPath: (fileConfigData.value.apiBaseUrl || "") + item.FileUrl
+      };
+      return props.afterHooks ? props.afterHooks({ file: fileData }) : fileData;
+    };
     if (Array.isArray(Data)) {
-      const _Data = Data.map((item: FileDataType) => {
-        return {
-          ...item,
-          FileName: item?.OriginalName || item?.FileName,
-          FullPath: (fileConfigData.value.apiBaseUrl || "") + item.FileUrl
-        };
-      });
-      inValue.value.push(..._Data);
+      inValue.value.push(...Data.map((item: FileDataType) => buildFileData(item)));
     } else {
-      inValue.value.push({
-        ...Data,
-        FileName: Data?.OriginalName || Data?.FileName,
-        FullPath: (fileConfigData.value.apiBaseUrl || "") + Data.FileUrl
-      });
+      inValue.value.push(buildFileData(Data));
     }
 
     changeEvent(inValue.value);

@@ -23,6 +23,11 @@ import { DatePickerShortcut } from "../pa-time/types";
  * @description 导入穿梭框组件类型定义
  */
 import { PaTransferType } from "../pa-transfer/types";
+/**
+ * **模块导入**
+ * @description 导入文件组件文件数据类型定义
+ */
+import { FileDataType } from "../pa-file/types";
 
 /**
  * **组件属性**
@@ -486,6 +491,13 @@ export type PaFormCellExDependentType = {
    * @description 文件下载模板函数
    */
   file_downloadTemplate?: { [x: string]: () => void };
+  /**
+   * **文件上传成功后处理钩子**
+   * @type `{ [x: string]: (payload: { file: FileDataType }) => FileDataType }` | `undefined`
+   * @default `undefined`
+   * @description 上传成功后的处理钩子，参数为 `{ file }`，需返回基于文件数据扩展后的对象
+   */
+  file_afterHooks?: { [x: string]: (payload: { file: FileDataType }) => FileDataType };
   /**
    * **时间选择器禁用日期函数**
    * @type `{ [x: string]: (date: any) => boolean }` | `undefined`

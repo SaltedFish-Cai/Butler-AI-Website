@@ -210,6 +210,14 @@ export type ComponentProps = {
    * @description 当设置该值时，会作为表单项标签宽度
    */
   titleWidth?: string;
+  /**
+   * 上传成功后的处理钩子
+   * @type ((payload: { file: FileDataType }) => FileDataType) | undefined
+   * @default undefined
+   * @description 当设置该值时，上传成功后会调用该方法，并将上传成功的文件数据以 `{ file }` 形式作为参数传入，
+   * 方法需返回一个基于文件数据的可扩展对象，返回值将作为最终的文件数据
+   */
+  afterHooks?: (payload: { file: FileDataType }) => FileDataType;
 };
 /**
  * 文件上传组件事件类型

@@ -460,6 +460,25 @@ const handleRemove = (index: number): void => {
   uploadFilesList.value.splice(index, 1);
 };
 /**
+ * 归一化上传接口返回的文件数据
+ * @param item - 后端返回的原始文件数据
+ * @param base - 文件访问地址前缀
+ * @returns FileDataType 组件内部使用的文件数据
+ * @description 后端返回 { url, name, size, contentType }，统一映射为 FileUrl / FileName / FullPath
+ */
+function normalizeFileData(item: FileDataType, base: string): FileDataType {
+  const raw = item as FileDataType & { url?: string; name?: string };
+  const fileUrl = item?.FileUrl || raw.url || "";
+  return {
+    ...item,
+    FileId: item?.FileId || fileUrl,
+    FileUrl: fileUrl,
+    FileName: item?.OriginalName || item?.FileName || raw.name,
+    OriginalName: item?.OriginalName || raw.name,
+    FullPath: /^https?:\/\//i.test(fileUrl) ? fileUrl : (base || "") + fileUrl
+  };
+}
+/**
  * 上传成功处理函数
  * @param response - 服务器响应数据
  * @description 处理文件上传成功后的响应，更新组件内部值
@@ -472,21 +491,15 @@ const handleSuccess = (response: string | { Code: number; Data: Array<FileDataTy
     if (!inValue.value) {
       inValue.value = [];
     }
+    const base = fileConfigData.value.apiBaseUrl || "";
+    const buildFileData = (item: FileDataType): FileDataType => {
+      const fileData = normalizeFileData(item, base);
+      return props.afterHooks ? props.afterHooks({ file: fileData }) : fileData;
+    };
     if (Array.isArray(Data)) {
-      const _Data = Data.map((item: FileDataType) => {
-        return {
-          ...item,
-          FileName: item?.OriginalName || item?.FileName,
-          FullPath: (fileConfigData.value.apiBaseUrl || "") + item.FileUrl
-        };
-      });
-      inValue.value.push(..._Data);
+      inValue.value.push(...Data.map(item => buildFileData(item)));
     } else {
-      inValue.value.push({
-        ...Data,
-        FileName: Data?.OriginalName || Data?.FileName,
-        FullPath: (fileConfigData.value.apiBaseUrl || "") + Data.FileUrl
-      });
+      inValue.value.push(buildFileData(Data));
     }
 
     changeEvent(inValue.value);
