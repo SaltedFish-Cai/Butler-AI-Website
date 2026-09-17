@@ -7,18 +7,29 @@
   >
     <div class="pa-easy-table__table">
       <div ref="headerRef" class="pa-easy-table__row pa-easy-table__row--header" :style="{ gridTemplateColumns: gridTemplate }">
-        <div v-for="col in columns" :key="col.key" class="pa-easy-table__cell pa-easy-table__cell--header">
-          <div class="pa-easy-table__cell--header_inner">{{ col.label }}</div>
-        </div>
+        <template v-for="col in columns" :key="col.key">
+          <div
+            v-show="col !== operationColumn"
+            class="pa-easy-table__cell pa-easy-table__cell--header"
+            :class="{
+              'pa-easy-table__cell--operation': col === operationColumn,
+              'pa-easy-table__cell--operation-pinned': col === operationColumn && operationPinned
+            }"
+          >
+            <div class="pa-easy-table__cell--header_inner">{{ col.label }}</div>
+          </div>
+        </template>
       </div>
       <pa-empty v-if="data.length === 0" :style="{ '--pa-color-bg': 'transparent' }" />
       <pa-scrollbar
         v-else
+        ref="scrollbarRef"
         @directly-scroll="onDirectlyScroll"
         @scroll-child-change="onScrollChildChange"
         :paddingWidth="5"
         :padding="['top', 'bottom']"
         :overflowX="overflowX"
+        :showThumbX="false"
       >
         <div class="pa-easy-table__virtual-space" :style="{ height: virtualTotalHeight + 'px' }">
           <div
@@ -38,7 +49,15 @@
               :class="{ 'pa-easy-table__row--hovered': hoveredRow === item.key }"
               :style="{ gridTemplateColumns: gridTemplate }"
             >
-              <div v-for="col in columns" :key="col.key" class="pa-easy-table__cell">
+              <div
+                v-for="col in columns"
+                :key="col.key"
+                class="pa-easy-table__cell"
+                :class="{
+                  'pa-easy-table__cell--operation': col === operationColumn,
+                  'pa-easy-table__cell--operation-pinned': col === operationColumn && operationPinned
+                }"
+              >
                 <div
                   class="pa-easy-table__cell_inner"
                   :style="{ whiteSpace: gridTemplate_Init ? '' : 'nowrap', width: gridTemplate_Init ? '100%' : '' }"
@@ -210,7 +229,130 @@ const triggerUpdate = ref(0);
 const columnWidths = ref<number[]>([]);
 const overflowX = ref(false);
 const headerRef = ref<HTMLElement | null>(null);
+/**
+ * 滚动条组件引用
+ */
+const scrollbarRef = ref<{ bodyEl?: HTMLElement } | null>(null);
 let measuring = false;
+
+/**
+ * 操作列（key 或 slot 为 operation）
+ * @description 该列固定在表格右侧，不随水平滚动移动
+ */
+const operationColumn = computed(() => props.columns.find(col => col.key === "operation" || col.slot === "operation"));
+
+/**
+ * 操作列是否已固定在右侧
+ */
+const operationPinned = ref(false);
+/**
+ * 操作列水平偏移量（px），用于抵消水平滚动使其固定在右侧
+ */
+const operationOffset = ref(0);
+/**
+ * 表头操作列水平偏移量（px）
+ */
+const headerOperationOffset = ref(0);
+/**
+ * 操作列自然状态下右边缘在滚动内容坐标系中的位置（px）
+ */
+let operationEdge = 0;
+/**
+ * 表头操作列自然状态下右边缘在滚动内容坐标系中的位置（px）
+ */
+let headerOperationEdge = 0;
+
+/**
+ * 计算操作列的水平偏移量
+ * @param edge - 操作列自然状态下右边缘位置
+ * @param clientWidth - 容器可视宽度
+ * @param scrollLeft - 当前水平滚动位置
+ * @returns 偏移量（仅向左偏移，故不大于 0）
+ */
+function calcOperationOffset(edge: number, clientWidth: number, scrollLeft: number) {
+  if (edge <= 0 || clientWidth <= 0) return 0;
+  return Math.min(0, Math.round(clientWidth - edge + scrollLeft));
+}
+
+/**
+ * 测量操作列自然状态下右边缘在滚动内容坐标系中的位置
+ * @param container - 滚动容器（表头或滚动主体）
+ * @param cell - 操作列单元格
+ * @param offset - 当前已施加的偏移量
+ * @returns 右边缘位置（px），未找到时返回 0
+ */
+function measureOperationEdge(container: HTMLElement | null, cell: HTMLElement | null, offset: number) {
+  if (!container || !cell) return 0;
+  const containerRect = container.getBoundingClientRect();
+  const cellRect = cell.getBoundingClientRect();
+  return cellRect.right - containerRect.left + container.scrollLeft - offset;
+}
+
+/**
+ * 测量操作列位置并同步偏移状态
+ */
+function measureOperation() {
+  if (!operationColumn.value) {
+    operationEdge = 0;
+    headerOperationEdge = 0;
+    operationOffset.value = 0;
+    operationPinned.value = false;
+    return;
+  }
+  const body = scrollbarRef.value?.bodyEl;
+  const header = headerRef.value;
+  if (!body) return;
+
+  operationEdge = measureOperationEdge(
+    body,
+    body.querySelector(".pa-easy-table__cell--operation") as HTMLElement | null,
+    operationOffset.value
+  );
+  headerOperationEdge = measureOperationEdge(
+    header,
+    header?.querySelector(".pa-easy-table__cell--operation") as HTMLElement | null,
+    headerOperationOffset.value
+  );
+  updateOperationOffset(body.scrollLeft, body.clientWidth, header?.clientWidth ?? 0);
+}
+
+/**
+ * 同步将偏移量写入操作列 DOM
+ * @description 滚动过程中直接改写 style，使偏移与滚动在同一帧生效，
+ * 避免经由 Vue 响应式渲染到下一帧才更新而产生的错位抖动
+ * @param offset - 偏移量（px）
+ */
+function applyOperationOffset(offset: number) {
+  const body = scrollbarRef.value?.bodyEl;
+  if (!body) return;
+  const cells = body.querySelectorAll<HTMLElement>(".pa-easy-table__cell--operation");
+  cells.forEach(cell => {
+    cell.style.transform = `translateX(${offset}px)`;
+  });
+}
+
+/**
+ * 更新操作列偏移状态
+ * @param scrollLeft - 当前水平滚动位置
+ * @param bodyClientWidth - 滚动主体可视宽度
+ * @param headerClientWidth - 表头可视宽度
+ */
+function updateOperationOffset(scrollLeft: number, bodyClientWidth: number, headerClientWidth: number) {
+  const offset = calcOperationOffset(operationEdge, bodyClientWidth, scrollLeft);
+  operationOffset.value = offset;
+  operationPinned.value = offset < 0;
+  headerOperationOffset.value = calcOperationOffset(headerOperationEdge, headerClientWidth, scrollLeft);
+  applyOperationOffset(offset);
+}
+
+/**
+ * 渲染完成后回填偏移量
+ * @description 虚拟滚动会新建行元素，这些元素没有携带偏移，需要在渲染后补写；
+ * 此时偏移值未变化，不会产生视觉效果
+ */
+function syncOperationOffset() {
+  nextTick(() => applyOperationOffset(operationOffset.value));
+}
 
 const gridTemplate = computed(() => {
   if (props.columns.length === 0) return "";
@@ -298,6 +440,7 @@ function measureColumns() {
       overflowX.value = false;
     }
     measuring = false;
+    nextTick(measureOperation);
   });
 }
 
@@ -313,6 +456,11 @@ onMounted(() => {
 });
 
 watch(() => props.data, measureColumns);
+
+/**
+ * 虚拟滚动切换可见行后回填偏移量
+ */
+watch(scrollTop, syncOperationOffset);
 
 const accumulatedTops = computed(() => {
   triggerUpdate.value;
@@ -404,14 +552,17 @@ function getRowKey(row: Record<string, any>, index: number): number | string {
 function onDirectlyScroll(data: { scrollTop: number; scrollLeft: number }) {
   scrollTop.value = data.scrollTop;
   if (headerRef.value?.scrollLeft != null) headerRef.value.scrollLeft = data.scrollLeft;
+  const body = scrollbarRef.value?.bodyEl;
+  updateOperationOffset(data.scrollLeft, body?.clientWidth ?? 0, headerRef.value?.clientWidth ?? 0);
 }
 
 /**
  * 处理滚动子元素变化
  * @param data - 滚动区域数据
  */
-function onScrollChildChange(data: { bodyHeight: number }) {
+function onScrollChildChange(data: { bodyHeight: number; bodyWidth?: number }) {
   bodyHeight.value = data.bodyHeight;
+  nextTick(measureOperation);
 }
 
 /**

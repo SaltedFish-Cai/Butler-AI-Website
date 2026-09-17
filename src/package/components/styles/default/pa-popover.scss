@@ -29,7 +29,7 @@
 .pa-popover-reference + .pa-button,
 .pa-button + .pa-popover-reference {
   display: inline-block;
-  margin: 0 var(--pa-size-padding_small);
+  margin: 0 calc(var(--pa-size-padding) * 0.5);
   &:last-child {
     margin-right: 0;
   }

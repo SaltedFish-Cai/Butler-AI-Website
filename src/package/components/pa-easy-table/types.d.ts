@@ -64,6 +64,8 @@ export interface ColumnDef {
   /**
    * 列字段名
    * @type string
+   * @description 列字段名。值为 `operation`（或 slot 为 `operation`）时为操作列：
+   *              该列显示在表格最右侧，并固定在右侧，不随水平滚动移动
    */
   key: string;
   /**

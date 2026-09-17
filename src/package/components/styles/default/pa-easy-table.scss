@@ -125,6 +125,36 @@
   background: var(--pa-color-bg, #fff);
 }
 
+/* 操作列：固定在表格右侧，不随水平滚动移动（通过 translateX 偏移实现） */
+.pa-easy-table__cell--operation {
+  justify-content: flex-end;
+  .pa-easy-table__cell_inner {
+    padding: calc(var(--pa-size-padding) * 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--pa-size-padding_small);
+    .pa-button {
+      margin: 0;
+    }
+  }
+}
+
+.pa-easy-table__cell--operation-pinned {
+  z-index: 3;
+  align-self: stretch;
+  margin-block: calc(var(--pa-size-padding) * -0.6);
+  background: var(--pa-color-send-bg, #f5f7fa);
+  box-shadow: -8px 0 8px -8px var(--pa-color-black, rgba(0, 0, 0, 0.35));
+}
+
+.pa-easy-table__cell--operation-pinned.pa-easy-table__cell--header {
+  margin-block: 0;
+  padding-block: 0;
+  background: var(--pa-color-bg, #fff);
+  z-index: 4;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .pa-easy-table__row--hovered {
     transform: none !important;
