@@ -385,7 +385,11 @@ export const useStateHooks = (
         })
       };
 
-      if (arrItem.isSelected || arrItem.isIndeterminate) state.selectTableData.push(arrItem);
+      // @ 切换分页/重复构建同一页时，已存在于 selectTableData 的行不再重复插入，避免选中数据重复
+      const isExistSelectData = state.selectTableData.some(
+        child => child[String(props.rowKey)] === arrItem[String(props.rowKey)]
+      );
+      if ((arrItem.isSelected || arrItem.isIndeterminate) && !isExistSelectData) state.selectTableData.push(arrItem);
       ar.push(arrItem);
     });
 
@@ -398,13 +402,19 @@ export const useStateHooks = (
 
     // @ 如果没有Page对象，重制分页请求，关闭监听
     const keys = Object.keys(exQuery).filter(item => item !== "Page");
+    // @ 分页模式下纯切换页码（仅 Page.PageNum，无筛选参数、无 PageSize 变化）：
+    // @ 旧页数据保留到新一页返回后再整体替换，避免请求期间先清空数据导致表格出现一次空白闪烁
+    const isPageRequest =
+      !!props.usePagination && !infiniteScroll.value && !keys.length && !!exQuery.Page?.PageNum && !exQuery.Page?.PageSize;
     if (keys.length || (exQuery.Page && exQuery.Page?.PageSize)) {
       listenCellChildChange.close?.();
       listenCellInView.close();
       state.listenCellInViewIng = false;
       state.PageNum = 1;
-      state.tableData.length = 0;
-      state.flatTableData.length = 0;
+      if (!isPageRequest) {
+        state.tableData.length = 0;
+        state.flatTableData.length = 0;
+      }
       state.tableLoadEndStatus = false;
       state.oldPageIndex = -1;
 
@@ -421,8 +431,11 @@ export const useStateHooks = (
 
     if (!infiniteScroll.value) {
       clearListen();
-      state.flatTableData.length = 0;
-      state.tableData.length = 0;
+      // @ 分页按页请求时保留旧页数据，待新页返回后在 render 前整体替换，避免空白闪烁
+      if (!isPageRequest) {
+        state.flatTableData.length = 0;
+        state.tableData.length = 0;
+      }
     }
     // @ 如果存在Page，更新Page信息
     if (exQuery?.Page) {
@@ -493,6 +506,9 @@ export const useStateHooks = (
       ];
       ar.push(...buildRows(_data, _pageNum * state.pageable.PageSize));
 
+      // @ 分页切页：新页数据返回后整体替换（tableData 以页码为索引，先清空再按 _pageNum 赋值）。
+      // @ 两步在同一 tick 内完成，Vue 批量更新不会渲染中间空帧，避免新旧数据叠加
+      if (isPageRequest) state.tableData.length = 0;
       state.tableData[_pageNum] = ar;
 
       // @ 删除当前页 上下5页 的数据
@@ -535,7 +551,8 @@ export const useStateHooks = (
     state.tableLoadStatus = false;
 
     listenCellChildChange.create?.(async () => {
-      state.flatTableData = [...state.flatTableData, ..._data];
+      // @ 分页切页时是整页替换而非追加，避免与保留的旧页数据叠加
+      state.flatTableData = isPageRequest ? [..._data] : [...state.flatTableData, ..._data];
     });
 
     state.tableLoadingSize = 100;

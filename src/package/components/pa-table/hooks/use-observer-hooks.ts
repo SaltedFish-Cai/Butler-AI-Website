@@ -77,12 +77,19 @@ export const useObserverHooks = (props: any, refs: any) => {
   function listenChildCell(callback?: () => void) {
     if (observer?.disconnect) return callback?.();
     if (isBrowser) window.developLog.log(`打开监听——子元素宽度变化`, props.id, "success");
-    observer = new window.MutationObserver(refs.setCellWidth);
+    // @ 数据渲染（如切换分页）引起的行变化：此时行已渲染，直接测量并跳过透明度淡入，
+    // @ 避免每次数据更新都把表格整体隐藏 500ms 造成闪烁；行未渲染时才走带淡入的重试流程
+    observer = new window.MutationObserver(() => {
+      const hasRow = !!refs.contentRef.value?.querySelector?.(".pa-table_body_content_cell");
+      refs.setCellWidth(hasRow);
+    });
     const config = { childList: true };
     if (refs.contentRef.value) {
       observer.observe(refs.contentRef.value, config);
       nextTick(() => {
-        refs.setCellWidth();
+        // @ 行已渲染时跳过透明度淡入，直接测量列宽，避免隐藏表格造成闪烁
+        const hasRow = !!refs.contentRef.value?.querySelector?.(".pa-table_body_content_cell");
+        refs.setCellWidth(hasRow);
         callback?.();
       });
     }

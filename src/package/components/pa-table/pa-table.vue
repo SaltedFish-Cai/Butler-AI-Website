@@ -199,7 +199,7 @@
                     <div
                       v-if="vi.row.isOpenChild"
                       class="pa-table_body_content_children_box"
-                      :style="{ width: bodyContentWidth + 'px' }"
+                      :style="{ width: useExpand ? bodyContentWidth + 'px' : '' }"
                     >
                       <template v-if="useChildren">
                         <template v-for="ch in vi.row.children" :key="ch[rowKey]">
@@ -292,7 +292,7 @@
                           <div
                             v-if="row.isOpenChild && index <= Number(state.PageNum) + 2 && index >= Number(state.PageNum) - 2"
                             class="pa-table_body_content_children_box"
-                            :style="{ width: bodyContentWidth + 'px' }"
+                            :style="{ width: useExpand ? bodyContentWidth + 'px' : '' }"
                           >
                             <template v-if="useChildren">
                               <template v-for="ch in row.children" :key="ch[rowKey]">
