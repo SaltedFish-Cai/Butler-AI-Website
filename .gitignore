@@ -34,3 +34,5 @@ components.d.ts
 dist
 coverage/
 test-results/
+
+synchronous-ui-prd.js
